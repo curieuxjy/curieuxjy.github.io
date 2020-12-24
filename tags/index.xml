@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cv</title>
+      <link>https://curieuxjy.github.io/tags/cv/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/tags/cv/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>css</title>
       <link>https://curieuxjy.github.io/tags/css/</link>

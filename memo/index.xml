@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jungyeon</title>
-    <link>https://curieuxjy.github.io/</link>
-    <description>Recent content on Jungyeon</description>
+    <title>Memos on Jungyeon</title>
+    <link>https://curieuxjy.github.io/memo/</link>
+    <description>Recent content in Memos on Jungyeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/memo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CV</title>
       <link>https://curieuxjy.github.io/memo/cv/</link>
@@ -20,46 +20,10 @@ Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechani
     
     <item>
       <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/blog/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/blog/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/gnn/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/gnn/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
       <link>https://curieuxjy.github.io/memo/markdown-syntax-guide/</link>
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/programming/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/programming/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/rl/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/rl/markdown-syntax-guide/</guid>
       <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
     </item>
     

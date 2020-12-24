@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cv on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/cv/</link>
+    <description>Recent content in cv on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/cv/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CV</title>
+      <link>https://curieuxjy.github.io/memo/cv/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/cv/</guid>
+      <description>안녕하세요. 이정연입니다. 이 blog는 공부하는 모든 것들을 기록하기 위해 시작했습니다.
+Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생(RL을 이용한 DME pulse design)  Challenge log  Intel과 함꼐하는 AI 해커톤(공학혁신센터 및 WISET 사업단 주관) 현장 조교 AI Robotics KR 커뮤니티 1기 운영진 및 python 스터디 진행 모두의 연구소 AIC - 강화학습 스타크래프트(betastar팀) beta reviewer - &amp;ldquo;케라스 창시자에게 배우는 딥러닝&amp;rdquo;, &amp;ldquo;펭귄 브로의 3분 딥러닝, 파이토치 맛&amp;rdquo;, &amp;ldquo;파이썬 증권 데이터 분석&amp;rdquo;  Competitions  2018 AI School(고려대공학혁신센터 주관) - 은상 2018 AI 사물인식 해커톤 대회(Efesta 공학페스티벌) - 장려상 2018 Naver Vision AI Competition - 최종 10위 서울 하드웨어 해커톤(AI 시각 장애인 지팡이) - 장려상 2019 인텔 AI 드론 경진대회 참가 Konyang Health Datathon 2019 - 최종 10위 2020 KPMG Ideation - 본선  </description>
+    </item>
+    
+  </channel>
+</rss>

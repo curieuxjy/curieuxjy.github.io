@@ -4,7 +4,27 @@
   
   <url>
     <loc>https://curieuxjy.github.io/</loc>
-    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/memo/cv/</loc>
+    <lastmod>2020-12-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/cv/</loc>
+    <lastmod>2020-12-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/memo/</loc>
+    <lastmod>2020-12-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/</loc>
+    <lastmod>2020-12-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -14,6 +34,11 @@
   
   <url>
     <loc>https://curieuxjy.github.io/tags/css/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/gnn/</loc>
     <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -33,27 +58,52 @@
   </url>
   
   <url>
+    <loc>https://curieuxjy.github.io/gnn/markdown-syntax-guide/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/memo/markdown-syntax-guide/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/programming/markdown-syntax-guide/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/rl/markdown-syntax-guide/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://curieuxjy.github.io/tags/math/</loc>
     <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://curieuxjy.github.io/blog/math-typesetting/</loc>
+    <loc>https://curieuxjy.github.io/memo/math-typesetting/</loc>
     <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://curieuxjy.github.io/blog/rich-text/</loc>
+    <loc>https://curieuxjy.github.io/programming/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/memo/rich-text/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/rl/</loc>
     <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://curieuxjy.github.io/tags/shortcodes/</loc>
-    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://curieuxjy.github.io/tags/</loc>
     <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -68,7 +118,7 @@
   </url>
   
   <url>
-    <loc>https://curieuxjy.github.io/blog/example-post/</loc>
+    <loc>https://curieuxjy.github.io/memo/example-post/</loc>
     <lastmod>2020-06-04T09:19:29-04:00</lastmod>
   </url>
   
