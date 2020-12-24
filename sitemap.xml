@@ -3,15 +3,77 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://curieuxjy.github.io/categories/</loc>
+    <loc>https://curieuxjy.github.io/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://curieuxjy.github.io/</loc>
+    <loc>https://curieuxjy.github.io/blog/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://curieuxjy.github.io/tags/</loc>
+    <loc>https://curieuxjy.github.io/tags/css/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/html/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/markdown/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/blog/markdown-syntax-guide/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/math/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/blog/math-typesetting/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/blog/rich-text/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/shortcodes/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/themes/</loc>
+    <lastmod>2020-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/tags/hugo/</loc>
+    <lastmod>2020-06-04T09:19:29-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/blog/example-post/</loc>
+    <lastmod>2020-06-04T09:19:29-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://curieuxjy.github.io/categories/</loc>
   </url>
   
 </urlset>
