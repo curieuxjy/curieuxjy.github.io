@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/python/</link>
+    <description>Recent content in python on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Mon, 20 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Import custom module</title>
+      <link>https://curieuxjy.github.io/code/import-custom-module/</link>
+      <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/code/import-custom-module/</guid>
+      <description>Python: custom module을 불러오는 방법
+Structure gym_foo folder에 반드시 __init__.py를 만들어야 한다.
+Code  utils_foo.py  def utils_test():print(&amp;quot;utils_foo&amp;quot;)print(&amp;quot;HERE: utils_foo&amp;quot;)  env_foo.py  from gym_foo import utils_fooutils_foo.utils_test()print(&amp;quot;HERE: env_foo&amp;quot;)def env_test():print(&amp;quot;env_foo&amp;quot;)   main_foo.py  from gym_foo import utils_foofrom gym_foo import env_fooutils_foo.utils_test()env_foo.env_test() Goal  실행 파일: main_foo.py import하는 파일: env_foo.py import하는 파일 내에서(=env_foo.py) import하는 파일: utils_foo.py  How  main_foo.py에서 env_foo.py를 import한다. env_foo.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>custom_data on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/custom_data/</link>
+    <description>Recent content in custom_data on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Thu, 16 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/custom_data/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Object detection with Custom data</title>
+      <link>https://curieuxjy.github.io/mldl/object-detection-with-custom-data/</link>
+      <pubDate>Thu, 16 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/mldl/object-detection-with-custom-data/</guid>
+      <description>참고한 post에 있는 순서대로 대부분 따라하지만 문제가 있는 부분을 수정해가며 따라했다.
+Anaconda virtual env 참고한 reference가 tensorflow 1.x 버전으로 호환이 되기 때문에 가상환경을 만들어서 진행하기로 했다.
+conda create -n automobile tensorflow==1.15.0
+ Reference(thanks to)   How to train an object detection model easy for free  Tensorflow : ckpt, pbtxt, pb 생성 이후 freeze까지  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,23 +7,152 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Event-Driven Visual-Tactile Sensing and Learning for Robots</title>
+      <link>https://curieuxjy.github.io/memo/robotics-paper-review-1/</link>
+      <pubDate>Fri, 25 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/robotics-paper-review-1/</guid>
+      <description> Paper Link Abstract </description>
+    </item>
+    
+    <item>
+      <title>An Optimistic Perspective on Offline Reinforcement Learning</title>
+      <link>https://curieuxjy.github.io/rl/rl-blog-post-1/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-blog-post-1/</guid>
+      <description>An Optimistic Perspective on Offline Reinforcement Learning</description>
+    </item>
+    
     <item>
       <title>CV</title>
       <link>https://curieuxjy.github.io/memo/cv/</link>
       <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/cv/</guid>
-      <description>안녕하세요. 이정연입니다. 이 blog는 공부하는 모든 것들을 기록하기 위해 시작했습니다.
-Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생(RL을 이용한 DME pulse design)  Challenge log  Intel과 함꼐하는 AI 해커톤(공학혁신센터 및 WISET 사업단 주관) 현장 조교 AI Robotics KR 커뮤니티 1기 운영진 및 python 스터디 진행 모두의 연구소 AIC - 강화학습 스타크래프트(betastar팀) beta reviewer - &amp;ldquo;케라스 창시자에게 배우는 딥러닝&amp;rdquo;, &amp;ldquo;펭귄 브로의 3분 딥러닝, 파이토치 맛&amp;rdquo;, &amp;ldquo;파이썬 증권 데이터 분석&amp;rdquo;  Competitions  2018 AI School(고려대공학혁신센터 주관) - 은상 2018 AI 사물인식 해커톤 대회(Efesta 공학페스티벌) - 장려상 2018 Naver Vision AI Competition - 최종 10위 서울 하드웨어 해커톤(AI 시각 장애인 지팡이) - 장려상 2019 인텔 AI 드론 경진대회 참가 Konyang Health Datathon 2019 - 최종 10위 2020 KPMG Ideation - 본선  </description>
+      <description>안녕하세요. 이정연입니다.
+호기심을 가지고 공부하는 모든 것들을 기록하는 곳입니다.
+Fields of interest  Machine Learning/Deep Learning Reinforcement Learning GNN Quantum Computing  Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생  2020 IPNT 우수논문상 &amp;ldquo;DME펄스 형태 개발을 위 심층 강화학습 Framework 연구&amp;rdquo;(2020.11.12)    Challenges  Intel과 함꼐하는 AI 해커톤(공학혁신센터 및 WISET 사업단 주관) 현장 조교 AI Robotics KR 커뮤니티 1기 운영진 및 python 스터디 진행 모두의 연구소 AIC - 강화학습 스타크래프트(betastar팀) Beta reviewer - &amp;ldquo;케라스 창시자에게 배우는 딥러닝&amp;rdquo;, &amp;ldquo;펭귄 브로의 3분 딥러닝, 파이토치 맛&amp;rdquo;, &amp;ldquo;파이썬 증권 데이터 분석&amp;rdquo; 미래연구소 Subtutor 14기(2020)/15기(2021)  Competitions  2018 AI School(고려대공학혁신센터 주관) - 은상 2018 AI 사물인식 해커톤 대회(Efesta 공학페스티벌) - 장려상 2018 Naver Vision AI Competition - 최종 10위 서울 하드웨어 해커톤(AI 시각 장애인 지팡이) - 장려상 2019 인텔 AI 드론 경진대회 참가 Konyang Health Datathon 2019 - 최종 10위 2020 KPMG Ideation - 본선 2020 Korea Health Data Competition 대회 - 4위 AWS AI champhionship X DeepRacer - 2위(2020.</description>
+    </item>
+    
+    <item>
+      <title>Deep Reinforcement Learning and its Neuroscientific Implications</title>
+      <link>https://curieuxjy.github.io/rl/rl-paper-review-2/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-paper-review-2/</guid>
+      <description>딥마인드의 매우 인지과학적 논문 읽어보기.
+Paper Link</description>
+    </item>
+    
+    <item>
+      <title>How to make Github Blog</title>
+      <link>https://curieuxjy.github.io/memo/how-to-make-github-blog/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/how-to-make-github-blog/</guid>
+      <description>Reference  레퍼런스1 레퍼런스2  Manual   원하는 Theme을 고른다. 여러번 골라보았지만 simple is the best.
+ Codex    Github에 2개의 repository를 만든다.
+     </description>
+    </item>
+    
+    <item>
+      <title>Learning Agile Robotic Locomotion Skills by Imitating Animals</title>
+      <link>https://curieuxjy.github.io/rl/rl-paper-review-1/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-paper-review-1/</guid>
+      <description>Abstract 동물들의 다양하고 민첩한 이동 기술을 재현하는 것은 로봇 공학에서 오랜 도전이었다. 수동으로 설계된 컨트롤러는 많은 복잡한 동작을 모방할 수 있었지만, 그러한 컨트롤러를 구축하는 데는 시간이 많이 걸리고 어려운 개발 과정이 필요하며, 종종 각 기술의 뉘앙스에 대한 상당한 전문지식이 필요하다. 강화 학습은 컨트롤러 개발에 관련된 수동 노력을 자동화하기 위한 매력적인 대안을 제공합니다. 그러나 에이전트에서 원하는 행동을 이끌어내는 학습 목표를 설계하는 것도 많은 기술 특정 전문 지식을 필요로할 수 있습니다. 본 논문에서는 다리가 달린 로봇이 실제 동물을 모방하여 민첩한 이동 기술을 학습할 수 있는 모방 학습 시스템을 제시한다.</description>
+    </item>
+    
+    <item>
+      <title>Machine Learning - Stanford Uni.</title>
+      <link>https://curieuxjy.github.io/memo/coursera-machine-learning/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/coursera-machine-learning/</guid>
+      <description>Machine Learning - Stanford Uni.</description>
+    </item>
+    
+    <item>
+      <title>DeepMind’s AI automatically generates reinforcement learning algorithms</title>
+      <link>https://curieuxjy.github.io/rl/rl-blog-post-2/</link>
+      <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-blog-post-2/</guid>
+      <description>DeepMind: RL 알고리즘 자동 생성 연구
+ Original link  Plus link  DeepMind 연구진은 Arxiv.org에 발표한 연구에서 환경과 상호작용하여 무엇을 예측하고 어떻게 배울지를 발견하는 RL 알고리즘 생성 기술을 기술하고 있다. 그들은 생성된 알고리즘이 아타리 비디오 게임의 다양한 도전적인 범위에서 잘 수행되어 기술의 일반성을 나타내는 &amp;ldquo;non-trivial&amp;rdquo; 성능을 달성한다고 주장한다.
+Reinforcement learning algorithms - 피드백을 사용하여 소프트웨어 agent가 시행착오로 환경에서 학습할 수 있도록 하는 알고리즘 - 학습한 규칙에 따라 agent의 parameter를 업데이트한다.</description>
+    </item>
+    
+    <item>
+      <title>Why supervised learning is more common than reinforcement learning</title>
+      <link>https://curieuxjy.github.io/rl/rl-blog-post-3/</link>
+      <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-blog-post-3/</guid>
+      <description>Supervised learning이 Reinforcement learning보다 흔한 이유
+ Original link  Supervised learning(이하 SL)은 기계 학습의 더 빠르고 저렴한 형태이기 때문에 부분적으로 Reinforcement learning(이하 RL)보다 일반적으로 사용되는 기계 학습이다. 데이터 세트를 사용하여 입력 및 출력에 매핑된 SL은 이미지 인식 또는 기계 변환 모델을 만들 수 있다. 반면 RL은 관찰(observe)해야 하며 시간이 많이 걸릴 수 있다고 UC Berkeley의 Ion Stoica 교수는 말했다. Stoica는 UC Berkeley의 RISELab에서 로봇공학과 RL을 연구하고 있으며, 기계학습을 위한 현대적 기반시설의 일부를 구축했다.</description>
+    </item>
+    
+    <item>
+      <title>Import custom module</title>
+      <link>https://curieuxjy.github.io/code/import-custom-module/</link>
+      <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/code/import-custom-module/</guid>
+      <description>Python: custom module을 불러오는 방법
+Structure gym_foo folder에 반드시 __init__.py를 만들어야 한다.
+Code  utils_foo.py  def utils_test():print(&amp;quot;utils_foo&amp;quot;)print(&amp;quot;HERE: utils_foo&amp;quot;)  env_foo.py  from gym_foo import utils_fooutils_foo.utils_test()print(&amp;quot;HERE: env_foo&amp;quot;)def env_test():print(&amp;quot;env_foo&amp;quot;)   main_foo.py  from gym_foo import utils_foofrom gym_foo import env_fooutils_foo.utils_test()env_foo.env_test() Goal  실행 파일: main_foo.py import하는 파일: env_foo.py import하는 파일 내에서(=env_foo.py) import하는 파일: utils_foo.py  How  main_foo.py에서 env_foo.py를 import한다. env_foo.</description>
+    </item>
+    
+    <item>
+      <title>My Reinforcement Learning Roadmap</title>
+      <link>https://curieuxjy.github.io/rl/rl-study-roadmap/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-study-roadmap/</guid>
+      <description>강화학습을 공부했던 roadmap을 기록하고자 글을 쓰게 되었다.
+짧게 기록할 수 있는 정보들과 내 느낌들을 간략하게 적어보고자 한다.
+My RL study road map  모두의 rl 케라스로 시작하는 rl 책 스터디 모두연 starcraft project - 논문 리딩 Udacity Connect-X pytorch 책 수학 강화학습 책 Open AI Gym fast campus BNM2h 스터디 ♥ RL 논문 스터디 3기  Materials  동영상   모두의 RL 팡요랩: 강화학습 강의로 유명한 데이비드 실버 교수님 강의 한글 버전 혁펜하임 CS285: 입문이라기에 조금 어려울 수는 있으나 만약 로봇틱스쪽을 생각하고 있다면 꼭 들어야하는 강의 유료 강의  Udacity 엄청 비쌈, 프로그램이 좋긴한데 가성비는 아님 Udemy 코드 위주로 빨리 배워보고 싶을 때 Fast campus 박준영 강사님    책   파이썬과 케라스로 배우는 강화학습 PyTorch를 활용한 강화학습/심층강화학습 실전 입문 수학으로 풀어보는 강화학습 원리와 알고리즘 : 수학적 기반 다지기.</description>
+    </item>
+    
+    <item>
+      <title>Object detection with Custom data</title>
+      <link>https://curieuxjy.github.io/mldl/object-detection-with-custom-data/</link>
+      <pubDate>Thu, 16 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/mldl/object-detection-with-custom-data/</guid>
+      <description>참고한 post에 있는 순서대로 대부분 따라하지만 문제가 있는 부분을 수정해가며 따라했다.
+Anaconda virtual env 참고한 reference가 tensorflow 1.x 버전으로 호환이 되기 때문에 가상환경을 만들어서 진행하기로 했다.
+conda create -n automobile tensorflow==1.15.0
+ Reference(thanks to)   How to train an object detection model easy for free  Tensorflow : ckpt, pbtxt, pb 생성 이후 freeze까지  </description>
+    </item>
+    
+    <item>
+      <title>Install Mujoco in Window10</title>
+      <link>https://curieuxjy.github.io/memo/install-mujoco-in-windows10/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/install-mujoco-in-windows10/</guid>
+      <description>Reinforcement learning에서 많이 쓰이는 시뮬레이션 Mujoco Window10에 설치하기
+Mujoco   Mujoco에서 Licensetab으로 들어가서 Personal Student Software License를 받는다.
+  이메일로 Account number를 받는다.(spam도 확인하자)
+  다시 License로 가서 Account number와 Computer Id를 입력한다.
+  다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.
+  .mujoco라는 파일을 C:\Users\사용자명\에 만든다.
+  Products에서 mjpro150 win64을 다운받아 .mujoco에 압축을 풀어준다.(C:\Users\사용자명\.mujoco\mjpro150)
+  다운받은 mjkey.txt 파일을 C:\Users\사용자명\.</description>
     </item>
     
     <item>
       <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/blog/markdown-syntax-guide/</link>
+      <link>https://curieuxjy.github.io/code/markdown-syntax-guide/</link>
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://curieuxjy.github.io/blog/markdown-syntax-guide/</guid>
+      <guid>https://curieuxjy.github.io/code/markdown-syntax-guide/</guid>
       <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
     </item>
     
@@ -42,24 +171,6 @@ Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechani
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/programming/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/programming/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/rl/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/rl/markdown-syntax-guide/</guid>
       <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
     </item>
     
@@ -90,7 +201,7 @@ Instagram Simple Shortcode YouTube Privacy Enhanced Shortcode   Twitter Simple S
       <pubDate>Thu, 04 Jun 2020 09:19:29 -0400</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/example-post/</guid>
-      <description>The standard Lorem Ipsum passage &amp;ldquo;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+      <description>ShortCodes      The standard Lorem Ipsum passage &amp;ldquo;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
     </item>
     
   </channel>

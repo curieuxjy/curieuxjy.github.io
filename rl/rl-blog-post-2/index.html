@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <title>DeepMind’s AI automatically generates reinforcement learning algorithms | Jungyeon</title>
+
+  <meta charset="UTF-8">
+  <meta name="language" content="en">
+  <meta name="description" content="DeepMind’s AI automatically generates reinforcement learning algorithms post review">
+  <meta name="keywords" content="rl , deepmind">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+
+
+  
+  
+    
+ 
+  
+  
+  
+  
+  
+  
+    
+    <link type="text/css" rel="stylesheet" href="/css/post.min.b60e0932fe1c50c3d7c5b4f83ee9e4592363654d0f2abf05bbd0678d5b8a214c.css" integrity="sha256-tg4JMv4cUMPXxbT4PunkWSNjZU0PKr8Fu9BnjVuKIUw="/>
+  
+    
+    <link type="text/css" rel="stylesheet" href="/css/custom.min.e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css" integrity="sha256-47DEQpj8HBSa&#43;/TImW&#43;5JCeuQeRkm5NMpJWZG3hSuFU="/>
+  
+  
+   
+   
+    
+
+<script type="application/ld+json">
+  
+    { 
+      "@context": "http://schema.org", 
+      "@type": "WebSite", 
+      "url": "https:\/\/curieuxjy.github.io\/rl\/rl-blog-post-2\/",
+      "name": "DeepMind’s AI automatically generates reinforcement learning algorithms",
+      "author": {
+        "@type": "Person",
+        "name": ""
+      },
+      "description": "DeepMind’s AI automatically generates reinforcement learning algorithms post review"
+    }
+  
+  </script>
+</head>
+
+<body>
+  <div class="burger__container">
+  <div class="burger" aria-controls="navigation" aria-label="Menu">
+    <div class="burger__meat burger__meat--1"></div>
+    <div class="burger__meat burger__meat--2"></div>
+    <div class="burger__meat burger__meat--3"></div>
+  </div>
+</div>
+ 
+
+  <nav class="nav" id="navigation">
+  <ul class="nav__list">
+    
+    
+      <li>
+        <a  href="/">Home</a>
+      </li>
+    
+      <li>
+        <a  href="/gnn">GNN</a>
+      </li>
+    
+      <li>
+        <a  href="/rl">RL</a>
+      </li>
+    
+      <li>
+        <a  href="mldl">ML/DL</a>
+      </li>
+    
+      <li>
+        <a  href="/code">Code</a>
+      </li>
+    
+      <li>
+        <a  href="/memo">Memo</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+  <main>
+    
+    
+
+    <div class="flex-wrapper">
+      <div class="post__container">
+        <div class="post">
+          <header class="post__header">
+            <h1 id="post__title">DeepMind’s AI automatically generates reinforcement learning algorithms</h1>
+            <time datetime="2020-07-24 00:00:00 &#43;0000 UTC" class="post__date">Jul 24 2020</time> 
+          </header>
+          <article class="post__content">
+              
+<p>DeepMind: RL 알고리즘 자동 생성 연구</p>
+<blockquote>
+<p><a href="https://venturebeat.com/2020/07/20/deepminds-ai-automatically-generates-reinforcement-learning-algorithms/?fbclid=IwAR048fPcppVj5PsiHZ6Qdq13dkC8802PSUwANW95HjNy9s_YcPxbu62dnK0" 
+  
+   target="_blank" rel="noreferrer noopener" 
+>Original link</a>
+</p>
+</blockquote>
+<blockquote>
+<p><a href="https://venturebeat.com/2020/07/15/why-supervised-learning-is-more-common-than-reinforcement-learning/" 
+  
+   target="_blank" rel="noreferrer noopener" 
+>Plus link</a>
+</p>
+</blockquote>
+<hr>
+<p>DeepMind 연구진은 <a href="https://arxiv.org/pdf/2007.08794.pdf" 
+  
+   target="_blank" rel="noreferrer noopener" 
+>Arxiv.org에 발표한 연구</a>
+에서 환경과 상호작용하여 무엇을 예측하고 어떻게 배울지를 발견하는 <code>RL 알고리즘 생성 기술</code>을 기술하고 있다. 그들은 생성된 알고리즘이 아타리 비디오 게임의 다양한 도전적인 범위에서 잘 수행되어 기술의 일반성을 나타내는 &ldquo;non-trivial&rdquo; 성능을 달성한다고 주장한다.</p>
+<p>Reinforcement learning algorithms - 피드백을 사용하여 소프트웨어 agent가 시행착오로 환경에서 학습할 수 있도록 하는 알고리즘 - 학습한 규칙에 따라 agent의 parameter를 업데이트한다. 대개 수년간의 연구를 통해 발견되는 규칙은 데이터에서 발견된 것을 자동화하여 효율적인 알고리즘 또는 특정 환경에 더 잘 적응할 수 있는 알고리즘으로 이어질 수 있다.</p>
+<p>DeepMind의 해결책은 <code>특정 agent가 예측해야 할 것</code>과 <code>policy 개선을 위해 예측을 사용하는 방법</code>을 공동으로 발견하는 <code>meta-learning framework</code>다. (RL에서 ‘policy’는 주어진 시간에 학습 agent의 행동 방식을 정의한다.) <code>learned policy gradient (LGP)</code>라는 그들의 아키텍처는 업데이트 규칙(즉, meta-learner)이 the agent’s outputs가 예측해야할 것을 결정할 수 있게 하고, 프레임워크는 각각 다른 환경과 상호작용하는 여러 학습 agent를 통해 규칙을 발견한다.</p>
+<hr>
+<p>실험에서 연구원들은 Tutankham, Breakout, Yars’ Revenge 등 복잡한 아타리 게임에 대해 LPG를 평가했다. 그들은 training environment이 아타리 게임보다 훨씬 간단한 기본 task를 가진 환경으로 구성되었음에도 불구하고 기존 알고리즘과 비교했을 때 &ldquo;reasonably well&rdquo;  일반화되었다는 것을 발견했다. 또한 LPG로 훈련된 agent는 hand-designed RL에 의존하지 않고 14개 게임에서 “superhuman” performance를 달성할 수 있었다.</p>
+<p>공동저자들은 LPG가 여전히 일부 advanced RL 알고리즘에 뒤쳐져 있다고 언급했다. 그러나 실험에서 훈련 환경의 수가 많아지고 generalization 성능이 빠르게 향상되어, 메타 트레이닝을 위해 더 큰 환경을 사용할 수 있게 되면 general-purpose RL 알고리즘을 발견하는 것이 가능할 수 있음을 시사했다.</p>
+<blockquote>
+<p>“제안된 접근방식은 데이터 중심의 방법으로 발견 과정을 자동화함으로써 새로운 RL 알고리즘을 발견하는 과정을 극적으로 가속화할 수 있는 가능성을 가지고 있다. 제안된 연구 방향이 성공하면 연구 패러다임이 수동으로 RL 알고리즘을 개발하는 것에서 <code>결과 알고리즘이 효율적이 되도록 적절한 환경을 구축하는 것으로</code> 바뀔 수 있다.&quot;</p>
+</blockquote>
+<blockquote>
+<p>&ldquo;또한, 제안된 접근법은 RL 연구원들이 손으로 설계한 알고리즘을 개발하고 개선하는 데 도움이 되는 도구가 될 수 있다. 이 경우 연구자들이 입력으로 제공하는 아키텍처에 따라 <code>좋은 업데이트 규칙이 어떻게 생겼는지에 대한 통찰력을 제공</code>하는 데 사용될 수 있으며, 이는 RL 알고리즘의 <code>manual discovery를 가속화</code>할 수 있다.&rdquo;</p>
+</blockquote>
+
+
+              
+          </article>
+          
+
+<ul class="tags__list">
+    
+    <li class="tag__item">
+        <a class="tag__link" href="https://curieuxjy.github.io/tags/deepmind/">deepmind</a>
+    </li>
+    <li class="tag__item">
+        <a class="tag__link" href="https://curieuxjy.github.io/tags/post_review/">post_review</a>
+    </li></ul>
+
+ <div class="pagination">
+  
+    <a class="pagination__item" href="https://curieuxjy.github.io/rl/rl-blog-post-3/">
+        <span class="pagination__label">Previous Post</span>
+        <span class="pagination__title">Why supervised learning is more common than reinforcement learning</span>
+    </a>
+  
+
+  
+    <a class="pagination__item" href="https://curieuxjy.github.io/rl/rl-paper-review-1/">
+      <span class="pagination__label">Next Post</span>
+      <span class="pagination__title" >Learning Agile Robotic Locomotion Skills by Imitating Animals</span>
+    </a>
+  
+</div>
+
+          <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "curieuxjy" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          <footer class="post__footer">
+            
+
+
+<div class="social-icons">
+  
+     
+    
+      <a class="social-icons__link" rel="me" title="GitHub"
+         href="https://github.com/curieuxjy"
+         target="_blank" rel="noopener">
+        <div class="social-icons__icon" style="background-image: url('https://curieuxjy.github.io/svg/github.svg')"></div>
+      </a>
+    
+  
+     
+    
+      <a class="social-icons__link" rel="me" title="Email"
+         href="mailto:curieuxjy@gmail.com"
+         target="_blank" rel="noopener">
+        <div class="social-icons__icon" style="background-image: url('https://curieuxjy.github.io/svg/email.svg')"></div>
+      </a>
+    
+  
+     
+    
+      <a class="social-icons__link" rel="me" title="Facebook"
+         href="https://www.facebook.com/jungyeon.lee.5667"
+         target="_blank" rel="noopener">
+        <div class="social-icons__icon" style="background-image: url('https://curieuxjy.github.io/svg/facebook.svg')"></div>
+      </a>
+    
+  
+     
+    
+      <a class="social-icons__link" rel="me" title="YouTube"
+         href="https://www.youtube.com/channel/UCsO_ekZZG5N3iq8k0Z7na8A"
+         target="_blank" rel="noopener">
+        <div class="social-icons__icon" style="background-image: url('https://curieuxjy.github.io/svg/youtube.svg')"></div>
+      </a>
+    
+     
+</div>
+
+            <p>© 2020</p>
+          </footer>
+          </div>
+      </div>
+      
+      <div class="toc-container">
+          
+        <nav id="TableOfContents"></nav>
+      </div>
+      
+    </div>
+    
+
+  </main>
+
+   
+
+  
+  <script src="/js/index.min.49e4d8a384357d9b445b87371863419937ede9fa77737522ffb633073aebfa44.js" integrity="sha256-SeTYo4Q1fZtEW4c3GGNBmTft6fp3c3Ui/7YzBzrr&#43;kQ=" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://unpkg.com/prismjs@1.20.0/components/prism-core.min.js"></script>
+
+  
+  <script src="https://unpkg.com/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js"
+    data-autoloader-path="https://unpkg.com/prismjs@1.20.0/components/"></script>
+
+  
+    <script src="/js/table-of-contents.js"></script>
+  
+
+
+</body>
+
+</html>

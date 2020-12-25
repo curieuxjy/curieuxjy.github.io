@@ -7,15 +7,61 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/memo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/memo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Event-Driven Visual-Tactile Sensing and Learning for Robots</title>
+      <link>https://curieuxjy.github.io/memo/robotics-paper-review-1/</link>
+      <pubDate>Fri, 25 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/robotics-paper-review-1/</guid>
+      <description> Paper Link Abstract </description>
+    </item>
+    
     <item>
       <title>CV</title>
       <link>https://curieuxjy.github.io/memo/cv/</link>
       <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/cv/</guid>
-      <description>안녕하세요. 이정연입니다. 이 blog는 공부하는 모든 것들을 기록하기 위해 시작했습니다.
-Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생(RL을 이용한 DME pulse design)  Challenge log  Intel과 함꼐하는 AI 해커톤(공학혁신센터 및 WISET 사업단 주관) 현장 조교 AI Robotics KR 커뮤니티 1기 운영진 및 python 스터디 진행 모두의 연구소 AIC - 강화학습 스타크래프트(betastar팀) beta reviewer - &amp;ldquo;케라스 창시자에게 배우는 딥러닝&amp;rdquo;, &amp;ldquo;펭귄 브로의 3분 딥러닝, 파이토치 맛&amp;rdquo;, &amp;ldquo;파이썬 증권 데이터 분석&amp;rdquo;  Competitions  2018 AI School(고려대공학혁신센터 주관) - 은상 2018 AI 사물인식 해커톤 대회(Efesta 공학페스티벌) - 장려상 2018 Naver Vision AI Competition - 최종 10위 서울 하드웨어 해커톤(AI 시각 장애인 지팡이) - 장려상 2019 인텔 AI 드론 경진대회 참가 Konyang Health Datathon 2019 - 최종 10위 2020 KPMG Ideation - 본선  </description>
+      <description>안녕하세요. 이정연입니다.
+호기심을 가지고 공부하는 모든 것들을 기록하는 곳입니다.
+Fields of interest  Machine Learning/Deep Learning Reinforcement Learning GNN Quantum Computing  Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생  2020 IPNT 우수논문상 &amp;ldquo;DME펄스 형태 개발을 위 심층 강화학습 Framework 연구&amp;rdquo;(2020.11.12)    Challenges  Intel과 함꼐하는 AI 해커톤(공학혁신센터 및 WISET 사업단 주관) 현장 조교 AI Robotics KR 커뮤니티 1기 운영진 및 python 스터디 진행 모두의 연구소 AIC - 강화학습 스타크래프트(betastar팀) Beta reviewer - &amp;ldquo;케라스 창시자에게 배우는 딥러닝&amp;rdquo;, &amp;ldquo;펭귄 브로의 3분 딥러닝, 파이토치 맛&amp;rdquo;, &amp;ldquo;파이썬 증권 데이터 분석&amp;rdquo; 미래연구소 Subtutor 14기(2020)/15기(2021)  Competitions  2018 AI School(고려대공학혁신센터 주관) - 은상 2018 AI 사물인식 해커톤 대회(Efesta 공학페스티벌) - 장려상 2018 Naver Vision AI Competition - 최종 10위 서울 하드웨어 해커톤(AI 시각 장애인 지팡이) - 장려상 2019 인텔 AI 드론 경진대회 참가 Konyang Health Datathon 2019 - 최종 10위 2020 KPMG Ideation - 본선 2020 Korea Health Data Competition 대회 - 4위 AWS AI champhionship X DeepRacer - 2위(2020.</description>
+    </item>
+    
+    <item>
+      <title>How to make Github Blog</title>
+      <link>https://curieuxjy.github.io/memo/how-to-make-github-blog/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/how-to-make-github-blog/</guid>
+      <description>Reference  레퍼런스1 레퍼런스2  Manual   원하는 Theme을 고른다. 여러번 골라보았지만 simple is the best.
+ Codex    Github에 2개의 repository를 만든다.
+     </description>
+    </item>
+    
+    <item>
+      <title>Machine Learning - Stanford Uni.</title>
+      <link>https://curieuxjy.github.io/memo/coursera-machine-learning/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/coursera-machine-learning/</guid>
+      <description>Machine Learning - Stanford Uni.</description>
+    </item>
+    
+    <item>
+      <title>Install Mujoco in Window10</title>
+      <link>https://curieuxjy.github.io/memo/install-mujoco-in-windows10/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/install-mujoco-in-windows10/</guid>
+      <description>Reinforcement learning에서 많이 쓰이는 시뮬레이션 Mujoco Window10에 설치하기
+Mujoco   Mujoco에서 Licensetab으로 들어가서 Personal Student Software License를 받는다.
+  이메일로 Account number를 받는다.(spam도 확인하자)
+  다시 License로 가서 Account number와 Computer Id를 입력한다.
+  다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.
+  .mujoco라는 파일을 C:\Users\사용자명\에 만든다.
+  Products에서 mjpro150 win64을 다운받아 .mujoco에 압축을 풀어준다.(C:\Users\사용자명\.mujoco\mjpro150)
+  다운받은 mjkey.txt 파일을 C:\Users\사용자명\.</description>
     </item>
     
     <item>
@@ -54,7 +100,7 @@ Instagram Simple Shortcode YouTube Privacy Enhanced Shortcode   Twitter Simple S
       <pubDate>Thu, 04 Jun 2020 09:19:29 -0400</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/example-post/</guid>
-      <description>The standard Lorem Ipsum passage &amp;ldquo;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+      <description>ShortCodes      The standard Lorem Ipsum passage &amp;ldquo;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
     </item>
     
   </channel>

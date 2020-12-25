@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rl on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/rl/</link>
+    <description>Recent content in rl on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/rl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deep Reinforcement Learning and its Neuroscientific Implications</title>
+      <link>https://curieuxjy.github.io/rl/rl-paper-review-2/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-paper-review-2/</guid>
+      <description>딥마인드의 매우 인지과학적 논문 읽어보기.
+Paper Link</description>
+    </item>
+    
+    <item>
+      <title>Why supervised learning is more common than reinforcement learning</title>
+      <link>https://curieuxjy.github.io/rl/rl-blog-post-3/</link>
+      <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-blog-post-3/</guid>
+      <description>Supervised learning이 Reinforcement learning보다 흔한 이유
+ Original link  Supervised learning(이하 SL)은 기계 학습의 더 빠르고 저렴한 형태이기 때문에 부분적으로 Reinforcement learning(이하 RL)보다 일반적으로 사용되는 기계 학습이다. 데이터 세트를 사용하여 입력 및 출력에 매핑된 SL은 이미지 인식 또는 기계 변환 모델을 만들 수 있다. 반면 RL은 관찰(observe)해야 하며 시간이 많이 걸릴 수 있다고 UC Berkeley의 Ion Stoica 교수는 말했다. Stoica는 UC Berkeley의 RISELab에서 로봇공학과 RL을 연구하고 있으며, 기계학습을 위한 현대적 기반시설의 일부를 구축했다.</description>
+    </item>
+    
+  </channel>
+</rss>

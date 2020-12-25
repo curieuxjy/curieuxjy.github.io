@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mujoco on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/mujoco/</link>
+    <description>Recent content in mujoco on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Mon, 13 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/mujoco/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install Mujoco in Window10</title>
+      <link>https://curieuxjy.github.io/memo/install-mujoco-in-windows10/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/memo/install-mujoco-in-windows10/</guid>
+      <description>Reinforcement learning에서 많이 쓰이는 시뮬레이션 Mujoco Window10에 설치하기
+Mujoco   Mujoco에서 Licensetab으로 들어가서 Personal Student Software License를 받는다.
+  이메일로 Account number를 받는다.(spam도 확인하자)
+  다시 License로 가서 Account number와 Computer Id를 입력한다.
+  다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.
+  .mujoco라는 파일을 C:\Users\사용자명\에 만든다.
+  Products에서 mjpro150 win64을 다운받아 .mujoco에 압축을 풀어준다.(C:\Users\사용자명\.mujoco\mjpro150)
+  다운받은 mjkey.txt 파일을 C:\Users\사용자명\.</description>
+    </item>
+    
+  </channel>
+</rss>

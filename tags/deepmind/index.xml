@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>deepmind on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/deepmind/</link>
+    <description>Recent content in deepmind on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/deepmind/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deep Reinforcement Learning and its Neuroscientific Implications</title>
+      <link>https://curieuxjy.github.io/rl/rl-paper-review-2/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-paper-review-2/</guid>
+      <description>딥마인드의 매우 인지과학적 논문 읽어보기.
+Paper Link</description>
+    </item>
+    
+    <item>
+      <title>DeepMind’s AI automatically generates reinforcement learning algorithms</title>
+      <link>https://curieuxjy.github.io/rl/rl-blog-post-2/</link>
+      <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-blog-post-2/</guid>
+      <description>DeepMind: RL 알고리즘 자동 생성 연구
+ Original link  Plus link  DeepMind 연구진은 Arxiv.org에 발표한 연구에서 환경과 상호작용하여 무엇을 예측하고 어떻게 배울지를 발견하는 RL 알고리즘 생성 기술을 기술하고 있다. 그들은 생성된 알고리즘이 아타리 비디오 게임의 다양한 도전적인 범위에서 잘 수행되어 기술의 일반성을 나타내는 &amp;ldquo;non-trivial&amp;rdquo; 성능을 달성한다고 주장한다.
+Reinforcement learning algorithms - 피드백을 사용하여 소프트웨어 agent가 시행착오로 환경에서 학습할 수 있도록 하는 알고리즘 - 학습한 규칙에 따라 agent의 parameter를 업데이트한다.</description>
+    </item>
+    
+  </channel>
+</rss>

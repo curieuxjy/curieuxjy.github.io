@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>berkely on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/berkely/</link>
+    <description>Recent content in berkely on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/berkely/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning Agile Robotic Locomotion Skills by Imitating Animals</title>
+      <link>https://curieuxjy.github.io/rl/rl-paper-review-1/</link>
+      <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-paper-review-1/</guid>
+      <description>Abstract 동물들의 다양하고 민첩한 이동 기술을 재현하는 것은 로봇 공학에서 오랜 도전이었다. 수동으로 설계된 컨트롤러는 많은 복잡한 동작을 모방할 수 있었지만, 그러한 컨트롤러를 구축하는 데는 시간이 많이 걸리고 어려운 개발 과정이 필요하며, 종종 각 기술의 뉘앙스에 대한 상당한 전문지식이 필요하다. 강화 학습은 컨트롤러 개발에 관련된 수동 노력을 자동화하기 위한 매력적인 대안을 제공합니다. 그러나 에이전트에서 원하는 행동을 이끌어내는 학습 목표를 설계하는 것도 많은 기술 특정 전문 지식을 필요로할 수 있습니다. 본 논문에서는 다리가 달린 로봇이 실제 동물을 모방하여 민첩한 이동 기술을 학습할 수 있는 모방 학습 시스템을 제시한다.</description>
+    </item>
+    
+  </channel>
+</rss>
