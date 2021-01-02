@@ -23,9 +23,9 @@
       <pubDate>Thu, 24 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>https://curieuxjy.github.io/memo/cv/</guid>
-      <description>안녕하세요. 이정연입니다.
-호기심을 가지고 공부하는 모든 것들을 기록하는 곳입니다.
-Fields of interest  Machine Learning/Deep Learning Reinforcement Learning GNN Quantum Computing  Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생  2020 IPNT 우수논문상 &amp;ldquo;DME펄스 형태 개발을 위 심층 강화학습 Framework 연구&amp;rdquo;(2020.11.12)    Challenges  Intel과 함꼐하는 AI 해커톤(공학혁신센터 및 WISET 사업단 주관) 현장 조교 AI Robotics KR 커뮤니티 1기 운영진 및 python 스터디 진행 모두의 연구소 AIC - 강화학습 스타크래프트(betastar팀) Beta reviewer - &amp;ldquo;케라스 창시자에게 배우는 딥러닝&amp;rdquo;, &amp;ldquo;펭귄 브로의 3분 딥러닝, 파이토치 맛&amp;rdquo;, &amp;ldquo;파이썬 증권 데이터 분석&amp;rdquo; 미래연구소 Subtutor 14기(2020)/15기(2021)  Competitions  2018 AI School(고려대공학혁신센터 주관) - 은상 2018 AI 사물인식 해커톤 대회(Efesta 공학페스티벌) - 장려상 2018 Naver Vision AI Competition - 최종 10위 서울 하드웨어 해커톤(AI 시각 장애인 지팡이) - 장려상 2019 인텔 AI 드론 경진대회 참가 Konyang Health Datathon 2019 - 최종 10위 2020 KPMG Ideation - 본선 2020 Korea Health Data Competition 대회 - 4위 AWS AI champhionship X DeepRacer - 2위(2020.</description>
+      <description>안녕하세요. 이정연입니다. 호기심을 가지고 공부하는 모든 것들을 기록하는 곳입니다.
+Fields of interest  Machine Learning/Deep Learning Reinforcement Learning Graph Nerual Network Quantum Computing   공순이의 잡생각은 제가 관심있는 분야들의 포스팅을 빠르고 간편하게 캡쳐하는 facebook 페이지입니다.
+ Education 2018.03~  홍익대학교 기계·시스템 디자인공학과(Mechanical System Design and Engineering) 전공 홍익대학교 디자인 엔지니어링(Design Engineering) 융합전공  Research 2020.05~  AutoNav Lab.학부연구생  2020 IPNT 구두발표 우수논문상 &amp;ldquo;DME펄스 형태 개발을 위 심층 강화학습 Framework 연구&amp;rdquo;(2020.</description>
     </item>
     
     <item>
@@ -62,45 +62,6 @@ Mujoco   Mujoco에서 Licensetab으로 들어가서 Personal Student Software 
   .mujoco라는 파일을 C:\Users\사용자명\에 만든다.
   Products에서 mjpro150 win64을 다운받아 .mujoco에 압축을 풀어준다.(C:\Users\사용자명\.mujoco\mjpro150)
   다운받은 mjkey.txt 파일을 C:\Users\사용자명\.</description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>https://curieuxjy.github.io/memo/markdown-syntax-guide/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/memo/markdown-syntax-guide/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Math Typesetting</title>
-      <link>https://curieuxjy.github.io/memo/math-typesetting/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/memo/math-typesetting/</guid>
-      <description>&lt;p&gt;Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Rich Content</title>
-      <link>https://curieuxjy.github.io/memo/rich-text/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/memo/rich-text/</guid>
-      <description>Hugo ships with several Built-in Shortcodesfor rich content, along with a Privacy Configand a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.
-Instagram Simple Shortcode YouTube Privacy Enhanced Shortcode   Twitter Simple Shortcode “In addition to being more logical, asymmetry has the advantage that its complete appearance is far more optically effective than symmetry.”
-— Jan Tschichold pic.twitter.com/gcv7SrhvJb
-&amp;mdash; Graphic Design History (@DesignReviewed) January 17, 2019  Vimeo Simple Shortcode  .</description>
-    </item>
-    
-    <item>
-      <title>Welcome To Codex</title>
-      <link>https://curieuxjy.github.io/memo/example-post/</link>
-      <pubDate>Thu, 04 Jun 2020 09:19:29 -0400</pubDate>
-      
-      <guid>https://curieuxjy.github.io/memo/example-post/</guid>
-      <description>ShortCodes      The standard Lorem Ipsum passage &amp;ldquo;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
     </item>
     
   </channel>

@@ -2,12 +2,12 @@
 <html lang="en-us">
 
 <head>
-  <title>Deep Reinforcement Learning and its Neuroscientific Implications | Jungyeon</title>
+  <title>Math Typesetting | Jungyeon</title>
 
   <meta charset="UTF-8">
   <meta name="language" content="en">
-  <meta name="description" content="Deep Reinforcement Learning and its Neuroscientific Implications paper review">
-  <meta name="keywords" content="neuroscientific , deepmind , rl">
+  <meta name="description" content="A brief guide to setup KaTeX">
+  <meta name="keywords" content="gohugo , hugo , go , blog">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,13 +44,13 @@
     { 
       "@context": "http://schema.org", 
       "@type": "WebSite", 
-      "url": "https:\/\/curieuxjy.github.io\/rl\/rl-paper-review-2\/",
-      "name": "Deep Reinforcement Learning and its Neuroscientific Implications",
+      "url": "https:\/\/curieuxjy.github.io\/examples\/math-typesetting\/",
+      "name": "Math Typesetting",
       "author": {
         "@type": "Person",
         "name": ""
       },
-      "description": "Deep Reinforcement Learning and its Neuroscientific Implications paper review"
+      "description": "A brief guide to setup KaTeX"
     }
   
   </script>
@@ -106,19 +106,59 @@
       <div class="post__container">
         <div class="post">
           <header class="post__header">
-            <h1 id="post__title">Deep Reinforcement Learning and its Neuroscientific Implications</h1>
-            <time datetime="2020-12-24 00:00:00 &#43;0000 UTC" class="post__date">Dec 24 2020</time> 
+            <h1 id="post__title">Math Typesetting</h1>
+            <time datetime="2020-06-05 00:00:00 &#43;0000 UTC" class="post__date">Jun 5 2020</time> 
           </header>
           <article class="post__content">
               
-<p>딥마인드의 매우 인지과학적 논문 읽어보기.</p>
-<p><a href="https://arxiv.org/abs/2007.03750?fbclid=IwAR1I4D4Uf9suRHho80ulpXlpZNMoHC1snGByYL4vgwKxKdRhWQTXwonoYrM" 
+<p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.</p>
+<p>In this example we will be using <a href="https://katex.org/" 
   
    target="_blank" rel="noreferrer noopener" 
->Paper Link</a>
+>KaTeX</a>
 </p>
+<ul>
+<li>Create a partial under <code>/layouts/partials/math.html</code></li>
+<li>Within this partial reference the <a href="https://katex.org/docs/autorender.html" 
+  
+   target="_blank" rel="noreferrer noopener" 
+>Auto-render Extension</a>
+ or host these scripts locally.</li>
+<li>Include the partial in your templates like so:</li>
+</ul>
+<pre><code>{{ if or .Params.math .Site.Params.math }}
+{{ partial &quot;math.html&quot; . }}
+{{ end }}
+</code></pre>
+<ul>
+<li>To enable KaTex globally set the parameter <code>math</code> to <code>true</code> in a project&rsquo;s configuration</li>
+<li>To enable KaTex on a per page basis include the parameter <code>math: true</code> in content files.</li>
+</ul>
+<p><strong>Note:</strong> Use the online reference of <a href="https://katex.org/docs/supported.html" 
+  
+   target="_blank" rel="noreferrer noopener" 
+>Supported TeX Functions</a>
 
+</p>
+<h3 id="examples">Examples<a class="anchor" href="#examples">#</a></h3>
+<p>Inline math: $$ \varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887… $$</p>
+<p>Block math:</p>
+<p>$$
+\sigma(t) = \cfrac{1}{1 + e^{-t}}
+$$</p>
 
+              
+                  
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
               
           </article>
           
@@ -126,30 +166,21 @@
 <ul class="tags__list">
     
     <li class="tag__item">
-        <a class="tag__link" href="https://curieuxjy.github.io/tags/neuroscientific/">neuroscientific</a>
-    </li>
-    <li class="tag__item">
-        <a class="tag__link" href="https://curieuxjy.github.io/tags/deepmind/">deepmind</a>
-    </li>
-    <li class="tag__item">
-        <a class="tag__link" href="https://curieuxjy.github.io/tags/rl/">rl</a>
-    </li>
-    <li class="tag__item">
-        <a class="tag__link" href="https://curieuxjy.github.io/tags/paper_review/">paper_review</a>
+        <a class="tag__link" href="https://curieuxjy.github.io/tags/math/">math</a>
     </li></ul>
 
  <div class="pagination">
   
-    <a class="pagination__item" href="https://curieuxjy.github.io/rl/rl-paper-review-1/">
+    <a class="pagination__item" href="https://curieuxjy.github.io/examples/rich-text/">
         <span class="pagination__label">Previous Post</span>
-        <span class="pagination__title">Learning Agile Robotic Locomotion Skills by Imitating Animals</span>
+        <span class="pagination__title">Rich Content</span>
     </a>
   
 
   
-    <a class="pagination__item" href="https://curieuxjy.github.io/rl/rl-blog-post-1/">
+    <a class="pagination__item" href="https://curieuxjy.github.io/examples/markdown-syntax-guide/">
       <span class="pagination__label">Next Post</span>
-      <span class="pagination__title" >An Optimistic Perspective on Offline Reinforcement Learning</span>
+      <span class="pagination__title" >Markdown Syntax Guide</span>
     </a>
   
 </div>
@@ -223,11 +254,6 @@
           </div>
       </div>
       
-      <div class="toc-container">
-          
-        <nav id="TableOfContents"></nav>
-      </div>
-      
     </div>
     
 
@@ -245,8 +271,6 @@
   <script src="https://unpkg.com/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js"
     data-autoloader-path="https://unpkg.com/prismjs@1.20.0/components/"></script>
 
-  
-    <script src="/js/table-of-contents.js"></script>
   
 
 
