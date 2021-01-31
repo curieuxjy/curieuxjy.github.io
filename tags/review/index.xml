@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mldls on Jungyeon</title>
-    <link>https://curieuxjy.github.io/mldl/</link>
-    <description>Recent content in Mldls on Jungyeon</description>
+    <title>review on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/review/</link>
+    <description>Recent content in review on Jungyeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Sun, 31 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/mldl/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/review/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Machine Learning using Python: Theory and Application</title>
       <link>https://curieuxjy.github.io/mldl/ml-tu-berlin-2021/</link>
@@ -16,18 +16,6 @@
       <guid>https://curieuxjy.github.io/mldl/ml-tu-berlin-2021/</guid>
       <description>Machine Learning using Python: Theory and Application TU Berlin Winter University Online 2021 사실 ML/DL 카테고리에는 공부내용만 적을려고 했으나 관련 수업을 들은 후기도 여기에 정리하면 좋을 것 같아 여기에 분류했다. 후에 수업에서 배운 내용들도 차근차근히 정리해볼 예정이다.
 수업 신청하게 된 계기와 과정(Before the course) 학교에서 지원해주는 교환학생이라던가 해외 협업 수업은 언제나 하고 싶었지만 항상 발목을 잡은 건 영어였던 것 같다. 영어..읽고 쓰는 것도 좋아하고 듣는 것도 다 알아듣진 못해도 어느정도는 되는데 항상 &amp;lsquo;말하기&amp;rsquo;가 문제였다.</description>
-    </item>
-    
-    <item>
-      <title>Object detection with Custom data</title>
-      <link>https://curieuxjy.github.io/mldl/object-detection-with-custom-data/</link>
-      <pubDate>Thu, 16 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://curieuxjy.github.io/mldl/object-detection-with-custom-data/</guid>
-      <description>참고한 post에 있는 순서대로 대부분 따라하지만 문제가 있는 부분을 수정해가며 따라했다.
-Anaconda virtual env 참고한 reference가 tensorflow 1.x 버전으로 호환이 되기 때문에 가상환경을 만들어서 진행하기로 했다.
-conda create -n automobile tensorflow==1.15.0
- Reference(thanks to)   How to train an object detection model easy for free  Tensorflow : ckpt, pbtxt, pb 생성 이후 freeze까지  </description>
     </item>
     
   </channel>

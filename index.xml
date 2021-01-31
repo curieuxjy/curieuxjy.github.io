@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Sun, 03 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Machine Learning using Python: Theory and Application</title>
+      <link>https://curieuxjy.github.io/mldl/ml-tu-berlin-2021/</link>
+      <pubDate>Sun, 31 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/mldl/ml-tu-berlin-2021/</guid>
+      <description>Machine Learning using Python: Theory and Application TU Berlin Winter University Online 2021 사실 ML/DL 카테고리에는 공부내용만 적을려고 했으나 관련 수업을 들은 후기도 여기에 정리하면 좋을 것 같아 여기에 분류했다. 후에 수업에서 배운 내용들도 차근차근히 정리해볼 예정이다.
+수업 신청하게 된 계기와 과정(Before the course) 학교에서 지원해주는 교환학생이라던가 해외 협업 수업은 언제나 하고 싶었지만 항상 발목을 잡은 건 영어였던 것 같다. 영어..읽고 쓰는 것도 좋아하고 듣는 것도 다 알아듣진 못해도 어느정도는 되는데 항상 &amp;lsquo;말하기&amp;rsquo;가 문제였다.</description>
+    </item>
+    
     <item>
       <title>반오십이 된 2021 맞이하기</title>
       <link>https://curieuxjy.github.io/secret/hello2021/</link>
@@ -16,7 +26,7 @@
       <guid>https://curieuxjy.github.io/secret/hello2021/</guid>
       <description>2021에 이루고 싶은 일들, 하고 싶은 일들, 바라는 일들, 2021 회고록을 쓰면서 &amp;ldquo;그땐 이런 생각을 하며 살려고 노력했었구나&amp;rdquo; 할 만한 이야기를 적어보자.
 해야하는/하고싶은 공부 구체적인 실천 목표들은 다이어리에 적고 여기에는 크게 대략적인 목표지점들을 적어보려고 한다.
-영어 이젠 피하고 싶다는 생각보다는 해내야만 한다는 생각이 더 크다. 다른 공부들도 그렇지만 영어야 말로 이제는 OUPUT을 내야하기 때문에 간절함이 더 커졌다.
+영어 이젠 피하고 싶다는 생각보다는 해내야만 한다는 생각이 더 크다. 다른 공부들도 그렇지만 영어야 말로 이제는 output을 내야하기 때문에 간절함이 더 커졌다.
  영어루틴 토플 90점 이상 외국인 친구 만들기  RL 아직도 잘 모르겠지만 아직도 내 호기심을 자극시키는 분야라 계속 공부하고 싶다.</description>
     </item>
     
