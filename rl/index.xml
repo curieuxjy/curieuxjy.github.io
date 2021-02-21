@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Thu, 24 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/rl/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/rl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Offline RL</title>
+      <link>https://curieuxjy.github.io/rl/rl-study-offline/</link>
+      <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-study-offline/</guid>
+      <description>도대체 offline rl이 무엇인가?
+An Optimistic Perspective on Offline Reinforcement LearningOffline Reinforcement Learning Workshop→ Papers</description>
+    </item>
+    
     <item>
       <title>An Optimistic Perspective on Offline Reinforcement Learning</title>
       <link>https://curieuxjy.github.io/rl/rl-blog-post-1/</link>

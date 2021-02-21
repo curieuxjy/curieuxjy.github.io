@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>offline-rl on Jungyeon</title>
+    <link>https://curieuxjy.github.io/tags/offline-rl/</link>
+    <description>Recent content in offline-rl on Jungyeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://curieuxjy.github.io/tags/offline-rl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Offline RL</title>
+      <link>https://curieuxjy.github.io/rl/rl-study-offline/</link>
+      <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://curieuxjy.github.io/rl/rl-study-offline/</guid>
+      <description>도대체 offline rl이 무엇인가?
+An Optimistic Perspective on Offline Reinforcement LearningOffline Reinforcement Learning Workshop→ Papers</description>
+    </item>
+    
+  </channel>
+</rss>
