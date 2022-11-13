@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-06-10">
+<meta name="description" content="Learning Structured Policy with Graph Neural Networks">
+
+<title>Jung Yeon - 📃NerveNet</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#nervenet" id="toc-nervenet" class="nav-link" data-scroll-target="#nervenet">NerveNet</a>
+  <ul class="collapse">
+  <li><a href="#graph-construction" id="toc-graph-construction" class="nav-link" data-scroll-target="#graph-construction">Graph Construction</a></li>
+  <li><a href="#nervenet-as-policy" id="toc-nervenet-as-policy" class="nav-link" data-scroll-target="#nervenet-as-policy">NerveNet as Policy</a>
+  <ul class="collapse">
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">0. Notation</a></li>
+  <li><a href="#input-model" id="toc-input-model" class="nav-link" data-scroll-target="#input-model">1. Input model</a></li>
+  <li><a href="#propagation-model" id="toc-propagation-model" class="nav-link" data-scroll-target="#propagation-model">2. Propagation model</a></li>
+  <li><a href="#output-model" id="toc-output-model" class="nav-link" data-scroll-target="#output-model">3. Output model</a></li>
+  </ul></li>
+  <li><a href="#learning-algorithm" id="toc-learning-algorithm" class="nav-link" data-scroll-target="#learning-algorithm">Learning Algorithm</a></li>
+  </ul></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments">Experiments</a>
+  <ul class="collapse">
+  <li><a href="#comparison-on-standard-benchmarks-of-mujoco" id="toc-comparison-on-standard-benchmarks-of-mujoco" class="nav-link" data-scroll-target="#comparison-on-standard-benchmarks-of-mujoco">1. Comparison on standard benchmarks of MuJoCo</a></li>
+  <li><a href="#structure-transfer-learning" id="toc-structure-transfer-learning" class="nav-link" data-scroll-target="#structure-transfer-learning">2. Structure transfer learning</a></li>
+  <li><a href="#multi-task-learning" id="toc-multi-task-learning" class="nav-link" data-scroll-target="#multi-task-learning">3. Multi-task learning</a></li>
+  <li><a href="#robustness-of-learnt-policies" id="toc-robustness-of-learnt-policies" class="nav-link" data-scroll-target="#robustness-of-learnt-policies">4. Robustness of learnt policies</a></li>
+  <li><a href="#interpreting-the-learned-representations" id="toc-interpreting-the-learned-representations" class="nav-link" data-scroll-target="#interpreting-the-learned-representations">5. Interpreting the learned representations</a></li>
+  <li><a href="#comparison-of-model-variants" id="toc-comparison-of-model-variants" class="nav-link" data-scroll-target="#comparison-of-model-variants">6. Comparison of model variants</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃NerveNet</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">gnn</div>
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">paper review</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Learning Structured Policy with Graph Neural Networks
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 10, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<blockquote class="blockquote">
+<p>We address the problem of learning <code>structured policies</code> for <code>continuous</code> control. In traditional reinforcement learning, policies of agents are learned by multi-layer perceptrons (MLPs) which take the concatenation of all observations from the environment as input for predicting actions. In this work, we propose <code>NerveNet</code> to <code>explicitly model the structure of an agent</code>, which naturally takes the form of <code>a graph</code>. Specifically, serving as the agent’s <code>policy network</code>, NerveNet <code>first propagates information over the structure of the agent</code> and then <code>predict actions for different parts of the agent</code>. In the experiments, we first show that our NerveNet is comparable to state-of-the-art methods on standard MuJoCo environments. We further propose our customized reinforcement learning environments for benchmarking two types of structure <code>transfer learning tasks</code>, i.e., size and disability transfer, as well as <code>multi-task learning</code>. We demonstrate that policies learned by NerveNet are significantly more transferable and generalizable than policies learned by other models and are able to transfer even in a <code>zero-shot setting</code>.</p>
+</blockquote>
+<p>보통 강화학습에서 agent들의 policy는 multi-layer perceptrons (MLPs)으로 네트워크를 만들기 때문에 agent가 environment에서 받은 observation들을 단순히 쌓아서(concatenation) policy network에 입력으로 들어가게 된다. 하지만 <code>손의 속도 정보</code>와 <code>발의 속도 정보</code>가 같은 <code>속도</code> 범주이지만 <code>위치가 다르기 때문에</code> 구분이 있을 수 있듯이 agent의 이런 구조적인 특성을 반영해서 policy를 만든다면 observation 정보들간의 구분을 할 수 있을 것이다. 이런 agent의 구조적 관계성을 나타내기 위해서 MLP대신 그래프를 활용하게 되었고 NerveNet을 고안하게 되었다. NerveNet은 그래프 구조로 되어 있는 policy network에서 각 노드들의 정보들이 전파(propagation)되며 agent의 부분들을 나타내는 노드마다 action을 prediction 하게 된다. MuJoCo 환경에서 MLP 기반의 벤치마크들과 비등한 학습결과를 보여주었으며, <code>transfer learning task</code>로 agent의 크기(size)와 agent의 일부 파트가 작동하지 않는(disability) variation을 주었을 때도 잘 학습되었으며 <code>multi-task learning</code>으로 walker 그룹의 다양한 환경에서의 학습 결과들도 좋았다. 이런 결과들을 통해 NerveNet이 <code>transferable</code>할 뿐만 아니라 <code>zero-shot setting</code>도 가능함을 보여주었다.</p>
+<ul>
+<li><code>transferable</code> - A task를 학습한 네트워크(weights)를 활용하여 B task 학습에도 적용하여 scratch에서 B task를 학습하는 것보다 더 빠르고 효율적인 학습을 가능하게 할 수 있다는 의미. A task 학습에서 습득한 논리체계를 B task에도 적용할 수 있음으로 볼 수 있다.</li>
+<li><a href="https://en.wikipedia.org/wiki/Zero-shot_learning"><code>zero-shot</code></a> - Meta learning에서 사용되는 용어로 A task에 대해서 학습된 네트워크가 fine tuning이 없이 바로 <strong>unseen</strong> new task B에 대해서 좋은 성능을 내는 것을 의미.</li>
+</ul>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>많은 강화학습 문제들에서 agent들은 여러개의 독립적인 controller들로 구성되어 있다. 예를들어 로봇의 제어에서 강화학습이 많이 적용되고 있는데, 로봇은 여러개의 링크(link)들과 조인트(joint)들로 이루어져 있고 움직임이 일어나는 joint들을 각 개별적인 controller로 볼 수 있다. 이때 link는 로봇의 물리적인 형태를 구성하는 뼈대처럼 생각하면 되고 joint는 로봇의 모션을 결정하는 관절로 생각할 수 있다.(보통 회전이 가능한 revolute joint를 사용한다.) 로봇은 <code>link-joint-link- ... -joint-link</code>와 같이 link와 joint가 체인처럼 연결되어서 구성되는데, 각 link와 joint의 움직임은 자신의 상태에만 의존하는 것이 아니라 연결된 주변 link와 joint들에게서도 영향을 받을 수 밖에 없다. 로봇을 움직이도록 <code>제어</code>를 한다는 것은 바로 모션을 만드는 <code>joint의 움직임을 결정</code>하는 것이다. 따라서 robot agent는 강화학습에서의 action을 joint을 제어하는 것으로 생각할 수 있고 action으로 로봇의 joint의 각도를 바꿔가며 로봇을 움직이게 된다.</p>
+<p>보통 강화학습에서 agent의 policy는 MLP로 구성한다. MLP기반의 policy는 가장 단순한 네트워크 구조로 input으로 agent가 얻는 observation 정보를 <code>concatenation</code>해서 넣어주게 된다. 다시 로봇 agent의 예시로 돌아가서 생각해보면, agent가 observation으로 사용하는 정보로는 각 joint의 회전각도, 회전 각속도, 위치 정보등 다양한 종류의 정보들이 있고 이 다양한 정보들은 각 joint로부터 얻게 되므로 <code>각 joint에서 얻을 수 있는 정보 x joint의 수</code> 가 보통 observation의 차원 수가 된다. 로봇의 joint가 많아질 수록 차원이 배로 커지게 되고 이런 여러 정보들을 단순히 concatenate해서 policy 네트워크에 넣어주는 것은 더 많은 training time을 요구하게 되고 더 많은 환경과 agent 간의 interaction 과정이 필요하게 된다. 따라서 본 논문에서는 agent가 가지고 있는 (link와 joint로 이루어진) 구조적인 특성을 이용해서 policy를 그래프로 만들어 observation을 넣어주고 학습을 하는 것을 제안하게 된다.</p>
+<p>로봇이나 동물들의 신체적인 구조를 보면 그래프 구조와 유사하다. 위에서 설명한 link와 joint의 체인과 같은 연결성은 <code>Graph Neural Network</code>를 적용하기에 좋다. 그래서 NerveNet에서 정보들의 propagation은 이런 그래프 구조를 기반으로 일어나게 되고 agent의 body정보를 여러 다른 파트들을 그래프의 node와 edge로 정의하면서 움직임이 일어나는 body node들의 action을 결정하게 된다.</p>
+</section>
+<section id="nervenet" class="level1">
+<h1>NerveNet</h1>
+<p>우선 강화학습의 Notation을 정리해보면, 본 논문에서는 locomotion control problem들을 목표로 잡았기 때문에 <code>infinite-horizon discounted Markov decision process (MDP)</code> 로 설정했다. 보통 <code>continuous</code>한 제어 문제에서는 시간 할인율을 고려한 무한 시간 스텝을 가지고 MDP를 구성하게 된다(실제로는 max step을 설정하긴하나 매우 큰 수로 잡는다).</p>
+<p>state 혹은 observation space로 <span class="math inline">S</span> , action space로 <span class="math inline">A</span>, stochastic policy <span class="math inline">\pi_{\theta}\left(a^{\tau} \mid s^{\tau}\right)</span> 는 파라미터 <span class="math inline">\theta</span>를 가지고 현재 상태 <span class="math inline">s</span>를 기반으로 <span class="math inline">a</span>를 만들게 된다. 이렇게 나온 agent의 <span class="math inline">a</span>와 <span class="math inline">s</span>를 가지고 환경에서는 reward <span class="math inline">r\left(s^{\tau}, a^{\tau}\right)</span> 를 주게 되고 agent는 이렇게 받는 reward를 최대화하는 방법을 학습하게 된다.</p>
+<p>이러한 MDP 구성은 기본적인 강화학습의 Notation에서 크게 벗어나지 않는다.</p>
+<section id="graph-construction" class="level2">
+<h2 class="anchored" data-anchor-id="graph-construction">Graph Construction</h2>
+<p>본 논문에서는 사용한 MuJoCo의 agent들은 이미 구조적으로 tree 구조를 가지고 있다. NerveNet의 핵심 아이디어인 그래프를 구성하기 위해 <code>body</code>와 <code>joint</code>, <code>root</code>라는 3가지 종류의 노드를 설정했다. <code>body</code> 노드는 로봇공학에서 말하는 link 기준의 좌표시스템을 나타내는 노드이고, <code>joint</code> 노드는 모션의 자유도(freedom of motion)을 나타내며 2개의 body 노드들을 연결해주는 노드이다.</p>
+<p>아래는 <code>Ant</code> 환경의 예시인데, 한 가지 그림에서 헷갈리지 말아야 할 점은 그림에서는 마치 <code>body</code>와 <code>root</code> 노드만 노드로 만든것 처럼 보이지만 root와 body, body와 body를 연결하는 엣지들도 실제로는 <code>joint</code> 노드들이다.(<em>we omit the joint nodes and use edges to represent the physical connections of joint nodes</em>.)<code>root</code>라는 노드는 agent의 추가적인 정보들을 담을 부분으로 사용하기 위해 추가한 노드 종류로, 예를 들어 agent가 도달해야 하는 target position에 대한 정보 등이 담겨있다.</p>
+<p><img src="https://i.imgur.com/pjCrsxt.png?1" class="img-fluid"></p>
+</section>
+<section id="nervenet-as-policy" class="level2">
+<h2 class="anchored" data-anchor-id="nervenet-as-policy">NerveNet as Policy</h2>
+<p>크게 3가지 파트로 NerveNet을 살펴볼 것인데 우선 (0) <code>Notation</code>을 보고 난뒤, (1) <code>Input model</code> (2) <code>Propagation model</code> (3) <code>Output model</code> 순으로 살펴볼 예정이다.</p>
+<section id="notation" class="level3">
+<h3 class="anchored" data-anchor-id="notation">0. Notation</h3>
+<p>그래프에서의 노테이션은 다음과 같이 <span class="math inline">G</span> 라는 그래프는 노드 집합 <span class="math inline">V</span>와 엣지 집합 <span class="math inline">E</span>로 구성된다.</p>
+<p><span class="math display">
+G=(V, E)
+</span></p>
+<p>Nervenet policy를 구성하는 그래프는 <code>Directed graph(유향 그래프)</code>이기 때문에 각 노드에서의 <code>in</code>과 <code>out</code>이 따로 명시되게 된다.</p>
+<ul>
+<li>노드 <span class="math inline">u</span>를 중심으로 노드 <span class="math inline">u</span>로 들어오는 이웃 노드이면 <span class="math inline">\mathcal{N}_{in}(u)</span></li>
+<li>노드 <span class="math inline">u</span>를 중심으로 노드 <span class="math inline">u</span>에서 나가는 이웃 노드이면 <span class="math inline">\mathcal{N}_{out}(u)</span></li>
+</ul>
+<p>그래프의 모든 노드 <span class="math inline">u</span>는 타입을 가지게 되고 이를 <span class="math inline">p_{u} \in\{1,2, \ldots, P\}</span> (associated note type)로 나타내며 여기에서는 위에 설명한 것과 같이 <code>body</code>, <code>joint</code>, <code>root</code> 3가지 타입이 있다.</p>
+<p>노드들 뿐만 아니라 엣지들도 타입을 정할 수 있는데 <span class="math inline">c_{(u, v)} \in\{1,2, \ldots, C\}</span> (associate each edge)로 표기하여 노드쌍 <span class="math inline">(u, v)</span> 사이의 엣지 타입을 정의할 수 있다.(하나의 엣지에 대해서 여러 엣지 타입을 정의할 수 있지만 여기에서는 심플 이즈 더 베스트 철학으로 하나의 엣지는 하나의 타입만 가지도록 했다)</p>
+<p>이렇게 노드별, 엣지별 타입을 나눔으로써,</p>
+<ul>
+<li><code>노드 타입</code>은 노드들간의 다른 중요도를 파악하는데 도움이 되고</li>
+<li><code>엣지 타입</code>은 노드들간의 서로다른 관계들을 나타내고 이 관계의 종류에 따라 정보를 다르게 propagation 하게 된다.</li>
+</ul>
+<p>이제 시간 노테이션에 대한 부분을 살펴보자. NerveNet에는 시간(time step)의 개념이 2가지 존재한다.</p>
+<ol type="1">
+<li>기존 강화학습에서 환경과 agent 사이의 interaction time step을 나타내는 <span class="math inline">\tau</span></li>
+<li>NerveNet의 내부 graph policy에서의 propagation step을 나타내는 <span class="math inline">t</span></li>
+</ol>
+<p>다시 풀어서 생각해보면, 강화학습의 시간 개념 <strong><span class="math inline">\tau</span> 스텝</strong>에서 환경으로부터 observation을 받고, 받은 observation을 기반으로 <strong><span class="math inline">t</span> 스텝</strong>동안 NerveNet의 내부의 그래프의 propagation이 일어난다.</p>
+</section>
+<section id="input-model" class="level3">
+<h3 class="anchored" data-anchor-id="input-model">1. Input model</h3>
+<p>위에서 말했듯이 환경과 상호작용으로 observation <span class="math inline">s^{\tau} \in \mathcal{S}</span>을 받게 된다(time step <span class="math inline">\tau</span>). 이 <span class="math inline">s^{\tau}</span>는 concatenation된 각 노드의 observation이라고 볼 수 있다. 이제 강화학습 interaction 수준의 <span class="math inline">\tau</span> 스텝은 잠시 멈춰두고 그래프 내부의 타임 스텝인 <span class="math inline">t</span> 수준에서 생각해보자. observation은 node <span class="math inline">u</span>에 해당하는 <span class="math inline">x_{u}</span>로 표현할 수 있고 <span class="math inline">x_{u}</span>는 input network <span class="math inline">F_{\mathrm{in}}</span>(MLP)를 거쳐서 고정된 크기의 state vector인 <span class="math inline">h_{u}^{0}</span>가 된다. <span class="math inline">h_{u}^{0}</span>의 노테이션을 풀어서 해석하면 노드 <code>u</code>의 propagation step <code>0</code> 에서의 state vector인 것이다. 이때 observation vector <span class="math inline">x_{u}</span>가 노드마다 크기가 다를 경우 zero padding으로 맞춰서 input network에 넣어주게 된다.</p>
+<p><span class="math display">
+h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
+</span></p>
+</section>
+<section id="propagation-model" class="level3">
+<h3 class="anchored" data-anchor-id="propagation-model">2. Propagation model</h3>
+<p>NerveNet의 propagation 과정 노드들 간에 주고 받는 정보를 <code>message</code>라고 하게 되고 이는 노드들 간에 주고 받는 상호작용이라고 생각할 수 있다. Propagation model은 3가지 단계로 나누어서 볼 수 있다.</p>
+<ol type="1">
+<li>Message Computation
+<ul>
+<li><p>전달할 메세지를 계산한다.</p></li>
+<li><p>propagation step인 <span class="math inline">t</span>에, 모든 노드들 <span class="math inline">u</span>에서 state vector <span class="math inline">h_{u}^{t}</span>를 정의할 수 있다.</p></li>
+<li><p>노드 <span class="math inline">u</span>로 모아지는(in-coming) 모든 엣지들을 가지고 메시지를 구하게 되는데, 이때 <span class="math inline">M</span>은 MLP이고 M의 아래첨자 <span class="math inline">c_{(u, v)}</span> 노테이션에서 알 수 있듯이 같은 종류의 엣지에 대해서는 같은 message function <span class="math inline">M</span>을 쓴다.</p>
+<p><span class="math display">
+  m_{(u, v)}^{t}=M_{c_{(u, v)}}\left(h_{u}^{t}\right)
+  </span></p></li>
+<li><p>예를 들어 아래 그림은 <code>CentipedeEight</code> 의 모습인데, 왼쪽은 실제 agent의 모습을 나타내고 있으며 오른쪽은 agent를 그래프로 나타냈을 때의 모습이다. 여기에서 2번째 torso에서 첫번째 세번째 torso에서 보낼 때 같은 메세지 펑션 <span class="math inline">M_{1}</span> 을 사용하고, LeftHip과 RightHip으로 보내는 메세지 펑션 <span class="math inline">M_{2}</span>를 사용하게 되는 것이다.</p>
+<p><img src="https://i.imgur.com/QFOY9VH.png" class="img-fluid"></p></li>
+</ul></li>
+<li>Message Aggregation
+<ul>
+<li><p>앞 단계에서 모든 노드들에 대해서 메세지 계산이 끝난 후에 in-coming 이웃 노드들로부터 온(계산된) 메세지를 모으게 된다. 이때 summation, average, max-pooling 등 다양한 aggregation 함수를 사용할 수 있다.</p>
+<p><span class="math display">
+  \bar{m}_{u}^{t}=A\left(\left\{h_{v}^{t} \mid v \in \mathcal{N}_{i n}(u)\right\}\right)
+  </span></p></li>
+</ul></li>
+<li>States Update
+<ul>
+<li><p>이제 모은 메세지를 기반으로 state vector를 업데이트 하면 된다!</p>
+<p><span class="math display">
+  h_{u}^{t+1}=U_{p_{u}}\left(h_{u}^{t}, \bar{m}_{u}^{t}\right)
+  </span></p></li>
+<li><p>여기서 업데이트 함수 <span class="math inline">U</span> 는 a gated recurrent unit (GRU), a long short term memory (LSTM) unit 또는 MLP가 될 수 있다.</p></li>
+<li><p>Update function의 아래첨자 <span class="math inline">p_{u}</span>에서 볼 수 있다시피 같은 노드 타입이면 같은 update function <span class="math inline">U</span>를 쓰게 된다. 이렇게 업데이트된 state vector는 타임 스텝 <span class="math inline">t</span>가 하나 올라간 <span class="math inline">t+1</span> 이 된 <span class="math inline">h_{u}^{t+1}</span>가 된다.</p></li>
+</ul></li>
+</ol>
+<p>이렇게 내부 propagation 과정 3단계(Message Computation, Message Aggregation, States Update)가 <span class="math inline">T</span> 스텝동안 일어나게 되고 각 노드의 최종 state vector는 <span class="math inline">h_{u}^{T}</span> 가 된다.</p>
+</section>
+<section id="output-model" class="level3">
+<h3 class="anchored" data-anchor-id="output-model">3. Output model</h3>
+<p>전형적인 RL의 MLP 폴리시에서는 네트워크에서 각 action의 gaussian distribution의 mean을 뽑아내게 된다. std는 trainable한 벡터이다. NerveNet에서도 std는 비슷하게 다루지만 <code>각 노드에 마다</code> action prediction을 만들게 된다.</p>
+<p>actuator와 연결되어 있는 노드들의 집합을 <span class="math inline">O</span>라고 하자. 이 집합에 있는 노드들의 최종 state vector <span class="math inline">h_{u \in \mathcal{O}}^{T}</span>는 MLP인 Ouput model <span class="math inline">O_{q_{u}}</span>에 인풋으로 들어가게 되고 아웃풋으로 각 actuator의 action distribution인 gaussian distribution의 mean <span class="math inline">\mu</span>을 출력하게 된다. 여기에서 새로운 노테이션 <span class="math inline">q_{u}</span>를 볼 수 있는데 <span class="math inline">q_{u}</span>는 아웃풋 타입, 즉 아웃풋을 내놓는 노드 <span class="math inline">u</span>의 타입으로 아웃풋 펑션의 아래첨자에 <span class="math inline">q_{u}</span>에 따라 아웃풋 노드의 타입이 같으면 Output function을 공유할 수 있다. 다시말해 아웃풋 노드 타입에 따라 컨트롤러를 공유할 수도 있는 것이다. 위의 Centipedes의 예시로 보면, 같은 LeftHip 끼리는 컨트롤러를 공유할 수 있다는 것이다.</p>
+<p><span class="math display">
+\mu_{u \in \mathcal{O}}=O_{q_{u}}\left(h_{u}^{T}\right)
+</span></p>
+<p>논문에서 실제로 실험을 해봤을 때 다른 타입의 컨트롤러들을 하나로 통합했더라도(<span class="math inline">O</span> function을 다 같은 MLP로 사용) 퍼포먼스가 그렇게 해쳐지지 않음을 확인할 수 있었다고 한다.</p>
+<p>여기까지해서 그래프 노테이션을 빌려 그래프 기반 가우시안 stochastic policy를 나타내면 아래의 수식과 같다.</p>
+<p><span class="math display">
+\pi_{\theta}\left(a^{\tau} \mid s^{\tau}\right)=\prod_{u \in \mathcal{O}} \pi_{\theta, u}\left(a_{u}^{\tau} \mid s^{\tau}\right)=\prod_{u \in \mathcal{O}} \frac{1}{\sqrt{2 \pi \sigma_{u}^{2}}} e^{\left(a_{u}^{\tau}-\mu_{u}\right)^{2} /\left(2 \sigma_{u}^{2}\right)}
+</span></p>
+<hr>
+<p>여기까지 NerveNet의 각 단계를 <code>Walker-Ostrich</code> 환경에서 예시로 한눈에 보기 쉽게 정리한 그림은 아래와 같다.</p>
+<p><img src="https://i.imgur.com/lnrF2Pb.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="learning-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="learning-algorithm">Learning Algorithm</h2>
+<p>이전 파트에서 NerveNet의 내부에서 propagation 스텝 <span class="math inline">t</span> 단위에서 각 단계들을 자세히 살펴보았다면 이제 강화학습 타임 스텝 <span class="math inline">\tau</span> 단위에서 학습의 목적함수와 알고리즘을 살펴보자. 목적함수는 전형적인 RL과 다른 점이 없이 policy의 파라미터 <span class="math inline">\theta</span>를 가지고 Return 값을 maximization하는 것으로 한다.</p>
+<p><span class="math display">
+J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\tau}, a^{\tau}\right)\right]
+</span></p>
+<p>강화학습 알고리즘으로는 <a href="https://arxiv.org/abs/1707.06347"><code>PPO</code></a>과 <a href="https://arxiv.org/abs/1506.02438"><code>GAE</code></a>를 사용했으며 해당 알고리즘들의 내용은 각각 알고리즘들의 원래 수식과 내용들과 상이한 점이 없으므로 각 논문으 참고하면 되기 때문에 이번 논문 리뷰에서는 생략한다.</p>
+<p>PPO와 GAE 알고리즘을 참고하여 위의 목적함수 <span class="math inline">J</span>를 정리하면 NerveNet의 목적함수는 다음과 같다.</p>
+<p><span class="math display">
+\begin{aligned}
+\tilde{J}(\theta)=&amp; J(\theta)-\beta L_{K L}(\theta)-\alpha L_{V}(\theta) \\
+=&amp; \mathbb{E}_{\pi_{\theta}}\left[\sum_{\tau=0}^{\infty} \min \left(\hat{A}^{\tau} r^{\tau}(\theta), \hat{A}^{\tau} \operatorname{clip}\left(r^{\tau}(\theta), 1-\epsilon, 1+\epsilon\right)\right)\right] \\
+&amp;-\beta \mathbb{E}_{\pi_{\theta}}\left[\sum_{\tau=0}^{\infty} \operatorname{KL}\left[\pi_{\theta}\left(: \mid s^{\tau}\right) \mid \pi_{\theta_{o l d}}\left(: \mid s^{\tau}\right)\right]\right]-\alpha \mathbb{E}_{\pi_{\theta}}\left[\sum_{\tau=0}^{\infty}\left(V_{\theta}\left(s^{\tau}\right)-V\left(s^{\tau}\right)^{\operatorname{target}}\right)^{2}\right]
+\end{aligned}
+</span></p>
+<p>위의 수식에서 볼 수 있는 <code>value network V를 어떻게 디자인할 것인지</code>가 이번 논문의 다른 포인트로 볼 수 있다. 논문의 기본 아이디어는 policy network를 그래프로 표현하는 것이고, value network는 어떻게 할지 여러 선택지들이 남아있다. 그래서 본 논문에서는 value network의 디자인을 두고 크게 3가지 NerveNet의 변형 알고리즘들을 실험해보았다.</p>
+<ol type="1">
+<li><p><strong>NerveNet-MLP</strong> : policy network를 1개의 GNN으로 구성하고 <code>value network는 MLP로</code> 구성</p></li>
+<li><p><strong>NerveNet-2</strong> : policy network를 1개의 GNN으로 구성하고 <code>value network는 또 다른 GNN으로</code> 구성(총 GNN 2개 - <em>without sharing the parameters of the two GNNs</em>)</p></li>
+<li><p><strong>NerveNet-1</strong> : <code>policy network와 value network 모두 1개의 GNN으로</code> 구성(총 GNN 1개)</p></li>
+</ol>
+</section>
+</section>
+<section id="experiments" class="level1">
+<h1>Experiments</h1>
+<p>먼저 MuJoCo 시뮬레이터에서 NerveNet의 효과를 확인하고 일부 커스텀한 환경들에서 NerveNet의 transferable과 multi-task learning 능력을 확인한다.</p>
+<section id="comparison-on-standard-benchmarks-of-mujoco" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-on-standard-benchmarks-of-mujoco">1. Comparison on standard benchmarks of MuJoCo</h2>
+<ul>
+<li>비교군으로 <code>MLP</code>, <code>TreeNet(모든 노드들이 연결 되어 있는 그래프, depth 1)</code>을 사용</li>
+<li>총 8개의 환경에서 실험 - <code>Reacher, InvertedPendulum, InvertedDoublePendulum, Swimmer, HalfCheetah, Hopper, Walker2d, Ant</code></li>
+<li>충분히 학습하는 스텝을 주기 위해서 1 million을 max로 둠</li>
+<li>하이퍼 파라미터의 경우 그리드 서치로 찾았으며(Appendix 참고) 각 알고리즘의 퍼포먼스를 측정할 때 3번의 run을 랜덤 시드를 바꿔가며 실행시킨 후 평균을 구해서 기록</li>
+<li>대부분의 환경에서 MLP가 잘됐고 NerveNet도 이와 비등한 퍼포먼스를 냈다.</li>
+</ul>
+<p>(3가지 케이스에 대한 learning curve, 다른 케이스들에서는 대체로 NerveNet과 MLP가 비슷했다.)</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>HalfCheetah</code></th>
+<th><code>InvertedDoublePendulum</code></th>
+<th><code>Swimmer</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://i.imgur.com/0Y8Nw6H.png?1" class="img-fluid"></td>
+<td><img src="https://i.imgur.com/BrvwJpQ.png?1" class="img-fluid"></td>
+<td><img src="https://i.imgur.com/dmDNN1q.png?1" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>MLP와 NerveNet이 비슷하고 TreeNet이 많이 안좋았음</td>
+<td>MLP가 좀더 좋은 결과를 냄</td>
+<td>NerveNet이 MLP보다 좋은 성능을 냄</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>대부분 환경들에서 <code>TreeNet</code>이 <code>NerveNet</code>보다 좋지 않았고 이를 통해서 물리적인 그래프 구조를 가져가는 것이 얼마나 중요한지 알 수 있다.</li>
+</ul>
+</section>
+<section id="structure-transfer-learning" class="level2">
+<h2 class="anchored" data-anchor-id="structure-transfer-learning">2. Structure transfer learning</h2>
+<ul>
+<li>MuJoCo의 환경 하나를 커스텀해서 <code>size</code>와 <code>disability</code>의 변화가 있을 때 transferable 함을 검증
+<ul>
+<li><code>size transfer</code> - 작은 사이즈의 그래프를 가진 agent를 학습 시킨 후 더 큰 사이즈의 그래프를 가진 agent로 transferable 한지</li>
+<li><code>disability transfer</code> - 모든 파트들이 정상작동하는 agent로 학습한 후 일부 파트들이 작동하지 않는 상황의 agent로 transferable 한지</li>
+</ul></li>
+<li>2개 종류의 환경을 커스텀하여 실험 - <code>centipede</code>와 <code>snake</code>
+<ol type="1">
+<li><p>centipede - 지네와 같이 생긴 agent로 torso body들이 여러개 체인처럼 연결 되어 있고 torso를 중심으로 양쪽에 다리가 1쌍으로 붙어 있다. 하나의 다리는 thigh와 shin으로 구성되어 있고 hinge actuator로 구현되어 있다. 커스텀은 다리의 갯수를 다양하게 해서 여러 커스텀 환경들을 만들었는데, 가장 짧은 agent로는 <code>CentipedeFour</code> 부터 가장 긴 agent로는 <code>CentipedeFourty</code> 로 다리가 40개까지(20쌍) 있는 환경을 만들수 있었다. disability로 일부 파트가 작동하지 않는 환경은 <code>Cp(Cripple)</code>로 따로 표기했다. 이 환경에서 y-direction으로 빨리 앞으로 가는게 목표다.</p></li>
+<li><p>snake - <code>swimmer</code> 환경을 기반으로 커스텀했으며 가장 빨리 진행방향으로 움직이는 게 목표다.</p>
+<p><img src="https://i.imgur.com/cKfht87.png" class="img-fluid"></p></li>
+</ol></li>
+<li>NerverNet과 비교군
+<ul>
+<li><code>NerveNet</code> : small agent가 학습한 모델을 바로 large agent에 적용할 수 있었다. agent의 구조가 반복적이기 때문에 반복되는 부분을 더 늘리기만 하면 되기 때문이다.</li>
+<li><code>MLP Pre-trained (MLPP)</code>: agent의 크기가 커짐에 따라 input size가 달라지므로 가장 straightforward하게 첫번째 hidden layer를 그대로 output layer로 사용하고 input layer의 사이즈만 키워서 추가하고 이 input layer는 랜덤 초기화를 해준다.</li>
+<li><code>MLP Activation Assigning (MLPAA)</code>: small agent의 weight들을 바로 large agent의 모델에 넣어주고 weight들의 남는 부분들을 0으로 초기화 해준다.</li>
+<li><code>TreeNet</code>: MLPAA처럼 스케일을 키워서 0으로 초기화 해준다.</li>
+<li><code>Random</code> : action space에서 uniformly하게 샘플링을 하는 policy이다.</li>
+</ul></li>
+<li>결과
+<ol type="1">
+<li><p>Centipede</p>
+<ol type="1">
+<li>Pretraining
+<ul>
+<li><p>6-다리 모델과 4-다리 모델로 <code>NerveNet</code>, <code>MLP</code>, <code>TreeNet</code> 에서의 퍼포먼스를 비교했다. 여기서 3개의 모델은 앞서 benchmark 비교 실험에서 사용한 비교군들과 동일하다.</p>
+<p><img src="https://i.imgur.com/M64FY71.png" class="img-fluid"></p></li>
+<li><p>4-다리 모델에서는 NerveNet이 가장 Reward가 높고, 6-다리 모델에서는 MLP가 가장 Reward가 높음을 알 수 있다. TreeNet은 두 환경 모두에서 가장 낮다.</p></li>
+<li><p>6-다리 모델과 4-다리 모델로 pretraining을 진행한 후 transferable을 실험했다.</p></li>
+</ul></li>
+<li>Zero-shot
+<ul>
+<li><p>fine tuning 없이 퍼포먼스를 측정했다.</p></li>
+<li><p>퍼포먼스를 쉽게 비교할 수 있도록 <code>average reward</code>와 <code>average running-length</code>를 normalization해서 색으로 아래와 같이 표현했다.(green-good, red-bad)</p>
+<p><img src="https://i.imgur.com/qAbGhpb.png" class="img-fluid"></p></li>
+<li><p>눈으로 확실히 확인할 수 있듯이 NerveNet의 퍼포먼스가 다른 비교군에 비해 월등히 transferable함을 알 수 있었다.</p></li>
+<li><p>또한 learning curve에서 볼 수 있듯이 NerveNet+Pretrain 이 다른 Pretrain 비교군들에 비해 훨씬 높은 reward 시작점에서 시작하고 더 적은 timestep으로 solved 점수에 도달하는 것을 보아 그래프의 구조적 이점을 확실히 활용하고 있음을 알 수 있다.</p>
+<p><img src="https://i.imgur.com/yU47fAC.png?1" class="img-fluid"></p></li>
+<li><p>NerveNet의 agent들은 다른 비교군 agent들에서 보이지 않는 <code>walk-cycle</code>을 가지고 있음을 확인할 수 있었는데, 이는 보행 로봇들은 걸음새에서 반복적인 움직임을 하게 되어 있기 때문에 자연스럽게 cycle을 가지게 되는 것을 agent가 학습했음을 알 수 있다. (반면 MLP는 8-다리 모델에서 모든 다리를 움직이지 않는 모습을 보이기도 했다.)</p></li>
+</ul></li>
+</ol></li>
+<li><p>Snake</p>
+<ul>
+<li>snake환경에서도 NerveNet이 다른 비교군들에 비해 뛰어난 reward 점수를 보여주며 transferable 함을 아래의 도표에서처럼 보여주었다.</li>
+<li>350점 정도가 <code>snakeThree</code>에서 solved된 상태라고 볼 수 있는데 NerveNet의 시작 점수들이 대부분 300점대에서 시작한 것으로 보아 이는 상당한 zero-shot 역량이 있음을 알 수 있다.</li>
+<li>다른 비교군들은 overfitting이 심해서 Random보다 안좋은 결과를 보여주는 점도 흥미롭다.</li>
+</ul>
+<p><img src="https://i.imgur.com/QvZG8di.png" class="img-fluid"></p>
+<ul>
+<li><p>zero-shot 뿐만 아니라 fine tuning을 하는 learning curve에서도 NerveNet은 Pretrain의 이점을 다른 비교군들에 비해 잘 활용하고 있음을 볼 수 있었다. <code>NerveNet+Pretrain</code>의 시작 reward가 높으며, 특정 size transfer 실험에서는 scratch NerveNet이 넘지 못한 MLP 점수를 <code>NerveNet+Pretrain</code>이 따라잡았다.</p>
+<p><img src="https://i.imgur.com/NLlKmqT.png?1" class="img-fluid"></p></li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="multi-task-learning" class="level2">
+<h2 class="anchored" data-anchor-id="multi-task-learning">3. Multi-task learning</h2>
+<p>NerveNet은 네트워크에 structure prior를 포함한 것이기 때문에 multi-task learning에 유리할 수 있다. 따라서 이를 실험하기 위해 <code>Walker</code> multi-task learning을 진행했다.</p>
+<ul>
+<li>2d-walker 환경들 5개 - <code>Walker-HalfHumanoid</code>, <code>Walker-Hopper</code>, <code>Walker-Horse</code>, <code>Walker-Ostrich, Walker-Wolf</code></li>
+<li>1개의 통합된 network로 학습</li>
+<li>NerveNet과 비교군
+<ul>
+<li><code>NerveNet</code> : agent들의 형태가 달라 weight들이 다를 수 밖에 없기 때문에 propagation과정에서의 weight matrices와 output만 공유했다.</li>
+<li><code>MLP Sharing</code> : hidden layer들 간의 weight matrices 를 공유</li>
+<li><code>MLP Aggregation</code> : 차원이 다른 observation들을 aggregation과정을 통해 첫번째 hidden layer의 크기로 다 맞춰주어서 input으로 넣어줌</li>
+<li><code>TreeNet</code>: TreeNet도 weight를 공유를 할 수 있지만 agent의 구조적인 정보는 알 수 없다. 단순히 root node를 중심으로 모든 노드의 정보다 aggregation 되기 때문이다.</li>
+<li><code>MLPs</code>: 각 agent마다 따로 MLP policy를 만들어서 학습(single-task)</li>
+</ul></li>
+<li>결과
+<ul>
+<li><p>multi-task learning 실험이기 때문에 한 두개 러닝 그래프만 볼 수 없고 5개의 러닝 그래프를 같이 봐야 한다.</p></li>
+<li><p>Single-task policy를 제외하고 모든 환경에서 NerveNet의 퍼포먼스가 좋음을 알 수 있다.</p>
+<p><img src="https://i.imgur.com/FpUeo5x.png" class="img-fluid"></p></li>
+<li><p>테이블에서 Ratio가 single-task policy에 비해 multi-task policy의 성능을 percentage로 나타낸 수치인데, MLP의 퍼포먼스가 single-task에서 multi-task로 넘어갔을 때 42%나 퍼포먼스가 줄어드는 것을 확인할 수 있다. (Average-58.6%) 반면에 NerveNet은 성능이 전혀 떨어지지 않는 결과를 보여주었다.</p>
+<p><img src="https://i.imgur.com/HMSZPgc.png?1" class="img-fluid"></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="robustness-of-learnt-policies" class="level2">
+<h2 class="anchored" data-anchor-id="robustness-of-learnt-policies">4. Robustness of learnt policies</h2>
+<p>강화학습 제어에서 robustness는 중요한 지표인데 질량이나 힘과 같은 물리적인 값들의 오차 범위가 어느정도까지 policy가 허용하고 잘 작동하는지를 확인해야 한다.</p>
+<ul>
+<li>5개의 Walker 그룹의 환경에서 실험</li>
+<li>pretrained agent를 가지고 agent의 질량과 joint의 strength을 변경한 뒤 퍼포먼스 측정</li>
+<li>대부분의 환경과 variation에서 NerveNet의 robustness가 MLP보다 좋음을 알 수 있다.</li>
+</ul>
+<p><img src="https://i.imgur.com/9Rcl54E.png?1" class="img-fluid"></p>
+</section>
+<section id="interpreting-the-learned-representations" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-learned-representations">5. Interpreting the learned representations</h2>
+<p>실제 폴리시들이 어떤 representation들을 학습했는지 알아보기 위해 <code>CentipedeEight</code> 환경에서 학습된 agent의 final state vector를 가지고 2D, 1D PCA를 진행했다.</p>
+<p>각 다리쌍들(Left Hip-Right Hip)들은 agent의 전체 몸체에서 각기 다른 위치에 있음에도 불구하고 invariant representation을 배울 수 있었음을 PCA를 통해서 알 수 있었다.</p>
+<p><img src="https://i.imgur.com/osZ7M6U.png?1" class="img-fluid"></p>
+<p>또한 앞서 Centipede transfer learning 실험 결과에서도 잠깐 언급했던 <code>walk-cycle</code>이 주기성이 뚜렷하게 보였다.</p>
+<p><img src="https://i.imgur.com/Aw80MM1.png" class="img-fluid"></p>
+</section>
+<section id="comparison-of-model-variants" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-of-model-variants">6. Comparison of model variants</h2>
+<p>Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 <code>Swimmer</code>, <code>Reacher</code>, <code>HalfCheetah</code>에서 비교해본 결과, Value Network는 MLP로 한 <code>NerveNet-MLP</code>의 퍼포먼스가 가장 좋았고 <code>NerveNet-1</code>의 퍼포먼스가 2등으로 <code>NerveNet-MLP</code> 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight <span class="math inline">\alpha</span>를 더 sensitive하게 만들기 때문이라고 추론할 수 있다.</p>
+<p><img src="https://i.imgur.com/W79cOCW.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>본 논문을 정리하면 다음과 같다.</p>
+<ul>
+<li>NerveNet이라는 그래프 구조를 활용한 policy를 가지고 RL agent의 body structure를 활용할 수 있는 알고리즘을 제안
+<ul>
+<li>각 body와 joint의 observation을 받아 GNN을 통해 non-linear message들을 계산하고 propagation하는 모델링</li>
+<li>propagation은 엣지로 표현된 joint간의 물리적으로 연결성을 가지고 본래 있는 의존성을 기반으로 이루어짐</li>
+</ul></li>
+<li>실험적으로 NerveNet이 MoJoCo 시뮬레이터 기반 여러 환경들에서 MLP 기반 SOTA 알고리즘들과 견줄만한 퍼포먼스를 보여줌o state-of-the-art methods on standard MuJoCo environments.</li>
+<li>몇가지 환경을 커스텀해서 size와 disability transfer를 검증했으며 zero-shot setting에서도 transferable함을 보임</li>
+</ul>
+<hr>
+</section>
+<section id="review" class="level1">
+<h1>Review</h1>
+<p>논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.</p>
+<ul>
+<li>Pros <strong>👍</strong>
+<ul>
+<li>로봇의 구조적인 특징을 기반으로 효율적인 feature embedding이었음을 보여줌</li>
+<li>다양한 robot configuration에서도 잘 작동함</li>
+<li>모델의 확장성을 설명할 수 있는 Transfer learning과 Multi-task learning이 인상적이었고 큰 장점이라고 생각</li>
+</ul></li>
+<li>Cons <strong>👎</strong>
+<ul>
+<li>시뮬레이션에서만 실험했다는 점이 아쉬움</li>
+<li>생각보다 기본적인 gnn모델이라서 edge에 대한 큰 디자인 요소가 들어가지 않은 것 같음</li>
+<li>다양한 RL 알고리즘들과의 시너지를 보기에는 솔직히 논문의 양이 너무 방대해질 것 같긴하지만 이에 대한 비교가 있었으면 좋았을 것 같음</li>
+</ul></li>
+</ul>
+</section>
+<section id="reference" class="level1">
+<h1>Reference</h1>
+<ul>
+<li>Original Project Homepage: <a href="http://www.cs.toronto.edu/~tingwuwang/nervenet.html">http://www.cs.toronto.edu/~tingwuwang/nervenet.html</a></li>
+<li>Code
+<ul>
+<li>Official: <a href="https://github.com/WilsonWangTHU/NerveNet">https://github.com/WilsonWangTHU/NerveNet</a></li>
+<li>Not official: <a href="https://github.com/HannesStark/gnn-reinforcement-learning">https://github.com/HannesStark/gnn-reinforcement-learning</a></li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="R_kgDOIa8jzg" data-category="General" data-category-id="DIC_kwDOIa8jzs4CShZ1" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_high_contrast" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

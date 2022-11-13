@@ -1,0 +1,112 @@
+---
+title: "📃GN-Block(2)"
+description: Graph Networks as Learnable Physics Engines for Inference and Control
+date: "2022-08-14"
+categories: [gnn, mpc, gn-block, system identification, deepmind, paper review]
+toc: true
+---
+
+이번 post는 [Graph Networks as Learnable Physics Engines for Inference and Control](https://arxiv.org/abs/1806.01242) 라는 논문을 읽고 리뷰한 내용이며, 총 2개의 post로 정리되어 있어서 이번에는 논문의 Method ~ Discussion 까지에 대한 내용이 정리되어 있습니다.
+
+- [GN-Block(1) post](https://curieuxjy.github.io/blog/gnn/mpc/gn-block/system%20identification/deepmind/paper%20review/2022/08/07/gn-block-1.html)
+- [GN-Block(2) post](https://curieuxjy.github.io/blog/gnn/mpc/gn-block/system%20identification/deepmind/paper%20review/2022/08/14/gn-block-2.html)
+
+
+# 3. Methods
+
+<span style="color: blue">Environments</span>
+
+- MuJoCo 시뮬레이션 환경을 이용했다.
+    - Pendulum, Cartpole, Acrobot, Swimmer, Cheetah, Walker2d, JACO(robotic arm)
+- generated training data for our forward models by applying simulated random controls to the systems, and recording the state transitions
+- generalization and system identification 실험을 위해서
+    - created a dataset of versions of several of our systems—Pendulum, Cartpole, Swimmer, Cheetah and JACO— with procedurally varied parameters and structure.
+    - 변화시킨 속성들로는 link lengths, body masses, and motor gears. + varied the number of links in the Swimmer’s structure, from 3-15 (we refer to a swimmer with N links as SwimmerN )
+
+<span style="color: blue">MPC planning</span>
+
+- **N-step trajectory**(N: planning horizon)와 그 trajectory를 실행했을 때 받을 **total reward**를 GN forward 모델로 예측했다.
+- 이때의 action sequences(=trajectory)들을 total reward의 backpropagating gradient를 가지고 최적화하게 된다.
+
+Model-based reinforcement learning
+
+- GN-based model을 강화학습에 적용해보다
+- SVG를 이용했다.
+- GN forward model이 미분가능하기 때문에 GN 모델로 생성된 next state를 가지고 expected return 값의 그라디언트를 구할 수 있다.
+- 1 step을 예측하는 SVG(1)과
+- model-free RL 베이스라인과 비교하기 위해 SVG(0)과 deterministic policy 알고리즘인 DDPG(Deep Deterministic Policy Gradients)알고리즘을 사용했다.
+
+<span style="color: blue">Baseline comparisons</span>
+
+1. constant prediction baseline: input state를 그대로 output state로 사용
+2. MLP baseline: GN model에 쓰인 데이터를 그대로 MLP에 flattened & concatenated 해서 학습
+3. MPC baseline: 물리 모델을 가지고 Differential Dynamic Programming algorithm을 사용해서 ground truth 값을 가짐
+4. SVG(0): model-free RL agents
+5. DDPG: model-free RL agents
+
+Prediction performance evaluation
+
+- calculated independent errors for **position, orientation, linear velocity angular velocity**
+1. squared one-step dynamic state differences (one-step error)
+2. squared trajectory differences (rollout error) between the prediction and the ground truth.
+
+# 4. Results
+
+## Prediction
+
+<span style="color: blue">Learning a **forward** model for a **single** system</span>
+
+하나의 시스템을 가지고 학습한 forward model의 Prediction 성능 살펴보기
+
+- random control로 만들어진 데이터들을 가지고 학습된 GN-based model
+    - **[Visually]** Swimmer6에서 그림에서 처럼 ground truth와 예측 결과가 구분이 안 갈 정도로 흡사하다.([영상](https://drive.google.com/file/d/1ez6sqCTZmHdSnf86lK6NEsnzyi-O25-B/view)에서도 거의 구분이 안 갈 정도로 잘 예측하고 있음을 알 수 있다.)
+        
+        ![](https://i.imgur.com/N6bOymB.png?1)
+        
+    - **[Quantitatively]** 100 step에서 3축 방향으로의 위치, 선속도, 각속도, 쿼터니안 방향 비교
+        
+        ![](https://i.imgur.com/anOJrxE.png?1)
+        
+- constant prediction baseline은 아웃풋으로 인풋을 그대로 복사해서 사용했기 때문에 애러 최대치로 normalization 하기 위해 검은색 점선으로 표기
+- 우선 검은 점선과 막대기들을 뭉뚱그려서 보면,
+- 1 step과 100 step의 rollout 결과를 비교했을 때 검은 점선에 비해 파란색 막대기들의 error 값이 낮음을 알 수 있다.
+    
+    ![](https://i.imgur.com/atKJKme.png?1)
+    
+
+- GN 모델이 MLP-based 보다 더 낮은 애러를 가지는 것을 알 수 있다. 이는 특별히 Swimmer6처럼 에이전트의 구조가 반복적인 경우에 더욱 눈에 띄게 낮음을 알 수 있었다. 이를 통해 GN-based forward 모델이 다양한 물리 시스템들에서 dynamics를 잘 예측함을 알 수 있다.
+
+![](https://i.imgur.com/u7z0wJP.png?1)
+
+- GN이 MLP보다 더 generalization이 잘 됨을 확인할 수 있었는데, Swimmer6를 집중적으로 `train`, `valid`, `test` 데이터에 대해 1-step, rollout error를 각각 확인해봤을 때, Best GN의 error 값이 Best MLP보다 낮음을 알 수 있다. 뿐만 아니라 test data의 error 증가율을 봤을 때에도 GN 모델의 test data의 error가 더 적게 증가함을 관찰할 수 있었고 이는 agent의 bodies와 joints들에 대한 inductive bias가 GN을 통해 잘 학습되었음을 증명할 수 있다.
+
+![](https://i.imgur.com/bMJJ6Jb.png?1)
+
+Learning a forward model for **multiple** systems
+
+한 개의 시스템에서의 forward model을 살펴보았으니 이제 여러 시스템에서의 forward model의 성능을 살펴보자. GN을 사용하면 여러 시스템들의 다양한 변수들도 잘 다룰 수 있다는 가정이 있었다. 이를 확인하기 위해 연속적으로 static parameter들(질량, body의 길이, joint의 각도 등)을 바꿔가면서 forward dynamics를 어떻게 학습해가는지 확인했다.
+
+![](https://i.imgur.com/pM4UKhs.png?1)
+
+## Inference
+
+## Control
+
+# 5. Discussion
+
+**Review**
+
+> 논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.
+
+- Pros 👍
+    - 
+    
+- Cons 👎
+    - mlp comparison
+
+---
+
+**Reference**
+
+- Original paper [Graph Networks as Learnable Physics Engines for Inference and Control](https://arxiv.org/abs/1806.01242)
+- Official code [https://github.com/fxia22/gn.pytorch](https://github.com/fxia22/gn.pytorch)

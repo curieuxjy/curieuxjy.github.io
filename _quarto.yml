@@ -10,11 +10,6 @@ website:
       - about.qmd
       - icon: github
         href: https://github.com/curieuxjy
-  # comments:
-  #   giscus:
-  #     repo: curieuxjy/curieuxjy.github.io
-  #     reactions-enabled: true
-  #     theme: light_high_contrast
 
 format:
   html:

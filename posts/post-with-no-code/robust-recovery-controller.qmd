@@ -1,0 +1,30 @@
+---
+draft: true
+title: "📃Robust Recovery Controller"
+description: Robust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning
+date: ""
+categories: [recovery, eth, paper review]
+toc: true
+---
+
+# Abstract
+
+The ability to `recover from a fall` is an essential feature for a legged robot to navigate in challenging environments robustly. Until today, there has been very little progress on this topic. Current solutions mostly build upon (heuristically) predefined trajectories, resulting in unnatural behaviors and requiring considerable effort in engineering system-specific components. In this paper, we present an approach based on model-free Deep Reinforcement Learning (RL) to control recovery maneuvers of quadrupedal robots using a `hierarchical behavior-based` controller. The controller consists of `four neural network policies` including `three behaviors` and `one behavior selector` to coordinate them. Each of them is trained individually in simulation and deployed directly on a real system. We experimentally validate our approach on the quadrupedal robot ANYmal, which is a dog-sized quadrupedal system with 12 degrees of freedom. With our method, ANYmal manifests dynamic and reactive recovery behaviors to recover from an arbitrary fall configuration within `less than 5 seconds`. We tested the recovery maneuver more than 100 times, and `the success rate was higher than 97 %`.
+
+# Introduction
+
+보행로봇의 많은 연구들은 보행하는 locomotion task에 집중되어 있는 경향이 있지만 이에 못지 않게 recovery task에 대해서도 생각해봐야 합니다. 보행 로봇이 잘 걷다가도 예상치 못한 환경요인에 의해 넘어질 위험은 항상 있기 때문입니다. 따라서 본 논문에서는 `robust recovery maneuver`를 강화학습을 통해 디자인했습니다. 잘 연구되지 않는 부분인 만큼 우선 이러한 maneuver에 대한 정의를 하자면, 로봇이 넘어진 상황(fall)에서 다시 정상 작동 상태(staning이나 walking)으로 돌아올 수 있도록 하는 maneuver를 말합니다. 이러한 기능을 수행하기 위해서는 (1) **지면과의 interaction**을 적절히 이용할 줄 알아야 하며, (2) **다리를 이용해서 swinging motion**을 사용할 줄 알고 (3) 로봇이 움직이는 과정 동안에 모션이 꼬여서 **혼자서 충돌하지 않도록** 해야 합니다.  
+
+![Imgur](https://i.imgur.com/kKRwRlP.png?1)
+
+이전의 연구들은 다리 이외의 꼬리나 추가적인 limb를 장착하여 해결하거나 예측 가능한 case들에 대해서만 fall-recovery를 했었기에 corner case들에서는 취약했습니다. 따라서 model-free RL 알고리즘으로 agent가 직접 환경과 상호작용하며 경험으로부터 다이나믹스와 컨트롤 policy를 학습하도록 했습니다. 로봇이 넘어졌다가 일어나는 과정을 단계별로 나누어서 생각해보면 다음과 같습니다.
+
+1. self-righting
+2. standing up
+3. locomotion(정상 보행)
+
+이 3가지 behavior를(multi-task) 한 개의 policy에 학습 시킬 경우 잘 학습이 되지 않을 뿐만 아니라 오히려 각 behavior의 퍼포먼스를 서로 해치게 되기 때문에 **여러 개의 policy들로 나누는 것**이 좋습니다. 그래서 본 논문에서는 각 behavior들을 컨트롤하는 **policy 3개**와 3개의 policy들 중에 하나를 선택하는 **behavior selection policy 1개**, 총 4개를 따로 학습 시켰습니다. 이런 `계층적(hierarchical)인 구조`는 모든 부분이 Neural Network로 이루어져 있어서 복잡한 maneuver를 만들기에 적합니다.
+
+강화학습 알고리즘으로는 **Trust Region Policy Optimization(TRPO)**를 사용했으며, **학습 기반의 state estimator**를 behavior selection과 동시에 학습시켜서 넘어졌을 때 알 수 없는 contact condition과 같은 상태를 파악할 수 있도록 했습니다.
+
+# Method

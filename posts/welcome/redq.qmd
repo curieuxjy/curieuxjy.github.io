@@ -1,8 +1,0 @@
----
-draft: true
-title: "redq"
-description: f
-date: ""
-categories: 
-toc: true
----

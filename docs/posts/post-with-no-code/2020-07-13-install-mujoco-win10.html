@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-07-13">
+<meta name="description" content="RL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기">
+
+<title>Jung Yeon - 👩‍💻Install Mujoco in Windows10</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#mujoco" id="toc-mujoco" class="nav-link active" data-scroll-target="#mujoco">Mujoco</a></li>
+  <li><a href="#mujoco-py" id="toc-mujoco-py" class="nav-link" data-scroll-target="#mujoco-py">Mujoco-py</a>
+  <ul class="collapse">
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">👩‍💻Install Mujoco in Windows10</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">mujoco</div>
+    <div class="quarto-category">windows10</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    RL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 13, 2020</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="mujoco" class="level1">
+<h1>Mujoco</h1>
+<ol type="1">
+<li><p><a href="http://www.mujoco.org/index.html">Mujoco</a>에서 <a href="https://www.roboti.us/license.html">License</a> tab으로 들어가서 Personal Student Software License를 받는다.</p></li>
+<li><p>이메일로 Account number를 받는다.(spam도 확인하자)</p></li>
+<li><p>다시 <a href="https://www.roboti.us/license.html">License</a>로 가서 Account number와 Computer Id를 입력한다.</p>
+<p><img src="../../images/img2.JPG" class="img-fluid"></p></li>
+<li><p>다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.</p></li>
+<li><p><code>.mujoco</code>라는 파일을 <code>C:\Users\사용자명\</code>에 만든다.</p></li>
+<li><p><a href="https://www.roboti.us/index.html">Products</a>에서 <code>mjpro150 win64</code>을 다운받아 <code>.mujoco</code>에 압축을 풀어준다.(<code>C:\Users\사용자명\.mujoco\mjpro150</code>)</p>
+<p><img src="../../images/img3.JPG" class="img-fluid"></p></li>
+<li><p>다운받은 mjkey.txt 파일을 <code>C:\Users\사용자명\.mujoco</code>와 <code>C:\Users\사용자명\.mujoco\mjpro150\bin</code> 에 옮긴다.</p></li>
+<li><p>cmd창을 열어서 cd 명령어로 <code>C:\Users\사용자명\.mujoco\mjpro150\bin</code> 경로로 이동한 다음 <code>simulate ../model/humanoid.xml</code>명령어를 입력한다.</p></li>
+<li><p>Humanoid Simulation 창이 나오면 성공이다.</p>
+<p><img src="../../images/gif2.gif" class="img-fluid"></p></li>
+</ol>
+</section>
+<section id="mujoco-py" class="level1">
+<h1>Mujoco-py</h1>
+<ol type="1">
+<li><p><code>SET PATH=C:\Users\사용자명\.mujoco\mjpro150\bin;%PATH%;</code>으로 경로설정을 해준다.</p></li>
+<li><p><a href="https://github.com/openai/mujoco-py/archive/1.50.1.0.zip">mujoco-py-1.50.1.0</a> 파일을 다운받아 <code>C:\Users\사용자명\.mujoco</code>에 압축을 풀어준다.(<code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0</code>)</p></li>
+<li><p>cmd 창에서 <code>python setup.py install</code>를 입력하여 설치한다.</p>
+<p><code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0&gt; python setup.py install</code></p>
+<p>혹시 여기서 error가 난다면 전에 mujoco-py를 설치해서 버젼이 안 맞아 나는 것일 수도 있다. <code>pip list</code>로 <code>mujoco-py</code>의 버젼을 확인해보고 다른 버젼이라면 <code>pip uninstall mujoco-py</code>를 해준후 다시 설치한다.</p></li>
+<li><p>cmd 창에서 <code>python examples\body_interaction.py</code>를 입력하여 잘 실행되는지 확인한다.</p>
+<p><code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0&gt; python examples\body_interaction.py</code></p>
+<p>처음에 실행화면이 뜨는 시간이 오래걸리지만 이후에는 실행창이 빨리 나왔다.</p>
+<p><img src="../../images/gif1.gif" class="img-fluid"></p></li>
+</ol>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
+<ul>
+<li><a href="https://seunghyun-lee.tistory.com/2">MuJoCo 설치 (윈도우 10 version)</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="R_kgDOIa8jzg" data-category="General" data-category-id="DIC_kwDOIa8jzs4CShZ1" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_high_contrast" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

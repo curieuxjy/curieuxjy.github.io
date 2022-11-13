@@ -1,0 +1,12 @@
+---
+draft: true
+title: "cpg-rl"
+description: blog post
+date: ""
+categories: 
+toc: true
+---
+
+![](https://i.imgur.com/1iPfFJZ.png)
+
+> 빠르게 논문의 abstract, 그림, key idea를 살펴보는 Speed Abstracting Series
