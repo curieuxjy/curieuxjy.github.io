@@ -18,9 +18,9 @@ format:
     html-math-method: katex
     theme:
       - lux
-      # - custom.scss
-# https://quarto.org/docs/websites/website-blog.html#themes sketchy simplex standstone
-# minty pulse
+      - custom.scss
+# https://quarto.org/docs/websites/website-blog.html#themes 
+# sketchy simplex standstone minty pulse
 
 execute: 
   freeze: auto

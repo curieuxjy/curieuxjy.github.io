@@ -9,15 +9,21 @@ listing:
   categories: true
   sort-ui: true
   filter-ui: true
-  image-placeholder: default.png
+  image-placeholder: default2.png
   
 page-layout: full
 title-block-banner: true
 ---
+<br> </br>
 
 # Je suis curieux de tout.
 
+<p> </p>
+
 | 📃 Paper Review | 🧩 Storage | 👩‍💻 Code | 📘 Note 
+
+<p> </p>
 
 <img src="https://ghchart.rshah.org/curieuxjy" style="width:80%">
 
+<br> </br>
