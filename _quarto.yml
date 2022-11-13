@@ -13,6 +13,8 @@ website:
   comments:
     giscus:
       repo: curieuxjy/curieuxjy.github.io
+      reactions-enabled: true
+      theme: light_high_contrast
 
 format:
   html:
@@ -21,7 +23,6 @@ format:
     page-layout: full
     html-math-method: katex
     theme:
-      - styles.css
       - lux
       # - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes sketchy simplex standstone
