@@ -1,19 +1,52 @@
 ---
 title: "About"
-image: profile.jpg
+image: profile.png
 about:
-  template: jolla
+  template: trestles
+  image-shape: round
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: www.linkedin.com/in/curieuxjy
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/cureiuxjy
 
 ---
 
-About this blog
+
+---
+
+Hello👋 I'm Jung Yeon Lee. Thanks for visiting my blog.
+
+It's a place where I record everything I study with curiosity. 👀
+
+My current motto is "Stop Wishing, Start Doing", and I'm looking forward to the world where people and robots coexist dynamically and peacefully.
+
+## Fields of interest
+* Machine Learning/Deep Learning
+* Reinforcement Learning
+* Multi-agents
+* Graph Nerual Network
+* Quantum Computing 
+
+## Education
+
+### _M.Eng. 2022.03~_
+* M.S. in MECHANICAL ENGINEERING, SungKyunKwan University(SKKU)
+* Researcher at [Robotics Innovatory Lab.](https://mecha.skku.ac.kr/roboticsinnovatory/index.do) Quadrupedal Walking Robot Team 
+
+### _2021.01.11~01.29_
+* TU Berlin Winter University Online : Machine learning using Pyhon - Theory and Application 
+    * Grade : 1.0(the best score)
+    * 5 credit points according to the ECTS(European Credit Transfer System)
+
+### _B.Eng. 2018.03~2022.02_
+* B.S. in ENGINEERING MECHANICAL & SYSTEM DESIGN ENGINEERING, HongIk University
+* Integrated Major in Design Engineering
+* Completed Accereditation Board for Engineering Education of Korea(ABEEK)
+* Undergraduate research student at [Autonomous Navigation Lab](https://sites.google.com/view/autonav/home)
+
+> If you want to know more details about my experiences, you can find them in my CURRICULUM VITAE.📃
+
+## [CV_2022](https://drive.google.com/file/d/1a-q7JUfFW58ScA9GtKwkiv1nZfOUbr94/view?usp=sharing)

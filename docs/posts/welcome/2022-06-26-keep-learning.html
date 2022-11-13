@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-06-26">
+<meta name="description" content="Fine-Tuning Locomotion Policies in the Real World">
+
+<title>Jung Yeon - 📃Legged Robots that Keep on Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">📃Legged Robots that Keep on Learning</h1>
+                  <div>
+        <div class="description">
+          Fine-Tuning Locomotion Policies in the Real World
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">legged robots</div>
+                <div class="quarto-category">rl</div>
+                <div class="quarto-category">fine-tuning</div>
+                <div class="quarto-category">redq</div>
+                <div class="quarto-category">berkely</div>
+                <div class="quarto-category">google research</div>
+                <div class="quarto-category">paper review</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 26, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">0. Abstract</a></li>
+  <li><a href="#i.-introduction" id="toc-i.-introduction" class="nav-link" data-scroll-target="#i.-introduction">I. Introduction</a>
+  <ul class="collapse">
+  <li><a href="#system-process" id="toc-system-process" class="nav-link" data-scroll-target="#system-process">System Process</a></li>
+  <li><a href="#how" id="toc-how" class="nav-link" data-scroll-target="#how">How</a></li>
+  <li><a href="#main-contribution" id="toc-main-contribution" class="nav-link" data-scroll-target="#main-contribution">Main Contribution</a></li>
+  <li><a href="#details-with-hash-tags" id="toc-details-with-hash-tags" class="nav-link" data-scroll-target="#details-with-hash-tags">Details with Hash tags</a></li>
+  </ul></li>
+  <li><a href="#ii.-fine-tuning-locomotion-in-the-real-world" id="toc-ii.-fine-tuning-locomotion-in-the-real-world" class="nav-link" data-scroll-target="#ii.-fine-tuning-locomotion-in-the-real-world">II. Fine-tuning Locomotion in the Real World</a>
+  <ul class="collapse">
+  <li><a href="#a-overview" id="toc-a-overview" class="nav-link" data-scroll-target="#a-overview">a) Overview</a></li>
+  <li><a href="#b-motion-imitation" id="toc-b-motion-imitation" class="nav-link" data-scroll-target="#b-motion-imitation">b) Motion Imitation</a></li>
+  <li><a href="#c-off-policy-rl" id="toc-c-off-policy-rl" class="nav-link" data-scroll-target="#c-off-policy-rl">c) Off-policy RL</a></li>
+  </ul></li>
+  <li><a href="#iii.-system-design" id="toc-iii.-system-design" class="nav-link" data-scroll-target="#iii.-system-design">III. System Design</a>
+  <ul class="collapse">
+  <li><a href="#a.-state-action-spaces" id="toc-a.-state-action-spaces" class="nav-link" data-scroll-target="#a.-state-action-spaces">A. State &amp; Action Spaces</a></li>
+  <li><a href="#b.-reward-function" id="toc-b.-reward-function" class="nav-link" data-scroll-target="#b.-reward-function">B. Reward Function</a></li>
+  <li><a href="#c.-reset-controller" id="toc-c.-reset-controller" class="nav-link" data-scroll-target="#c.-reset-controller">C. Reset Controller</a></li>
+  </ul></li>
+  <li><a href="#iv.-experiments" id="toc-iv.-experiments" class="nav-link" data-scroll-target="#iv.-experiments">IV. Experiments</a>
+  <ul class="collapse">
+  <li><a href="#a.-simulation-experiments" id="toc-a.-simulation-experiments" class="nav-link" data-scroll-target="#a.-simulation-experiments">A. Simulation Experiments</a></li>
+  <li><a href="#b.-real-world-experiments" id="toc-b.-real-world-experiments" class="nav-link" data-scroll-target="#b.-real-world-experiments">B. Real-World Experiments</a></li>
+  <li><a href="#c.-semi-autonomous-training" id="toc-c.-semi-autonomous-training" class="nav-link" data-scroll-target="#c.-semi-autonomous-training">C. Semi-autonomous training</a></li>
+  </ul></li>
+  <li><a href="#v.-conclusion" id="toc-v.-conclusion" class="nav-link" data-scroll-target="#v.-conclusion">V. Conclusion</a></li>
+  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="abstract" class="level1">
+<h1>0. Abstract</h1>
+<blockquote class="blockquote">
+<p>Legged robots are physically capable of traversing a wide range of challenging environments but designing controllers that are sufficiently robust to handle this diversity has been a long-standing challenge in robotics. Reinforcement learning presents an appealing approach for automating the controller design process and has been able to produce remarkably robust controllers when trained in a suitable range of environments. However, it is <code>difficult to predict all likely conditions the robot will encounter</code> during deployment and enumerate them at training-time. What if instead of training controllers that are robust enough to handle any eventuality, <code>we enable the robot to continually learn in any setting it finds itself in?</code> This kind of real-world reinforcement learning poses a number of challenges, including efficiency, safety, and autonomy. To address these challenges, we propose a practical robot reinforcement learning system for <code>fine-tuning locomotion policies in the real world.</code> We demonstrate that a modest amount of real-world training can substantially improve performance during deployment, and this enables <code>a real A1 quadrupedal robot</code> to autonomously fine-tune multiple locomotion skills in a range of environments, including <code>an outdoor lawn and a variety of indoor terrains.</code></p>
+</blockquote>
+</section>
+<section id="i.-introduction" class="level1">
+<h1>I. Introduction</h1>
+<p><em>강화학습이 로봇 제어 분야에서 각광 받는 이유가 무엇일까?</em> 기존의 로봇 제어 알고리즘들은 정말 많은 engineering 적인 고려와 복잡한 수학적 모델링이 필요하다. 그런데 그마저 엔지니어가 미처 고려하지 못한 작동을 해야 할 때는 바로 실패한 controller 디자인이 되어 버리기 때문에 로봇 제어는 쉽지 않은 문제였다. 이런 면에서 강화학습은 controller를 <code>trial-and-error</code>로 로봇 agent가 알아서 어떻게 작동해야 할지 학습하기 때문에 공학자에게 controller 디자인에 대한 부담을 줄여주었고 이런 점에 강화학습이 로봇 제어 분야에서 주목 받는 이유였다.</p>
+<p>하지만, 안타깝게도 강화학습이 controller를 만드는 것의 부담을 줄여주었지만 강화학습의 environment 설계에 대한 부담이었다. 위에서 설명한 대로 강화학습에서 trial-and-error로 <code>알아서</code> 학습한다는 점이 매력적이지만, 이런 학습의 조건에는 좋은 environment가 필요하다. 강화학습 분야에서 자주 언급되는 <code>좋은 agent의 배경에는 좋은 environment가 있다.</code>는 말처럼 agent가 environment에서 경험하면서 좋은 학습을 하지 못하면 좋은 결과를 기대할 수 없다. 따라서 마치 controller 디자인과 environment 디자인은 trade-off 관계로 엔지니어에게 과제를 남기게 된다.</p>
+<p>agent가 학습하는 동안에 경험하게 되는 environment와 테스트 시(실사용 시) 경험하게 되는 environment의 차이가 크면 클수록 agent는 제대로 작동할 수 없다. 학습되지 않은 경험들이기 때문에 학습된 agent의 policy가 좋은 action을 할 수 없다. 이러한 문제를 해결하기 위해서 경험해보지 못한, 즉 학습하지 못한 경우에 대해서도 제대로 agent가 동작하기 위해 <code>zero-shot generalization</code>(한번도 보지 못한-zero shot 경험 데이터에 대해 잘 일반화-generalization 할 수 있는 능력) 이 필요하지만, 본 논문에서는 완벽한 <code>zero-shot generalization</code>은 일어날 수 없다는 가정하에 문제를 어떻게 풀것인가 고민했다.</p>
+<p>그렇게 해서 제안된 방법은 <code>테스트 환경에서 빠르게 fine-tuning 해서 agent가 잘 동작하게 만들자</code>였고, 이 방법이 가능하다면 로봇은 실제로 동작하면서 언제든지 마주칠 수 있는 새로운 환경에 적응해서(fine-tuned) 잘 동작할 수 있을 것이다.</p>
+<blockquote class="blockquote">
+<p>🎯 본 논문의 목표는 실제 환경(real-world)에서 로봇의 locomotion policy들이 fine-tuning할 수 있는 완전한 시스템을 디자인 하는 것이다.</p>
+</blockquote>
+<section id="system-process" class="level2">
+<h2 class="anchored" data-anchor-id="system-process">System Process</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/vJJH1oF.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<ol type="1">
+<li>위의 사진에 보이는 공원과 같은 <code>새로운 환경</code>에서 먼저 로봇 agent가 첫번째 시도로 locomotion task를 진행한다.</li>
+<li>만약에 땅이 고르지 못해서 agent의 학습된 policy를 활용할 수 없는 상황이 되어서 넘어지게 되는 상황이 될 수 도 있다.</li>
+<li>이때 <code>reset controller</code>를 이용해서 빠르게 다시 일어난다.</li>
+<li>실제 task에서 좀 더 몇 번 시도를 하면서 1~3의 과정을 몇 번 반복하게 되고 이 과정에서 <code>policy가 업데이트</code> 되게 된다.</li>
+<li>업데이트가 되면서 policy는 <code>새로운 test 환경에서 제대로 작동</code>할 수 있게 된다.</li>
+</ol>
+</section>
+<section id="how" class="level2">
+<h2 class="anchored" data-anchor-id="how">How</h2>
+<ul>
+<li>강화학습의 reward 가 robot의 <code>on-board 센서로 측정되는 값들로만</code> 디자인 되어야 실제 Real-world에서 작동하면서 fine tuning을 할 수 있다.</li>
+<li>Agile한 behavior를 학습하기 위해서 <code>Motion imitation</code> 기법을 활용했다.</li>
+<li>로봇의 넘어지고 나서 빠르게 정상자세로 회복할 수 있도록 <code>Recovery policy</code>를 학습했다.</li>
+<li>강화학습 알고리즘들 중에서 <a href="https://arxiv.org/abs/2101.05982"><code>REDQ(Randomized Ensembled Double Q-Learning)</code></a> 라는 알고리즘을 사용했는데, 이 알고리즘은 여러개 Q-network들의 앙상블을 통해 randomization을 해서 Q-learning 계열의 알고리즘들의 sample-efficiency와 안정성을 향상시킨 알고리즘이다.</li>
+</ul>
+</section>
+<section id="main-contribution" class="level2">
+<h2 class="anchored" data-anchor-id="main-contribution">Main Contribution</h2>
+<blockquote class="blockquote">
+<p>본 논문의 주요 contribution은 다음과 같다.</p>
+</blockquote>
+<ul>
+<li>4족 보행 로봇의 agile한 locomotion skill을 real-world에서 학습하기 위한 <code>fine-tuning 자동화 시스템</code>을 제안하였다.</li>
+<li>처음으로 <code>자동화 reset</code>과 <code>on-board 상태 추정</code>을 통해 real-world에서 fine-tuning이 될 수 있음으로 보였다.</li>
+<li><code>A1</code> 로봇을 가지고 dynamic skill들을 학습해서 외부 잔디에서 앞으로, 뒤로 pacing을 하고 3가지 다른 지형 특징을 가진 환경에서 side-stepping을 할 수 있었다.</li>
+</ul>
+</section>
+<section id="details-with-hash-tags" class="level2">
+<h2 class="anchored" data-anchor-id="details-with-hash-tags">Details with Hash tags</h2>
+<blockquote class="blockquote">
+<p>원 논문의 <code>II. Related Work</code> section 참고</p>
+</blockquote>
+<p><code>#Cumbersome controller designs</code></p>
+<ul>
+<li>이전의 로봇 controller들은 footstep planning, trajectory optimization, model-predictive control (MPC) 등의 조합으로 만들어지고 있었다. 그러나 이런 방법들은 로봇의 동역학과 각 로봇마다 다르고 각 skill마다 다른 많은 요소들을 고려해야 하기 때문에 정말 어려웠다.</li>
+</ul>
+<p><code>#Sim2Real</code></p>
+<ul>
+<li><code>trial-and-error</code>라는 데이터에 매우 의존성이 높은 강화학습 알고리즘의 특성과 하드웨어의 safety 이슈 때문에 보통 로봇 강화학습 agent는 <code>시뮬레이션 기반</code>으로 학습된다. 하지만 시뮬레이션에서 학습하면서 실제로 만나보지 않은 real-world의 모든 조건들을 예상하고 학습하기란 사실상 불가능하며 가장 robust한 policy라고 할지라도 모든 상황에 대해 generalization 되었다고 할 수 없다.</li>
+</ul>
+<p><code>#Real-world</code></p>
+<ul>
+<li><p>이전에 복잡한 motion들을 학습하게 하기 위해서 environment의 다양한 장치들로 다양한 상태 정보를 만들어서 사용했지만 본 연구에서는 real-world에서 작동하고 있는 로봇에서 fine-tuning을 해야 하기 때문에 <code>로봇의 on-board에서 받을 수 있는 모든 state estimation 정보들을 가지고만</code> 진행했으며 motion capture나 외부 장치들을 별도로 사용하지 않았다.</p></li>
+<li><p>scratch부터 실제 환경에서 단순한 구조의 로봇들로 walking gaits들을 학습하는게 아니라, <code>A1</code> 로봇으로 <code>pacing, side stepping</code> 등 매우 자연스럽고 조금은 불안정하고 세밀한 balancing이 요구되는 skill들을 학습할 수 있었다. (기존의 연구들은 balancing에 매우 신경쓴 나머지 느리고 부자연스러운 walking gaits 에 치중한 면이 있었다.) 본 논문의 연구에서 <code>motion imitation과 실제 환경에서의 fine-tuning</code> 이 이런 다이나믹한 task들을 성공시키는데 매우 중요한 역할을 했다. 또한 실제 환경에서 로봇이 작동하면서 넘어질 때, manual하게 로봇의 reset하거나 recovery시키지 않고 <code>강화학습으로 자동적으로 reset</code> 할 수 있는 controller를 만들어서 사용했다.</p></li>
+</ul>
+<p><code>#Few-shot adaptation</code></p>
+<ul>
+<li>기존의 <code>Adaptation structure</code>라는 구조를 만들어서 학습시켜서 latent 또는 explicit한 환경에 대한 descriptor로 adaptive한 policy를 만드는 연구들이 있었으나, 이 기법들 또한 결국 training에서 경험했던 것들을 기반으로 adaptive함을 보이는 것이므로 실제 test 환경이 이 허용 범위에서 많이 벗어날 경우 제대로 작동안되는 것은 똑같다. 따라서 강화학습으로 지속적인 적응적인 학습능력을 보장해서 <code>어떤 test 환경에서든 잘 작동할 수 있도록</code> 했다.</li>
+</ul>
+<p><code>#RL Algorithm</code></p>
+<ul>
+<li>강화학습 알고리즘으로는 기존의 vision 기반 매니퓰레이터들에서 grasping 작업을 하는 task들에서 많이 쓰인 <code>off-policy model-free</code> RL 기법들을 참고하여 fixed되어 있는 매니퓰레이터들보다 더 challenging한 <code>floating-based 보행 로봇의 locomotion</code>에 적용해서 성공시켰다.</li>
+</ul>
+</section>
+</section>
+<section id="ii.-fine-tuning-locomotion-in-the-real-world" class="level1">
+<h1>II. Fine-tuning Locomotion in the Real World</h1>
+<p>강화학습 알고리즘으로 <code>multi-tasking</code>을 할 수 있도록 학습시켰다.</p>
+<ul>
+<li><code>REDQ</code> 알고리즘으로 이용해서 sample efficiency를 높일 수 있었다.</li>
+<li>학습된 <code>reset policy</code>를 이용해서 여러개의 episode들을 이어서(stitch together) 학습시켰다.</li>
+</ul>
+<section id="a-overview" class="level2">
+<h2 class="anchored" data-anchor-id="a-overview">a) Overview</h2>
+<p><img src="https://i.imgur.com/2q4OYul.png?1" class="img-fluid" alt="Imgur"> <img src="https://i.imgur.com/kIL9RPT.png?1" class="img-fluid" alt="Imgur"></p>
+<ul>
+<li>위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 <strong>각각의 policy</strong>는 <strong>하나의 desired skill</strong>을 학습하게 된다. (forward, backward, reset)</li>
+<li>Agent의 policy는 <strong>시뮬레이션에서 pretrained</strong> 한다. (Algorithm2: line 2~7)
+<ul>
+<li>각 에피소드가 끝날 때마다 <strong>학습된 recovery policy</strong>가 로봇을 다음 rollout을 할 수 있도록 준비시켜준다.</li>
+<li>각 skill을 위한 policy들은 <strong>독립적으로 학습</strong>되고 recovery policy도 마찬가지로 독립적으로 학습된다.</li>
+</ul></li>
+<li><strong>Fine-tuning을 실제 물리적인 환경에서</strong> 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm2: line 8~14)
+<ul>
+<li>시뮬레이션과 실제 환경의 차이를 고려하여 <strong>각 policy들의 replay buffer는 초기화</strong> 시켜준다.(Algorithm2: line 12)</li>
+</ul></li>
+<li><strong>Multitask framework</strong>를 사용했다.(Algorithm2 참고)</li>
+</ul>
+</section>
+<section id="b-motion-imitation" class="level2">
+<h2 class="anchored" data-anchor-id="b-motion-imitation">b) Motion Imitation</h2>
+<ul>
+<li><code>Motion Imiation</code> 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 <a href="https://arxiv.org/abs/2004.00784"><code>Learning Agile Robotic Locomotion Skills by Imitating Animals</code></a>라는 논문에서 제시한 방법을 따라했다. (Algorithm 1: line1~4)</li>
+<li><strong>Reference motion <span class="math inline">\(M\)</span></strong>이 주어지면 agent의일련의 pose들과 비교하여 section <code>III-B</code>에서 소개될 reward function을 기반으로 학습한다.
+<ul>
+<li>이 방법을 통해 <strong>reference motion data</strong>만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.</li>
+<li><strong>recovery policy</strong>를 학습하기 위해서 <strong>standing pose</strong>를 모방하도록 할 수 있다.(<code>III-C</code> 참고)</li>
+</ul></li>
+</ul>
+</section>
+<section id="c-off-policy-rl" class="level2">
+<h2 class="anchored" data-anchor-id="c-off-policy-rl">c) Off-policy RL</h2>
+<ul>
+<li>off-policy 알고리즘인 <strong>REDQ algorithm</strong> 사용했다.(Algorithm 1: line5~9)
+<ul>
+<li>SAC 알고리즘을 더 발전시킨 알고리즘</li>
+<li>time step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.</li>
+<li>너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.</li>
+</ul></li>
+</ul>
+<p>(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 <code>Algorithm 1</code>을 참고) <img src="https://i.imgur.com/sBvIszd.png?1" class="img-fluid" alt="Imgur"></p>
+</section>
+</section>
+<section id="iii.-system-design" class="level1">
+<h1>III. System Design</h1>
+<blockquote class="blockquote">
+<p>Setting - A1 robot from Unitree - PyBullet simulator - <strong>motion imitation skills</strong>을 얻기 위해서 - 공개된 데이터 셋들 중에 <strong>dog pacing</strong>의 mocap을 녹화하고 retargetting 하였다. - 로봇의 역기구학을 이용해서 A1 로봇의 <strong>side-step motion</strong>을 애니메이션으로 만들어서 사용했다. - REDQ 알고리즘 - Adam optimizer - learning rate of 10−4 - batch size of 256 transitions - TensorFlow</p>
+</blockquote>
+<section id="a.-state-action-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="a.-state-action-spaces">A. State &amp; Action Spaces</h2>
+<ol type="1">
+<li><p>State space</p>
+<ul>
+<li>State는 연속적인 <strong>3 timesteps</strong>에서 얻은 아래 정보들로 정의했다.
+<ul>
+<li>Root orientation (read from the IMU)</li>
+<li>Joint angles</li>
+<li>Previous actions</li>
+</ul></li>
+<li><strong>Policy</strong>는 위에서 말한 <strong>Proprioceptive input</strong> 뿐만 아니라 <strong>a goal <span class="math inline">\(g_t\)</span></strong>에 대한 정보도 input으로 받게 된다.
+<ul>
+<li><span class="math inline">\(g_t\)</span>는 future timesteps에서의 reference motion에서 계산된 <strong>Target pose (root position, root rotation, joint angles)</strong>의 정보를 포함한다.</li>
+<li><strong>4 future target poses</strong> 는 현재 timestep에서 약 1초 정도 이후의 pose들이다.</li>
+</ul></li>
+</ul></li>
+<li><p>Action space</p>
+<ul>
+<li>Action은 <strong>12 joints</strong>들에 대한 <strong>PD position targets</strong> 이다.</li>
+<li><strong>33Hz</strong>의 주파수로 command가 적용된다.</li>
+<li>자연스러운 움직임을 위해 PD targets을 <strong>low-pass filter</strong>를 로봇에 적용하기 전에 통과시켜준다.</li>
+</ul></li>
+</ol>
+</section>
+<section id="b.-reward-function" class="level2">
+<h2 class="anchored" data-anchor-id="b.-reward-function">B. Reward Function</h2>
+<p><span class="math display">\[
+\begin{gathered}r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1\end{gathered}
+\]</span></p>
+<hr>
+<ul>
+<li><p><span class="math inline">\(r_{t}^{\mathrm{p}}\)</span> : 로봇의 <strong>joint rotation</strong> 값들을 reference motion의 joint rotation과 맞추도록 하는 reward term</p>
+<p><span class="math display">\[
+  r_{t}^{\mathrm{p}}=\exp \left[-5 \sum_{j}\left\|\hat{q}_{t}^{j}-q_{t}^{j}\right\|^{2}\right]
+  \]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{q}_{t}^{j}\)</span> : 시점 <span class="math inline">\(t\)</span>에 reference motion의 <span class="math inline">\(j\)</span>번째 joint의 <strong>local rotation</strong></li>
+<li><span class="math inline">\(q_{t}^{j}\)</span> : 로봇의 <span class="math inline">\(j\)</span>번째 joint <strong>local rotation</strong></li>
+</ul></li>
+<li><p><span class="math inline">\(r_{t}^{\mathrm{v}}\)</span> : <strong>joint velocities</strong></p></li>
+<li><p><span class="math inline">\(r_{t}^{\mathrm{e}}\)</span> : <strong>end-effector positions</strong></p></li>
+<li><p>로봇이 reference root motion을 잘 tracking 하게 하기 위한 reward term</p>
+<ul>
+<li><span class="math inline">\(r_{t}^{\mathrm{rp}}\)</span> : <strong>root pose reward</strong></li>
+<li><span class="math inline">\(r_{t}^{\mathrm{rv}}\)</span> : <strong>root velocity reward</strong></li>
+</ul></li>
+</ul>
+<hr>
+<p>이전부터 강조해왔듯이, 실제 환경에서 <code>fine-tuning</code>과정을 진행하기 위해서 on-board 센서들의 값을 이용해서 reward function을 디자인하였고 실제 물리적인 환경에서 구동할 때 이를 상태 추정 기법을 이용해서 reward를 구하게 된다. 따라서 아래의 상태 추정 방법(State Estimation)이 fine-tuning의 성능을 결정하는 중요한 부분이 된다.</p>
+<ul>
+<li>Real-world에서 로봇의 <strong>linear root velocity</strong>를 잘 추정하기 위해서 <strong>Kalman filter</strong>를 사용했다.
+<ul>
+<li>칼만 필터는 IMU 센서에서 acceleration과 orientation 값들을 읽어서 foot contact sensors로 값들을 보정한다.</li>
+<li>처음에 발 끝의 속도를 0으로 생각해서 각 다리의 joint velocities를 고려하여 몸체의 속도를 계산하고 IMU으로부터 추정했던 값을 보정한다.</li>
+</ul></li>
+<li>이렇게 계산된 <strong>linear velocity</strong>를 로봇의 position 추정값에 통합시킨다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/1DW4hsQ.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>위의 그래프들에 볼 수 있듯이(아래에서 위 방향으로),</p>
+<ul>
+<li><strong>angular velocity와 orientation</strong> 센서 값들은 매우 정확했다.</li>
+<li><strong>linear velocity</strong>는 매우 정확하진 않았지만 허용가능했다.(reasonable)</li>
+<li><strong>position drifts</strong>는 상당히 벗어나는 부분이 있었지만, 각 에피소드에서 reward function을 계산할 정도로의 적합한 값들을 보여주었다.</li>
+</ul>
+</section>
+<section id="c.-reset-controller" class="level2">
+<h2 class="anchored" data-anchor-id="c.-reset-controller">C. Reset Controller</h2>
+<ul>
+<li><strong>reset policy</strong>를 시뮬레이션에서 학습하기 위해 다양한 <strong>initial states</strong>에서 시작하도록 했다.</li>
+</ul>
+<p>→ 로봇을 random한 height &amp; orientation에서 떨어뜨려서 아래 사진에서 볼 수 있듯이 다양한 <strong>initial states</strong>를 설정</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/2soOO1g.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Motion imitation 목적함수를 수정해서 <strong>single, streamlined reset policy</strong>를 학습시켰다.</p></li>
+<li><p>Reference motion을 가지고 로봇이 정확히 어떻게 일어나야 할지를 알려주는 것이 아니라, 아래와 같은 방법으로 reset policy를 학습시켰다.</p></li>
+</ul>
+<ol type="1">
+<li>policy가 <strong>rolling right side up</strong>을 위한 reward만을 가지고 학습한다.</li>
+<li>만약 로봇이 <strong>upright</strong>하는데 성공하면 이후에 <strong>motion imitation reward</strong>를 추가시켜서 학습니다.
+<ul>
+<li>이때의 reference motion은 <strong>standing pose</strong>가 되고 로봇이 똑바로 설 수 있도록 학습시킨다.</li>
+</ul></li>
+</ol>
+<ul>
+<li>이런 방식으로 학습된 <strong>reset policy</strong>는 다양한 test 지형에서 fine-tuning 없이도 잘 동작했다.(tranfered well)</li>
+</ul>
+</section>
+</section>
+<section id="iv.-experiments" class="level1">
+<h1>IV. Experiments</h1>
+<p>💡 실험 결과에서 주목해서 봐야할 질문 3가지!</p>
+<ol type="1">
+<li><p>본 논문에서 제시한 finetuning-based method가 이전의 방법들에 비해 <code>시뮬레이션 trianing을 충분히 활용</code>하고 <code>실제 물리 환경에서 적응</code>할 수 있었는가?</p></li>
+<li><p>본 논문에서 제시한 시스템 디자인 요소들이 <code>feasibility of real-world training</code>에 어떤 영향을 주었는가?</p></li>
+<li><p><code>얼마나 다양한 실제 물리적인 환경들</code>에서 autonomous, online fine-tuning 방법이 로봇의 skill을 향상시켰는가?</p></li>
+</ol>
+<section id="a.-simulation-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="a.-simulation-experiments">A. Simulation Experiments</h2>
+<ul>
+<li><p>agent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 <strong>학습된 시뮬레이션과 또 다른</strong> 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.</p></li>
+<li><p><strong>Learned forward pacing gait</strong>가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.</p></li>
+<li><p><strong>Standard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)</strong>으로 Pre-train을 <strong>flat</strong> ground에서 진행했다.</p></li>
+<li><p>The test terrains : test 환경들로는 총 3가지로 실험하였다.</p>
+<ol type="1">
+<li><strong>a flat ground</strong> : pre-training 과정의 시뮬레이션 셋팅과 유사한 test 환경</li>
+<li>pre-training 과정의 시뮬레이션 셋팅과 다소 다른 test 환경 :
+<ol type="1">
+<li><strong>randomized heightfield</strong> : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형</li>
+<li><strong>a low friction surface</strong> : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)</li>
+</ol></li>
+</ol></li>
+<li><p>비교군</p>
+<ol type="1">
+<li><code>latent space</code> : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습</li>
+<li><code>RMA</code>: dynamics randomization한 모델. 위에서 언급한 <code>Adaptation Module</code>을 가지고 학습</li>
+<li><code>Vanilla SAC</code> : Soft Actor-Critic 알고리즘으로 학습</li>
+<li><code>Ours(REDQ)</code>: 10개의 Q-functions을 가지고 randomly sample 2로 학습</li>
+</ol></li>
+</ul>
+<hr>
+<p>실험 결과는 아래와 같았다.</p>
+<ul>
+<li><code>RMA</code>는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.</li>
+<li><code>SAC</code>에 비해서 <code>Ours</code>가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/BCyV1Xk.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="b.-real-world-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="b.-real-world-experiments">B. Real-World Experiments</h2>
+<ul>
+<li><p>시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다.</p></li>
+<li><p>모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 <strong>fine-tuning</strong> 해주었다.</p></li>
+</ul>
+<ol type="1">
+<li><p>Outdoor <code>grassy lawn</code>:</p>
+<ul>
+<li><p><strong>slippery surface</strong>를 가지고 있어서 발이 잔디에서 미끄러지거나 흙에 빠질 수 있다.</p></li>
+<li><p>앞 혹은 뒤로 움직이는 <strong>pacing gait</strong>를 fine-tuning 하도록 했다.</p>
+<ul>
+<li>pacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새</li>
+</ul></li>
+<li><p>Pre-trained <strong>forward</strong> pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained <strong>backward</strong> pacing policy는 잘 넘어지는 경향이 있었다.</p></li>
+<li><p><strong>작동한 지 약 2시간 만에</strong>, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/EeTTRF8.png?2" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Indoor</p>
+<ul>
+<li><code>Carpeted room</code>: 높은 마찰계수를 가지는 지형으로 (카펫이 푹신하므로) 로봇의 고무로 마감되어 있는 발이 시뮬레이션에서 학습된 것과 다르게 안정적이지 않은 컨택을 하게 될 수 있다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Pviw7be.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><code>Doormat with crevices</code>: 매트 표면에 발이 빠질 수도 있는 환경이다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/865kXHv.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><code>Memory foam</code>: 4cm 정도의 두께의 메모리폼으로 발이 매트리스에 빠지고 평평하고 딱딱한 바닥과 비교했을 때 이 환경에서는 gait(걸음새)가 상당히 변화가 많이 일어날 수 있다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/EfZvlS5.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p><code>Indoors</code>에서는, pre-trained side stepping policy가 움직일 때 매우 불안정했고 motion을 끝내기 전에 넘어졌다.</p></li>
+<li><p>그러나 각 지형 셋팅에서 <strong>2.5 시간 이내로</strong> 로봇이 비틀거림 없이 skill을 수행할 수 있었다.</p></li>
+</ul></li>
+</ol>
+<hr>
+<p>실험 결과는 아래와 같았다. <img src="https://i.imgur.com/NRNMAex.png?1" class="img-fluid" alt="Imgur"></p>
+</section>
+<section id="c.-semi-autonomous-training" class="level2">
+<h2 class="anchored" data-anchor-id="c.-semi-autonomous-training">C. Semi-autonomous training</h2>
+<ul>
+<li>전반적인 모든 실험들에서, the recovery policy는 100% 성공적이었다.</li>
+<li>본 논문에서 제시된 방법으로 학습된 reset controller와 Unitree에서 제공한 built-in rollover controller를 비교해보았다.
+<ul>
+<li><strong>On hard surfaces</strong> : 두 가지 controllers 모두 효과적으로 잘 작동했지만 <strong>built-in</strong> 컨트롤러는 <strong>learned policy</strong>에 비해 상당히 느렸다.</li>
+<li><strong>On the memory foam</strong> : <strong>built-in</strong> 컨트롤러는 더 성능이 좋지 못했다.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="v.-conclusion" class="level1">
+<h1>V. Conclusion</h1>
+<ul>
+<li>grass, carpets, doormats and memory foam과 같은 다양한 <strong>real-world settings</strong>에서 <strong>finetune locomotion policies</strong>을 학습할 수 있는 시스템을 제안하였다.</li>
+<li><strong>autonomous data collection</strong>과 <strong>data-efficient model-free RL</strong>의 결합을 보여주었다.</li>
+<li>로봇의 넘어짐에서 <strong>automated recoveries</strong>를 수행할 수 있도록, 로봇의 <strong>on-board sensors</strong>들을 가지고 <strong>state estimation</strong>을 했으며, 이 정보들을 기반으로 효과적인 <strong>reward calculation</strong>을 제안하였다.</li>
+<li>다양한 locomotion skill에 대한 <strong>data-efficient fine-tuning</strong> 방법을 보여주었다.</li>
+<li>복잡하고 다양하며 <strong>끊임없이</strong> 변화하는 <strong>real-world environments</strong>에 대응할 수 있는 <code>a lifelong learning system for legged robots</code>를 future work로 보고 있다.</li>
+</ul>
+</section>
+<section id="review" class="level1">
+<h1>Review</h1>
+<blockquote class="blockquote">
+<p>논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.</p>
+</blockquote>
+<ul>
+<li>Pros 👍
+<ul>
+<li>로봇 operation의 명확한 한계점, 결국 로봇이 동작해야 하는 환경이 계속 변화할 수 밖에 없다는 문제점 인식이 좋은 것 같음</li>
+<li>실제 산업에서도 효율적일 것 같은 방법이라고 생각이 들었음</li>
+<li>rest policy의 성공률이 대단했음</li>
+</ul></li>
+<li>Cons 👎
+<ul>
+<li>Out door 실험에서는 여러 알고리즘으로 비교해보진 않았음</li>
+<li>알고리즘은 동일하게 하고 3개의 policy를 따로 두지 않고 1개의 policy로 만들었을 때도 비교군으로 비교해서 실험결과가 있었으면 더 좋았을 것 같음</li>
+</ul></li>
+</ul>
+</section>
+<section id="reference" class="level1">
+<h1>Reference</h1>
+<ul>
+<li><p><a href="https://arxiv.org/abs/2110.05457">Original Paper</a></p></li>
+<li><p><a href="https://sites.google.com/berkeley.edu/fine-tuning-locomotion">Project Homepage</a></p></li>
+<li><p><a href="https://arxiv.org/abs/2101.05982">Randomized Ensembled Double Q-Learning: Learning Fast Without a Model</a></p></li>
+<li><p><a href="https://github.com/utilForever/rl-paper-study/blob/main/4th/210510%20-%20Randomized%20Ensembled%20Double%20Q-Learning%20Learning%20Fast%20Without%20a%20Model%2C%20X.%20Chen%20et%20al%2C%202021.pdf">REDQ REVIEW</a></p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

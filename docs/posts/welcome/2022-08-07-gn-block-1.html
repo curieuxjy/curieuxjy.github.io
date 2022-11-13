@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-08-07">
+<meta name="description" content="Graph Networks as Learnable Physics Engines for Inference and Control">
+
+<title>Jung Yeon - 📃GN-Block(1)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">📃GN-Block(1)</h1>
+                  <div>
+        <div class="description">
+          Graph Networks as Learnable Physics Engines for Inference and Control
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">gnn</div>
+                <div class="quarto-category">mpc</div>
+                <div class="quarto-category">gn-block</div>
+                <div class="quarto-category">system identification</div>
+                <div class="quarto-category">deepmind</div>
+                <div class="quarto-category">paper review</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 7, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">1. Introduction</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">2. Model</a>
+  <ul class="collapse">
+  <li><a href="#graph-representation-of-a-physical-system" id="toc-graph-representation-of-a-physical-system" class="nav-link" data-scroll-target="#graph-representation-of-a-physical-system">Graph representation of a physical system</a></li>
+  <li><a href="#static-dynamic-properties" id="toc-static-dynamic-properties" class="nav-link" data-scroll-target="#static-dynamic-properties">Static &amp; Dynamic properties</a></li>
+  <li><a href="#graph-networks" id="toc-graph-networks" class="nav-link" data-scroll-target="#graph-networks">Graph networks</a></li>
+  <li><a href="#forward-models" id="toc-forward-models" class="nav-link" data-scroll-target="#forward-models">Forward models</a></li>
+  <li><a href="#inference-models" id="toc-inference-models" class="nav-link" data-scroll-target="#inference-models">Inference Models</a></li>
+  <li><a href="#control-algorithm" id="toc-control-algorithm" class="nav-link" data-scroll-target="#control-algorithm">Control algorithm</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<p>이번 post는 <a href="https://arxiv.org/abs/1806.01242">Graph Networks as Learnable Physics Engines for Inference and Control</a> 라는 논문을 읽고 리뷰한 내용이며, 총 2개의 post로 정리되어 있어서 이번에는 논문의 Model까지에 대한 내용이 정리되어 있습니다.</p>
+<ul>
+<li><a href="https://curieuxjy.github.io/blog/gnn/mpc/gn-block/system%20identification/deepmind/paper%20review/2022/08/07/gn-block-1.html">GN-Block(1) post</a></li>
+<li><a href="https://curieuxjy.github.io/blog/gnn/mpc/gn-block/system%20identification/deepmind/paper%20review/2022/08/14/gn-block-2.html">GN-Block(2) post</a></li>
+</ul>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<blockquote class="blockquote">
+<p>Understanding and interacting with everyday physical scenes requires rich knowledge about the structure of the world, represented either implicitly in a value or policy function, or explicitly in a transition model. Here we introduce a new class of learnable models—<code>based on graph networks—which implement an inductive bias for object- and relation-centric representations of complex, dynamical systems</code>. Our results show that as a <code>forward model</code>, our approach supports accurate predictions from real and simulated data, and surprisingly strong and efficient generalization, across eight distinct physical systems which we varied parametrically and structurally. We also found that our <code>inference model</code> can perform system identification. Our models are also <code>differentiable, and support online planning via gradient-based trajectory optimization</code>, as well as <code>offline policy optimization</code>. Our framework offers new opportunities for harnessing and exploiting rich knowledge about the world and takes a key step toward building machines with <code>more human-like representations of the world</code>.</p>
+</blockquote>
+</section>
+<section id="introduction" class="level1 page-columns page-full">
+<h1>1. Introduction</h1>
+<p>사람은 걸을때 마찰력, 작용 반작용 법칙을 생각하면서 걷지 않습니다. 많은 물리 문제들과 법칙들을 이해하기 어렵지만 복잡한 물리적 작용들이 일어나는 걷는 행동에 있어서 어려움이 없습니다. 사실 사람이 태어나서 수없이 많은 경험들의 누적으로 우리는 크게 신경쓰지 않아도 어떻게 힘을 주면 다리가 움직이는 지 알고있기 때문입니다. 이처럼 인공지능도 <em>어떻게 하면 복잡한 시스템을 이해하고 잘 작동할 수 있을까?</em> 라는 물음을 <strong>GN-Block</strong>이라는 Graph 아이디어로 해결할 수 있다고 주장하는 논문입니다.</p>
+<aside>
+<p>❓ How can an intelligent agent understand and control such complex systems?</p>
+</aside>
+<p>인공지능이 이렇게 사람이 자연스럽게 익히는 세상의 물리적인 현상을 이해하고 상호작용 작용하려면 암시적이든 명시적으로든 세계에 대한 풍부한(rich) 표현과 지식이 필요합니다. 다시 말해, 시스템에 있는 objects들과 objects간의 관계를 표현해서 동일 object에는 동일한 <strong>object-wise한 계산</strong>을, 이들 사이에 일어나는 interation들에 대해서는 <strong>relation-wise 계산</strong>을 적용해서 학습을 할 수 있어야 합니다. 마치 레고 블럭들 하나하나를 이해하고 어떻게 하면 성을 쌓을 수 있는지 아는 것처럼 <code>combinatorial generalization</code> 능력을 가질 수 있는 것이라고 생각해 볼 수 있습니다.</p>
+<p>해당 논문의 목표는 <strong>physical dynamics models을 그래프 기반의 방법으로 학습</strong>하는 것입니다. Graph Neural Network(GN)의 <code>node update function</code>을 가지고 body의 dynamics에 대한 학습을 할 수 있고, <code>edge update function</code>을 가지고 interaction의 dynamics를 인코딩할 수 있으며, <code>global update function</code>을 가지고 global system의 속성들을 인코딩 할 수 있다고 주장합니다. 여기서 다른 논문들과 다르게 특이한 점은 global한 시스템의 속성이라는 부분을 따로 고려를 했다는 점이라고 할 수 있습니다.</p>
+<p>논문의 contribution은 크게 3가지 forward model, inference model, control algorithm 입니다. (하지만 리뷰하면서 느낀 점은 <em>control algorithm</em> 부분은 contribution이라고 하기보다는 GN-based model을 가지고 control pipeline을 잘 붙인 것이라고 생각됩니다.) 다른 physics engine들과 다르게 물리법칙에 대한 사전 지식(prior knowledge)을 전혀 가정하지 않지만 대신 <code>object- and relation-centric inductive bias</code>를 이용하여 <strong>current-state/next-state pairs</strong>에 대한 학습을 합니다. 그래프 기반으로 물리 시스템을 forward model과 inference model이 학습하게 되면 control algorithm은 이 모델들을 이용하여 planning이나 policy learning을 하게 됩니다.</p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GN-based forward models</td>
+<td>정확하고 일반화된 prediction을 할 수 있음</td>
+</tr>
+<tr class="even">
+<td>GN-based inference models</td>
+<td>observation에 숨겨져 있는 속성들을 기반으로 system identification을 할 수 있음</td>
+</tr>
+<tr class="odd">
+<td>NOT GN-based control algorithms</td>
+<td>다른 베이스라인들보다 좋은 control 퍼포먼스를 보여줌</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model" class="level1">
+<h1>2. Model</h1>
+<section id="graph-representation-of-a-physical-system" class="level2">
+<h2 class="anchored" data-anchor-id="graph-representation-of-a-physical-system">Graph representation of a physical system</h2>
+<p>물리시스템을 어떻게 그래프로 나타낼 수 있는지 몇가지 용어와 수식들을 정리해보겠습니다. - 물리 시스템의 body는 그래프의 <code>node</code>로 표현합니다. - 물리 시스템의 joint는 그래프의 <code>edge</code>로 표현합니다. - 물리 시스템의 global한 속성은 <code>global feature</code>로 표현합니다.</p>
+<p>아래 사진에서 보이는 half-cheetah에서 직관적으로 어떻게 그래프가 그려질 수 있는지 알 수 있고 이 그래프를 <span class="math inline">\(G\)</span>로 나타낼 수 있습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/yN3GlTK.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>앞서 설명한 부분을 수식으로 나타내면 다음과 같습니다.</p>
+<p><span class="math display">\[
+G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\mathbf{e}_{j}, s_{j}, r_{j}\right\}_{j=1 \cdots N_{e}}\right)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(g\)</span> : global features 시스템의 중력이나 time step과 같은 속성을 나타내는 벡터입니다.</li>
+<li><span class="math inline">\(\mathbf{n}_{i}\)</span> : node features를 나타내는 벡터입니다.</li>
+<li><span class="math inline">\(\mathbf{e}_{j}\)</span> : edge features를 나타내는 벡터입니다.</li>
+<li><span class="math inline">\(s_{j}\)</span> : 이 edge를 통해서 message를 보내는 sender nodes의 인덱스입니다.</li>
+<li><span class="math inline">\(r_{j}\)</span> : 이 edge를 통해서 message를 받는 receiver nodes의 인덱스입니다.</li>
+</ul>
+</section>
+<section id="static-dynamic-properties" class="level2">
+<h2 class="anchored" data-anchor-id="static-dynamic-properties">Static &amp; Dynamic properties</h2>
+<p>여기서 static graph <span class="math inline">\(G_s\)</span>와 dynamic graph <span class="math inline">\(G_d\)</span> 라는 그래프는 2가지 종류가 있습니다. 이 2개의 그래프는 각각 시스템의 속성이 시간에 따라 변화하는지(dynamic/time-variant) 안하는지(static/time-invaritant)에 따라 그래프를 구성하는 정보의 종류가 다릅니다.(자세한 정보는 Appendix G section에서 Mujoco 기반의 어떤 정보로 각 그래프를 구성했는지 나와있습니다.)</p>
+<ul>
+<li>A static graph <span class="math inline">\(G_s\)</span>: 시스템의 static한 정보를 가지고 있는 그래프
+<ul>
+<li><code>global parameters</code>: the time step, viscosity, gravity, etc</li>
+<li><code>body/node parameters</code>: mass, inertia tensor, etc.</li>
+<li><code>joint/edge parameters</code>: joint type과 properties, motor type and properties, etc</li>
+</ul></li>
+<li>A dynamic graph <span class="math inline">\(G_d\)</span>: 시스템의 일시적인 state 정보를 가지고 있는 그래프
+<ul>
+<li><code>body/node</code>: 3D Cartesian position, 4D quaternion orientation, 3D linear velocity, 3D angular velocity</li>
+<li><code>joint/edge</code>: joint에 적용된 action들의 크기</li>
+</ul></li>
+</ul>
+</section>
+<section id="graph-networks" class="level2">
+<h2 class="anchored" data-anchor-id="graph-networks">Graph networks</h2>
+<ul>
+<li><code>graph2graph</code> 모듈을 활용하여 인풋을 그래프로 받고 아웃풋도 그래프로 받는 모델입니다. 따라서 아웃풋의 그래프는 인풋 그래프와 다른 edge, node, global features를 가지게 됩니다.</li>
+</ul>
+<p>본 논문의 핵심 아이디어인 GN 블록의 구조에 대해 알아보겠습니다. - A core GN block</p>
+<pre><code>![Imgur](https://i.imgur.com/3PffG3H.png?1)
+
+- 3개의 sub function, MLP로 이루어져 있습니다.
+    - edge-wise $f_e$ : 모든 edge들에 대한 update를 진행합니다.
+    - node-wise $f_n$ : 모든 node들에 대한 update를 진행합니다.
+    - global $f_g$ : 마지막으로 global feature들을 update 합니다.</code></pre>
+<p>하나의 feedforward GN pass는 그래프 상에서 message-passing 단계의 한 스텝으로 간주할 수 있습니다. 이러한 GN-block 내에서의 알고리즘은 아래와 같습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/TjghKvm.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="forward-models" class="level2">
+<h2 class="anchored" data-anchor-id="forward-models">Forward models</h2>
+<p>Forward model의 목적은 <strong>현재 정보를 기반으로 다음 step의 상태를 예측(prediction)하는 것입니다.</strong> (이는 영어 단어의 비슷한 의미때문에 다음에 나오는 inference model의 목적과 많이 혼동될 수 있으니 잘 정의하고 넘어가는 것이 좋습니다.) forward model은 <em>RNN(GRU)를 도입했는지 여부에 따라</em> 2가지 타입이 있습니다.</p>
+<p><strong>Type1. GNN feed-forward</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/2tN81Kd.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>가장 간단한 GNN feed-forward 모델입니다. 그래프는 처음에 <span class="math inline">\(GN_1\)</span>을 거쳐 latent graph인 <span class="math inline">\(G'\)</span>이 됩니다. 그리고 다음 <span class="math inline">\(GN_2\)</span>의 인풋으로는 <span class="math inline">\(GN_1\)</span>을 거치긴 전의 그래프였던 <span class="math inline">\(G\)</span>와 <span class="math inline">\(G'\)</span>를 concatenate를 해서 넣어주게 됩니다. 저자들은 이렇게 디자인한 이유로, 그래프의 모든 노드들과 엣지들이 모두 communicate하게 하기 위함이라고 이야기합니다. 이렇게 <span class="math inline">\(GN_1\)</span>, <span class="math inline">\(GN_2\)</span>를 거쳐 최종적으로 나오는 <span class="math inline">\(G^*\)</span>의 node feature들이 각 body의 상태 prediction 값이 되는 것 입니다.</p>
+<p><strong>Type2. RNN+GNN</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/7ZKlooE.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>다음으로 앞서 기본이 되는 모델에 G-GRU를 추가한 타입니다. Type 1과 비슷하게 skip connection, latent graph를 모두 사용하는데 GN block의 GRU 버젼인 G-GRU가 들어가면서 <span class="math inline">\(G_h\)</span>라는 RNN에서 hidden vector와 같은 개념의 hidden graph가 추가된 것입니다. 모든 edge, node, global feature들에 대해 각각 RNN이 적용되어 총 3개의 RNN sub-modules이 있습니다.</p>
+<p><strong>두가지 타입의 GNN forward 모델에 공통적인 사항</strong></p>
+<ol type="1">
+<li><p><code>state differences</code>를 예측하는 것을 학습해서 state prediction의 절댓값(absolute)을 계산합니다. 이 계산된 absolute state prediction을 가지고 state를 update하게 되는 것입니다.</p></li>
+<li><p><code>long-range rollout</code> trajectory를 만들어내기 위해서 state prediction 값과 control input을 반복적으로 model에 넣어주어서 여러 스텝의 trajectory를 생성하게 됩니다.</p></li>
+<li><p>GN model의 인풋과 아웃풋들은 normalize 됩니다.</p></li>
+</ol>
+<p>사실 리뷰를 하면서 forward model과 inference model 사이의 구분이나 모델의 구체적인 프로세스 이해가 pseudo algorithm을 보기 전까지 잘되지 않았습니다. Appendix에 나와있어서 잘 보지 않을 확률이 높지만 논문의 개념을 대략적으로 이해하고 난 후에는 꼭 line by line으로 보시길 추천합니다.</p>
+<p>먼저 <strong>forward model의 학습과정</strong>을 보여주는 pseudo algorithm 입니다. 다시한번 이 모델의 목적을 상기시켜보자면, 현재 상태 <span class="math inline">\(x^{t_0}\)</span> 를 기반으로 <span class="math inline">\(a^{t_0}\)</span>와 함께 주어졌을 때, <span class="math inline">\(x^{t_0+1}\)</span>을 예측하는 것입니다. 앞서 설명한 부분들인, state의 잔차를 학습하는 부분이나 normalization 등이 알고리즘내에 잘 나와있습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Fzex7GV.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>다음은 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">\(x^{t_0+1}\)</span>을 어떻게 예측하는지 보여주는 알고리즘입니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/ztG7ZuO.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>마지막으로 바로 위 알고리즘과 동일하게 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">\(x^{t_0+1}\)</span>을 어떻게 예측하는지 보여주는 알고리즘이지만 inference model에서 학습된 <span class="math inline">\(GN_p\)</span>를 가지고 <code>system identification</code>이 추가된 상태에서 어떻게 알고리즘이 흘러가는지 보여줍니다.(이전에 알고리즘에서는 system parameter <span class="math inline">\(p\)</span>라고 표시되었던 부분이 대체된 것입니다.)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Snfkuwb.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="inference-models" class="level2">
+<h2 class="anchored" data-anchor-id="inference-models">Inference Models</h2>
+<p>Inference model의 목적을 한 마디로 표현하자면 <code>System identification</code>이라고 할 수 있습니다. System identification이란 <strong>관찰할 수 없는(unobserved) dynamic system의 속성들을 관찰되는(observed) behavior(또는 어떤 양상)를 가지고 추론하는 것</strong>을 말합니다. 즉 암시적으로 system을 구성하는 요소들을 (명시적이지 않아) 측정하거나 관찰할 수 없지만 <strong>latent representations</strong>을 통해 추론할 수 있습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/4ZMFGU1.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>Inference model도 <strong>Recurrent GN-based model</strong> 입니다. forward 모델과 다른 점으로는 오직 trajectory의 <code>dynamic states</code>들만 input으로 받습니다. 따라서 dynamic state graph인 <span class="math inline">\(G_d\)</span>와 control input을 받습니다. 아웃풋으로는 일정 time step <span class="math inline">\(T\)</span>이후의 <span class="math inline">\(G^*(T)\)</span>이 되며, 본 논문에서 이후 실험파트에서 20 step을 사용했습니다.</p>
+<p><strong>inference model 학습과정</strong>의 pseudo 알고리즘은 아래와 같습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/0FeskwM.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="control-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="control-algorithm">Control algorithm</h2>
+<p>control algorithm에서는 그래프 기반이 아니고 앞서 설명한 그래프 기반의 forward model과 inference model을 잘 활용해서 어떻게 control할 수 있을지를 보여줍니다. 본 논문에서는 크게 2가지 control algorithm을 사용했습니다. 강화학습을 주로 연구하는 입장에서 리뷰해보면, 대부분 강화학습은 model-free 기반의 알고리즘이 많이 발전했는데 GN기반의 다음 상태를 예측할 수 있는 model을 만듦으로써 model-based 기반의 강화학습 알고리즘을 적용할 수 있다는 것이 매우 흥미로웠습니다.</p>
+<ol type="1">
+<li><p>MPC(Model Predictive Control)</p>
+<p>GN은 미분 가능하기 때문에 MPC같은 <strong>gradient-based trajectory optimization</strong> 방법으로 model-based planning을 할 수 있습니다. 대표적으로 MPC가 있고 학습기반이 아니라 최적화 알고리즘이며 알고리즘의 흐름은 아래와 같습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/4s443v3.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div></li>
+<li><p><a href="https://proceedings.neurips.cc/paper/2015/hash/148510031349642de5ca0c544f31b2ef-Abstract.html">SVG</a>(Stochastic Value Gradients)</p>
+<p>강화학습 알고리즘 중 하나이며, GN-based model과 SVG의 policy function을 동시에 학습하는 agent로 control을 하는 방법입니다. SVG(1)은 한 스텝을 예측하는 GN model을 가지고 강화학습 알고리즘으로 control을 한 것이며(model-based) SVG(0)은 예측하는 GN model 없이 model-free 기반으로 control한 것으로 이해하시면 됩니다.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>사실 MPC와 SVG는 매우 비슷한 측면이 있습니다. MPC에서는 control inputs들이 한 에피소드에서 초기 조건들이 주어졌을 때 최적화 되는 것이라면, SVG에서는 state와 control을 매칭시키는 policy function이 학습과정에서 경험한 states에 대해서 최적화 되는 것입니다.</p>
+</blockquote>
+<hr>
+<p><strong>Reference</strong> - Original paper <a href="https://arxiv.org/abs/1806.01242">Graph Networks as Learnable Physics Engines for Inference and Control</a> - Official code <a href="https://github.com/fxia22/gn.pytorch">https://github.com/fxia22/gn.pytorch</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

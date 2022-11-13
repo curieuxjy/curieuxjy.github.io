@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Robust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning">
+
+<title>Jung Yeon - 📃Robust Recovery Controller</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">📃Robust Recovery Controller</h1>
+                  <div>
+        <div class="description">
+          Robust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">recovery</div>
+                <div class="quarto-category">eth</div>
+                <div class="quarto-category">paper review</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>The ability to <code>recover from a fall</code> is an essential feature for a legged robot to navigate in challenging environments robustly. Until today, there has been very little progress on this topic. Current solutions mostly build upon (heuristically) predefined trajectories, resulting in unnatural behaviors and requiring considerable effort in engineering system-specific components. In this paper, we present an approach based on model-free Deep Reinforcement Learning (RL) to control recovery maneuvers of quadrupedal robots using a <code>hierarchical behavior-based</code> controller. The controller consists of <code>four neural network policies</code> including <code>three behaviors</code> and <code>one behavior selector</code> to coordinate them. Each of them is trained individually in simulation and deployed directly on a real system. We experimentally validate our approach on the quadrupedal robot ANYmal, which is a dog-sized quadrupedal system with 12 degrees of freedom. With our method, ANYmal manifests dynamic and reactive recovery behaviors to recover from an arbitrary fall configuration within <code>less than 5 seconds</code>. We tested the recovery maneuver more than 100 times, and <code>the success rate was higher than 97 %</code>.</p>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>보행로봇의 많은 연구들은 보행하는 locomotion task에 집중되어 있는 경향이 있지만 이에 못지 않게 recovery task에 대해서도 생각해봐야 합니다. 보행 로봇이 잘 걷다가도 예상치 못한 환경요인에 의해 넘어질 위험은 항상 있기 때문입니다. 따라서 본 논문에서는 <code>robust recovery maneuver</code>를 강화학습을 통해 디자인했습니다. 잘 연구되지 않는 부분인 만큼 우선 이러한 maneuver에 대한 정의를 하자면, 로봇이 넘어진 상황(fall)에서 다시 정상 작동 상태(staning이나 walking)으로 돌아올 수 있도록 하는 maneuver를 말합니다. 이러한 기능을 수행하기 위해서는 (1) <strong>지면과의 interaction</strong>을 적절히 이용할 줄 알아야 하며, (2) <strong>다리를 이용해서 swinging motion</strong>을 사용할 줄 알고 (3) 로봇이 움직이는 과정 동안에 모션이 꼬여서 <strong>혼자서 충돌하지 않도록</strong> 해야 합니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/kKRwRlP.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>이전의 연구들은 다리 이외의 꼬리나 추가적인 limb를 장착하여 해결하거나 예측 가능한 case들에 대해서만 fall-recovery를 했었기에 corner case들에서는 취약했습니다. 따라서 model-free RL 알고리즘으로 agent가 직접 환경과 상호작용하며 경험으로부터 다이나믹스와 컨트롤 policy를 학습하도록 했습니다. 로봇이 넘어졌다가 일어나는 과정을 단계별로 나누어서 생각해보면 다음과 같습니다.</p>
+<ol type="1">
+<li>self-righting</li>
+<li>standing up</li>
+<li>locomotion(정상 보행)</li>
+</ol>
+<p>이 3가지 behavior를(multi-task) 한 개의 policy에 학습 시킬 경우 잘 학습이 되지 않을 뿐만 아니라 오히려 각 behavior의 퍼포먼스를 서로 해치게 되기 때문에 <strong>여러 개의 policy들로 나누는 것</strong>이 좋습니다. 그래서 본 논문에서는 각 behavior들을 컨트롤하는 <strong>policy 3개</strong>와 3개의 policy들 중에 하나를 선택하는 <strong>behavior selection policy 1개</strong>, 총 4개를 따로 학습 시켰습니다. 이런 <code>계층적(hierarchical)인 구조</code>는 모든 부분이 Neural Network로 이루어져 있어서 복잡한 maneuver를 만들기에 적합니다.</p>
+<p>강화학습 알고리즘으로는 <strong>Trust Region Policy Optimization(TRPO)</strong>를 사용했으며, <strong>학습 기반의 state estimator</strong>를 behavior selection과 동시에 학습시켜서 넘어졌을 때 알 수 없는 contact condition과 같은 상태를 파악할 수 있도록 했습니다.</p>
+</section>
+<section id="method" class="level1">
+<h1>Method</h1>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

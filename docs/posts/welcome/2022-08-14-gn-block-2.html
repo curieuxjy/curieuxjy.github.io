@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-08-14">
+<meta name="description" content="Graph Networks as Learnable Physics Engines for Inference and Control">
+
+<title>Jung Yeon - 📃GN-Block(2)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">📃GN-Block(2)</h1>
+                  <div>
+        <div class="description">
+          Graph Networks as Learnable Physics Engines for Inference and Control
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">gnn</div>
+                <div class="quarto-category">mpc</div>
+                <div class="quarto-category">gn-block</div>
+                <div class="quarto-category">system identification</div>
+                <div class="quarto-category">deepmind</div>
+                <div class="quarto-category">paper review</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 14, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#methods" id="toc-methods" class="nav-link active" data-scroll-target="#methods">3. Methods</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">4. Results</a>
+  <ul class="collapse">
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
+  <li><a href="#control" id="toc-control" class="nav-link" data-scroll-target="#control">Control</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">5. Discussion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>이번 post는 <a href="https://arxiv.org/abs/1806.01242">Graph Networks as Learnable Physics Engines for Inference and Control</a> 라는 논문을 읽고 리뷰한 내용이며, 총 2개의 post로 정리되어 있어서 이번에는 논문의 Method ~ Discussion 까지에 대한 내용이 정리되어 있습니다.</p>
+<ul>
+<li><a href="https://curieuxjy.github.io/blog/gnn/mpc/gn-block/system%20identification/deepmind/paper%20review/2022/08/07/gn-block-1.html">GN-Block(1) post</a></li>
+<li><a href="https://curieuxjy.github.io/blog/gnn/mpc/gn-block/system%20identification/deepmind/paper%20review/2022/08/14/gn-block-2.html">GN-Block(2) post</a></li>
+</ul>
+<section id="methods" class="level1">
+<h1>3. Methods</h1>
+<p><span style="color: blue">Environments</span></p>
+<ul>
+<li>MuJoCo 시뮬레이션 환경을 이용했다.
+<ul>
+<li>Pendulum, Cartpole, Acrobot, Swimmer, Cheetah, Walker2d, JACO(robotic arm)</li>
+</ul></li>
+<li>generated training data for our forward models by applying simulated random controls to the systems, and recording the state transitions</li>
+<li>generalization and system identification 실험을 위해서
+<ul>
+<li>created a dataset of versions of several of our systems—Pendulum, Cartpole, Swimmer, Cheetah and JACO— with procedurally varied parameters and structure.</li>
+<li>변화시킨 속성들로는 link lengths, body masses, and motor gears. + varied the number of links in the Swimmer’s structure, from 3-15 (we refer to a swimmer with N links as SwimmerN )</li>
+</ul></li>
+</ul>
+<p><span style="color: blue">MPC planning</span></p>
+<ul>
+<li><strong>N-step trajectory</strong>(N: planning horizon)와 그 trajectory를 실행했을 때 받을 <strong>total reward</strong>를 GN forward 모델로 예측했다.</li>
+<li>이때의 action sequences(=trajectory)들을 total reward의 backpropagating gradient를 가지고 최적화하게 된다.</li>
+</ul>
+<p>Model-based reinforcement learning</p>
+<ul>
+<li>GN-based model을 강화학습에 적용해보다</li>
+<li>SVG를 이용했다.</li>
+<li>GN forward model이 미분가능하기 때문에 GN 모델로 생성된 next state를 가지고 expected return 값의 그라디언트를 구할 수 있다.</li>
+<li>1 step을 예측하는 SVG(1)과</li>
+<li>model-free RL 베이스라인과 비교하기 위해 SVG(0)과 deterministic policy 알고리즘인 DDPG(Deep Deterministic Policy Gradients)알고리즘을 사용했다.</li>
+</ul>
+<p><span style="color: blue">Baseline comparisons</span></p>
+<ol type="1">
+<li>constant prediction baseline: input state를 그대로 output state로 사용</li>
+<li>MLP baseline: GN model에 쓰인 데이터를 그대로 MLP에 flattened &amp; concatenated 해서 학습</li>
+<li>MPC baseline: 물리 모델을 가지고 Differential Dynamic Programming algorithm을 사용해서 ground truth 값을 가짐</li>
+<li>SVG(0): model-free RL agents</li>
+<li>DDPG: model-free RL agents</li>
+</ol>
+<p>Prediction performance evaluation</p>
+<ul>
+<li>calculated independent errors for <strong>position, orientation, linear velocity angular velocity</strong></li>
+</ul>
+<ol type="1">
+<li>squared one-step dynamic state differences (one-step error)</li>
+<li>squared trajectory differences (rollout error) between the prediction and the ground truth.</li>
+</ol>
+</section>
+<section id="results" class="level1">
+<h1>4. Results</h1>
+<section id="prediction" class="level2">
+<h2 class="anchored" data-anchor-id="prediction">Prediction</h2>
+<p><span style="color: blue">Learning a <strong>forward</strong> model for a <strong>single</strong> system</span></p>
+<p>하나의 시스템을 가지고 학습한 forward model의 Prediction 성능 살펴보기</p>
+<ul>
+<li><p>random control로 만들어진 데이터들을 가지고 학습된 GN-based model</p>
+<ul>
+<li><p><strong>[Visually]</strong> Swimmer6에서 그림에서 처럼 ground truth와 예측 결과가 구분이 안 갈 정도로 흡사하다.(<a href="https://drive.google.com/file/d/1ez6sqCTZmHdSnf86lK6NEsnzyi-O25-B/view">영상</a>에서도 거의 구분이 안 갈 정도로 잘 예측하고 있음을 알 수 있다.)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/N6bOymB.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div></li>
+<li><p><strong>[Quantitatively]</strong> 100 step에서 3축 방향으로의 위치, 선속도, 각속도, 쿼터니안 방향 비교</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/anOJrxE.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div></li>
+</ul></li>
+<li><p>constant prediction baseline은 아웃풋으로 인풋을 그대로 복사해서 사용했기 때문에 애러 최대치로 normalization 하기 위해 검은색 점선으로 표기</p></li>
+<li><p>우선 검은 점선과 막대기들을 뭉뚱그려서 보면,</p></li>
+<li><p>1 step과 100 step의 rollout 결과를 비교했을 때 검은 점선에 비해 파란색 막대기들의 error 값이 낮음을 알 수 있다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/atKJKme.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>GN 모델이 MLP-based 보다 더 낮은 애러를 가지는 것을 알 수 있다. 이는 특별히 Swimmer6처럼 에이전트의 구조가 반복적인 경우에 더욱 눈에 띄게 낮음을 알 수 있었다. 이를 통해 GN-based forward 모델이 다양한 물리 시스템들에서 dynamics를 잘 예측함을 알 수 있다.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/u7z0wJP.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>GN이 MLP보다 더 generalization이 잘 됨을 확인할 수 있었는데, Swimmer6를 집중적으로 <code>train</code>, <code>valid</code>, <code>test</code> 데이터에 대해 1-step, rollout error를 각각 확인해봤을 때, Best GN의 error 값이 Best MLP보다 낮음을 알 수 있다. 뿐만 아니라 test data의 error 증가율을 봤을 때에도 GN 모델의 test data의 error가 더 적게 증가함을 관찰할 수 있었고 이는 agent의 bodies와 joints들에 대한 inductive bias가 GN을 통해 잘 학습되었음을 증명할 수 있다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/bMJJ6Jb.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p>Learning a forward model for <strong>multiple</strong> systems</p>
+<p>한 개의 시스템에서의 forward model을 살펴보았으니 이제 여러 시스템에서의 forward model의 성능을 살펴보자. GN을 사용하면 여러 시스템들의 다양한 변수들도 잘 다룰 수 있다는 가정이 있었다. 이를 확인하기 위해 연속적으로 static parameter들(질량, body의 길이, joint의 각도 등)을 바꿔가면서 forward dynamics를 어떻게 학습해가는지 확인했다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/pM4UKhs.png?1" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="inference" class="level2">
+<h2 class="anchored" data-anchor-id="inference">Inference</h2>
+</section>
+<section id="control" class="level2">
+<h2 class="anchored" data-anchor-id="control">Control</h2>
+</section>
+</section>
+<section id="discussion" class="level1">
+<h1>5. Discussion</h1>
+<p><strong>Review</strong></p>
+<blockquote class="blockquote">
+<p>논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.</p>
+</blockquote>
+<ul>
+<li>Pros 👍
+<ul>
+<li></li>
+</ul></li>
+<li>Cons 👎
+<ul>
+<li>mlp comparison</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>Reference</strong></p>
+<ul>
+<li>Original paper <a href="https://arxiv.org/abs/1806.01242">Graph Networks as Learnable Physics Engines for Inference and Control</a></li>
+<li>Official code <a href="https://github.com/fxia22/gn.pytorch">https://github.com/fxia22/gn.pytorch</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

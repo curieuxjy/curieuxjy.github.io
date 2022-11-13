@@ -3,18 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "github_blog"
+  title: "Jung Yeon"
+  favicon: profile.png
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/curieuxjy
+
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme:
+      - standstone
+      - custom.scss
+# https://quarto.org/docs/websites/website-blog.html#themes sketchy simplex standstone
+# minty pulse
 
-
-
+execute: 
+  freeze: auto

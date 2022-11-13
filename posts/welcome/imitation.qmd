@@ -1,0 +1,346 @@
+---
+draft: true
+title: "📃Learning Agile Robotic Locomotion Skills by Imitating Animals"
+description: Reproducing the diverse and agile locomotion skills of animals
+date: ""
+categories: [legged robots, rl, imitation learning, pybullet, paper review]
+toc: true
+---
+
+![Imgur](https://i.imgur.com/1Fh5MaD.png?1)
+
+# 0. Abstract
+
+> Abstract—`Reproducing the diverse and agile locomotion skills of animals` has been a longstanding challenge in robotics. While manually-designed controllers have been able to emulate many complex behaviors, building such controllers involves a time-consuming and difficult development process, often requiring substantial expertise in the nuances of each skill. Reinforcement learning provides an appealing alternative for automating the manual effort involved in the development of controllers. However, `designing learning objectives that elicit the desired behaviors from an agent` can also require a great deal of skill-specific expertise. In this work, we present an `imitation learning system` that enables legged robots to `learn agile locomotion skills by imitating real-world animals`. We show that by `leveraging reference motion data`, a single learning-based approach is able to automatically synthesize controllers for a diverse repertoire of behaviors for legged robots. By `incorporating sample efficient domain adaptation techniques` into the training process, our system is able to learn adaptive policies in simulation that can then be quickly adapted for real-world deployment. To demonstrate the effectiveness of our system, we train an `18DoF` quadruped robot to perform a variety of agile behaviors ranging from different locomotion gaits to dynamic hops and turns.
+
+
+- 동물들의 locomotion skill들을 로봇으로 재현하는 것은 정말 challenging하다
+- agent에게 원하는 행동을 명확하게 objective로 제시하는 것도 매우 어렵다.
+- imitation learning 기법을 이용하여 동물들의 locomotion skill들을 학습할 수 있도록 했다.
+- reference motion data들을 이용해서 controller에 학습기반의 접근법을 바로 넣을 수 있었고 domain adaptation 기법을 training 과정에 넣어주어서 실제 로봇에 deployment를 했을 때 바로 잘 동작할 수 있었다.
+- 18 자유도를 가지는 4족 보행 로봇을 가지고 다양한 locomotion gait들과 dynamic hop이나 turn이 가능했다.
+
+# I. Introduction
+
+- While these methods have demonstrated promising results in simulation, 
+agents trained through RL are prone to adopting unnatural behaviors 
+that are dangerous or infeasible when deployed in the real world
+- one to wonder: 
+can we build more agile robotic controllers with less effort by directly imitating animal motions?
+- The use of reference motions alleviates the need to design skill-specific reward functions
+- In order to transfer policies learned in simulation to the real world, 
+we propose a sample efficient adaptation technique, which fine-tunes the behavior of a policy
+- Laikago quadruped robot
+- different locomotion gaits, as well as dynamic hops and turns
+
+---
+
+- RL로 학습한 agent들은 시뮬레이션에서 좋은 결과를 보여주지만 막상 실제 로봇에 적용되었을 때 부자연스럽고 위험한 동작들을 보여줄 때가 있다.
+- 그래서 자연스럽게 바로 동물들의 모션을 따라서 로봇들이 움직이도록 하면 되지 않을까? 라는 생각을 하게 된다.
+- reference가 될 수 있는 motion 데이터들을 사용하는 것은 특정 skill들을 위한 reward function을 만드는 어려움을 줄여줄 수 있다.
+- 시뮬레이션에서 학습한 policy를 실제 로봇에 적용하기 위해 sample efficient한 adaptation technique을 제안했는데, 이는 policy로 만들어지는 behavior를 fine-tuning하는 것이다.
+- Laikago 4족 보행 로봇으로 다양한 locomotion gait(이동 걸음새)들을 학습할 수 있었고 dynaamic hops와 turn들도 가능했다.
+
+# II. RELATED WORK
+
+- Trajectory optimization and model predictive control can mitigate some of the manual effort involved in the design process, 
+but due to the high-dimensional and complex dynamics of legged systems, 
+reduced-order models are often needed to formulate tractable optimization problems
+- Trajectory optimization이나 model predictive control 같은 방법들은 controller 디자인 과정에서 많은 manual 한 부분들을 없애주긴 했지만 보행 로봇들의 고차원적이고 복잡한 동역학 과정 때문에 축약된 모델들을 사용했었다.
+
+## Motion imitation
+
+- But applications of motion imitation to legged robots have predominantly been limited to behaviors that emphasize upper-body motions, 
+with fairly static lower-body movements, 
+where balance control can be delegated to separate control strategies
+- Recently, motion imitation with reinforcement learning has been effective 
+for learning a large repertoire of highly acrobatic skills in simulation [44, 34, 45, 32]
+- 보행로봇들의 application에 motion imitation은 상당히 정적인 lower-body의 움직임으로 upper-body의 모션을 너무 신경쓰는 행동들에 제한됬었다. 그래서 balance control이 제어 전략으로 따로 분리됬었다.
+- 최근 연구들로 RL로 하는 motion imitation은 시뮬레이션에서 매우 acrobatic한 skill들을 잘 학습하는 것으로 알려졌다.
+
+## Sim-to-real transfer
+
+- by constructing more accurate simulations [58, 62], 
+or adapting the simulator with realworld data [57, 23, 26, 36, 5].
+- Domain randomization can be incorporated into the training process to encourage policies to be robust to variations in the dynamics [52, 60, 47, 42, 41].
+- Sample efficient adaptation techniques, 
+such as finetuning [51] and meta-learning [13, 16, 6] can also be applied 
+to further improve the performance of pre-trained policies in new domains.
+
+---
+
+강화학습은 우선 시뮬레이션(source domain)에서 먼저 학습을 시킨 후 , real world(target domain)에 학습된 agent가 동작하게 된다. 이 과정에서 시뮬레이션과 real world 사이의 차이(gap)이 생기게 되고 이를 해결하기 위한 많은 방법들이 제시된다.
+
+- 매우 정확한 시뮬레이터를 만들거나 real world 데이터를 가지고 시뮬레이터를 맞춰서 sim-to-real  transferring을 해결하고자 했었다.
+- Domain randomization은 training과정에서 policy가 다양한 다이나믹스를 접할 수 있도록 하는 방법이다.
+    - 여기서 domain이라 함은 물리적인 조건, 로봇의 질량, 마찰력등과 같은 로봇이 동작하는 환경의 변수 조건들의 집합이라고 볼 수 있다.
+    - 이런 물리적인 값들을 시뮬레이션에서 실제 로봇이 동작할 환경과 똑같이 맞춰주기 힘들다.
+    - 이런 값들이 조금이라도 달라져서 로봇이 제대로 동작하지 못하고 다시 처음부터 학습을 해야 한다면 매우 난감한 상황이되고 사실상 로봇을 쓸 수 없는 상황일 것이다.
+- Fine-tuning이나 meta-learning과 같은 sample efficient adaptation 기법들을 사용해서 새로운 domain에 놓인 pre-trained policy들이 퍼포먼스를 잘 나타내게 하는 방법도 있다.
+
+### Ours
+
+- latent space methods [24, 65, 67], 
+to transfer locomotion policies from simulation to the real world
+- During pre-training, 
+these methods learn a latent representation of different behaviors 
+that are effective under various scenarios.
+- When transferring to a new domain, 
+a search can be conducted in the latent space 
+to find behaviors that successfully execute a desired task in the new domain.
+- by combining motion imitation and latent space adaptation, 
+our system is able to learn a diverse corpus of dynamic locomotion skills 
+that can be transferred to legged robots in the real world.
+
+---
+
+본 논문의 방법은
+
+- latent space 방법을 이용해서 시뮬레이션에서 real world에 배포할 때 locomotion policy들이 성공적으로 transferring되도록 했다.
+    - pre-training과정에서 여러 behavior들의 latent representation을 학습하는 것은 다양한 시나리오에서 매우 효율적이다.
+    - 새로운 도메인에 transferring될 때, 새로운 도메인에서 desired task를 하기 위한 behavior가 latent space에서 검색된다.
+- motion imitation과 latent space adaptation을 합치면서 다양한 locomotion skill들을 학습할 수 있었을 뿐만 아니라 실제 로봇에도 적용할 수 있었다.
+
+## RL for legged locomotion
+
+- Hwangbo et al. [26] proposed learning a motor dynamics model using real-world data, which enabled direct transfer of a variety of locomotion skills to the ANYmal robot
+    - manually-designed reward functions for each skill
+- Xie et al. [62] trained bipedal walking policies for the Cassie robot 
+by imitating reference motions recorded from existing controllers and keyframe animations.
+    - transferred from simulation to the real world with the aid of careful system identification
+- Yu et al. [65] transferred bipedal locomotion policies from simulation 
+to a physical Darwin OP2 robot 
+using a latent space adaptation method, 
+which mitigates the dependency on accurate simulators
+
+### Ours
+
+- latent space method, but by combining it with motion imitation, 
+our system enables real robots to perform more diverse and agile behaviors 
+than have been demonstrated by these previous methods.
+
+---
+
+- 매우 세세한 reward function 디자인이나 system identification을 썼던 이전 방법들과 달리 latent space method를 motion imitation과 합치면서 더 다양하고 agile한 behavior들을 수행할 수 있었다.
+
+# III. OVERVIEW
+
+![Imgur](https://i.imgur.com/1Fh5MaD.png?1)
+
+- Our framework receives as input a reference motion 
+that demonstrates a desired skill for the robot, 
+which may be recorded using motion capture (mocap) of real animals (e.g. a dog).
+- Given a reference motion, 
+it then uses reinforcement learning 
+to synthesize a policy that enables a robot to reproduce that skill in the real world
+- 3 stages
+    - 1) The reference motion is first processed by the motion retargeting stage, 
+    where the motion clip is mapped from the original subject’s morphology 
+    to the robot’s morphology via inverse-kinematics.
+    - 2) Next, the retargeted reference motion is used in the motion imitation stage 
+    to train a policy to reproduce the motion with a simulated model of the robot. 
+    To facilitate transfer to the real world, 
+    domain randomization is applied in simulation 
+    to train policies that can adapt to different dynamics.
+    - 3) Finally, the policy is transferred to a real robot 
+    via a sample efficient domain adaptation process, 
+    which adapts the policy’s behavior using a learned latent dynamics representation.
+    
+
+---
+
+- 전체적인 과정을 보면 원하는 skill의 reference motion을 input을 받아서 강화학습으로 그 모션을 따라하도록 학습하게 한다.
+- 크게 3가지 과정으로 진행되며, 
+1) reference motion이 만들어지고 원래 그 행동을 한 대상의 형태와 로봇의 형태를 inverse-kinematics를 이용해서 matching해준다.(강아지의 오른쪽 앞발 끝과 로봇의 오른쪽 앞 발 끝을 맞춰주는 과정) 
+2) 시뮬레이션 상에서 retargeted reference motion을 재현하도록 학습한다. 이때 domain randomization을 통해 real world transferring을 더 빨리 할 수 있도록 한다. 
+3) 실제 로봇에 policy가 배포되고 latent dynamics representation을 통해 policy의 behavior가 잘 적용될 수 있도록 한다.
+
+## 1. Motion Retargeting
+
+![Imgur](https://i.imgur.com/mb8oQEE.png?1)
+
+- To address this discrepancy, 
+the source motions are retargeted to the robot’s morphology using inverse-kinematics [19]
+- The keypoints include the positions of the feet and hips
+- At each timestep, 
+the source motion specifies the 3D location $\hat{\mathbf{X}}_{i}(t)$ of each keypointi. 
+The corresponding target keypoint $\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)$ is determined 
+by the robot’s pose $\mathbf{q}_{t}$, represented in generalized coordinates
+- IK is then applied 
+to construct a sequence of poses $\mathbf{q}_{0: T}$ that track the keypoints at each frame
+- $\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)$
+- additional regularization term is included 
+to encourage the poses to remain similar to a default pose $\overline{\mathbf{q}}$
+- $\mathbf{W}=\operatorname{diag}\left(w_{1}, w_{2}, \ldots\right)$ 
+a diagonal matrix specifying regularization coefficients for each joint
+
+---
+
+- 로봇과 모션 데이터를 얻은 동물의 형태는 일치하지 않기 때문에 이 모션 데이터를 inverse-kinematics를 이용해서 retargetting하는 작업이 필요하다.
+- 키포인트는 hips, feet을 사용했다.
+- source motion은 키포인트 i번째의 3d 좌표 xi(t)
+- The corresponding target keypoint xi (qt ) is determined by the robot’s pose qt
+- IK이 a sequence of poses q0:T에 대해 각 프레임의 키포인트들을 따라가기 위해 적용됐다.
+- default pose ̄q와 비슷한 상태를 유지하기 위해서 regularization term인 `W = diag(w1 , w2 , ...)` 을 추가했다.
+    - 각 조인트에 대한 regularization coefficient를 명시한 대각행렬이다.
+
+$$
+\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)
+$$
+
+- $\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)$
+
+## 2. Motion Imitation
+
+- $J(\pi)=\mathbb{E}_{\tau \sim p(\tau \mid \pi)}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right]$
+- $p(\tau \mid \pi)=p\left(\mathbf{s}_{0}\right) \prod_{t=0}^{T-1} p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_{t}, \mathbf{a}_{t}\right) \pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)$
+- To imitate a given reference motion,
+The inputs to the policy is augmented with an additional goal $g_t$ , 
+which specifies the motion that the robot should imitate.
+- $\pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}, \mathbf{g}_{t}\right)$
+- policy is queried at 30Hz for a new action at each timestep
+- The state $\mathbf{s}_{t}=\left(\mathbf{q}_{t-2: t}, \mathbf{a}_{t-3: t-1}\right)$ is represented 
+by the poses $\mathbf{q}_{t-2: t}$ of the robot in the three previous timesteps, 
+and the three previous actions $\mathbf{a}_{t-3: t-1}$
+- The pose features qt consist of 
+IMU readings of the root orientation (row, pitch, yaw) 
+and the local rotations of every joint.
+- The root position is not included among the pose features 
+to avoid the need to estimate the root position during real-world deployment.
+- The goal $\mathbf{g}_{t}=\left(\hat{\mathbf{q}}_{t+1}, \hat{\mathbf{q}}_{t+2}, \hat{\mathbf{q}}_{t+10}, \hat{\mathbf{q}}_{t+30}\right)$ 
+specifies target poses from the reference motion 
+at four future timesteps, spanning approximately 1 second
+- The action at specifies target rotations for PD controllers at each joint
+- To ensure smoother motions, the PD targets are first processed by a low-pass filter
+
+---
+
+- The inputs to the policy is augmented with an additional goal gt ,
+    - specifies the motion that the robot should imitate
+- π(at |st , gt )
+- The policy is queried at `30Hz` for a new action at each timestep
+- The state `st = (qt−2:t , at−3:t−1 )`
+    - the poses qt−2:t of the robot in `the three previous timesteps`
+    - `the three previous actions` at−3:t−1
+- The pose features `qt` :
+    - IMU readings of the root orientation (row, pitch, yaw)
+    - the local rotations of every joint
+    - 실제 로봇에 적용할 때 root position을 추정하지 않아도 되도록 qt에 root position을 포함하지 않았다.
+- The goal $\mathbf{g}_{t}=\left(\hat{\mathbf{q}}_{t+1}, \hat{\mathbf{q}}_{t+2}, \hat{\mathbf{q}}_{t+10}, \hat{\mathbf{q}}_{t+30}\right)$
+    - specifies target poses from the reference motion at `four future timesteps`,
+    - 약 1 second
+- The action at: specifies target rotations for PD controllers at each joint.
+- 모션이 부드러워지기 위해서 low-pass filter를 사용
+
+### Reward Function
+
+$$
+\begin{gathered}
+r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\
+w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1
+\end{gathered}
+$$
+
+---
+
+- encourages the policy to track the sequence of target poses $\left(\hat{\mathbf{q}}_{0}, \hat{\mathbf{q}}_{1}, \ldots, \hat{\mathbf{q}}_{T}\right)$
+- $\begin{gathered}r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1\end{gathered}$
+
+각 리워드 텀을 살펴보면,
+
+- The pose reward는 레퍼런스 모션과의 차이를 줄이기 위한 리워드이다. q는 1차원 rotation 값이다.
+    - $r_{t}^{\mathrm{p}}=\exp \left[-5 \sum_{j}\left\|\hat{\mathbf{q}}_{t}^{j}-\mathbf{q}_{t}^{j}\right\|^{2}\right]$
+- the velocity reward는 pose reward와 비슷하게 1차원의 값으로 angular velocity 값이다.
+    - $r_{t}^{\mathrm{v}}=\exp \left[-0.1 \sum_{j}\left\|\hat{\dot{\mathbf{q}}}_{t}^{j}-\dot{\mathbf{q}}_{t}^{j}\right\|^{2}\right]$소
+- the ee reward는 3차원 값으로 로봇의 end-effector들의 좌표를 나타낸다.
+    - $r_{t}^{\mathrm{e}}=\exp \left[-40 \sum_{e}\left\|\hat{\mathbf{x}}_{t}^{e}-\mathbf{x}_{t}^{e}\right\|^{2}\right]$
+- root pose reward는 몸체의 global position과 rotation을 가지고 구하며, root velocity reward는 몸체의 선속도와 각속도를 가지고 구한다.
+    - $\begin{aligned}&r_{t}^{\mathrm{rp}}=\exp \left[-20\left\|\hat{\mathbf{x}}_{t}^{\mathrm{root}}-\mathbf{x}_{t}^{\mathrm{root}}\right\|^{2}-10\left\|\hat{\mathbf{q}}_{t}^{\mathrm{root}}-\mathbf{q}_{t}^{\mathrm{root}}\right\|^{2}\right] \\&r_{t}^{\mathrm{rv}}=\exp \left[-2\left\|\hat{\mathbf{x}}_{t}^{\mathrm{root}}-\dot{\mathbf{x}}_{t}^{\mathrm{root}}\right\|^{2}-0.2\left\|\hat{\mathbf{q}}_{t}^{\mathrm{root}}-\dot{\mathbf{q}}_{t}^{\text {root }}\right\|^{2}\right]\end{aligned}$
+
+
+
+## Domain Adaptation
+
+## A. Domain Randomization
+
+- simple strategy for improving a policy’s robustness to dynamics variations [52, 60, 42]
+- varies the dynamics during training
+- no single strategy that is effective across all environments
+
+---
+
+- domain randomization varies the dynamics during training, thereby encouraging the policy to learn strategies that are functional across different dynamics.
+- training 중에 역학을 변화시켜, 다른 역학에 걸쳐 기능적인 전략을 학습하도록 정책을 장려한다
+
+## B. Domain Adaptation
+
+![Imgur](https://i.imgur.com/JLTwjaq.png?1)
+
+- `µ` represent the values of the dynamics parameters that are randomized during training in simulation
+- a random set of parameters are sampled according to `µ ∼ p(µ)`
+- The dynamics parameters are then encoded into a latent embedding z ∼ E(z|µ) 
+by a stochastic encoder E
+- z is provided as an additional input to the policy `π(a|s, z)`
+    - g는 인풋으로 넣어주지 않았다.
+- **incorporate an information bottleneck into the encoder**
+- The information bottleneck enforces an upper bound Ic on the mutual information I(M, Z) between the dynamics parameters M and the encoding Z
+
+$$
+\begin{array}{ll}
+\underset{\pi, E}{\arg \max } & \mathbb{E}_{\boldsymbol{\mu} \sim p(\boldsymbol{\mu})} \mathbb{E}_{\mathbf{z} \sim E(\mathbf{z} \mid \boldsymbol{\mu})} \mathbb{E}_{\tau \sim p(\tau \mid \pi, \boldsymbol{\mu}, \mathbf{z})}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right] \\
+\text { s.t. } & I(\mathbf{M}, \mathbf{Z}) \leq I_{c} .
+\end{array}
+$$
+
+- note에 정리
+
+## C. Real World Transfer
+
+- $\mathbf{z}^{*}=\underset{\mathbf{z}}{\arg \max } \quad \mathbb{E}_{\tau \sim p^{*}(\tau \mid \pi, \mathbf{z})}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right]$
+
+# VII. EXPERIMENTAL EVALUATION
+
+![Imgur](https://i.imgur.com/O1ZRjHb.png?1)
+
+- `18` degrees-of-freedom quadruped
+    - 3 actuated degrees-of-freedom per leg
+    - 6 under-actuateddegrees of freedom for the root (torso)
+- We further study the effects of regularizing the latent dynamics encoding with an information bottleneck, and
+- show that this provides a mechanism to trade off between the robustness and adaptability of the learned policies.
+
+## A. Experimental Setup
+
+![Imgur](https://i.imgur.com/yo5bpza.png?1)
+
+- mocap clips are collected from a public dataset
+- Performance is recorded as the average normalized return,
+    - 0 corresponding to the minimum possible return per episode
+    - 1 being the maximum return
+- Each policy is trained with proximal policy optimization 
+using about 200 million samples in simulation
+- end-to-end using the reparameterization trick
+- Domain adaptation is performed on the physical system with AWR in the latent dynamics space,
+    - using approximately 50 real-world trials to adapt each policy
+    - Trials vary between 5s and 10s in length depending on the space requirements of each skill.
+    - Hyperparameter settings are available in Appendix A
+
+## Model Representation
+
+![Imgur](https://i.imgur.com/tSMcnZl.png?1)
+
+- The encoder E(z|µ) is represented by a fully-connected network 
+that maps the dynamics parameters µ to the mean mE (µ) and standard deviation ΣE (µ) of the encoder distribution
+- The policy network π(a|s, g, z)
+    - input : the state s, goal g, and dynamics encoding z
+    - output : the mean mπ (s, g, z) of a Gaussian action distribution
+- The standard deviation $\Sigma_{\pi}=\operatorname{diag}\left(\sigma_{\pi}^{1}, \sigma_{\pi}^{2}, \ldots\right)$ of the action distribution is represented by a fixed matrix.
+- The value function V(s,g,μ) : input the state, goal, and dynamics parameters
+
+## B. Learned Skills
+
+- pacing and trotting, as well as agile turning and spinning motions
+    - Pacing is typically used for walking at slower speeds, and is characterized by each pair of legs on the same side of the body moving in unison
+    - Trotting is a faster gait, where diagonal pairs of legs move together
+- train policies for these different gaits ← providing the system with different reference motions
+
+# VIII. DISCUSSION AND FUTURE WORK

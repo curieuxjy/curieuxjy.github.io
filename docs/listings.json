@@ -2,9 +2,27 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/post-with-code/hello.html",
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/posts/welcome/2022-10-29-gueltto-the-end.html",
+      "/posts/welcome/2022-10-24-daily-english-004.html",
+      "/posts/welcome/2022-10-17-daily-english-003.html",
+      "/posts/welcome/2022-10-16-recovery.html",
+      "/posts/welcome/2022-10-11-daily-english-002.html",
+      "/posts/welcome/2022-10-03-daily-english-001.html",
+      "/posts/welcome/2022-10-02-vae.html",
+      "/posts/welcome/2022-09-17-wavenet.html",
+      "/posts/welcome/2022-09-04-retrospective.html",
+      "/posts/welcome/2022-08-14-gn-block-2.html",
+      "/posts/welcome/2022-08-07-gn-block-1.html",
+      "/posts/welcome/2022-06-26-keep-learning.html",
+      "/posts/welcome/2022-06-10-NerveNet.html",
+      "/posts/welcome/2022-05-06-geultto-7th-start.html",
+      "/posts/welcome/2021-01-31-ML-tu-berlin-2021.html",
+      "/posts/welcome/2021-01-03-Goodbye-2020.html",
+      "/posts/welcome/2021-01-03-Hello-2021.html",
+      "/posts/welcome/2021-01-02-GNN-intro.html",
+      "/posts/post-with-code/2020-07-20-import-custom-module.html",
+      "/posts/welcome/2020-07-17-rl-study-roadmap.html",
+      "/posts/welcome/2020-07-13-install-mujoco-win10.html"
     ]
   }
 ]
