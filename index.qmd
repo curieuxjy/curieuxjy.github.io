@@ -16,7 +16,7 @@ title-block-banner: true
 ---
 <br> </br>
 
-# Je suis curieux de tout.
+### *Je suis curieux de tout.*
 
 <p> </p>
 
