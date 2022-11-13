@@ -1,18 +1,23 @@
 ---
-title: "Je suis curieux de tout."
+# title: "Je suis curieux de tout."
 listing:
   contents: posts
   sort: "date desc"
   type: default
+  table-striped: true
+  table-hover: true
   categories: true
-  sort-ui: false
-  filter-ui: false
+  sort-ui: true
+  filter-ui: true
+  max-items: 10
+  
 page-layout: full
 title-block-banner: true
 ---
 
+# Je suis curieux de tout.
 
 | 📃 Paper Review | 🧩 Storage | 👩‍💻 Code | 📘 Note 
 
-<img src="https://ghchart.rshah.org/curieuxjy" style="width:60%">
+<img src="https://ghchart.rshah.org/curieuxjy" style="width:80%">
 

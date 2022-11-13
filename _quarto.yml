@@ -10,16 +10,15 @@ website:
       - about.qmd
       - icon: github
         href: https://github.com/curieuxjy
-  comments:
-    giscus:
-      repo: curieuxjy/curieuxjy.github.io
-      reactions-enabled: true
-      theme: light_high_contrast
+  # comments:
+  #   giscus:
+  #     repo: curieuxjy/curieuxjy.github.io
+  #     reactions-enabled: true
+  #     theme: light_high_contrast
 
 format:
   html:
     # title-block-style: default
-    title-color: <#ffffff>
     page-layout: full
     html-math-method: katex
     theme:

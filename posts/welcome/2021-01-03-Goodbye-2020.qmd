@@ -73,4 +73,4 @@ toc: true
 
 잘가요 2020
 
-![]({{ site.baseurl }}/images/goodbye2020.jpg "goodbye2020")
+![](../../images/goodbye2020.jpg "goodbye2020")

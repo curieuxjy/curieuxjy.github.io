@@ -5,4 +5,11 @@
 freeze: true
 
 # Enable banner style title blocks
-title-block-banner: true
+# title-block-banner: false
+# title-block-banner-color: <#ffffff>
+
+comments:
+  giscus:
+    repo: curieuxjy/curieuxjy.github.io
+    reactions-enabled: true
+    theme: light_high_contrast
