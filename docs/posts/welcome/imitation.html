@@ -188,12 +188,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/1Fh5MaD.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/1Fh5MaD.png?1" class="img-fluid"></p>
 <section id="abstract" class="level1">
 <h1>0. Abstract</h1>
 <blockquote class="blockquote">
@@ -307,12 +302,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="iii.-overview" class="level1">
 <h1>III. OVERVIEW</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/1Fh5MaD.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/1Fh5MaD.png?1" class="img-fluid"></p>
 <ul>
 <li>Our framework receives as input a reference motion that demonstrates a desired skill for the robot, which may be recorded using motion capture (mocap) of real animals (e.g.&nbsp;a dog).</li>
 <li>Given a reference motion, it then uses reinforcement learning to synthesize a policy that enables a robot to reproduce that skill in the real world</li>
@@ -341,12 +331,7 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <section id="motion-retargeting" class="level2">
 <h2 class="anchored" data-anchor-id="motion-retargeting">1. Motion Retargeting</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/mb8oQEE.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/mb8oQEE.png?1" class="img-fluid"></p>
 <ul>
 <li>To address this discrepancy, the source motions are retargeted to the robot’s morphology using inverse-kinematics [19]</li>
 <li>The keypoints include the positions of the feet and hips</li>
@@ -469,12 +454,7 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 </section>
 <section id="b.-domain-adaptation" class="level2">
 <h2 class="anchored" data-anchor-id="b.-domain-adaptation">B. Domain Adaptation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/JLTwjaq.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/JLTwjaq.png?1" class="img-fluid"></p>
 <ul>
 <li><code>µ</code> represent the values of the dynamics parameters that are randomized during training in simulation</li>
 <li>a random set of parameters are sampled according to <code>µ ∼ p(µ)</code></li>
@@ -505,12 +485,7 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 </section>
 <section id="vii.-experimental-evaluation" class="level1">
 <h1>VII. EXPERIMENTAL EVALUATION</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/O1ZRjHb.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/O1ZRjHb.png?1" class="img-fluid"></p>
 <ul>
 <li><code>18</code> degrees-of-freedom quadruped
 <ul>
@@ -522,12 +497,7 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 </ul>
 <section id="a.-experimental-setup" class="level2">
 <h2 class="anchored" data-anchor-id="a.-experimental-setup">A. Experimental Setup</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/yo5bpza.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/yo5bpza.png?1" class="img-fluid"></p>
 <ul>
 <li>mocap clips are collected from a public dataset</li>
 <li>Performance is recorded as the average normalized return,
@@ -547,12 +517,7 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 </section>
 <section id="model-representation" class="level2">
 <h2 class="anchored" data-anchor-id="model-representation">Model Representation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/tSMcnZl.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/tSMcnZl.png?1" class="img-fluid"></p>
 <ul>
 <li>The encoder E(z|µ) is represented by a fully-connected network that maps the dynamics parameters µ to the mean mE (µ) and standard deviation ΣE (µ) of the encoder distribution</li>
 <li>The policy network π(a|s, g, z)
@@ -680,6 +645,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     });
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="" data-category="General" data-category-id="" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

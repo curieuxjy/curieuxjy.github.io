@@ -6,17 +6,17 @@ categories: [generative model, vae, variational inference, paper review]
 toc: true
 ---
 
-![Imgur](https://i.imgur.com/xTJRmKC.jpg)
+![](https://i.imgur.com/xTJRmKC.jpg)
 
 이번 포스트는 생성모델에서 유명한 Variational Auto-Encoder(VAE)를 다루고 있는 `Auto-Encoding Variational Bayes`라는 논문 리뷰입니다. 이번 포스트를 정리하면서 가장 많이 인용하고 도움을 받은 [오토 인코더의 모든 것](https://youtu.be/o_peo6U7IRM)를 보시면 훨씬 더 자세하고 깊은 이해를 하실 수 있습니다. 포스트의 순서는 아래와 같이 진행됩니다.
 
-![Imgur](https://i.imgur.com/wXPuTek.jpg)
+![](https://i.imgur.com/wXPuTek.jpg)
 
 # Introduction
 
 VAE는 생성모델(Generative Model)에서 유명한 모델입니다. 그렇다면 생성 모델이란 무엇을 말하는 걸까요? 예를 들어 우리가 찍은 적이 없는 강아지 사진을 `만들어내고 싶다`고 해봅시다. 그렇지만 강아지 사진이 실제 강아지들을 찍은 사진들과 너무 동떨어져서 이질감을 느끼지 않아야 합니다. 이런 맥락에서 우리가 원하는 것은 train database에 있는 사진들, 즉 실제로 강아지들을 찍은 사진들의 **분포**를 알고 싶습니다. 여기서 **분포**를 알고 싶은 이유는 우리가 분포(distribution)을 알아야 분포에서 data를 샘플링해서 **생성**할 수 있기 떄문입니다. 다시 정리하자면, 현재 데이터들과 **비슷한 새로운 데이터를 생성 하기 위해** 현재 train DB의 데이터들의 분포 **$p(x)$** 를 알고 싶습니다. 
 
-![Imgur](https://i.imgur.com/v5JMB4O.jpg)
+![](https://i.imgur.com/v5JMB4O.jpg)
 
 데이터 $x$를 생성하는 **Generator**를 작동시킬 **controller**가 필요합니다. 어떤 데이터를 생성하도록 Generator를 trigger 해주는 부분이기 때문에 우리가 다루기 쉽게 만들어 줘야 이후 생성모델을 사용할 때 편리할 것 입니다. controller 역할을 하는 latent variable $z$는 위의 그림에서 볼 수 있둣이 데이터 x보다 차원이 작게 만들고 $p(z)$에서 샘플링 됩니다. 
 
@@ -26,15 +26,15 @@ VAE는 생성모델(Generative Model)에서 유명한 모델입니다. 그렇다
 
 좋은 sampling function이란, 앞선 예시에서 볼 수 있었듯이 train DB에 있는 data $x$와 유사한 샘플이 나올 수 있는 확률분포라고 할 수 있습니다. 따라서 그냥 샘플링 함수를 만들기 보다 evidence로 x를 given(조건)으로 하여 z를 뽑아내는 확률분포 $p(z\|x)$를 만들어내는 것이 목적입니다. 하지만 여기서 또 문제인 점은 true distridution인 해당 분포를 만들어내기위해 Variational Inference 방법을 이용합니다. 분포 추정을 위한 family, 예를 들면 guassian 분포들을 Approximation Class로 두고 true distribution을 추정합니다. 이때 gaussian 분포의 파라미터인 $\phi$는 mean과 std 값이 될 것 이고 이런 여러 gaussian 분포들과 true posterior 간의 KL divergence를 구하여 추정해갑니다.
 
-![Imgur](https://i.imgur.com/UzRI0bp.jpg)
+![](https://i.imgur.com/UzRI0bp.jpg)
 
 따라서 정리해보면 아래 그림과 같이 생성모델인 Generator를 학습하기 위해 Variational Inference 방법을 사용하게 되었고 그러다 보니 AutoEncoder와 비슷한 모델 구조가 되었습니다. 그러나 `데이터 압축`이 목표인 AutoEncoder와 `데이터 생성`이 목표인 VAE는 각자의 목표에 맞춰 필요한 방법론을 더하게 되면서 그 모델 구조가 비슷해보이게 된 것이지 같지않습니다.
 
-![Imgur](https://i.imgur.com/uMHIQnA.jpg)
+![](https://i.imgur.com/uMHIQnA.jpg)
 
 VAE의 전체 구조는 **[1] Decoder, Generator, Generation Network** 라고 부르는 부분과 **[2] Encoder, Posterior, Inference Network**라고 부르는 부분, 크게 2가지 파트로 이루어져 있습니다.
 
-![Imgur](https://i.imgur.com/4rrcmgH.jpg)
+![](https://i.imgur.com/4rrcmgH.jpg)
 
 # Variational Bound
 
@@ -42,65 +42,65 @@ VAE의 전체 구조는 **[1] Decoder, Generator, Generation Network** 라고 �
 
 처음의 목표였던 $p(x)$에 log를 씌워서 아래와 같은 식 변형을 진행하면 2개의 term으로 나눠집니다. 첫번째 term은 이번 장의 주인공인 Evidence LowerBOund라는 ELBO이고 두번째 term은 Variational Inference에서 봤었던 true posterior와 approximator 사이의 거리를 나타내는 KL 값입니다. 여기서 $log(p(x))$가 일정할 때 KL 값을 줄이는 것이 목표(=true posterior를 잘 approximation하는 것)이고 KL은 항상 양수이기 때문에, 역으로 생각해보면 첫번째 term이었던 ELBO 값을 최대화하는 것이라고 생각할 수 있습니다. 이를 간단히 그래프로 나타내보면 오른쪽 그림에서 볼 수 있듯이 우리가 원하는 것은 ELBO값이 커질 수 있는 $\phi$를 찾아가는 과정이라고 볼 수 있습니다.
 
-![Imgur](https://i.imgur.com/B5gwqlT.jpg)
+![](https://i.imgur.com/B5gwqlT.jpg)
 
 따라서 ELBO값이 커질 수 있는 $\phi$를 찾아가는 최적화를 수식을 변형하여 또 다시 2개의 term으로 나눌 수 있는데 (1) `Reconstructino Error`와 (2) `Regularization` 으로 볼 수 있고 각 term은 다음과 같이 해석할 수 있습니다.
 
-![Imgur](https://i.imgur.com/J0uo8qQ.jpg)
+![](https://i.imgur.com/J0uo8qQ.jpg)
 
-![Imgur](https://i.imgur.com/vjQJAWt.jpg)
+![](https://i.imgur.com/vjQJAWt.jpg)
 
 ## Regularization term
 
 ELBO term을 나누었을 때 나왔던 첫번째 Regularization term에 대해 보겠습니다. True posterior를 추정하기 위한 $q_{\phi}(z\|x)$은 KL 값을 계산하기 쉽도록 하기 위해 Multivariate gaussian distribution으로 설계합니다. 또한 앞서 이야기했던 것 처럼 controller 부분인 $p(z)$는 다루기 쉬운 분포이어야 하기 때문에 정규분포로 만들어 줍니다. 그러면 논문의 Appendix F.1에서 볼 수 있듯이 가우시안 분포들 사이의 KL 값은 다음과 같이 쉽게 계산될 수 있습니다. 
 
-![Imgur](https://i.imgur.com/NXEFibn.jpg)
+![](https://i.imgur.com/NXEFibn.jpg)
 
 ## Reconstruction error term
 
 ELBO의 두번째 term인 Reconstruction error에 대해 살펴보겠습니다. Reconstruction error의 expectation 표현을 integral로 표현하면 다음과 같고 이는 몬테카를로 샘플링을 통해 $L$개의 $z^{i, l}$를 가지고 평균을 내서 구할 수 있습니다. 여기에서 index $i$는 데이터 $x$의 넘버링이고 index $l$은 generator의 distribution에서 샘플링하는 횟수에 대한 넘버링입니다.
 
-![Imgur](https://i.imgur.com/xuJwkVJ.jpg)
+![](https://i.imgur.com/xuJwkVJ.jpg)
 
 ### Reparametrization Trick
 
 위에서 Reconstruction error를 구하기 위해 샘플링하는 과정에서 backpropation을 하기 위해 **Reparametrization trick**을 사용하게 됩니다. 단순히 정규분포에서 샘플링 하면 random node인 $z$에 대해서 gradient를 계산할 수 없기 때문에 random성을 정규분포에서 샘플링 되는 $\epsilon$으로 만들어주고 이를 reparametrization을 해주어서 deterministic node가 된 $z$를 backpropagation 할 수 있게 됩니다. 
 
-![Imgur](https://i.imgur.com/9b1CPni.jpg)
+![](https://i.imgur.com/9b1CPni.jpg)
 
 $z$를 샘플링하는 generator의 distribution은 Bernoulli로 디자인할 경우 NLL이 Cross Entropy가 되며 Gaussian 분포로 디자인할 경우 MSE가 되어서 보통 계산하기 용이한 2개의 분포 중 하나를 사용하게 됩니다.
 
-![Imgur](https://i.imgur.com/lCMjRUO.jpg)
+![](https://i.imgur.com/lCMjRUO.jpg)
 
 # VAE Structure
 
 지금까지 살펴본 VAE 구조는 Encoder와 Decoder를 각각 어떤 분포로 디자인해주는 냐에 따라 Reconstruction error와 Regularization을 계산하는 식만 조금씩 달라지게 됩니다. Encoder 부분은 Reconstruction error의 계산의 용이성 때문에 거의 가우시안 분포를 사용하게 되고 Decoder 부분만 변형하여 아래의 여러 유형들이 나타나게 됩니다.
 
-![Imgur](https://i.imgur.com/JPOVTlK.jpg)
+![](https://i.imgur.com/JPOVTlK.jpg)
 
-![Imgur](https://i.imgur.com/fNma1fZ.jpg)
+![](https://i.imgur.com/fNma1fZ.jpg)
 
-![Imgur](https://i.imgur.com/fNma1fZ.jpg)
+![](https://i.imgur.com/fNma1fZ.jpg)
 
-![Imgur](https://i.imgur.com/Si4xjNg.jpg)
+![](https://i.imgur.com/Si4xjNg.jpg)
 
 MNIST를 예시로 들어서 VAE 구조를 나타내보면 다음과 같습니다.
 
-![Imgur](https://i.imgur.com/FqjKwdF.jpg)
+![](https://i.imgur.com/FqjKwdF.jpg)
 
 # Experiment
 
 해당 논문에서 실험은 총 2가지를 진행했는데 앞에서는 계속 VAE로 나타냈지만 논문에서는 해당 알고리즘을 AEVB로 지칭하기 때문에 이를 VAE 알고리즘으로 생각하고 실험 결과들을 보면 됩니다. 우선 첫번째는 MNIST 데이터셋과 Frey Face 데이터셋을 사용하여 베이스라인으로 wake-sleep 알고리즘과 성능을 비교했습니다. ELBO값을 최대화하는 것이 목표이므로 값이 클수록 좋은 것으로 해석할 수 있습니다. 아래의 그래프들에서 실선과 점선은 각각 train과 test 데이터셋에 대해 ELBO 값을 plotting한 것으로 latent variable인 $z$의 차원의 크기에 따라 ELBO 값이 어떤 양상을 나타내는지 보여줍니다.  
 
-![Imgur](https://i.imgur.com/1vllCMk.jpg)
+![](https://i.imgur.com/1vllCMk.jpg)
 
 두번째로는 MNIST 데이터셋에 대해서 $z$의 차원이 1000, 50000일때의 각 알고리즘들의 성능을 학습 샘플수에 따라 Marginal log-likelihood를 plotting하여 나타냈습니다. 이 실험에서는 베이스라인으로 Wake-Sleep과 MCEM을 사용했으며 여기서도 AEVB(=VAE)가 우수한 성능을 보여주었습니다.
 
-![Imgur](https://i.imgur.com/cPEO4wa.jpg)
+![](https://i.imgur.com/cPEO4wa.jpg)
 
 # Conclusion
 
-![Imgur](https://i.imgur.com/VwtJ70W.jpg)
+![](https://i.imgur.com/VwtJ70W.jpg)
 
 > 아래는 추가적으로 VAE를 발표한 후에 받았던 in-class 질문들에 대해 답변해본 부분들 입니다. 질문에 대한 답변은 solution이 아닌 discussion으로만 참고해주세요.
 

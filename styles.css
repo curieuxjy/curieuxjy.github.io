@@ -1,1 +1,11 @@
 /* css styles */
+/*-- scss:defaults --*/
+title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}

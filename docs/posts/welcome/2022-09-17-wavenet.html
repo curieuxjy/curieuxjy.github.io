@@ -173,12 +173,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/s1pIkp9.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/s1pIkp9.jpg" class="img-fluid"></p>
 <p>이번 포스팅은 Google DeepMind에서 발표한 WaveNet이라는 논문에 대해 리뷰를 하려고 합니다. WaveNet은 Autoregressive한 Generative model로써 <a href="https://towardsdatascience.com/wavenet-google-assistants-voice-synthesizer-a168e9af13b1">Google의 스피커 서비스에 사용되었다</a>고 많이 알려진 모델입니다.</p>
 <blockquote class="blockquote">
 <p>리뷰에 앞서서 가장 도움을 많이 받고 아래 포스팅의 상당한 이미지들이 김정희 님의 <a href="https://joungheekim.github.io/2020/09/17/paper-review/">[논문리뷰]WaveNet</a> 포스팅에서 가져온 것임을 밝히며 감사의 말씀을 전해드리고 싶습니다.</p>
@@ -186,157 +181,62 @@ ul.task-list li input[type="checkbox"] {
 <section id="background" class="level1">
 <h1>Background</h1>
 <p>WaveNet은 음성 생성 모델로 본격적으로 모델에 대해 알아보기 전에 <code>소리</code>라는 것이 어떻게 <code>신호</code>가 되는가를 살펴볼 필요가 있습니다. 소리는 공기 입자들의 떨림이며 종파의 파형을 가지고 있습니다. 이러한 <code>소리</code>라는 현상을 파동으로 표현해보자면, 아래의 그림과 같이 공기 입자들이 많이 밀집되어 있는 부분을 파동의 진폭을 크게, 상대적으로 입자들의 수가 적은 곳은 진폭을 작게하여 표현할 수 있습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/OLEUpu2.jpg?2" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/OLEUpu2.jpg?2" class="img-fluid"></p>
 <p>이렇게 파동 모형으로 나타내어진 소리는 <strong>Continutous(연속적인)</strong> 신호 입니다. 이러한 신호를 컴퓨터에서 처리하기 위해서는 컴퓨터가 이해할 수 있도록 <strong>Discrete(불연속적인)</strong> 값으로 나타낼 수 있어야 하며 <code>Continuous한 신호 → Discrete한 신호</code>로 바꾸는 과정을 <strong>Sampling</strong>이라고 합니다. 여기서 끝이 아닌 컴퓨터는 무한한 (이진화된)정수 표현을 가질 수 있는것이 아니고 더 효율적으로 신호를 처리하기 위해 <strong>Quantization(양자화)</strong>과정을 거치게 됩니다. 이는 샘플링되어 이산화 되어 있는 신호 값을 Section을 나누어 일정 구간 내에 있는 값들은 하나의 양자화된 값으로 매칭하는 과정입니다. 이렇게 이진수로 정수화된 소리는 아래의 오른쪽 그림에서와 같이 시간축(x)에 따라 빨간 점으로 나타내어지는 신호로 변환되게 됩니다. 이러한 신호처리 과정을 <strong>Pulse-Code Modulation(PCM)</strong>이라고 합니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/M4E6qo6.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/M4E6qo6.jpg" class="img-fluid"></p>
 <p>보통 소리의 신호처리는 16-bit의 정수표현(-255 ~ 256)으로 나타내지만 WaveNet에서는 Nonlinearity를 증가시키고 더 효율적이었던 <strong>8-bit</strong> 정수 표현 디지털 신호를 사용했습니다. 이때 사용한 방법은 <code>µ-law Companding Transformation(μ-law algorithm)</code>으로 사람이 소리를 인식하는 방법을 모방한 방식을 사용했습니다. 사람은 작은 소리의 변화에는 민감하지만 큰 소리의 변화에는 둔감하므로 <a href="https://en.wikipedia.org/wiki/%CE%9C-law_algorithm">μ-law algorithm</a>에서도 작은 소리의 구간(아래 그래프에서 중앙 부분)은 세밀하게 나누고 큰 소리 구간(아래 그래프에서 좌우 끝 부분)은 기울기를 완만하게 하여 비교적 듬성하게 나누었습니다. WaveNet에서 16-bit가 아닌 8-bit를 사용한 이유는 아래 그림의 오른쪽에서 WaveNet의 전체 흐름에서 볼 때 양자화된 각 구간의 softmax로 해당 값의 확률을 구하게 되는데, 16-bit라면 softmax layer에서 총 65,536(= <span class="math inline">-2^{15}</span> ~ <span class="math inline">2^{15}-1</span> )개의 확률을 구해야 하므로 계산이 매우 많이 필요하기 때문입니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/QkCyAUV.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/QkCyAUV.jpg" class="img-fluid"></p>
 <p><strong>TTS(Text-to-Speech)란</strong></p>
 <p>앞서 이야기한대로 구글의 스피커 서비스에 WaveNet이 쓰인 것으로 큰 화제였는데 이는 바로 TTS 서비스에 WaveNet이 쓰인 것 이었습니다. TTS task는 특정 text가 주어지면 이를 음성 신호로 바꿔주는(음성을 생성하는) task이며 기존의 TTS 기술은 크게 2가지가 있었습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/K9RHlez.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/K9RHlez.jpg" class="img-fluid"></p>
 <p>첫번째로 <code>Concatenative</code>는 다량의 음성 데이터를 음소 단위로 쪼개어 신호를 저장한 것을 조합하여 새로운 음성을 생성하는 방식으로, 마치 퀼트로 옷감의 패턴을 만들어내듯이 음성 단위들을 이어붙이는 방식입니다. 이 방법은 실제 음성 데이터를 쪼갠 것을 사용하는 것이므로 음성 데이터 하나 하나의 퀄리티는 좋지만 단점으로는 음성을 조절할 수 있는 자유도가 떨어진다는 점과 음성 데이터가 매우 많아야 한다는 점이 있습니다.</p>
 <p>두번째로 <code>Parametric</code>은 통계적 모델을 사용하여 음성을 합성하는 방식으로 WaveNet의 부록에 자세히 설명이 되어 있듯이 Acoustic model을 만들어서 음성을 만들어 냅니다. Concatenative와 다르게 새로운 음성 데이터를 만들어낸다는 점에서 음성 신호를 조작할 수 있는 자유도가 커지고 데이터 셋이 많이 필요 없으나 음성을 생성해내는 퀄리티가 다소 떨어지는 단점이 있습니다.</p>
 </section>
 <section id="wavenet" class="level1">
 <h1>WaveNet</h1>
 <p>기존의 TTS 방식들과 다르게 접근한 WaveNet의 전체적인 구조는 아래의 그림과 같습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/iDjHrlC.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/iDjHrlC.jpg" class="img-fluid"></p>
 <p>WaveNet의 전체 구조에서 앞으로 크게 4가지 부분 <strong>Dilated Casual Convolution</strong>, <strong>Residual Connection &amp; Gated Activation Units</strong>, <strong>Skip Connection</strong>, <strong>Conditional WaveNets</strong>으로 나누어서 살펴보겠습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/CPv1KZk.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/CPv1KZk.jpg" class="img-fluid"></p>
 <section id="dilated-casual-convolution" class="level2">
 <h2 class="anchored" data-anchor-id="dilated-casual-convolution">Dilated Casual Convolution</h2>
 <p>먼저 <code>Dilated Casual Convolution</code>은 <code>µ-law Companding Transformation</code> 처리를 거친 음성 신호를 받아오는 첫번째 부분입니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/5ZkIjOM.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/5ZkIjOM.jpg" class="img-fluid"></p>
 <p>우선 <strong>Casual</strong> 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 <span class="math inline">t</span>를 기준으로 <strong>미래 정보는 사용할 수 없고</strong> 현재까지의(과거~현재 <span class="math inline">t</span>) 정보<code>만</code> 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 <code>(레이어 수) + (필터의 length) -1</code>로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 <code>input</code>에서 5개의 음성 정보가 <code>output</code>의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/GrYzT5k.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/GrYzT5k.jpg" class="img-fluid"></p>
 <p>그래서 제안이 된 방법이 바로 <strong>Dilated Convolution</strong>입니다. 이는 convolution with <strong>holes</strong>로 해석할 수 있는데 위의 그림에서 볼 수 있듯이 이전 레이어에서 데이터가 Dilated되어 데이터가 듬성듬성하게 모아져서 다음 레이어로 넘어가는 것을 볼 수 있습니다. 이는 skip이나 pooling과 유사해보이지만 input과 output의 차원이 유지된다는 점에서 차이가 있습니다. 이때의 RF는 각 레이어의 Dilation 값을 모두 더하고 마지막에 현재 시점의 데이터 1을 더하며 RF가 계산됩니다. WaveNet에서는 Dilation을 총 30개의 레이어에 적용했고 Dilation 값의 패턴은 input에서 부터 1, 2, …, 512 로 2배씩 늘린 10개의 레이어를 총 3번 반복했습니다. 이때, 1 ~ 512 Dilation 값을 가진 10개 레이어의 RF는 1024로 계산됩니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/MUqZJtY.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/MUqZJtY.jpg" class="img-fluid"></p>
 </section>
 <section id="residual-connection-gated-activation-units" class="level2">
 <h2 class="anchored" data-anchor-id="residual-connection-gated-activation-units">Residual Connection &amp; Gated Activation Units</h2>
 <p>다음으로 Dilated Causal Convolution을 거친 후 통과하게 되는 <code>Residual Connection &amp; Gated Activation Units</code> 부분에 대해서 살펴보겠습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/32eLca9.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/32eLca9.jpg" class="img-fluid"></p>
 <p>WaveNet에서 사용된 <strong>Gated Activation Units</strong>는 <a href="https://arxiv.org/abs/1606.05328">PixelCNN</a>에서 사용된 매커니즘을 차용했습니다. 아래의 그림에서 보이는 보라색 Dilated Conv가 앞에서 설명한 DCC이며 이를 거친 후 Convoltion layer와 각각 tanh, sigmoid activation을 통과하여 <strong>Filter</strong>, <strong>Gate</strong>가 됩니다. 이 2가지 경로로 계산된 값은 elementwise product를 통해 하나의 벡터로 변환됩니다. 이떄 Dilated를 통과하기 전 값을 <strong>Residual Connection</strong>을 통해 연결함으로써 딥러닝 모델이 레이어를 더 깊게 쌓을 수 있도록 돕고 더 빠르게 학습할 수 있도록 할 수 있었다고 합니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/TKpQQfe.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/TKpQQfe.jpg" class="img-fluid"></p>
 </section>
 <section id="skip-connection" class="level2">
 <h2 class="anchored" data-anchor-id="skip-connection">Skip Connection</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/rMwfb6c.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/rMwfb6c.jpg" class="img-fluid"></p>
 <p><strong>Skip Connection</strong>은 Dilated Convolution을 통해 다양한 RF를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/dwregcK.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/dwregcK.jpg" class="img-fluid"></p>
 </section>
 <section id="conditional-wavenets" class="level2">
 <h2 class="anchored" data-anchor-id="conditional-wavenets">Conditional WaveNets</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/mfsI9G4.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/mfsI9G4.jpg" class="img-fluid"></p>
 <p>Conditional은 Autoregressive model인 WaveNet에 적용하기 쉽고 이 또한 PixelCNN에서의 아이디어와 유사합니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/WrTq2a6.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/WrTq2a6.jpg" class="img-fluid"></p>
 </section>
 </section>
 <section id="experiments" class="level1">
 <h1>Experiments</h1>
 <p>실험은 총 4가지 Free-form Speech Generation, TTS, Music Audio Modelling, Speech Recognition을 진행했지만 주된 실험은 TTS를 중심으로 이루어졌으며 Evaluation은 2가지로 <code>Paired Comparison Test</code>, <code>Mean Opinion Score</code>으로 진행했습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/9CdUv7r.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/AhbWSYx.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/a7HYmrR.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/9CdUv7r.jpg" class="img-fluid"></p>
+<p><img src="https://i.imgur.com/AhbWSYx.jpg" class="img-fluid"></p>
+<p><img src="https://i.imgur.com/a7HYmrR.jpg" class="img-fluid"></p>
 </section>
 <section id="takehome-message" class="level1">
 <h1>Takehome Message</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/sDAeGVm.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/sDAeGVm.jpg" class="img-fluid"></p>
 <hr>
 <p><strong>Reference</strong> - Original paper <a href="https://arxiv.org/abs/1609.03499">WaveNet: A Generative Model for Raw Audio</a> - Project page <a href="https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio">https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio</a></p>
 <p>[1] <a href="https://m.blog.naver.com/sbkim24/10084099777">https://m.blog.naver.com/sbkim24/10084099777</a></p>
@@ -452,6 +352,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     });
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="" data-category="General" data-category-id="" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

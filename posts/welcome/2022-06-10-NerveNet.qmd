@@ -37,7 +37,7 @@ state 혹은 observation space로 $S$ , action space로 $A$, stochastic policy $
 
 아래는 `Ant` 환경의 예시인데, 한 가지 그림에서 헷갈리지 말아야 할 점은 그림에서는 마치 `body`와 `root` 노드만 노드로 만든것 처럼 보이지만 root와 body, body와 body를 연결하는 엣지들도 실제로는 `joint` 노드들이다.(*we omit the joint nodes and use edges to represent the physical connections of joint nodes*.)`root`라는 노드는 agent의 추가적인 정보들을 담을 부분으로 사용하기 위해 추가한 노드 종류로, 예를 들어 agent가 도달해야 하는 target position에 대한 정보 등이 담겨있다. 
 
-![Imgur](https://i.imgur.com/pjCrsxt.png?1)
+![](https://i.imgur.com/pjCrsxt.png?1)
 
 
 ## NerveNet as Policy
@@ -98,7 +98,7 @@ NerveNet의 propagation 과정 노드들 간에 주고 받는 정보를 `message
         
     - 예를 들어 아래 그림은 `CentipedeEight` 의 모습인데, 왼쪽은 실제 agent의 모습을 나타내고 있으며 오른쪽은 agent를 그래프로 나타냈을 때의 모습이다. 여기에서 2번째 torso에서 첫번째 세번째 torso에서 보낼 때 같은 메세지 펑션 $M_{1}$ 을 사용하고, LeftHip과 RightHip으로 보내는 메세지 펑션 $M_{2}$를 사용하게 되는 것이다.
         
-        ![Imgur](https://i.imgur.com/QFOY9VH.png)
+        ![](https://i.imgur.com/QFOY9VH.png)
         
 2. Message Aggregation
     - 앞 단계에서 모든 노드들에 대해서 메세지 계산이 끝난 후에 in-coming 이웃 노드들로부터 온(계산된) 메세지를 모으게 된다. 이때 summation, average, max-pooling 등 다양한 aggregation 함수를 사용할 수 있다.
@@ -141,7 +141,7 @@ $$
 
 여기까지 NerveNet의 각 단계를 `Walker-Ostrich` 환경에서 예시로 한눈에 보기 쉽게 정리한 그림은 아래와 같다. 
 
-![Imgur](https://i.imgur.com/lnrF2Pb.png)
+![](https://i.imgur.com/lnrF2Pb.png)
 
 ## Learning Algorithm
 
@@ -187,7 +187,7 @@ $$
 
 |`HalfCheetah`|`InvertedDoublePendulum`|`Swimmer`|
 |-|-|-|
-|![Imgur](https://i.imgur.com/0Y8Nw6H.png?1)|![Imgur](https://i.imgur.com/BrvwJpQ.png?1)|![Imgur](https://i.imgur.com/dmDNN1q.png?1)|
+|![](https://i.imgur.com/0Y8Nw6H.png?1)|![](https://i.imgur.com/BrvwJpQ.png?1)|![](https://i.imgur.com/dmDNN1q.png?1)|
 |MLP와 NerveNet이 비슷하고 TreeNet이 많이 안좋았음|MLP가 좀더 좋은 결과를 냄|NerveNet이 MLP보다 좋은 성능을 냄|
 
 - 대부분 환경들에서 `TreeNet`이 `NerveNet`보다 좋지 않았고 이를 통해서 물리적인 그래프 구조를 가져가는 것이 얼마나 중요한지 알 수 있다.
@@ -201,7 +201,7 @@ $$
     1. centipede - 지네와 같이 생긴 agent로 torso body들이 여러개 체인처럼 연결 되어 있고 torso를 중심으로 양쪽에 다리가 1쌍으로 붙어 있다. 하나의 다리는 thigh와 shin으로 구성되어 있고 hinge actuator로 구현되어 있다. 커스텀은 다리의 갯수를 다양하게 해서 여러 커스텀 환경들을 만들었는데, 가장 짧은 agent로는 `CentipedeFour` 부터 가장 긴 agent로는 `CentipedeFourty` 로 다리가 40개까지(20쌍) 있는 환경을 만들수 있었다. disability로 일부 파트가 작동하지 않는 환경은 `Cp(Cripple)`로 따로 표기했다. 이 환경에서 y-direction으로 빨리 앞으로 가는게 목표다.
     2. snake - `swimmer` 환경을 기반으로 커스텀했으며 가장 빨리 진행방향으로 움직이는 게 목표다.
         
-        ![Imgur](https://i.imgur.com/cKfht87.png)
+        ![](https://i.imgur.com/cKfht87.png)
         
     
 - NerverNet과 비교군
@@ -215,7 +215,7 @@ $$
         1. Pretraining
             - 6-다리 모델과 4-다리 모델로 `NerveNet`, `MLP`, `TreeNet` 에서의 퍼포먼스를 비교했다. 여기서 3개의 모델은 앞서 benchmark 비교 실험에서 사용한 비교군들과 동일하다.
                 
-                ![Imgur](https://i.imgur.com/M64FY71.png)
+                ![](https://i.imgur.com/M64FY71.png)
                 
             - 4-다리 모델에서는 NerveNet이 가장 Reward가 높고, 6-다리 모델에서는 MLP가 가장 Reward가 높음을 알 수 있다. TreeNet은 두 환경 모두에서 가장 낮다.
             - 6-다리 모델과 4-다리 모델로 pretraining을 진행한 후 transferable을 실험했다.
@@ -223,12 +223,12 @@ $$
             - fine tuning 없이 퍼포먼스를 측정했다.
             - 퍼포먼스를 쉽게 비교할 수 있도록 `average reward`와 `average running-length`를 normalization해서 색으로 아래와 같이 표현했다.(green-good, red-bad)
                 
-                ![Imgur](https://i.imgur.com/qAbGhpb.png)
+                ![](https://i.imgur.com/qAbGhpb.png)
                 
             - 눈으로 확실히 확인할 수 있듯이 NerveNet의 퍼포먼스가 다른 비교군에 비해 월등히 transferable함을 알 수 있었다.
             - 또한 learning curve에서 볼 수 있듯이 NerveNet+Pretrain 이 다른 Pretrain 비교군들에 비해 훨씬 높은 reward 시작점에서 시작하고 더 적은 timestep으로 solved 점수에 도달하는 것을 보아 그래프의 구조적 이점을 확실히 활용하고 있음을 알 수 있다.
                 
-                ![Imgur](https://i.imgur.com/yU47fAC.png?1)
+                ![](https://i.imgur.com/yU47fAC.png?1)
                 
             - NerveNet의 agent들은 다른 비교군 agent들에서 보이지 않는 `walk-cycle`을 가지고 있음을 확인할 수 있었는데, 이는 보행 로봇들은 걸음새에서 반복적인 움직임을 하게 되어 있기 때문에 자연스럽게 cycle을 가지게 되는 것을 agent가 학습했음을 알 수 있다. (반면 MLP는 8-다리 모델에서 모든 다리를 움직이지 않는 모습을 보이기도 했다.)
     2. Snake
@@ -236,11 +236,11 @@ $$
         - 350점 정도가 `snakeThree`에서 solved된 상태라고 볼 수 있는데 NerveNet의 시작 점수들이 대부분 300점대에서 시작한 것으로 보아 이는 상당한 zero-shot 역량이 있음을 알 수 있다.
         - 다른 비교군들은 overfitting이 심해서 Random보다 안좋은 결과를 보여주는 점도 흥미롭다.
         
-        ![Imgur](https://i.imgur.com/QvZG8di.png)
+        ![](https://i.imgur.com/QvZG8di.png)
         
         - zero-shot 뿐만 아니라 fine tuning을 하는 learning curve에서도 NerveNet은 Pretrain의 이점을 다른 비교군들에 비해 잘 활용하고 있음을 볼 수 있었다. `NerveNet+Pretrain`의 시작 reward가 높으며, 특정 size transfer 실험에서는 scratch NerveNet이 넘지 못한 MLP 점수를 `NerveNet+Pretrain`이 따라잡았다.
             
-            ![Imgur](https://i.imgur.com/NLlKmqT.png?1)
+            ![](https://i.imgur.com/NLlKmqT.png?1)
             
 
 ## 3. Multi-task learning
@@ -259,11 +259,11 @@ NerveNet은 네트워크에 structure prior를 포함한 것이기 때문에 mul
     - multi-task learning 실험이기 때문에 한 두개 러닝 그래프만 볼 수 없고 5개의 러닝 그래프를 같이 봐야 한다.
     - Single-task policy를 제외하고 모든 환경에서 NerveNet의 퍼포먼스가 좋음을 알 수 있다.
         
-        ![Imgur](https://i.imgur.com/FpUeo5x.png)
+        ![](https://i.imgur.com/FpUeo5x.png)
         
     - 테이블에서 Ratio가 single-task policy에 비해 multi-task policy의 성능을 percentage로 나타낸 수치인데, MLP의 퍼포먼스가 single-task에서 multi-task로 넘어갔을 때 42%나 퍼포먼스가 줄어드는 것을 확인할 수 있다. (Average-58.6%) 반면에 NerveNet은 성능이 전혀 떨어지지 않는 결과를 보여주었다.
         
-        ![Imgur](https://i.imgur.com/HMSZPgc.png?1)
+        ![](https://i.imgur.com/HMSZPgc.png?1)
         
 
 ## 4. Robustness of learnt policies
@@ -274,7 +274,7 @@ NerveNet은 네트워크에 structure prior를 포함한 것이기 때문에 mul
 - pretrained agent를 가지고 agent의 질량과 joint의 strength을 변경한 뒤 퍼포먼스 측정
 - 대부분의 환경과 variation에서 NerveNet의 robustness가 MLP보다 좋음을 알 수 있다.
 
-![Imgur](https://i.imgur.com/9Rcl54E.png?1)
+![](https://i.imgur.com/9Rcl54E.png?1)
 
 ## 5. Interpreting the learned representations
 
@@ -282,17 +282,17 @@ NerveNet은 네트워크에 structure prior를 포함한 것이기 때문에 mul
 
 각 다리쌍들(Left Hip-Right Hip)들은 agent의 전체 몸체에서 각기 다른 위치에 있음에도 불구하고 invariant representation을 배울 수 있었음을 PCA를 통해서 알 수 있었다.
 
-![Imgur](https://i.imgur.com/osZ7M6U.png?1)
+![](https://i.imgur.com/osZ7M6U.png?1)
 
 또한 앞서 Centipede transfer learning 실험 결과에서도 잠깐 언급했던 `walk-cycle`이 주기성이 뚜렷하게 보였다.
 
-![Imgur](https://i.imgur.com/Aw80MM1.png)
+![](https://i.imgur.com/Aw80MM1.png)
 
 ## 6. Comparison of model variants
 
 Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 `Swimmer`, `Reacher`, `HalfCheetah`에서 비교해본 결과, Value Network는 MLP로 한 `NerveNet-MLP`의 퍼포먼스가 가장 좋았고 `NerveNet-1`의 퍼포먼스가 2등으로 `NerveNet-MLP` 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight $\alpha$를 더 sensitive하게 만들기 때문이라고 추론할 수 있다.
 
-![Imgur](https://i.imgur.com/W79cOCW.png)
+![](https://i.imgur.com/W79cOCW.png)
 
 # Conclusion
 

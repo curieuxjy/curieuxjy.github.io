@@ -10,14 +10,20 @@ website:
       - about.qmd
       - icon: github
         href: https://github.com/curieuxjy
+  comments:
+    giscus:
+      repo: curieuxjy/curieuxjy.github.io
 
 format:
   html:
+    # title-block-style: default
+    title-color: <#ffffff>
     page-layout: full
     html-math-method: katex
     theme:
-      - standstone
-      - custom.scss
+      - styles.css
+      - lux
+      # - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes sketchy simplex standstone
 # minty pulse
 

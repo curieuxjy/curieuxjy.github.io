@@ -14,5 +14,5 @@ title-block-banner: true
 
 | 📃 Paper Review | 🧩 Storage | 👩‍💻 Code | 📘 Note 
 
-<img src="https://ghchart.rshah.org/curieuxjy" style="width:600px;">
+<img src="https://ghchart.rshah.org/curieuxjy" style="width:60%">
 

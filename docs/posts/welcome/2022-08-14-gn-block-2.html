@@ -215,54 +215,24 @@ ul.task-list li input[type="checkbox"] {
 <li><p>random control로 만들어진 데이터들을 가지고 학습된 GN-based model</p>
 <ul>
 <li><p><strong>[Visually]</strong> Swimmer6에서 그림에서 처럼 ground truth와 예측 결과가 구분이 안 갈 정도로 흡사하다.(<a href="https://drive.google.com/file/d/1ez6sqCTZmHdSnf86lK6NEsnzyi-O25-B/view">영상</a>에서도 거의 구분이 안 갈 정도로 잘 예측하고 있음을 알 수 있다.)</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/N6bOymB.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div></li>
+<p><img src="https://i.imgur.com/N6bOymB.png?1" class="img-fluid"></p></li>
 <li><p><strong>[Quantitatively]</strong> 100 step에서 3축 방향으로의 위치, 선속도, 각속도, 쿼터니안 방향 비교</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/anOJrxE.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div></li>
+<p><img src="https://i.imgur.com/anOJrxE.png?1" class="img-fluid"></p></li>
 </ul></li>
 <li><p>constant prediction baseline은 아웃풋으로 인풋을 그대로 복사해서 사용했기 때문에 애러 최대치로 normalization 하기 위해 검은색 점선으로 표기</p></li>
 <li><p>우선 검은 점선과 막대기들을 뭉뚱그려서 보면,</p></li>
 <li><p>1 step과 100 step의 rollout 결과를 비교했을 때 검은 점선에 비해 파란색 막대기들의 error 값이 낮음을 알 수 있다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/atKJKme.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div></li>
+<p><img src="https://i.imgur.com/atKJKme.png?1" class="img-fluid"></p></li>
 <li><p>GN 모델이 MLP-based 보다 더 낮은 애러를 가지는 것을 알 수 있다. 이는 특별히 Swimmer6처럼 에이전트의 구조가 반복적인 경우에 더욱 눈에 띄게 낮음을 알 수 있었다. 이를 통해 GN-based forward 모델이 다양한 물리 시스템들에서 dynamics를 잘 예측함을 알 수 있다.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/u7z0wJP.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/u7z0wJP.png?1" class="img-fluid"></p>
 <ul>
 <li>GN이 MLP보다 더 generalization이 잘 됨을 확인할 수 있었는데, Swimmer6를 집중적으로 <code>train</code>, <code>valid</code>, <code>test</code> 데이터에 대해 1-step, rollout error를 각각 확인해봤을 때, Best GN의 error 값이 Best MLP보다 낮음을 알 수 있다. 뿐만 아니라 test data의 error 증가율을 봤을 때에도 GN 모델의 test data의 error가 더 적게 증가함을 관찰할 수 있었고 이는 agent의 bodies와 joints들에 대한 inductive bias가 GN을 통해 잘 학습되었음을 증명할 수 있다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/bMJJ6Jb.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/bMJJ6Jb.png?1" class="img-fluid"></p>
 <p>Learning a forward model for <strong>multiple</strong> systems</p>
 <p>한 개의 시스템에서의 forward model을 살펴보았으니 이제 여러 시스템에서의 forward model의 성능을 살펴보자. GN을 사용하면 여러 시스템들의 다양한 변수들도 잘 다룰 수 있다는 가정이 있었다. 이를 확인하기 위해 연속적으로 static parameter들(질량, body의 길이, joint의 각도 등)을 바꿔가면서 forward dynamics를 어떻게 학습해가는지 확인했다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/pM4UKhs.png?1" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/pM4UKhs.png?1" class="img-fluid"></p>
 </section>
 <section id="inference" class="level2">
 <h2 class="anchored" data-anchor-id="inference">Inference</h2>
@@ -395,6 +365,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     });
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="" data-category="General" data-category-id="" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

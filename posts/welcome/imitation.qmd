@@ -7,7 +7,7 @@ categories: [legged robots, rl, imitation learning, pybullet, paper review]
 toc: true
 ---
 
-![Imgur](https://i.imgur.com/1Fh5MaD.png?1)
+![](https://i.imgur.com/1Fh5MaD.png?1)
 
 # 0. Abstract
 
@@ -125,7 +125,7 @@ than have been demonstrated by these previous methods.
 
 # III. OVERVIEW
 
-![Imgur](https://i.imgur.com/1Fh5MaD.png?1)
+![](https://i.imgur.com/1Fh5MaD.png?1)
 
 - Our framework receives as input a reference motion 
 that demonstrates a desired skill for the robot, 
@@ -157,7 +157,7 @@ to synthesize a policy that enables a robot to reproduce that skill in the real 
 
 ## 1. Motion Retargeting
 
-![Imgur](https://i.imgur.com/mb8oQEE.png?1)
+![](https://i.imgur.com/mb8oQEE.png?1)
 
 - To address this discrepancy, 
 the source motions are retargeted to the robot’s morphology using inverse-kinematics [19]
@@ -274,7 +274,7 @@ $$
 
 ## B. Domain Adaptation
 
-![Imgur](https://i.imgur.com/JLTwjaq.png?1)
+![](https://i.imgur.com/JLTwjaq.png?1)
 
 - `µ` represent the values of the dynamics parameters that are randomized during training in simulation
 - a random set of parameters are sampled according to `µ ∼ p(µ)`
@@ -300,7 +300,7 @@ $$
 
 # VII. EXPERIMENTAL EVALUATION
 
-![Imgur](https://i.imgur.com/O1ZRjHb.png?1)
+![](https://i.imgur.com/O1ZRjHb.png?1)
 
 - `18` degrees-of-freedom quadruped
     - 3 actuated degrees-of-freedom per leg
@@ -310,7 +310,7 @@ $$
 
 ## A. Experimental Setup
 
-![Imgur](https://i.imgur.com/yo5bpza.png?1)
+![](https://i.imgur.com/yo5bpza.png?1)
 
 - mocap clips are collected from a public dataset
 - Performance is recorded as the average normalized return,
@@ -326,7 +326,7 @@ using about 200 million samples in simulation
 
 ## Model Representation
 
-![Imgur](https://i.imgur.com/tSMcnZl.png?1)
+![](https://i.imgur.com/tSMcnZl.png?1)
 
 - The encoder E(z|µ) is represented by a fully-connected network 
 that maps the dynamics parameters µ to the mean mE (µ) and standard deviation ΣE (µ) of the encoder distribution

@@ -7,6 +7,6 @@ categories:
 toc: true
 ---
 
-![Imgur](https://i.imgur.com/1iPfFJZ.png)
+![](https://i.imgur.com/1iPfFJZ.png)
 
 > 빠르게 논문의 abstract, 그림, key idea를 살펴보는 Speed Abstracting Series
