@@ -62,7 +62,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 </head>
 
@@ -99,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">📃WaveNet</h1>
                   <div>
         <div class="description">
@@ -131,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -153,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -184,7 +199,7 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>보통 소리의 신호처리는 16-bit의 정수표현(-255 ~ 256)으로 나타내지만 WaveNet에서는 Nonlinearity를 증가시키고 더 효율적이었던 <strong>8-bit</strong> 정수 표현 디지털 신호를 사용했습니다. 이때 사용한 방법은 <code>µ-law Companding Transformation(μ-law algorithm)</code>으로 사람이 소리를 인식하는 방법을 모방한 방식을 사용했습니다. 사람은 작은 소리의 변화에는 민감하지만 큰 소리의 변화에는 둔감하므로 <a href="https://en.wikipedia.org/wiki/%CE%9C-law_algorithm">μ-law algorithm</a>에서도 작은 소리의 구간(아래 그래프에서 중앙 부분)은 세밀하게 나누고 큰 소리 구간(아래 그래프에서 좌우 끝 부분)은 기울기를 완만하게 하여 비교적 듬성하게 나누었습니다. WaveNet에서 16-bit가 아닌 8-bit를 사용한 이유는 아래 그림의 오른쪽에서 WaveNet의 전체 흐름에서 볼 때 양자화된 각 구간의 softmax로 해당 값의 확률을 구하게 되는데, 16-bit라면 softmax layer에서 총 65,536(= <span class="math inline">\(-2^{15}\)</span> ~ <span class="math inline">\(2^{15}-1\)</span> )개의 확률을 구해야 하므로 계산이 매우 많이 필요하기 때문입니다.</p>
+<p>보통 소리의 신호처리는 16-bit의 정수표현(-255 ~ 256)으로 나타내지만 WaveNet에서는 Nonlinearity를 증가시키고 더 효율적이었던 <strong>8-bit</strong> 정수 표현 디지털 신호를 사용했습니다. 이때 사용한 방법은 <code>µ-law Companding Transformation(μ-law algorithm)</code>으로 사람이 소리를 인식하는 방법을 모방한 방식을 사용했습니다. 사람은 작은 소리의 변화에는 민감하지만 큰 소리의 변화에는 둔감하므로 <a href="https://en.wikipedia.org/wiki/%CE%9C-law_algorithm">μ-law algorithm</a>에서도 작은 소리의 구간(아래 그래프에서 중앙 부분)은 세밀하게 나누고 큰 소리 구간(아래 그래프에서 좌우 끝 부분)은 기울기를 완만하게 하여 비교적 듬성하게 나누었습니다. WaveNet에서 16-bit가 아닌 8-bit를 사용한 이유는 아래 그림의 오른쪽에서 WaveNet의 전체 흐름에서 볼 때 양자화된 각 구간의 softmax로 해당 값의 확률을 구하게 되는데, 16-bit라면 softmax layer에서 총 65,536(= <span class="math inline">-2^{15}</span> ~ <span class="math inline">2^{15}-1</span> )개의 확률을 구해야 하므로 계산이 매우 많이 필요하기 때문입니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/QkCyAUV.jpg" class="img-fluid figure-img"></p>
@@ -227,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>우선 <strong>Casual</strong> 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 <span class="math inline">\(t\)</span>를 기준으로 <strong>미래 정보는 사용할 수 없고</strong> 현재까지의(과거~현재 <span class="math inline">\(t\)</span>) 정보<code>만</code> 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 <code>(레이어 수) + (필터의 length) -1</code>로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 <code>input</code>에서 5개의 음성 정보가 <code>output</code>의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.</p>
+<p>우선 <strong>Casual</strong> 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 <span class="math inline">t</span>를 기준으로 <strong>미래 정보는 사용할 수 없고</strong> 현재까지의(과거~현재 <span class="math inline">t</span>) 정보<code>만</code> 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 <code>(레이어 수) + (필터의 length) -1</code>로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 <code>input</code>에서 5개의 음성 정보가 <code>output</code>의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/GrYzT5k.jpg" class="img-fluid figure-img"></p>

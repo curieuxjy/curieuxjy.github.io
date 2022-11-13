@@ -62,7 +62,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 </head>
 
@@ -99,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">📃NerveNet</h1>
                   <div>
         <div class="description">
@@ -128,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -166,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -191,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="nervenet" class="level1">
 <h1>NerveNet</h1>
 <p>우선 강화학습의 Notation을 정리해보면, 본 논문에서는 locomotion control problem들을 목표로 잡았기 때문에 <code>infinite-horizon discounted Markov decision process (MDP)</code> 로 설정했다. 보통 <code>continuous</code>한 제어 문제에서는 시간 할인율을 고려한 무한 시간 스텝을 가지고 MDP를 구성하게 된다(실제로는 max step을 설정하긴하나 매우 큰 수로 잡는다).</p>
-<p>state 혹은 observation space로 <span class="math inline">\(S\)</span> , action space로 <span class="math inline">\(A\)</span>, stochastic policy <span class="math inline">\(\pi_{\theta}\left(a^{\tau} \mid s^{\tau}\right)\)</span> 는 파라미터 <span class="math inline">\(\theta\)</span>를 가지고 현재 상태 <span class="math inline">\(s\)</span>를 기반으로 <span class="math inline">\(a\)</span>를 만들게 된다. 이렇게 나온 agent의 <span class="math inline">\(a\)</span>와 <span class="math inline">\(s\)</span>를 가지고 환경에서는 reward <span class="math inline">\(r\left(s^{\tau}, a^{\tau}\right)\)</span> 를 주게 되고 agent는 이렇게 받는 reward를 최대화하는 방법을 학습하게 된다.</p>
+<p>state 혹은 observation space로 <span class="math inline">S</span> , action space로 <span class="math inline">A</span>, stochastic policy <span class="math inline">\pi_{\theta}\left(a^{\tau} \mid s^{\tau}\right)</span> 는 파라미터 <span class="math inline">\theta</span>를 가지고 현재 상태 <span class="math inline">s</span>를 기반으로 <span class="math inline">a</span>를 만들게 된다. 이렇게 나온 agent의 <span class="math inline">a</span>와 <span class="math inline">s</span>를 가지고 환경에서는 reward <span class="math inline">r\left(s^{\tau}, a^{\tau}\right)</span> 를 주게 되고 agent는 이렇게 받는 reward를 최대화하는 방법을 학습하게 된다.</p>
 <p>이러한 MDP 구성은 기본적인 강화학습의 Notation에서 크게 벗어나지 않는다.</p>
 <section id="graph-construction" class="level2">
 <h2 class="anchored" data-anchor-id="graph-construction">Graph Construction</h2>
@@ -209,17 +224,17 @@ ul.task-list li input[type="checkbox"] {
 <p>크게 3가지 파트로 NerveNet을 살펴볼 것인데 우선 (0) <code>Notation</code>을 보고 난뒤, (1) <code>Input model</code> (2) <code>Propagation model</code> (3) <code>Output model</code> 순으로 살펴볼 예정이다.</p>
 <section id="notation" class="level3">
 <h3 class="anchored" data-anchor-id="notation">0. Notation</h3>
-<p>그래프에서의 노테이션은 다음과 같이 <span class="math inline">\(G\)</span> 라는 그래프는 노드 집합 <span class="math inline">\(V\)</span>와 엣지 집합 <span class="math inline">\(E\)</span>로 구성된다.</p>
-<p><span class="math display">\[
+<p>그래프에서의 노테이션은 다음과 같이 <span class="math inline">G</span> 라는 그래프는 노드 집합 <span class="math inline">V</span>와 엣지 집합 <span class="math inline">E</span>로 구성된다.</p>
+<p><span class="math display">
 G=(V, E)
-\]</span></p>
+</span></p>
 <p>Nervenet policy를 구성하는 그래프는 <code>Directed graph(유향 그래프)</code>이기 때문에 각 노드에서의 <code>in</code>과 <code>out</code>이 따로 명시되게 된다.</p>
 <ul>
-<li>노드 <span class="math inline">\(u\)</span>를 중심으로 노드 <span class="math inline">\(u\)</span>로 들어오는 이웃 노드이면 <span class="math inline">\(\mathcal{N}_{in}(u)\)</span></li>
-<li>노드 <span class="math inline">\(u\)</span>를 중심으로 노드 <span class="math inline">\(u\)</span>에서 나가는 이웃 노드이면 <span class="math inline">\(\mathcal{N}_{out}(u)\)</span></li>
+<li>노드 <span class="math inline">u</span>를 중심으로 노드 <span class="math inline">u</span>로 들어오는 이웃 노드이면 <span class="math inline">\mathcal{N}_{in}(u)</span></li>
+<li>노드 <span class="math inline">u</span>를 중심으로 노드 <span class="math inline">u</span>에서 나가는 이웃 노드이면 <span class="math inline">\mathcal{N}_{out}(u)</span></li>
 </ul>
-<p>그래프의 모든 노드 <span class="math inline">\(u\)</span>는 타입을 가지게 되고 이를 <span class="math inline">\(p_{u} \in\{1,2, \ldots, P\}\)</span> (associated note type)로 나타내며 여기에서는 위에 설명한 것과 같이 <code>body</code>, <code>joint</code>, <code>root</code> 3가지 타입이 있다.</p>
-<p>노드들 뿐만 아니라 엣지들도 타입을 정할 수 있는데 <span class="math inline">\(c_{(u, v)} \in\{1,2, \ldots, C\}\)</span> (associate each edge)로 표기하여 노드쌍 <span class="math inline">\((u, v)\)</span> 사이의 엣지 타입을 정의할 수 있다.(하나의 엣지에 대해서 여러 엣지 타입을 정의할 수 있지만 여기에서는 심플 이즈 더 베스트 철학으로 하나의 엣지는 하나의 타입만 가지도록 했다)</p>
+<p>그래프의 모든 노드 <span class="math inline">u</span>는 타입을 가지게 되고 이를 <span class="math inline">p_{u} \in\{1,2, \ldots, P\}</span> (associated note type)로 나타내며 여기에서는 위에 설명한 것과 같이 <code>body</code>, <code>joint</code>, <code>root</code> 3가지 타입이 있다.</p>
+<p>노드들 뿐만 아니라 엣지들도 타입을 정할 수 있는데 <span class="math inline">c_{(u, v)} \in\{1,2, \ldots, C\}</span> (associate each edge)로 표기하여 노드쌍 <span class="math inline">(u, v)</span> 사이의 엣지 타입을 정의할 수 있다.(하나의 엣지에 대해서 여러 엣지 타입을 정의할 수 있지만 여기에서는 심플 이즈 더 베스트 철학으로 하나의 엣지는 하나의 타입만 가지도록 했다)</p>
 <p>이렇게 노드별, 엣지별 타입을 나눔으로써,</p>
 <ul>
 <li><code>노드 타입</code>은 노드들간의 다른 중요도를 파악하는데 도움이 되고</li>
@@ -227,17 +242,17 @@ G=(V, E)
 </ul>
 <p>이제 시간 노테이션에 대한 부분을 살펴보자. NerveNet에는 시간(time step)의 개념이 2가지 존재한다.</p>
 <ol type="1">
-<li>기존 강화학습에서 환경과 agent 사이의 interaction time step을 나타내는 <span class="math inline">\(\tau\)</span></li>
-<li>NerveNet의 내부 graph policy에서의 propagation step을 나타내는 <span class="math inline">\(t\)</span></li>
+<li>기존 강화학습에서 환경과 agent 사이의 interaction time step을 나타내는 <span class="math inline">\tau</span></li>
+<li>NerveNet의 내부 graph policy에서의 propagation step을 나타내는 <span class="math inline">t</span></li>
 </ol>
-<p>다시 풀어서 생각해보면, 강화학습의 시간 개념 <strong><span class="math inline">\(\tau\)</span> 스텝</strong>에서 환경으로부터 observation을 받고, 받은 observation을 기반으로 <strong><span class="math inline">\(t\)</span> 스텝</strong>동안 NerveNet의 내부의 그래프의 propagation이 일어난다.</p>
+<p>다시 풀어서 생각해보면, 강화학습의 시간 개념 <strong><span class="math inline">\tau</span> 스텝</strong>에서 환경으로부터 observation을 받고, 받은 observation을 기반으로 <strong><span class="math inline">t</span> 스텝</strong>동안 NerveNet의 내부의 그래프의 propagation이 일어난다.</p>
 </section>
 <section id="input-model" class="level3">
 <h3 class="anchored" data-anchor-id="input-model">1. Input model</h3>
-<p>위에서 말했듯이 환경과 상호작용으로 observation <span class="math inline">\(s^{\tau} \in \mathcal{S}\)</span>을 받게 된다(time step <span class="math inline">\(\tau\)</span>). 이 <span class="math inline">\(s^{\tau}\)</span>는 concatenation된 각 노드의 observation이라고 볼 수 있다. 이제 강화학습 interaction 수준의 <span class="math inline">\(\tau\)</span> 스텝은 잠시 멈춰두고 그래프 내부의 타임 스텝인 <span class="math inline">\(t\)</span> 수준에서 생각해보자. observation은 node <span class="math inline">\(u\)</span>에 해당하는 <span class="math inline">\(x_{u}\)</span>로 표현할 수 있고 <span class="math inline">\(x_{u}\)</span>는 input network <span class="math inline">\(F_{\mathrm{in}}\)</span>(MLP)를 거쳐서 고정된 크기의 state vector인 <span class="math inline">\(h_{u}^{0}\)</span>가 된다. <span class="math inline">\(h_{u}^{0}\)</span>의 노테이션을 풀어서 해석하면 노드 <code>u</code>의 propagation step <code>0</code> 에서의 state vector인 것이다. 이때 observation vector <span class="math inline">\(x_{u}\)</span>가 노드마다 크기가 다를 경우 zero padding으로 맞춰서 input network에 넣어주게 된다.</p>
-<p><span class="math display">\[
+<p>위에서 말했듯이 환경과 상호작용으로 observation <span class="math inline">s^{\tau} \in \mathcal{S}</span>을 받게 된다(time step <span class="math inline">\tau</span>). 이 <span class="math inline">s^{\tau}</span>는 concatenation된 각 노드의 observation이라고 볼 수 있다. 이제 강화학습 interaction 수준의 <span class="math inline">\tau</span> 스텝은 잠시 멈춰두고 그래프 내부의 타임 스텝인 <span class="math inline">t</span> 수준에서 생각해보자. observation은 node <span class="math inline">u</span>에 해당하는 <span class="math inline">x_{u}</span>로 표현할 수 있고 <span class="math inline">x_{u}</span>는 input network <span class="math inline">F_{\mathrm{in}}</span>(MLP)를 거쳐서 고정된 크기의 state vector인 <span class="math inline">h_{u}^{0}</span>가 된다. <span class="math inline">h_{u}^{0}</span>의 노테이션을 풀어서 해석하면 노드 <code>u</code>의 propagation step <code>0</code> 에서의 state vector인 것이다. 이때 observation vector <span class="math inline">x_{u}</span>가 노드마다 크기가 다를 경우 zero padding으로 맞춰서 input network에 넣어주게 된다.</p>
+<p><span class="math display">
 h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
-\]</span></p>
+</span></p>
 </section>
 <section id="propagation-model" class="level3">
 <h3 class="anchored" data-anchor-id="propagation-model">2. Propagation model</h3>
@@ -246,12 +261,12 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
 <li>Message Computation
 <ul>
 <li><p>전달할 메세지를 계산한다.</p></li>
-<li><p>propagation step인 <span class="math inline">\(t\)</span>에, 모든 노드들 <span class="math inline">\(u\)</span>에서 state vector <span class="math inline">\(h_{u}^{t}\)</span>를 정의할 수 있다.</p></li>
-<li><p>노드 <span class="math inline">\(u\)</span>로 모아지는(in-coming) 모든 엣지들을 가지고 메시지를 구하게 되는데, 이때 <span class="math inline">\(M\)</span>은 MLP이고 M의 아래첨자 <span class="math inline">\(c_{(u, v)}\)</span> 노테이션에서 알 수 있듯이 같은 종류의 엣지에 대해서는 같은 message function <span class="math inline">\(M\)</span>을 쓴다.</p>
-<p><span class="math display">\[
+<li><p>propagation step인 <span class="math inline">t</span>에, 모든 노드들 <span class="math inline">u</span>에서 state vector <span class="math inline">h_{u}^{t}</span>를 정의할 수 있다.</p></li>
+<li><p>노드 <span class="math inline">u</span>로 모아지는(in-coming) 모든 엣지들을 가지고 메시지를 구하게 되는데, 이때 <span class="math inline">M</span>은 MLP이고 M의 아래첨자 <span class="math inline">c_{(u, v)}</span> 노테이션에서 알 수 있듯이 같은 종류의 엣지에 대해서는 같은 message function <span class="math inline">M</span>을 쓴다.</p>
+<p><span class="math display">
   m_{(u, v)}^{t}=M_{c_{(u, v)}}\left(h_{u}^{t}\right)
-  \]</span></p></li>
-<li><p>예를 들어 아래 그림은 <code>CentipedeEight</code> 의 모습인데, 왼쪽은 실제 agent의 모습을 나타내고 있으며 오른쪽은 agent를 그래프로 나타냈을 때의 모습이다. 여기에서 2번째 torso에서 첫번째 세번째 torso에서 보낼 때 같은 메세지 펑션 <span class="math inline">\(M_{1}\)</span> 을 사용하고, LeftHip과 RightHip으로 보내는 메세지 펑션 <span class="math inline">\(M_{2}\)</span>를 사용하게 되는 것이다.</p>
+  </span></p></li>
+<li><p>예를 들어 아래 그림은 <code>CentipedeEight</code> 의 모습인데, 왼쪽은 실제 agent의 모습을 나타내고 있으며 오른쪽은 agent를 그래프로 나타냈을 때의 모습이다. 여기에서 2번째 torso에서 첫번째 세번째 torso에서 보낼 때 같은 메세지 펑션 <span class="math inline">M_{1}</span> 을 사용하고, LeftHip과 RightHip으로 보내는 메세지 펑션 <span class="math inline">M_{2}</span>를 사용하게 되는 것이다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/QFOY9VH.png" class="img-fluid figure-img"></p>
@@ -262,34 +277,34 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
 <li>Message Aggregation
 <ul>
 <li><p>앞 단계에서 모든 노드들에 대해서 메세지 계산이 끝난 후에 in-coming 이웃 노드들로부터 온(계산된) 메세지를 모으게 된다. 이때 summation, average, max-pooling 등 다양한 aggregation 함수를 사용할 수 있다.</p>
-<p><span class="math display">\[
+<p><span class="math display">
   \bar{m}_{u}^{t}=A\left(\left\{h_{v}^{t} \mid v \in \mathcal{N}_{i n}(u)\right\}\right)
-  \]</span></p></li>
+  </span></p></li>
 </ul></li>
 <li>States Update
 <ul>
 <li><p>이제 모은 메세지를 기반으로 state vector를 업데이트 하면 된다!</p>
-<p><span class="math display">\[
+<p><span class="math display">
   h_{u}^{t+1}=U_{p_{u}}\left(h_{u}^{t}, \bar{m}_{u}^{t}\right)
-  \]</span></p></li>
-<li><p>여기서 업데이트 함수 <span class="math inline">\(U\)</span> 는 a gated recurrent unit (GRU), a long short term memory (LSTM) unit 또는 MLP가 될 수 있다.</p></li>
-<li><p>Update function의 아래첨자 <span class="math inline">\(p_{u}\)</span>에서 볼 수 있다시피 같은 노드 타입이면 같은 update function <span class="math inline">\(U\)</span>를 쓰게 된다. 이렇게 업데이트된 state vector는 타임 스텝 <span class="math inline">\(t\)</span>가 하나 올라간 <span class="math inline">\(t+1\)</span> 이 된 <span class="math inline">\(h_{u}^{t+1}\)</span>가 된다.</p></li>
+  </span></p></li>
+<li><p>여기서 업데이트 함수 <span class="math inline">U</span> 는 a gated recurrent unit (GRU), a long short term memory (LSTM) unit 또는 MLP가 될 수 있다.</p></li>
+<li><p>Update function의 아래첨자 <span class="math inline">p_{u}</span>에서 볼 수 있다시피 같은 노드 타입이면 같은 update function <span class="math inline">U</span>를 쓰게 된다. 이렇게 업데이트된 state vector는 타임 스텝 <span class="math inline">t</span>가 하나 올라간 <span class="math inline">t+1</span> 이 된 <span class="math inline">h_{u}^{t+1}</span>가 된다.</p></li>
 </ul></li>
 </ol>
-<p>이렇게 내부 propagation 과정 3단계(Message Computation, Message Aggregation, States Update)가 <span class="math inline">\(T\)</span> 스텝동안 일어나게 되고 각 노드의 최종 state vector는 <span class="math inline">\(h_{u}^{T}\)</span> 가 된다.</p>
+<p>이렇게 내부 propagation 과정 3단계(Message Computation, Message Aggregation, States Update)가 <span class="math inline">T</span> 스텝동안 일어나게 되고 각 노드의 최종 state vector는 <span class="math inline">h_{u}^{T}</span> 가 된다.</p>
 </section>
 <section id="output-model" class="level3">
 <h3 class="anchored" data-anchor-id="output-model">3. Output model</h3>
 <p>전형적인 RL의 MLP 폴리시에서는 네트워크에서 각 action의 gaussian distribution의 mean을 뽑아내게 된다. std는 trainable한 벡터이다. NerveNet에서도 std는 비슷하게 다루지만 <code>각 노드에 마다</code> action prediction을 만들게 된다.</p>
-<p>actuator와 연결되어 있는 노드들의 집합을 <span class="math inline">\(O\)</span>라고 하자. 이 집합에 있는 노드들의 최종 state vector <span class="math inline">\(h_{u \in \mathcal{O}}^{T}\)</span>는 MLP인 Ouput model <span class="math inline">\(O_{q_{u}}\)</span>에 인풋으로 들어가게 되고 아웃풋으로 각 actuator의 action distribution인 gaussian distribution의 mean <span class="math inline">\(\mu\)</span>을 출력하게 된다. 여기에서 새로운 노테이션 <span class="math inline">\(q_{u}\)</span>를 볼 수 있는데 <span class="math inline">\(q_{u}\)</span>는 아웃풋 타입, 즉 아웃풋을 내놓는 노드 <span class="math inline">\(u\)</span>의 타입으로 아웃풋 펑션의 아래첨자에 <span class="math inline">\(q_{u}\)</span>에 따라 아웃풋 노드의 타입이 같으면 Output function을 공유할 수 있다. 다시말해 아웃풋 노드 타입에 따라 컨트롤러를 공유할 수도 있는 것이다. 위의 Centipedes의 예시로 보면, 같은 LeftHip 끼리는 컨트롤러를 공유할 수 있다는 것이다.</p>
-<p><span class="math display">\[
+<p>actuator와 연결되어 있는 노드들의 집합을 <span class="math inline">O</span>라고 하자. 이 집합에 있는 노드들의 최종 state vector <span class="math inline">h_{u \in \mathcal{O}}^{T}</span>는 MLP인 Ouput model <span class="math inline">O_{q_{u}}</span>에 인풋으로 들어가게 되고 아웃풋으로 각 actuator의 action distribution인 gaussian distribution의 mean <span class="math inline">\mu</span>을 출력하게 된다. 여기에서 새로운 노테이션 <span class="math inline">q_{u}</span>를 볼 수 있는데 <span class="math inline">q_{u}</span>는 아웃풋 타입, 즉 아웃풋을 내놓는 노드 <span class="math inline">u</span>의 타입으로 아웃풋 펑션의 아래첨자에 <span class="math inline">q_{u}</span>에 따라 아웃풋 노드의 타입이 같으면 Output function을 공유할 수 있다. 다시말해 아웃풋 노드 타입에 따라 컨트롤러를 공유할 수도 있는 것이다. 위의 Centipedes의 예시로 보면, 같은 LeftHip 끼리는 컨트롤러를 공유할 수 있다는 것이다.</p>
+<p><span class="math display">
 \mu_{u \in \mathcal{O}}=O_{q_{u}}\left(h_{u}^{T}\right)
-\]</span></p>
-<p>논문에서 실제로 실험을 해봤을 때 다른 타입의 컨트롤러들을 하나로 통합했더라도(<span class="math inline">\(O\)</span> function을 다 같은 MLP로 사용) 퍼포먼스가 그렇게 해쳐지지 않음을 확인할 수 있었다고 한다.</p>
+</span></p>
+<p>논문에서 실제로 실험을 해봤을 때 다른 타입의 컨트롤러들을 하나로 통합했더라도(<span class="math inline">O</span> function을 다 같은 MLP로 사용) 퍼포먼스가 그렇게 해쳐지지 않음을 확인할 수 있었다고 한다.</p>
 <p>여기까지해서 그래프 노테이션을 빌려 그래프 기반 가우시안 stochastic policy를 나타내면 아래의 수식과 같다.</p>
-<p><span class="math display">\[
+<p><span class="math display">
 \pi_{\theta}\left(a^{\tau} \mid s^{\tau}\right)=\prod_{u \in \mathcal{O}} \pi_{\theta, u}\left(a_{u}^{\tau} \mid s^{\tau}\right)=\prod_{u \in \mathcal{O}} \frac{1}{\sqrt{2 \pi \sigma_{u}^{2}}} e^{\left(a_{u}^{\tau}-\mu_{u}\right)^{2} /\left(2 \sigma_{u}^{2}\right)}
-\]</span></p>
+</span></p>
 <hr>
 <p>여기까지 NerveNet의 각 단계를 <code>Walker-Ostrich</code> 환경에서 예시로 한눈에 보기 쉽게 정리한 그림은 아래와 같다.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -302,19 +317,19 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
 </section>
 <section id="learning-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="learning-algorithm">Learning Algorithm</h2>
-<p>이전 파트에서 NerveNet의 내부에서 propagation 스텝 <span class="math inline">\(t\)</span> 단위에서 각 단계들을 자세히 살펴보았다면 이제 강화학습 타임 스텝 <span class="math inline">\(\tau\)</span> 단위에서 학습의 목적함수와 알고리즘을 살펴보자. 목적함수는 전형적인 RL과 다른 점이 없이 policy의 파라미터 <span class="math inline">\(\theta\)</span>를 가지고 Return 값을 maximization하는 것으로 한다.</p>
-<p><span class="math display">\[
+<p>이전 파트에서 NerveNet의 내부에서 propagation 스텝 <span class="math inline">t</span> 단위에서 각 단계들을 자세히 살펴보았다면 이제 강화학습 타임 스텝 <span class="math inline">\tau</span> 단위에서 학습의 목적함수와 알고리즘을 살펴보자. 목적함수는 전형적인 RL과 다른 점이 없이 policy의 파라미터 <span class="math inline">\theta</span>를 가지고 Return 값을 maximization하는 것으로 한다.</p>
+<p><span class="math display">
 J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\tau}, a^{\tau}\right)\right]
-\]</span></p>
+</span></p>
 <p>강화학습 알고리즘으로는 <a href="https://arxiv.org/abs/1707.06347"><code>PPO</code></a>과 <a href="https://arxiv.org/abs/1506.02438"><code>GAE</code></a>를 사용했으며 해당 알고리즘들의 내용은 각각 알고리즘들의 원래 수식과 내용들과 상이한 점이 없으므로 각 논문으 참고하면 되기 때문에 이번 논문 리뷰에서는 생략한다.</p>
-<p>PPO와 GAE 알고리즘을 참고하여 위의 목적함수 <span class="math inline">\(J\)</span>를 정리하면 NerveNet의 목적함수는 다음과 같다.</p>
-<p><span class="math display">\[
+<p>PPO와 GAE 알고리즘을 참고하여 위의 목적함수 <span class="math inline">J</span>를 정리하면 NerveNet의 목적함수는 다음과 같다.</p>
+<p><span class="math display">
 \begin{aligned}
 \tilde{J}(\theta)=&amp; J(\theta)-\beta L_{K L}(\theta)-\alpha L_{V}(\theta) \\
 =&amp; \mathbb{E}_{\pi_{\theta}}\left[\sum_{\tau=0}^{\infty} \min \left(\hat{A}^{\tau} r^{\tau}(\theta), \hat{A}^{\tau} \operatorname{clip}\left(r^{\tau}(\theta), 1-\epsilon, 1+\epsilon\right)\right)\right] \\
 &amp;-\beta \mathbb{E}_{\pi_{\theta}}\left[\sum_{\tau=0}^{\infty} \operatorname{KL}\left[\pi_{\theta}\left(: \mid s^{\tau}\right) \mid \pi_{\theta_{o l d}}\left(: \mid s^{\tau}\right)\right]\right]-\alpha \mathbb{E}_{\pi_{\theta}}\left[\sum_{\tau=0}^{\infty}\left(V_{\theta}\left(s^{\tau}\right)-V\left(s^{\tau}\right)^{\operatorname{target}}\right)^{2}\right]
 \end{aligned}
-\]</span></p>
+</span></p>
 <p>위의 수식에서 볼 수 있는 <code>value network V를 어떻게 디자인할 것인지</code>가 이번 논문의 다른 포인트로 볼 수 있다. 논문의 기본 아이디어는 policy network를 그래프로 표현하는 것이고, value network는 어떻게 할지 여러 선택지들이 남아있다. 그래서 본 논문에서는 value network의 디자인을 두고 크게 3가지 NerveNet의 변형 알고리즘들을 실험해보았다.</p>
 <ol type="1">
 <li><p><strong>NerveNet-MLP</strong> : policy network를 1개의 GNN으로 구성하고 <code>value network는 MLP로</code> 구성</p></li>
@@ -523,7 +538,7 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 </section>
 <section id="comparison-of-model-variants" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-model-variants">6. Comparison of model variants</h2>
-<p>Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 <code>Swimmer</code>, <code>Reacher</code>, <code>HalfCheetah</code>에서 비교해본 결과, Value Network는 MLP로 한 <code>NerveNet-MLP</code>의 퍼포먼스가 가장 좋았고 <code>NerveNet-1</code>의 퍼포먼스가 2등으로 <code>NerveNet-MLP</code> 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight <span class="math inline">\(\alpha\)</span>를 더 sensitive하게 만들기 때문이라고 추론할 수 있다.</p>
+<p>Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 <code>Swimmer</code>, <code>Reacher</code>, <code>HalfCheetah</code>에서 비교해본 결과, Value Network는 MLP로 한 <code>NerveNet-MLP</code>의 퍼포먼스가 가장 좋았고 <code>NerveNet-1</code>의 퍼포먼스가 2등으로 <code>NerveNet-MLP</code> 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight <span class="math inline">\alpha</span>를 더 sensitive하게 만들기 때문이라고 추론할 수 있다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/W79cOCW.png" class="img-fluid figure-img"></p>

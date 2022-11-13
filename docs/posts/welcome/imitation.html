@@ -61,7 +61,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 </head>
 
@@ -98,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">📃Learning Agile Robotic Locomotion Skills by Imitating Animals</h1>
                   <div>
         <div class="description">
@@ -123,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -168,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -335,11 +350,11 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>To address this discrepancy, the source motions are retargeted to the robot’s morphology using inverse-kinematics [19]</li>
 <li>The keypoints include the positions of the feet and hips</li>
-<li>At each timestep, the source motion specifies the 3D location <span class="math inline">\(\hat{\mathbf{X}}_{i}(t)\)</span> of each keypointi. The corresponding target keypoint <span class="math inline">\(\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\)</span> is determined by the robot’s pose <span class="math inline">\(\mathbf{q}_{t}\)</span>, represented in generalized coordinates</li>
-<li>IK is then applied to construct a sequence of poses <span class="math inline">\(\mathbf{q}_{0: T}\)</span> that track the keypoints at each frame</li>
-<li><span class="math inline">\(\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)\)</span></li>
-<li>additional regularization term is included to encourage the poses to remain similar to a default pose <span class="math inline">\(\overline{\mathbf{q}}\)</span></li>
-<li><span class="math inline">\(\mathbf{W}=\operatorname{diag}\left(w_{1}, w_{2}, \ldots\right)\)</span> a diagonal matrix specifying regularization coefficients for each joint</li>
+<li>At each timestep, the source motion specifies the 3D location <span class="math inline">\hat{\mathbf{X}}_{i}(t)</span> of each keypointi. The corresponding target keypoint <span class="math inline">\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)</span> is determined by the robot’s pose <span class="math inline">\mathbf{q}_{t}</span>, represented in generalized coordinates</li>
+<li>IK is then applied to construct a sequence of poses <span class="math inline">\mathbf{q}_{0: T}</span> that track the keypoints at each frame</li>
+<li><span class="math inline">\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)</span></li>
+<li>additional regularization term is included to encourage the poses to remain similar to a default pose <span class="math inline">\overline{\mathbf{q}}</span></li>
+<li><span class="math inline">\mathbf{W}=\operatorname{diag}\left(w_{1}, w_{2}, \ldots\right)</span> a diagonal matrix specifying regularization coefficients for each joint</li>
 </ul>
 <hr>
 <ul>
@@ -353,25 +368,25 @@ ul.task-list li input[type="checkbox"] {
 <li>각 조인트에 대한 regularization coefficient를 명시한 대각행렬이다.</li>
 </ul></li>
 </ul>
-<p><span class="math display">\[
+<p><span class="math display">
 \underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)
-\]</span></p>
+</span></p>
 <ul>
-<li><span class="math inline">\(\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)\)</span></li>
+<li><span class="math inline">\underset{\mathbf{q}_{0: T}}{\arg \min } \sum_{t} \sum_{i}\left\|\hat{\mathbf{x}}_{i}(t)-\mathbf{x}_{i}\left(\mathbf{q}_{t}\right)\right\|^{2}+\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)^{T} \mathbf{W}\left(\overline{\mathbf{q}}-\mathbf{q}_{t}\right)</span></li>
 </ul>
 </section>
 <section id="motion-imitation-1" class="level2">
 <h2 class="anchored" data-anchor-id="motion-imitation-1">2. Motion Imitation</h2>
 <ul>
-<li><span class="math inline">\(J(\pi)=\mathbb{E}_{\tau \sim p(\tau \mid \pi)}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right]\)</span></li>
-<li><span class="math inline">\(p(\tau \mid \pi)=p\left(\mathbf{s}_{0}\right) \prod_{t=0}^{T-1} p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_{t}, \mathbf{a}_{t}\right) \pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)\)</span></li>
-<li>To imitate a given reference motion, The inputs to the policy is augmented with an additional goal <span class="math inline">\(g_t\)</span> , which specifies the motion that the robot should imitate.</li>
-<li><span class="math inline">\(\pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}, \mathbf{g}_{t}\right)\)</span></li>
+<li><span class="math inline">J(\pi)=\mathbb{E}_{\tau \sim p(\tau \mid \pi)}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right]</span></li>
+<li><span class="math inline">p(\tau \mid \pi)=p\left(\mathbf{s}_{0}\right) \prod_{t=0}^{T-1} p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_{t}, \mathbf{a}_{t}\right) \pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)</span></li>
+<li>To imitate a given reference motion, The inputs to the policy is augmented with an additional goal <span class="math inline">g_t</span> , which specifies the motion that the robot should imitate.</li>
+<li><span class="math inline">\pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}, \mathbf{g}_{t}\right)</span></li>
 <li>policy is queried at 30Hz for a new action at each timestep</li>
-<li>The state <span class="math inline">\(\mathbf{s}_{t}=\left(\mathbf{q}_{t-2: t}, \mathbf{a}_{t-3: t-1}\right)\)</span> is represented by the poses <span class="math inline">\(\mathbf{q}_{t-2: t}\)</span> of the robot in the three previous timesteps, and the three previous actions <span class="math inline">\(\mathbf{a}_{t-3: t-1}\)</span></li>
+<li>The state <span class="math inline">\mathbf{s}_{t}=\left(\mathbf{q}_{t-2: t}, \mathbf{a}_{t-3: t-1}\right)</span> is represented by the poses <span class="math inline">\mathbf{q}_{t-2: t}</span> of the robot in the three previous timesteps, and the three previous actions <span class="math inline">\mathbf{a}_{t-3: t-1}</span></li>
 <li>The pose features qt consist of IMU readings of the root orientation (row, pitch, yaw) and the local rotations of every joint.</li>
 <li>The root position is not included among the pose features to avoid the need to estimate the root position during real-world deployment.</li>
-<li>The goal <span class="math inline">\(\mathbf{g}_{t}=\left(\hat{\mathbf{q}}_{t+1}, \hat{\mathbf{q}}_{t+2}, \hat{\mathbf{q}}_{t+10}, \hat{\mathbf{q}}_{t+30}\right)\)</span> specifies target poses from the reference motion at four future timesteps, spanning approximately 1 second</li>
+<li>The goal <span class="math inline">\mathbf{g}_{t}=\left(\hat{\mathbf{q}}_{t+1}, \hat{\mathbf{q}}_{t+2}, \hat{\mathbf{q}}_{t+10}, \hat{\mathbf{q}}_{t+30}\right)</span> specifies target poses from the reference motion at four future timesteps, spanning approximately 1 second</li>
 <li>The action at specifies target rotations for PD controllers at each joint</li>
 <li>To ensure smoother motions, the PD targets are first processed by a low-pass filter</li>
 </ul>
@@ -394,7 +409,7 @@ ul.task-list li input[type="checkbox"] {
 <li>the local rotations of every joint</li>
 <li>실제 로봇에 적용할 때 root position을 추정하지 않아도 되도록 qt에 root position을 포함하지 않았다.</li>
 </ul></li>
-<li>The goal <span class="math inline">\(\mathbf{g}_{t}=\left(\hat{\mathbf{q}}_{t+1}, \hat{\mathbf{q}}_{t+2}, \hat{\mathbf{q}}_{t+10}, \hat{\mathbf{q}}_{t+30}\right)\)</span>
+<li>The goal <span class="math inline">\mathbf{g}_{t}=\left(\hat{\mathbf{q}}_{t+1}, \hat{\mathbf{q}}_{t+2}, \hat{\mathbf{q}}_{t+10}, \hat{\mathbf{q}}_{t+30}\right)</span>
 <ul>
 <li>specifies target poses from the reference motion at <code>four future timesteps</code>,</li>
 <li>약 1 second</li>
@@ -404,34 +419,34 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <section id="reward-function" class="level3">
 <h3 class="anchored" data-anchor-id="reward-function">Reward Function</h3>
-<p><span class="math display">\[
+<p><span class="math display">
 \begin{gathered}
 r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\
 w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1
 \end{gathered}
-\]</span></p>
+</span></p>
 <hr>
 <ul>
-<li>encourages the policy to track the sequence of target poses <span class="math inline">\(\left(\hat{\mathbf{q}}_{0}, \hat{\mathbf{q}}_{1}, \ldots, \hat{\mathbf{q}}_{T}\right)\)</span></li>
-<li><span class="math inline">\(\begin{gathered}r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1\end{gathered}\)</span></li>
+<li>encourages the policy to track the sequence of target poses <span class="math inline">\left(\hat{\mathbf{q}}_{0}, \hat{\mathbf{q}}_{1}, \ldots, \hat{\mathbf{q}}_{T}\right)</span></li>
+<li><span class="math inline">\begin{gathered}r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1\end{gathered}</span></li>
 </ul>
 <p>각 리워드 텀을 살펴보면,</p>
 <ul>
 <li>The pose reward는 레퍼런스 모션과의 차이를 줄이기 위한 리워드이다. q는 1차원 rotation 값이다.
 <ul>
-<li><span class="math inline">\(r_{t}^{\mathrm{p}}=\exp \left[-5 \sum_{j}\left\|\hat{\mathbf{q}}_{t}^{j}-\mathbf{q}_{t}^{j}\right\|^{2}\right]\)</span></li>
+<li><span class="math inline">r_{t}^{\mathrm{p}}=\exp \left[-5 \sum_{j}\left\|\hat{\mathbf{q}}_{t}^{j}-\mathbf{q}_{t}^{j}\right\|^{2}\right]</span></li>
 </ul></li>
 <li>the velocity reward는 pose reward와 비슷하게 1차원의 값으로 angular velocity 값이다.
 <ul>
-<li><span class="math inline">\(r_{t}^{\mathrm{v}}=\exp \left[-0.1 \sum_{j}\left\|\hat{\dot{\mathbf{q}}}_{t}^{j}-\dot{\mathbf{q}}_{t}^{j}\right\|^{2}\right]\)</span>소</li>
+<li><span class="math inline">r_{t}^{\mathrm{v}}=\exp \left[-0.1 \sum_{j}\left\|\hat{\dot{\mathbf{q}}}_{t}^{j}-\dot{\mathbf{q}}_{t}^{j}\right\|^{2}\right]</span>소</li>
 </ul></li>
 <li>the ee reward는 3차원 값으로 로봇의 end-effector들의 좌표를 나타낸다.
 <ul>
-<li><span class="math inline">\(r_{t}^{\mathrm{e}}=\exp \left[-40 \sum_{e}\left\|\hat{\mathbf{x}}_{t}^{e}-\mathbf{x}_{t}^{e}\right\|^{2}\right]\)</span></li>
+<li><span class="math inline">r_{t}^{\mathrm{e}}=\exp \left[-40 \sum_{e}\left\|\hat{\mathbf{x}}_{t}^{e}-\mathbf{x}_{t}^{e}\right\|^{2}\right]</span></li>
 </ul></li>
 <li>root pose reward는 몸체의 global position과 rotation을 가지고 구하며, root velocity reward는 몸체의 선속도와 각속도를 가지고 구한다.
 <ul>
-<li><span class="math inline">\(\begin{aligned}&amp;r_{t}^{\mathrm{rp}}=\exp \left[-20\left\|\hat{\mathbf{x}}_{t}^{\mathrm{root}}-\mathbf{x}_{t}^{\mathrm{root}}\right\|^{2}-10\left\|\hat{\mathbf{q}}_{t}^{\mathrm{root}}-\mathbf{q}_{t}^{\mathrm{root}}\right\|^{2}\right] \\&amp;r_{t}^{\mathrm{rv}}=\exp \left[-2\left\|\hat{\mathbf{x}}_{t}^{\mathrm{root}}-\dot{\mathbf{x}}_{t}^{\mathrm{root}}\right\|^{2}-0.2\left\|\hat{\mathbf{q}}_{t}^{\mathrm{root}}-\dot{\mathbf{q}}_{t}^{\text {root }}\right\|^{2}\right]\end{aligned}\)</span></li>
+<li><span class="math inline">\begin{aligned}&amp;r_{t}^{\mathrm{rp}}=\exp \left[-20\left\|\hat{\mathbf{x}}_{t}^{\mathrm{root}}-\mathbf{x}_{t}^{\mathrm{root}}\right\|^{2}-10\left\|\hat{\mathbf{q}}_{t}^{\mathrm{root}}-\mathbf{q}_{t}^{\mathrm{root}}\right\|^{2}\right] \\&amp;r_{t}^{\mathrm{rv}}=\exp \left[-2\left\|\hat{\mathbf{x}}_{t}^{\mathrm{root}}-\dot{\mathbf{x}}_{t}^{\mathrm{root}}\right\|^{2}-0.2\left\|\hat{\mathbf{q}}_{t}^{\mathrm{root}}-\dot{\mathbf{q}}_{t}^{\text {root }}\right\|^{2}\right]\end{aligned}</span></li>
 </ul></li>
 </ul>
 </section>
@@ -471,12 +486,12 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 <li><strong>incorporate an information bottleneck into the encoder</strong></li>
 <li>The information bottleneck enforces an upper bound Ic on the mutual information I(M, Z) between the dynamics parameters M and the encoding Z</li>
 </ul>
-<p><span class="math display">\[
+<p><span class="math display">
 \begin{array}{ll}
 \underset{\pi, E}{\arg \max } &amp; \mathbb{E}_{\boldsymbol{\mu} \sim p(\boldsymbol{\mu})} \mathbb{E}_{\mathbf{z} \sim E(\mathbf{z} \mid \boldsymbol{\mu})} \mathbb{E}_{\tau \sim p(\tau \mid \pi, \boldsymbol{\mu}, \mathbf{z})}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right] \\
 \text { s.t. } &amp; I(\mathbf{M}, \mathbf{Z}) \leq I_{c} .
 \end{array}
-\]</span></p>
+</span></p>
 <ul>
 <li>note에 정리</li>
 </ul>
@@ -484,7 +499,7 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 <section id="c.-real-world-transfer" class="level2">
 <h2 class="anchored" data-anchor-id="c.-real-world-transfer">C. Real World Transfer</h2>
 <ul>
-<li><span class="math inline">\(\mathbf{z}^{*}=\underset{\mathbf{z}}{\arg \max } \quad \mathbb{E}_{\tau \sim p^{*}(\tau \mid \pi, \mathbf{z})}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right]\)</span></li>
+<li><span class="math inline">\mathbf{z}^{*}=\underset{\mathbf{z}}{\arg \max } \quad \mathbb{E}_{\tau \sim p^{*}(\tau \mid \pi, \mathbf{z})}\left[\sum_{t=0}^{T-1} \gamma^{t} r_{t}\right]</span></li>
 </ul>
 </section>
 </section>
@@ -545,7 +560,7 @@ w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.1
 <li>input : the state s, goal g, and dynamics encoding z</li>
 <li>output : the mean mπ (s, g, z) of a Gaussian action distribution</li>
 </ul></li>
-<li>The standard deviation <span class="math inline">\(\Sigma_{\pi}=\operatorname{diag}\left(\sigma_{\pi}^{1}, \sigma_{\pi}^{2}, \ldots\right)\)</span> of the action distribution is represented by a fixed matrix.</li>
+<li>The standard deviation <span class="math inline">\Sigma_{\pi}=\operatorname{diag}\left(\sigma_{\pi}^{1}, \sigma_{\pi}^{2}, \ldots\right)</span> of the action distribution is represented by a fixed matrix.</li>
 <li>The value function V(s,g,μ) : input the state, goal, and dynamics parameters</li>
 </ul>
 </section>

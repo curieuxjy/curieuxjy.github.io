@@ -62,7 +62,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 </head>
 
@@ -99,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">📃Robust Recovery Controller</h1>
                   <div>
         <div class="description">
@@ -132,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -160,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -245,14 +260,14 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p><strong>(1)Self-righting behavior</strong></p>
-<p>Self-righting을 학습하기 위해 policy에 들어가는 data(state 정보)로는 아래의 표에서 볼 수 있듯이 총 6개의 data가 있습니다. 그 중 <span class="math inline">\(e_g\)</span>는 몸체 base의 z 방향으로의 단위 벡터로 몸체의 upright를 판단하기 위한 정보로 볼 수 있습니다.</p>
+<p>Self-righting을 학습하기 위해 policy에 들어가는 data(state 정보)로는 아래의 표에서 볼 수 있듯이 총 6개의 data가 있습니다. 그 중 <span class="math inline">e_g</span>는 몸체 base의 z 방향으로의 단위 벡터로 몸체의 upright를 판단하기 위한 정보로 볼 수 있습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/o3h1UAQ.jpg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>보통 강화학습에서는 reward를 최대화 하는 방향으로 학습(최적화)이 일어나지만 reward의 반대 개념인 cost의 값이 최소화하는 방향으로 학습을 시켰습니다. 아래의 식처럼 여러개의 cost term들이 있지만 그 중 self-righting에서 특징적인 cost term은 <strong>orientation cost term</strong> 입니다. 이 cost term은 <span class="math inline">\(c_o=\left\|[0,0,-1]^T-e_g\right\|\)</span>로 계산되는데 이는 위에서 설명한 대로 policy network가 로봇 몸체의 base의 방향을 uprighting 하도록 학습되게 하기 위한 term이라고 볼 수 있습니다.</p>
+<p>보통 강화학습에서는 reward를 최대화 하는 방향으로 학습(최적화)이 일어나지만 reward의 반대 개념인 cost의 값이 최소화하는 방향으로 학습을 시켰습니다. 아래의 식처럼 여러개의 cost term들이 있지만 그 중 self-righting에서 특징적인 cost term은 <strong>orientation cost term</strong> 입니다. 이 cost term은 <span class="math inline">c_o=\left\|[0,0,-1]^T-e_g\right\|</span>로 계산되는데 이는 위에서 설명한 대로 policy network가 로봇 몸체의 base의 방향을 uprighting 하도록 학습되게 하기 위한 term이라고 볼 수 있습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/YXoKK18.png" class="img-fluid figure-img"></p>
@@ -289,7 +304,7 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>각 Behavior policy에서 나오는 output은 <span class="math inline">\(o_t\)</span>이며 이는 로봇을 구동시키는 12개의 joint motor에 <code>대응</code>하는 실수 벡터입니다. <code>대응</code>이라고 표현한 이유는 해당 실수값을 바로 joint의 desired position으로 사용하는 것이 아니라 좀 더 빠른 학습 수렴을 위해 desired joint position을 구하는 식을 거쳐 계산된 값을 사용하기 때문입니다. 우선 <code>Self-righting</code>과 <code>Standing up</code> task에서는 네트워크에서 나온 값 <span class="math inline">\(o_t\)</span>를 현재 각 모터의 position인 <span class="math inline">\(\phi_t\)</span>에 더해주어서 최종 desired joint position인 <span class="math inline">\(\phi_d\)</span> 값으로 제어합니다. <code>Locomotion</code>에서는 현재의 joint position 대신, 로봇이 서있는 자세인 nominal joint configuration <span class="math inline">\(\phi_n\)</span>에 <span class="math inline">\(o_t\)</span>을 더해주어 최종 desired joint position인 <span class="math inline">\(\phi_d\)</span>을 사용합니다.(<span class="math inline">\(o_t\)</span>에 곱해지는 <span class="math inline">\(k\)</span>는 하이퍼파라미터처럼 찾아야 하는 상수값입니다.)</p>
+<p>각 Behavior policy에서 나오는 output은 <span class="math inline">o_t</span>이며 이는 로봇을 구동시키는 12개의 joint motor에 <code>대응</code>하는 실수 벡터입니다. <code>대응</code>이라고 표현한 이유는 해당 실수값을 바로 joint의 desired position으로 사용하는 것이 아니라 좀 더 빠른 학습 수렴을 위해 desired joint position을 구하는 식을 거쳐 계산된 값을 사용하기 때문입니다. 우선 <code>Self-righting</code>과 <code>Standing up</code> task에서는 네트워크에서 나온 값 <span class="math inline">o_t</span>를 현재 각 모터의 position인 <span class="math inline">\phi_t</span>에 더해주어서 최종 desired joint position인 <span class="math inline">\phi_d</span> 값으로 제어합니다. <code>Locomotion</code>에서는 현재의 joint position 대신, 로봇이 서있는 자세인 nominal joint configuration <span class="math inline">\phi_n</span>에 <span class="math inline">o_t</span>을 더해주어 최종 desired joint position인 <span class="math inline">\phi_d</span>을 사용합니다.(<span class="math inline">o_t</span>에 곱해지는 <span class="math inline">k</span>는 하이퍼파라미터처럼 찾아야 하는 상수값입니다.)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/MtyoB9j.jpg" class="img-fluid figure-img"></p>
@@ -306,7 +321,7 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>Height Estimator Network가 input으로 받는 data는 아래의 표와 같습니다. Output으로는 body의 IMU 값과 12개 joint들의 position을 출력하여 해당 값들을 가지고 forward kinematics를 이용하여 구한 height 값을 네트워크에서 추정한 값으로 사용합니다. 이 신경망은 강화학습으로 학습을 하는 것이 아니라 지도학습 방법으로 true 값을 맞춰가는 과정을 통해 학습하게 되는데 이떄 true data는 시뮬레이션 상에서는 쉽게 구할 수 있고 Regression model의 loss 값은 <span class="math inline">\(\sum_{j=0}^K\left\|h_j-h_\psi\left(s_j\right)\right\|^2\)</span>으로 계산됩니다. (<span class="math inline">\(j\)</span>: joint index, <span class="math inline">\(s_j\)</span>: joint state, <span class="math inline">\(\psi\)</span>: network parameter)</p>
+<p>Height Estimator Network가 input으로 받는 data는 아래의 표와 같습니다. Output으로는 body의 IMU 값과 12개 joint들의 position을 출력하여 해당 값들을 가지고 forward kinematics를 이용하여 구한 height 값을 네트워크에서 추정한 값으로 사용합니다. 이 신경망은 강화학습으로 학습을 하는 것이 아니라 지도학습 방법으로 true 값을 맞춰가는 과정을 통해 학습하게 되는데 이떄 true data는 시뮬레이션 상에서는 쉽게 구할 수 있고 Regression model의 loss 값은 <span class="math inline">\sum_{j=0}^K\left\|h_j-h_\psi\left(s_j\right)\right\|^2</span>으로 계산됩니다. (<span class="math inline">j</span>: joint index, <span class="math inline">s_j</span>: joint state, <span class="math inline">\psi</span>: network parameter)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/lRW3DpP.jpg" class="img-fluid figure-img"></p>
@@ -349,7 +364,7 @@ ul.task-list li input[type="checkbox"] {
 <p>논문에서 설계한 Recovery Controller의 실험 결과는 다음과 같이 (1) Recovery 성공률, (2) Height Estimator의 상태 추정 효과, (3) Behavior Selector의 (기존 방법론인 State Machine과 비교했을 때의) 경쟁력 3가지로 살펴볼 수 있습니다.</p>
 <section id="the-success-of-recovery" class="level2">
 <h2 class="anchored" data-anchor-id="the-success-of-recovery">The success of recovery</h2>
-<p>Recovery 실험은 총 2가지로 진행되었는데 첫번째는 지면에 로봇을 임의의 position으로 넘어진 상황을 연출한 후 5초 이내로 일어날 수 있는지를 확인했고 두번째로는 로봇이 걷고 있을 때 발로 쳐서 넘어뜨린후 로봇이 다시 자연스럽게(각 behavior들 간의 switching이 자연스럽게) 일어나는지를 확인했습니다. 각각의 실험 모두 50번 이상씩 진행했으며이때 약 100번중 97번을 성공하여 97% 성공률을 보였습니다. (실패한 케이스들의 경우에는 joint의 position이 <span class="math inline">\(2\pi\)</span>를 넘어가는 값으로 나올 때 잘 작동하지 않았다고 합니다.)</p>
+<p>Recovery 실험은 총 2가지로 진행되었는데 첫번째는 지면에 로봇을 임의의 position으로 넘어진 상황을 연출한 후 5초 이내로 일어날 수 있는지를 확인했고 두번째로는 로봇이 걷고 있을 때 발로 쳐서 넘어뜨린후 로봇이 다시 자연스럽게(각 behavior들 간의 switching이 자연스럽게) 일어나는지를 확인했습니다. 각각의 실험 모두 50번 이상씩 진행했으며이때 약 100번중 97번을 성공하여 97% 성공률을 보였습니다. (실패한 케이스들의 경우에는 joint의 position이 <span class="math inline">2\pi</span>를 넘어가는 값으로 나올 때 잘 작동하지 않았다고 합니다.)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/FnkqCfc.jpg" class="img-fluid figure-img"></p>

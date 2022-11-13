@@ -62,7 +62,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 </head>
 
@@ -99,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">📃GN-Block(1)</h1>
                   <div>
         <div class="description">
@@ -131,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -154,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full column-page-left" id="quarto-document-content">
 
 
 
@@ -211,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="graph-representation-of-a-physical-system" class="level2">
 <h2 class="anchored" data-anchor-id="graph-representation-of-a-physical-system">Graph representation of a physical system</h2>
 <p>물리시스템을 어떻게 그래프로 나타낼 수 있는지 몇가지 용어와 수식들을 정리해보겠습니다. - 물리 시스템의 body는 그래프의 <code>node</code>로 표현합니다. - 물리 시스템의 joint는 그래프의 <code>edge</code>로 표현합니다. - 물리 시스템의 global한 속성은 <code>global feature</code>로 표현합니다.</p>
-<p>아래 사진에서 보이는 half-cheetah에서 직관적으로 어떻게 그래프가 그려질 수 있는지 알 수 있고 이 그래프를 <span class="math inline">\(G\)</span>로 나타낼 수 있습니다.</p>
+<p>아래 사진에서 보이는 half-cheetah에서 직관적으로 어떻게 그래프가 그려질 수 있는지 알 수 있고 이 그래프를 <span class="math inline">G</span>로 나타낼 수 있습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/yN3GlTK.png?1" class="img-fluid figure-img"></p>
@@ -219,28 +234,28 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>앞서 설명한 부분을 수식으로 나타내면 다음과 같습니다.</p>
-<p><span class="math display">\[
+<p><span class="math display">
 G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\mathbf{e}_{j}, s_{j}, r_{j}\right\}_{j=1 \cdots N_{e}}\right)
-\]</span></p>
+</span></p>
 <ul>
-<li><span class="math inline">\(g\)</span> : global features 시스템의 중력이나 time step과 같은 속성을 나타내는 벡터입니다.</li>
-<li><span class="math inline">\(\mathbf{n}_{i}\)</span> : node features를 나타내는 벡터입니다.</li>
-<li><span class="math inline">\(\mathbf{e}_{j}\)</span> : edge features를 나타내는 벡터입니다.</li>
-<li><span class="math inline">\(s_{j}\)</span> : 이 edge를 통해서 message를 보내는 sender nodes의 인덱스입니다.</li>
-<li><span class="math inline">\(r_{j}\)</span> : 이 edge를 통해서 message를 받는 receiver nodes의 인덱스입니다.</li>
+<li><span class="math inline">g</span> : global features 시스템의 중력이나 time step과 같은 속성을 나타내는 벡터입니다.</li>
+<li><span class="math inline">\mathbf{n}_{i}</span> : node features를 나타내는 벡터입니다.</li>
+<li><span class="math inline">\mathbf{e}_{j}</span> : edge features를 나타내는 벡터입니다.</li>
+<li><span class="math inline">s_{j}</span> : 이 edge를 통해서 message를 보내는 sender nodes의 인덱스입니다.</li>
+<li><span class="math inline">r_{j}</span> : 이 edge를 통해서 message를 받는 receiver nodes의 인덱스입니다.</li>
 </ul>
 </section>
 <section id="static-dynamic-properties" class="level2">
 <h2 class="anchored" data-anchor-id="static-dynamic-properties">Static &amp; Dynamic properties</h2>
-<p>여기서 static graph <span class="math inline">\(G_s\)</span>와 dynamic graph <span class="math inline">\(G_d\)</span> 라는 그래프는 2가지 종류가 있습니다. 이 2개의 그래프는 각각 시스템의 속성이 시간에 따라 변화하는지(dynamic/time-variant) 안하는지(static/time-invaritant)에 따라 그래프를 구성하는 정보의 종류가 다릅니다.(자세한 정보는 Appendix G section에서 Mujoco 기반의 어떤 정보로 각 그래프를 구성했는지 나와있습니다.)</p>
+<p>여기서 static graph <span class="math inline">G_s</span>와 dynamic graph <span class="math inline">G_d</span> 라는 그래프는 2가지 종류가 있습니다. 이 2개의 그래프는 각각 시스템의 속성이 시간에 따라 변화하는지(dynamic/time-variant) 안하는지(static/time-invaritant)에 따라 그래프를 구성하는 정보의 종류가 다릅니다.(자세한 정보는 Appendix G section에서 Mujoco 기반의 어떤 정보로 각 그래프를 구성했는지 나와있습니다.)</p>
 <ul>
-<li>A static graph <span class="math inline">\(G_s\)</span>: 시스템의 static한 정보를 가지고 있는 그래프
+<li>A static graph <span class="math inline">G_s</span>: 시스템의 static한 정보를 가지고 있는 그래프
 <ul>
 <li><code>global parameters</code>: the time step, viscosity, gravity, etc</li>
 <li><code>body/node parameters</code>: mass, inertia tensor, etc.</li>
 <li><code>joint/edge parameters</code>: joint type과 properties, motor type and properties, etc</li>
 </ul></li>
-<li>A dynamic graph <span class="math inline">\(G_d\)</span>: 시스템의 일시적인 state 정보를 가지고 있는 그래프
+<li>A dynamic graph <span class="math inline">G_d</span>: 시스템의 일시적인 state 정보를 가지고 있는 그래프
 <ul>
 <li><code>body/node</code>: 3D Cartesian position, 4D quaternion orientation, 3D linear velocity, 3D angular velocity</li>
 <li><code>joint/edge</code>: joint에 적용된 action들의 크기</li>
@@ -277,7 +292,7 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>가장 간단한 GNN feed-forward 모델입니다. 그래프는 처음에 <span class="math inline">\(GN_1\)</span>을 거쳐 latent graph인 <span class="math inline">\(G'\)</span>이 됩니다. 그리고 다음 <span class="math inline">\(GN_2\)</span>의 인풋으로는 <span class="math inline">\(GN_1\)</span>을 거치긴 전의 그래프였던 <span class="math inline">\(G\)</span>와 <span class="math inline">\(G'\)</span>를 concatenate를 해서 넣어주게 됩니다. 저자들은 이렇게 디자인한 이유로, 그래프의 모든 노드들과 엣지들이 모두 communicate하게 하기 위함이라고 이야기합니다. 이렇게 <span class="math inline">\(GN_1\)</span>, <span class="math inline">\(GN_2\)</span>를 거쳐 최종적으로 나오는 <span class="math inline">\(G^*\)</span>의 node feature들이 각 body의 상태 prediction 값이 되는 것 입니다.</p>
+<p>가장 간단한 GNN feed-forward 모델입니다. 그래프는 처음에 <span class="math inline">GN_1</span>을 거쳐 latent graph인 <span class="math inline">G'</span>이 됩니다. 그리고 다음 <span class="math inline">GN_2</span>의 인풋으로는 <span class="math inline">GN_1</span>을 거치긴 전의 그래프였던 <span class="math inline">G</span>와 <span class="math inline">G'</span>를 concatenate를 해서 넣어주게 됩니다. 저자들은 이렇게 디자인한 이유로, 그래프의 모든 노드들과 엣지들이 모두 communicate하게 하기 위함이라고 이야기합니다. 이렇게 <span class="math inline">GN_1</span>, <span class="math inline">GN_2</span>를 거쳐 최종적으로 나오는 <span class="math inline">G^*</span>의 node feature들이 각 body의 상태 prediction 값이 되는 것 입니다.</p>
 <p><strong>Type2. RNN+GNN</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -285,7 +300,7 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>다음으로 앞서 기본이 되는 모델에 G-GRU를 추가한 타입니다. Type 1과 비슷하게 skip connection, latent graph를 모두 사용하는데 GN block의 GRU 버젼인 G-GRU가 들어가면서 <span class="math inline">\(G_h\)</span>라는 RNN에서 hidden vector와 같은 개념의 hidden graph가 추가된 것입니다. 모든 edge, node, global feature들에 대해 각각 RNN이 적용되어 총 3개의 RNN sub-modules이 있습니다.</p>
+<p>다음으로 앞서 기본이 되는 모델에 G-GRU를 추가한 타입니다. Type 1과 비슷하게 skip connection, latent graph를 모두 사용하는데 GN block의 GRU 버젼인 G-GRU가 들어가면서 <span class="math inline">G_h</span>라는 RNN에서 hidden vector와 같은 개념의 hidden graph가 추가된 것입니다. 모든 edge, node, global feature들에 대해 각각 RNN이 적용되어 총 3개의 RNN sub-modules이 있습니다.</p>
 <p><strong>두가지 타입의 GNN forward 모델에 공통적인 사항</strong></p>
 <ol type="1">
 <li><p><code>state differences</code>를 예측하는 것을 학습해서 state prediction의 절댓값(absolute)을 계산합니다. 이 계산된 absolute state prediction을 가지고 state를 update하게 되는 것입니다.</p></li>
@@ -293,21 +308,21 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <li><p>GN model의 인풋과 아웃풋들은 normalize 됩니다.</p></li>
 </ol>
 <p>사실 리뷰를 하면서 forward model과 inference model 사이의 구분이나 모델의 구체적인 프로세스 이해가 pseudo algorithm을 보기 전까지 잘되지 않았습니다. Appendix에 나와있어서 잘 보지 않을 확률이 높지만 논문의 개념을 대략적으로 이해하고 난 후에는 꼭 line by line으로 보시길 추천합니다.</p>
-<p>먼저 <strong>forward model의 학습과정</strong>을 보여주는 pseudo algorithm 입니다. 다시한번 이 모델의 목적을 상기시켜보자면, 현재 상태 <span class="math inline">\(x^{t_0}\)</span> 를 기반으로 <span class="math inline">\(a^{t_0}\)</span>와 함께 주어졌을 때, <span class="math inline">\(x^{t_0+1}\)</span>을 예측하는 것입니다. 앞서 설명한 부분들인, state의 잔차를 학습하는 부분이나 normalization 등이 알고리즘내에 잘 나와있습니다.</p>
+<p>먼저 <strong>forward model의 학습과정</strong>을 보여주는 pseudo algorithm 입니다. 다시한번 이 모델의 목적을 상기시켜보자면, 현재 상태 <span class="math inline">x^{t_0}</span> 를 기반으로 <span class="math inline">a^{t_0}</span>와 함께 주어졌을 때, <span class="math inline">x^{t_0+1}</span>을 예측하는 것입니다. 앞서 설명한 부분들인, state의 잔차를 학습하는 부분이나 normalization 등이 알고리즘내에 잘 나와있습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/Fzex7GV.png?1" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>다음은 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">\(x^{t_0+1}\)</span>을 어떻게 예측하는지 보여주는 알고리즘입니다.</p>
+<p>다음은 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">x^{t_0+1}</span>을 어떻게 예측하는지 보여주는 알고리즘입니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/ztG7ZuO.png?1" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>마지막으로 바로 위 알고리즘과 동일하게 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">\(x^{t_0+1}\)</span>을 어떻게 예측하는지 보여주는 알고리즘이지만 inference model에서 학습된 <span class="math inline">\(GN_p\)</span>를 가지고 <code>system identification</code>이 추가된 상태에서 어떻게 알고리즘이 흘러가는지 보여줍니다.(이전에 알고리즘에서는 system parameter <span class="math inline">\(p\)</span>라고 표시되었던 부분이 대체된 것입니다.)</p>
+<p>마지막으로 바로 위 알고리즘과 동일하게 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">x^{t_0+1}</span>을 어떻게 예측하는지 보여주는 알고리즘이지만 inference model에서 학습된 <span class="math inline">GN_p</span>를 가지고 <code>system identification</code>이 추가된 상태에서 어떻게 알고리즘이 흘러가는지 보여줍니다.(이전에 알고리즘에서는 system parameter <span class="math inline">p</span>라고 표시되었던 부분이 대체된 것입니다.)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/Snfkuwb.png?1" class="img-fluid figure-img"></p>
@@ -324,7 +339,7 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p>Inference model도 <strong>Recurrent GN-based model</strong> 입니다. forward 모델과 다른 점으로는 오직 trajectory의 <code>dynamic states</code>들만 input으로 받습니다. 따라서 dynamic state graph인 <span class="math inline">\(G_d\)</span>와 control input을 받습니다. 아웃풋으로는 일정 time step <span class="math inline">\(T\)</span>이후의 <span class="math inline">\(G^*(T)\)</span>이 되며, 본 논문에서 이후 실험파트에서 20 step을 사용했습니다.</p>
+<p>Inference model도 <strong>Recurrent GN-based model</strong> 입니다. forward 모델과 다른 점으로는 오직 trajectory의 <code>dynamic states</code>들만 input으로 받습니다. 따라서 dynamic state graph인 <span class="math inline">G_d</span>와 control input을 받습니다. 아웃풋으로는 일정 time step <span class="math inline">T</span>이후의 <span class="math inline">G^*(T)</span>이 되며, 본 논문에서 이후 실험파트에서 20 step을 사용했습니다.</p>
 <p><strong>inference model 학습과정</strong>의 pseudo 알고리즘은 아래와 같습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
