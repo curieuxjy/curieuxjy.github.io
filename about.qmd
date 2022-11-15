@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "JungYeon Lee"
 image: profile.png
 about:
   template: trestles
@@ -7,7 +7,7 @@ about:
   links:
     - icon: linkedin
       text: LinkedIn
-      href: wwww.linkedin.com/in/curieuxjy
+      href: www.linkedin.com/in/curieuxjy
     - icon: github
       text: Github
       href: https://github.com/cureiuxjy

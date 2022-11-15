@@ -11,7 +11,7 @@ listing:
   filter-ui: true
   image-placeholder: def.png
   
-page-layout: article
+page-layout: full
 title-block-banner: true
 ---
 <p> </p>

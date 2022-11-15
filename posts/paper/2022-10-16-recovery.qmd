@@ -161,9 +161,7 @@ Recovery 실험은 총 2가지로 진행되었는데 첫번째는 지면에 로�
 
 <details>
 <summary><b>Appendix</b></summary>
-    <p>
-    <a href="https://imgur.com/ehbPM3X"><img src="https://i.imgur.com/ehbPM3X.jpg" title="Cost Table" /></a>
-    </p>
+<img width="100%" src="https://i.imgur.com/ehbPM3X.jpg" title="Cost Table" />
 </details>
 
 **Reference**

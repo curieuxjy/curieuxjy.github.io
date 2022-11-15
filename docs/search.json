@@ -2,21 +2,21 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "JungYeon Lee",
     "section": "",
     "text": "Hello👋 I’m Jung Yeon Lee. Thanks for visiting my blog.\nIt’s a place where I record everything I study with curiosity. 👀\nMy current motto is “Stop Wishing, Start Doing”, and I’m looking forward to the world where people and robots coexist dynamically and peacefully."
   },
   {
     "objectID": "about.html#fields-of-interest",
     "href": "about.html#fields-of-interest",
-    "title": "About",
+    "title": "JungYeon Lee",
     "section": "Fields of interest",
     "text": "Fields of interest\n\nRobot Control\nMachine Learning/Deep Learning\nReinforcement Learning\nGraph Nerual Network"
   },
   {
     "objectID": "about.html#education",
     "href": "about.html#education",
-    "title": "About",
+    "title": "JungYeon Lee",
     "section": "Education",
     "text": "Education\n\nM.Eng. 2022.03~\n\nM.S. in MECHANICAL ENGINEERING, SungKyunKwan University(SKKU)\nResearcher at Robotics Innovatory Lab. Quadrupedal Walking Robot Team\n\n\n\n2021.01.11~01.29\n\nTU Berlin Winter University Online : Machine learning using Pyhon - Theory and Application\n\nGrade : 1.0(the best score)\n5 credit points according to the ECTS(European Credit Transfer System)\n\n\n\n\nB.Eng. 2018.03~2022.02\n\nB.S. in ENGINEERING MECHANICAL & SYSTEM DESIGN ENGINEERING, HongIk University\nIntegrated Major in Design Engineering\nCompleted Accereditation Board for Engineering Education of Korea(ABEEK)\nUndergraduate research student at Autonomous Navigation Lab\n\n\nIf you want to know more details about my experiences, you can find them in my CURRICULUM VITAE.📃 CV_2022"
   },
@@ -550,14 +550,14 @@
     "href": "posts/paper/2022-10-02-vae.html#regularization-term",
     "title": "📃VAE",
     "section": "Regularization term",
-    "text": "Regularization term\nELBO term을 나누었을 때 나왔던 첫번째 Regularization term에 대해 보겠습니다. True posterior를 추정하기 위한 q_{\\phi}(z\\|x)은 KL 값을 계산하기 쉽도록 하기 위해 Multivariate gaussian distribution으로 설계합니다. 또한 앞서 이야기했던 것 처럼 controller 부분인 p(z)는 다루기 쉬운 분포이어야 하기 때문에 정규분포로 만들어 줍니다. 그러면 논문의 Appendix F.1에서 볼 수 있듯이 가우시안 분포들 사이의 KL 값은 다음과 같이 쉽게 계산될 수 있습니다."
+    "text": "Regularization term\nELBO term을 나누었을 때 나왔던 첫번째 Regularization term에 대해 보겠습니다. True posterior를 추정하기 위한 q_\\phi(\\mathrm{z} \\mid \\mathrm{x})은 KL 값을 계산하기 쉽도록 하기 위해 Multivariate gaussian distribution으로 설계합니다. 또한 앞서 이야기했던 것 처럼 controller 부분인 p(z)는 다루기 쉬운 분포이어야 하기 때문에 정규분포로 만들어 줍니다. 그러면 논문의 Appendix F.1에서 볼 수 있듯이 가우시안 분포들 사이의 KL 값은 다음과 같이 쉽게 계산될 수 있습니다."
   },
   {
     "objectID": "posts/paper/2022-10-02-vae.html#reconstruction-error-term",
     "href": "posts/paper/2022-10-02-vae.html#reconstruction-error-term",
     "title": "📃VAE",
     "section": "Reconstruction error term",
-    "text": "Reconstruction error term\nELBO의 두번째 term인 Reconstruction error에 대해 살펴보겠습니다. Reconstruction error의 expectation 표현을 integral로 표현하면 다음과 같고 이는 몬테카를로 샘플링을 통해 L개의 z^{i, l}를 가지고 평균을 내서 구할 수 있습니다. 여기에서 index i는 데이터 x의 넘버링이고 index l은 generator의 distribution에서 샘플링하는 횟수에 대한 넘버링입니다.\n\n\nReparametrization Trick\n위에서 Reconstruction error를 구하기 위해 샘플링하는 과정에서 backpropation을 하기 위해 Reparametrization trick을 사용하게 됩니다. 단순히 정규분포에서 샘플링 하면 random node인 z에 대해서 gradient를 계산할 수 없기 때문에 random성을 정규분포에서 샘플링 되는 \\epsilon으로 만들어주고 이를 reparametrization을 해주어서 deterministic node가 된 z를 backpropagation 할 수 있게 됩니다.\n\nz를 샘플링하는 generator의 distribution은 Bernoulli로 디자인할 경우 NLL이 Cross Entropy가 되며 Gaussian 분포로 디자인할 경우 MSE가 되어서 보통 계산하기 용이한 2개의 분포 중 하나를 사용하게 됩니다."
+    "text": "Reconstruction error term\nELBO의 두번째 term인 Reconstruction error에 대해 살펴보겠습니다. Reconstruction error의 expectation 표현을 integral로 표현하면 다음과 같고 이는 몬테카를로 샘플링을 통해 L개의 z_{i, l}를 가지고 평균을 내서 구할 수 있습니다. 여기에서 index i는 데이터 x의 넘버링이고 index l은 generator의 distribution에서 샘플링하는 횟수에 대한 넘버링입니다.\n\n\nReparametrization Trick\n위에서 Reconstruction error를 구하기 위해 샘플링하는 과정에서 backpropation을 하기 위해 Reparametrization trick을 사용하게 됩니다. 단순히 정규분포에서 샘플링 하면 random node인 z에 대해서 gradient를 계산할 수 없기 때문에 random성을 정규분포에서 샘플링 되는 ϵ으로 만들어주고 이를 reparametrization을 해주어서 deterministic node가 된 z를 backpropagation 할 수 있게 됩니다.\n\nz를 샘플링하는 generator의 distribution은 Bernoulli로 디자인할 경우 NLL이 Cross Entropy가 되며 Gaussian 분포로 디자인할 경우 MSE가 되어서 보통 계산하기 용이한 2개의 분포 중 하나를 사용하게 됩니다."
   },
   {
     "objectID": "posts/paper/2022-10-16-recovery.html",
@@ -620,7 +620,7 @@
     "href": "posts/paper/2022-10-16-recovery.html#the-competitiveness-of-beahavior-selector",
     "title": "📃Robust Recovery Controller",
     "section": "The competitiveness of Beahavior Selector",
-    "text": "The competitiveness of Beahavior Selector\n기존의 제어방법들에서는 여러가지 mode를 조율하기 위해서 FSM(Finite State Machine)을 많이 사용합니다. 특정 조건을 if에 넣어주어서 각 mode를 transition하는 기법인데 논문에서도 강화학습으로 학습한 Behavior Selector의 비교를 위해 기존의 FSM 방식을 활용하여 State Machine을 만들어서 비교했습니다. FSM 방식은 여전히 corner case들이 Behavior Selector에 비해 많이 존재했고 각 behavior들 간의 전환도 자연스럽지 않았습니다.\n\nReview > 아직 minor 한 주제인 Recovery task에 대해 집중적으로 잘 분석하고 성과도 확실히 보여준 논문이라고 생각합니다. Control system을 working하게 하기 위해 각 파트들을 어떻게 설계하고 학습해야할 지 많은 고민을 했다는 것을 느낄 수 있었습니다. 여전히 flat ground에서만 진행된 연구이기에 slope가 있는 환경이나 다른 object가 있는 좀 더 실제 상황과 비슷한 상황에 대한 recovery가 해결되기 위해서는 연구되어야 할 부분이 충분히 많은 것 같습니다.\n\n\nAppendix\n\n<p>\n<a href=\"https://imgur.com/ehbPM3X\"><img src=\"https://i.imgur.com/ehbPM3X.jpg\" title=\"Cost Table\" /></a>\n</p>\n\nReference\n\norginal paper : https://arxiv.org/abs/1901.07517\nhttps://youtu.be/veXcohbFxKQ"
+    "text": "The competitiveness of Beahavior Selector\n기존의 제어방법들에서는 여러가지 mode를 조율하기 위해서 FSM(Finite State Machine)을 많이 사용합니다. 특정 조건을 if에 넣어주어서 각 mode를 transition하는 기법인데 논문에서도 강화학습으로 학습한 Behavior Selector의 비교를 위해 기존의 FSM 방식을 활용하여 State Machine을 만들어서 비교했습니다. FSM 방식은 여전히 corner case들이 Behavior Selector에 비해 많이 존재했고 각 behavior들 간의 전환도 자연스럽지 않았습니다.\n\nReview > 아직 minor 한 주제인 Recovery task에 대해 집중적으로 잘 분석하고 성과도 확실히 보여준 논문이라고 생각합니다. Control system을 working하게 하기 위해 각 파트들을 어떻게 설계하고 학습해야할 지 많은 고민을 했다는 것을 느낄 수 있었습니다. 여전히 flat ground에서만 진행된 연구이기에 slope가 있는 환경이나 다른 object가 있는 좀 더 실제 상황과 비슷한 상황에 대한 recovery가 해결되기 위해서는 연구되어야 할 부분이 충분히 많은 것 같습니다.\n\n\nAppendix\n\n\n\nReference\n\norginal paper : https://arxiv.org/abs/1901.07517\nhttps://youtu.be/veXcohbFxKQ"
   },
   {
     "objectID": "posts/paper/2022-09-17-wavenet.html",
@@ -633,29 +633,29 @@
     "objectID": "posts/paper/2022-09-17-wavenet.html#dilated-casual-convolution",
     "href": "posts/paper/2022-09-17-wavenet.html#dilated-casual-convolution",
     "title": "📃WaveNet",
-    "section": "Dilated Casual Convolution",
-    "text": "Dilated Casual Convolution\n먼저 Dilated Casual Convolution은 µ-law Companding Transformation 처리를 거친 음성 신호를 받아오는 첫번째 부분입니다.\n\n우선 Casual 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 t를 기준으로 미래 정보는 사용할 수 없고 현재까지의(과거~현재 t) 정보만 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 (레이어 수) + (필터의 length) -1로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 input에서 5개의 음성 정보가 output의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.\n\n그래서 제안이 된 방법이 바로 Dilated Convolution입니다. 이는 convolution with holes로 해석할 수 있는데 위의 그림에서 볼 수 있듯이 이전 레이어에서 데이터가 Dilated되어 데이터가 듬성듬성하게 모아져서 다음 레이어로 넘어가는 것을 볼 수 있습니다. 이는 skip이나 pooling과 유사해보이지만 input과 output의 차원이 유지된다는 점에서 차이가 있습니다. 이때의 RF는 각 레이어의 Dilation 값을 모두 더하고 마지막에 현재 시점의 데이터 1을 더하며 RF가 계산됩니다. WaveNet에서는 Dilation을 총 30개의 레이어에 적용했고 Dilation 값의 패턴은 input에서 부터 1, 2, …, 512 로 2배씩 늘린 10개의 레이어를 총 3번 반복했습니다. 이때, 1 ~ 512 Dilation 값을 가진 10개 레이어의 RF는 1024로 계산됩니다."
+    "section": "1. Dilated Casual Convolution",
+    "text": "1. Dilated Casual Convolution\n먼저 Dilated Casual Convolution은 µ-law Companding Transformation 처리를 거친 음성 신호를 받아오는 첫번째 부분입니다.\n\n우선 Casual 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 t를 기준으로 미래 정보는 사용할 수 없고 현재까지의(과거~현재 t) 정보만 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 (레이어 수) + (필터의 length) -1로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 input에서 5개의 음성 정보가 output의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.\n\n그래서 제안이 된 방법이 바로 Dilated Convolution입니다. 이는 convolution with holes로 해석할 수 있는데 위의 그림에서 볼 수 있듯이 이전 레이어에서 데이터가 Dilated되어 데이터가 듬성듬성하게 모아져서 다음 레이어로 넘어가는 것을 볼 수 있습니다. 이는 skip이나 pooling과 유사해보이지만 input과 output의 차원이 유지된다는 점에서 차이가 있습니다. 이때의 RF는 각 레이어의 Dilation 값을 모두 더하고 마지막에 현재 시점의 데이터 1을 더하며 RF가 계산됩니다. WaveNet에서는 Dilation을 총 30개의 레이어에 적용했고 Dilation 값의 패턴은 input에서 부터 1, 2, …, 512 로 2배씩 늘린 10개의 레이어를 총 3번 반복했습니다. 이때, 1 ~ 512 Dilation 값을 가진 10개 레이어의 RF는 1024로 계산됩니다."
   },
   {
     "objectID": "posts/paper/2022-09-17-wavenet.html#residual-connection-gated-activation-units",
     "href": "posts/paper/2022-09-17-wavenet.html#residual-connection-gated-activation-units",
     "title": "📃WaveNet",
-    "section": "Residual Connection & Gated Activation Units",
-    "text": "Residual Connection & Gated Activation Units\n다음으로 Dilated Causal Convolution을 거친 후 통과하게 되는 Residual Connection & Gated Activation Units 부분에 대해서 살펴보겠습니다.\n\nWaveNet에서 사용된 Gated Activation Units는 PixelCNN에서 사용된 매커니즘을 차용했습니다. 아래의 그림에서 보이는 보라색 Dilated Conv가 앞에서 설명한 DCC이며 이를 거친 후 Convoltion layer와 각각 tanh, sigmoid activation을 통과하여 Filter, Gate가 됩니다. 이 2가지 경로로 계산된 값은 elementwise product를 통해 하나의 벡터로 변환됩니다. 이떄 Dilated를 통과하기 전 값을 Residual Connection을 통해 연결함으로써 딥러닝 모델이 레이어를 더 깊게 쌓을 수 있도록 돕고 더 빠르게 학습할 수 있도록 할 수 있었다고 합니다."
+    "section": "2. Residual Connection & Gated Activation Units",
+    "text": "2. Residual Connection & Gated Activation Units\n다음으로 Dilated Causal Convolution을 거친 후 통과하게 되는 Residual Connection & Gated Activation Units 부분에 대해서 살펴보겠습니다.\n\nWaveNet에서 사용된 Gated Activation Units는 PixelCNN에서 사용된 매커니즘을 차용했습니다. 아래의 그림에서 보이는 보라색 Dilated Conv가 앞에서 설명한 DCC이며 이를 거친 후 Convoltion layer와 각각 tanh, sigmoid activation을 통과하여 Filter, Gate가 됩니다. 이 2가지 경로로 계산된 값은 elementwise product를 통해 하나의 벡터로 변환됩니다. 이떄 Dilated를 통과하기 전 값을 Residual Connection을 통해 연결함으로써 딥러닝 모델이 레이어를 더 깊게 쌓을 수 있도록 돕고 더 빠르게 학습할 수 있도록 할 수 있었다고 합니다."
   },
   {
     "objectID": "posts/paper/2022-09-17-wavenet.html#skip-connection",
     "href": "posts/paper/2022-09-17-wavenet.html#skip-connection",
     "title": "📃WaveNet",
-    "section": "Skip Connection",
-    "text": "Skip Connection\n\nSkip Connection은 Dilated Convolution을 통해 다양한 RF를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다."
+    "section": "3. Skip Connection",
+    "text": "3. Skip Connection\n\nSkip Connection은 Dilated Convolution을 통해 다양한 RF를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다."
   },
   {
     "objectID": "posts/paper/2022-09-17-wavenet.html#conditional-wavenets",
     "href": "posts/paper/2022-09-17-wavenet.html#conditional-wavenets",
     "title": "📃WaveNet",
-    "section": "Conditional WaveNets",
-    "text": "Conditional WaveNets\n\nConditional은 Autoregressive model인 WaveNet에 적용하기 쉽고 이 또한 PixelCNN에서의 아이디어와 유사합니다."
+    "section": "4. Conditional WaveNets",
+    "text": "4. Conditional WaveNets\n\nConditional Modeling은 Autoregressive model인 WaveNet에 적용하기 쉽고 이 또한 PixelCNN에서의 아이디어와 유사합니다. Feature h 벡터를 조건 부분에 추가하여 음성 데이터에 조건을 추가할 수 있습니다.\n\np(\\mathbf{x} \\mid \\mathbf{h})=\\prod_{t=1}^T p\\left(x_t \\mid x_1, \\ldots, x_{t-1}, \\mathbf{h}\\right)\n\nCondition에는 크게 2가지로 Global과 Local이 있습니다. 먼저 Global은 Time-invariant한 조건으로 시점에 따라 변하지 않는 조건 정보를 추가하는 것을 말합니다. 예를 들어 한 발화자의 음성은 해당 음성 파일의 어떤 시점에서나 똑같은 condition이기 때문에 Global condition이라고 할 수 있습니다. 이때의 Feature vector h는 linear projection을 거친 후 data x와 더하게 됩니다.\n다음으로 Time-variant한 Local condition은 시점에 따라 변하는 조건 정보를 추가하는 것을 말하는데 음성 데이터보다 길이가 짧지만 순서가 있는 일정 길이의 Sequence vector라고 생각할 수 있습니다. 같은 발화자여도 어떤 단어를 말하느냐에 따라 음성학적인 특징(linguistic feature)가 다를 수 있기 떄문에 local한 조건은 한 음성 파일에 여러개가 있을 수 있습니다. 이때 Feature vector h는 음성 파일과 길이가 다르기 때문에 Upsampling을 거친후 1x1 convolution을 거쳐서 data x와 더해집니다."
   },
   {
     "objectID": "index.html",
