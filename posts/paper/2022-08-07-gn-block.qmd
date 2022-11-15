@@ -1,0 +1,260 @@
+---
+title: "📃GN-Block"
+description: Graph Networks as Learnable Physics Engines for Inference and Control
+date: "2022-08-07"
+categories: [gnn, system identification, mpc, rl, paper]
+toc: true
+---
+
+
+이번 post는 [Graph Networks as Learnable Physics Engines for Inference and Control](https://arxiv.org/abs/1806.01242) 라는 논문을 읽고 리뷰한 내용입니다.
+
+# Abstract
+
+> Understanding and interacting with everyday physical scenes requires rich knowledge about the structure of the world, represented either implicitly in a value or policy function, or explicitly in a transition model. Here we introduce a new class of learnable models—`based on graph networks—which implement an inductive bias` for object- and relation-centric representations of complex, dynamical systems. Our results show that as a `forward model`, our approach supports accurate predictions from real and simulated data, and surprisingly strong and efficient generalization, across eight distinct physical systems which we varied parametrically and structurally. We also found that our `inference model` can perform system identification. Our models are also `differentiable, and support online planning via gradient-based trajectory optimization`, as well as `offline policy optimization`. Our framework offers new opportunities for harnessing and exploiting rich knowledge about the world and takes a key step toward building machines with `more human-like representations of the world`.
+> 
+
+# 1. Introduction
+
+사람은 걸을때 마찰력, 작용 반작용 법칙을 생각하면서 걷지 않습니다. 많은 물리 문제들과 법칙들을 이해하기 어렵지만 복잡한 물리적 작용들이 일어나는 걷는 행동에 있어서 어려움이 없습니다. 사실 사람이 태어나서 수없이 많은 경험들의 누적으로 우리는 크게 신경쓰지 않아도 어떻게 힘을 주면 다리가 움직이는 지 알고있기 때문입니다. 이처럼 인공지능도 *어떻게 하면 복잡한 시스템을 이해하고 잘 작동할 수 있을까?* 라는 물음을 **GN-Block**이라는 Graph 아이디어로 해결할 수 있다고 주장하는 논문입니다.
+
+<aside>
+❓ How can an intelligent agent understand and control such complex systems?
+</aside>
+
+인공지능이 이렇게 사람이 자연스럽게 익히는 세상의 물리적인 현상을 이해하고 상호작용 작용하려면  암시적이든 명시적으로든 세계에 대한 풍부한(rich) 표현과 지식이 필요합니다. 다시 말해, 시스템에 있는 objects들과 objects간의 관계를 표현해서 동일 object에는 동일한 **object-wise한 계산**을, 이들 사이에 일어나는 interation들에 대해서는 **relation-wise 계산**을 적용해서 학습을 할 수 있어야 합니다. 마치 레고 블럭들 하나하나를 이해하고 어떻게 하면 성을 쌓을 수 있는지 아는 것처럼 `combinatorial generalization` 능력을 가질 수 있는 것이라고 생각해 볼 수 있습니다. 
+
+해당 논문의 목표는 **physical dynamics models을 그래프 기반의 방법으로 학습**하는 것입니다. Graph Neural Network(GN)의 `node update function`을 가지고 body의 dynamics에 대한 학습을 할 수 있고, `edge update function`을 가지고 interaction의 dynamics를 인코딩할 수 있으며, `global update function`을 가지고 global system의 속성들을 인코딩 할 수 있다고 주장합니다. 여기서 다른 논문들과 다르게 특이한 점은 global한 시스템의 속성이라는 부분을 따로 고려를 했다는 점이라고 할 수 있습니다.
+
+논문의 contribution은 크게 3가지 forward model, inference model, control algorithm 입니다. (하지만 리뷰하면서 느낀 점은 *control algorithm* 부분은 contribution이라고 하기보다는 GN-based model을 가지고 control pipeline을 잘 붙인 것이라고 생각됩니다.) 다른 physics engine들과 다르게 물리법칙에 대한 사전 지식(prior knowledge)을 전혀 가정하지 않지만 대신 `object- and relation-centric inductive bias`를 이용하여 **current-state/next-state pairs**에 대한 학습을 합니다. 그래프 기반으로 물리 시스템을 forward model과 inference model이 학습하게 되면 control algorithm은 이 모델들을 이용하여 planning이나 policy learning을 하게 됩니다.
+
+|Model|Role|
+|-|-|
+|GN-based forward models|정확하고 일반화된 prediction을 할 수 있음|
+|GN-based inference models|observation에 숨겨져 있는 속성들을 기반으로 system identification을 할 수 있음|
+|NOT GN-based control algorithms|다른 베이스라인들보다 좋은 control 퍼포먼스를 보여줌|
+
+
+# 2. Model
+
+## Graph representation of a physical system
+
+물리시스템을 어떻게 그래프로 나타낼 수 있는지 몇가지 용어와 수식들을 정리해보겠습니다.
+- 물리 시스템의 body는 그래프의 `node`로 표현합니다.
+- 물리 시스템의 joint는 그래프의 `edge`로 표현합니다.
+- 물리 시스템의 global한 속성은 `global feature`로 표현합니다.
+
+아래 사진에서 보이는 half-cheetah에서 직관적으로 어떻게 그래프가 그려질 수 있는지 알 수 있고 이 그래프를 $G$로 나타낼 수 있습니다.
+
+![](https://i.imgur.com/yN3GlTK.png?1)
+
+앞서 설명한 부분을 수식으로 나타내면 다음과 같습니다.
+
+$$
+G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\mathbf{e}_{j}, s_{j}, r_{j}\right\}_{j=1 \cdots N_{e}}\right)
+$$
+
+    
+- $g$ : global features 시스템의 중력이나 time step과 같은 속성을 나타내는 벡터입니다.
+- $\mathbf{n}_{i}$ : node features를 나타내는 벡터입니다.
+- $\mathbf{e}_{j}$ : edge features를 나타내는 벡터입니다.
+- $s_{j}$ : 이 edge를 통해서 message를 보내는 sender nodes의 인덱스입니다.
+- $r_{j}$ : 이 edge를 통해서 message를 받는 receiver nodes의 인덱스입니다.
+
+## Static & Dynamic properties
+
+여기서 static graph $G_s$와 dynamic graph $G_d$ 라는 그래프는 2가지 종류가 있습니다. 이 2개의 그래프는 각각 시스템의 속성이 시간에 따라 변화하는지(dynamic/time-variant) 안하는지(static/time-invaritant)에 따라 그래프를 구성하는 정보의 종류가 다릅니다.(자세한 정보는 Appendix G section에서 Mujoco 기반의 어떤 정보로 각 그래프를 구성했는지 나와있습니다.)
+
+- A static graph $G_s$: 시스템의 static한 정보를 가지고 있는 그래프
+    - `global parameters`: the time step, viscosity, gravity, etc
+    - `body/node parameters`: mass, inertia tensor, etc.
+    - `joint/edge parameters`: joint type과 properties, motor type and properties, etc
+- A dynamic graph $G_d$: 시스템의 일시적인 state 정보를 가지고 있는 그래프
+    - `body/node`: 3D Cartesian position, 4D quaternion orientation, 3D linear velocity, 3D angular velocity
+    - `joint/edge`: joint에 적용된 action들의 크기
+
+## Graph networks
+
+- `graph2graph` 모듈을 활용하여 인풋을 그래프로 받고 아웃풋도 그래프로 받는 모델입니다. 따라서 아웃풋의 그래프는 인풋 그래프와 다른 edge, node, global features를 가지게 됩니다.
+
+본 논문의 핵심 아이디어인 GN 블록의 구조에 대해 알아보겠습니다.
+- A core GN block
+
+    ![](https://i.imgur.com/3PffG3H.png?1)
+    
+    - 3개의 sub function, MLP로 이루어져 있습니다.
+        - edge-wise $f_e$ : 모든 edge들에 대한 update를 진행합니다.
+        - node-wise $f_n$ : 모든 node들에 대한 update를 진행합니다.
+        - global $f_g$ : 마지막으로 global feature들을 update 합니다.
+
+하나의 feedforward GN pass는 그래프 상에서 message-passing 단계의 한 스텝으로 간주할 수 있습니다. 이러한 GN-block 내에서의 알고리즘은 아래와 같습니다. 
+        
+![](https://i.imgur.com/TjghKvm.png?1)
+        
+
+## Forward models
+
+Forward model의 목적은 **현재 정보를 기반으로 다음 step의 상태를 예측(prediction)하는 것입니다.** (이는 영어 단어의 비슷한 의미때문에 다음에 나오는 inference model의 목적과 많이 혼동될 수 있으니 잘 정의하고 넘어가는 것이 좋습니다.) forward model은 *RNN(GRU)를 도입했는지 여부에 따라* 2가지 타입이 있습니다.
+
+**Type1. GNN feed-forward**
+
+![](https://i.imgur.com/2tN81Kd.png?1)
+
+가장 간단한 GNN feed-forward 모델입니다. 그래프는 처음에 $GN_1$을 거쳐 latent graph인 $G'$이 됩니다. 그리고 다음 $GN_2$의 인풋으로는 $GN_1$을 거치긴 전의 그래프였던 $G$와 $G'$를 concatenate를 해서 넣어주게 됩니다. 저자들은 이렇게 디자인한 이유로, 그래프의 모든 노드들과 엣지들이 모두 communicate하게 하기 위함이라고 이야기합니다. 이렇게 $GN_1$, $GN_2$를 거쳐 최종적으로 나오는 $G^*$의 node feature들이 각 body의 상태 prediction 값이 되는 것 입니다.
+
+**Type2. RNN+GNN**
+
+![](https://i.imgur.com/7ZKlooE.png?1)
+
+다음으로 앞서 기본이 되는 모델에 G-GRU를 추가한 타입니다. Type 1과 비슷하게 skip connection, latent graph를 모두 사용하는데 GN block의 GRU 버젼인 G-GRU가 들어가면서 $G_h$라는 RNN에서 hidden vector와 같은 개념의 hidden graph가 추가된 것입니다. 모든 edge, node, global feature들에 대해 각각 RNN이 적용되어 총 3개의 RNN sub-modules이 있습니다.
+
+**두가지 타입의 GNN forward 모델에 공통적인 사항**
+
+1. `state differences`를 예측하는 것을 학습해서 state prediction의 절댓값(absolute)을 계산합니다. 이 계산된 absolute state prediction을 가지고 state를 update하게 되는 것입니다.
+
+2. `long-range rollout` trajectory를 만들어내기 위해서 state prediction 값과 control input을 반복적으로 model에 넣어주어서 여러 스텝의 trajectory를 생성하게 됩니다.
+ 
+3. GN model의 인풋과 아웃풋들은 normalize 됩니다.
+
+사실 리뷰를 하면서 forward model과 inference model 사이의 구분이나 모델의 구체적인 프로세스 이해가 pseudo algorithm을 보기 전까지 잘되지 않았습니다. Appendix에 나와있어서 잘 보지 않을 확률이 높지만 논문의 개념을 대략적으로 이해하고 난 후에는 꼭 line by line으로 보시길 추천합니다.
+
+먼저 **forward model의 학습과정**을 보여주는 pseudo algorithm 입니다. 다시한번 이 모델의 목적을 상기시켜보자면, 현재 상태 $x^{t_0}$ 를 기반으로 $a^{t_0}$와 함께 주어졌을 때, $x^{t_0+1}$을 예측하는 것입니다. 앞서 설명한 부분들인, state의 잔차를 학습하는 부분이나 normalization 등이 알고리즘내에 잘 나와있습니다.
+
+![](https://i.imgur.com/Fzex7GV.png?1)
+
+다음은 **학습된 forward model**을 가지고 다음 상태인 $x^{t_0+1}$을 어떻게 예측하는지 보여주는 알고리즘입니다.
+
+![](https://i.imgur.com/ztG7ZuO.png?1)
+
+마지막으로 바로 위 알고리즘과 동일하게 **학습된 forward model**을 가지고 다음 상태인 $x^{t_0+1}$을 어떻게 예측하는지 보여주는 알고리즘이지만 inference model에서 학습된 $GN_p$를 가지고 `system identification`이 추가된 상태에서 어떻게 알고리즘이 흘러가는지 보여줍니다.(이전에 알고리즘에서는 system parameter $p$라고 표시되었던 부분이 대체된 것입니다.)
+
+![](https://i.imgur.com/Snfkuwb.png?1)
+
+## Inference Models
+
+Inference model의 목적을 한 마디로 표현하자면 `System identification`이라고 할 수 있습니다. System identification이란 **관찰할 수 없는(unobserved) dynamic system의 속성들을 관찰되는(observed) behavior(또는 어떤 양상)를 가지고 추론하는 것**을 말합니다. 즉 암시적으로 system을 구성하는 요소들을 (명시적이지 않아) 측정하거나 관찰할 수 없지만 **latent representations**을 통해 추론할 수 있습니다.
+
+![](https://i.imgur.com/4ZMFGU1.png?1)
+
+Inference model도 **Recurrent GN-based model** 입니다. forward 모델과 다른 점으로는 오직 trajectory의 `dynamic states`들만 input으로 받습니다. 따라서 dynamic state graph인 $G_d$와 control input을 받습니다. 아웃풋으로는 일정 time step $T$이후의 $G^*(T)$이 되며, 본 논문에서 이후 실험파트에서 20 step을 사용했습니다.
+
+**inference model 학습과정**의 pseudo 알고리즘은 아래와 같습니다.
+
+![](https://i.imgur.com/0FeskwM.png)
+
+## Control algorithm
+
+control algorithm에서는 그래프 기반이 아니고 앞서 설명한 그래프 기반의 forward model과 inference model을 잘 활용해서 어떻게 control할 수 있을지를 보여줍니다. 본 논문에서는 크게 2가지 control algorithm을 사용했습니다. 강화학습을 주로 연구하는 입장에서 리뷰해보면, 대부분 강화학습은 model-free 기반의 알고리즘이 많이 발전했는데 GN기반의 다음 상태를 예측할 수 있는 model을 만듦으로써 model-based 기반의 강화학습 알고리즘을 적용할 수 있다는 것이 매우 흥미로웠습니다.
+
+1. MPC(Model Predictive Control)
+    
+    GN은 미분 가능하기 때문에 MPC같은 **gradient-based trajectory optimization** 방법으로 model-based planning을 할 수 있습니다. 대표적으로 MPC가 있고 학습기반이 아니라 최적화 알고리즘이며 알고리즘의 흐름은 아래와 같습니다.
+
+    ![](https://i.imgur.com/4s443v3.png?1)
+    
+2. [SVG](https://proceedings.neurips.cc/paper/2015/hash/148510031349642de5ca0c544f31b2ef-Abstract.html)(Stochastic Value Gradients)
+    
+     강화학습 알고리즘 중 하나이며, GN-based model과 SVG의 policy function을 동시에 학습하는 agent로 control을 하는 방법입니다. SVG(1)은 한 스텝을 예측하는 GN model을 가지고 강화학습 알고리즘으로 control을 한 것이며(model-based) SVG(0)은 예측하는 GN model 없이 model-free 기반으로 control한 것으로 이해하시면 됩니다.
+    
+
+> 사실 MPC와 SVG는 매우 비슷한 측면이 있습니다.
+> MPC에서는 control inputs들이 한 에피소드에서 초기 조건들이 주어졌을 때 최적화 되는 것이라면, SVG에서는 state와 control을 매칭시키는 policy function이 학습과정에서 경험한 states에 대해서 최적화 되는 것입니다.
+
+# 3. Methods
+
+<span style="color: blue">Environments</span>
+
+- MuJoCo 시뮬레이션 환경을 이용했다.
+    - Pendulum, Cartpole, Acrobot, Swimmer, Cheetah, Walker2d, JACO(robotic arm)
+- generated training data for our forward models by applying simulated random controls to the systems, and recording the state transitions
+- generalization and system identification 실험을 위해서
+    - created a dataset of versions of several of our systems—Pendulum, Cartpole, Swimmer, Cheetah and JACO— with procedurally varied parameters and structure.
+    - 변화시킨 속성들로는 link lengths, body masses, and motor gears. + varied the number of links in the Swimmer’s structure, from 3-15 (we refer to a swimmer with N links as SwimmerN )
+
+<span style="color: blue">MPC planning</span>
+
+- **N-step trajectory**(N: planning horizon)와 그 trajectory를 실행했을 때 받을 **total reward**를 GN forward 모델로 예측했다.
+- 이때의 action sequences(=trajectory)들을 total reward의 backpropagating gradient를 가지고 최적화하게 된다.
+
+Model-based reinforcement learning
+
+- GN-based model을 강화학습에 적용해보다
+- SVG를 이용했다.
+- GN forward model이 미분가능하기 때문에 GN 모델로 생성된 next state를 가지고 expected return 값의 그라디언트를 구할 수 있다.
+- 1 step을 예측하는 SVG(1)과
+- model-free RL 베이스라인과 비교하기 위해 SVG(0)과 deterministic policy 알고리즘인 DDPG(Deep Deterministic Policy Gradients)알고리즘을 사용했다.
+
+<span style="color: blue">Baseline comparisons</span>
+
+1. constant prediction baseline: input state를 그대로 output state로 사용
+2. MLP baseline: GN model에 쓰인 데이터를 그대로 MLP에 flattened & concatenated 해서 학습
+3. MPC baseline: 물리 모델을 가지고 Differential Dynamic Programming algorithm을 사용해서 ground truth 값을 가짐
+4. SVG(0): model-free RL agents
+5. DDPG: model-free RL agents
+
+Prediction performance evaluation
+
+- calculated independent errors for **position, orientation, linear velocity angular velocity**
+1. squared one-step dynamic state differences (one-step error)
+2. squared trajectory differences (rollout error) between the prediction and the ground truth.
+
+# 4. Results
+
+## Prediction
+
+<span style="color: blue">Learning a **forward** model for a **single** system</span>
+
+하나의 시스템을 가지고 학습한 forward model의 Prediction 성능 살펴보기
+
+- random control로 만들어진 데이터들을 가지고 학습된 GN-based model
+    - **[Visually]** Swimmer6에서 그림에서 처럼 ground truth와 예측 결과가 구분이 안 갈 정도로 흡사하다.([영상](https://drive.google.com/file/d/1ez6sqCTZmHdSnf86lK6NEsnzyi-O25-B/view)에서도 거의 구분이 안 갈 정도로 잘 예측하고 있음을 알 수 있다.)
+        
+        ![](https://i.imgur.com/N6bOymB.png?1)
+        
+    - **[Quantitatively]** 100 step에서 3축 방향으로의 위치, 선속도, 각속도, 쿼터니안 방향 비교
+        
+        ![](https://i.imgur.com/anOJrxE.png?1)
+        
+- constant prediction baseline은 아웃풋으로 인풋을 그대로 복사해서 사용했기 때문에 애러 최대치로 normalization 하기 위해 검은색 점선으로 표기
+- 우선 검은 점선과 막대기들을 뭉뚱그려서 보면,
+- 1 step과 100 step의 rollout 결과를 비교했을 때 검은 점선에 비해 파란색 막대기들의 error 값이 낮음을 알 수 있다.
+    
+    ![](https://i.imgur.com/atKJKme.png?1)
+    
+
+- GN 모델이 MLP-based 보다 더 낮은 애러를 가지는 것을 알 수 있다. 이는 특별히 Swimmer6처럼 에이전트의 구조가 반복적인 경우에 더욱 눈에 띄게 낮음을 알 수 있었다. 이를 통해 GN-based forward 모델이 다양한 물리 시스템들에서 dynamics를 잘 예측함을 알 수 있다.
+
+![](https://i.imgur.com/u7z0wJP.png?1)
+
+- GN이 MLP보다 더 generalization이 잘 됨을 확인할 수 있었는데, Swimmer6를 집중적으로 `train`, `valid`, `test` 데이터에 대해 1-step, rollout error를 각각 확인해봤을 때, Best GN의 error 값이 Best MLP보다 낮음을 알 수 있다. 뿐만 아니라 test data의 error 증가율을 봤을 때에도 GN 모델의 test data의 error가 더 적게 증가함을 관찰할 수 있었고 이는 agent의 bodies와 joints들에 대한 inductive bias가 GN을 통해 잘 학습되었음을 증명할 수 있다.
+
+![](https://i.imgur.com/bMJJ6Jb.png?1)
+
+Learning a forward model for **multiple** systems
+
+한 개의 시스템에서의 forward model을 살펴보았으니 이제 여러 시스템에서의 forward model의 성능을 살펴보자. GN을 사용하면 여러 시스템들의 다양한 변수들도 잘 다룰 수 있다는 가정이 있었다. 이를 확인하기 위해 연속적으로 static parameter들(질량, body의 길이, joint의 각도 등)을 바꿔가면서 forward dynamics를 어떻게 학습해가는지 확인했다.
+
+![](https://i.imgur.com/pM4UKhs.png?1)
+
+## Inference
+
+## Control
+
+# 5. Discussion
+
+**Review**
+
+> 논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.
+
+- Pros 👍
+    - 
+    
+- Cons 👎
+    - mlp comparison
+
+---
+
+**Reference**
+
+- Original paper [Graph Networks as Learnable Physics Engines for Inference and Control](https://arxiv.org/abs/1806.01242)
+- Official code [https://github.com/fxia22/gn.pytorch](https://github.com/fxia22/gn.pytorch)

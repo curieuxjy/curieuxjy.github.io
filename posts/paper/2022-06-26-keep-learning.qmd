@@ -1,0 +1,317 @@
+---
+title: "📃Legged Robots that Keep on Learning"
+description: Fine-Tuning Locomotion Policies in the Real World
+date: "2022-06-26"
+categories: [quadruped, rl, redq, paper]
+toc: true
+---
+
+# 0. Abstract
+
+> Legged robots are physically capable of traversing a wide range of challenging environments but designing controllers that are sufficiently robust to handle this diversity has been a long-standing challenge in robotics. Reinforcement learning presents an appealing approach for automating the controller design process and has been able to produce remarkably robust controllers when trained in a suitable range of environments. However, it is `difficult to predict all likely conditions the robot will encounter` during deployment and enumerate them at training-time. What if instead of training controllers that are robust enough to handle any eventuality, `we enable the robot to continually learn in any setting it finds itself in?` This kind of real-world reinforcement learning poses a number of challenges, including efficiency, safety, and autonomy. To address these challenges, we propose a practical robot reinforcement learning system for `fine-tuning locomotion policies in the real world.` We demonstrate that a modest amount of real-world training can substantially improve performance during deployment, and this enables `a real A1 quadrupedal robot` to autonomously fine-tune multiple locomotion skills in a range of environments, including `an outdoor lawn and a variety of indoor terrains.`
+
+# I. Introduction
+
+*강화학습이 로봇 제어 분야에서 각광 받는 이유가 무엇일까?* 기존의 로봇 제어 알고리즘들은 정말 많은 engineering 적인 고려와 복잡한 수학적 모델링이 필요하다. 그런데 그마저 엔지니어가 미처 고려하지 못한 작동을 해야 할 때는 바로 실패한 controller 디자인이 되어 버리기 때문에 로봇 제어는 쉽지 않은 문제였다. 이런 면에서 강화학습은 controller를 `trial-and-error`로 로봇 agent가 알아서 어떻게 작동해야 할지 학습하기 때문에 공학자에게 controller 디자인에 대한 부담을 줄여주었고 이런 점에 강화학습이 로봇 제어 분야에서 주목 받는 이유였다.
+
+하지만, 안타깝게도 강화학습이 controller를 만드는 것의 부담을 줄여주었지만 강화학습의 environment 설계에 대한 부담이었다. 위에서 설명한 대로 강화학습에서 trial-and-error로 `알아서` 학습한다는 점이 매력적이지만, 이런 학습의 조건에는 좋은 environment가 필요하다. 강화학습 분야에서 자주 언급되는 `좋은 agent의 배경에는 좋은 environment가 있다.`는 말처럼 agent가 environment에서 경험하면서 좋은 학습을 하지 못하면 좋은 결과를 기대할 수 없다. 따라서 마치 controller 디자인과 environment 디자인은 trade-off 관계로 엔지니어에게 과제를 남기게 된다.
+
+agent가 학습하는 동안에 경험하게 되는 environment와 테스트 시(실사용 시) 경험하게 되는 environment의 차이가 크면 클수록 agent는 제대로 작동할 수 없다. 학습되지 않은 경험들이기 때문에 학습된 agent의 policy가 좋은 action을 할 수 없다. 이러한 문제를 해결하기 위해서 경험해보지 못한, 즉 학습하지 못한 경우에 대해서도 제대로 agent가 동작하기 위해 `zero-shot generalization`(한번도 보지 못한-zero shot 경험 데이터에 대해 잘 일반화-generalization 할 수 있는 능력) 이 필요하지만, 본 논문에서는 완벽한 `zero-shot generalization`은 일어날 수 없다는 가정하에 문제를 어떻게 풀것인가 고민했다.
+
+그렇게 해서 제안된 방법은 `테스트 환경에서 빠르게 fine-tuning 해서 agent가 잘 동작하게 만들자`였고, 이 방법이 가능하다면 로봇은 실제로 동작하면서 언제든지 마주칠 수 있는 새로운 환경에 적응해서(fine-tuned) 잘 동작할 수 있을 것이다.
+
+> 🎯 본 논문의 목표는 실제 환경(real-world)에서 로봇의 locomotion policy들이 fine-tuning할 수 있는 완전한 시스템을 디자인 하는 것이다.
+
+
+## System Process
+
+![](https://i.imgur.com/vJJH1oF.png?1)
+
+1. 위의 사진에 보이는 공원과 같은 `새로운 환경`에서 먼저 로봇 agent가 첫번째 시도로 locomotion task를 진행한다.
+2. 만약에 땅이 고르지 못해서 agent의 학습된 policy를 활용할 수 없는 상황이 되어서 넘어지게 되는 상황이 될 수 도 있다.
+3. 이때 `reset controller`를 이용해서 빠르게 다시 일어난다.
+4. 실제 task에서 좀 더 몇 번 시도를 하면서 1~3의 과정을 몇 번 반복하게 되고 이 과정에서 `policy가 업데이트` 되게 된다.
+5. 업데이트가 되면서 policy는 `새로운 test 환경에서 제대로 작동`할 수 있게 된다.
+
+## How
+
+- 강화학습의 reward 가 robot의 `on-board 센서로 측정되는 값들로만` 디자인 되어야 실제 Real-world에서 작동하면서 fine tuning을 할 수 있다.
+- Agile한 behavior를 학습하기 위해서 `Motion imitation` 기법을 활용했다.
+- 로봇의 넘어지고 나서 빠르게 정상자세로 회복할 수 있도록 `Recovery policy`를 학습했다.
+- 강화학습 알고리즘들 중에서 [`REDQ(Randomized Ensembled Double Q-Learning)`](https://arxiv.org/abs/2101.05982) 라는 알고리즘을 사용했는데, 이 알고리즘은 여러개 Q-network들의 앙상블을 통해 randomization을 해서 Q-learning 계열의 알고리즘들의 sample-efficiency와 안정성을 향상시킨 알고리즘이다.
+
+## Main Contribution
+
+> 본 논문의 주요 contribution은 다음과 같다.
+
+- 4족 보행 로봇의 agile한 locomotion skill을 real-world에서 학습하기 위한 `fine-tuning 자동화 시스템`을 제안하였다.
+- 처음으로 `자동화 reset`과 `on-board 상태 추정`을 통해 real-world에서 fine-tuning이 될 수 있음으로 보였다.
+- `A1` 로봇을 가지고 dynamic skill들을 학습해서 외부 잔디에서 앞으로, 뒤로 pacing을 하고 3가지 다른 지형 특징을 가진 환경에서 side-stepping을 할 수 있었다.
+
+## Details with Hash tags
+> 원 논문의 `II. Related Work` section 참고
+
+`#Cumbersome controller designs`
+
+- 이전의 로봇 controller들은 footstep planning, trajectory optimization, model-predictive control (MPC) 등의 조합으로 만들어지고 있었다. 그러나 이런 방법들은 로봇의 동역학과 각 로봇마다 다르고 각 skill마다 다른 많은 요소들을 고려해야 하기 때문에 정말 어려웠다.
+
+`#Sim2Real`
+
+- `trial-and-error`라는 데이터에 매우 의존성이 높은 강화학습 알고리즘의 특성과 하드웨어의 safety 이슈 때문에 보통 로봇 강화학습 agent는 `시뮬레이션 기반`으로 학습된다. 하지만 시뮬레이션에서 학습하면서 실제로 만나보지 않은 real-world의 모든 조건들을 예상하고 학습하기란 사실상 불가능하며 가장 robust한 policy라고 할지라도 모든 상황에 대해 generalization 되었다고 할 수 없다.
+
+`#Real-world`
+
+- 이전에 복잡한 motion들을 학습하게 하기 위해서 environment의 다양한 장치들로 다양한 상태 정보를 만들어서 사용했지만 본 연구에서는 real-world에서 작동하고 있는 로봇에서 fine-tuning을 해야 하기 때문에 `로봇의 on-board에서 받을 수 있는 모든 state estimation 정보들을 가지고만` 진행했으며 motion capture나 외부 장치들을 별도로 사용하지 않았다.
+
+- scratch부터 실제 환경에서 단순한 구조의 로봇들로 walking gaits들을 학습하는게 아니라, `A1` 로봇으로 `pacing, side stepping` 등 매우 자연스럽고 조금은 불안정하고 세밀한 balancing이 요구되는 skill들을 학습할 수 있었다. (기존의 연구들은 balancing에 매우 신경쓴 나머지 느리고 부자연스러운 walking gaits 에 치중한 면이 있었다.) 본 논문의 연구에서 `motion imitation과 실제 환경에서의 fine-tuning` 이 이런 다이나믹한 task들을 성공시키는데 매우 중요한 역할을 했다. 또한 실제 환경에서 로봇이 작동하면서 넘어질 때, manual하게 로봇의 reset하거나 recovery시키지 않고 `강화학습으로 자동적으로 reset` 할 수 있는 controller를 만들어서 사용했다.
+
+`#Few-shot adaptation`
+
+- 기존의 `Adaptation structure`라는 구조를 만들어서 학습시켜서 latent 또는 explicit한 환경에 대한 descriptor로 adaptive한 policy를 만드는 연구들이 있었으나, 이 기법들 또한 결국 training에서 경험했던 것들을 기반으로 adaptive함을 보이는 것이므로 실제 test 환경이 이 허용 범위에서 많이 벗어날 경우 제대로 작동안되는 것은 똑같다. 따라서 강화학습으로 지속적인 적응적인 학습능력을 보장해서 `어떤 test 환경에서든 잘 작동할 수 있도록` 했다.
+
+`#RL Algorithm`
+
+- 강화학습 알고리즘으로는 기존의 vision 기반 매니퓰레이터들에서 grasping 작업을 하는 task들에서 많이 쓰인 `off-policy model-free` RL 기법들을 참고하여 fixed되어 있는 매니퓰레이터들보다 더 challenging한 `floating-based 보행 로봇의 locomotion`에 적용해서 성공시켰다.
+
+
+# II. Fine-tuning Locomotion in the Real World
+
+강화학습 알고리즘으로 `multi-tasking`을 할 수 있도록 학습시켰다.
+
+- `REDQ` 알고리즘으로 이용해서 sample efficiency를 높일 수 있었다.
+- 학습된 `reset policy`를 이용해서 여러개의 episode들을 이어서(stitch together) 학습시켰다.
+
+## a) Overview
+
+![](https://i.imgur.com/2q4OYul.png?1)
+![](https://i.imgur.com/kIL9RPT.png?1)
+
+- 위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 **각각의 policy**는 **하나의 desired skill**을 학습하게 된다. (forward, backward, reset)
+- Agent의 policy는 **시뮬레이션에서 pretrained** 한다. (Algorithm2: line 2~7)
+    - 각 에피소드가 끝날 때마다 **학습된 recovery policy**가 로봇을 다음 rollout을 할 수 있도록 준비시켜준다.
+    - 각 skill을 위한 policy들은 **독립적으로 학습**되고 recovery policy도 마찬가지로 독립적으로 학습된다.
+- **Fine-tuning을 실제 물리적인 환경에서** 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm2: line 8~14)
+    - 시뮬레이션과 실제 환경의 차이를 고려하여 **각 policy들의 replay buffer는 초기화** 시켜준다.(Algorithm2: line 12)
+- **Multitask framework**를 사용했다.(Algorithm2 참고)
+
+## b) Motion Imitation
+
+- `Motion Imiation` 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 [`Learning Agile Robotic Locomotion Skills by Imitating Animals`](https://arxiv.org/abs/2004.00784)라는 논문에서 제시한 방법을 따라했다. (Algorithm 1: line1~4)
+- **Reference motion $M$**이 주어지면 agent의일련의 pose들과 비교하여 section `III-B`에서 소개될 reward function을 기반으로 학습한다.
+    - 이 방법을 통해 **reference motion data**만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.
+    - **recovery policy**를 학습하기 위해서 **standing pose**를 모방하도록 할 수 있다.(`III-C` 참고)
+
+## c) Off-policy RL
+
+- off-policy 알고리즘인 **REDQ algorithm** 사용했다.(Algorithm 1: line5~9)
+    - SAC 알고리즘을 더 발전시킨 알고리즘
+    - time step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.
+    - 너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.
+    
+(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 `Algorithm 1`을 참고)
+![](https://i.imgur.com/sBvIszd.png?1)
+
+# III. System Design
+
+> Setting
+- A1 robot from Unitree
+- PyBullet simulator
+- **motion imitation skills**을 얻기 위해서
+    - 공개된 데이터 셋들 중에 **dog pacing**의 mocap을 녹화하고 retargetting 하였다.
+    - 로봇의 역기구학을 이용해서 A1 로봇의 **side-step motion**을 애니메이션으로 만들어서 사용했다.
+- REDQ 알고리즘
+    - Adam optimizer
+    - learning rate of 10−4
+    - batch size of 256 transitions
+    - TensorFlow
+
+## A. State & Action Spaces
+
+1. State space
+    - State는 연속적인 **3 timesteps**에서 얻은 아래 정보들로 정의했다.
+        - Root orientation (read from the IMU)
+        - Joint angles
+        - Previous actions
+    - **Policy**는 위에서 말한 **Proprioceptive input** 뿐만 아니라 **a goal $g_t$**에 대한 정보도 input으로 받게 된다.
+        - $g_t$는 future timesteps에서의 reference motion에서 계산된 **Target pose (root position, root rotation, joint angles)**의 정보를 포함한다.
+        - **4 future target poses** 는 현재 timestep에서 약 1초 정도 이후의 pose들이다.
+
+2. Action space
+
+    - Action은 **12 joints**들에 대한 **PD position targets** 이다.
+    - **33Hz**의 주파수로 command가 적용된다.
+    - 자연스러운 움직임을 위해 PD targets을 **low-pass filter**를 로봇에 적용하기 전에 통과시켜준다.
+
+## B. Reward Function
+
+$$
+\begin{gathered}r_{t}=w^{\mathrm{p}} r_{t}^{\mathrm{p}}+w^{\mathrm{v}} r_{t}^{\mathrm{v}}+w^{\mathrm{e}} r_{t}^{\mathrm{e}}+w^{\mathrm{rp}} r_{t}^{\mathrm{rp}}+w^{\mathrm{rv}} r_{t}^{\mathrm{rv}} \\w^{\mathrm{p}}=0.5, w^{\mathrm{v}}=0.05, w^{\mathrm{e}}=0.2, w^{\mathrm{rp}}=0.15, w^{\mathrm{rv}}=0.1\end{gathered}
+$$
+
+---
+
+- $r_{t}^{\mathrm{p}}$ : 로봇의 **joint rotation** 값들을 reference motion의 joint rotation과 맞추도록 하는 reward term
+    
+    $$
+    r_{t}^{\mathrm{p}}=\exp \left[-5 \sum_{j}\left\|\hat{q}_{t}^{j}-q_{t}^{j}\right\|^{2}\right]
+    $$
+    
+    - $\hat{q}_{t}^{j}$ : 시점 $t$에 reference motion의 $j$번째 joint의 **local rotation**
+    - $q_{t}^{j}$ : 로봇의 $j$번째 joint **local rotation**
+
+- $r_{t}^{\mathrm{v}}$ : **joint velocities**
+- $r_{t}^{\mathrm{e}}$ : **end-effector positions**
+- 로봇이 reference root motion을 잘 tracking 하게 하기 위한 reward term
+    - $r_{t}^{\mathrm{rp}}$ : **root pose reward**
+    - $r_{t}^{\mathrm{rv}}$ : **root velocity reward**
+
+---
+
+이전부터 강조해왔듯이, 실제 환경에서 `fine-tuning`과정을 진행하기 위해서 on-board 센서들의 값을 이용해서 reward function을 디자인하였고 실제 물리적인 환경에서 구동할 때 이를 상태 추정 기법을 이용해서 reward를 구하게 된다. 따라서 아래의 상태 추정 방법(State Estimation)이 fine-tuning의 성능을 결정하는 중요한 부분이 된다.
+
+- Real-world에서 로봇의 **linear root velocity**를 잘 추정하기 위해서 **Kalman filter**를 사용했다.
+    - 칼만 필터는 IMU 센서에서 acceleration과 orientation 값들을 읽어서 foot contact sensors로 값들을 보정한다.
+    - 처음에 발 끝의 속도를 0으로 생각해서 각 다리의 joint velocities를 고려하여 몸체의 속도를 계산하고 IMU으로부터 추정했던 값을 보정한다.
+- 이렇게 계산된 **linear velocity**를 로봇의 position 추정값에 통합시킨다.
+
+![](https://i.imgur.com/1DW4hsQ.png?1)
+
+위의 그래프들에 볼 수 있듯이(아래에서 위 방향으로),
+
+- **angular velocity와 orientation** 센서 값들은 매우 정확했다.
+- **linear velocity**는 매우 정확하진 않았지만 허용가능했다.(reasonable)
+- **position drifts**는 상당히 벗어나는 부분이 있었지만, 각 에피소드에서 reward function을 계산할 정도로의 적합한 값들을 보여주었다.
+
+## C. Reset Controller
+
+- **reset policy**를 시뮬레이션에서 학습하기 위해 다양한 **initial states**에서 시작하도록 했다. 
+
+→ 로봇을 random한 height & orientation에서 떨어뜨려서 아래 사진에서 볼 수 있듯이 다양한 **initial states**를 설정
+
+![](https://i.imgur.com/2soOO1g.png?1)
+
+- Motion imitation 목적함수를 수정해서 **single, streamlined reset policy**를 학습시켰다.
+
+- Reference motion을 가지고 로봇이 정확히 어떻게 일어나야 할지를 알려주는 것이 아니라, 아래와 같은 방법으로 reset policy를 학습시켰다.
+
+1. policy가 **rolling right side up**을 위한 reward만을 가지고 학습한다.
+2. 만약 로봇이 **upright**하는데 성공하면 이후에 **motion imitation reward**를 추가시켜서 학습니다.
+    - 이때의 reference motion은 **standing pose**가 되고 로봇이 똑바로 설 수 있도록 학습시킨다.
+- 이런 방식으로 학습된 **reset policy**는 다양한 test 지형에서 fine-tuning 없이도 잘 동작했다.(tranfered well)
+
+# IV. Experiments
+
+💡 실험 결과에서 주목해서 봐야할 질문 3가지!
+
+1. 본 논문에서 제시한 finetuning-based method가 이전의 방법들에 비해 `시뮬레이션 trianing을 충분히 활용`하고 `실제 물리 환경에서 적응`할 수 있었는가?
+
+2. 본 논문에서 제시한 시스템 디자인 요소들이 `feasibility of real-world training`에 어떤 영향을 주었는가?
+
+3. `얼마나 다양한 실제 물리적인 환경들`에서 autonomous, online fine-tuning 방법이 로봇의 skill을 향상시켰는가?
+
+## A. Simulation Experiments
+
+- agent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 **학습된 시뮬레이션과 또 다른** 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.
+-  **Learned forward pacing gait**가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.
+- **Standard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)**으로 Pre-train을 **flat** ground에서 진행했다.
+
+- The test terrains : test 환경들로는 총 3가지로 실험하였다.
+    1. **a flat ground** : pre-training 과정의 시뮬레이션 셋팅과 유사한 test 환경 
+    2. pre-training 과정의 시뮬레이션 셋팅과 다소 다른 test 환경 :
+        1. **randomized heightfield** : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형
+        2. **a low friction surface** : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)
+
+-  비교군
+    1. `latent space` : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습
+    2. `RMA`: dynamics randomization한 모델. 위에서 언급한 `Adaptation Module`을 가지고 학습
+    3. `Vanilla SAC` : Soft Actor-Critic 알고리즘으로 학습
+    4. `Ours(REDQ)`: 10개의 Q-functions을 가지고 randomly sample 2로 학습
+
+---
+
+실험 결과는 아래와 같았다. 
+
+- `RMA`는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.
+- `SAC`에 비해서 `Ours`가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.
+
+![](https://i.imgur.com/BCyV1Xk.png?1)
+
+
+## B. Real-World Experiments
+
+- 시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다.
+
+- 모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 **fine-tuning** 해주었다.
+
+1. Outdoor `grassy lawn`:
+    - **slippery surface**를 가지고 있어서 발이 잔디에서 미끄러지거나 흙에 빠질 수 있다.
+    - 앞 혹은 뒤로 움직이는 **pacing gait**를 fine-tuning 하도록 했다.
+        - pacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새
+
+    - Pre-trained **forward** pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained **backward** pacing policy는 잘 넘어지는 경향이 있었다. 
+    
+    - **작동한 지 약 2시간 만에**, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.
+
+    ![](https://i.imgur.com/EeTTRF8.png?2)
+    
+2. Indoor
+
+    - `Carpeted room`: 
+    높은 마찰계수를 가지는 지형으로 (카펫이 푹신하므로) 로봇의 고무로 마감되어 있는 발이 시뮬레이션에서 학습된 것과 다르게 안정적이지 않은 컨택을 하게 될 수 있다.
+    
+    ![](https://i.imgur.com/Pviw7be.png?1)
+    
+    - `Doormat with crevices`: 
+    매트 표면에 발이 빠질 수도 있는 환경이다.
+    
+    ![](https://i.imgur.com/865kXHv.png?1)
+    
+    - `Memory foam`: 
+    4cm 정도의 두께의 메모리폼으로 발이 매트리스에 빠지고 평평하고 딱딱한 바닥과 비교했을 때 이 환경에서는 gait(걸음새)가 상당히 변화가 많이 일어날 수 있다.
+    
+    ![](https://i.imgur.com/EfZvlS5.png?1)
+    
+    - `Indoors`에서는, pre-trained side stepping policy가 움직일 때 매우 불안정했고 motion을 끝내기 전에 넘어졌다.
+
+    - 그러나 각 지형 셋팅에서 **2.5 시간 이내로** 로봇이 비틀거림 없이 skill을 수행할 수 있었다.
+
+---
+
+실험 결과는 아래와 같았다. 
+![](https://i.imgur.com/NRNMAex.png?1)
+
+## C. Semi-autonomous training
+- 전반적인 모든 실험들에서, the recovery policy는 100% 성공적이었다.
+- 본 논문에서 제시된 방법으로 학습된 reset controller와 Unitree에서 제공한 built-in rollover controller를 비교해보았다.
+    - **On hard surfaces** : 두 가지 controllers 모두 효과적으로 잘 작동했지만 **built-in** 컨트롤러는 **learned policy**에 비해 상당히 느렸다.
+    - **On the memory foam** : **built-in** 컨트롤러는 더 성능이 좋지 못했다.
+
+# V. Conclusion
+
+- grass, carpets, doormats and memory foam과 같은 다양한 **real-world settings**에서 **finetune locomotion policies**을 학습할 수 있는 시스템을 제안하였다.
+- **autonomous data collection**과 **data-efficient model-free RL**의 결합을 보여주었다.
+- 로봇의 넘어짐에서 **automated recoveries**를 수행할 수 있도록, 로봇의 **on-board sensors**들을 가지고 **state estimation**을 했으며, 이 정보들을 기반으로 효과적인 **reward calculation**을 제안하였다.
+- 다양한 locomotion skill에 대한 **data-efficient fine-tuning** 방법을 보여주었다.
+- 복잡하고 다양하며 **끊임없이** 변화하는 **real-world environments**에 대응할 수 있는 `a lifelong learning system for legged robots`를 future work로 보고 있다. 
+
+# Review
+> 논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.
+
+- Pros 👍
+    - 로봇 operation의 명확한 한계점, 결국 로봇이 동작해야 하는 환경이 계속 변화할 수 밖에 없다는 문제점 인식이 좋은 것 같음
+    - 실제 산업에서도 효율적일 것 같은 방법이라고 생각이 들었음
+    - rest policy의 성공률이 대단했음
+    
+- Cons 👎
+    - Out door 실험에서는 여러 알고리즘으로 비교해보진 않았음
+    - 알고리즘은 동일하게 하고 3개의 policy를 따로 두지 않고 1개의 policy로 만들었을 때도 비교군으로 비교해서 실험결과가 있었으면 더 좋았을 것 같음
+
+# Reference
+
+- [Original Paper](https://arxiv.org/abs/2110.05457)
+
+- [Project Homepage](https://sites.google.com/berkeley.edu/fine-tuning-locomotion)
+
+- [Randomized Ensembled Double Q-Learning: Learning Fast Without a Model](https://arxiv.org/abs/2101.05982)
+
+- [REDQ REVIEW](https://github.com/utilForever/rl-paper-study/blob/main/4th/210510%20-%20Randomized%20Ensembled%20Double%20Q-Learning%20Learning%20Fast%20Without%20a%20Model%2C%20X.%20Chen%20et%20al%2C%202021.pdf)

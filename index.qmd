@@ -6,15 +6,15 @@ listing:
   type: default
   table-striped: true
   table-hover: true
-  categories: true
+  categories: cloud
   sort-ui: true
   filter-ui: true
-  image-placeholder: default2.png
+  image-placeholder: def.png
   
-page-layout: full
+page-layout: article
 title-block-banner: true
 ---
-<br> </br>
+<p> </p>
 
 ### *Je suis curieux de tout.*
 

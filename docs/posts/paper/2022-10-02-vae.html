@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-10-02">
+<meta name="description" content="Auto-Encoding Variational Bayes">
+
+<title>Jung Yeon - 📃VAE</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jung Yeon</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#variational-bound" id="toc-variational-bound" class="nav-link" data-scroll-target="#variational-bound">Variational Bound</a>
+  <ul class="collapse">
+  <li><a href="#regularization-term" id="toc-regularization-term" class="nav-link" data-scroll-target="#regularization-term">Regularization term</a></li>
+  <li><a href="#reconstruction-error-term" id="toc-reconstruction-error-term" class="nav-link" data-scroll-target="#reconstruction-error-term">Reconstruction error term</a>
+  <ul class="collapse">
+  <li><a href="#reparametrization-trick" id="toc-reparametrization-trick" class="nav-link" data-scroll-target="#reparametrization-trick">Reparametrization Trick</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#vae-structure" id="toc-vae-structure" class="nav-link" data-scroll-target="#vae-structure">VAE Structure</a></li>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment">Experiment</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃VAE</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">generative</div>
+    <div class="quarto-category">variational inference</div>
+    <div class="quarto-category">paper</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Auto-Encoding Variational Bayes
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 2, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p><img src="https://i.imgur.com/xTJRmKC.jpg" class="img-fluid"></p>
+<p>이번 포스트는 생성모델에서 유명한 Variational Auto-Encoder(VAE)를 다루고 있는 <code>Auto-Encoding Variational Bayes</code>라는 논문 리뷰입니다. 이번 포스트를 정리하면서 가장 많이 인용하고 도움을 받은 <a href="https://youtu.be/o_peo6U7IRM">오토 인코더의 모든 것</a>를 보시면 훨씬 더 자세하고 깊은 이해를 하실 수 있습니다. 포스트의 순서는 아래와 같이 진행됩니다.</p>
+<p><img src="https://i.imgur.com/wXPuTek.jpg" class="img-fluid"></p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>VAE는 생성모델(Generative Model)에서 유명한 모델입니다. 그렇다면 생성 모델이란 무엇을 말하는 걸까요? 예를 들어 우리가 찍은 적이 없는 강아지 사진을 <code>만들어내고 싶다</code>고 해봅시다. 그렇지만 강아지 사진이 실제 강아지들을 찍은 사진들과 너무 동떨어져서 이질감을 느끼지 않아야 합니다. 이런 맥락에서 우리가 원하는 것은 train database에 있는 사진들, 즉 실제로 강아지들을 찍은 사진들의 <strong>분포</strong>를 알고 싶습니다. 여기서 <strong>분포</strong>를 알고 싶은 이유는 우리가 분포(distribution)을 알아야 분포에서 data를 샘플링해서 <strong>생성</strong>할 수 있기 떄문입니다. 다시 정리하자면, 현재 데이터들과 <strong>비슷한 새로운 데이터를 생성 하기 위해</strong> 현재 train DB의 데이터들의 분포 <strong><span class="math inline">p(x)</span></strong> 를 알고 싶습니다.</p>
+<p><img src="https://i.imgur.com/v5JMB4O.jpg" class="img-fluid"></p>
+<p>데이터 <span class="math inline">x</span>를 생성하는 <strong>Generator</strong>를 작동시킬 <strong>controller</strong>가 필요합니다. 어떤 데이터를 생성하도록 Generator를 trigger 해주는 부분이기 때문에 우리가 다루기 쉽게 만들어 줘야 이후 생성모델을 사용할 때 편리할 것 입니다. controller 역할을 하는 latent variable <span class="math inline">z</span>는 위의 그림에서 볼 수 있둣이 데이터 x보다 차원이 작게 만들고 <span class="math inline">p(z)</span>에서 샘플링 됩니다.</p>
+<p>다시 목표였던 <span class="math inline">p(x)</span>를 생각해보면, <code>prior probability</code> <span class="math inline">p(z)</span>와 conditional probabability의 곱 적분으로 생각해볼 수 있습니다. 적분 이때 적분을 단순히 sampling한 여러 데이터들을 summation해서 maximum likelihood estimation을 바로 할 수 있지 않을까? 생각할 수도 있지만 이는 샘플링하는 과정에서 우리가 원하지 않는 샘플들이 더 많이 뽑힐 수 있기 때문에 이 방법을 쓸 수 없습니다.</p>
+<p><strong>우리가 원하지 않는 샘플들이 더 많이 뽑히는 현상</strong>을 예시를 들어 살펴보겠습니다. MINST 데이터 중 2를 나타내는 이미지 (a)가 있고, (a)를 일부 지운 (b)와 (a)를 오른쪽으로 1 pixel 만큼 옮긴 (c)가 있습니다. 이때 우리는 (a)와 유사한 데이터를 더 많이 뽑고 싶고, (b)보다는 (c)가 (a)와 더 가깝다고 생각하므로 (c)와 같은 데이터들이 더 많이 뽑히기리 원합니다. 하지만 보통 Generator가 Normal distribution으로 디자인 되고 MSE 거리 계산을 통해 (a)와 더 가까운 데이터 샘플로 Normal distribution의 평균을 옮겨간다고 했을 때, (c)보다 (b)가 (a)와의 MSE가 적기 때문에 (b)와 비슷한 값이 정규분포의 평균이 되고 (b)와 비슷한 샘플들이 더 많이 나오게 됩니다. 하지만 결과적으로 (c)가 (a)와 비슷한 것이 더 좋은 샘플링이 되는 것이라고 볼 수 있습니다.</p>
+<p>좋은 sampling function이란, 앞선 예시에서 볼 수 있었듯이 train DB에 있는 data <span class="math inline">x</span>와 유사한 샘플이 나올 수 있는 확률분포라고 할 수 있습니다. 따라서 그냥 샘플링 함수를 만들기 보다 evidence로 x를 given(조건)으로 하여 z를 뽑아내는 확률분포 <span class="math inline">p(z\|x)</span>를 만들어내는 것이 목적입니다. 하지만 여기서 또 문제인 점은 true distridution인 해당 분포를 만들어내기위해 Variational Inference 방법을 이용합니다. 분포 추정을 위한 family, 예를 들면 guassian 분포들을 Approximation Class로 두고 true distribution을 추정합니다. 이때 gaussian 분포의 파라미터인 <span class="math inline">\phi</span>는 mean과 std 값이 될 것 이고 이런 여러 gaussian 분포들과 true posterior 간의 KL divergence를 구하여 추정해갑니다.</p>
+<p><img src="https://i.imgur.com/UzRI0bp.jpg" class="img-fluid"></p>
+<p>따라서 정리해보면 아래 그림과 같이 생성모델인 Generator를 학습하기 위해 Variational Inference 방법을 사용하게 되었고 그러다 보니 AutoEncoder와 비슷한 모델 구조가 되었습니다. 그러나 <code>데이터 압축</code>이 목표인 AutoEncoder와 <code>데이터 생성</code>이 목표인 VAE는 각자의 목표에 맞춰 필요한 방법론을 더하게 되면서 그 모델 구조가 비슷해보이게 된 것이지 같지않습니다.</p>
+<p><img src="https://i.imgur.com/uMHIQnA.jpg" class="img-fluid"></p>
+<p>VAE의 전체 구조는 <strong>[1] Decoder, Generator, Generation Network</strong> 라고 부르는 부분과 <strong>[2] Encoder, Posterior, Inference Network</strong>라고 부르는 부분, 크게 2가지 파트로 이루어져 있습니다.</p>
+<p><img src="https://i.imgur.com/4rrcmgH.jpg" class="img-fluid"></p>
+</section>
+<section id="variational-bound" class="level1">
+<h1>Variational Bound</h1>
+<p>위의 흐름을 이어가보면, 처음에 알고 싶었던 것은 <strong>(1) <span class="math inline">p(x)</span></strong>였으나 우리가 원하는 데이터들로 샘플링(컨트롤)하기 위해 <strong>(2) <span class="math inline">p(z\|x)</span></strong>(true posterior)가 필요해졌고, true posterior를 알 수 없으니 이를 추정(Variational Inference)하기 위해서 <strong>(3) <span class="math inline">q_{\phi}(z\|x)</span></strong>가 필요했습니다. 따라서 우리는 이 3개의 분포들의 관계를 좀 더 살펴보고 어떻게 생성모델을 학습해나갈 것인지 고민해봐야 합니다.</p>
+<p>처음의 목표였던 <span class="math inline">p(x)</span>에 log를 씌워서 아래와 같은 식 변형을 진행하면 2개의 term으로 나눠집니다. 첫번째 term은 이번 장의 주인공인 Evidence LowerBOund라는 ELBO이고 두번째 term은 Variational Inference에서 봤었던 true posterior와 approximator 사이의 거리를 나타내는 KL 값입니다. 여기서 <span class="math inline">log(p(x))</span>가 일정할 때 KL 값을 줄이는 것이 목표(=true posterior를 잘 approximation하는 것)이고 KL은 항상 양수이기 때문에, 역으로 생각해보면 첫번째 term이었던 ELBO 값을 최대화하는 것이라고 생각할 수 있습니다. 이를 간단히 그래프로 나타내보면 오른쪽 그림에서 볼 수 있듯이 우리가 원하는 것은 ELBO값이 커질 수 있는 <span class="math inline">\phi</span>를 찾아가는 과정이라고 볼 수 있습니다.</p>
+<p><img src="https://i.imgur.com/B5gwqlT.jpg" class="img-fluid"></p>
+<p>따라서 ELBO값이 커질 수 있는 <span class="math inline">\phi</span>를 찾아가는 최적화를 수식을 변형하여 또 다시 2개의 term으로 나눌 수 있는데 (1) <code>Reconstructino Error</code>와 (2) <code>Regularization</code> 으로 볼 수 있고 각 term은 다음과 같이 해석할 수 있습니다.</p>
+<p><img src="https://i.imgur.com/J0uo8qQ.jpg" class="img-fluid"></p>
+<p><img src="https://i.imgur.com/vjQJAWt.jpg" class="img-fluid"></p>
+<section id="regularization-term" class="level2">
+<h2 class="anchored" data-anchor-id="regularization-term">Regularization term</h2>
+<p>ELBO term을 나누었을 때 나왔던 첫번째 Regularization term에 대해 보겠습니다. True posterior를 추정하기 위한 <span class="math inline">q_{\phi}(z\|x)</span>은 KL 값을 계산하기 쉽도록 하기 위해 Multivariate gaussian distribution으로 설계합니다. 또한 앞서 이야기했던 것 처럼 controller 부분인 <span class="math inline">p(z)</span>는 다루기 쉬운 분포이어야 하기 때문에 정규분포로 만들어 줍니다. 그러면 논문의 Appendix F.1에서 볼 수 있듯이 가우시안 분포들 사이의 KL 값은 다음과 같이 쉽게 계산될 수 있습니다.</p>
+<p><img src="https://i.imgur.com/NXEFibn.jpg" class="img-fluid"></p>
+</section>
+<section id="reconstruction-error-term" class="level2">
+<h2 class="anchored" data-anchor-id="reconstruction-error-term">Reconstruction error term</h2>
+<p>ELBO의 두번째 term인 Reconstruction error에 대해 살펴보겠습니다. Reconstruction error의 expectation 표현을 integral로 표현하면 다음과 같고 이는 몬테카를로 샘플링을 통해 <span class="math inline">L</span>개의 <span class="math inline">z^{i, l}</span>를 가지고 평균을 내서 구할 수 있습니다. 여기에서 index <span class="math inline">i</span>는 데이터 <span class="math inline">x</span>의 넘버링이고 index <span class="math inline">l</span>은 generator의 distribution에서 샘플링하는 횟수에 대한 넘버링입니다.</p>
+<p><img src="https://i.imgur.com/xuJwkVJ.jpg" class="img-fluid"></p>
+<section id="reparametrization-trick" class="level3">
+<h3 class="anchored" data-anchor-id="reparametrization-trick">Reparametrization Trick</h3>
+<p>위에서 Reconstruction error를 구하기 위해 샘플링하는 과정에서 backpropation을 하기 위해 <strong>Reparametrization trick</strong>을 사용하게 됩니다. 단순히 정규분포에서 샘플링 하면 random node인 <span class="math inline">z</span>에 대해서 gradient를 계산할 수 없기 때문에 random성을 정규분포에서 샘플링 되는 <span class="math inline">\epsilon</span>으로 만들어주고 이를 reparametrization을 해주어서 deterministic node가 된 <span class="math inline">z</span>를 backpropagation 할 수 있게 됩니다.</p>
+<p><img src="https://i.imgur.com/9b1CPni.jpg" class="img-fluid"></p>
+<p><span class="math inline">z</span>를 샘플링하는 generator의 distribution은 Bernoulli로 디자인할 경우 NLL이 Cross Entropy가 되며 Gaussian 분포로 디자인할 경우 MSE가 되어서 보통 계산하기 용이한 2개의 분포 중 하나를 사용하게 됩니다.</p>
+<p><img src="https://i.imgur.com/lCMjRUO.jpg" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="vae-structure" class="level1">
+<h1>VAE Structure</h1>
+<p>지금까지 살펴본 VAE 구조는 Encoder와 Decoder를 각각 어떤 분포로 디자인해주는 냐에 따라 Reconstruction error와 Regularization을 계산하는 식만 조금씩 달라지게 됩니다. Encoder 부분은 Reconstruction error의 계산의 용이성 때문에 거의 가우시안 분포를 사용하게 되고 Decoder 부분만 변형하여 아래의 여러 유형들이 나타나게 됩니다.</p>
+<p><img src="https://i.imgur.com/JPOVTlK.jpg" class="img-fluid"></p>
+<p><img src="https://i.imgur.com/fNma1fZ.jpg" class="img-fluid"></p>
+<p><img src="https://i.imgur.com/fNma1fZ.jpg" class="img-fluid"></p>
+<p><img src="https://i.imgur.com/Si4xjNg.jpg" class="img-fluid"></p>
+<p>MNIST를 예시로 들어서 VAE 구조를 나타내보면 다음과 같습니다.</p>
+<p><img src="https://i.imgur.com/FqjKwdF.jpg" class="img-fluid"></p>
+</section>
+<section id="experiment" class="level1">
+<h1>Experiment</h1>
+<p>해당 논문에서 실험은 총 2가지를 진행했는데 앞에서는 계속 VAE로 나타냈지만 논문에서는 해당 알고리즘을 AEVB로 지칭하기 때문에 이를 VAE 알고리즘으로 생각하고 실험 결과들을 보면 됩니다. 우선 첫번째는 MNIST 데이터셋과 Frey Face 데이터셋을 사용하여 베이스라인으로 wake-sleep 알고리즘과 성능을 비교했습니다. ELBO값을 최대화하는 것이 목표이므로 값이 클수록 좋은 것으로 해석할 수 있습니다. 아래의 그래프들에서 실선과 점선은 각각 train과 test 데이터셋에 대해 ELBO 값을 plotting한 것으로 latent variable인 <span class="math inline">z</span>의 차원의 크기에 따라 ELBO 값이 어떤 양상을 나타내는지 보여줍니다.</p>
+<p><img src="https://i.imgur.com/1vllCMk.jpg" class="img-fluid"></p>
+<p>두번째로는 MNIST 데이터셋에 대해서 <span class="math inline">z</span>의 차원이 1000, 50000일때의 각 알고리즘들의 성능을 학습 샘플수에 따라 Marginal log-likelihood를 plotting하여 나타냈습니다. 이 실험에서는 베이스라인으로 Wake-Sleep과 MCEM을 사용했으며 여기서도 AEVB(=VAE)가 우수한 성능을 보여주었습니다.</p>
+<p><img src="https://i.imgur.com/cPEO4wa.jpg" class="img-fluid"></p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p><img src="https://i.imgur.com/VwtJ70W.jpg" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>아래는 추가적으로 VAE를 발표한 후에 받았던 in-class 질문들에 대해 답변해본 부분들 입니다. 질문에 대한 답변은 solution이 아닌 discussion으로만 참고해주세요.</p>
+</blockquote>
+<details>
+<summary>
+<b>Questions in class</b>
+</summary>
+<pre><code>&lt;p&gt;
+&lt;a href="https://imgur.com/RHarOED"&gt;&lt;img src="https://i.imgur.com/RHarOED.jpg" title = "Question 1"/&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/cRj4GHK"&gt;&lt;img src="https://i.imgur.com/cRj4GHK.jpg" title = "Question 2"/&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/PxPm5Pf"&gt;&lt;img src="https://i.imgur.com/PxPm5Pf.jpg" title = "Question 3"/&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/dT1dXfc"&gt;&lt;img src="https://i.imgur.com/dT1dXfc.jpg" title = "Question 4" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/ajgw7p8"&gt;&lt;img src="https://i.imgur.com/ajgw7p8.jpg" title = "Question 5" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/mIxVuO4"&gt;&lt;img src="https://i.imgur.com/mIxVuO4.jpg" title = "Question 6" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/N2fIvvh"&gt;&lt;img src="https://i.imgur.com/N2fIvvh.jpg" title = "Question 7" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/0OZrZOE"&gt;&lt;img src="https://i.imgur.com/0OZrZOE.jpg" title = "Question 8" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/czPUc72"&gt;&lt;img src="https://i.imgur.com/czPUc72.jpg" title = "Question 9" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/qsRONAE"&gt;&lt;img src="https://i.imgur.com/qsRONAE.jpg" title = "Question 10" /&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://imgur.com/zsjDlrB"&gt;&lt;img src="https://i.imgur.com/zsjDlrB.jpg" title = "Question 11" /&gt;&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+</details>
+<p><strong>Reference</strong></p>
+<ul>
+<li>original paper: <a href="https://arxiv.org/abs/1312.6114">https://arxiv.org/abs/1312.6114</a></li>
+</ul>
+<p>[1] <a href="https://di-bigdata-study.tistory.com/5">https://di-bigdata-study.tistory.com/5</a></p>
+<p>[2] <a href="https://di-bigdata-study.tistory.com/4?category=848869">https://di-bigdata-study.tistory.com/4?category=848869</a></p>
+<p>[3] <a href="https://ratsgo.github.io/generative%20model/2017/12/19/vi/">https://ratsgo.github.io/generative%20model/2017/12/19/vi/</a></p>
+<p>[4] <a href="https://taeu.github.io/paper/deeplearning-paper-vae/">https://taeu.github.io/paper/deeplearning-paper-vae/</a></p>
+<p>[5] <a href="https://medium.com/humanscape-tech/paper-review-vae-ac918509a9ba">https://medium.com/humanscape-tech/paper-review-vae-ac918509a9ba</a></p>
+<p>[6] <a href="https://www.youtube.com/watch?v=o_peo6U7IRM">https://www.youtube.com/watch?v=o_peo6U7IRM</a></p>
+<p>[7] <a href="https://youtu.be/SAfJz_uzaa8">https://youtu.be/SAfJz_uzaa8</a></p>
+<p>[8] <a href="https://youtu.be/GbCAwVVKaHY">https://youtu.be/GbCAwVVKaHY</a></p>
+<p>[9] <a href="https://youtu.be/7t_3dNs4QK4">https://youtu.be/7t_3dNs4QK4</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="R_kgDOIa8jzg" data-category="General" data-category-id="DIC_kwDOIa8jzs4CShZ1" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_high_contrast" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

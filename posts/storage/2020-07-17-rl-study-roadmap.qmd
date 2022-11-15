@@ -1,0 +1,61 @@
+---
+title: "🧩My Reinforcement Learning Roadmap"
+toc: true
+date: "2020-07-17"
+description: 내가 공부했던 강화학습 Roadmap
+categories: [rl, study, storage]
+---
+
+강화학습을 공부했던 roadmap을 기록하고자 글을 쓰게 되었다.
+
+짧게 기록할 수 있는 정보들과 내 느낌들을 간략하게 적어보고자 한다.
+
+## My RL study road map
+> 아래는 시간 순서대로 내가 공부했던 강의나 책, 스터디 모임
+1. 모두의 rl
+2. 케라스로 시작하는 rl 책 스터디
+3. 모두연 starcraft project - 논문 리딩
+4. Udacity
+5. Connect-X
+6. pytorch 책
+7. 수학 강화학습 책
+8. Open AI Gym
+9. fast campus
+10. BNM2h 스터디
+11. RL 논문 스터디 3기
+12. Unity Ml agent 스터디
+
+## Materials
+1. 무료강의
+- [모두의 RL](https://www.youtube.com/playlist?list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG)
+- [팡요랩](https://youtu.be/wYgyiCEkwC8) : 강화학습 강의로 유명한 데이비드 실버 교수님 강의 한글 버전
+- [혁펜하임](https://youtu.be/cvctS4xWSaU) 
+- [CS285](https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc) : 입문이라기에 조금 어려울 수는 있으나 만약 로봇틱스쪽을 생각하고 있다면 꼭 들어야하는 강의
+- [DeepMind - Reinforcement Learning Lecture Series 2021](https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021) (2022.05.06 updated)
+
+2. 유료강의
+- Udacity 엄청 비쌈, 프로그램이 좋긴한데 가성비는 아님
+- Udemy 코드 위주로 빨리 배워보고 싶을 때
+- Fast campus 박준영 강사님
+
+2. 책
+- 파이썬과 케라스로 배우는 강화학습 
+- PyTorch를 활용한 강화학습/심층강화학습 실전 입문 
+- 수학으로 풀어보는 강화학습 원리와 알고리즘 : 수학적 기반 다지기. 모델 베이스드 RL 쪽으로 내용이 좋음.
+- 단단한 강화학습 : 강화학습 대가 리처드 서튼 교수님의 바이블 원작을 번역.
+- 단단한 심층강화학습 (2022.05.06 updated)
+
+** 2022.05.06 기준 강화학습 관련된 많은 책들이 나옴
+
+3. 웹사이트(입문으로는 조금 힘들 수 있으나 트렌드나 흐름 잡기에 좋음)
+- [DeepMind blog](https://deepmind.com/blog/article/Agent57-Outperforming-the-human-Atari-benchmark)
+- [OpenAI blog](https://openai.com/blog/solving-rubiks-cube/)
+- [OpenAI Spinning up](https://spinningup.openai.com/en/latest/)
+
+4. Github
+- [RL 가계도](https://github.com/bennylp/RL-Taxonomy)
+- [Huggingface DRL](https://github.com/huggingface/deep-rl-class) (2022.05.06 updated)
+
+5. 커뮤니티
+- RL Korea : 페이스북
+- RL.start() : 오픈 카카오톡
