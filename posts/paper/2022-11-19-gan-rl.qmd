@@ -1,0 +1,9 @@
+---
+draft: true
+title: "📃GAN-RL"
+description: Connecting Generative Adversarial Networks and Actor-Critic Methods
+date: "2022-11-19"
+categories: [rl, gan, paper]
+toc: true
+---
+

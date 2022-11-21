@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-07-13">
-<meta name="description" content="RL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기">
+<meta name="dcterms.date" content="2022-11-19">
+<meta name="description" content="Connecting Generative Adversarial Networks and Actor-Critic Methods">
 
-<title>Jung Yeon - 👩‍💻Install Mujoco in Windows10</title>
+<title>Jung Yeon - 📃GAN-RL</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,33 +100,24 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#mujoco" id="toc-mujoco" class="nav-link active" data-scroll-target="#mujoco">Mujoco</a></li>
-  <li><a href="#mujoco-py" id="toc-mujoco-py" class="nav-link" data-scroll-target="#mujoco-py">Mujoco-py</a>
-  <ul class="collapse">
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">👩‍💻Install Mujoco in Windows10</h1>
+<h1 class="title">📃GAN-RL</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">mujoco</div>
-    <div class="quarto-category">code</div>
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">gan</div>
+    <div class="quarto-category">paper</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    RL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기
+    Connecting Generative Adversarial Networks and Actor-Critic Methods
   </div>
 </div>
 
@@ -137,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 13, 2020</p>
+      <p class="date">November 19, 2022</p>
     </div>
   </div>
     
@@ -146,45 +137,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="mujoco" class="level1">
-<h1>Mujoco</h1>
-<ol type="1">
-<li><p><a href="http://www.mujoco.org/index.html">Mujoco</a>에서 <a href="https://www.roboti.us/license.html">License</a> tab으로 들어가서 Personal Student Software License를 받는다.</p></li>
-<li><p>이메일로 Account number를 받는다.(spam도 확인하자)</p></li>
-<li><p>다시 <a href="https://www.roboti.us/license.html">License</a>로 가서 Account number와 Computer Id를 입력한다.</p>
-<p><img src="../../images/img2.JPG" class="img-fluid"></p></li>
-<li><p>다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.</p></li>
-<li><p><code>.mujoco</code>라는 파일을 <code>C:\Users\사용자명\</code>에 만든다.</p></li>
-<li><p><a href="https://www.roboti.us/index.html">Products</a>에서 <code>mjpro150 win64</code>을 다운받아 <code>.mujoco</code>에 압축을 풀어준다.(<code>C:\Users\사용자명\.mujoco\mjpro150</code>)</p>
-<p><img src="../../images/img3.JPG" class="img-fluid"></p></li>
-<li><p>다운받은 mjkey.txt 파일을 <code>C:\Users\사용자명\.mujoco</code>와 <code>C:\Users\사용자명\.mujoco\mjpro150\bin</code> 에 옮긴다.</p></li>
-<li><p>cmd창을 열어서 cd 명령어로 <code>C:\Users\사용자명\.mujoco\mjpro150\bin</code> 경로로 이동한 다음 <code>simulate ../model/humanoid.xml</code>명령어를 입력한다.</p></li>
-<li><p>Humanoid Simulation 창이 나오면 성공이다.</p>
-<p><img src="../../images/gif2.gif" class="img-fluid"></p></li>
-</ol>
-</section>
-<section id="mujoco-py" class="level1">
-<h1>Mujoco-py</h1>
-<ol type="1">
-<li><p><code>SET PATH=C:\Users\사용자명\.mujoco\mjpro150\bin;%PATH%;</code>으로 경로설정을 해준다.</p></li>
-<li><p><a href="https://github.com/openai/mujoco-py/archive/1.50.1.0.zip">mujoco-py-1.50.1.0</a> 파일을 다운받아 <code>C:\Users\사용자명\.mujoco</code>에 압축을 풀어준다.(<code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0</code>)</p></li>
-<li><p>cmd 창에서 <code>python setup.py install</code>를 입력하여 설치한다.</p>
-<p><code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0&gt; python setup.py install</code></p>
-<p>혹시 여기서 error가 난다면 전에 mujoco-py를 설치해서 버젼이 안 맞아 나는 것일 수도 있다. <code>pip list</code>로 <code>mujoco-py</code>의 버젼을 확인해보고 다른 버젼이라면 <code>pip uninstall mujoco-py</code>를 해준후 다시 설치한다.</p></li>
-<li><p>cmd 창에서 <code>python examples\body_interaction.py</code>를 입력하여 잘 실행되는지 확인한다.</p>
-<p><code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0&gt; python examples\body_interaction.py</code></p>
-<p>처음에 실행화면이 뜨는 시간이 오래걸리지만 이후에는 실행창이 빨리 나왔다.</p>
-<p><img src="../../images/gif1.gif" class="img-fluid"></p></li>
-</ol>
-<section id="reference" class="level3">
-<h3 class="anchored" data-anchor-id="reference">Reference</h3>
-<ul>
-<li><a href="https://seunghyun-lee.tistory.com/2">MuJoCo 설치 (윈도우 10 version)</a></li>
-</ul>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

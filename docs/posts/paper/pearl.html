@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-10-31">
-<meta name="description" content="sds">
+<meta name="description" content="Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables">
 
-<title>Jung Yeon - 📃 test</title>
+<title>Jung Yeon - 📃PEARL</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">JungYeon Lee</a>
+    <a class="nav-link" href="../../about.html">About</a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
@@ -100,22 +99,31 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">📃 test</h1>
+<h1 class="title">📃PEARL</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">daily</div>
+    <div class="quarto-category">meta rl</div>
     <div class="quarto-category">paper</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    sds
+    Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables
   </div>
 </div>
 
@@ -123,12 +131,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 31, 2022</p>
-    </div>
-  </div>
     
   </div>
   
@@ -139,8 +141,15 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>빠르게 논문의 abstract, 그림, key idea를 살펴보는 Speed Abstracting Series</p>
 </blockquote>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>Deep reinforcement learning algorithms require large amounts of experience to learn an individual task. While in principle meta-reinforcement learning (meta-RL) algorithms enable agents to learn new skills from small amounts of experience, several major challenges preclude their practicality. Current methods rely heavily on on-policy experience, limiting their sample efficiency. The also lack mechanisms to reason about task uncertainty when adapting to new tasks, limiting their effectiveness in sparse reward problems. In this paper, we address these challenges by developing an offpolicy meta-RL algorithm that disentangles task inference and control. In our approach, we perform online probabilistic filtering of latent task variables to infer how to solve a new task from small amounts of experience. This probabilistic interpretation enables posterior sampling for structured and efficient exploration. We demonstrate how to integrate these task variables with off-policy RL algorithms to achieve both metatraining and adaptation efficiency. Our method outperforms prior algorithms in sample efficiency by 20-100X as well as in asymptotic performance on several meta-RL benchmarks.</p>
+</section>
+<section id="section" class="level1">
+<h1></h1>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
