@@ -6,7 +6,7 @@ description: 리눅스에서 GPU 상태를 확인하는 여러가지 방법을 �
 categories: [linux, gpu, code]
 ---
 
-1. nvidia-smi
+### 1. nvidia-smi
 
 ```
 watch -d -n 0.5 nvidia-smi
@@ -16,7 +16,7 @@ watch -d -n 0.5 nvidia-smi
 - `-n` : 주기적으로 실행할 시간 간격
 
 
-2. gpustat
+### 2. gpustat
 
 ```
 sudo apt install gpustat
@@ -37,7 +37,7 @@ options
 ```
 
 
-3. gpumonitor
+### 3. gpumonitor
 
 - Github [mountassir/gmonitor](https://github.com/mountassir/gmonitor#building-from-source)에서 설치방법 확인
 
@@ -64,7 +64,7 @@ gmonitor -d 0 -g 0123
 gmonitor -d 0 -r 3
 ```
 
-4. glance
+### 4. glance
 
 - 설치 `sudo apt-get install -y python-pip; sudo pip install glances[gpu]`
 

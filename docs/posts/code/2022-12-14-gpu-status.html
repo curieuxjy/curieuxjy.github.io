@@ -100,10 +100,19 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#nvidia-smi" id="toc-nvidia-smi" class="nav-link active" data-scroll-target="#nvidia-smi">1. nvidia-smi</a></li>
+  <li><a href="#gpustat" id="toc-gpustat" class="nav-link" data-scroll-target="#gpustat">2. gpustat</a></li>
+  <li><a href="#gpumonitor" id="toc-gpumonitor" class="nav-link" data-scroll-target="#gpumonitor">3. gpumonitor</a></li>
+  <li><a href="#glance" id="toc-glance" class="nav-link" data-scroll-target="#glance">4. glance</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -137,18 +146,17 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<ol type="1">
-<li>nvidia-smi</li>
-</ol>
+<section id="nvidia-smi" class="level3">
+<h3 class="anchored" data-anchor-id="nvidia-smi">1. nvidia-smi</h3>
 <pre><code>watch -d -n 0.5 nvidia-smi</code></pre>
 <ul>
 <li><code>watch</code> : 명령어를 주기적으로 실행</li>
 <li><code>-d</code> : 차이를 보여줌</li>
 <li><code>-n</code> : 주기적으로 실행할 시간 간격</li>
 </ul>
-<ol start="2" type="1">
-<li>gpustat</li>
-</ol>
+</section>
+<section id="gpustat" class="level3">
+<h3 class="anchored" data-anchor-id="gpustat">2. gpustat</h3>
 <pre><code>sudo apt install gpustat
 gpustat -i</code></pre>
 <p>options</p>
@@ -160,9 +168,9 @@ gpustat -i</code></pre>
 -P, --show-power : Display GPU power usage and/or limit (draw or draw,limit)
 -i, --interval : Run in watch mode (equivalent to watch gpustat) if given. Denotes interval between updates.
 --json : JSON Output (Experimental, #10)</code></pre>
-<ol start="3" type="1">
-<li>gpumonitor</li>
-</ol>
+</section>
+<section id="gpumonitor" class="level3">
+<h3 class="anchored" data-anchor-id="gpumonitor">3. gpumonitor</h3>
 <ul>
 <li>Github <a href="https://github.com/mountassir/gmonitor#building-from-source">mountassir/gmonitor</a>에서 설치방법 확인</li>
 </ul>
@@ -183,15 +191,16 @@ gmonitor -d 0 -g 0123
 
 \# Monitor both current and previous states for all GPUs, refresh every 3 seconds.
 gmonitor -d 0 -r 3</code></pre>
-<ol start="4" type="1">
-<li>glance</li>
-</ol>
+</section>
+<section id="glance" class="level3">
+<h3 class="anchored" data-anchor-id="glance">4. glance</h3>
 <ul>
 <li><p>설치 <code>sudo apt-get install -y python-pip; sudo pip install glances[gpu]</code></p></li>
 <li><p>실행 <code>sudo glances</code></p></li>
 </ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
