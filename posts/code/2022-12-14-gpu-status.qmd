@@ -1,0 +1,71 @@
+---
+title: "👩‍💻Linux GPU 상태 확인하기"
+toc: true
+date: "2022-12-14"
+description: 리눅스에서 GPU 상태를 확인하는 여러가지 방법을 알아봅니다.
+categories: [linux, gpu, code]
+---
+
+1. nvidia-smi
+
+```
+watch -d -n 0.5 nvidia-smi
+```
+- `watch` : 명령어를 주기적으로 실행
+- `-d` : 차이를 보여줌
+- `-n` : 주기적으로 실행할 시간 간격
+
+
+2. gpustat
+
+```
+sudo apt install gpustat
+gpustat -i
+```
+
+options
+
+```
+--color : Force colored output (even when stdout is not a tty)
+--no-color : Suppress colored output
+-u, --show-user : Display username of the process owner
+-c, --show-cmd : Display the process name
+-p, --show-pid : Display PID of the process
+-P, --show-power : Display GPU power usage and/or limit (draw or draw,limit)
+-i, --interval : Run in watch mode (equivalent to watch gpustat) if given. Denotes interval between updates.
+--json : JSON Output (Experimental, #10)
+```
+
+
+3. gpumonitor
+
+- Github [mountassir/gmonitor](https://github.com/mountassir/gmonitor#building-from-source)에서 설치방법 확인
+
+```
+$ cd gmonitor
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ sudo make install
+```
+
+```
+\# use default
+gmonitor
+
+\# Monitor the most recent state only
+gmonitor -d 1
+
+\# Monitor current and history states for 4 GPUs.
+gmonitor -d 0 -g 0123
+
+\# Monitor both current and previous states for all GPUs, refresh every 3 seconds.
+gmonitor -d 0 -r 3
+```
+
+4. glance
+
+- 설치 `sudo apt-get install -y python-pip; sudo pip install glances[gpu]`
+
+- 실행 `sudo glances`

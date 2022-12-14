@@ -6,89 +6,351 @@ categories: [autoregressive, generative, paper]
 toc: true
 ---
 
-![](https://i.imgur.com/s1pIkp9.jpg)
+![Imgur](https://i.imgur.com/s1pIkp9.jpg)
 
 이번 포스팅은 Google DeepMind에서 발표한 WaveNet이라는 논문에 대해 리뷰를 하려고 합니다. WaveNet은 Autoregressive한 Generative model로써 [Google의 스피커 서비스에 사용되었다](https://towardsdatascience.com/wavenet-google-assistants-voice-synthesizer-a168e9af13b1)고 많이 알려진 모델입니다. 
 
-> 리뷰에 앞서서 가장 도움을 많이 받고 아래 포스팅의 상당한 이미지들이 김정희 님의 [[논문리뷰]WaveNet](https://joungheekim.github.io/2020/09/17/paper-review/) 포스팅에서 가져온 것임을 밝히며 감사의 말씀을 전해드리고 싶습니다.
+> 리뷰에 앞서서 가장 도움을 많이 받고 아래 포스팅의 상당한 이미지들이 김정희 님의 [[논문리뷰]WaveNet](https://joungheekim.github.io/2020/09/17/paper-review/) 포스팅에서 가져온 것임을 밝히며 감사의 말씀을 전해드리고 싶습니다. 각 이미지의 출처는 윗첨자로 Reference numbering을 표시하였습니다.
 
 # Background
+
+<img src="https://i.imgur.com/spzO8yA.gif" />
+
+<div style="text-align:center">
+  Raw waveform of the audio<sup>2</sup>
+</div>
+
+<p>
+
+</p>
 
 WaveNet은 음성 생성 모델로 본격적으로 모델에 대해 알아보기 전에 `소리`라는 것이 어떻게 `신호`가 되는가를 살펴볼 필요가 있습니다. 소리는 공기 입자들의 떨림이며 종파의 파형을 가지고 있습니다. 이러한 `소리`라는 현상을 파동으로 표현해보자면, 아래의 그림과 같이 공기 입자들이 많이 밀집되어 있는 부분을 파동의 진폭을 크게, 상대적으로 입자들의 수가 적은 곳은 진폭을 작게하여 표현할 수 있습니다. 
 
 ![](https://ds055uzetaobb.cloudfront.net/uploads/BA0A3V9ODx-p4g2-1.gif)
 
+<div style="text-align:center">
+  Sound waveform<sup>3</sup>
+</div>
+
+<p>
+
+</p>
+
 이렇게 파동 모형으로 나타내어진 소리는 **Continutous(연속적인)** 신호 입니다. 이러한 신호를 컴퓨터에서 처리하기 위해서는 컴퓨터가 이해할 수 있도록 **Discrete(불연속적인)** 값으로 나타낼 수 있어야 하며 `Continuous한 신호 → Discrete한 신호`로 바꾸는 과정을 **Sampling**이라고 합니다. 여기서 끝이 아닌 컴퓨터는 무한한 (이진화된)정수 표현을 가질 수 있는것이 아니고 더 효율적으로 신호를 처리하기 위해 **Quantization(양자화)**과정을 거치게 됩니다. 이는 샘플링되어 이산화 되어 있는 신호 값을 Section을 나누어 일정 구간 내에 있는 값들은 하나의 양자화된 값으로 매칭하는 과정입니다. 이렇게 이진수로 정수화된 소리는 아래의 오른쪽 그림에서와 같이 시간축(x)에 따라 빨간 점으로 나타내어지는 신호로 변환되게 됩니다. 이러한 신호처리 과정을 **Pulse-Code Modulation(PCM)**이라고 합니다.
 
-![](https://i.imgur.com/M4E6qo6.jpg)
+![Imgur](https://i.imgur.com/oOWn7U7.png)
 
-보통 소리의 신호처리는 16-bit의 정수표현(-255 ~ 256)으로 나타내지만 WaveNet에서는 Nonlinearity를 증가시키고 더 효율적이었던 **8-bit** 정수 표현 디지털 신호를 사용했습니다. 이때 사용한 방법은 `µ-law Companding Transformation(μ-law algorithm)`으로 사람이 소리를 인식하는 방법을 모방한 방식을 사용했습니다. 사람은 작은 소리의 변화에는 민감하지만 큰 소리의 변화에는 둔감하므로 [μ-law algorithm](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)에서도 작은 소리의 구간(아래 그래프에서 중앙 부분)은 세밀하게 나누고 큰 소리 구간(아래 그래프에서 좌우 끝 부분)은 기울기를 완만하게 하여 비교적 듬성하게 나누었습니다. WaveNet에서 16-bit가 아닌 8-bit를 사용한 이유는 아래 그림의 오른쪽에서 WaveNet의 전체 흐름에서 볼 때 양자화된 각 구간의 softmax로 해당 값의 확률을 구하게 되는데, 16-bit라면 softmax layer에서 총 65,536(= $-2^{15}$ ~ $2^{15}-1$ )개의 확률을 구해야 하므로 계산이 매우 많이 필요하기 때문입니다. 반면 8-bit는 $-2^{7}$ ~ $2^{7}-1$, 즉 256개의 확률만 구하면 되므로 계산이 훨씬 적게 필요합니다.
+<div style="text-align:center">
+  PCM<sup>6, 8</sup>
+</div>
 
-![](https://i.imgur.com/QkCyAUV.jpg)
+<p>
+
+</p>
+
+보통 소리의 신호처리는 16-bit의 정수표현(-255 ~ 256)으로 나타내지만 WaveNet에서는 Nonlinearity를 증가시키고 더 효율적이었던 **8-bit** 정수 표현 디지털 신호를 사용했습니다. 이때 사용한 방법은 `µ-law Companding Transformation(μ-law algorithm)`으로 사람이 소리를 인식하는 방법을 모방한 방식을 사용했습니다. 사람은 작은 소리의 변화에는 민감하지만 큰 소리의 변화에는 둔감하므로 [μ-law algorithm](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)에서도 작은 소리의 구간(아래 그래프에서 중앙 부분)은 세밀하게 나누고 큰 소리 구간(아래 그래프에서 좌우 끝 부분)은 기울기를 완만하게 하여 비교적 듬성하게 나누었습니다. 
+
+![Imgur](https://i.imgur.com/ZI5lIyp.png)
+
+<div style="text-align:center">
+  μ-law algorithm<sup>9</sup>
+</div>
+
+<p>
+
+</p>
+
+WaveNet에서 16-bit가 아닌 8-bit를 사용한 이유는 아래 그림의 오른쪽에서 WaveNet의 전체 흐름에서 볼 때 양자화된 각 구간의 softmax로 해당 값의 확률을 구하게 되는데, 16-bit라면 softmax layer에서 총 65,536(= $-2^{15}$ ~ $2^{15}-1$ )개의 확률을 구해야 하므로 계산이 매우 많이 필요하기 때문입니다.
+
+![Imgur](https://i.imgur.com/DWwuKRO.png)
+
+<div style="text-align:center">
+  WaveNet Structure<sup>6</sup>
+</div>
+
+<p>
+
+</p>
+
 
 **TTS(Text-to-Speech)란**
 
-앞서 이야기한대로 구글의 스피커 서비스에 WaveNet이 쓰인 것으로 큰 화제였는데 이는 바로 TTS 서비스에 WaveNet이 쓰인 것 이었습니다. TTS task는 특정 text가 주어지면 이를 음성 신호로 바꿔주는(음성을 생성하는) task이며 기존의 TTS 기술은 크게 2가지가 있었습니다.
+앞서 이야기한대로 구글의 스피커 서비스에 WaveNet이 쓰인 것으로 큰 화제였는데 이는 바로 TTS 서비스에 WaveNet이 쓰인 것 이었습니다. TTS task는 특정 text가 주어지면 이를 음성 신호로 바꿔주는(음성을 생성하는) task이며 Text analysis와 Speech synthesis가 같이 이루어지는 task 입니다.
 
-![](https://i.imgur.com/K9RHlez.jpg)
 
-첫번째로 `Concatenative`는 다량의 음성 데이터를 음소 단위로 쪼개어 신호를 저장한 것을 조합하여 새로운 음성을 생성하는 방식으로, 마치 퀼트로 옷감의 패턴을 만들어내듯이 음성 단위들을 이어붙이는 방식입니다. 이 방법은 실제 음성 데이터를 쪼갠 것을 사용하는 것이므로 음성 데이터 하나 하나의 퀄리티는 좋지만 단점으로는 음성을 조절할 수 있는 자유도가 떨어진다는 점과 음성 데이터가 매우 많아야 한다는 점이 있습니다.
+![Imgur](https://i.imgur.com/SJIIZSd.png)
 
-두번째로 `Parametric`은 통계적 모델을 사용하여 음성을 합성하는 방식으로 WaveNet의 부록에 자세히 설명이 되어 있듯이 Acoustic model을 만들어서 음성을 만들어 냅니다. Concatenative와 다르게 새로운 음성 데이터를 만들어낸다는 점에서 음성 신호를 조작할 수 있는 자유도가 커지고 데이터 셋이 많이 필요 없으나 음성을 생성해내는 퀄리티가 다소 떨어지는 단점이 있습니다.
+<div style="text-align:center">
+  TTS Process <sup>19</sup>
+</div>
 
+<p>
+
+</p>
+
+
+기존의 TTS 기술은 크게 2가지가 있었습니다. 첫번째로 `Concatenative`는 다량의 음성 데이터를 음소 단위로 쪼개어 신호를 저장한 것을 조합하여 새로운 음성을 생성하는 방식으로, 마치 퀼트로 옷감의 패턴을 만들어내듯이 음성 단위들을 이어붙이는 방식입니다. 이 방법은 실제 음성 데이터를 쪼갠 것을 사용하는 것이므로 음성 데이터 하나 하나의 퀄리티는 좋지만 단점으로는 음성을 조절할 수 있는 자유도가 떨어진다는 점과 음성 데이터가 매우 많아야 한다는 점이 있습니다.
+
+두번째로 `Parametric`은 통계적 모델을 사용하여 음성을 합성하는 방식으로 WaveNet의 부록에 자세히 설명이 되어 있듯이 Acoustic model을 만들어서 음성을 만들어 냅니다. Concatenative와 다르게 새로운 음성 데이터를 만들어낸다는 점에서 음성 신호를 조작할 수 있는 자유도가 커지고 데이터 셋이 많이 필요 없으나 음성을 생성해내는 퀄리티가 다소 떨어지는 단점이 있습니다. 기존의 2가지 방식과 다르게 WaveNet은 explicit한 acoustic feature를 모델링 하지 않고 바로 raw waveform을 생성하는 것이 가장 큰 차이라고 볼 수 있습니다.
+
+![Imgur](https://i.imgur.com/Kx9VZi3.png)
+
+<div style="text-align:center">
+  Concatenative and Parametric methods<sup>10</sup>
+</div>
+
+<p>
+
+</p>
+
+![Imgur](https://i.imgur.com/P54R1zi.png)
+
+<div style="text-align:center">
+  NN-based GM for TTS<sup>19</sup>
+</div>
+
+<p>
+
+</p>
+
+WaveNet을 vocoder로 이용하여 Tacotron2와 같은 텍스트에서 직접 음성 합성을 위한 신경망 아키텍처에서 쓰게 됩니다. 아래는 Tacotron2의 구조이며 오른쪽 상단에서 WaveNet MoL(mixture of logistic distributions)을 찾아볼 수 있습니다.
+
+![Imgur](https://i.imgur.com/nrRdYjy.png)
+
+<div style="text-align:center">
+  Tacotron 2 system architecture<sup>20</sup>
+</div>
+
+<p>
+
+</p>
 
 # WaveNet
 
-기존의 TTS 방식들과 다르게 접근한 WaveNet의 전체적인 구조는 아래의 그림과 같습니다.
+WaveNet의 전체적인 구조는 아래의 그림과 같이 크게 4가지 부분으로 나누어서 살펴보겠습니다.
 
-![](https://i.imgur.com/iDjHrlC.jpg)
+![Imgur](https://i.imgur.com/42guttz.png)
 
-WaveNet의 전체 구조에서 앞으로 크게 4가지 부분으로 나누어서 살펴보겠습니다.
+<div style="text-align:center">
+  WaveNet 4 Main components <sup>6</sup>
+</div>
 
-![](https://i.imgur.com/CPv1KZk.jpg)
+<p>
 
-- **Dilated Casual Convolution**
-- **Residual Connection & Gated Activation Units**
-- **Skip Connection**
-- **Conditional WaveNets**
+</p>
 
+1. **Dilated Casual Convolution**
+
+2. **Residual Connection & Gated Activation Units**
+
+3. **Skip Connection**
+
+4. **Conditional WaveNets**
+
+WaveNet 구현은 내용 이해를 우선으로 하기 위해 비교적 구현이 간단 명료하게 되어있는 Reference[17]을 참고하였습니다.([Youtube 강의](https://youtu.be/KCk1i5xRxLA)) 우선 WaveNet의 전체 코드는 다음과 같고 class 내부에 있는 다른 module class에 대한 자세한 코드는 아래 내용에서 설명과 함께 나올 예정입니다.
+
+```python
+class WaveNet(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size, stack_size, layer_size):
+        super().__init__()
+        self.stack_size = stack_size
+        self.layer_size = layer_size
+        self.kernel_size = kernel_size
+        self.casualConv1D = CasualDilatedConv1D(in_channels, in_channels, kernel_size, dilation=1)
+        self.stackResBlock = StackOfResBlocks(self.stack_size, self.layer_size, in_channels, out_channels, kernel_size)
+        self.denseLayer = DenseLayer(out_channels)
+
+
+    def calculateReceptiveField(self):
+        return np.sum([(self.kernel_size - 1) * (2 ** l) for l in range(self.layer_size)] * self.stack_size)
+
+    def calculateOutputSize(self, x):
+        return int(x.size(2)) - self.calculateReceptiveField()
+
+    def forward(self, x):
+        # x: b c t -> input data size
+        x = self.casualConv1D(x)
+        skipSize = self.calculateOutputSize(x)
+        _, skipConnections = self.stackResBlock(x, skipSize)
+        dense=self.denseLayer(skipConnections)
+        return dense
+```
+
+---
 
 ## 1. Dilated Casual Convolution
 
 먼저 `Dilated Casual Convolution`은 `µ-law Companding Transformation` 처리를 거친 음성 신호를 받아오는 첫번째 부분입니다.
 
-![](https://i.imgur.com/5ZkIjOM.jpg)
+![Imgur](https://i.imgur.com/WwYFZBr.png)
+
+<div style="text-align:center">
+  Casual Convolution <sup>2</sup>
+</div>
+
+<p>
+
+</p>
 
 우선 **Casual** 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 $t$를 기준으로 **미래 정보는 사용할 수 없고** 현재까지의(과거~현재 $t$) 정보`만` 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 `(레이어 수) + (필터의 length) -1`로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 `input`에서 5개의 음성 정보가 `output`의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.
 
-![](https://i.imgur.com/GrYzT5k.jpg)
+
+![Imgur](https://i.imgur.com/k9Nhtsz.png)
+
+<div style="text-align:center">
+  Dilated Casual Convolution <sup>2</sup>
+</div>
+
+<p>
+
+</p>
 
 그래서 제안이 된 방법이 바로 **Dilated Convolution**입니다. 이는 convolution with **holes**로 해석할 수 있는데 위의 그림에서 볼 수 있듯이 이전 레이어에서 데이터가 Dilated되어 데이터가 듬성듬성하게 모아져서 다음 레이어로 넘어가는 것을 볼 수 있습니다. 이는 skip이나 pooling과 유사해보이지만 input과 output의 차원이 유지된다는 점에서 차이가 있습니다. 이때의 RF는 각 레이어의 Dilation 값을 모두 더하고 마지막에 현재 시점의 데이터 1을 더하며 RF가 계산됩니다. WaveNet에서는 Dilation을 총 30개의 레이어에 적용했고 Dilation 값의 패턴은 input에서 부터 1, 2, ..., 512 로 2배씩 늘린 10개의 레이어를 총 3번 반복했습니다. 이때, 1 ~ 512 Dilation 값을 가진 10개 레이어의 RF는 1024로 계산됩니다. 
 
-![](https://i.imgur.com/MUqZJtY.jpg)
+![Imgur](https://i.imgur.com/K4NH1nL.gif)
+
+<div style="text-align:center">
+  Dilated Casual Convolution Process<sup>2</sup>
+</div>
+
+<p>
+
+</p>
+
+![Imgur](https://i.imgur.com/61Ph7uJ.png)
+
+<div style="text-align:center">
+  Dilated Convolution Pattern<sup>6</sup>
+</div>
+
+<p>
+
+</p>
+
+Code 구현으로 살펴보면 아래와 같이 구현할 수 있습니다. Casual 특성을 반영하기 위해 `self.ignoreOutIndex` 을 만들어서 dilation 값을 고려하여 `(kernel_size - 1) * dilation`으로 계산한 후에 잘라내주는 것을 확인할 수 있습니다.
+
+```python
+class CasualDilatedConv1D(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size, dilation, padding=1):
+        super().__init__()
+        self.conv1D = nn.Conv1d(in_channels, out_channels, kernel_size, dilation=dilation, bias=False, padding='same')
+        self.ignoreOutIndex = (kernel_size - 1) * dilation # casual
+
+    def forward(self, x):
+        return self.conv1D(x)[..., :-self.ignoreOutIndex] # casual
+```
+
 
 ## 2. Residual Connection & Gated Activation Units
 
 다음으로 Dilated Causal Convolution을 거친 후 통과하게 되는 `Residual Connection & Gated Activation Units` 부분에 대해서 살펴보겠습니다.
 
-![](https://i.imgur.com/32eLca9.jpg)
+![Imgur](https://i.imgur.com/qJqN9JK.png)
 
 WaveNet에서 사용된 **Gated Activation Units**는 [PixelCNN](https://arxiv.org/abs/1606.05328)에서 사용된 매커니즘을 차용했습니다. 아래의 그림에서 보이는 보라색 Dilated Conv가 앞에서 설명한 DCC이며 이를 거친 후 Convoltion layer와 각각 tanh, sigmoid activation을 통과하여 **Filter**, **Gate**가 됩니다. 이 2가지 경로로 계산된 값은 elementwise product를 통해 하나의 벡터로 변환됩니다. 이떄 Dilated를 통과하기 전 값을 **Residual Connection**을 통해 연결함으로써 딥러닝 모델이 레이어를 더 깊게 쌓을 수 있도록 돕고 더 빠르게 학습할 수 있도록 할 수 있었다고 합니다.
 
-![](https://i.imgur.com/TKpQQfe.jpg)
+![Imgur](https://i.imgur.com/7Q5PiqX.png)
+
+<div style="text-align:center">
+  Residual Connection & Gated Activation Units<sup>6</sup>
+</div>
+
+<p>
+
+</p>
+
 
 ## 3. Skip Connection
 
+![Imgur](https://i.imgur.com/kw4enrQ.png)
 
-![](https://i.imgur.com/rMwfb6c.jpg)
 
-**Skip Connection**은 Dilated Convolution을 통해 다양한 RF를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다.
+**Skip Connection**은 Dilated Convolution을 통해 다양한 Receptive Field를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다. 앞서 설명했던 대로 각 Residual Block의 Dilation 값이 다 다르기 때문에 각 Residual Block의 output은 **서로 다른 Receptive Field**를 가지게 됩니다.
 
-![](https://i.imgur.com/dwregcK.jpg)
+![Imgur](https://i.imgur.com/1YWCpC3.png)
+
+<div style="text-align:center">
+  Skip Connection<sup>6</sup>
+</div>
+
+<p>
+
+</p>
+
+Residual Connection과 Skip Connection을 Code로 구현하면 다음과 같습니다. 위에서 설명했던 Gated Activation Units의 tanh, sigmoid activation을 각각의 activation function을 거친후 `self.resConv1D`을 통과하는 것을 확인할 수 있습니다. 또한 Skip Connection을 구현하는 부분은 `self.skipConv1D`에서 확인할 수 있습니다. 마지막 return에서 `resOutput`, `skipOutput`으로 2개의 output이 나오는 것을 알 수 있습니다.
+
+```python
+class ResBlock(nn.Module):
+    def __init__(self, res_channels, skip_channels, kernel_size, dilation):
+        super().__init__()
+        self.casualDilatedConv1D = CasualDilatedConv1D(res_channels, res_channels, kernel_size, dilation=dilation)
+        self.resConv1D = nn.Conv1d(res_channels, res_channels, kernel_size=1)
+        self.skipConv1D = nn.Conv1d(res_channels, skip_channels, kernel_size=1)
+        self.tanh = nn.Tanh()
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, inputX, skipSize):
+        x = self.casualDilatedConv1D(inputX)
+        x1 = self.tanh(x)
+        x2 = self.sigmoid(x)
+        x = x1 * x2
+        resOutput = self.resConv1D(x)
+        resOutput = resOutput + inputX[..., -resOutput.size(2):]
+        skipOutput = self.skipConv1D(x)
+        skipOutput = skipOutput[..., -skipSize:]
+        return resOutput, skipOutput
+```
+
+위와 같은 `ResBlock`은 전체 구조에서 보시다시피 여러개가 stacked 되어 있으므로 `StackOfResBlocks` class로 구현하여 WaveNet에 넣어주게 됩니다. 
+
+```python
+class StackOfResBlocks(nn.Module):
+
+    def __init__(self, stack_size, layer_size, res_channels, skip_channels, kernel_size):
+        super().__init__()
+        buildDilationFunc = np.vectorize(self.buildDilation)
+        dilations = buildDilationFunc(stack_size, layer_size)
+        self.resBlocks = []
+        for s,dilationPerStack in enumerate(dilations):
+            for l,dilation in enumerate(dilationPerStack):
+                resBlock=ResBlock(res_channels, skip_channels, kernel_size, dilation)
+                self.add_module(f'resBlock_{s}_{l}', resBlock) # Add modules manually
+                self.resBlocks.append(resBlock)
+
+    def buildDilation(self, stack_size, layer_size):
+        # stack1=[1,2,4,8,16,...512]
+        dilationsForAllStacks = []
+        for stack in range(stack_size):
+            dilations = []
+            for layer in range(layer_size):
+                dilations.append(2 ** layer)
+            dilationsForAllStacks.append(dilations)
+        return dilationsForAllStacks
+
+    def forward(self, x, skipSize):
+        resOutput = x
+        skipOutputs = []
+        for resBlock in self.resBlocks:
+            resOutput, skipOutput = resBlock(resOutput, skipSize)
+            skipOutputs.append(skipOutput)
+        return resOutput, torch.stack(skipOutputs)
+```
 
 
 ## 4. Conditional WaveNets
-![](https://i.imgur.com/mfsI9G4.jpg)
+
+![Imgur](https://i.imgur.com/lAbHdjt.png)
+
+![Imgur](https://i.imgur.com/dqoNwPB.png)
+
+<div style="text-align:center">
+  Conditional modeling <sup>6</sup>
+</div>
+
+<p>
+
+</p>
+
 
 **Conditional Modeling**은 Autoregressive model인 WaveNet에 적용하기 쉽고 이 또한 PixelCNN에서의 아이디어와 유사합니다. Feature $h$ 벡터를 조건 부분에 추가하여 음성 데이터에 조건을 추가할 수 있습니다. 
 
@@ -98,57 +360,106 @@ $$
 
 Condition에는 크게 2가지로 **Global**과 **Local**이 있습니다. 먼저 **Global**은 Time-invariant한 조건으로 시점에 따라 변하지 않는 조건 정보를 추가하는 것을 말합니다. 예를 들어 한 발화자의 음성은 해당 음성 파일의 어떤 시점에서나 똑같은 condition이기 때문에 Global condition이라고 할 수 있습니다. 이때의 Feature vector $h$는 linear projection을 거친 후 data $x$와 더하게 됩니다.
 
+![Imgur](https://i.imgur.com/xnfhnfa.png)
+
 다음으로 Time-variant한 **Local** condition은 시점에 따라 변하는 조건 정보를 추가하는 것을 말하는데 음성 데이터보다 길이가 짧지만 순서가 있는 일정 길이의 Sequence vector라고 생각할 수 있습니다. 같은 발화자여도 어떤 단어를 말하느냐에 따라 음성학적인 특징(linguistic feature)가 다를 수 있기 떄문에 local한 조건은 한 음성 파일에 여러개가 있을 수 있습니다. 이때 Feature vector $h$는 음성 파일과 길이가 다르기 때문에 Upsampling을 거친후 1x1 convolution을 거쳐서 data $x$와 더해집니다.
 
-![](https://i.imgur.com/WrTq2a6.jpg)
+![Imgur](https://i.imgur.com/6P2OFif.png)
 
 # Experiments
 
 실험은 총 4가지 **Free-form Speech Generation, TTS, Music Audio Modelling, Speech Recognition**을 진행했지만 주된 실험은 **TTS**를 중심으로 이루어졌으며 Evaluation은 2가지로 `Paired Comparison Test`, `Mean Opinion Score`으로 진행했습니다. `Paired Comparison Test`은 피실험자에게 2개의 실험 모델로부터 생성된 음성 파일을 들려주고 둘 중 **더 자연스럽다고** 생각되는 음성 파일을 선택하게 합니다. 이때 두 개의 음성들에서 딱히 선호도가 없을 경우에는 `No preference`로 응답할 수 있습니다. `Mean Opinion Score` 실험에서는 피실험자에게 생성된 음성 1개를 들려주고 1~5점 사이의 품질 점수를 받게 됩니다. (1: Bad, 2: Poor, 3: Fair, 4: Good, 5: Excellent)
 
-![](https://i.imgur.com/9CdUv7r.jpg)
+![Imgur](https://i.imgur.com/BJDXKwa.png)
 
 TTS 실험에서 **Paired Comparison Test**를 진행하기 위해 입력 text에서 추출된 linguistic feature[L]와 음성의 특징 중 하나인 logarithmic fundamental frequency($F_o$)[F]를 local condition으로 넣어주었습니다. 이때 Receptive Field는 240 밀리세컨드였으며 비교모델로는 `concatenative 계열`의 HMM-driven unit selection과 `parametric 계열`의 LSTM-RNN-based 모델을 가지고 비교했습니다.
 
 Preference score을 비교해봤을 때, 우선 기존의 방법론이었던 LSTM와 Concat을 비교해보면(가장 왼쪽 bar graph) 영어에서는 `Concat`이 중국어에서는 `LSTM`이 더 높은 점수를 받은 것을 보아 데이터가 많은 영어에서는 Concat 방법론이 더 좋은 것을 확인할 수 있습니다. 다음으로 WaveNet의 local condition을 `L만 주었을 때`와 `L+F를 주었을 때`를 비교해보면(가운데 bar graph) local condition 조건이 많을수록, 즉 L+F를 local condition으로 주었을 때 선호도가 높음을 알 수 있었습니다. 마지막으로 비교군이었던 기존의 모델들 중 가장 선호도가 높은 모델과 WaveNet에 모든 local condition을 주었을 때를 비교해보면(가장 오른쪽 bar graph) 영어와 중국어 모두에서 WaveNet의 선호도가 높은 것을 확인할 수 있습니다.
 
-![](https://i.imgur.com/AhbWSYx.jpg)
+![Imgur](https://i.imgur.com/khalgQ7.png)
+
+<div style="text-align:center">
+  Paired Comparison Test Result and Logarithmic fundamental frequency<sup>12</sup>
+</div>
+
+<p>
+
+</p>
 
 두번째 실험인 **Mean Opinion Score**에서는 WaveNet이 4점 Good을 영어와 중국어에서 모두 넘은 것을 확인할 수 있었으며 실제 음성(ground truth)에서 8-bit 혹은 16-bit로 변환한 것과 기존 모델들(LSTM, HMM)사이의 차이를 더 줄여준 것을 확인함으로써 음성 생성 모델의 퍼포먼스가 향상된 것을 확인할 수 있습니다.
 
-![](https://i.imgur.com/a7HYmrR.jpg)
+![Imgur](https://i.imgur.com/4hjl1VL.png)
+
+<div style="text-align:center">
+  Mean Opinion Score Result 
+</div>
+
+<p>
+
+</p>
 
 # Conclusion
 
 WaveNet 논문에서는 **음성 생성을 raw data로** 바로 할 수 있었다는 것을 보여준 것에 큰 Contribution이 있습니다. 이를 위해 Dilated Causal Convolution / Skip / Residual 기법을 이용하여 **Receptive Field를 늘려서 긴 음성 파형을 학습**할 수 있도록 했습니다. 또한 음성 파형 데이터에다가 **conditioning model**을 더함으로써 더 특징적이고 자연스러운 음성을 생성 할 수 있도록 했습니다. 마지막으로 TTS를 중심으로 연구가 되긴했지만 음악과 같은 사람의 음성이 아닌 음성 데이터 생성에도 potential한 결과를 보여주어 그 **확장성이 좋다**고 할 수 있습니다.
 
-![](https://i.imgur.com/sDAeGVm.jpg)
+![Imgur](https://i.imgur.com/3H5u77X.png)
 
+# Improved Works
 
+WaveNet의 auto-regressive한 특성으로 인해 계산량이 많고 느린 생성을 보완한 [Fast Wavenet Generation Algorithm](https://arxiv.org/abs/1611.09482) 연구가 있었습니다. 네트워크의 레이어 수를 $L$이라고 했을 때 기존의 naive WaveNet이 $O(2^L)$ 복잡도가 있었지만 중복되는 convolution 연산을 caching함으로써 $O(L)$ 복잡도로 줄일 수 있었습니다.
+
+![Imgur](https://i.imgur.com/vKlD7a1.png)
+
+<div style="text-align:center">
+  Fast Wavenet <sup>21</sup>
+</div>
+
+<p>
+
+</p>
 
 ---
+
 **Reference**
-- Original paper [WaveNet: A Generative Model for Raw Audio](https://arxiv.org/abs/1609.03499)
-- Project page [https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio](https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio)
 
-[1] [https://m.blog.naver.com/sbkim24/10084099777](https://m.blog.naver.com/sbkim24/10084099777)
+[1] Original paper - [WaveNet: A Generative Model for Raw Audio](https://arxiv.org/abs/1609.03499)
 
-[2] [https://blog.naver.com/sorionclinic/221184537689](https://blog.naver.com/sorionclinic/221184537689)
+[2] Project page - [https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio](https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio)
 
-[3] [https://joungheekim.github.io/2020/09/17/paper-review/](https://joungheekim.github.io/2020/09/17/paper-review/)
+[3] [https://brilliant.org/practice/wave-anatomy-2/](https://brilliant.org/practice/wave-anatomy-2/)
 
-[4] [https://wiki.aalto.fi/pages/viewpage.action?pageId=149890776](https://wiki.aalto.fi/pages/viewpage.action?pageId=149890776)
+[4] [https://m.blog.naver.com/sbkim24/10084099777](https://m.blog.naver.com/sbkim24/10084099777)
 
-[5] [https://tech.kakaoenterprise.com/66](https://tech.kakaoenterprise.com/66)
+[5] [https://blog.naver.com/sorionclinic/221184537689](https://blog.naver.com/sorionclinic/221184537689)
 
-[6] [https://youtu.be/m2A9g6Xu91I](https://youtu.be/m2A9g6Xu91I)
+[6] [https://joungheekim.github.io/2020/09/17/paper-review/](https://joungheekim.github.io/2020/09/17/paper-review/)
 
-[7] [https://youtu.be/GyQnex_DK2k](https://youtu.be/GyQnex_DK2k)
+[7] [https://tech.kakaoenterprise.com/66](https://tech.kakaoenterprise.com/66)
 
-[8] [https://youtu.be/MNZepE1m-kI](https://youtu.be/MNZepE1m-kI)
+[8] [https://www.researchgate.net/publication/269935208_Psychophysics_of_musical_elements_in_the_discrete-time_representation_of_sound](https://www.researchgate.net/publication/269935208_Psychophysics_of_musical_elements_in_the_discrete-time_representation_of_sound)
 
-[9] [https://medium.com/@satyam.kumar.iiitv/understanding-wavenet-architecture-361cc4c2d623](https://medium.com/@satyam.kumar.iiitv/understanding-wavenet-architecture-361cc4c2d623)
+[9] [https://en.wikipedia.org/wiki/%CE%9C-law_algorithm](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)
 
-[10] [https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio](https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio)
+[10] [https://youtu.be/m2A9g6Xu91I](https://youtu.be/m2A9g6Xu91I)
 
-[11] [https://towardsdatascience.com/wavenet-google-assistants-voice-synthesizer-a168e9af13b1](https://towardsdatascience.com/wavenet-google-assistants-voice-synthesizer-a168e9af13b1)
+[11] [https://youtu.be/GyQnex_DK2k](https://youtu.be/GyQnex_DK2k)
+
+[12] [https://wiki.aalto.fi/pages/viewpage.action?pageId=149890776](https://wiki.aalto.fi/pages/viewpage.action?pageId=149890776)
+
+[13] [https://youtu.be/MNZepE1m-kI](https://youtu.be/MNZepE1m-kI)
+
+[14] [https://medium.com/@satyam.kumar.iiitv/understanding-wavenet-architecture-361cc4c2d623](https://medium.com/@satyam.kumar.iiitv/understanding-wavenet-architecture-361cc4c2d623)
+
+[15] [https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio](https://www.deepmind.com/blog/wavenet-a-generative-model-for-raw-audio)
+
+[16] [https://towardsdatascience.com/wavenet-google-assistants-voice-synthesizer-a168e9af13b1](https://towardsdatascience.com/wavenet-google-assistants-voice-synthesizer-a168e9af13b1)
+
+[17] [https://github.com/antecessor/Wavenet](https://github.com/antecessor/Wavenet)
+
+[18] [https://youtu.be/nsrSrYtKkT8](https://youtu.be/nsrSrYtKkT8)
+
+[19] [https://research.google/pubs/pub45882/](https://research.google/pubs/pub45882/)
+
+[20] [https://arxiv.org/abs/1712.05884](https://arxiv.org/abs/1712.05884)
+
+[21] [https://arxiv.org/abs/1611.09482](https://arxiv.org/abs/1611.09482)
