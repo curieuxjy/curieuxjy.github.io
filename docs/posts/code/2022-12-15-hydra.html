@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-12-14">
-<meta name="description" content="리눅스에서 GPU 상태를 확인하는 여러가지 방법을 알아봅니다.">
+<meta name="dcterms.date" content="2022-12-15">
+<meta name="description" content="여러 실험 파라미터들을 관리해주는 Hydra">
 
-<title>Jung Yeon - 👩‍💻Linux GPU 상태 확인하기</title>
+<title>Jung Yeon - 👩‍💻Hydra로 실험관리 하기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,11 +104,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#nvidia-smi" id="toc-nvidia-smi" class="nav-link active" data-scroll-target="#nvidia-smi">1. nvidia-smi</a></li>
-  <li><a href="#gpustat" id="toc-gpustat" class="nav-link" data-scroll-target="#gpustat">2. gpustat</a></li>
-  <li><a href="#gpumonitor" id="toc-gpumonitor" class="nav-link" data-scroll-target="#gpumonitor">3. gpumonitor</a></li>
-  <li><a href="#glance" id="toc-glance" class="nav-link" data-scroll-target="#glance">4. glance</a></li>
-  <li><a href="#jupyter-lab에서-gpu-상태-확인하기" id="toc-jupyter-lab에서-gpu-상태-확인하기" class="nav-link" data-scroll-target="#jupyter-lab에서-gpu-상태-확인하기">[+] Jupyter Lab에서 GPU 상태 확인하기</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a>
+  <ul class="collapse">
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -117,17 +116,16 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">👩‍💻Linux GPU 상태 확인하기</h1>
+<h1 class="title">👩‍💻Hydra로 실험관리 하기</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">linux</div>
-    <div class="quarto-category">gpu</div>
+    <div class="quarto-category">hydra</div>
     <div class="quarto-category">code</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    리눅스에서 GPU 상태를 확인하는 여러가지 방법을 알아봅니다.
+    여러 실험 파라미터들을 관리해주는 Hydra
   </div>
 </div>
 
@@ -138,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 14, 2022</p>
+      <p class="date">December 15, 2022</p>
     </div>
   </div>
     
@@ -147,71 +145,21 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="nvidia-smi" class="level3">
-<h3 class="anchored" data-anchor-id="nvidia-smi">1. nvidia-smi</h3>
-<pre><code>watch -d -n 0.5 nvidia-smi</code></pre>
+<p>ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 한다. 이를 위해 여러가지 방법이 있지만, 이번 포스팅에서는 FacebookResearch에서 만든 <a href="https://hydra.cc/">Hydra</a>를 사용해보자 합니다.</p>
+<p><img src="https://hydra.cc/img/logo.svg" class="img-fluid"></p>
+<section id="section" class="level1">
+<h1></h1>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
 <ul>
-<li><code>watch</code> : 명령어를 주기적으로 실행</li>
-<li><code>-d</code> : 차이를 보여줌</li>
-<li><code>-n</code> : 주기적으로 실행할 시간 간격</li>
+<li><p>https://lucaseo.github.io/posts/2021-11-07-hydra-for-machine-learning/</p></li>
+<li><p>https://only-wanna.tistory.com/entry/Hydra-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%A0%95%EB%A6%AC</p></li>
+<li><p>https://www.sscardapane.it/tutorials/hydra-tutorial/</p></li>
+<li><p>https://github.com/sscardapane/hydra-tutorial</p></li>
 </ul>
+
+
 </section>
-<section id="gpustat" class="level3">
-<h3 class="anchored" data-anchor-id="gpustat">2. gpustat</h3>
-<pre><code>sudo apt install gpustat
-gpustat -i</code></pre>
-<p>options</p>
-<pre><code>--color : Force colored output (even when stdout is not a tty)
---no-color : Suppress colored output
--u, --show-user : Display username of the process owner
--c, --show-cmd : Display the process name
--p, --show-pid : Display PID of the process
--P, --show-power : Display GPU power usage and/or limit (draw or draw,limit)
--i, --interval : Run in watch mode (equivalent to watch gpustat) if given. Denotes interval between updates.
---json : JSON Output (Experimental, #10)</code></pre>
-</section>
-<section id="gpumonitor" class="level3">
-<h3 class="anchored" data-anchor-id="gpumonitor">3. gpumonitor</h3>
-<ul>
-<li>Github <a href="https://github.com/mountassir/gmonitor#building-from-source">mountassir/gmonitor</a>에서 설치방법 확인</li>
-</ul>
-<pre><code>$ cd gmonitor
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-$ sudo make install</code></pre>
-<pre><code>\# use default
-gmonitor
-
-\# Monitor the most recent state only
-gmonitor -d 1
-
-\# Monitor current and history states for 4 GPUs.
-gmonitor -d 0 -g 0123
-
-\# Monitor both current and previous states for all GPUs, refresh every 3 seconds.
-gmonitor -d 0 -r 3</code></pre>
-</section>
-<section id="glance" class="level3">
-<h3 class="anchored" data-anchor-id="glance">4. glance</h3>
-<ul>
-<li><p>설치 <code>sudo apt-get install -y python-pip; sudo pip install glances[gpu]</code></p></li>
-<li><p>실행 <code>sudo glances</code></p></li>
-</ul>
-</section>
-<section id="jupyter-lab에서-gpu-상태-확인하기" class="level3">
-<h3 class="anchored" data-anchor-id="jupyter-lab에서-gpu-상태-확인하기">[+] Jupyter Lab에서 GPU 상태 확인하기</h3>
-<ul>
-<li>https://developer.nvidia.com/blog/gpu-dashboards-in-jupyter-lab/</li>
-</ul>
-<pre><code>$ pip install jupyterlab-nvdashboard
-
-# If you are using Jupyter Lab 2 you will also need to run
-$ jupyter labextension install jupyterlab-nvdashboard</code></pre>
-<p><img src="https://developer.download.nvidia.com/devblogs/GPUDashboard_Pic1.gif" class="img-fluid"></p>
-
-
 </section>
 
 </main> <!-- /main -->

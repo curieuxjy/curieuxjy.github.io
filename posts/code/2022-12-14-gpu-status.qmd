@@ -69,3 +69,18 @@ gmonitor -d 0 -r 3
 - 설치 `sudo apt-get install -y python-pip; sudo pip install glances[gpu]`
 
 - 실행 `sudo glances`
+
+
+### [+] Jupyter Lab에서 GPU 상태 확인하기
+
+- https://developer.nvidia.com/blog/gpu-dashboards-in-jupyter-lab/
+
+
+```
+$ pip install jupyterlab-nvdashboard
+
+# If you are using Jupyter Lab 2 you will also need to run
+$ jupyter labextension install jupyterlab-nvdashboard
+```
+
+![](https://developer.download.nvidia.com/devblogs/GPUDashboard_Pic1.gif)
