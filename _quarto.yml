@@ -17,10 +17,10 @@ format:
     page-layout: full
     html-math-method: katex
     theme:
-      - lux
+      - simplex
       - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes 
-# sketchy simplex standstone minty pulse
+# sketchy simplex standstone minty pulse lux
 
 execute: 
   freeze: auto
