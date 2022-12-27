@@ -200,7 +200,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="config-class" class="level1">
 <h1>Config Class</h1>
-<p>기준이 되는 부모 class AConfig - 자식 class가 같은 하위 class에 override 할 때는 이름을 바꾸지 않음 - 부모 class에 없었던 하위 class를 만들 경우 <code>자식Class의 이름(e.g. B, C)</code> 활용 - <strong>대문자</strong>는 Config 객체의 ID - <strong>소문자</strong>는 한개의 Config 클래스 객체 내에서의 하위 class 순서</p>
+<p>기준이 되는 부모 class AConfig</p>
+<ul>
+<li><p>자식 class가 같은 하위 class에 override 할 때는 이름을 바꾸지 않음</p></li>
+<li><p>부모 class에 없었던 하위 class를 만들 경우 <code>자식Class의 이름(e.g. B, C)</code> 활용</p></li>
+<li><p><strong>대문자</strong>는 Config 객체의 ID</p></li>
+<li><p><strong>소문자</strong>는 한개의 Config 클래스 객체 내에서의 하위 class 순서</p></li>
+</ul>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AConfig():</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config:</span>
@@ -210,7 +216,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        element03 <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        element04 <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>BConfig는 - AConfig의 <code>A_a_Config</code>를 override - AConfig의 <code>A_b_Config</code>를 override 하지 않음 - <code>B_a_Config</code> 추가</p>
+<p>BConfig는</p>
+<ul>
+<li><p>AConfig의 <code>A_a_Config</code>를 override</p></li>
+<li><p>AConfig의 <code>A_b_Config</code>를 override 하지 않음</p></li>
+<li><p><code>B_a_Config</code> 추가</p></li>
+</ul>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BConfig(AConfig):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config:</span>
@@ -220,7 +231,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> B_a_Config:</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        element05 <span class="op">=</span> {<span class="st">"key"</span>:<span class="st">"value"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>CConfig는 - AConfig의 <code>A_a_Config</code>를 override - AConfig의 <code>A_b_Config</code>를 pass로 override - <code>C_a_Config</code> 추가</p>
+<p>CConfig는</p>
+<ul>
+<li><p>AConfig의 <code>A_a_Config</code>를 override</p></li>
+<li><p>AConfig의 <code>A_b_Config</code>를 pass로 override</p></li>
+<li><p><code>C_a_Config</code> 추가</p></li>
+</ul>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CConfig(AConfig):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config:</span>
@@ -230,7 +246,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> C_a_Config:</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        element05 <span class="op">=</span> {<span class="st">"key"</span>:<span class="st">"value"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>DConfig는 - AConfig의 <code>A_a_Config</code>를 인자로 받아 override - AConfig의 <code>A_b_Config</code>를 인자로 받아 override</p>
+<p>DConfig는</p>
+<ul>
+<li><p>AConfig의 <code>A_a_Config</code>를 인자로 받아 override</p></li>
+<li><p>AConfig의 <code>A_b_Config</code>를 인자로 받아 override</p></li>
+</ul>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DConfig(AConfig):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config(AConfig.A_a_Config):</span>
@@ -238,7 +258,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_b_Config(AConfig.A_b_Config):</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>EConfig는 - <code>__init__(super)</code>로 <code>Aconfig</code> 상속</p>
+<p>EConfig는</p>
+<ul>
+<li><code>__init__(super)</code>로 <code>Aconfig</code> 상속</li>
+</ul>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EConfig(AConfig):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="bu">super</span>): <span class="cf">pass</span></span>
@@ -310,12 +333,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  'E_a_Config': {'element06': (1, 3, 5)}}</code></pre>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/XNws4Uo.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
-</figure>
-</div>
+<p><img src="https://i.imgur.com/XNws4Uo.png" class="img-fluid"></p>
 </section>
 <section id="dict-to-yaml" class="level1">
 <h1>Dict to Yaml</h1>
