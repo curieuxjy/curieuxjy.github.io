@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/code/2022_12_26_class_dict_yaml.html",
       "/posts/code/2022-12-21-torch-tensor-inverted.html",
       "/posts/code/2022-12-14-gpu-status.html",
       "/posts/note/2022-10-29-gueltto-the-end.html",
