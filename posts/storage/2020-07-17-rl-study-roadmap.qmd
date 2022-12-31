@@ -11,7 +11,9 @@ categories: [rl, study, storage]
 짧게 기록할 수 있는 정보들과 내 느낌들을 간략하게 적어보고자 한다.
 
 ## My RL study road map
+
 > 아래는 시간 순서대로 내가 공부했던 강의나 책, 스터디 모임
+
 1. 모두의 rl
 2. 케라스로 시작하는 rl 책 스터디
 3. 모두연 starcraft project - 논문 리딩
