@@ -2,7 +2,7 @@
 title: "📘Goodbye 2020"
 description: 조금은 늦은 2020 회고록을 2021에 적어봅니다.
 date: "2021-01-03"
-categories: [diary, note]
+categories: [diary, 2021]
 toc: true
 ---
 

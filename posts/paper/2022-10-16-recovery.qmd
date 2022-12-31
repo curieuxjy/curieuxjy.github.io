@@ -156,6 +156,7 @@ Recovery 실험은 총 2가지로 진행되었는데 첫번째는 지면에 로�
 ![](https://i.imgur.com/zuUo93r.jpg)
 
 **Review**
+
 > 아직 minor 한 주제인 Recovery task에 대해 집중적으로 잘 분석하고 성과도 확실히 보여준 논문이라고 생각합니다. Control system을 working하게 하기 위해 각 파트들을 어떻게 설계하고 학습해야할 지 많은 고민을 했다는 것을 느낄 수 있었습니다. 여전히 flat ground에서만 진행된 연구이기에 slope가 있는 환경이나 다른 object가 있는 좀 더 실제 상황과 비슷한 상황에 대한 recovery가 해결되기 위해서는 연구되어야 할 부분이 충분히 많은 것 같습니다.
 
 

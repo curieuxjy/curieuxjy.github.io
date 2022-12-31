@@ -1,26 +1,31 @@
 [
   {
+    "listing": "/note.html",
+    "items": [
+      "/posts/note/2022-10-29-gueltto-the-end.html",
+      "/posts/note/2022-10-24-daily-english-004.html",
+      "/posts/note/2022-10-17-daily-english-003.html",
+      "/posts/note/2022-10-11-daily-english-002.html",
+      "/posts/note/2022-10-03-daily-english-001.html",
+      "/posts/note/2022-09-04-retrospective.html",
+      "/posts/note/2022-05-06-geultto-7th-start.html",
+      "/posts/note/2021-01-31-ML-tu-berlin-2021.html",
+      "/posts/note/2021-01-03-Goodbye-2020.html",
+      "/posts/note/2021-01-03-Hello-2021.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/code/2022-12-26-class-dict-yaml.html",
       "/posts/code/2022-12-21-torch-tensor-inverted.html",
       "/posts/code/2022-12-14-gpu-status.html",
-      "/posts/note/2022-10-29-gueltto-the-end.html",
-      "/posts/note/2022-10-24-daily-english-004.html",
-      "/posts/note/2022-10-17-daily-english-003.html",
       "/posts/paper/2022-10-16-recovery.html",
-      "/posts/note/2022-10-11-daily-english-002.html",
-      "/posts/note/2022-10-03-daily-english-001.html",
       "/posts/paper/2022-10-02-vae.html",
       "/posts/paper/2022-09-17-wavenet.html",
-      "/posts/note/2022-09-04-retrospective.html",
       "/posts/paper/2022-08-07-gn-block.html",
       "/posts/paper/2022-06-26-keep-learning.html",
       "/posts/paper/2022-06-10-NerveNet.html",
-      "/posts/note/2022-05-06-geultto-7th-start.html",
-      "/posts/note/2021-01-31-ML-tu-berlin-2021.html",
-      "/posts/note/2021-01-03-Goodbye-2020.html",
-      "/posts/note/2021-01-03-Hello-2021.html",
       "/posts/storage/2021-01-02-GNN-intro.html",
       "/posts/code/2020-07-20-import-custom-module.html",
       "/posts/storage/2020-07-17-rl-study-roadmap.html",

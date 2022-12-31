@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2022-06-10">
 <meta name="description" content="Learning Structured Policy with Graph Neural Networks">
 
-<title>Jung Yeon - 📃NerveNet</title>
+<title>Curieux.JY - 📃NerveNet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Jung Yeon</span>
+    <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -98,7 +98,10 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html">Jung Yeon Lee</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html">✒️</a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
@@ -210,7 +213,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="graph-construction">Graph Construction</h2>
 <p>본 논문에서는 사용한 MuJoCo의 agent들은 이미 구조적으로 tree 구조를 가지고 있다. NerveNet의 핵심 아이디어인 그래프를 구성하기 위해 <code>body</code>와 <code>joint</code>, <code>root</code>라는 3가지 종류의 노드를 설정했다. <code>body</code> 노드는 로봇공학에서 말하는 link 기준의 좌표시스템을 나타내는 노드이고, <code>joint</code> 노드는 모션의 자유도(freedom of motion)을 나타내며 2개의 body 노드들을 연결해주는 노드이다.</p>
 <p>아래는 <code>Ant</code> 환경의 예시인데, 한 가지 그림에서 헷갈리지 말아야 할 점은 그림에서는 마치 <code>body</code>와 <code>root</code> 노드만 노드로 만든것 처럼 보이지만 root와 body, body와 body를 연결하는 엣지들도 실제로는 <code>joint</code> 노드들이다.(<em>we omit the joint nodes and use edges to represent the physical connections of joint nodes</em>.)<code>root</code>라는 노드는 agent의 추가적인 정보들을 담을 부분으로 사용하기 위해 추가한 노드 종류로, 예를 들어 agent가 도달해야 하는 target position에 대한 정보 등이 담겨있다.</p>
-<p><img src="https://i.imgur.com/pjCrsxt.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/pjCrsxt.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 <section id="nervenet-as-policy" class="level2">
 <h2 class="anchored" data-anchor-id="nervenet-as-policy">NerveNet as Policy</h2>
@@ -260,7 +267,11 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
   m_{(u, v)}^{t}=M_{c_{(u, v)}}\left(h_{u}^{t}\right)
   </span></p></li>
 <li><p>예를 들어 아래 그림은 <code>CentipedeEight</code> 의 모습인데, 왼쪽은 실제 agent의 모습을 나타내고 있으며 오른쪽은 agent를 그래프로 나타냈을 때의 모습이다. 여기에서 2번째 torso에서 첫번째 세번째 torso에서 보낼 때 같은 메세지 펑션 <span class="math inline">M_{1}</span> 을 사용하고, LeftHip과 RightHip으로 보내는 메세지 펑션 <span class="math inline">M_{2}</span>를 사용하게 되는 것이다.</p>
-<p><img src="https://i.imgur.com/QFOY9VH.png" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/QFOY9VH.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ul></li>
 <li>Message Aggregation
 <ul>
@@ -295,7 +306,11 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
 </span></p>
 <hr>
 <p>여기까지 NerveNet의 각 단계를 <code>Walker-Ostrich</code> 환경에서 예시로 한눈에 보기 쉽게 정리한 그림은 아래와 같다.</p>
-<p><img src="https://i.imgur.com/lnrF2Pb.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/lnrF2Pb.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 </section>
 <section id="learning-algorithm" class="level2">
@@ -376,7 +391,11 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <ol type="1">
 <li><p>centipede - 지네와 같이 생긴 agent로 torso body들이 여러개 체인처럼 연결 되어 있고 torso를 중심으로 양쪽에 다리가 1쌍으로 붙어 있다. 하나의 다리는 thigh와 shin으로 구성되어 있고 hinge actuator로 구현되어 있다. 커스텀은 다리의 갯수를 다양하게 해서 여러 커스텀 환경들을 만들었는데, 가장 짧은 agent로는 <code>CentipedeFour</code> 부터 가장 긴 agent로는 <code>CentipedeFourty</code> 로 다리가 40개까지(20쌍) 있는 환경을 만들수 있었다. disability로 일부 파트가 작동하지 않는 환경은 <code>Cp(Cripple)</code>로 따로 표기했다. 이 환경에서 y-direction으로 빨리 앞으로 가는게 목표다.</p></li>
 <li><p>snake - <code>swimmer</code> 환경을 기반으로 커스텀했으며 가장 빨리 진행방향으로 움직이는 게 목표다.</p>
-<p><img src="https://i.imgur.com/cKfht87.png" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/cKfht87.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ol></li>
 <li>NerverNet과 비교군
 <ul>
@@ -393,7 +412,11 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li>Pretraining
 <ul>
 <li><p>6-다리 모델과 4-다리 모델로 <code>NerveNet</code>, <code>MLP</code>, <code>TreeNet</code> 에서의 퍼포먼스를 비교했다. 여기서 3개의 모델은 앞서 benchmark 비교 실험에서 사용한 비교군들과 동일하다.</p>
-<p><img src="https://i.imgur.com/M64FY71.png" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/M64FY71.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>4-다리 모델에서는 NerveNet이 가장 Reward가 높고, 6-다리 모델에서는 MLP가 가장 Reward가 높음을 알 수 있다. TreeNet은 두 환경 모두에서 가장 낮다.</p></li>
 <li><p>6-다리 모델과 4-다리 모델로 pretraining을 진행한 후 transferable을 실험했다.</p></li>
 </ul></li>
@@ -401,10 +424,18 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <ul>
 <li><p>fine tuning 없이 퍼포먼스를 측정했다.</p></li>
 <li><p>퍼포먼스를 쉽게 비교할 수 있도록 <code>average reward</code>와 <code>average running-length</code>를 normalization해서 색으로 아래와 같이 표현했다.(green-good, red-bad)</p>
-<p><img src="https://i.imgur.com/qAbGhpb.png" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/qAbGhpb.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>눈으로 확실히 확인할 수 있듯이 NerveNet의 퍼포먼스가 다른 비교군에 비해 월등히 transferable함을 알 수 있었다.</p></li>
 <li><p>또한 learning curve에서 볼 수 있듯이 NerveNet+Pretrain 이 다른 Pretrain 비교군들에 비해 훨씬 높은 reward 시작점에서 시작하고 더 적은 timestep으로 solved 점수에 도달하는 것을 보아 그래프의 구조적 이점을 확실히 활용하고 있음을 알 수 있다.</p>
-<p><img src="https://i.imgur.com/yU47fAC.png?1" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/yU47fAC.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>NerveNet의 agent들은 다른 비교군 agent들에서 보이지 않는 <code>walk-cycle</code>을 가지고 있음을 확인할 수 있었는데, 이는 보행 로봇들은 걸음새에서 반복적인 움직임을 하게 되어 있기 때문에 자연스럽게 cycle을 가지게 되는 것을 agent가 학습했음을 알 수 있다. (반면 MLP는 8-다리 모델에서 모든 다리를 움직이지 않는 모습을 보이기도 했다.)</p></li>
 </ul></li>
 </ol></li>
@@ -414,10 +445,18 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li>350점 정도가 <code>snakeThree</code>에서 solved된 상태라고 볼 수 있는데 NerveNet의 시작 점수들이 대부분 300점대에서 시작한 것으로 보아 이는 상당한 zero-shot 역량이 있음을 알 수 있다.</li>
 <li>다른 비교군들은 overfitting이 심해서 Random보다 안좋은 결과를 보여주는 점도 흥미롭다.</li>
 </ul>
-<p><img src="https://i.imgur.com/QvZG8di.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/QvZG8di.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ul>
 <li><p>zero-shot 뿐만 아니라 fine tuning을 하는 learning curve에서도 NerveNet은 Pretrain의 이점을 다른 비교군들에 비해 잘 활용하고 있음을 볼 수 있었다. <code>NerveNet+Pretrain</code>의 시작 reward가 높으며, 특정 size transfer 실험에서는 scratch NerveNet이 넘지 못한 MLP 점수를 <code>NerveNet+Pretrain</code>이 따라잡았다.</p>
-<p><img src="https://i.imgur.com/NLlKmqT.png?1" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/NLlKmqT.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ul></li>
 </ol></li>
 </ul>
@@ -440,9 +479,17 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <ul>
 <li><p>multi-task learning 실험이기 때문에 한 두개 러닝 그래프만 볼 수 없고 5개의 러닝 그래프를 같이 봐야 한다.</p></li>
 <li><p>Single-task policy를 제외하고 모든 환경에서 NerveNet의 퍼포먼스가 좋음을 알 수 있다.</p>
-<p><img src="https://i.imgur.com/FpUeo5x.png" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/FpUeo5x.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>테이블에서 Ratio가 single-task policy에 비해 multi-task policy의 성능을 percentage로 나타낸 수치인데, MLP의 퍼포먼스가 single-task에서 multi-task로 넘어갔을 때 42%나 퍼포먼스가 줄어드는 것을 확인할 수 있다. (Average-58.6%) 반면에 NerveNet은 성능이 전혀 떨어지지 않는 결과를 보여주었다.</p>
-<p><img src="https://i.imgur.com/HMSZPgc.png?1" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/HMSZPgc.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ul></li>
 </ul>
 </section>
@@ -454,20 +501,36 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li>pretrained agent를 가지고 agent의 질량과 joint의 strength을 변경한 뒤 퍼포먼스 측정</li>
 <li>대부분의 환경과 variation에서 NerveNet의 robustness가 MLP보다 좋음을 알 수 있다.</li>
 </ul>
-<p><img src="https://i.imgur.com/9Rcl54E.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/9Rcl54E.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 <section id="interpreting-the-learned-representations" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-the-learned-representations">5. Interpreting the learned representations</h2>
 <p>실제 폴리시들이 어떤 representation들을 학습했는지 알아보기 위해 <code>CentipedeEight</code> 환경에서 학습된 agent의 final state vector를 가지고 2D, 1D PCA를 진행했다.</p>
 <p>각 다리쌍들(Left Hip-Right Hip)들은 agent의 전체 몸체에서 각기 다른 위치에 있음에도 불구하고 invariant representation을 배울 수 있었음을 PCA를 통해서 알 수 있었다.</p>
-<p><img src="https://i.imgur.com/osZ7M6U.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/osZ7M6U.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <p>또한 앞서 Centipede transfer learning 실험 결과에서도 잠깐 언급했던 <code>walk-cycle</code>이 주기성이 뚜렷하게 보였다.</p>
-<p><img src="https://i.imgur.com/Aw80MM1.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Aw80MM1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 <section id="comparison-of-model-variants" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-model-variants">6. Comparison of model variants</h2>
 <p>Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 <code>Swimmer</code>, <code>Reacher</code>, <code>HalfCheetah</code>에서 비교해본 결과, Value Network는 MLP로 한 <code>NerveNet-MLP</code>의 퍼포먼스가 가장 좋았고 <code>NerveNet-1</code>의 퍼포먼스가 2등으로 <code>NerveNet-MLP</code> 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight <span class="math inline">\alpha</span>를 더 sensitive하게 만들기 때문이라고 추론할 수 있다.</p>
-<p><img src="https://i.imgur.com/W79cOCW.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/W79cOCW.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 </section>
 <section id="conclusion" class="level1">

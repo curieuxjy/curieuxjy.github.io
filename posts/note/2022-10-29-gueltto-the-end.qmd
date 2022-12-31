@@ -2,13 +2,13 @@
 title: "📘Gueltto End"
 description: 글또 7기를 마무리하며
 date: "2022-10-29"
-categories: [geultto, note]
+categories: [geultto, 2022]
 toc: true
 image: ../../def.png
 ---
 
 
-이번 post는 지난 2022년 5월 15일부터 10월 16일까지 활동했던 **글**쓰는 **또**라이 7기 활동을 마치고 회고한 글입니다. 처음 시작을 [다짐](https://curieuxjy.github.io/posts/post-with-no-code/2022-05-06-geultto-7th-start.html)으로 시작하여 9월 14일에 [중간 점검글](https://curieuxjy.github.io/posts/post-with-no-code/2022-09-04-retrospective.html)도 잠깐 쓰고 이제 마지막 이글로 회고를 하면서 마무리 지어보려고 합니다.
+이번 post는 지난 2022년 5월 15일부터 10월 16일까지 활동했던 **글**쓰는 **또**라이 7기 활동을 마치고 회고한 글입니다. 처음 시작을 [다짐](https://curieuxjy.github.io/posts/note/2022-05-06-geultto-7th-start.html)으로 시작하여 9월 14일에 [중간 점검글](https://curieuxjy.github.io/posts/note/2022-09-04-retrospective.html)도 잠깐 쓰고 이제 마지막 이글로 회고를 하면서 마무리 지어보려고 합니다.
 
 # Activies in Gueltto 7th
 

@@ -1,8 +1,8 @@
 ---
-title: "🧩Casual English Phrases 003"
+title: "🌎Casual English Phrases 003"
 description: Daily English Series
 date: "2022-10-17"
-categories: [daily, english, casual, note]
+categories: [daily, english, casual, 2022]
 toc: true
 ---
 

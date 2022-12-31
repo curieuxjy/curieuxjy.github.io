@@ -1,7 +1,13 @@
 ---
 # title: "Je suis curieux de tout."
 listing:
-  contents: posts
+  contents: 
+    - "posts/code/*.qmd"
+    - "posts/code/*.ipynb"
+    - "posts/paper/*.qmd"
+    - "posts/paper/*.ipynb"
+    - "posts/storage/*.qmd"
+    - "posts/storage/*.ipynb"
   sort: "date desc"
   type: default
   table-striped: true
@@ -20,7 +26,7 @@ title-block-banner: true
 
 <p> </p>
 
-| 📃 Paper Review | 🧩 Storage | 👩‍💻 Code | 📘 Note 
+| 📃 Paper Review | 🧩 Storage | 👩‍💻 Code
 
 <p> </p>
 

@@ -2,7 +2,7 @@
 title: "📘Geultto Start"
 description: 안녕하세요 글또 7기입니다
 date: "2022-05-06"
-categories: [geultto, note]
+categories: [geultto, 2022]
 toc: true
 ---
 

@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2022-06-26">
 <meta name="description" content="Fine-Tuning Locomotion Policies in the Real World">
 
-<title>Jung Yeon - 📃Legged Robots that Keep on Learning</title>
+<title>Curieux.JY - 📃Legged Robots that Keep on Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Jung Yeon</span>
+    <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -98,7 +98,10 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html">Jung Yeon Lee</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html">✒️</a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
@@ -205,7 +208,11 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <section id="system-process" class="level2">
 <h2 class="anchored" data-anchor-id="system-process">System Process</h2>
-<p><img src="https://i.imgur.com/vJJH1oF.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/vJJH1oF.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ol type="1">
 <li>위의 사진에 보이는 공원과 같은 <code>새로운 환경</code>에서 먼저 로봇 agent가 첫번째 시도로 locomotion task를 진행한다.</li>
 <li>만약에 땅이 고르지 못해서 agent의 학습된 policy를 활용할 수 없는 상황이 되어서 넘어지게 되는 상황이 될 수 도 있다.</li>
@@ -271,7 +278,16 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <section id="a-overview" class="level2">
 <h2 class="anchored" data-anchor-id="a-overview">a) Overview</h2>
-<p><img src="https://i.imgur.com/2q4OYul.png?1" class="img-fluid"> <img src="https://i.imgur.com/kIL9RPT.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/2q4OYul.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/kIL9RPT.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ul>
 <li>위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 <strong>각각의 policy</strong>는 <strong>하나의 desired skill</strong>을 학습하게 된다. (forward, backward, reset)</li>
 <li>Agent의 policy는 <strong>시뮬레이션에서 pretrained</strong> 한다. (Algorithm2: line 2~7)
@@ -307,7 +323,7 @@ ul.task-list li input[type="checkbox"] {
 <li>너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.</li>
 </ul></li>
 </ul>
-<p>(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 <code>Algorithm 1</code>을 참고) <img src="https://i.imgur.com/sBvIszd.png?1" class="img-fluid"></p>
+<p>(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 <code>Algorithm 1</code>을 참고) <img src="https://i.imgur.com/sBvIszd.png?1" class="img-fluid" data-fig-align="default"></p>
 </section>
 </section>
 <section id="iii.-system-design" class="level1">
@@ -373,7 +389,11 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li>이렇게 계산된 <strong>linear velocity</strong>를 로봇의 position 추정값에 통합시킨다.</li>
 </ul>
-<p><img src="https://i.imgur.com/1DW4hsQ.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/1DW4hsQ.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <p>위의 그래프들에 볼 수 있듯이(아래에서 위 방향으로),</p>
 <ul>
 <li><strong>angular velocity와 orientation</strong> 센서 값들은 매우 정확했다.</li>
@@ -387,7 +407,11 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>reset policy</strong>를 시뮬레이션에서 학습하기 위해 다양한 <strong>initial states</strong>에서 시작하도록 했다.</li>
 </ul>
 <p>→ 로봇을 random한 height &amp; orientation에서 떨어뜨려서 아래 사진에서 볼 수 있듯이 다양한 <strong>initial states</strong>를 설정</p>
-<p><img src="https://i.imgur.com/2soOO1g.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/2soOO1g.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ul>
 <li><p>Motion imitation 목적함수를 수정해서 <strong>single, streamlined reset policy</strong>를 학습시켰다.</p></li>
 <li><p>Reference motion을 가지고 로봇이 정확히 어떻게 일어나야 할지를 알려주는 것이 아니라, 아래와 같은 방법으로 reset policy를 학습시켰다.</p></li>
@@ -441,7 +465,11 @@ ul.task-list li input[type="checkbox"] {
 <li><code>RMA</code>는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.</li>
 <li><code>SAC</code>에 비해서 <code>Ours</code>가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.</li>
 </ul>
-<p><img src="https://i.imgur.com/BCyV1Xk.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/BCyV1Xk.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 <section id="b.-real-world-experiments" class="level2">
 <h2 class="anchored" data-anchor-id="b.-real-world-experiments">B. Real-World Experiments</h2>
@@ -460,27 +488,48 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Pre-trained <strong>forward</strong> pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained <strong>backward</strong> pacing policy는 잘 넘어지는 경향이 있었다.</p></li>
 <li><p><strong>작동한 지 약 2시간 만에</strong>, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.</p></li>
 </ul>
-<p><img src="https://i.imgur.com/EeTTRF8.png?2" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/EeTTRF8.png?2" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>Indoor</p>
 <ul>
 <li><code>Carpeted room</code>: 높은 마찰계수를 가지는 지형으로 (카펫이 푹신하므로) 로봇의 고무로 마감되어 있는 발이 시뮬레이션에서 학습된 것과 다르게 안정적이지 않은 컨택을 하게 될 수 있다.</li>
 </ul>
-<p><img src="https://i.imgur.com/Pviw7be.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Pviw7be.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ul>
 <li><code>Doormat with crevices</code>: 매트 표면에 발이 빠질 수도 있는 환경이다.</li>
 </ul>
-<p><img src="https://i.imgur.com/865kXHv.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/865kXHv.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ul>
 <li><code>Memory foam</code>: 4cm 정도의 두께의 메모리폼으로 발이 매트리스에 빠지고 평평하고 딱딱한 바닥과 비교했을 때 이 환경에서는 gait(걸음새)가 상당히 변화가 많이 일어날 수 있다.</li>
 </ul>
-<p><img src="https://i.imgur.com/EfZvlS5.png?1" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/EfZvlS5.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <ul>
 <li><p><code>Indoors</code>에서는, pre-trained side stepping policy가 움직일 때 매우 불안정했고 motion을 끝내기 전에 넘어졌다.</p></li>
 <li><p>그러나 각 지형 셋팅에서 <strong>2.5 시간 이내로</strong> 로봇이 비틀거림 없이 skill을 수행할 수 있었다.</p></li>
 </ul></li>
 </ol>
 <hr>
-<p>실험 결과는 아래와 같았다. <img src="https://i.imgur.com/NRNMAex.png?1" class="img-fluid"></p>
+<p>실험 결과는 아래와 같았다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/NRNMAex.png?1" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </section>
 <section id="c.-semi-autonomous-training" class="level2">
 <h2 class="anchored" data-anchor-id="c.-semi-autonomous-training">C. Semi-autonomous training</h2>

@@ -8,8 +8,9 @@ toc: true
 
 ## Structure
 
-![folder_img](../../images/img4.JPG)
-![xmind_img](../../images/img5.JPG)
+![folder_img](../../images/img4.JPG){fig-align="default"}
+
+![xmind_img](../../images/img5.JPG){fig-align="default"}
 
 `gym_foo` folder에 반드시 `__init__.py`를 만들어야 한다.
 

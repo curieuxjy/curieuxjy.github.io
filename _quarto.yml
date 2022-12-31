@@ -3,11 +3,12 @@ project:
   output-dir: docs
 
 website:
-  title: "Jung Yeon"
+  title: "Curieux.JY"
   favicon: profile.png
   navbar:
     right:
       - about.qmd
+      - note.qmd
       - icon: github
         href: https://github.com/curieuxjy
 

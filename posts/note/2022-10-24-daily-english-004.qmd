@@ -1,8 +1,8 @@
 ---
-title: "🧩IT English Experssions 004"
+title: "🌎IT English Experssions 004"
 description: Daily English Series
 date: "2022-10-24"
-categories: [daily, english, it, note]
+categories: [daily, english, it, 2022]
 toc: true
 ---
 

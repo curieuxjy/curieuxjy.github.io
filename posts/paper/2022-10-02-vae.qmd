@@ -215,7 +215,7 @@ def decoder(z, dim_img, n_hidden):
 
 **(1) Encoder: Gaussian / Decoder: Bernoulli**
 
-![https://i.imgur.com/JPOVTlK.jpg](https://i.imgur.com/JPOVTlK.jpg)
+![Encoder: Gaussian / Decoder: Bernoulli](https://i.imgur.com/JPOVTlK.jpg)
 
 <div style="text-align:center">
   VAE type 1 <sup>6</sup>
@@ -261,7 +261,7 @@ def bernoulli_MLP_decoder(z, n_hidden, n_output, keep_prob, reuse=False):
 
 **(2) Encoder: Gaussian / Decoder: Gaussian**
 
-![https://i.imgur.com/fNma1fZ.jpg](https://i.imgur.com/fNma1fZ.jpg)
+![Encoder: Gaussian / Decoder: Gaussian](https://i.imgur.com/fNma1fZ.jpg)
 
 <div style="text-align:center">
   VAE type 2 <sup>6</sup>
@@ -313,7 +313,7 @@ def gaussian_MLP_encoder(x, n_hidden, n_output, keep_prob):
 
 **(3) Encoder: Gaussian / Decoder: Gaussian w/ Identity Covariance**
 
-![https://i.imgur.com/Si4xjNg.jpg](https://i.imgur.com/Si4xjNg.jpg)
+![Encoder: Gaussian / Decoder: Gaussian w/ Identity Covariance](https://i.imgur.com/Si4xjNg.jpg)
 
 <div style="text-align:center">
   VAE type 3 <sup>6</sup>
@@ -325,7 +325,7 @@ def gaussian_MLP_encoder(x, n_hidden, n_output, keep_prob):
 
 MNIST data을 예시로 들어서 VAE 구조를 나타내보면 다음과 같습니다.
 
-![https://i.imgur.com/FqjKwdF.jpg](https://i.imgur.com/FqjKwdF.jpg)
+![MNIST VAE](https://i.imgur.com/FqjKwdF.jpg)
 
 <div style="text-align:center">
   VAE with MNIST <sup>6</sup>

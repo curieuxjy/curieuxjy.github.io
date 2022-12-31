@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2020-07-13">
 <meta name="description" content="RL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기">
 
-<title>Jung Yeon - 👩‍💻Install Mujoco in Windows10</title>
+<title>Curieux.JY - 👩‍💻Install Mujoco in Windows10</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Jung Yeon</span>
+    <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -82,7 +82,10 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html">Jung Yeon Lee</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html">✒️</a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
@@ -152,15 +155,27 @@ ul.task-list li input[type="checkbox"] {
 <li><p><a href="http://www.mujoco.org/index.html">Mujoco</a>에서 <a href="https://www.roboti.us/license.html">License</a> tab으로 들어가서 Personal Student Software License를 받는다.</p></li>
 <li><p>이메일로 Account number를 받는다.(spam도 확인하자)</p></li>
 <li><p>다시 <a href="https://www.roboti.us/license.html">License</a>로 가서 Account number와 Computer Id를 입력한다.</p>
-<p><img src="../../images/img2.JPG" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/img2.JPG" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.</p></li>
 <li><p><code>.mujoco</code>라는 파일을 <code>C:\Users\사용자명\</code>에 만든다.</p></li>
 <li><p><a href="https://www.roboti.us/index.html">Products</a>에서 <code>mjpro150 win64</code>을 다운받아 <code>.mujoco</code>에 압축을 풀어준다.(<code>C:\Users\사용자명\.mujoco\mjpro150</code>)</p>
-<p><img src="../../images/img3.JPG" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/img3.JPG" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 <li><p>다운받은 mjkey.txt 파일을 <code>C:\Users\사용자명\.mujoco</code>와 <code>C:\Users\사용자명\.mujoco\mjpro150\bin</code> 에 옮긴다.</p></li>
 <li><p>cmd창을 열어서 cd 명령어로 <code>C:\Users\사용자명\.mujoco\mjpro150\bin</code> 경로로 이동한 다음 <code>simulate ../model/humanoid.xml</code>명령어를 입력한다.</p></li>
 <li><p>Humanoid Simulation 창이 나오면 성공이다.</p>
-<p><img src="../../images/gif2.gif" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/gif2.gif" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ol>
 </section>
 <section id="mujoco-py" class="level1">
@@ -174,7 +189,11 @@ ul.task-list li input[type="checkbox"] {
 <li><p>cmd 창에서 <code>python examples\body_interaction.py</code>를 입력하여 잘 실행되는지 확인한다.</p>
 <p><code>C:\Users\사용자명\.mujoco\mujoco-py-1.50.1.0&gt; python examples\body_interaction.py</code></p>
 <p>처음에 실행화면이 뜨는 시간이 오래걸리지만 이후에는 실행창이 빨리 나왔다.</p>
-<p><img src="../../images/gif1.gif" class="img-fluid"></p></li>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/gif1.gif" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ol>
 <section id="reference" class="level3">
 <h3 class="anchored" data-anchor-id="reference">Reference</h3>

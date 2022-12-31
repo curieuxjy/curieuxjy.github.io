@@ -83,4 +83,4 @@ $ pip install jupyterlab-nvdashboard
 $ jupyter labextension install jupyterlab-nvdashboard
 ```
 
-![](https://developer.download.nvidia.com/devblogs/GPUDashboard_Pic1.gif)
+![](https://developer.download.nvidia.com/devblogs/GPUDashboard_Pic1.gif){fig-align="default"}
