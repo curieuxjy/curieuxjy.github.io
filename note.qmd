@@ -1,5 +1,5 @@
 ---
-title: "✒️"
+title: "✒️Note"
 listing:
   contents: 
     - "posts/note/*.qmd"
@@ -17,11 +17,5 @@ listing:
 page-layout: full
 # title-block-banner: true
 ---
-```
-나는 조금만 더 올라가면 보일걸 그 말을 굳게 믿은 채 다시 살아간다
-나는 조그맣게 꿈 꿔온 세상에다 내 작은 발을 내딛고 다시 살아간다
-쉽게 오지 않을 날에 잔뜩 기대를 걸어두고          
-- 살아간다, 최유리 -
-```
-<img src="images/note.png" style="width:100%">
+<img src="note.png" style="width:100%">
 
