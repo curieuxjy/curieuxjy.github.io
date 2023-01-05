@@ -26,19 +26,22 @@ categories: [rl, study, storage]
 10. BNM2h 스터디
 11. RL 논문 스터디 3기
 12. Unity Ml agent 스터디
+13. Hugging face 강화학습 강의
 
 ## Materials
+
 1. 무료강의
-- [모두의 RL](https://www.youtube.com/playlist?list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG)
+- [Huggiing Face - DRL course](https://huggingface.co/deep-rl-course/unit0/introduction): 허깅페이스에서 제공하는 강화학습 강의. 역시 허깅 페이스. 개인적으로 Udacity보다 더 좋은 것 같다.
+- [모두의 RL](https://www.youtube.com/playlist?list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG): 강화학습 입문용 강의. 가볍게 듣고 시작하는 것을 추천.
 - [팡요랩](https://youtu.be/wYgyiCEkwC8) : 강화학습 강의로 유명한 데이비드 실버 교수님 강의 한글 버전
-- [혁펜하임](https://youtu.be/cvctS4xWSaU) 
-- [CS285](https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc) : 입문이라기에 조금 어려울 수는 있으나 만약 로봇틱스쪽을 생각하고 있다면 꼭 들어야하는 강의
+- [혁펜하임](https://youtu.be/cvctS4xWSaU) : 수식적으로 파고 들어가고 싶다면 추천.
+- [CS285](https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc) : 입문이라기에 조금 어려울 수는 있으나 만약 로봇틱스쪽을 생각하고 있다면 꼭 들어야하는 강의.
 - [DeepMind - Reinforcement Learning Lecture Series 2021](https://www.deepmind.com/learning-resources/reinforcement-learning-lecture-series-2021) (2022.05.06 updated)
 
 2. 유료강의
-- Udacity 엄청 비쌈, 프로그램이 좋긴한데 가성비는 아님
-- Udemy 코드 위주로 빨리 배워보고 싶을 때
-- Fast campus 박준영 강사님
+- Udacity : 엄청 비쌈, 프로그램이 좋긴한데 nano degree가 목적이 아니라면 추천하지 않음.
+- Udemy : 코드 위주로 빨리 배워보고 싶을 때. 어느정도 강화학습에 대한 기본 지식이 있을 때 듣는 것이 좋음.
+- Fast campus 박준영 강사님 : 무엇보다 한국어로 자세히 설명도 해주시고 코드도 있어서 좋음. 개인적으로 무료 강의들로 기초를 한번 다지고 난 후 이 강의를 들으면서 불명확했던 부분을 짚으면 좋은 것 같다.
 
 2. 책
 - 파이썬과 케라스로 배우는 강화학습 
@@ -47,17 +50,17 @@ categories: [rl, study, storage]
 - 단단한 강화학습 : 강화학습 대가 리처드 서튼 교수님의 바이블 원작을 번역.
 - 단단한 심층강화학습 (2022.05.06 updated)
 
-** 2022.05.06 기준 강화학습 관련된 많은 책들이 나옴
+> 2022.05.06 기준 강화학습 관련된 많은 책들이 나와서 책에 대한 추천은 최근 출간된 책들을 목차들을 보고 본인에게 필요한 부분을 공부하는 것을 추천.
 
-3. 웹사이트(입문으로는 조금 힘들 수 있으나 트렌드나 흐름 잡기에 좋음)
+3. 웹사이트(입문으로는 조금 힘들 수 있으나 어느정도 공부한 후, 트렌드나 흐름 잡기에 좋음)
 - [DeepMind blog](https://deepmind.com/blog/article/Agent57-Outperforming-the-human-Atari-benchmark)
 - [OpenAI blog](https://openai.com/blog/solving-rubiks-cube/)
 - [OpenAI Spinning up](https://spinningup.openai.com/en/latest/)
 
 4. Github
 - [RL 가계도](https://github.com/bennylp/RL-Taxonomy)
-- [Huggingface DRL](https://github.com/huggingface/deep-rl-class) (2022.05.06 updated)
+- [Huggingface DRL](https://github.com/huggingface/deep-rl-class) : 위에 무료강의 중 허깅페이스 강의에서 사용하는 코드들이 올라와 있음.
 
 5. 커뮤니티
-- RL Korea : 페이스북
-- RL.start() : 오픈 카카오톡
+- `RL Korea` : 페이스북
+- `RL.start()` : 오픈 카카오톡

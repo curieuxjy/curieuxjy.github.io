@@ -92,3 +92,5 @@ oneline control이란 로봇이 동작을 하는 동안에
     -
 
 
+**Reference**
+- https://juliazoid.com/heres-how-nasa-is-using-julia-to-better-understand-the-ocean-fd172322a918 : 나사에서 Julia를 활용한 사례
