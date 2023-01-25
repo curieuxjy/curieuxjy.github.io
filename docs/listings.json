@@ -17,6 +17,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/code/2023-01-24-insatll-orbit.html",
       "/posts/code/2022-12-26-class-dict-yaml.html",
       "/posts/code/2022-12-21-torch-tensor-inverted.html",
       "/posts/code/2022-12-14-gpu-status.html",

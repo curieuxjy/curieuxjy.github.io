@@ -28,249 +28,11 @@
     "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n     \n  \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\nOct 29, 2022\n\n\n📘Gueltto End\n\n\n\n\nOct 24, 2022\n\n\n🌎IT English Experssions 004\n\n\n\n\nOct 17, 2022\n\n\n🌎Casual English Phrases 003\n\n\n\n\nOct 11, 2022\n\n\n🌎Casual English Phrases 002\n\n\n\n\nOct 3, 2022\n\n\n🌎Casual English Phrases 001\n\n\n\n\nSep 4, 2022\n\n\n📘2022 글또 중간점검\n\n\n\n\nMay 6, 2022\n\n\n📘Geultto Start\n\n\n\n\nJan 31, 2021\n\n\n📘Machine Learning using Python-Theory and Application\n\n\n\n\nJan 3, 2021\n\n\n📘Goodbye 2020\n\n\n\n\nJan 3, 2021\n\n\n📘Hello 2021\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/storage/2021-01-02-GNN-intro.html",
-    "href": "posts/storage/2021-01-02-GNN-intro.html",
-    "title": "🧩GNN Intro",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Curieux.JY",
     "section": "",
-    "text": "GNN에 관심을 가지게 된 계기는 RoboGrammar라는 paper였다. 예전부터 하고 싶었던 Robot design 아이디어를 GNN을 가지고 실현시킨 것이 너무 신기해서 공부해보고 싶었다. 이번 포스팅에서는 GNN과 첫만남인 만큼 공부할 자료들을 정리해보려 한다."
-  },
-  {
-    "objectID": "posts/storage/2021-01-02-GNN-intro.html#materials",
-    "href": "posts/storage/2021-01-02-GNN-intro.html#materials",
-    "title": "🧩GNN Intro",
-    "section": "Materials",
-    "text": "Materials\n\nTobigs Graph Study\nCS224W: Machine Learning with Graphs / Videos\nGraph Neural Networks - Penn Engineering\nTF Graph Neural Network Samples\nGraph Neural Networks in TF2\nGraph Representation Learning(Pytorch)\nA Gentle Introduction to Graph Neural Networks (Basics, DeepWalk, and GraphSage)\nInvariant Graph Networks : invariance, equivariance, k-WL GNN 관련 주제\nEnd-to-End, Transferable Deep RL for Graph Optimization : RL + GNN\n\n\nTutorials & Workshops\n\nWWW 18 Tutorial : Representation Learning on Networks\nCIKM 19 Tutorial : Recent Developments of Deep Heterogeneous Information Network Analysis\nWSDM 19 Tutorial : Learning and Reasoning on Graph for Recommendation\nKDD 19 Tutorial : Learning From Networks\nAAAI 20 Tutorial : Graph Neural Networks: Models and Applications\nICML2020 GNN Workshop GRL+\nWWW 20 Hands on Tutorial - Videos\nGraph Neural Networks for Natural Language Processing / PPT\nTutorial on Spectral and Graph ConvNets\n\n\n\nPapers & Survey\n\nGraph Neural Networks: Taxonomy, Advances and Trends\nA Comprehensive Survey on Graph Neural Networks\nDirectional Graph Networks\nGNN KR Paper List\nGraph Meta Learning via Local Sub-graphs\n\nMeta-GNN: On Few-shot Node Classification in Graph Meta-learning\nFew-shot Learning with Graph Neural Networks\nLearning to Propagate for Graph Meta-Learning\n\nSelf-supervised Training of Graph Convolutional Networks\nXGNN: Towards Model-Level Explanations of Graph Neural Networks\nL2-GCN: Layer-Wise and Learned Efficient Training of Graph Convolutional Networks, 2020 CVPR\n\n\n\nVideos\n\nAn Introduction to Graph Neural Networks: Models and Applications\n{% include youtube.html content=‘https://www.youtube.com/embed/zCEYiCxrL_0’ %}\n\n\nGraph Convolutional Networks using only NumPy\n{% include youtube.html content=‘https://www.youtube.com/embed/8qTnNXdkF1Q’ %}\n\n\nGeometric Deep Learning on Graphs and Manifolds\n{% include youtube.html content=‘https://www.youtube.com/embed/LvmjbXZyoP0’ %}\n\n\nGraph Nets: The Next Generation\n\nLink\n\n{% include youtube.html content=‘https://www.youtube.com/embed/Wx8J-Kw3fTA’ %}\n\n\nRecent Developments of Graph Network Architectures\n\nSlide\n2019-2020에 발표된 GNN 방법론들을 정리\nGNN의 expressiveness, 그중에서도 invariance and equvariance\n\n{% include youtube.html content=‘https://www.youtube.com/embed/M60huxIvKbE’ %}\n\n\nDeep learning on graphs: successes, challenges, and next steps\n{% include youtube.html content=‘https://www.youtube.com/embed/PLGcx65MhCc’ %}\n\n\nGraph Representation Learning for Algorithmic Reasoning\n\nSlide\n\n{% include youtube.html content=‘https://www.youtube.com/embed/IPQ6CPoluok’ %}\n\n\nHow Uber uses Graph Neural Networks to recommend you food\n\nPost\n\n{% include youtube.html content=‘https://www.youtube.com/embed/9O9osybNvyY’ %}"
-  },
-  {
-    "objectID": "posts/storage/2020-07-17-rl-study-roadmap.html",
-    "href": "posts/storage/2020-07-17-rl-study-roadmap.html",
-    "title": "🧩My Reinforcement Learning Roadmap",
-    "section": "",
-    "text": "강화학습을 공부했던 roadmap을 기록하고자 글을 쓰게 되었다.\n짧게 기록할 수 있는 정보들과 내 느낌들을 간략하게 적어보고자 한다."
-  },
-  {
-    "objectID": "posts/storage/2020-07-17-rl-study-roadmap.html#my-rl-study-road-map",
-    "href": "posts/storage/2020-07-17-rl-study-roadmap.html#my-rl-study-road-map",
-    "title": "🧩My Reinforcement Learning Roadmap",
-    "section": "My RL study road map",
-    "text": "My RL study road map\n\n아래는 시간 순서대로 내가 공부했던 강의나 책, 스터디 모임\n\n\n모두의 rl\n케라스로 시작하는 rl 책 스터디\n모두연 starcraft project - 논문 리딩\nUdacity\nConnect-X\npytorch 책\n수학 강화학습 책\nOpen AI Gym\nfast campus\nBNM2h 스터디\nRL 논문 스터디 3기\nUnity Ml agent 스터디\nHugging face 강화학습 강의"
-  },
-  {
-    "objectID": "posts/storage/2020-07-17-rl-study-roadmap.html#materials",
-    "href": "posts/storage/2020-07-17-rl-study-roadmap.html#materials",
-    "title": "🧩My Reinforcement Learning Roadmap",
-    "section": "Materials",
-    "text": "Materials\n\n무료강의\n\n\nHuggiing Face - DRL course: 허깅페이스에서 제공하는 강화학습 강의. 역시 허깅 페이스. 개인적으로 Udacity보다 더 좋은 것 같다.\n모두의 RL: 강화학습 입문용 강의. 가볍게 듣고 시작하는 것을 추천.\n팡요랩 : 강화학습 강의로 유명한 데이비드 실버 교수님 강의 한글 버전\n혁펜하임 : 수식적으로 파고 들어가고 싶다면 추천.\nCS285 : 입문이라기에 조금 어려울 수는 있으나 만약 로봇틱스쪽을 생각하고 있다면 꼭 들어야하는 강의.\nDeepMind - Reinforcement Learning Lecture Series 2021 (2022.05.06 updated)\n\n\n유료강의\n\n\nUdacity : 엄청 비쌈, 프로그램이 좋긴한데 nano degree가 목적이 아니라면 추천하지 않음.\nUdemy : 코드 위주로 빨리 배워보고 싶을 때. 어느정도 강화학습에 대한 기본 지식이 있을 때 듣는 것이 좋음.\nFast campus 박준영 강사님 : 무엇보다 한국어로 자세히 설명도 해주시고 코드도 있어서 좋음. 개인적으로 무료 강의들로 기초를 한번 다지고 난 후 이 강의를 들으면서 불명확했던 부분을 짚으면 좋은 것 같다.\n\n\n책\n\n\n파이썬과 케라스로 배우는 강화학습\nPyTorch를 활용한 강화학습/심층강화학습 실전 입문\n수학으로 풀어보는 강화학습 원리와 알고리즘 : 수학적 기반 다지기. 모델 베이스드 RL 쪽으로 내용이 좋음.\n단단한 강화학습 : 강화학습 대가 리처드 서튼 교수님의 바이블 원작을 번역.\n단단한 심층강화학습 (2022.05.06 updated)\n\n\n2022.05.06 기준 강화학습 관련된 많은 책들이 나와서 책에 대한 추천은 최근 출간된 책들을 목차들을 보고 본인에게 필요한 부분을 공부하는 것을 추천.\n\n\n웹사이트(입문으로는 조금 힘들 수 있으나 어느정도 공부한 후, 트렌드나 흐름 잡기에 좋음)\n\n\nDeepMind blog\nOpenAI blog\nOpenAI Spinning up\n\n\nGithub\n\n\nRL 가계도\nHuggingface DRL : 위에 무료강의 중 허깅페이스 강의에서 사용하는 코드들이 올라와 있음.\n\n\n커뮤니티\n\n\nRL Korea : 페이스북\nRL.start() : 오픈 카카오톡"
-  },
-  {
-    "objectID": "posts/note/2021-01-31-ML-tu-berlin-2021.html",
-    "href": "posts/note/2021-01-31-ML-tu-berlin-2021.html",
-    "title": "📘Machine Learning using Python-Theory and Application",
-    "section": "",
-    "text": "사실 ML/DL 카테고리에는 공부내용만 적을려고 했으나 관련 수업을 들은 후기도 여기에 정리하면 좋을 것 같아 여기에 분류했다. 후에 수업에서 배운 내용들도 차근차근히 정리해볼 예정이다.\n\n\n학교에서 지원해주는 교환학생이라던가 해외 협업 수업은 언제나 하고 싶었지만 항상 발목을 잡은 건 영어였던 것 같다. 영어..읽고 쓰는 것도 좋아하고 듣는 것도 다 알아듣진 못해도 어느정도는 되는데 항상 ’말하기’가 문제였다. 사실 천성 내향형 인간이라 한국어로도 말은 원래 잘 못하는데 영어는 더더욱 자신이 없었다. 게다가 학교에서 지원하는 프로그램들은 내가 영어를 잘하는지 증명을 해야하는데 토플 준비만했을 뿐 정작 시험은 안봤다. 계속 다른 일에 우선순위가 밀리고 시험비도 그냥 한번 시도해보기엔 만만치 않아서가 변명이라면 변명이었다. 어쨌든 자격증이 없으니 지원자격자체가 안됬었다.\n그런데 영어 자격증이 없어도 지원할 수 있는 프로그램이 하나 생겼고 코로나로 인해 온라인이긴 했지만 지원했다. 마지막 4학년만 남았기에 이번이 마지막일 수도 있다는 생각도 있었다. 들을 수 있는 수업이 4개가 있었는데 데이터 사이언스/시각화분야 수업과 머신러닝 이론/적용분야 수업 중에 고민을 했다. 결과적으로는 머신러닝 이론/적용을 선택했다. 이유는 아래와 같았다.\n\nSyllabus에 이미 알고 있는 내용들이 좀 더 많았기에 혹시 놓치더라도 뒤쳐지지 않을 것 같았음 + 영어로 소통하는 것에 좀 더 집중할 수 있음\nFeature Engineering 부분이나 Unsupervised Learning과 같은 실제 적용은 많이 해보지 않은 부분들을 다지는 기회\nLecturer 중에 전공분야가 Reinforcement Learning이신 분이 있어서 (혹시라도 친해지면) 이것저것 물어볼 수 있지 않을까라는 생각\n\n그래서 학교에 지원을 넣고 합격이 될까 안될까 걱정반 설렘반이었는데, 담당 교수님과 편하게 카톡영상통화로 면접을 보고 난후 흔쾌히 허락해주셨다. 다행이었다. 이제 독일 학교에 지원서를 작성하는데 문제가 하나 있었다. 지원서 영어실력을 증명하라는 칸이 있었는데 위에 써놓은 것과 같이 난 자격증이 없었기에 뭘 제출하라는 말인지 이해하지 못했다. 근데 컨택해주신 교수님이 분명 영어 자격증없어도 가능하다고 하셨던 것 같은데..뭘까…고민을 하다가 학교에서 이수한 과목들 목록을 뽑았다. 그중에는 영국인 교수님이 수업하신 (물론 영어로 진행된) 영국문화 알아가기라는 교양 수업도 있었고, 필수 이수과목인 대학영어, 전공과목이지만 영어로 진행한 수업들도 있었다. 그래서 학기별 내가 들은 ’영어’와 관련된 수업 목록들을 하나하나 설명하는 보고서(?)를 작성하여 “이런 영어로 진행된 수업들을 잘 이수하였으니 난 영어로 소통가능하다”라고 어필했다. 다행히도 그 보고서로 나의 영어 실력이 증명이 되어서 간신히 수업등록을 마칠 수 있었다. 이렇게 우여곡절 끝에 수업등록을 하니 영어자격증을 빨리 따야겠다는 생각만 더 절실해졌다.😂(이제 조금 여유가 생긴 2월달에 토플 시험 볼 예정이다.)\n\n\n\n\n수업이 시작되고 역시나 걱정되는 건 영어로하는 의사소통이었다. 급하게 영어 말하기 세포를 깨우기 위해 Facebook 지인분들께 방법도 여쭤보고 혼자서 엄청 중얼중얼 거렸다. 단기간에 실력적인 향상 효과는 미미했지만 마음의 준비는 할 수 있었다. 근데 확실히 수업이 막상 시작하니 난관은 말하기보다 듣기에 있었다. 다양한 나라의 다양한 억양은 듣기 힘들다는 이야기를 듣긴 했어도 직접 체험해보니 잘 안들리는 황당함이란.. 다양한 나라의 사람들과 소통하고 싶다는 포부로 시작했던 처음 마음과 달리, 수업하는 동안은 ’잘’듣는 것만으로도 나에게 도전이었던 것 같다. 그런데 한편으로는 완벽한 영어를 구성하지 않는, 나와같이 영어가 제2외국어이신 분들과 수업을 하니 말할때는 부담없이 나도 막(?)말했던 것 같다. 어쨌든 걱정했던 ’말하기’는 생각보다 난관이 아니었고, ’듣기’가 난관이었다는 이야기다. 같이 수업을 듣는 분들은 약 20명 정도 였는데 첫시간에 자기소개할 때 들어보니 다들 박사과정이거나 직장인이었다..?!😲 학사도 졸업 못한 나랑은 너무나 대비되는 분들이라 신기하기도 하고 걱정도 됐다. (학교는 왜 이런 프로그램인지 왜 안알려줬지) 그분들의 능력은 나중에 프로젝트 발표하실 때 확연히 느낄 수 있었는데 프로젝트 완성도나 주제가 넘사벽이었다.\n수업은 대부분 강의 시청 + exercise + 질의 응답으로 이루어졌기에 내가 적극적으로 이야기하고 질문할 부분이 많진 않았다. 그리고 앞서 적었던 것처럼 수업내용이 나한테는 완전히 새로운 분야는 아니어서 그런지 그럭저럭 따라갈 수 있었다. (벌써 수업 마쳤다고 기억이 미화된건지는 모르겠지만) 그리고 모르는게 있으면 구글링으로 잘 정리해놓은 훌륭하신 한국인 분들의 포스팅, 가지고 있는 책들로 메꿔갔기에 수업을 따라가는 건 많이 어렵진 않았던 것 같다. 진짜 다른분들이 잘 정리해놓으신 포스팅에 도움을 많이 받아서 항상 드는 생각이지만 언젠가는 나도 저분들처럼 도움되는 포스팅을 하고 싶다라는 생각이 든다.\n사실 등록 전에는 몰랐던 Group Work는 수업계획서에서 처음 봤을 때 당황스러웠다. 그러나 걱정됐던 부분과 달리 팀구성도 잘됐고, 내가 주도해서 그런지 주제도 내가 원하는 걸로 진행하게되었다. 워낙 짧은 시간(3일 정도)에 완성해야하는 프로젝트였기에 마음과 달리 여러가지 기법들을 사용하기 보다는 심플하고 충실하게 ‘배운것만’ 응용해서 프로젝트를 마무리했다. 그래도 팀원분들과 영어로 의견 조율하는게 잠깐이었지만 재밌었고, 이번 경험으로 영어가 더이상 공포의 대상이 아닌 세상 다른 사람들과 ’소통’할 수 있는 도구라는 생각이 확실히 각인된 것 같다. 정말 ’언어’라는 생각을 체험해보는 기회였달까. 그렇게 더듬더듬거리는 영어지만 의견과 생각을 나누는 경험은 소중했고 마지막 프로젝트까지 잘 마칠 수 있었다. 나중에 Lecturer 분들께서 코멘트 해주실 때도 프로젝트 지적을 당했다라는 생각보다, 진정으로 우리 프로젝트를 봐주시고 인정해주신다는 생각이 들어서 감사했다. 그리고 사실은 진짜로 우리팀이 프로젝트에서 중요한 포인트를 빼먹었었는데 짚어주시는 거 보고 많이 배웠다.(한편으로는 말도 안되는 영어로 발표하는 거 들으시고도 이해하셨다는게 신기했다🤣) 아쉽게도 발표할 때가 처음이자 마지막으로 Lecturer 분들과 이야기한 순간이었다.(아 첫시간에 자기소개 빼고!) 프로젝트 깃헙은 여기에 있다.\n수업 마지막에 봤던 시험은 생각보다 어렵지 않았기에 사실 후기에 적을 내용이 별로 없다. 한국 시험에서는 선택형이어도 꼬아서 내거나 복수 정답지들을 만들어서 난이도를 높이는데, 여기 수업은 깔끔하게 중복 답안지 없다라고 말해주고 선택지들도 기본중의 기본이었다. 그나마 분별력을 가질 수 있는 부분은 프로그래밍 파트였으나 이 부분마저 코드를 외워서 치는게 아니라 오픈북이어서 그렇게 어렵진 않았던 것 같다. 게다가 시험시간은 3시간이었기에 타임 리밋도 거의 없는거나 다름없었다. 물론 시험보기 전에는 시험이 어떻게 나올지 예측할 수 없었기에 전날밤을 새워가며 공부하긴 했었다.\n\n\n\n마지막 날에 발표를 마치고 Lecturer분들의 ML/DL 트렌드에 관한 짧은 발표와 같이 수업들은 분들과 약간의 담소를 나누며 훈훈하게 수업이 끝났다. 약 3주간동안 저녁 시간에 열심히 배웠던 수업이 막을 내렸다.\n항상 가장 괴로울 때 가장 많이 배우는 것 같다. 사실 지나고 보면 그 고통이 어느정도 미화되는 것도 있고 위에 ‘어렵지 않았다.’, ’잘 마무리됐다.’라고 써놓기도 했지만, 그걸 하고 있던 순간에는 힘들었다. 아무리 알고 있던 내용이들이라도 그 내용들을 다시 다지는 것도 어렵고, 직접 코드를 써보는 것도 어렵고, 마무리 하기까지 불확실성과 두려움 때문에 괴로웠던 건 팩트다. 근데 항상 그러면서 배우는 것 같다. 그래서 이번 코스를 통해 배운 걸 정리해보자면,\n\nML은 확실히 DL보다 수학적인 이론이 어려웠음\n영어가 시험이나 부담이 아닌 ’언어’라는 것. 나를 표현할 수 있는 툴이라는 것\n전에 조금이라도 공부했던 것들이 나중에 도움이 ’크게’될 수 있다는 것\n내가 알고있는 것들을 꾸준하게 포스팅하는 습관을 길러야 하겠다는 생각\n해보지 않고 추측만으로 하는 생각들로 두려워하지 말 것\n\n수업을 마치고 certificate를 받았다. 사실 certificate에는 옵션이 있었는데, grade를 받을 것인지/pass or fail을 받을 것인지 내가 선택할 수 있었다. 등록 당시엔 근자감으로 grade를 받겠다고 했다가 수업 듣는 동안 과거의 나를 반성했다. 사실 수업하는 동안 그렇게 적극적이지도 않았고, 프로젝트 발표를 하고 지적을 받으면서 든 생각은 ‘최고 grade까지는 못받고 중간이라도 했으면..’ 했다. 그런데 생각지 못했던 최고 grade를 받을 수 있었다. 학점이 다가 아니긴 하지만 그래도 최선을 다했다는 것을 어느정도 뒷받침해줄 수 있기 때문에 뿌듯했다. 그래서 위에 배운 점들에 하나 더 추가하자면, ’최선을 다해서 어찌저찌해보면 뭐라도 한다.’라는 것. 식상한 멘트와 교훈이지만 매번 도전하면서 느끼는 바이기도 하다. 이렇게 2021년도 1월은 TU Berlin의 Machine Learning using Python: Theory and Application 코스와 함께 시간을 보냈다."
-  },
-  {
-    "objectID": "posts/note/2022-10-17-daily-english-003.html",
-    "href": "posts/note/2022-10-17-daily-english-003.html",
-    "title": "🌎Casual English Phrases 003",
-    "section": "",
-    "text": "속마음을 보여주다\nwear your heart on your sleeve\n\nIf you wear your heart on your sleeve, you openly show your feelings or emotions rather than keeping them hidden. 속마음을 보여준다는 말은, 너의 감정이나 느낌들을 숨기기보다 보여준다는 거야.\nIt takes courage to wear your heart on your sleeve, which is why few people do it. 속마음을 털어놓는다는 건 용기가 필요한 일이기 때문에 많은 사람들이 하지 못하는 일이지.\nI need someone whom I can wear my heart on my sleeve. 내 속마음을 털어놓을 사람이 필요해.\n\n\n\n기억력이 좋은\na memory like an elephant\n\nShe has a memory like an elephant. 그녀는 기억력이 굉장히 좋아\nYou can remember his name even if you don’t have a memory like an elephant. 니가 기억력이 엄청 좋지 않더라도 그의 이름은 기억할껄?\nThe menual is so simple. Don’t worrry that you don’t have a memory like an elephant. 메뉴얼이 엄청 간단해. 기억력이 좋지 않다고 걱정할 필요 없어.\n\n\n\n입장바꿔 생각해봐\nput yourself in one’s shoes\n\nPlease put yourself in his shoes before blurting it out. 그냥 말을 하기전에 그의 입장도 생각해봐\n\nblurt out : 말을 내뱉다\n\nIt’s hard to put myself in other people’s shoes from the my heart. 진심으로 다른 사람들의 입장이 되어보는 것은 어려워\n\nfrom the (bottom of one’s) heart : 진심으로\n\nWould you mind putting yourself in my shoes? 제 입장에서 한번만 생각해주실 수 있으실까요?\n\n참고 기억력 상징이 코끼리가 된 이유"
-  },
-  {
-    "objectID": "posts/note/2022-09-04-retrospective.html",
-    "href": "posts/note/2022-09-04-retrospective.html",
-    "title": "📘2022 글또 중간점검",
-    "section": "",
-    "text": "이번 post는 2022년도 상반기 회고록에 관한 내용을 담고 있습니다. 지난 8월 25일에 있었던 글또콘 후기와 글또를 처음 시작했을 때의 다짐을 기반으로 회고를 해보았습니다."
-  },
-  {
-    "objectID": "posts/note/2022-09-04-retrospective.html#section",
-    "href": "posts/note/2022-09-04-retrospective.html#section",
-    "title": "📘2022 글또 중간점검",
-    "section": "1",
-    "text": "1\n글또에서 활동하기 시작하면서 개인적으로 Github의 커밋도 되도록이면 매일하는 목표를 이루고 싶었는데 상반기에 열심히 노력했으나 벌써 몇몇 빈구석이 있습니다. 최근에 1001일 매일 커밋하신 분을 봤었는데 하반기에는 더욱 더 노력을 해보려고 합니다. 더욱더 부지런하게..!"
-  },
-  {
-    "objectID": "posts/note/2022-09-04-retrospective.html#section-1",
-    "href": "posts/note/2022-09-04-retrospective.html#section-1",
-    "title": "📘2022 글또 중간점검",
-    "section": "2",
-    "text": "2\n글의 퀄리티는 항상 신경쓰지만 쉽게 올리기 힘든 것 같습니다. 개인적으로 글의 퀄리티라는 것은 내가 타겟으로 하는 독자들의 만족감이라고 생각하는데 우선 스스로 독자가 되어 되돌아봐도 아직 모자른 내용들이기에 아직 많이 모자른 것 같습니다. 개인 기록용으로 처음에 목표를 낮게 잡긴했지만 그래도 좀 더 욕심을 내보아서 다른 누군가에게 도움이 되고 이후에는 입소문도 날 수 있는 블로그가 되기를 기대해봅니다. 또한 글의 콘텐츠는 사실 하고 싶은 것이 많지만 하반기에는 특별히 지금까지 작성해보지 않았던 코드와 함께하는 포스팅을 도전해보려고 합니다."
-  },
-  {
-    "objectID": "posts/note/2022-09-04-retrospective.html#section-2",
-    "href": "posts/note/2022-09-04-retrospective.html#section-2",
-    "title": "📘2022 글또 중간점검",
-    "section": "3",
-    "text": "3\n삶의 풍요로움과 멘탈관리를 위해 조만간 특별한 취미생활을 시작할 것 같은데 글또 커뮤니티에 용기내서 공유할 수 있었으면 좋겠습니다. 사실 지금 글을 작성하면서도 이 취미생활을 할 수 있을까 많이 고민되기 떄문에 구체적으로 적진 않고 Slack에서 인사드리겠습니다.\n\n\n\n\n\n\n이번 포스팅에서는 글의 서두에 적은 것처럼 일기처럼 2022년도의 상반기를 한가닥 묶어보았습니다. 연말에 이글을 또 다시 읽어보며 조금 더 성장해있기를 바랍니다. :)"
-  },
-  {
-    "objectID": "posts/note/2022-10-24-daily-english-004.html",
-    "href": "posts/note/2022-10-24-daily-english-004.html",
-    "title": "🌎IT English Experssions 004",
-    "section": "",
-    "text": "영어 회화 표현이나 논문에서 쓸 수 있는 유용한 표현들을 조금씩 익히기 위해 시작한 1000일 시리즈 포스트 입니다. 공부 리소스는 유튜브, 리얼클래스, PN님의 블로그, cake 어플, 책, 논문, 기사 등 다양한 출처에서 보고 기록합니다."
-  },
-  {
-    "objectID": "posts/note/2022-10-24-daily-english-004.html#git으로-세련되게-협업하는-방법",
-    "href": "posts/note/2022-10-24-daily-english-004.html#git으로-세련되게-협업하는-방법",
-    "title": "🌎IT English Experssions 004",
-    "section": "Git으로 세련되게 협업하는 방법",
-    "text": "Git으로 세련되게 협업하는 방법\n\nConventional Commits\n\n커밋 메세지는 Subject (Title), Body, Footer로 구분\n구조\n\n<type>[optional scope]:<description>\n[optional body]\n[optional footer(s)]\n\n예시(http://www.conventionalcommits.org/)\n\nfix: prevent racing of requests                           ---> Subject or Title\nIntroduce a request id and a reference to latest request. ---> Body\nReviewed-by : Z                                           ---> Footer(s)\nRefs : #123\n\n\nSubject(Title) 작성법\n커밋 메세지의 제목은 변경사항을 대표하는 텍스트이므로 대표적인 타입들이 있다.\n\nfeat: 코드에 새로운 기능(=feature) 추가\nfix: 버그 수정\nBREAKING CHANGE: 이전 버전과 호환되지 않는 변경 내역. !으로 표시할 수 있음. e.g.) feat!:\ndocs: 개발 문서 변경\nstyle: 들여쓰기, 따옴표, 세미콜론 등 코드 형식 및 스타일 변경\nci: CI/CD(continueout integration and deployment) 관련 코드 변경\nrefactor: 중복된 코드 제거, 변수명 변경, 코드 단순화 등 리팩터링\ntest: 테스트 관련 코드 변경\nbuild: 빌드 시스템 관련 코드 변경\nperf: 성능 개선 관련 코드 변경\nchore: 기타 코드 변경\n\n예시\n\nfix: remove deprecated features 수정: 권장되지 않는 기능 삭제\nfeat: add parameters to getImage 기능: getImage에 매개변수 추가\ndocs(readme): update build instructions 문서(readme): 빌드 지침 업데이트\nchore: update np dependencies to latest version 기타: npm 의존성 최신버전으로 업테이트\n\n나만의 예시 연습\n\ndocs(readme): add new papers \"THE TITLE OF PAPER\"\nfeat: add getJointPosition function\nrefactor: delete overlapped constants and variables of robot model\n\n\n\n5가지 커밋 작성법\n\n동사 원형으로 시작\n\n\n제목은 명령적 어조(Imperative Mood)의 동사원형으로 시작\nBody, Footer는 명령문이 아니어도 됨\n상황에 따라 과거형(e.g. Added) 또는 3인칭 단수 현재형(e.g. Adds)를 사용하기도 함\n커밋 메세지에 자주 등장하는 동사\n\nFix: 수정하다\nImprove: 개선하다\nHandle: 처리하다\nOptimize: 최적화하다\nUpdate: 업데이트하다\nImplement: 구현하다, 적용하다\nRefactor: 리펙터링하다\nAdd: 추가하다\nRevert: 되돌리다\nChange: 변경하다\nReplace: 대체하다\nMerge: 병합하다\nDocument: 문서를 작성하다\nBump: 버전을 올리다\nSimplify: 단순화시키다\nEnable: 가능하게 하다\nRun: 실행하다\nClean: 제거하다, 정리하다\nWrap: 감싸다, 그룹화하다\nDeploy: 배포하다\nModify: 변경하다\nRemove: 제거하다\nRename: 이름을 바꾸다\nMove: 이동하다, 이동시키다\n\n\n\n모두 소문자로 또는 첫 글자만 대문자로\n\n\nConventional Commits 형식에서는 모든 문자를 소문자로 작성. type: description에 맞추어 메세지 작성\nConventional Commits 형식을 적용하지 않는 경우, 일반적으로 앞부분만 대문자 사용하고 type 생략\n예시\n\n[1] docs: update build.md with detailed instructions\n[2] Update build.md with detailed instructions\n\n관사(a, an, the와 같은 Article) 생략\n\n\n커밋 타이틀은 최대 50글자 제한\n핵심 키워드만 활용하여 메세지를 작성하기 위해 관사 생략\n예시\n\n[X] Fix a typo in the header\n[O] Fix typo in header\n\n마침표와 같은 구두점(Punctuation Mark) 생략\n\n\n반드시 필요한 경우가 아니면 쉼표, 하이픈 등 생략\n예시\n\n[X] feat: implement google analytics.\n[O] feat: implement google analytics\n\n변경한 이유, 상세한 설명은 본문(Body)에\n\n\n코드 변경 사유와 상세 설명은 커밋 본문에 씀\n\n\n\nGit 주요 실무 영어\n\nSquash the last 3 commits: 최근 3개 커밋을 합치다\nPush commits to a repository: 리포지터리(코드 저장소)로 커밋을 전달하다\nMerge a feature branch into the base branch: 기능 브랜치를 기본 브랜치에 병합하다\nRevert a pull request: 풀 리퀘스트를 되돌리다(이전 상태로 되돌리다)\nRequest a review: 검토를 요청하다\nComment on a pull request: 풀 리퀘스트에 댓글을 남기다\nResolve a merge conflict: 병합 충돌을 해결하다\nRebase onto another branch: 다른 브랜치로 리베이스(base를 재설정하여 커밋 재적용)하다\nClone a repository: 리포지터리를 복제하다\nClose a pull request without merging it onto the branch: 풀 리퀘스트를 병합하지 않고 종료하다"
-  },
-  {
-    "objectID": "posts/note/2022-05-06-geultto-7th-start.html",
-    "href": "posts/note/2022-05-06-geultto-7th-start.html",
-    "title": "📘Geultto Start",
-    "section": "",
-    "text": "전부터 알고 있었던 글쓰는 또라이, 글또는 언젠가 꼭 들어가고 싶은 모임이었다. 내가 아는 지식에 대해 이야기 할 줄 아는 능력이 멋져보이기도 했고 무엇보다 다른 사람들에게 도움이 되기도 하겠지만 글을 쓰면서 오히려 내 머릿속에서 정리되고 나에게 가장 큰 도움이 되기 때문에(과거의 내가 미래의 나를 다시 가르쳐줄거란 생각으로) 글을 쓰고 싶었다. 글을 쓰는 걸 좋아하긴 하지만 IT, 개발관련 글을 쓰는 건 평소에 쉽게 써내려가는 감성적이고 주관적인 글쓰기와는 조금 거리가 있기 때문에 좀 망설였던 부분도 있었다. 혹시나 틀린 정보나 생각을 적으면 어떡하지 등의 걱정과 함께 계속해서 미뤄져온 글쓰기는 이제는 좀 마음의 짐을 덜고 현재에 최선을 다해서 적으면 된다라는 생각으로 시작하려고 한다.\n블로그 방황기에 대해 말하자면 그 역사가 2년 정도 되는데, 그 기간동안 Github pages, 유명한 Jekyll, Go언어 써보기 위해서 도전한 Hugo, 빠르게 포스팅할 수 있어서 잠시 돌아간 Naver blog, 코딩과는 안맞는 것 같아서 그만둔 Brunch, 영어로 포스팅하는 거 연습하기 위해서 해본 Medium, 쉽게 생각했다가 커스텀하기 더 어려워서 그만둔 Tistory, 기록용으로는 좋지만 Github과 연동이 안되어서 아쉬운 Notion까지.. 가능한 블로그 플랫폼들은 다 해봤던 것 같다. 그 중에 글또와 함께 정착할 플랫폼은 Fastai에서 만들어준 Fastpages로 결정했다. 다음은 내가 블로그 플랫폼을 결정할 때 생각했던 우선순위들인데, Fastpages가 가장 잘 만족하는 플랫폼이었다.\n\n작성하는 방법이 어렵지 않은 지\n(해외 검색까지 고려해서)Googling이 가능하도록 한 지\nGithub과 연동(기록)이 되는 지\n수식작성과 Table of Contents(TOC), 태그 설정이 가능한 지\n블로그내 포스팅 검색이 가능한 지\n광고가 붙지 않는지(컨텐츠에 집중할 수 있는 깔끔함)\n\nMarkdown과 Jupyter Notebook 형식의 작성을 모두 지원하면서 검색이나 태그 설정이 만들어져 있었고 형식이 깔끔하다. 다크 템플릿을 위해서 조금 설정을 해준 것 말고는 힘들게 셋팅하는 부분들이 없었다.\n인생은 타이밍이라는 말처럼 어떤 일을 할 때의 시기가 있다고 생각한다. 시간적인 여유를 생각했을 때는 대학생 때 작성하는 습관을 들이는 걸 연습하기에 좋다고 생각할 수 있지만, 그때의 나를 돌이켜보면 다른 사람들의 포스팅을 보면서 배우기에도 급급했던 것 같다. 지금 석사과정을 시작하면서 내가 배운 것들을 최대한 기록하고, 그 기록들을 발판삼아 더 성장하는 공학자가 되기 위한 타이밍이 지금이 아닐까 싶다. 글또를 통해 이전의 블로그 방황기와 간헐적이었던 글쓰기를 멈출 수 있기를 기대한다.\n\n\n글또 7기를 진행하면서 약 10-20여개의 글을 쓰게 되는데, 한 가지 주제에만 집중해서 쭉 포스팅하는 것이 좋겠지만 크게 제약을 두지 않고 시작하려고 한다. 한 가지 주제만 해야한다는 생각에 미루게 되는 핑계를 스스로 만들지 않고 그때 내가 배운, 내가 나누고 싶은 이야기를 적는 걸로 계획했다. 하지만 큰 글감들로는 아래와 같은 내용들을 생각하고 있다.\n\n로봇 제어(이론이나 시뮬레이션 툴 등)\n로봇 연구에서의 강화학습\nJulia 언어로 하는 Robotics\n\n\n\n\n글또 7기에서 꼭 이뤘으면 하는 목표는 다음과 같다.\n\n공식적인 포스팅 작성 횟수 다 채우기\n커피챗 참여\n\n추가적인 목표로는, 글또 7기 Slack에 많은 채널들이 있는데(#멍또, #냥또는 사랑입니다❣️) 그 중에서 #알또와 #헬또를 통해 알고리즘 실력과 운동도 챙기고 싶다.\n\n1주일에 1알고리즘 문제 풀기\n주 3일 운동하기\n\n최근에 한해의 Github commit을 3D로 만들어주는 기능을 알게 되었는데 글또와 함께한 2022 커밋은 대도시의 건물 숲처럼 더 멋지게 만들어졌으면 좋겠다.🏙"
-  },
-  {
-    "objectID": "posts/note/2022-10-11-daily-english-002.html",
-    "href": "posts/note/2022-10-11-daily-english-002.html",
-    "title": "🌎Casual English Phrases 002",
-    "section": "",
-    "text": "속마음을 보여주다\nwear your heart on your sleeve\n\nIf you wear your heart on your sleeve, you openly show your feelings or emotions rather than keeping them hidden. 속마음을 보여준다는 말은, 너의 감정이나 느낌들을 숨기기보다 보여준다는 거야.\nIt takes courage to wear your heart on your sleeve, which is why few people do it. 속마음을 털어놓는다는 건 용기가 필요한 일이기 때문에 많은 사람들이 하지 못하는 일이지.\nI need someone whom I can wear my heart on my sleeve. 내 속마음을 털어놓을 사람이 필요해.\n\n\n\n고지식하거나 융통성 없는 성격\n약간 모범생 이미지\nsquare\nIf you are a SQUARE: You are an organized, logical, and hardworking person who likes structure and rules.\n\nBe there, or be square. : The expression be there or be square means that if one declines to attend an event, one is considered “uncool.” It implies that the event will be exciting.\nDon’t be square. 고리타분하게 굴지마\nShe is such a square - I’ve never met anyone so boring. 그녀는 진짜 고지식한 사람이야 이때껏 그사람처럼 지루한 사람은 처음봤어.\n\n\n\n위선적인\ntwo-faced\n\nDon’t trust her - I suspect she’s a bit two-faced. 그녀를 믿지마. 그녀가 조금 위선적인 사람인 것 같아.\nHe’s a two-faced cheater. 그는 두얼굴을 사진 사기꾼이야.\nHe had been devious and two-faced. 그는 기만적인고 양면적이었다.\n\ndevious : 정직하지 못한, 기만적인"
-  },
-  {
-    "objectID": "posts/note/2022-10-29-gueltto-the-end.html",
-    "href": "posts/note/2022-10-29-gueltto-the-end.html",
-    "title": "📘Gueltto End",
-    "section": "",
-    "text": "이번 post는 지난 2022년 5월 15일부터 10월 16일까지 활동했던 글쓰는 또라이 7기 활동을 마치고 회고한 글입니다. 처음 시작을 다짐으로 시작하여 9월 14일에 중간 점검글도 잠깐 쓰고 이제 마지막 이글로 회고를 하면서 마무리 지어보려고 합니다."
-  },
-  {
-    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#the-bottom-line",
-    "href": "posts/note/2022-10-29-gueltto-the-end.html#the-bottom-line",
-    "title": "📘Gueltto End",
-    "section": "The bottom line …",
-    "text": "The bottom line …\n글또 활동 보증금으로 10만원을 내고 시작했고 모든 권장 활동을 충실히 지킨 결과, 굿즈 구입비 1만원도 커피챗 2회 보상(5000원x2)으로 보충되어 그대로 10만원을 받을 수 있었습니다."
-  },
-  {
-    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#본질",
-    "href": "posts/note/2022-10-29-gueltto-the-end.html#본질",
-    "title": "📘Gueltto End",
-    "section": "본질",
-    "text": "본질\n처음에 글또에 참여하겠다고 설문지를 작성하던 그때를 떠올리고 오리엔테이션을 마치고 처음 다짐글을 다시 읽으면서 되새겨보면, 제게 가장 강력했던 동기는 글쓰기 힘 기르기였습니다. 글은 장르와 목적에 따라 어떻게 작성하는게 명확하고 전달력이 좋은지 차이가 크고 콘텐츠를 보는 사람의 즉각적인 피드백을 얻기 힘들기 때문에 머릿속을 빙빙도는 스토리들을 잘 만드는 사람이 되고 싶었습니다. 처음 다짐글에 감상적인 글보다는 IT, 개발관련 글을 쓰고 싶었다고 생각한 이유는 생각이나 감정을 배제하고 싶다는 생각보다는 일기와 같은 글에서는 내 이야기 중심이다보니 나 이외의 독자를 배려하거나 고려할 수 있는 힘을 기를 수 없기 때문이었습니다. 같은 맥락으로 사실 블로그에 내가 공부한 것들을 정리한 정리노트 서랍장이 되지 않기를 바랐던 것도 있었습니다. 나 이외의 독자(들)도 이해를 하고 도움을 받을 수 있을까? 나는 내 글로 다른 사람들이 이 글을 읽을 가치가 있다고 설득할 수 있을까? 고민들을 했었습니다. 물론 지금도 이 질문들에 완벽한 답변이 될 만한 포스트들을 작성하고 있지 못하지만 글또에서 조금은 나아졌다고 생각합니다. 단순히 느낌만 그런것이 아니라, 같은 팀내에서 피드백들을 받고 저보다 글을 더 논리정연하게 쓰고 설득할 줄 아는 분들의 어깨너머로 확실이 배울 수 있었습니다.\n활동 보증금이 있어서 정말 완벽한 의지로 글을 쓰는 습관을 들인 것은 아니지만 그래도 활동 보증금을 다 받을 수 있을 정도 만큼은 성장했다는 것에 만족합니다. 일단 1차 목표였고 한 단계를 밟았기 때문입니다. 사실 이 작은 성장을 시작으로 본질 밑바닥에 깔려있던 흑심은 블로그 포스팅으로 서술하는 능력을 길러서 좋은 논문을 내는 연구자가 되고 싶었던 마음이 있었습니다. 연구가 아직 내 적성에 맞는지는 확신이 서지 않지만 일단 석사과정을 시작한 한 미약한 연구자로써 글을 잘쓰고 싶었기 때문입니다. 큰 학술지는 아니었지만 학부과정에서 2번정도 논문들을 쓸 기회가 있었는데 솔직히 CV에는 한줄이라도 쓰기 위해 논문들을 적어놓지만 남보여주기에는 부끄러웠습니다. 저 이외의 연구자들을 전혀 고려하지 않은 서술들이었기 때문이었습니다. 또한 여러 논문들을 읽다보면 어떤 논문은 정말 감탄이 나올정도로 설계도 깔끔하고 서술도 완벽에 가까운데 반해 어떤 논문은 뭘 말하고자 하는지 왜 이렇게 써야했는지 이해하기 어려운데 적어도 저의 석사논문 만큼은 같은 동료 연구자들에게 고개를 끄덕일 수 있도록 퀄리티가 좋았으면..하는 희망이 있습니다. 이 마음 저 생각이 모여 글또로 시작을 열 생각을 하게된 것 같고 그 본질과 흑심을 표면 밖으로 끄집에 내게 해준 글또 활동들이 소중했습니다.\n본질과는 조금 동떨어지지만 글쓰는 작은 변화가 근래에 있었습니다. 영어공부도 할겸 영어 실력을 향상시키기 위해 daily english 시리즈로 글을 되도록 자주 올리도록 노력하게 되었습니다. 이야말로 위에서 말했던 정리노트 서랍장을 만들 수도 있을 위험이 크지만 그래도 영어표현이나 팁들을 다른 사람들도 보기 쉽게 소비하고 도움을 받을 수 있도록 정리하려고 합니다. 실제로 제가 다른분들의 짧은 영어 포스팅들로 도움을 많이 받기 때문에 이와 같은 일환으로 시작하게 되었습니다."
-  },
-  {
-    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#처음-다짐",
-    "href": "posts/note/2022-10-29-gueltto-the-end.html#처음-다짐",
-    "title": "📘Gueltto End",
-    "section": "처음 다짐",
-    "text": "처음 다짐\n\n글의 주제\n\n달성정도: 2/5\n처음 다짐에 로봇 제어(이론이나 시뮬레이션 툴 등), 로봇 연구에서의 강화학습, Julia 언어로 하는 Robotics로 글을 쓰고 싶다고 적었었습니다. 하지만 거의 논문 리뷰 위주로 글을 쓰다보니 해당 주제들에서 많이 벗어난 글들도 있었고 로봇 연구에서의 강화학습에 해당하는 글들만 조금 쓸 수 있었던 것 같습니다.\n\n활동 목표\n\n달성정도: 5/5\n활동 목표로 처음 활동 보증금을 모두 회수할 수 있는 미니멈으로 목표를 정했었습니다. 그리고 중간중간 위험하게 마감을 못지킬 것 같은 순간들도 있었지만 결과적으로 100% 회수할 수 있는 활동기록으로 마무리했습니다. 사실 이게 가장 중요하게 생각한 목표였기 때문에 정말 뿌듯했습니다.\n\n생활 목표\n\n달성정도: 2/5\n알고리즘 문제 풀기와 운동 꾸준히 하기를 생활목표로 정했었는데 우선 알고리즘 문제 풀기는 중간에 연구장학생 준비를 위해 조금 했기 때문에 1점 + 운동은 꾸준히는 아니지만 간헐적으로 시간있을 때 챙길려고 노력하기 때문에 1점 해서 총 2점입니다."
-  },
-  {
-    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#중간-점검",
-    "href": "posts/note/2022-10-29-gueltto-the-end.html#중간-점검",
-    "title": "📘Gueltto End",
-    "section": "중간 점검",
-    "text": "중간 점검\n\n매일 커밋하기\n\n달성정도: 3/5\n커뮤니티에서 1001일 매일 커밋하신 분을 보고 모티베이션을 얻어서 정한 목표였는데 역시 매일 커밋은 정말 어려운 일이었습니다. 솔직히 하루 무너지니 다짐이 도미노처럼 우르르 무너져 3-4일간 하기 싫은 적도 있었는데 글또에서 피드백 주셨던 것처럼 의미없는 커밋에 마음 뺏기지 말고 의미있는 커밋에 좀 더 중점을 두고 꾸준히 노력해봐야겠습니다. 본질을 생각해야겠죠.\n\n코드가 들어가는 포스팅 작성하기\n\n달성정도: 0/5\n지금까지 작성해보지 않았던 코드와 함께하는 포스팅을 도전하겠다 해놓고 아직까지도 도전 준비중 상태입니다. 코드를 글에 적기 위해서는 실습을 해보는 시간 + 적절한 편집 실력도 필요해서 더 망설여지는 것 같습니다. 그렇지만 아직 하지 않았을 뿐이지 하지 않을 것은 아니기 때문에 조만간 학교 수업에서 듣는 코드들도 조금씩 작성해보려고 합니다.\n\n멘탈관리를 위해 딴짓하기\n\n달성정도: 3/5\n조만간 특별한 취미생활이라며 중간 다짐글에 적어놓지 않았었는데 그 취미는 클라리넷이었습니다. 사실 어렸을 때부터 악기를 매우매우 좋아해서 이것저것 많이 했었는데 그 중 고1때까지 했던 클라리넷 상자가 어느날 제 눈을 사로잡았습니다. 입시만 끝나면 다시 끄낼 줄 알았던 그 상자가 어느새 대학 졸업하고 대학원에 들어왔는데도 열리지 않았는데 멘탈을 위해, 딴짓을 위해 이것저것 생각하다보니 떠올라서 다시 열게되었습니다. 다행히도 학교 근처에서 렛슨을 하는데가 있어서 다시 시작할 수 있었고 2011.00.00 렛슨 날짜가 적혀있는 교본을 다시 꺼내서 2022.00.00날짜를 적으니 감회가 새로웠습니다. 이에 더해 몸이 기억하고 있는 운지법은 정말 신기했던 것 같습니다.\n\n\n마지막 한 줄로 글또 7기를 정리하자면,\n\n좋은 시도, 경험, 마무리였다."
-  },
-  {
-    "objectID": "posts/note/2022-10-03-daily-english-001.html",
-    "href": "posts/note/2022-10-03-daily-english-001.html",
-    "title": "🌎Casual English Phrases 001",
-    "section": "",
-    "text": "갑자기\nout of the blue\n\nA cockroach appeared out of the blue. And then I really wanted to get out of there. 갑자기 바퀴벌레가 나타나서 진짜 거기서 나오고 싶었어.\nI just thought about that out of the blue. 그냥 갑자기 생각나서.\nIt happened out of the blue, so I could not handle that situation. 그 일이 너무 갑자기 일어나서 어떻게 할 수가 없었어.\n\n\n\n듣고있어\nI’m all ears\n\nJust keep talking about it. I’m all ears. 계속 말해. 나 듣고 있어.\nWhen you have a conversation with someone, you should be all ears. 누군가와 대화를 하면 귀기울여서 들어야해.\nDon’t pretend to be all ears. 듣고 있는 척 하지마.\n\n\n\n들킬것 같이 위태롭고 불안한\nprecarious\n\nI hate precarious situations. They make me very vexed. 난 진짜 조마조마한 상황들이 싫어. 진짜 나를 초조하게 만들거든.\n\nvexed : 초조한\n\nReal liars don’t have a precarious feelings. Instead, They enjoy the situations and make more fakes. 진짜 거짓말 쟁이들은 불안한 감정을 느끼지 않아. 오히려 그들은 그 상황을 즐기고 더 많은 거짓들을 만들어내지.\nJust tell the truth to her, not make yourself more precarious. 그냥 그녀에게 진실을 털어놔 더 너 자신을 위태롭게 만들지 말고."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html",
-    "title": "📘Goodbye 2020",
-    "section": "",
-    "text": "구글 캘린더의 도움을 받아 조금은 늦은 2020 회고록을 적어봤다. 기억이 희미하고 상기하면서 왜곡된 추억을 회상할 수도 있겠지만, 2020을 보내고 2021을 맞이하기에 충분한 시간을 가지는 건 이 시간이 아니면 할 수 없기에 소중하게 생각하며 한 글자 한 글자 적어봤다. 월마다 1~2개의 이야기를 쓰게 될 것 같으니 한 해를 12개 정도의 이야기로 잘 풀어가봐야 겠다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---2월",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---2월",
-    "title": "📘Goodbye 2020",
-    "section": "1월 - 2월",
-    "text": "1월 - 2월\n독서실 알바를 했었다. 벌써 1년전 일이라서 잊고 있었던 일이었는데..2020년도 일이었다니 새삼 놀랍다. 아빠의 해외 출장에 마음이 헛헛해지기도 하고, 방학 때 쉽게 쳐질 수 있는 생활 패턴도 잡고, 돈도 벌고자 찾은 아르바이트였다. 그동안 대치동 학원 알바도 해보고 동네 수학학원 보조교사도 해봤었는데 이번에는 처음으로 대면(?)알바가 아니었다. 청소담당을 지원했었는데 당시 실장님 면접 때 여자인 내가 와서 고개를 갸우뚱하셨던게 기억에 남는다. 나름 아침형 인간인지라 사람이 오기전 6~8시 사이에 독서실 모든 공간을 청소기 돌리고 물걸레질을 부지런히 했었다.(부모님이 제일 반대하던 알바였는데.. 생각해보면 은근 말 안듣는 딸인 듯)\n그때 청소를 하면서 독서실 위에 놓여진 공시, 어학 책들을 보며, (삼수생이었던 못난 면모를 아직 벗어던지지 못해서 그런지 겨울만 되면 센치해지는 감성때문일수도) 열심히 공부하는 청춘들의 시간이 왜 안타까워보이기만 했다. 오지랖일순 있지만.. 취업시장이 좁아지고, 스펙과 자격증만 바라보게 되고, 좁은 독서실 자리로 향해야한다는 현실이 너무 답답했다. 각설하고 그때 공짜로 받은 자리에서 공부했던 걸 생각해보면 Udacity RL 코스를 열심히 했던 것 같다. TOEFL도 준비하겠다고 옆에 책을 쌓아두긴 했었지만 제대로 공부 안한건 2021에 그대로 업보로 받아 이어지고 있다.(으이구🤪)\n\n오랜만에 가족들과 속초여행을 갔었다. 당시에 코로나가 조금씩 심해지고 있었는데 그땐 “여름까지 코로나가 계속되면 안되는데..”라고 걱정하고 있었다. 왠걸..2020 한 해를 온전히 코로나랑 함께할 줄은 몰랐다.😥 친구들과도 갔었던 속초였지만 가족들과 함께했던 속초는 또 다른 모습으로 즐길 수 있어서 좋았다. 타임랩스로 바다위로 떠오르는 태양을 찍었던 기억이 생생하다. 물회는 맛있었고, 겨울바다의 소리는 정말 맑고 시원했다.\n\n사실 2019 겨울부터해서 2월까지 KPMG Ideation이라는 대회에 멋진 분들과 함께 준비하고 있었다. 다른 대회보다 달랐던 점은 정말 나에게는 도전 그 자체였기에 더 기억에 남는다. 그 동안 기술적인 성격의 대회들은 대부분 숫자로 표현된 성적으로 판단하는게 대부분이었는데 이 대회는 아이디어 제안 성격을 가지고 있었기에 엔지니어 마인드보다 기획자 마인드를 배우게 되었던 것 같다. 또한 잘 몰랐던 NLP 분야에 대해 공부할 수 있는 기회였고, 특허라는 분야, 변리사라는 직업에 대한 이야기 등 새로운 세상 이야기 좋아하는 나에게는 진짜 재밌었던 시간이었다. 잊지못할 해프닝이 있던 대회이기도 했는데, 본선 대회 당일 대회장에 도착하자 마자 집으로 돌아가라고 통보(?) 받았던 대회였기도 했다. 혹시라도 밝히고 싶지 않으실 수도 있으니까 최대한 말을 아끼고 내 마음속에 저장하겠지만, 정말 감사했던 점은 함께 해주셨던 팀원분들이 정말 다 멋진 분들이었다는 것이다. 밤을 새워가며 함께 나누었던 이야기들이나 생각들 모두 너무 좋았고 평생 남을만한 따뜻한 추억이 생겼다는게 행복했다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---6월",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---6월",
-    "title": "📘Goodbye 2020",
-    "section": "3월 - 6월",
-    "text": "3월 - 6월\n본격적으로 코로나로 인한 대혼란이 시작됐다. 상황이 좋아질 기미가 보이지 않고 개강이 미뤄졌다. 지금은 익숙하지만 처음접하게 된 온라인 수업은 정말 당황 그 자체였다. 등하교 3시간 통학러인 나에게는 시간을 세이브할 수 있는 장점도 있긴 했지만 집에서 하루종일 노트북만 보고 있으면서 “이게 뭐하는 건가..”싶은 생각이 든게 한 두번이 아니었다. 진짜 대학의 역할에 대해 진지하게 고민도 했었다. 그래도 바쁘게 1학기를 잘 보냈고 랩실 생활도 열심히 했던 것 같다. 아 생각해보니 이때부터 나그네처럼 랩실을 다녔던 생활을 마치고 정식으로 학부연구생으로 인정받아 돈을 받으면서 연구하게 되었다.\n\n종강을 하고 미래연구소 14기 서브튜터를 하게되었다. 내가 처음으로 딥러닝을 공부하게 된 곳에서 서브튜터로 일하게 되었다는 게 정말 신기하고 감사했다. 대학교 가자마자 우연히 보게된 글을 보고 (지금 생각해보면 겁도 없이 혼자 찾아간게 신기하지만) 미래연구소 1기로 딥러닝을 공부했다. 오랜만에 랩장님도 보고 몰라보게 커진 미래연구소 모습을 보면서 괜시리 뿌듯하기도 했다. 사실 메인튜터님이 많이 배려해주시기도 하시고 서브튜터 업무 자체는 크게 부담스럽지는 않았지만 돈을 받고 일하는 자리는 항상 긴장하게 되기 때문에 조금 스트레스를 받았던 것 같긴하다. 14기 분들 중 완전 입문자를 위한 파이썬 기초 스터디는 따로 혼자 운영해야 했기 때문에 좀 더 긴장했던 것 같기도 하다. 그래도 항상 DL 공부 관련해서 INPUT만 했던 입장에서 처음으로 OUTPUT을 하게되는 도전적인 경험이었고, 지식적인 면으로나 태도적인 면으로나 성장할 수 있었던 큰 도약점이 됬었다. 부족한 서브튜터를 만났지만 열심히 공부하셨던 14기 분들이 모두 성공하셔서 나중에 커뮤니티에서 만나뵈면 정말 행복할 것 같다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---8월",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---8월",
-    "title": "📘Goodbye 2020",
-    "section": "7월 - 8월",
-    "text": "7월 - 8월\n여름방학에 역시 많은 일들이 있었다. 우선 정말 다이나믹했던 2020 국제창작자동차대회 PostNomad팀으로 참가한 이야기.🦈 4학년 분들의 졸업프로젝트였지만 운좋게도 참여할 수 있는 기회가 주어져서 제어팀으로 합류할 수 있었다. 후에는 딥러닝 테스크 비중이 높은 비젼팀으로 옮겨가야만 했지만. 그동안은 학교내에서 팀을 꾸려서 대회에 나가기보다는 대외 스터디나 모임에서 만난 분들과 프로젝트들을 했었기 때문에 또 다른 느낌이었다. 대형학과이다 보니 사실상 같은 학과여도 서로 잘 모르기 때문에 졸업할 때까지 모르는 동기도 많다. 평소에 아싸생활을 하는 나로써는 더더욱 학과 사람들이랑 친해질 기회가 없었는데 처음으로 기계과 사람들과 함께할 수 있었던 시간이 아니었나 싶다. 지금 회고하는 이 시점에서는 대회 결과도 아쉽고😢 준비하는 과정에서 랩뷰만 써야하는 답답함, 협업하면서 느꼈던 어려움과 실망했던 점들도 많지만, 진짜 소중한 시간들이었다. 지하 작업실에서 회의하고, 함께 공구들을 나르고, 덥고 습한 K-City에서 다같이 고생하고 고민했던 모든 시간들이 감사하다. 이 회고록을 빌려 고백을 하자면.. 우리 팀에게 조금 더 잘하지 못한 게 죄송하다. 다들 열심히 하시고 항상 나를 배려해주셨던 것 같은데 그에 비해 나는 잘 따라가는 팀원은 아니었던 것 같다.\n\n랩실 연구를 비롯해서 TOEFL 공부까지 하느라 정말 열심히 살았는데, 사실 이때 제대로 공부하지 않아서 후에 고생하게 된 건 안비밀이다. 항상 느끼는 것이긴 한데 나는 한가지 일을 집중해서 끝내는 능력이 아직도 부족한 것 같다. 이에 더하여 2020 Korea Health Datathon에 참가하여 부비동 데이터셋으로 최종 4위를 했었다. NSML 플랫폼은 할말하않이긴 하지만 꾸준히 데이터톤 경험을 갖게 해주신 것만으로도 감사하다. 2019 대회에도 참여했었는데 그때보다 발전된 성적을 가질 수 있어서 좋았다.\n\n산티아고 순례길을 걷고 싶다는 버킷리스트가 생겼다. 그래서 하나씩 뭘 준비해야 하나 고민하는 중에 체력을 길러야 겠다는 생각을 했다. 이에 더해 코로나로 떨어진 활동성을 보충하고자 등하교를 따릉이로 하기 시작했다. 가는데에만 2시간 걸리는 여정이었지만 한강을 따라 가는 길이 나쁘지 않았기 때문에 충분히 좋은 도전이었다. 처음에는 다들 미친 짓(?)이라고 만류했었고 나도 반신반의 했었지만 막상 해보니 죽을 정도는 아니었고 자전거 타고 보는 한강은 다리아픈 것 따위 다 잊게 만들정도로 예뻤다. 아침은 아침대로, 저녁은 저녁대로, 맑으면 맑은대로, 흐리면 흐린대로. 때로는 상수나들목 공사때문에 당황하기도 했지만 길은 항상 찾으면 되는 거였다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---10월",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---10월",
-    "title": "📘Goodbye 2020",
-    "section": "9월 - 10월",
-    "text": "9월 - 10월\n2학기도 여전히 코로나로 인해 온라인으로 진행됐다. 학기중에는 거의 수업에 집중하다보니 딱히 회고록에 적을 내용이 없는 것 같아서 한빛미디어에서 “나는 리뷰어다”로 참여했던 경험을 적어볼까 한다. 리뷰어로 활동을 하면서 2개의 도전이 있었다. 첫째는 글쓰는 것 자체에 대한 도전이었는데, 예전에는(그러니까 고2때 까지만 하더라도) 글을 쓰는데 어려움이 없었던 것 같다. 그리고 나름 글을 잘 쓴다고 인정도 받았던 것 같은데 이후에 딱히 글을 쓸 기회가 없었고 쓰지 않다보니 리뷰를 쓴다는 것 자체가 어색했다. 그리고 “독후감”과는 다른 목적이 있는 “리뷰”라는 글에 대한 고민이 있었다. 출판사에서 책을 주면서 나에게 리뷰를 쓰기를 원하는 니즈는 분명 있는 것이고, 다른 사람들에게 책의 내용이 잘 어필이 되길 바라는 것일터였다. 그러면 단순히 책의 장단점을 나 혼자 판단하고 즐기고 끝나는 것이 아닌 다른 사람들에게 잘 전달될 수 있도록 표현해야 한다는 것이었다. 두번째로는 빠르게 기술서를 봐야한다는 도전이었다. 사실 IT전공도 아니고 원래는 1개의 책도 적어도 2~3개월을 봐야하는 거북이 속도인데 리뷰를 하려면 1달에 1권을 무조건 다 보고 리뷰까지 완성해야 했다. 몇개의 책들은 사실 다 보지도 못하고 리뷰 적기에 급급했던 것도 사실이다. 제대로 리뷰어로 활동하지 못해 관계자분들께 죄송하다. 그래도 몇몇 리뷰는 제대로 적었다는 것에 스스로 조금 위안을 삼아본다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#월",
-    "title": "📘Goodbye 2020",
-    "section": "11월",
-    "text": "11월\n지금까지 인생의 경험들 중에 최악과 최고를 다 뽑으라고 하면 2020.11월에 다 있다. 좋은 것부터 먼저. 우선 최고는 내 인생 처음으로 학회에서 내가 한 연구를 가지고 발표를 완성도 있게 마무리 할 수 있었고 인정도 받아서 우수논문상까지 받게 된 경험이다. 진짜 학회 발표 전 리허설하는 랩미팅에서 울면서 나가기도 했었고 발표 전날까지도 결과가 잘 나오지 않아 정말 힘들었다. “힘들었다”라는 4글자로 밖에 표현 못한다는 게 억울할 정도로 최고의 스트레스를 받은 시간이었다. 그래도 진짜 주변에 천사들을 심어 놓으신 것인지 기적적으로 도움도 받고 몇일 밤을 새서 어찌저찌 마무리 할 수 있었고 IPNT에서 구두발표도 잘 마무리하여 우수논문상도 받게되었다.(지금생각해도 기적이라고 말할 수 밖에 없다.) 진짜 힘들었던 만큼 최고의 성취감은 말로 할 수 없었다.\n다음으로 최악의 경험은 사실 최고의 경험과 관련이 깊다. 앞서 적은 “최고의 스트레스”가 복선이었다. 학회를 마치고 체력이 바닥으로 떨어질대로 떨어졌고 긴장은 완전히 풀어진 상태에서 몸이 엄청 아팠다. 감을 먹고 체한 탓도 있었지만 몸이 정말 아팠고 힘이 빠지면서 “이대로 죽을 수도 있겠구나..” 싶은 생각이 들었다. 인생 처음으로 자다가 새벽에 구급차를 불러 응급실에 갔던 게 최악의 경험이지 않나 싶다. 근데 유감스럽게도 구급대원분들이 오시면서 급속도로 괜찮아져서 정말 난처하고 민망했다. 나중에 새벽 4시쯤 엄마랑 응급실을 나와서 걸어서 집으로 돌아갔다. 이때의 일은 가족들에게도 큰 충격을 주어서 지금도 아빠는 잊을만 하면 이야기를 하시는데 하지말라고 장난스럽게 말을 하면서도 죄송한 마음이 들기도 한다. 웃프긴 하지만 이 일 이후로 내가 제일 좋아하는 “감”은 금지어가 되었다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월-1",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#월-1",
-    "title": "📘Goodbye 2020",
-    "section": "12월",
-    "text": "12월\n사랑하는 양가의 조부모님들이 몇년전만 해도 다 살아계셨다. 하지만 근 2년 정도 매년 겨울에 사랑하는 분들을 떠나보내게 되었다. 외할아버지, 친할아버지, 그리고 외할머니까지. 올해 후반에 건강이 급속도로 나빠지신 외할머니가 결국 우리곁을 떠나셨다. 4분의 할머니 할아버지 가운데 가장 사랑의 표현도 아끼시지 않고 항상 전화도 먼저 걸어주셨던 멋진 할머니였다. 지금 이렇게 “할머니 사랑해요”라고 말하던게 이렇게 그리워할 것이었다면 살아계셨을때 왜 그렇게 어색해하고 표현하기 부끄러워 했는지. 코로나로 인해 좋았던 점 하나는 장례식에 손님들 없이 식구들끼리 할머니를 추억하면서 얼마나 멋진 분이셨는지 되새길수 있어서 좋았다. 진짜 멋진 분이셨다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#bnm2h",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#bnm2h",
-    "title": "📘Goodbye 2020",
-    "section": "BNM2h",
-    "text": "BNM2h\n2020년도에 감사했던 많은 일들이 있었지만, 지금 나름 뿌듯하고 보람찬 시간들을 회고할 수 있도록 도와준 많은 분들이 있었다. 스터디를 통해서 만나는 인연들이 대부분이다. 물론 많은 스터디에 참여해보고 도전 받을 수 있는 좋은 시간들이었다. 그래도 가장 애정가는 스터디는 아무래도 BNM2h가 아닐까 싶다. 그렇다. 사실 가장 애정가는 이유 중 하나는 아무래도 내가 만든 스터디였기에 가장 책임을 느꼈고 가장 스트레스도 많이 받고 가장 노력했음을 나 스스로도 느꼈기 때문일 것이다.\n처음에는 진짜 가벼운 마음으로 시작했다. 따지고 보면 2019년도에 Kaggle KR에서 스터디 리더를 뽑는다는 글을 보고 마침 캐글에서 Connect-X라는 강화학습 대회가 베타수준으로 시도하기 시작했던 때라 “내가 한번 캐글 강화학습 스터디 리더가 되어보자!”라는 생각과 패기로 시작했던 거였다. 패기는 패기였던 걸로.. 그렇게 시작했으나 함께할 팀원분들이 모집되지 않아 그냥 한 순간의 불꽃으로 끝날 뻔 했다. 다행이도 다른 리더분들 중에 나와 같은 처지였던 분이 계셨었고 감사하게도 같이 공부하자 먼저 손을 내밀어 주셔서 BNM2h라는 스터디가 생기게 되었다!🙌\n그때 그때 마다 인연이 되는대로 지금까지 이어져오고 있는 스터디에서 강화학습을 공부하고 있다. 최고의 스터디라고 자랑할 순 없지만 최애 스터디라고는 할 수 있다. 아직도 강화학습이라는 분야에 대해, 스터디에서 함께 공부하는 방식에 대해, 스터디 매니징하는 것에 대해, 감사함과 겸손함을 표현하는 것에 대해 한참 모자른 애송이이지만 매주 스터디에 나와주셔서 나에게 성장할 기회를 주고 그런 시간들을 함께 보내주시는 BNM2h 스터디원분들은 천사들이신 것 같다. 나도 그런 분들에게 조금이나마 도움이 되고 함께 성장하기 위해 조금 더 노력하는 사람이 되어야겠다고 느낀 한 해였다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#마무리",
-    "href": "posts/note/2021-01-03-Goodbye-2020.html#마무리",
-    "title": "📘Goodbye 2020",
-    "section": "마무리",
-    "text": "마무리\n물론 당연히도 여기에 적지 못한 많은 이야기들이 있다. 이야기들은 열정을 담기도 하고, 아쉬움을 담기도 하고, 기쁨을 담기도 하고, 슬픔을 담기도 한다. 그 이야기들은 지금의 나의 마음이나 기억 속 어딘가에 잘 살아있겠지.\n멋있는 개발자분들의 회고록 같은 것을 기대했으나 적고나서 읽어보니 아직은 어디에 내놓기 부끄러운 새벽감성의 회고록이니 그냥 조용히 블로그에 남기기로 생각했다.😂\n잘가요 2020"
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Hello-2021.html",
-    "href": "posts/note/2021-01-03-Hello-2021.html",
-    "title": "📘Hello 2021",
-    "section": "",
-    "text": "2021에 이루고 싶은 일들, 하고 싶은 일들, 바라는 일들, 2021 회고록을 쓰면서 “그땐 이런 생각을 하며 살려고 노력했었구나” 할 만한 이야기를 적어보자."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Hello-2021.html#해야하는하고싶은-공부",
-    "href": "posts/note/2021-01-03-Hello-2021.html#해야하는하고싶은-공부",
-    "title": "📘Hello 2021",
-    "section": "해야하는/하고싶은 공부",
-    "text": "해야하는/하고싶은 공부\n구체적인 실천 목표들은 다이어리에 적고 여기에는 크게 대략적인 목표지점들을 적어보려고 한다.\n\n영어\n이젠 피하고 싶다는 생각보다는 해내야만 한다는 생각이 더 크다. 다른 공부들도 그렇지만 영어야 말로 이제는 output을 내야하기 때문에 간절함이 더 커졌다. - 영어루틴 - 토플 90점 이상 - 외국인 친구 만들기\n\n\nRL\n아직도 잘 모르겠지만 아직도 내 호기심을 자극시키는 분야라 계속 공부하고 싶다.\n\n스터디(기초이론과 논문읽기)\n구현능력 올리기\n연구에 활용하는 능력 기르기\n\n\n\nGNN\n\n기초 이론 입문하기\n\n\n\nQC\n\n기초 이론 입문하기(feat. 모두연)\nQiskit Challenge 도전하기"
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Hello-2021.html#하고싶은-취미",
-    "href": "posts/note/2021-01-03-Hello-2021.html#하고싶은-취미",
-    "title": "📘Hello 2021",
-    "section": "하고싶은 취미",
-    "text": "하고싶은 취미\n2020에 회고하면서 한 가지 느꼈던 게 있었다. 취미라 할 만한 활동을 하질 않았었다. 그래서 더 쉽게 지쳤고 멀리 나가지 못했던 것 같아 2021에는 취미도 생각하면서 살고 싶어서 한번 적어보았다.\n\n피아노\n부모님의 반대를 무릅쓰고 산 전자 피아노가 하나 있는데 많이 쳐보지를 못했다. 원래 쳤던 곡들도 좋고 재즈 피아노나 마피아에서 산 몇곡 악보를 제대로 연습해보고 싶다. 예전에는 피아노한테 힐링도 많이 받았었는데..왜 이렇게 멀어졌을까🤔\n\n박터틀의 재즈 피아노\nTido Kang의 노래\n피아노 치는 이정환님의 노래 이건 불가능하겠지만🤣\n\n\n\n책 읽기\n유튜브 보는 시간을 좀 줄여보고 한 달에 딱 1권은 인문이나 사회 분야 등과 같이 내가 쉽게 접할 수 없는 분야의 책들을 읽어보려 한다. 기술서 같은 경우에는 필요에 의해 손이 많이 가지만 이외의 책들은 정말 안 읽게 되는 것 같다. 간략히 남기고 싶은 문구나 독후감은 다이어리에 남겨보자."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Hello-2021.html#만들고-싶은-습관",
-    "href": "posts/note/2021-01-03-Hello-2021.html#만들고-싶은-습관",
-    "title": "📘Hello 2021",
-    "section": "만들고 싶은 습관",
-    "text": "만들고 싶은 습관\n\n운동\n체력과 건강을 무시 못할 시기가 온 것 같다. 지금은 코로나로 인해 헬스장이 언제 열릴지는 모르겠으나 일단은 기본적인 걷기나 자전거, 간단한 홈트 동작들을 꾸준히 아침 루틴으로 하는 것이 목표다.\n\n\n블로깅\n지금 쓰고 있는 github 블로그에 꾸준히 기술관련 포스팅을 하는 것이 목표다. 아직은 개발자도 아니고 유의미한 output 포스팅을 하기엔 실력이 없지만, 내가 그때 그때 마다 알게 된 것, 이후의 나에게 도움이 될 만한 내용이라고 판단되면 적어보려고 한다. 나부터 나를 가르쳐보면서 어떤 글이 잘 쓰여진 글인지 스스로 체크해보며 블로깅하는 실력을 길러보는 한 해가 되었으면 좋겠다.\n\n\n다이어리\n블로깅이 주로 기술관련(특히 it 분야겠지만)이라면 다이어리는 내 내면과 생각을 정리해보고 싶어서 만들고 싶은 습관이다. 생각보다 하루하루 내가 느낀 것들은 많은데 막상 돌이켜 보면 잘 기억이 나지 않고 내면의 단단함이 쉽게 물러지는 느낌이 든다. 그냥 생각없이 산 것 같기도 하고 내 삶을 소중히 생각하지 않은 것 같은 느낌이 들 때. 순간의 나도 이런 생각을 하고 고민을 하며 살아왔다는 흔적을 남기는 연습을 하고 싶다. 예전에 삼수를 할 때 비교적 생활 패턴이 규칙적이고 고요할 때(?)는 다이어리에 기록하는게 어렵지 않았는데 지금은 다이어리 루틴을 만든다는 게 쉽지 않은 것 같다. 2021은 남겨보려고 노력해보고 싶다."
-  },
-  {
-    "objectID": "posts/note/2021-01-03-Hello-2021.html#신년다짐과-생각",
-    "href": "posts/note/2021-01-03-Hello-2021.html#신년다짐과-생각",
-    "title": "📘Hello 2021",
-    "section": "신년다짐과 생각",
-    "text": "신년다짐과 생각\n송구영신 예배와 신년 축복예배에서 받은 말씀은 기대의 차원을 높이자와 대장부가 되자였다. 남에게 기대하기 보다 나에게 기대하는 삶을, 나보단 하나님께 근거있는 삶을 바라며 나에게 주어진 새로운 시간들을 잘보냈으면 좋겠다. 그리고 지금까지 살면서 느껴왔던 것처럼 삶을 살아가면서 내가 생각지 못한 경험들의 스펙트럼은 점점 넓어진다는 걸 알았다. 좋은 쪽으로만 범위가 넓어지는 것이 아니기에. 내가 감당치 못할 어려움을 주시는 분이 아니시기에 당장 눈 앞에 커보이는 두려움을 담대하게 맞설 수 있다는 믿음을 더 확고히 할 수 있는 한 해가 될 수 있도록.\n어쩌다보니 대학생활도 마지막에 접어들었다. 생각없이 보내기엔 다시 돌아오지 않을 시간들이기에 좀 더 정신차리고 최선을 다해보고 싶다. 내 것이 되기전에는 한 없이 미웠었지만 지금은 그 어떤 대학보다 나의 가능성을 확인시켜 준 내 학교에서 마지막 생활은 어떨까. 안녕 2021"
+    "text": "Je suis curieux de tout.\n\n\n📃 Paper Review | 🧩 Storage | 👩‍💻 Code\n\n\n\n \n\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n👩‍💻Orbit 설치하기\n\n\n\n\n\n\n\norbit\n\n\nisaacsim\n\n\ncode\n\n\n\n\nIsaac Orbit Series 001\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻class ⟷ dict ⟷ yaml\n\n\n\n\n\n\n\nconfig\n\n\nyaml\n\n\ncode\n\n\n\n\n여러 파라미터들을 기록하기 위한 config 관리\n\n\n\n\n\n\nDec 26, 2022\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻torch.Tensor vs torch.tensor\n\n\n\n\n\n\n\ntorch\n\n\ntensor\n\n\ninverted\n\n\ncode\n\n\n\n\ntorch Tensor 객체 생성 방법 비교와 Inverted 연산 확인하기\n\n\n\n\n\n\nDec 21, 2022\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻Linux GPU 상태 확인하기\n\n\n\n\n\n\n\nlinux\n\n\ngpu\n\n\ncode\n\n\n\n\n리눅스에서 GPU 상태를 확인하는 여러가지 방법을 알아봅니다.\n\n\n\n\n\n\nDec 14, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃Robust Recovery Controller\n\n\n\n\n\n\n\nrl\n\n\ntrpo\n\n\ngae\n\n\nquadruped\n\n\npaper\n\n\n\n\nRobust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning\n\n\n\n\n\n\nOct 16, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃VAE\n\n\n\n\n\n\n\ngenerative\n\n\nvariational inference\n\n\npaper\n\n\n\n\nAuto-Encoding Variational Bayes\n\n\n\n\n\n\nOct 2, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃WaveNet\n\n\n\n\n\n\n\nautoregressive\n\n\ngenerative\n\n\npaper\n\n\n\n\nA Generative Model for Raw Audio\n\n\n\n\n\n\nSep 17, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃GN-Block\n\n\n\n\n\n\n\ngnn\n\n\nsystem identification\n\n\nmpc\n\n\nrl\n\n\npaper\n\n\n\n\nGraph Networks as Learnable Physics Engines for Inference and Control\n\n\n\n\n\n\nAug 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃Legged Robots that Keep on Learning\n\n\n\n\n\n\n\nquadruped\n\n\nrl\n\n\nredq\n\n\npaper\n\n\n\n\nFine-Tuning Locomotion Policies in the Real World\n\n\n\n\n\n\nJun 26, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃NerveNet\n\n\n\n\n\n\n\ngnn\n\n\nrl\n\n\npaper\n\n\n\n\nLearning Structured Policy with Graph Neural Networks\n\n\n\n\n\n\nJun 10, 2022\n\n\n\n\n\n\n  \n\n\n\n\n🧩GNN Intro\n\n\n\n\n\n\n\ngnn\n\n\nstorage\n\n\n\n\nGNN 처음 알아보기\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻Import custom module\n\n\n\n\n\n\n\npython\n\n\ncode\n\n\n\n\ncustom module을 불러오는 방법\n\n\n\n\n\n\nJul 20, 2020\n\n\n\n\n\n\n  \n\n\n\n\n🧩My Reinforcement Learning Roadmap\n\n\n\n\n\n\n\nrl\n\n\nstudy\n\n\nstorage\n\n\n\n\n내가 공부했던 강화학습 Roadmap\n\n\n\n\n\n\nJul 17, 2020\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻Install Mujoco in Windows10\n\n\n\n\n\n\n\nmujoco\n\n\ncode\n\n\n\n\nRL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기\n\n\n\n\n\n\nJul 13, 2020\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/code/2022-12-21-torch-tensor-inverted.html",
@@ -292,6 +54,27 @@
     "title": "👩‍💻torch.Tensor vs torch.tensor",
     "section": "torch.Tensor()",
     "text": "torch.Tensor()\n\na = torch.Tensor([0,1,10])\nprint(f\"Shape of tensor: {a.shape}\")\nprint(f\"Datatype of tensor: {a.dtype}\")\nprint(f\"Device tensor is stored on: {a.device}\")\n\nShape of tensor: torch.Size([3])\nDatatype of tensor: torch.float32\nDevice tensor is stored on: cpu\n\n\n\na\n\ntensor([ 0.,  1., 10.])\n\n\n\n~a\n\nTypeError: ~ (operator.invert) is only implemented on integer and Boolean-type tensors\n\n\n\nb = torch.Tensor([True, False, True])\nprint(f\"Shape of tensor: {b.shape}\")\nprint(f\"Datatype of tensor: {b.dtype}\")\nprint(f\"Device tensor is stored on: {b.device}\")\n\nShape of tensor: torch.Size([3])\nDatatype of tensor: torch.float32\nDevice tensor is stored on: cpu\n\n\n\nb\n\ntensor([1., 0., 1.])\n\n\n\n~b\n\nTypeError: ~ (operator.invert) is only implemented on integer and Boolean-type tensors\n\n\n\nc = torch.Tensor([0.13, 1.5, -.116])\nprint(f\"Shape of tensor: {c.shape}\")\nprint(f\"Datatype of tensor: {c.dtype}\")\nprint(f\"Device tensor is stored on: {c.device}\")\n\nShape of tensor: torch.Size([3])\nDatatype of tensor: torch.float32\nDevice tensor is stored on: cpu\n\n\n\nc\n\ntensor([ 0.1300,  1.5000, -0.1160])\n\n\n\n~c\n\nTypeError: ~ (operator.invert) is only implemented on integer and Boolean-type tensors\n\n\n결론: torch.tensor()로만 ~연산 사용 가능\nReference\n\ntorch.Tensor와 torch.tensor의 차이"
+  },
+  {
+    "objectID": "posts/code/2023-01-24-insatll-orbit.html",
+    "href": "posts/code/2023-01-24-insatll-orbit.html",
+    "title": "👩‍💻Orbit 설치하기",
+    "section": "",
+    "text": "Nvidia의 Omniverse Isaac Orbit를 사용해보기 위해 Orbit Docs - Installation Guide를 따라 설치과정을 기록해보았습니다.\n\n\n\n\n\n\nIsaac Orbit (or orbit in short) is a unified and modular framework for robot learning powered by NVIDIA Isaac Sim.\n\n\nOrbit을 설치하기 전에\n\n공식 홈페이지에 소개되어 있는 IsaacSim 설치방법을 따라 Omniverse를 통해 Isaac Sim 2022.2을 설치합니다.\n설치 진행 환경\n- Ubuntu 20.04 LTS\n- Nvidia RTX 4080\n- Driver Version: 525.60.13\nPython Environment Setting\nIsaacSim Default Python Environment\nConfiguring the environment variables\n\n\n\nImgur\n\n\n~/.bashrc\ngedit ~/.bashrc\n# Isaac Sim root directory\nexport ISAACSIM_PATH=\"${HOME}/.local/share/ov/pkg/isaac_sim-2022.2.0\"\n# Isaac Sim python executable\nexport ISAACSIM_PYTHON_EXE=\"${ISAACSIM_PATH}/python.sh\"\nsource ~/.bashrc\nRunning the simulator\n# note: you can pass the argument `--help` to see all arguments possible.\n$ISAACSIM_PATH/isaac-sim.sh\n# checks that python path is set correctly\n$ISAACSIM_PYTHON_EXE -c \"print('Isaac Sim configuration is now complete.')\"\n# checks that Isaac Sim can be launched from python\n$ISAACSIM_PYTHON_EXE $ISAACSIM_PATH/standalone_examples/api/omni.isaac.core/add_cubes.py\n\n\n\nOrbit 설치하기\n\ngit clone"
+  },
+  {
+    "objectID": "posts/code/2020-07-13-install-mujoco-win10.html",
+    "href": "posts/code/2020-07-13-install-mujoco-win10.html",
+    "title": "👩‍💻Install Mujoco in Windows10",
+    "section": "",
+    "text": "Mujoco\n\nMujoco에서 License tab으로 들어가서 Personal Student Software License를 받는다.\n이메일로 Account number를 받는다.(spam도 확인하자)\n다시 License로 가서 Account number와 Computer Id를 입력한다.\n\n\n\n\n\n다시 이메일로 MuJoCo Pro Personal Activation Key(mjkey.txt)를 받는다.\n.mujoco라는 파일을 C:\\Users\\사용자명\\에 만든다.\nProducts에서 mjpro150 win64을 다운받아 .mujoco에 압축을 풀어준다.(C:\\Users\\사용자명\\.mujoco\\mjpro150)\n\n\n\n\n\n다운받은 mjkey.txt 파일을 C:\\Users\\사용자명\\.mujoco와 C:\\Users\\사용자명\\.mujoco\\mjpro150\\bin 에 옮긴다.\ncmd창을 열어서 cd 명령어로 C:\\Users\\사용자명\\.mujoco\\mjpro150\\bin 경로로 이동한 다음 simulate ../model/humanoid.xml명령어를 입력한다.\nHumanoid Simulation 창이 나오면 성공이다.\n\n\n\n\n\n\n\n\nMujoco-py\n\nSET PATH=C:\\Users\\사용자명\\.mujoco\\mjpro150\\bin;%PATH%;으로 경로설정을 해준다.\nmujoco-py-1.50.1.0 파일을 다운받아 C:\\Users\\사용자명\\.mujoco에 압축을 풀어준다.(C:\\Users\\사용자명\\.mujoco\\mujoco-py-1.50.1.0)\ncmd 창에서 python setup.py install를 입력하여 설치한다.\nC:\\Users\\사용자명\\.mujoco\\mujoco-py-1.50.1.0> python setup.py install\n혹시 여기서 error가 난다면 전에 mujoco-py를 설치해서 버젼이 안 맞아 나는 것일 수도 있다. pip list로 mujoco-py의 버젼을 확인해보고 다른 버젼이라면 pip uninstall mujoco-py를 해준후 다시 설치한다.\ncmd 창에서 python examples\\body_interaction.py를 입력하여 잘 실행되는지 확인한다.\nC:\\Users\\사용자명\\.mujoco\\mujoco-py-1.50.1.0> python examples\\body_interaction.py\n처음에 실행화면이 뜨는 시간이 오래걸리지만 이후에는 실행창이 빨리 나왔다.\n\n\n\n\n\n\n\nReference\n\nMuJoCo 설치 (윈도우 10 version)"
+  },
+  {
+    "objectID": "posts/code/2022-12-14-gpu-status.html",
+    "href": "posts/code/2022-12-14-gpu-status.html",
+    "title": "👩‍💻Linux GPU 상태 확인하기",
+    "section": "",
+    "text": "1. nvidia-smi\nwatch -d -n 0.5 nvidia-smi\n\nwatch : 명령어를 주기적으로 실행\n-d : 차이를 보여줌\n-n : 주기적으로 실행할 시간 간격\n\n\n\n2. gpustat\nsudo apt install gpustat\ngpustat -i\noptions\n--color : Force colored output (even when stdout is not a tty)\n--no-color : Suppress colored output\n-u, --show-user : Display username of the process owner\n-c, --show-cmd : Display the process name\n-p, --show-pid : Display PID of the process\n-P, --show-power : Display GPU power usage and/or limit (draw or draw,limit)\n-i, --interval : Run in watch mode (equivalent to watch gpustat) if given. Denotes interval between updates.\n--json : JSON Output (Experimental, #10)\n\n\n3. gpumonitor\n\nGithub mountassir/gmonitor에서 설치방법 확인\n\n$ cd gmonitor\n$ mkdir build\n$ cd build\n$ cmake ..\n$ make\n$ sudo make install\n\\# use default\ngmonitor\n\n\\# Monitor the most recent state only\ngmonitor -d 1\n\n\\# Monitor current and history states for 4 GPUs.\ngmonitor -d 0 -g 0123\n\n\\# Monitor both current and previous states for all GPUs, refresh every 3 seconds.\ngmonitor -d 0 -r 3\n\n\n4. glance\n\n설치 sudo apt-get install -y python-pip; sudo pip install glances[gpu]\n실행 sudo glances\n\n\n\n[+] Jupyter Lab에서 GPU 상태 확인하기\n\nhttps://developer.nvidia.com/blog/gpu-dashboards-in-jupyter-lab/\n\n$ pip install jupyterlab-nvdashboard\n\n# If you are using Jupyter Lab 2 you will also need to run\n$ jupyter labextension install jupyterlab-nvdashboard"
   },
   {
     "objectID": "posts/code/2020-07-20-import-custom-module.html",
@@ -322,123 +105,46 @@
     "text": "How\n\nmain_foo.py에서 env_foo.py를 import한다.\nenv_foo.py에서 utils_foo.py를 import 한다.\n이때 env_foo.py에서 import utils_foo로 utils_foo를 불러오면,\n\npython env_foo.py 실행시 잘 작동되지만(같은 위치)\npython main_foo.py 실행에서는 from gym_foo import *코드를 읽을 때 env_foo.py내의 from gym_foo import utils_foo를 불러올 수 없다고 error가 난다.(상위 위치)\n\n\n$ python main_foo.py \nTraceback (most recent call last):\nFile \"main_foo.py\", line 4, in <module>\n    env_foo.env_test()\nNameError: name 'env_foo' is not defined\n\nenv_foo.py에서 utils_foo module을 불러올 때, from gym_foo import utils_foo로 불러온다. 상위 위치인 gym_foo를 거쳐서 import해야한다는 뜻이다. 그러면 python main_foo.py 실행시 잘 작동한다.\n\n$ python main_foo.py \nHERE: utils_foo\nutils_foo\nHERE: env_foo\nutils_foo\nenv_foo\n\n한 가지 더 주의해야할 점이 있다. main_foo.py에서 utils_foo와 env_foo를 import 할 때이다.\nfrom gym_foo import * 코드로 utils_foo와 env_foo가 모두 불러와질 것이라고 생각했으나, main_foo.py를 실행했을 때 import 하지 못한다. 따라서 위에 main_foo.py에서 볼 수 있듯이 from gym_foo import utils_foo, from gym_foo import env_foo각각 따로 import 해줘야 한다."
   },
   {
-    "objectID": "posts/code/2020-07-13-install-mujoco-win10.html",
-    "href": "posts/code/2020-07-13-install-mujoco-win10.html",
-    "title": "👩‍💻Install Mujoco in Windows10",
-    "section": "",
-    "text": "Mujoco-py\n\nSET PATH=C:\\Users\\사용자명\\.mujoco\\mjpro150\\bin;%PATH%;으로 경로설정을 해준다.\nmujoco-py-1.50.1.0 파일을 다운받아 C:\\Users\\사용자명\\.mujoco에 압축을 풀어준다.(C:\\Users\\사용자명\\.mujoco\\mujoco-py-1.50.1.0)\ncmd 창에서 python setup.py install를 입력하여 설치한다.\nC:\\Users\\사용자명\\.mujoco\\mujoco-py-1.50.1.0> python setup.py install\n혹시 여기서 error가 난다면 전에 mujoco-py를 설치해서 버젼이 안 맞아 나는 것일 수도 있다. pip list로 mujoco-py의 버젼을 확인해보고 다른 버젼이라면 pip uninstall mujoco-py를 해준후 다시 설치한다.\ncmd 창에서 python examples\\body_interaction.py를 입력하여 잘 실행되는지 확인한다.\nC:\\Users\\사용자명\\.mujoco\\mujoco-py-1.50.1.0> python examples\\body_interaction.py\n처음에 실행화면이 뜨는 시간이 오래걸리지만 이후에는 실행창이 빨리 나왔다.\n\n\n\n\n\n\n\nReference\n\nMuJoCo 설치 (윈도우 10 version)"
-  },
-  {
-    "objectID": "posts/code/2022-12-14-gpu-status.html",
-    "href": "posts/code/2022-12-14-gpu-status.html",
-    "title": "👩‍💻Linux GPU 상태 확인하기",
-    "section": "",
-    "text": "2. gpustat\nsudo apt install gpustat\ngpustat -i\noptions\n--color : Force colored output (even when stdout is not a tty)\n--no-color : Suppress colored output\n-u, --show-user : Display username of the process owner\n-c, --show-cmd : Display the process name\n-p, --show-pid : Display PID of the process\n-P, --show-power : Display GPU power usage and/or limit (draw or draw,limit)\n-i, --interval : Run in watch mode (equivalent to watch gpustat) if given. Denotes interval between updates.\n--json : JSON Output (Experimental, #10)\n\n\n3. gpumonitor\n\nGithub mountassir/gmonitor에서 설치방법 확인\n\n$ cd gmonitor\n$ mkdir build\n$ cd build\n$ cmake ..\n$ make\n$ sudo make install\n\\# use default\ngmonitor\n\n\\# Monitor the most recent state only\ngmonitor -d 1\n\n\\# Monitor current and history states for 4 GPUs.\ngmonitor -d 0 -g 0123\n\n\\# Monitor both current and previous states for all GPUs, refresh every 3 seconds.\ngmonitor -d 0 -r 3\n\n\n4. glance\n\n설치 sudo apt-get install -y python-pip; sudo pip install glances[gpu]\n실행 sudo glances\n\n\n\n[+] Jupyter Lab에서 GPU 상태 확인하기\n\nhttps://developer.nvidia.com/blog/gpu-dashboards-in-jupyter-lab/\n\n$ pip install jupyterlab-nvdashboard\n\n# If you are using Jupyter Lab 2 you will also need to run\n$ jupyter labextension install jupyterlab-nvdashboard"
-  },
-  {
     "objectID": "posts/code/2022-12-26-class-dict-yaml.html",
     "href": "posts/code/2022-12-26-class-dict-yaml.html",
     "title": "👩‍💻class ⟷ dict ⟷ yaml",
     "section": "",
-    "text": "Class to Dict\nclass 객체를 dictionary로 만들기\n\ndef class_to_dict(obj) -> dict:\n    if not hasattr(obj, \"__dict__\"):                # __dict__ : 클래스 객체의 속성 정보를 확인하기 위해 사용. 객체가 가진 여러가지 속성들을 딕셔너리 형태로 편하게 확인\n        return obj\n    result = {}                                     # 빈 dict 객체 만들기\n    for key in dir(obj):                            # dir(): 어떤 객체를 인자로 넣어주면 해당 객체가 어떤 변수와 메소드(method)를 가지고 있는지 나열\n        if key.startswith(\"_\"):                     # startswith: str.startswith(str or tuple) 형식으로 사용하면 되고, 반환 값으로는 True, False를 반환\n            continue\n        element = []                                # 리스트 요소에 대비\n        val = getattr(obj, key)                     # getattr: object에 존재하는 속성의 값을 가져옴\n        if isinstance(val, list):                   # isinstance로 list 객체인지 확인 e.g.) isinstance(object, type)\n            for item in val:\n                element.append(class_to_dict(item))\n        else:                                       # 리스트가 아닌 모든 요소들 처리\n            element = class_to_dict(val)\n        result[key] = element                       # 결과 dict에 저장\n    return result\n\n\nAConfigDict = class_to_dict(AConfig)\nAConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\nBConfigDict = class_to_dict(BConfig)\nBConfigDict\n\n{'A_a_Config': {'element02': False},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},\n 'B_a_Config': {'element05': {'key': 'value'}}}\n\n\n\nCConfigDict = class_to_dict(CConfig)\nCConfigDict\n\n{'A_a_Config': {'element02': False},\n 'A_b_Config': {},\n 'C_a_Config': {'element05': {'key': 'value'}}}\n\n\n\nDConfigDict = class_to_dict(DConfig)\nDConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': False},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\nEConfigDict = class_to_dict(EConfig)\nEConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},\n 'E_a_Config': {'element06': (1, 3, 5)}}\n\n\n\n\n\nDict to Yaml\n\nimport yaml\nfrom pprint import pprint\n\n\nAConfigDictYaml = yaml.dump(AConfigDict)\nprint(AConfigDictYaml)\nprint(type(AConfigDictYaml))\n\nA_a_Config:\n  element01: element01\n  element02: true\nA_b_Config:\n  element03: 0\n  element04:\n  - 2\n  - 4\n  - 6\n\n<class 'str'>\n\n\n\n\nYaml to Dict\n\nAYamlDict = yaml.safe_load(AConfigDictYaml)\npprint(AYamlDict)\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\n\nDict to Class\n\n속성값으로 만들어주는 것이기 때문에 내부 메소드나 내부 클래스가 아닌, 내부 변수와 같음\n\n\nclass Dict2Class(object):\n    def __init__(self, input_dict):\n        for key in input_dict:\n            print(\"Set arribute: \", key)\n            setattr(self, key, input_dict[key]) # object에 존재하는 속성의 값을 바꾸거나, 새로운 속성을 생성하여 값을 부여\n\n\nAYamlDictClass = Dict2Class(AYamlDict)\n\nSet arribute:  A_a_Config\nSet arribute:  A_b_Config\n\n\n\nAYamlDictClass.A_a_Config\n\n{'element01': 'element01', 'element02': True}\n\n\n\nAYamlDictClass.A_b_Config\n\n{'element03': 0, 'element04': [2, 4, 6]}"
+    "text": "Config Class\n기준이 되는 부모 class AConfig\n\n자식 class가 같은 하위 class에 override 할 때는 이름을 바꾸지 않음\n부모 class에 없었던 하위 class를 만들 경우 자식Class의 이름(e.g. B, C) 활용\n대문자는 Config 객체의 ID\n소문자는 한개의 Config 클래스 객체 내에서의 하위 class 순서\n\n\nclass AConfig():\n    class A_a_Config:\n        element01 = \"element01\"\n        element02 = True\n    class A_b_Config:\n        element03 = 0\n        element04 = [2,4,6]\n\nBConfig는\n\nAConfig의 A_a_Config를 override\nAConfig의 A_b_Config를 override 하지 않음\nB_a_Config 추가\n\n\nclass BConfig(AConfig):\n    class A_a_Config:\n        element02 = False\n    # class A_b_Config:\n    #     pass\n    class B_a_Config:\n        element05 = {\"key\":\"value\"}\n\nCConfig는\n\nAConfig의 A_a_Config를 override\nAConfig의 A_b_Config를 pass로 override\nC_a_Config 추가\n\n\nclass CConfig(AConfig):\n    class A_a_Config:\n        element02 = False\n    class A_b_Config:\n        pass\n    class C_a_Config:\n        element05 = {\"key\":\"value\"}\n\nDConfig는\n\nAConfig의 A_a_Config를 인자로 받아 override\nAConfig의 A_b_Config를 인자로 받아 override\n\n\nclass DConfig(AConfig):\n    class A_a_Config(AConfig.A_a_Config):\n        element02 = False\n    class A_b_Config(AConfig.A_b_Config):\n        pass\n\nEConfig는\n\n__init__(super)로 Aconfig 상속\n\n\nclass EConfig(AConfig):\n    def __init__(super): pass\n    class E_a_Config:\n        element06 = (1,3,5)\n\n\n\nClass to Dict\nclass 객체를 dictionary로 만들기\n\ndef class_to_dict(obj) -> dict:\n    if not hasattr(obj, \"__dict__\"):                # __dict__ : 클래스 객체의 속성 정보를 확인하기 위해 사용. 객체가 가진 여러가지 속성들을 딕셔너리 형태로 편하게 확인\n        return obj\n    result = {}                                     # 빈 dict 객체 만들기\n    for key in dir(obj):                            # dir(): 어떤 객체를 인자로 넣어주면 해당 객체가 어떤 변수와 메소드(method)를 가지고 있는지 나열\n        if key.startswith(\"_\"):                     # startswith: str.startswith(str or tuple) 형식으로 사용하면 되고, 반환 값으로는 True, False를 반환\n            continue\n        element = []                                # 리스트 요소에 대비\n        val = getattr(obj, key)                     # getattr: object에 존재하는 속성의 값을 가져옴\n        if isinstance(val, list):                   # isinstance로 list 객체인지 확인 e.g.) isinstance(object, type)\n            for item in val:\n                element.append(class_to_dict(item))\n        else:                                       # 리스트가 아닌 모든 요소들 처리\n            element = class_to_dict(val)\n        result[key] = element                       # 결과 dict에 저장\n    return result\n\n\nAConfigDict = class_to_dict(AConfig)\nAConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\nBConfigDict = class_to_dict(BConfig)\nBConfigDict\n\n{'A_a_Config': {'element02': False},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},\n 'B_a_Config': {'element05': {'key': 'value'}}}\n\n\n\nCConfigDict = class_to_dict(CConfig)\nCConfigDict\n\n{'A_a_Config': {'element02': False},\n 'A_b_Config': {},\n 'C_a_Config': {'element05': {'key': 'value'}}}\n\n\n\nDConfigDict = class_to_dict(DConfig)\nDConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': False},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\nEConfigDict = class_to_dict(EConfig)\nEConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},\n 'E_a_Config': {'element06': (1, 3, 5)}}\n\n\n\n\n\nDict to Yaml\n\nimport yaml\nfrom pprint import pprint\n\n\nAConfigDictYaml = yaml.dump(AConfigDict)\nprint(AConfigDictYaml)\nprint(type(AConfigDictYaml))\n\nA_a_Config:\n  element01: element01\n  element02: true\nA_b_Config:\n  element03: 0\n  element04:\n  - 2\n  - 4\n  - 6\n\n<class 'str'>\n\n\n\n\nYaml to Dict\n\nAYamlDict = yaml.safe_load(AConfigDictYaml)\npprint(AYamlDict)\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\n\nDict to Class\n\n속성값으로 만들어주는 것이기 때문에 내부 메소드나 내부 클래스가 아닌, 내부 변수와 같음\n\n\nclass Dict2Class(object):\n    def __init__(self, input_dict):\n        for key in input_dict:\n            print(\"Set arribute: \", key)\n            setattr(self, key, input_dict[key]) # object에 존재하는 속성의 값을 바꾸거나, 새로운 속성을 생성하여 값을 부여\n\n\nAYamlDictClass = Dict2Class(AYamlDict)\n\nSet arribute:  A_a_Config\nSet arribute:  A_b_Config\n\n\n\nAYamlDictClass.A_a_Config\n\n{'element01': 'element01', 'element02': True}\n\n\n\nAYamlDictClass.A_b_Config\n\n{'element03': 0, 'element04': [2, 4, 6]}"
   },
   {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html",
-    "href": "posts/paper/2022-06-26-keep-learning.html",
-    "title": "📃Legged Robots that Keep on Learning",
+    "objectID": "posts/storage/2020-07-17-rl-study-roadmap.html",
+    "href": "posts/storage/2020-07-17-rl-study-roadmap.html",
+    "title": "🧩My Reinforcement Learning Roadmap",
     "section": "",
-    "text": "Legged robots are physically capable of traversing a wide range of challenging environments but designing controllers that are sufficiently robust to handle this diversity has been a long-standing challenge in robotics. Reinforcement learning presents an appealing approach for automating the controller design process and has been able to produce remarkably robust controllers when trained in a suitable range of environments. However, it is difficult to predict all likely conditions the robot will encounter during deployment and enumerate them at training-time. What if instead of training controllers that are robust enough to handle any eventuality, we enable the robot to continually learn in any setting it finds itself in? This kind of real-world reinforcement learning poses a number of challenges, including efficiency, safety, and autonomy. To address these challenges, we propose a practical robot reinforcement learning system for fine-tuning locomotion policies in the real world. We demonstrate that a modest amount of real-world training can substantially improve performance during deployment, and this enables a real A1 quadrupedal robot to autonomously fine-tune multiple locomotion skills in a range of environments, including an outdoor lawn and a variety of indoor terrains."
+    "text": "강화학습을 공부했던 roadmap을 기록하고자 글을 쓰게 되었다.\n짧게 기록할 수 있는 정보들과 내 느낌들을 간략하게 적어보고자 한다."
   },
   {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#system-process",
-    "href": "posts/paper/2022-06-26-keep-learning.html#system-process",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "System Process",
-    "text": "System Process\n\n\n\n\n\n\n위의 사진에 보이는 공원과 같은 새로운 환경에서 먼저 로봇 agent가 첫번째 시도로 locomotion task를 진행한다.\n만약에 땅이 고르지 못해서 agent의 학습된 policy를 활용할 수 없는 상황이 되어서 넘어지게 되는 상황이 될 수 도 있다.\n이때 reset controller를 이용해서 빠르게 다시 일어난다.\n실제 task에서 좀 더 몇 번 시도를 하면서 1~3의 과정을 몇 번 반복하게 되고 이 과정에서 policy가 업데이트 되게 된다.\n업데이트가 되면서 policy는 새로운 test 환경에서 제대로 작동할 수 있게 된다."
+    "objectID": "posts/storage/2020-07-17-rl-study-roadmap.html#my-rl-study-road-map",
+    "href": "posts/storage/2020-07-17-rl-study-roadmap.html#my-rl-study-road-map",
+    "title": "🧩My Reinforcement Learning Roadmap",
+    "section": "My RL study road map",
+    "text": "My RL study road map\n\n아래는 시간 순서대로 내가 공부했던 강의나 책, 스터디 모임\n\n\n모두의 rl\n케라스로 시작하는 rl 책 스터디\n모두연 starcraft project - 논문 리딩\nUdacity\nConnect-X\npytorch 책\n수학 강화학습 책\nOpen AI Gym\nfast campus\nBNM2h 스터디\nRL 논문 스터디 3기\nUnity Ml agent 스터디\nHugging face 강화학습 강의"
   },
   {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#how",
-    "href": "posts/paper/2022-06-26-keep-learning.html#how",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "How",
-    "text": "How\n\n강화학습의 reward 가 robot의 on-board 센서로 측정되는 값들로만 디자인 되어야 실제 Real-world에서 작동하면서 fine tuning을 할 수 있다.\nAgile한 behavior를 학습하기 위해서 Motion imitation 기법을 활용했다.\n로봇의 넘어지고 나서 빠르게 정상자세로 회복할 수 있도록 Recovery policy를 학습했다.\n강화학습 알고리즘들 중에서 REDQ(Randomized Ensembled Double Q-Learning) 라는 알고리즘을 사용했는데, 이 알고리즘은 여러개 Q-network들의 앙상블을 통해 randomization을 해서 Q-learning 계열의 알고리즘들의 sample-efficiency와 안정성을 향상시킨 알고리즘이다."
+    "objectID": "posts/storage/2020-07-17-rl-study-roadmap.html#materials",
+    "href": "posts/storage/2020-07-17-rl-study-roadmap.html#materials",
+    "title": "🧩My Reinforcement Learning Roadmap",
+    "section": "Materials",
+    "text": "Materials\n\n무료강의\n\n\nHuggiing Face - DRL course: 허깅페이스에서 제공하는 강화학습 강의. 역시 허깅 페이스. 개인적으로 Udacity보다 더 좋은 것 같다.\n모두의 RL: 강화학습 입문용 강의. 가볍게 듣고 시작하는 것을 추천.\n팡요랩 : 강화학습 강의로 유명한 데이비드 실버 교수님 강의 한글 버전\n혁펜하임 : 수식적으로 파고 들어가고 싶다면 추천.\nCS285 : 입문이라기에 조금 어려울 수는 있으나 만약 로봇틱스쪽을 생각하고 있다면 꼭 들어야하는 강의.\nDeepMind - Reinforcement Learning Lecture Series 2021 (2022.05.06 updated)\n\n\n유료강의\n\n\nUdacity : 엄청 비쌈, 프로그램이 좋긴한데 nano degree가 목적이 아니라면 추천하지 않음.\nUdemy : 코드 위주로 빨리 배워보고 싶을 때. 어느정도 강화학습에 대한 기본 지식이 있을 때 듣는 것이 좋음.\nFast campus 박준영 강사님 : 무엇보다 한국어로 자세히 설명도 해주시고 코드도 있어서 좋음. 개인적으로 무료 강의들로 기초를 한번 다지고 난 후 이 강의를 들으면서 불명확했던 부분을 짚으면 좋은 것 같다.\n\n\n책\n\n\n파이썬과 케라스로 배우는 강화학습\nPyTorch를 활용한 강화학습/심층강화학습 실전 입문\n수학으로 풀어보는 강화학습 원리와 알고리즘 : 수학적 기반 다지기. 모델 베이스드 RL 쪽으로 내용이 좋음.\n단단한 강화학습 : 강화학습 대가 리처드 서튼 교수님의 바이블 원작을 번역.\n단단한 심층강화학습 (2022.05.06 updated)\n\n\n2022.05.06 기준 강화학습 관련된 많은 책들이 나와서 책에 대한 추천은 최근 출간된 책들을 목차들을 보고 본인에게 필요한 부분을 공부하는 것을 추천.\n\n\n웹사이트(입문으로는 조금 힘들 수 있으나 어느정도 공부한 후, 트렌드나 흐름 잡기에 좋음)\n\n\nDeepMind blog\nOpenAI blog\nOpenAI Spinning up\n\n\nGithub\n\n\nRL 가계도\nHuggingface DRL : 위에 무료강의 중 허깅페이스 강의에서 사용하는 코드들이 올라와 있음.\n\n\n커뮤니티\n\n\nRL Korea : 페이스북\nRL.start() : 오픈 카카오톡"
   },
   {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#main-contribution",
-    "href": "posts/paper/2022-06-26-keep-learning.html#main-contribution",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "Main Contribution",
-    "text": "Main Contribution\n\n본 논문의 주요 contribution은 다음과 같다.\n\n\n4족 보행 로봇의 agile한 locomotion skill을 real-world에서 학습하기 위한 fine-tuning 자동화 시스템을 제안하였다.\n처음으로 자동화 reset과 on-board 상태 추정을 통해 real-world에서 fine-tuning이 될 수 있음으로 보였다.\nA1 로봇을 가지고 dynamic skill들을 학습해서 외부 잔디에서 앞으로, 뒤로 pacing을 하고 3가지 다른 지형 특징을 가진 환경에서 side-stepping을 할 수 있었다."
+    "objectID": "posts/storage/2021-01-02-GNN-intro.html",
+    "href": "posts/storage/2021-01-02-GNN-intro.html",
+    "title": "🧩GNN Intro",
+    "section": "",
+    "text": "GNN에 관심을 가지게 된 계기는 RoboGrammar라는 paper였다. 예전부터 하고 싶었던 Robot design 아이디어를 GNN을 가지고 실현시킨 것이 너무 신기해서 공부해보고 싶었다. 이번 포스팅에서는 GNN과 첫만남인 만큼 공부할 자료들을 정리해보려 한다."
   },
   {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#details-with-hash-tags",
-    "href": "posts/paper/2022-06-26-keep-learning.html#details-with-hash-tags",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "Details with Hash tags",
-    "text": "Details with Hash tags\n\n원 논문의 II. Related Work section 참고\n\n#Cumbersome controller designs\n\n이전의 로봇 controller들은 footstep planning, trajectory optimization, model-predictive control (MPC) 등의 조합으로 만들어지고 있었다. 그러나 이런 방법들은 로봇의 동역학과 각 로봇마다 다르고 각 skill마다 다른 많은 요소들을 고려해야 하기 때문에 정말 어려웠다.\n\n#Sim2Real\n\ntrial-and-error라는 데이터에 매우 의존성이 높은 강화학습 알고리즘의 특성과 하드웨어의 safety 이슈 때문에 보통 로봇 강화학습 agent는 시뮬레이션 기반으로 학습된다. 하지만 시뮬레이션에서 학습하면서 실제로 만나보지 않은 real-world의 모든 조건들을 예상하고 학습하기란 사실상 불가능하며 가장 robust한 policy라고 할지라도 모든 상황에 대해 generalization 되었다고 할 수 없다.\n\n#Real-world\n\n이전에 복잡한 motion들을 학습하게 하기 위해서 environment의 다양한 장치들로 다양한 상태 정보를 만들어서 사용했지만 본 연구에서는 real-world에서 작동하고 있는 로봇에서 fine-tuning을 해야 하기 때문에 로봇의 on-board에서 받을 수 있는 모든 state estimation 정보들을 가지고만 진행했으며 motion capture나 외부 장치들을 별도로 사용하지 않았다.\nscratch부터 실제 환경에서 단순한 구조의 로봇들로 walking gaits들을 학습하는게 아니라, A1 로봇으로 pacing, side stepping 등 매우 자연스럽고 조금은 불안정하고 세밀한 balancing이 요구되는 skill들을 학습할 수 있었다. (기존의 연구들은 balancing에 매우 신경쓴 나머지 느리고 부자연스러운 walking gaits 에 치중한 면이 있었다.) 본 논문의 연구에서 motion imitation과 실제 환경에서의 fine-tuning 이 이런 다이나믹한 task들을 성공시키는데 매우 중요한 역할을 했다. 또한 실제 환경에서 로봇이 작동하면서 넘어질 때, manual하게 로봇의 reset하거나 recovery시키지 않고 강화학습으로 자동적으로 reset 할 수 있는 controller를 만들어서 사용했다.\n\n#Few-shot adaptation\n\n기존의 Adaptation structure라는 구조를 만들어서 학습시켜서 latent 또는 explicit한 환경에 대한 descriptor로 adaptive한 policy를 만드는 연구들이 있었으나, 이 기법들 또한 결국 training에서 경험했던 것들을 기반으로 adaptive함을 보이는 것이므로 실제 test 환경이 이 허용 범위에서 많이 벗어날 경우 제대로 작동안되는 것은 똑같다. 따라서 강화학습으로 지속적인 적응적인 학습능력을 보장해서 어떤 test 환경에서든 잘 작동할 수 있도록 했다.\n\n#RL Algorithm\n\n강화학습 알고리즘으로는 기존의 vision 기반 매니퓰레이터들에서 grasping 작업을 하는 task들에서 많이 쓰인 off-policy model-free RL 기법들을 참고하여 fixed되어 있는 매니퓰레이터들보다 더 challenging한 floating-based 보행 로봇의 locomotion에 적용해서 성공시켰다."
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#a-overview",
-    "href": "posts/paper/2022-06-26-keep-learning.html#a-overview",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "a) Overview",
-    "text": "a) Overview\n\n\n\n\n\n\n\n\n\n\n\n위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 각각의 policy는 하나의 desired skill을 학습하게 된다. (forward, backward, reset)\nAgent의 policy는 시뮬레이션에서 pretrained 한다. (Algorithm2: line 2~7)\n\n각 에피소드가 끝날 때마다 학습된 recovery policy가 로봇을 다음 rollout을 할 수 있도록 준비시켜준다.\n각 skill을 위한 policy들은 독립적으로 학습되고 recovery policy도 마찬가지로 독립적으로 학습된다.\n\nFine-tuning을 실제 물리적인 환경에서 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm2: line 8~14)\n\n시뮬레이션과 실제 환경의 차이를 고려하여 각 policy들의 replay buffer는 초기화 시켜준다.(Algorithm2: line 12)\n\nMultitask framework를 사용했다.(Algorithm2 참고)"
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#b-motion-imitation",
-    "href": "posts/paper/2022-06-26-keep-learning.html#b-motion-imitation",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "b) Motion Imitation",
-    "text": "b) Motion Imitation\n\nMotion Imiation 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 Learning Agile Robotic Locomotion Skills by Imitating Animals라는 논문에서 제시한 방법을 따라했다. (Algorithm 1: line1~4)\nReference motion M이 주어지면 agent의일련의 pose들과 비교하여 section III-B에서 소개될 reward function을 기반으로 학습한다.\n\n이 방법을 통해 reference motion data만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.\nrecovery policy를 학습하기 위해서 standing pose를 모방하도록 할 수 있다.(III-C 참고)"
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#c-off-policy-rl",
-    "href": "posts/paper/2022-06-26-keep-learning.html#c-off-policy-rl",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "c) Off-policy RL",
-    "text": "c) Off-policy RL\n\noff-policy 알고리즘인 REDQ algorithm 사용했다.(Algorithm 1: line5~9)\n\nSAC 알고리즘을 더 발전시킨 알고리즘\ntime step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.\n너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.\n\n\n(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 Algorithm 1을 참고)"
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#a.-state-action-spaces",
-    "href": "posts/paper/2022-06-26-keep-learning.html#a.-state-action-spaces",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "A. State & Action Spaces",
-    "text": "A. State & Action Spaces\n\nState space\n\nState는 연속적인 3 timesteps에서 얻은 아래 정보들로 정의했다.\n\nRoot orientation (read from the IMU)\nJoint angles\nPrevious actions\n\nPolicy는 위에서 말한 Proprioceptive input 뿐만 아니라 a goal g_t에 대한 정보도 input으로 받게 된다.\n\ng_t는 future timesteps에서의 reference motion에서 계산된 Target pose (root position, root rotation, joint angles)의 정보를 포함한다.\n4 future target poses 는 현재 timestep에서 약 1초 정도 이후의 pose들이다.\n\n\nAction space\n\nAction은 12 joints들에 대한 PD position targets 이다.\n33Hz의 주파수로 command가 적용된다.\n자연스러운 움직임을 위해 PD targets을 low-pass filter를 로봇에 적용하기 전에 통과시켜준다."
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#b.-reward-function",
-    "href": "posts/paper/2022-06-26-keep-learning.html#b.-reward-function",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "B. Reward Function",
-    "text": "B. Reward Function\n\n\\begin{gathered}r_{t}=w^{\\mathrm{p}} r_{t}^{\\mathrm{p}}+w^{\\mathrm{v}} r_{t}^{\\mathrm{v}}+w^{\\mathrm{e}} r_{t}^{\\mathrm{e}}+w^{\\mathrm{rp}} r_{t}^{\\mathrm{rp}}+w^{\\mathrm{rv}} r_{t}^{\\mathrm{rv}} \\\\w^{\\mathrm{p}}=0.5, w^{\\mathrm{v}}=0.05, w^{\\mathrm{e}}=0.2, w^{\\mathrm{rp}}=0.15, w^{\\mathrm{rv}}=0.1\\end{gathered}\n\n\n\nr_{t}^{\\mathrm{p}} : 로봇의 joint rotation 값들을 reference motion의 joint rotation과 맞추도록 하는 reward term\n\n  r_{t}^{\\mathrm{p}}=\\exp \\left[-5 \\sum_{j}\\left\\|\\hat{q}_{t}^{j}-q_{t}^{j}\\right\\|^{2}\\right]\n  \n\n\\hat{q}_{t}^{j} : 시점 t에 reference motion의 j번째 joint의 local rotation\nq_{t}^{j} : 로봇의 j번째 joint local rotation\n\nr_{t}^{\\mathrm{v}} : joint velocities\nr_{t}^{\\mathrm{e}} : end-effector positions\n로봇이 reference root motion을 잘 tracking 하게 하기 위한 reward term\n\nr_{t}^{\\mathrm{rp}} : root pose reward\nr_{t}^{\\mathrm{rv}} : root velocity reward\n\n\n\n이전부터 강조해왔듯이, 실제 환경에서 fine-tuning과정을 진행하기 위해서 on-board 센서들의 값을 이용해서 reward function을 디자인하였고 실제 물리적인 환경에서 구동할 때 이를 상태 추정 기법을 이용해서 reward를 구하게 된다. 따라서 아래의 상태 추정 방법(State Estimation)이 fine-tuning의 성능을 결정하는 중요한 부분이 된다.\n\nReal-world에서 로봇의 linear root velocity를 잘 추정하기 위해서 Kalman filter를 사용했다.\n\n칼만 필터는 IMU 센서에서 acceleration과 orientation 값들을 읽어서 foot contact sensors로 값들을 보정한다.\n처음에 발 끝의 속도를 0으로 생각해서 각 다리의 joint velocities를 고려하여 몸체의 속도를 계산하고 IMU으로부터 추정했던 값을 보정한다.\n\n이렇게 계산된 linear velocity를 로봇의 position 추정값에 통합시킨다.\n\n\n\n\n\n\n위의 그래프들에 볼 수 있듯이(아래에서 위 방향으로),\n\nangular velocity와 orientation 센서 값들은 매우 정확했다.\nlinear velocity는 매우 정확하진 않았지만 허용가능했다.(reasonable)\nposition drifts는 상당히 벗어나는 부분이 있었지만, 각 에피소드에서 reward function을 계산할 정도로의 적합한 값들을 보여주었다."
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#c.-reset-controller",
-    "href": "posts/paper/2022-06-26-keep-learning.html#c.-reset-controller",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "C. Reset Controller",
-    "text": "C. Reset Controller\n\nreset policy를 시뮬레이션에서 학습하기 위해 다양한 initial states에서 시작하도록 했다.\n\n→ 로봇을 random한 height & orientation에서 떨어뜨려서 아래 사진에서 볼 수 있듯이 다양한 initial states를 설정\n\n\n\n\n\n\nMotion imitation 목적함수를 수정해서 single, streamlined reset policy를 학습시켰다.\nReference motion을 가지고 로봇이 정확히 어떻게 일어나야 할지를 알려주는 것이 아니라, 아래와 같은 방법으로 reset policy를 학습시켰다.\n\n\npolicy가 rolling right side up을 위한 reward만을 가지고 학습한다.\n만약 로봇이 upright하는데 성공하면 이후에 motion imitation reward를 추가시켜서 학습니다.\n\n이때의 reference motion은 standing pose가 되고 로봇이 똑바로 설 수 있도록 학습시킨다.\n\n\n\n이런 방식으로 학습된 reset policy는 다양한 test 지형에서 fine-tuning 없이도 잘 동작했다.(tranfered well)"
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#a.-simulation-experiments",
-    "href": "posts/paper/2022-06-26-keep-learning.html#a.-simulation-experiments",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "A. Simulation Experiments",
-    "text": "A. Simulation Experiments\n\nagent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 학습된 시뮬레이션과 또 다른 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.\nLearned forward pacing gait가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.\nStandard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)으로 Pre-train을 flat ground에서 진행했다.\nThe test terrains : test 환경들로는 총 3가지로 실험하였다.\n\na flat ground : pre-training 과정의 시뮬레이션 셋팅과 유사한 test 환경\npre-training 과정의 시뮬레이션 셋팅과 다소 다른 test 환경 :\n\nrandomized heightfield : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형\na low friction surface : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)\n\n\n비교군\n\nlatent space : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습\nRMA: dynamics randomization한 모델. 위에서 언급한 Adaptation Module을 가지고 학습\nVanilla SAC : Soft Actor-Critic 알고리즘으로 학습\nOurs(REDQ): 10개의 Q-functions을 가지고 randomly sample 2로 학습\n\n\n\n실험 결과는 아래와 같았다.\n\nRMA는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.\nSAC에 비해서 Ours가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다."
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#b.-real-world-experiments",
-    "href": "posts/paper/2022-06-26-keep-learning.html#b.-real-world-experiments",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "B. Real-World Experiments",
-    "text": "B. Real-World Experiments\n\n시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다.\n모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 fine-tuning 해주었다.\n\n\nOutdoor grassy lawn:\n\nslippery surface를 가지고 있어서 발이 잔디에서 미끄러지거나 흙에 빠질 수 있다.\n앞 혹은 뒤로 움직이는 pacing gait를 fine-tuning 하도록 했다.\n\npacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새\n\nPre-trained forward pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained backward pacing policy는 잘 넘어지는 경향이 있었다.\n작동한 지 약 2시간 만에, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.\n\n\n\n\n\n\nIndoor\n\nCarpeted room: 높은 마찰계수를 가지는 지형으로 (카펫이 푹신하므로) 로봇의 고무로 마감되어 있는 발이 시뮬레이션에서 학습된 것과 다르게 안정적이지 않은 컨택을 하게 될 수 있다.\n\n\n\n\n\n\n\nDoormat with crevices: 매트 표면에 발이 빠질 수도 있는 환경이다.\n\n\n\n\n\n\n\nMemory foam: 4cm 정도의 두께의 메모리폼으로 발이 매트리스에 빠지고 평평하고 딱딱한 바닥과 비교했을 때 이 환경에서는 gait(걸음새)가 상당히 변화가 많이 일어날 수 있다.\n\n\n\n\n\n\n\nIndoors에서는, pre-trained side stepping policy가 움직일 때 매우 불안정했고 motion을 끝내기 전에 넘어졌다.\n그러나 각 지형 셋팅에서 2.5 시간 이내로 로봇이 비틀거림 없이 skill을 수행할 수 있었다.\n\n\n\n실험 결과는 아래와 같았다."
-  },
-  {
-    "objectID": "posts/paper/2022-06-26-keep-learning.html#c.-semi-autonomous-training",
-    "href": "posts/paper/2022-06-26-keep-learning.html#c.-semi-autonomous-training",
-    "title": "📃Legged Robots that Keep on Learning",
-    "section": "C. Semi-autonomous training",
-    "text": "C. Semi-autonomous training\n\n전반적인 모든 실험들에서, the recovery policy는 100% 성공적이었다.\n본 논문에서 제시된 방법으로 학습된 reset controller와 Unitree에서 제공한 built-in rollover controller를 비교해보았다.\n\nOn hard surfaces : 두 가지 controllers 모두 효과적으로 잘 작동했지만 built-in 컨트롤러는 learned policy에 비해 상당히 느렸다.\nOn the memory foam : built-in 컨트롤러는 더 성능이 좋지 못했다."
+    "objectID": "posts/storage/2021-01-02-GNN-intro.html#materials",
+    "href": "posts/storage/2021-01-02-GNN-intro.html#materials",
+    "title": "🧩GNN Intro",
+    "section": "Materials",
+    "text": "Materials\n\nTobigs Graph Study\nCS224W: Machine Learning with Graphs / Videos\nGraph Neural Networks - Penn Engineering\nTF Graph Neural Network Samples\nGraph Neural Networks in TF2\nGraph Representation Learning(Pytorch)\nA Gentle Introduction to Graph Neural Networks (Basics, DeepWalk, and GraphSage)\nInvariant Graph Networks : invariance, equivariance, k-WL GNN 관련 주제\nEnd-to-End, Transferable Deep RL for Graph Optimization : RL + GNN\n\n\nTutorials & Workshops\n\nWWW 18 Tutorial : Representation Learning on Networks\nCIKM 19 Tutorial : Recent Developments of Deep Heterogeneous Information Network Analysis\nWSDM 19 Tutorial : Learning and Reasoning on Graph for Recommendation\nKDD 19 Tutorial : Learning From Networks\nAAAI 20 Tutorial : Graph Neural Networks: Models and Applications\nICML2020 GNN Workshop GRL+\nWWW 20 Hands on Tutorial - Videos\nGraph Neural Networks for Natural Language Processing / PPT\nTutorial on Spectral and Graph ConvNets\n\n\n\nPapers & Survey\n\nGraph Neural Networks: Taxonomy, Advances and Trends\nA Comprehensive Survey on Graph Neural Networks\nDirectional Graph Networks\nGNN KR Paper List\nGraph Meta Learning via Local Sub-graphs\n\nMeta-GNN: On Few-shot Node Classification in Graph Meta-learning\nFew-shot Learning with Graph Neural Networks\nLearning to Propagate for Graph Meta-Learning\n\nSelf-supervised Training of Graph Convolutional Networks\nXGNN: Towards Model-Level Explanations of Graph Neural Networks\nL2-GCN: Layer-Wise and Learned Efficient Training of Graph Convolutional Networks, 2020 CVPR\n\n\n\nVideos\n\nAn Introduction to Graph Neural Networks: Models and Applications\n{% include youtube.html content=‘https://www.youtube.com/embed/zCEYiCxrL_0’ %}\n\n\nGraph Convolutional Networks using only NumPy\n{% include youtube.html content=‘https://www.youtube.com/embed/8qTnNXdkF1Q’ %}\n\n\nGeometric Deep Learning on Graphs and Manifolds\n{% include youtube.html content=‘https://www.youtube.com/embed/LvmjbXZyoP0’ %}\n\n\nGraph Nets: The Next Generation\n\nLink\n\n{% include youtube.html content=‘https://www.youtube.com/embed/Wx8J-Kw3fTA’ %}\n\n\nRecent Developments of Graph Network Architectures\n\nSlide\n2019-2020에 발표된 GNN 방법론들을 정리\nGNN의 expressiveness, 그중에서도 invariance and equvariance\n\n{% include youtube.html content=‘https://www.youtube.com/embed/M60huxIvKbE’ %}\n\n\nDeep learning on graphs: successes, challenges, and next steps\n{% include youtube.html content=‘https://www.youtube.com/embed/PLGcx65MhCc’ %}\n\n\nGraph Representation Learning for Algorithmic Reasoning\n\nSlide\n\n{% include youtube.html content=‘https://www.youtube.com/embed/IPQ6CPoluok’ %}\n\n\nHow Uber uses Graph Neural Networks to recommend you food\n\nPost\n\n{% include youtube.html content=‘https://www.youtube.com/embed/9O9osybNvyY’ %}"
   },
   {
     "objectID": "posts/paper/2022-08-07-gn-block.html",
@@ -581,6 +287,41 @@
     "text": "6. Comparison of model variants\nValue Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 Swimmer, Reacher, HalfCheetah에서 비교해본 결과, Value Network는 MLP로 한 NerveNet-MLP의 퍼포먼스가 가장 좋았고 NerveNet-1의 퍼포먼스가 2등으로 NerveNet-MLP 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight \\alpha를 더 sensitive하게 만들기 때문이라고 추론할 수 있다."
   },
   {
+    "objectID": "posts/paper/2022-09-17-wavenet.html",
+    "href": "posts/paper/2022-09-17-wavenet.html",
+    "title": "📃WaveNet",
+    "section": "",
+    "text": "이번 포스팅은 Google DeepMind에서 발표한 WaveNet이라는 논문에 대해 리뷰를 하려고 합니다. WaveNet은 Autoregressive한 Generative model로써 Google의 스피커 서비스에 사용되었다고 많이 알려진 모델입니다."
+  },
+  {
+    "objectID": "posts/paper/2022-09-17-wavenet.html#dilated-casual-convolution",
+    "href": "posts/paper/2022-09-17-wavenet.html#dilated-casual-convolution",
+    "title": "📃WaveNet",
+    "section": "1. Dilated Casual Convolution",
+    "text": "1. Dilated Casual Convolution\n먼저 Dilated Casual Convolution은 µ-law Companding Transformation 처리를 거친 음성 신호를 받아오는 첫번째 부분입니다.\n\n\n\n\n\n\nCasual Convolution 2\n\n\n\n우선 Casual 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 t를 기준으로 미래 정보는 사용할 수 없고 현재까지의(과거~현재 t) 정보만 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 (레이어 수) + (필터의 length) -1로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 input에서 5개의 음성 정보가 output의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.\n\n\n\n\n\n\nDilated Casual Convolution 2\n\n\n\n그래서 제안이 된 방법이 바로 Dilated Convolution입니다. 이는 convolution with holes로 해석할 수 있는데 위의 그림에서 볼 수 있듯이 이전 레이어에서 데이터가 Dilated되어 데이터가 듬성듬성하게 모아져서 다음 레이어로 넘어가는 것을 볼 수 있습니다. 이는 skip이나 pooling과 유사해보이지만 input과 output의 차원이 유지된다는 점에서 차이가 있습니다. 이때의 RF는 각 레이어의 Dilation 값을 모두 더하고 마지막에 현재 시점의 데이터 1을 더하며 RF가 계산됩니다. WaveNet에서는 Dilation을 총 30개의 레이어에 적용했고 Dilation 값의 패턴은 input에서 부터 1, 2, …, 512 로 2배씩 늘린 10개의 레이어를 총 3번 반복했습니다. 이때, 1 ~ 512 Dilation 값을 가진 10개 레이어의 RF는 1024로 계산됩니다.\n\n\n\n\n\n\nDilated Casual Convolution Process2\n\n\n\n\n\n\n\n\n\nDilated Convolution Pattern6\n\n\n\nCode 구현으로 살펴보면 아래와 같이 구현할 수 있습니다. Casual 특성을 반영하기 위해 self.ignoreOutIndex 을 만들어서 dilation 값을 고려하여 (kernel_size - 1) * dilation으로 계산한 후에 잘라내주는 것을 확인할 수 있습니다.\nclass CasualDilatedConv1D(nn.Module):\n    def __init__(self, in_channels, out_channels, kernel_size, dilation, padding=1):\n        super().__init__()\n        self.conv1D = nn.Conv1d(in_channels, out_channels, kernel_size, dilation=dilation, bias=False, padding='same')\n        self.ignoreOutIndex = (kernel_size - 1) * dilation # casual\n\n    def forward(self, x):\n        return self.conv1D(x)[..., :-self.ignoreOutIndex] # casual"
+  },
+  {
+    "objectID": "posts/paper/2022-09-17-wavenet.html#residual-connection-gated-activation-units",
+    "href": "posts/paper/2022-09-17-wavenet.html#residual-connection-gated-activation-units",
+    "title": "📃WaveNet",
+    "section": "2. Residual Connection & Gated Activation Units",
+    "text": "2. Residual Connection & Gated Activation Units\n다음으로 Dilated Causal Convolution을 거친 후 통과하게 되는 Residual Connection & Gated Activation Units 부분에 대해서 살펴보겠습니다.\n\n\n\n\n\nWaveNet에서 사용된 Gated Activation Units는 PixelCNN에서 사용된 매커니즘을 차용했습니다. 아래의 그림에서 보이는 보라색 Dilated Conv가 앞에서 설명한 DCC이며 이를 거친 후 Convoltion layer와 각각 tanh, sigmoid activation을 통과하여 Filter, Gate가 됩니다. 이 2가지 경로로 계산된 값은 elementwise product를 통해 하나의 벡터로 변환됩니다. 이떄 Dilated를 통과하기 전 값을 Residual Connection을 통해 연결함으로써 딥러닝 모델이 레이어를 더 깊게 쌓을 수 있도록 돕고 더 빠르게 학습할 수 있도록 할 수 있었다고 합니다.\n\n\n\n\n\n\nResidual Connection & Gated Activation Units6"
+  },
+  {
+    "objectID": "posts/paper/2022-09-17-wavenet.html#skip-connection",
+    "href": "posts/paper/2022-09-17-wavenet.html#skip-connection",
+    "title": "📃WaveNet",
+    "section": "3. Skip Connection",
+    "text": "3. Skip Connection\n\n\n\n\n\nSkip Connection은 Dilated Convolution을 통해 다양한 Receptive Field를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다. 앞서 설명했던 대로 각 Residual Block의 Dilation 값이 다 다르기 때문에 각 Residual Block의 output은 서로 다른 Receptive Field를 가지게 됩니다.\n\n\n\n\n\n\nSkip Connection6\n\n\n\nResidual Connection과 Skip Connection을 Code로 구현하면 다음과 같습니다. 위에서 설명했던 Gated Activation Units의 tanh, sigmoid activation을 각각의 activation function을 거친후 self.resConv1D을 통과하는 것을 확인할 수 있습니다. 또한 Skip Connection을 구현하는 부분은 self.skipConv1D에서 확인할 수 있습니다. 마지막 return에서 resOutput, skipOutput으로 2개의 output이 나오는 것을 알 수 있습니다.\nclass ResBlock(nn.Module):\n    def __init__(self, res_channels, skip_channels, kernel_size, dilation):\n        super().__init__()\n        self.casualDilatedConv1D = CasualDilatedConv1D(res_channels, res_channels, kernel_size, dilation=dilation)\n        self.resConv1D = nn.Conv1d(res_channels, res_channels, kernel_size=1)\n        self.skipConv1D = nn.Conv1d(res_channels, skip_channels, kernel_size=1)\n        self.tanh = nn.Tanh()\n        self.sigmoid = nn.Sigmoid()\n\n    def forward(self, inputX, skipSize):\n        x = self.casualDilatedConv1D(inputX)\n        x1 = self.tanh(x)\n        x2 = self.sigmoid(x)\n        x = x1 * x2\n        resOutput = self.resConv1D(x)\n        resOutput = resOutput + inputX[..., -resOutput.size(2):]\n        skipOutput = self.skipConv1D(x)\n        skipOutput = skipOutput[..., -skipSize:]\n        return resOutput, skipOutput\n위와 같은 ResBlock은 전체 구조에서 보시다시피 여러개가 stacked 되어 있으므로 StackOfResBlocks class로 구현하여 WaveNet에 넣어주게 됩니다.\nclass StackOfResBlocks(nn.Module):\n\n    def __init__(self, stack_size, layer_size, res_channels, skip_channels, kernel_size):\n        super().__init__()\n        buildDilationFunc = np.vectorize(self.buildDilation)\n        dilations = buildDilationFunc(stack_size, layer_size)\n        self.resBlocks = []\n        for s,dilationPerStack in enumerate(dilations):\n            for l,dilation in enumerate(dilationPerStack):\n                resBlock=ResBlock(res_channels, skip_channels, kernel_size, dilation)\n                self.add_module(f'resBlock_{s}_{l}', resBlock) # Add modules manually\n                self.resBlocks.append(resBlock)\n\n    def buildDilation(self, stack_size, layer_size):\n        # stack1=[1,2,4,8,16,...512]\n        dilationsForAllStacks = []\n        for stack in range(stack_size):\n            dilations = []\n            for layer in range(layer_size):\n                dilations.append(2 ** layer)\n            dilationsForAllStacks.append(dilations)\n        return dilationsForAllStacks\n\n    def forward(self, x, skipSize):\n        resOutput = x\n        skipOutputs = []\n        for resBlock in self.resBlocks:\n            resOutput, skipOutput = resBlock(resOutput, skipSize)\n            skipOutputs.append(skipOutput)\n        return resOutput, torch.stack(skipOutputs)"
+  },
+  {
+    "objectID": "posts/paper/2022-09-17-wavenet.html#conditional-wavenets",
+    "href": "posts/paper/2022-09-17-wavenet.html#conditional-wavenets",
+    "title": "📃WaveNet",
+    "section": "4. Conditional WaveNets",
+    "text": "4. Conditional WaveNets\n\n\n\n\n\n\n\n\n\n\n\nConditional modeling 6\n\n\n\nConditional Modeling은 Autoregressive model인 WaveNet에 적용하기 쉽고 이 또한 PixelCNN에서의 아이디어와 유사합니다. Feature h 벡터를 조건 부분에 추가하여 음성 데이터에 조건을 추가할 수 있습니다.\n\np(\\mathbf{x} \\mid \\mathbf{h})=\\prod_{t=1}^T p\\left(x_t \\mid x_1, \\ldots, x_{t-1}, \\mathbf{h}\\right)\n\nCondition에는 크게 2가지로 Global과 Local이 있습니다. 먼저 Global은 Time-invariant한 조건으로 시점에 따라 변하지 않는 조건 정보를 추가하는 것을 말합니다. 예를 들어 한 발화자의 음성은 해당 음성 파일의 어떤 시점에서나 똑같은 condition이기 때문에 Global condition이라고 할 수 있습니다. 이때의 Feature vector h는 linear projection을 거친 후 data x와 더하게 됩니다.\n\n\n\n\n\n다음으로 Time-variant한 Local condition은 시점에 따라 변하는 조건 정보를 추가하는 것을 말하는데 음성 데이터보다 길이가 짧지만 순서가 있는 일정 길이의 Sequence vector라고 생각할 수 있습니다. 같은 발화자여도 어떤 단어를 말하느냐에 따라 음성학적인 특징(linguistic feature)가 다를 수 있기 떄문에 local한 조건은 한 음성 파일에 여러개가 있을 수 있습니다. 이때 Feature vector h는 음성 파일과 길이가 다르기 때문에 Upsampling을 거친후 1x1 convolution을 거쳐서 data x와 더해집니다."
+  },
+  {
     "objectID": "posts/paper/2022-10-02-vae.html",
     "href": "posts/paper/2022-10-02-vae.html",
     "title": "📃VAE",
@@ -600,6 +341,104 @@
     "title": "📃VAE",
     "section": "Reconstruction error term",
     "text": "Reconstruction error term\nELBO의 두번째 term인 Reconstruction error에 대해 살펴보겠습니다. Reconstruction error의 expectation 표현을 integral로 표현하면 다음과 같고 이는 몬테카를로 샘플링을 통해 L개의 z_{i, l}를 가지고 평균을 내서 구할 수 있습니다. 여기에서 index i는 데이터 x의 넘버링이고 index l은 generator의 distribution에서 샘플링하는 횟수에 대한 넘버링입니다. VAE는 한정된 몬테카를로 샘플링을 통해 효과적으로 optimization을 수행합니다.\n\n\nRecontruction error term6\n\n\n\n\nReparametrization Trick\n위에서 Reconstruction error를 구하기 위해 샘플링하는 과정에서 backpropation을 하기 위해 Reparametrization trick을 사용하게 됩니다. 단순히 정규분포에서 샘플링 하면 random node인 z에 대해서 gradient를 계산할 수 없기 때문에 random성을 정규분포에서 샘플링 되는 ϵ으로 만들어주고 이를 reparametrization을 해주어서 deterministic node가 된 z를 backpropagation 할 수 있게 됩니다.\n\n\nReparametrization trick6\n\n\n\n# sampling by re-parameterization technique\nz = mu + sigma * tf.random_normal(tf.shape(mu), 0, 1, dtype=tf.float32)\nz를 샘플링하는 generator의 distribution은 Bernoulli로 디자인할 경우 NLL이 Cross Entropy가 되며 Gaussian 분포로 디자인할 경우 MSE가 되어서 보통 계산하기 용이한 2개의 분포 중 하나를 사용하게 됩니다. 모델 디자인의 조건은 데이터의 분포에 따라 결정되는데 데이터의 분포가 continuous 하다면 Gaussian 분포에 가깝기 때문에 Gaussian으로 디자인하고, 데이터의 분포가 discrete 하다면 Bernoulli분포에 가깝기 때문에 Bernoulli로 디자인합니다.\n\n\nTypes of generator distributions6"
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html",
+    "href": "posts/paper/2022-06-26-keep-learning.html",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "",
+    "text": "Legged robots are physically capable of traversing a wide range of challenging environments but designing controllers that are sufficiently robust to handle this diversity has been a long-standing challenge in robotics. Reinforcement learning presents an appealing approach for automating the controller design process and has been able to produce remarkably robust controllers when trained in a suitable range of environments. However, it is difficult to predict all likely conditions the robot will encounter during deployment and enumerate them at training-time. What if instead of training controllers that are robust enough to handle any eventuality, we enable the robot to continually learn in any setting it finds itself in? This kind of real-world reinforcement learning poses a number of challenges, including efficiency, safety, and autonomy. To address these challenges, we propose a practical robot reinforcement learning system for fine-tuning locomotion policies in the real world. We demonstrate that a modest amount of real-world training can substantially improve performance during deployment, and this enables a real A1 quadrupedal robot to autonomously fine-tune multiple locomotion skills in a range of environments, including an outdoor lawn and a variety of indoor terrains."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#system-process",
+    "href": "posts/paper/2022-06-26-keep-learning.html#system-process",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "System Process",
+    "text": "System Process\n\n\n\n\n\n\n위의 사진에 보이는 공원과 같은 새로운 환경에서 먼저 로봇 agent가 첫번째 시도로 locomotion task를 진행한다.\n만약에 땅이 고르지 못해서 agent의 학습된 policy를 활용할 수 없는 상황이 되어서 넘어지게 되는 상황이 될 수 도 있다.\n이때 reset controller를 이용해서 빠르게 다시 일어난다.\n실제 task에서 좀 더 몇 번 시도를 하면서 1~3의 과정을 몇 번 반복하게 되고 이 과정에서 policy가 업데이트 되게 된다.\n업데이트가 되면서 policy는 새로운 test 환경에서 제대로 작동할 수 있게 된다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#how",
+    "href": "posts/paper/2022-06-26-keep-learning.html#how",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "How",
+    "text": "How\n\n강화학습의 reward 가 robot의 on-board 센서로 측정되는 값들로만 디자인 되어야 실제 Real-world에서 작동하면서 fine tuning을 할 수 있다.\nAgile한 behavior를 학습하기 위해서 Motion imitation 기법을 활용했다.\n로봇의 넘어지고 나서 빠르게 정상자세로 회복할 수 있도록 Recovery policy를 학습했다.\n강화학습 알고리즘들 중에서 REDQ(Randomized Ensembled Double Q-Learning) 라는 알고리즘을 사용했는데, 이 알고리즘은 여러개 Q-network들의 앙상블을 통해 randomization을 해서 Q-learning 계열의 알고리즘들의 sample-efficiency와 안정성을 향상시킨 알고리즘이다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#main-contribution",
+    "href": "posts/paper/2022-06-26-keep-learning.html#main-contribution",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "Main Contribution",
+    "text": "Main Contribution\n\n본 논문의 주요 contribution은 다음과 같다.\n\n\n4족 보행 로봇의 agile한 locomotion skill을 real-world에서 학습하기 위한 fine-tuning 자동화 시스템을 제안하였다.\n처음으로 자동화 reset과 on-board 상태 추정을 통해 real-world에서 fine-tuning이 될 수 있음으로 보였다.\nA1 로봇을 가지고 dynamic skill들을 학습해서 외부 잔디에서 앞으로, 뒤로 pacing을 하고 3가지 다른 지형 특징을 가진 환경에서 side-stepping을 할 수 있었다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#details-with-hash-tags",
+    "href": "posts/paper/2022-06-26-keep-learning.html#details-with-hash-tags",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "Details with Hash tags",
+    "text": "Details with Hash tags\n\n원 논문의 II. Related Work section 참고\n\n#Cumbersome controller designs\n\n이전의 로봇 controller들은 footstep planning, trajectory optimization, model-predictive control (MPC) 등의 조합으로 만들어지고 있었다. 그러나 이런 방법들은 로봇의 동역학과 각 로봇마다 다르고 각 skill마다 다른 많은 요소들을 고려해야 하기 때문에 정말 어려웠다.\n\n#Sim2Real\n\ntrial-and-error라는 데이터에 매우 의존성이 높은 강화학습 알고리즘의 특성과 하드웨어의 safety 이슈 때문에 보통 로봇 강화학습 agent는 시뮬레이션 기반으로 학습된다. 하지만 시뮬레이션에서 학습하면서 실제로 만나보지 않은 real-world의 모든 조건들을 예상하고 학습하기란 사실상 불가능하며 가장 robust한 policy라고 할지라도 모든 상황에 대해 generalization 되었다고 할 수 없다.\n\n#Real-world\n\n이전에 복잡한 motion들을 학습하게 하기 위해서 environment의 다양한 장치들로 다양한 상태 정보를 만들어서 사용했지만 본 연구에서는 real-world에서 작동하고 있는 로봇에서 fine-tuning을 해야 하기 때문에 로봇의 on-board에서 받을 수 있는 모든 state estimation 정보들을 가지고만 진행했으며 motion capture나 외부 장치들을 별도로 사용하지 않았다.\nscratch부터 실제 환경에서 단순한 구조의 로봇들로 walking gaits들을 학습하는게 아니라, A1 로봇으로 pacing, side stepping 등 매우 자연스럽고 조금은 불안정하고 세밀한 balancing이 요구되는 skill들을 학습할 수 있었다. (기존의 연구들은 balancing에 매우 신경쓴 나머지 느리고 부자연스러운 walking gaits 에 치중한 면이 있었다.) 본 논문의 연구에서 motion imitation과 실제 환경에서의 fine-tuning 이 이런 다이나믹한 task들을 성공시키는데 매우 중요한 역할을 했다. 또한 실제 환경에서 로봇이 작동하면서 넘어질 때, manual하게 로봇의 reset하거나 recovery시키지 않고 강화학습으로 자동적으로 reset 할 수 있는 controller를 만들어서 사용했다.\n\n#Few-shot adaptation\n\n기존의 Adaptation structure라는 구조를 만들어서 학습시켜서 latent 또는 explicit한 환경에 대한 descriptor로 adaptive한 policy를 만드는 연구들이 있었으나, 이 기법들 또한 결국 training에서 경험했던 것들을 기반으로 adaptive함을 보이는 것이므로 실제 test 환경이 이 허용 범위에서 많이 벗어날 경우 제대로 작동안되는 것은 똑같다. 따라서 강화학습으로 지속적인 적응적인 학습능력을 보장해서 어떤 test 환경에서든 잘 작동할 수 있도록 했다.\n\n#RL Algorithm\n\n강화학습 알고리즘으로는 기존의 vision 기반 매니퓰레이터들에서 grasping 작업을 하는 task들에서 많이 쓰인 off-policy model-free RL 기법들을 참고하여 fixed되어 있는 매니퓰레이터들보다 더 challenging한 floating-based 보행 로봇의 locomotion에 적용해서 성공시켰다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#a-overview",
+    "href": "posts/paper/2022-06-26-keep-learning.html#a-overview",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "a) Overview",
+    "text": "a) Overview\n\n\n\n\n\n\n\n\n\n\n\n위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 각각의 policy는 하나의 desired skill을 학습하게 된다. (forward, backward, reset)\nAgent의 policy는 시뮬레이션에서 pretrained 한다. (Algorithm2: line 2~7)\n\n각 에피소드가 끝날 때마다 학습된 recovery policy가 로봇을 다음 rollout을 할 수 있도록 준비시켜준다.\n각 skill을 위한 policy들은 독립적으로 학습되고 recovery policy도 마찬가지로 독립적으로 학습된다.\n\nFine-tuning을 실제 물리적인 환경에서 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm2: line 8~14)\n\n시뮬레이션과 실제 환경의 차이를 고려하여 각 policy들의 replay buffer는 초기화 시켜준다.(Algorithm2: line 12)\n\nMultitask framework를 사용했다.(Algorithm2 참고)"
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#b-motion-imitation",
+    "href": "posts/paper/2022-06-26-keep-learning.html#b-motion-imitation",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "b) Motion Imitation",
+    "text": "b) Motion Imitation\n\nMotion Imiation 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 Learning Agile Robotic Locomotion Skills by Imitating Animals라는 논문에서 제시한 방법을 따라했다. (Algorithm 1: line1~4)\nReference motion M이 주어지면 agent의일련의 pose들과 비교하여 section III-B에서 소개될 reward function을 기반으로 학습한다.\n\n이 방법을 통해 reference motion data만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.\nrecovery policy를 학습하기 위해서 standing pose를 모방하도록 할 수 있다.(III-C 참고)"
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#c-off-policy-rl",
+    "href": "posts/paper/2022-06-26-keep-learning.html#c-off-policy-rl",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "c) Off-policy RL",
+    "text": "c) Off-policy RL\n\noff-policy 알고리즘인 REDQ algorithm 사용했다.(Algorithm 1: line5~9)\n\nSAC 알고리즘을 더 발전시킨 알고리즘\ntime step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.\n너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.\n\n\n(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 Algorithm 1을 참고)"
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#a.-state-action-spaces",
+    "href": "posts/paper/2022-06-26-keep-learning.html#a.-state-action-spaces",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "A. State & Action Spaces",
+    "text": "A. State & Action Spaces\n\nState space\n\nState는 연속적인 3 timesteps에서 얻은 아래 정보들로 정의했다.\n\nRoot orientation (read from the IMU)\nJoint angles\nPrevious actions\n\nPolicy는 위에서 말한 Proprioceptive input 뿐만 아니라 a goal g_t에 대한 정보도 input으로 받게 된다.\n\ng_t는 future timesteps에서의 reference motion에서 계산된 Target pose (root position, root rotation, joint angles)의 정보를 포함한다.\n4 future target poses 는 현재 timestep에서 약 1초 정도 이후의 pose들이다.\n\n\nAction space\n\nAction은 12 joints들에 대한 PD position targets 이다.\n33Hz의 주파수로 command가 적용된다.\n자연스러운 움직임을 위해 PD targets을 low-pass filter를 로봇에 적용하기 전에 통과시켜준다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#b.-reward-function",
+    "href": "posts/paper/2022-06-26-keep-learning.html#b.-reward-function",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "B. Reward Function",
+    "text": "B. Reward Function\n\n\\begin{gathered}r_{t}=w^{\\mathrm{p}} r_{t}^{\\mathrm{p}}+w^{\\mathrm{v}} r_{t}^{\\mathrm{v}}+w^{\\mathrm{e}} r_{t}^{\\mathrm{e}}+w^{\\mathrm{rp}} r_{t}^{\\mathrm{rp}}+w^{\\mathrm{rv}} r_{t}^{\\mathrm{rv}} \\\\w^{\\mathrm{p}}=0.5, w^{\\mathrm{v}}=0.05, w^{\\mathrm{e}}=0.2, w^{\\mathrm{rp}}=0.15, w^{\\mathrm{rv}}=0.1\\end{gathered}\n\n\n\nr_{t}^{\\mathrm{p}} : 로봇의 joint rotation 값들을 reference motion의 joint rotation과 맞추도록 하는 reward term\n\n  r_{t}^{\\mathrm{p}}=\\exp \\left[-5 \\sum_{j}\\left\\|\\hat{q}_{t}^{j}-q_{t}^{j}\\right\\|^{2}\\right]\n  \n\n\\hat{q}_{t}^{j} : 시점 t에 reference motion의 j번째 joint의 local rotation\nq_{t}^{j} : 로봇의 j번째 joint local rotation\n\nr_{t}^{\\mathrm{v}} : joint velocities\nr_{t}^{\\mathrm{e}} : end-effector positions\n로봇이 reference root motion을 잘 tracking 하게 하기 위한 reward term\n\nr_{t}^{\\mathrm{rp}} : root pose reward\nr_{t}^{\\mathrm{rv}} : root velocity reward\n\n\n\n이전부터 강조해왔듯이, 실제 환경에서 fine-tuning과정을 진행하기 위해서 on-board 센서들의 값을 이용해서 reward function을 디자인하였고 실제 물리적인 환경에서 구동할 때 이를 상태 추정 기법을 이용해서 reward를 구하게 된다. 따라서 아래의 상태 추정 방법(State Estimation)이 fine-tuning의 성능을 결정하는 중요한 부분이 된다.\n\nReal-world에서 로봇의 linear root velocity를 잘 추정하기 위해서 Kalman filter를 사용했다.\n\n칼만 필터는 IMU 센서에서 acceleration과 orientation 값들을 읽어서 foot contact sensors로 값들을 보정한다.\n처음에 발 끝의 속도를 0으로 생각해서 각 다리의 joint velocities를 고려하여 몸체의 속도를 계산하고 IMU으로부터 추정했던 값을 보정한다.\n\n이렇게 계산된 linear velocity를 로봇의 position 추정값에 통합시킨다.\n\n\n\n\n\n\n위의 그래프들에 볼 수 있듯이(아래에서 위 방향으로),\n\nangular velocity와 orientation 센서 값들은 매우 정확했다.\nlinear velocity는 매우 정확하진 않았지만 허용가능했다.(reasonable)\nposition drifts는 상당히 벗어나는 부분이 있었지만, 각 에피소드에서 reward function을 계산할 정도로의 적합한 값들을 보여주었다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#c.-reset-controller",
+    "href": "posts/paper/2022-06-26-keep-learning.html#c.-reset-controller",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "C. Reset Controller",
+    "text": "C. Reset Controller\n\nreset policy를 시뮬레이션에서 학습하기 위해 다양한 initial states에서 시작하도록 했다.\n\n→ 로봇을 random한 height & orientation에서 떨어뜨려서 아래 사진에서 볼 수 있듯이 다양한 initial states를 설정\n\n\n\n\n\n\nMotion imitation 목적함수를 수정해서 single, streamlined reset policy를 학습시켰다.\nReference motion을 가지고 로봇이 정확히 어떻게 일어나야 할지를 알려주는 것이 아니라, 아래와 같은 방법으로 reset policy를 학습시켰다.\n\n\npolicy가 rolling right side up을 위한 reward만을 가지고 학습한다.\n만약 로봇이 upright하는데 성공하면 이후에 motion imitation reward를 추가시켜서 학습니다.\n\n이때의 reference motion은 standing pose가 되고 로봇이 똑바로 설 수 있도록 학습시킨다.\n\n\n\n이런 방식으로 학습된 reset policy는 다양한 test 지형에서 fine-tuning 없이도 잘 동작했다.(tranfered well)"
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#a.-simulation-experiments",
+    "href": "posts/paper/2022-06-26-keep-learning.html#a.-simulation-experiments",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "A. Simulation Experiments",
+    "text": "A. Simulation Experiments\n\nagent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 학습된 시뮬레이션과 또 다른 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.\nLearned forward pacing gait가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.\nStandard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)으로 Pre-train을 flat ground에서 진행했다.\nThe test terrains : test 환경들로는 총 3가지로 실험하였다.\n\na flat ground : pre-training 과정의 시뮬레이션 셋팅과 유사한 test 환경\npre-training 과정의 시뮬레이션 셋팅과 다소 다른 test 환경 :\n\nrandomized heightfield : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형\na low friction surface : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)\n\n\n비교군\n\nlatent space : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습\nRMA: dynamics randomization한 모델. 위에서 언급한 Adaptation Module을 가지고 학습\nVanilla SAC : Soft Actor-Critic 알고리즘으로 학습\nOurs(REDQ): 10개의 Q-functions을 가지고 randomly sample 2로 학습\n\n\n\n실험 결과는 아래와 같았다.\n\nRMA는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.\nSAC에 비해서 Ours가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#b.-real-world-experiments",
+    "href": "posts/paper/2022-06-26-keep-learning.html#b.-real-world-experiments",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "B. Real-World Experiments",
+    "text": "B. Real-World Experiments\n\n시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다.\n모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 fine-tuning 해주었다.\n\n\nOutdoor grassy lawn:\n\nslippery surface를 가지고 있어서 발이 잔디에서 미끄러지거나 흙에 빠질 수 있다.\n앞 혹은 뒤로 움직이는 pacing gait를 fine-tuning 하도록 했다.\n\npacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새\n\nPre-trained forward pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained backward pacing policy는 잘 넘어지는 경향이 있었다.\n작동한 지 약 2시간 만에, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.\n\n\n\n\n\n\nIndoor\n\nCarpeted room: 높은 마찰계수를 가지는 지형으로 (카펫이 푹신하므로) 로봇의 고무로 마감되어 있는 발이 시뮬레이션에서 학습된 것과 다르게 안정적이지 않은 컨택을 하게 될 수 있다.\n\n\n\n\n\n\n\nDoormat with crevices: 매트 표면에 발이 빠질 수도 있는 환경이다.\n\n\n\n\n\n\n\nMemory foam: 4cm 정도의 두께의 메모리폼으로 발이 매트리스에 빠지고 평평하고 딱딱한 바닥과 비교했을 때 이 환경에서는 gait(걸음새)가 상당히 변화가 많이 일어날 수 있다.\n\n\n\n\n\n\n\nIndoors에서는, pre-trained side stepping policy가 움직일 때 매우 불안정했고 motion을 끝내기 전에 넘어졌다.\n그러나 각 지형 셋팅에서 2.5 시간 이내로 로봇이 비틀거림 없이 skill을 수행할 수 있었다.\n\n\n\n실험 결과는 아래와 같았다."
+  },
+  {
+    "objectID": "posts/paper/2022-06-26-keep-learning.html#c.-semi-autonomous-training",
+    "href": "posts/paper/2022-06-26-keep-learning.html#c.-semi-autonomous-training",
+    "title": "📃Legged Robots that Keep on Learning",
+    "section": "C. Semi-autonomous training",
+    "text": "C. Semi-autonomous training\n\n전반적인 모든 실험들에서, the recovery policy는 100% 성공적이었다.\n본 논문에서 제시된 방법으로 학습된 reset controller와 Unitree에서 제공한 built-in rollover controller를 비교해보았다.\n\nOn hard surfaces : 두 가지 controllers 모두 효과적으로 잘 작동했지만 built-in 컨트롤러는 learned policy에 비해 상당히 느렸다.\nOn the memory foam : built-in 컨트롤러는 더 성능이 좋지 못했다."
   },
   {
     "objectID": "posts/paper/2022-10-16-recovery.html",
@@ -665,45 +504,213 @@
     "text": "The competitiveness of Beahavior Selector\n기존의 제어방법들에서는 여러가지 mode를 조율하기 위해서 FSM(Finite State Machine)을 많이 사용합니다. 특정 조건을 if에 넣어주어서 각 mode를 transition하는 기법인데 논문에서도 강화학습으로 학습한 Behavior Selector의 비교를 위해 기존의 FSM 방식을 활용하여 State Machine을 만들어서 비교했습니다. FSM 방식은 여전히 corner case들이 Behavior Selector에 비해 많이 존재했고 각 behavior들 간의 전환도 자연스럽지 않았습니다.\n\nReview\n\n아직 minor 한 주제인 Recovery task에 대해 집중적으로 잘 분석하고 성과도 확실히 보여준 논문이라고 생각합니다. Control system을 working하게 하기 위해 각 파트들을 어떻게 설계하고 학습해야할 지 많은 고민을 했다는 것을 느낄 수 있었습니다. 여전히 flat ground에서만 진행된 연구이기에 slope가 있는 환경이나 다른 object가 있는 좀 더 실제 상황과 비슷한 상황에 대한 recovery가 해결되기 위해서는 연구되어야 할 부분이 충분히 많은 것 같습니다.\n\n\n\nAppendix\n\n\n\nReference\n\norginal paper : https://arxiv.org/abs/1901.07517\nhttps://youtu.be/veXcohbFxKQ"
   },
   {
-    "objectID": "posts/paper/2022-09-17-wavenet.html",
-    "href": "posts/paper/2022-09-17-wavenet.html",
-    "title": "📃WaveNet",
+    "objectID": "posts/note/2021-01-31-ML-tu-berlin-2021.html",
+    "href": "posts/note/2021-01-31-ML-tu-berlin-2021.html",
+    "title": "📘Machine Learning using Python-Theory and Application",
     "section": "",
-    "text": "이번 포스팅은 Google DeepMind에서 발표한 WaveNet이라는 논문에 대해 리뷰를 하려고 합니다. WaveNet은 Autoregressive한 Generative model로써 Google의 스피커 서비스에 사용되었다고 많이 알려진 모델입니다."
+    "text": "사실 ML/DL 카테고리에는 공부내용만 적을려고 했으나 관련 수업을 들은 후기도 여기에 정리하면 좋을 것 같아 여기에 분류했다. 후에 수업에서 배운 내용들도 차근차근히 정리해볼 예정이다.\n\n\n학교에서 지원해주는 교환학생이라던가 해외 협업 수업은 언제나 하고 싶었지만 항상 발목을 잡은 건 영어였던 것 같다. 영어..읽고 쓰는 것도 좋아하고 듣는 것도 다 알아듣진 못해도 어느정도는 되는데 항상 ’말하기’가 문제였다. 사실 천성 내향형 인간이라 한국어로도 말은 원래 잘 못하는데 영어는 더더욱 자신이 없었다. 게다가 학교에서 지원하는 프로그램들은 내가 영어를 잘하는지 증명을 해야하는데 토플 준비만했을 뿐 정작 시험은 안봤다. 계속 다른 일에 우선순위가 밀리고 시험비도 그냥 한번 시도해보기엔 만만치 않아서가 변명이라면 변명이었다. 어쨌든 자격증이 없으니 지원자격자체가 안됬었다.\n그런데 영어 자격증이 없어도 지원할 수 있는 프로그램이 하나 생겼고 코로나로 인해 온라인이긴 했지만 지원했다. 마지막 4학년만 남았기에 이번이 마지막일 수도 있다는 생각도 있었다. 들을 수 있는 수업이 4개가 있었는데 데이터 사이언스/시각화분야 수업과 머신러닝 이론/적용분야 수업 중에 고민을 했다. 결과적으로는 머신러닝 이론/적용을 선택했다. 이유는 아래와 같았다.\n\nSyllabus에 이미 알고 있는 내용들이 좀 더 많았기에 혹시 놓치더라도 뒤쳐지지 않을 것 같았음 + 영어로 소통하는 것에 좀 더 집중할 수 있음\nFeature Engineering 부분이나 Unsupervised Learning과 같은 실제 적용은 많이 해보지 않은 부분들을 다지는 기회\nLecturer 중에 전공분야가 Reinforcement Learning이신 분이 있어서 (혹시라도 친해지면) 이것저것 물어볼 수 있지 않을까라는 생각\n\n그래서 학교에 지원을 넣고 합격이 될까 안될까 걱정반 설렘반이었는데, 담당 교수님과 편하게 카톡영상통화로 면접을 보고 난후 흔쾌히 허락해주셨다. 다행이었다. 이제 독일 학교에 지원서를 작성하는데 문제가 하나 있었다. 지원서 영어실력을 증명하라는 칸이 있었는데 위에 써놓은 것과 같이 난 자격증이 없었기에 뭘 제출하라는 말인지 이해하지 못했다. 근데 컨택해주신 교수님이 분명 영어 자격증없어도 가능하다고 하셨던 것 같은데..뭘까…고민을 하다가 학교에서 이수한 과목들 목록을 뽑았다. 그중에는 영국인 교수님이 수업하신 (물론 영어로 진행된) 영국문화 알아가기라는 교양 수업도 있었고, 필수 이수과목인 대학영어, 전공과목이지만 영어로 진행한 수업들도 있었다. 그래서 학기별 내가 들은 ’영어’와 관련된 수업 목록들을 하나하나 설명하는 보고서(?)를 작성하여 “이런 영어로 진행된 수업들을 잘 이수하였으니 난 영어로 소통가능하다”라고 어필했다. 다행히도 그 보고서로 나의 영어 실력이 증명이 되어서 간신히 수업등록을 마칠 수 있었다. 이렇게 우여곡절 끝에 수업등록을 하니 영어자격증을 빨리 따야겠다는 생각만 더 절실해졌다.😂(이제 조금 여유가 생긴 2월달에 토플 시험 볼 예정이다.)\n\n\n\n\n수업이 시작되고 역시나 걱정되는 건 영어로하는 의사소통이었다. 급하게 영어 말하기 세포를 깨우기 위해 Facebook 지인분들께 방법도 여쭤보고 혼자서 엄청 중얼중얼 거렸다. 단기간에 실력적인 향상 효과는 미미했지만 마음의 준비는 할 수 있었다. 근데 확실히 수업이 막상 시작하니 난관은 말하기보다 듣기에 있었다. 다양한 나라의 다양한 억양은 듣기 힘들다는 이야기를 듣긴 했어도 직접 체험해보니 잘 안들리는 황당함이란.. 다양한 나라의 사람들과 소통하고 싶다는 포부로 시작했던 처음 마음과 달리, 수업하는 동안은 ’잘’듣는 것만으로도 나에게 도전이었던 것 같다. 그런데 한편으로는 완벽한 영어를 구성하지 않는, 나와같이 영어가 제2외국어이신 분들과 수업을 하니 말할때는 부담없이 나도 막(?)말했던 것 같다. 어쨌든 걱정했던 ’말하기’는 생각보다 난관이 아니었고, ’듣기’가 난관이었다는 이야기다. 같이 수업을 듣는 분들은 약 20명 정도 였는데 첫시간에 자기소개할 때 들어보니 다들 박사과정이거나 직장인이었다..?!😲 학사도 졸업 못한 나랑은 너무나 대비되는 분들이라 신기하기도 하고 걱정도 됐다. (학교는 왜 이런 프로그램인지 왜 안알려줬지) 그분들의 능력은 나중에 프로젝트 발표하실 때 확연히 느낄 수 있었는데 프로젝트 완성도나 주제가 넘사벽이었다.\n수업은 대부분 강의 시청 + exercise + 질의 응답으로 이루어졌기에 내가 적극적으로 이야기하고 질문할 부분이 많진 않았다. 그리고 앞서 적었던 것처럼 수업내용이 나한테는 완전히 새로운 분야는 아니어서 그런지 그럭저럭 따라갈 수 있었다. (벌써 수업 마쳤다고 기억이 미화된건지는 모르겠지만) 그리고 모르는게 있으면 구글링으로 잘 정리해놓은 훌륭하신 한국인 분들의 포스팅, 가지고 있는 책들로 메꿔갔기에 수업을 따라가는 건 많이 어렵진 않았던 것 같다. 진짜 다른분들이 잘 정리해놓으신 포스팅에 도움을 많이 받아서 항상 드는 생각이지만 언젠가는 나도 저분들처럼 도움되는 포스팅을 하고 싶다라는 생각이 든다.\n사실 등록 전에는 몰랐던 Group Work는 수업계획서에서 처음 봤을 때 당황스러웠다. 그러나 걱정됐던 부분과 달리 팀구성도 잘됐고, 내가 주도해서 그런지 주제도 내가 원하는 걸로 진행하게되었다. 워낙 짧은 시간(3일 정도)에 완성해야하는 프로젝트였기에 마음과 달리 여러가지 기법들을 사용하기 보다는 심플하고 충실하게 ‘배운것만’ 응용해서 프로젝트를 마무리했다. 그래도 팀원분들과 영어로 의견 조율하는게 잠깐이었지만 재밌었고, 이번 경험으로 영어가 더이상 공포의 대상이 아닌 세상 다른 사람들과 ’소통’할 수 있는 도구라는 생각이 확실히 각인된 것 같다. 정말 ’언어’라는 생각을 체험해보는 기회였달까. 그렇게 더듬더듬거리는 영어지만 의견과 생각을 나누는 경험은 소중했고 마지막 프로젝트까지 잘 마칠 수 있었다. 나중에 Lecturer 분들께서 코멘트 해주실 때도 프로젝트 지적을 당했다라는 생각보다, 진정으로 우리 프로젝트를 봐주시고 인정해주신다는 생각이 들어서 감사했다. 그리고 사실은 진짜로 우리팀이 프로젝트에서 중요한 포인트를 빼먹었었는데 짚어주시는 거 보고 많이 배웠다.(한편으로는 말도 안되는 영어로 발표하는 거 들으시고도 이해하셨다는게 신기했다🤣) 아쉽게도 발표할 때가 처음이자 마지막으로 Lecturer 분들과 이야기한 순간이었다.(아 첫시간에 자기소개 빼고!) 프로젝트 깃헙은 여기에 있다.\n수업 마지막에 봤던 시험은 생각보다 어렵지 않았기에 사실 후기에 적을 내용이 별로 없다. 한국 시험에서는 선택형이어도 꼬아서 내거나 복수 정답지들을 만들어서 난이도를 높이는데, 여기 수업은 깔끔하게 중복 답안지 없다라고 말해주고 선택지들도 기본중의 기본이었다. 그나마 분별력을 가질 수 있는 부분은 프로그래밍 파트였으나 이 부분마저 코드를 외워서 치는게 아니라 오픈북이어서 그렇게 어렵진 않았던 것 같다. 게다가 시험시간은 3시간이었기에 타임 리밋도 거의 없는거나 다름없었다. 물론 시험보기 전에는 시험이 어떻게 나올지 예측할 수 없었기에 전날밤을 새워가며 공부하긴 했었다.\n\n\n\n마지막 날에 발표를 마치고 Lecturer분들의 ML/DL 트렌드에 관한 짧은 발표와 같이 수업들은 분들과 약간의 담소를 나누며 훈훈하게 수업이 끝났다. 약 3주간동안 저녁 시간에 열심히 배웠던 수업이 막을 내렸다.\n항상 가장 괴로울 때 가장 많이 배우는 것 같다. 사실 지나고 보면 그 고통이 어느정도 미화되는 것도 있고 위에 ‘어렵지 않았다.’, ’잘 마무리됐다.’라고 써놓기도 했지만, 그걸 하고 있던 순간에는 힘들었다. 아무리 알고 있던 내용이들이라도 그 내용들을 다시 다지는 것도 어렵고, 직접 코드를 써보는 것도 어렵고, 마무리 하기까지 불확실성과 두려움 때문에 괴로웠던 건 팩트다. 근데 항상 그러면서 배우는 것 같다. 그래서 이번 코스를 통해 배운 걸 정리해보자면,\n\nML은 확실히 DL보다 수학적인 이론이 어려웠음\n영어가 시험이나 부담이 아닌 ’언어’라는 것. 나를 표현할 수 있는 툴이라는 것\n전에 조금이라도 공부했던 것들이 나중에 도움이 ’크게’될 수 있다는 것\n내가 알고있는 것들을 꾸준하게 포스팅하는 습관을 길러야 하겠다는 생각\n해보지 않고 추측만으로 하는 생각들로 두려워하지 말 것\n\n수업을 마치고 certificate를 받았다. 사실 certificate에는 옵션이 있었는데, grade를 받을 것인지/pass or fail을 받을 것인지 내가 선택할 수 있었다. 등록 당시엔 근자감으로 grade를 받겠다고 했다가 수업 듣는 동안 과거의 나를 반성했다. 사실 수업하는 동안 그렇게 적극적이지도 않았고, 프로젝트 발표를 하고 지적을 받으면서 든 생각은 ‘최고 grade까지는 못받고 중간이라도 했으면..’ 했다. 그런데 생각지 못했던 최고 grade를 받을 수 있었다. 학점이 다가 아니긴 하지만 그래도 최선을 다했다는 것을 어느정도 뒷받침해줄 수 있기 때문에 뿌듯했다. 그래서 위에 배운 점들에 하나 더 추가하자면, ’최선을 다해서 어찌저찌해보면 뭐라도 한다.’라는 것. 식상한 멘트와 교훈이지만 매번 도전하면서 느끼는 바이기도 하다. 이렇게 2021년도 1월은 TU Berlin의 Machine Learning using Python: Theory and Application 코스와 함께 시간을 보냈다."
   },
   {
-    "objectID": "posts/paper/2022-09-17-wavenet.html#dilated-casual-convolution",
-    "href": "posts/paper/2022-09-17-wavenet.html#dilated-casual-convolution",
-    "title": "📃WaveNet",
-    "section": "1. Dilated Casual Convolution",
-    "text": "1. Dilated Casual Convolution\n먼저 Dilated Casual Convolution은 µ-law Companding Transformation 처리를 거친 음성 신호를 받아오는 첫번째 부분입니다.\n\n\n\n\n\n\nCasual Convolution 2\n\n\n\n우선 Casual 이라는 것은 Time-series인 음성 신호의 시간 순서를 고려하여 현재 시점 t를 기준으로 미래 정보는 사용할 수 없고 현재까지의(과거~현재 t) 정보만 사용할 수 있다는 의미입니다. 왼쪽 Causal Convolution 그림에서 Receptive Field는 (레이어 수) + (필터의 length) -1로 계산되어 총 레이어 수는 4개이고 필터 length는 이전 레이어에서 2개의 정보가 모아져서 다음 레이어의 하나의 데이터로 산출되므로 필터 length는 2라고 볼 수 있습니다. 따라서 4+2-1로 Receptive Field는 5가 되며 이를 그림에서 살펴보면 처음 input에서 5개의 음성 정보가 output의 1개의 정보로 나오는 것을 볼 수 있습니다. 이런 Receptive Field는 매우 짧은 시간에 많은 음성신호가 매칭되는 상황에서 매우 좁으며 RF를 늘리기 위해서는 레이어 수를 늘리거나 필터의 length를 늘려야 하는데 이는 모델을 매우 크게 만들게 되고 계산도 많이 요구됩니다.\n\n\n\n\n\n\nDilated Casual Convolution 2\n\n\n\n그래서 제안이 된 방법이 바로 Dilated Convolution입니다. 이는 convolution with holes로 해석할 수 있는데 위의 그림에서 볼 수 있듯이 이전 레이어에서 데이터가 Dilated되어 데이터가 듬성듬성하게 모아져서 다음 레이어로 넘어가는 것을 볼 수 있습니다. 이는 skip이나 pooling과 유사해보이지만 input과 output의 차원이 유지된다는 점에서 차이가 있습니다. 이때의 RF는 각 레이어의 Dilation 값을 모두 더하고 마지막에 현재 시점의 데이터 1을 더하며 RF가 계산됩니다. WaveNet에서는 Dilation을 총 30개의 레이어에 적용했고 Dilation 값의 패턴은 input에서 부터 1, 2, …, 512 로 2배씩 늘린 10개의 레이어를 총 3번 반복했습니다. 이때, 1 ~ 512 Dilation 값을 가진 10개 레이어의 RF는 1024로 계산됩니다.\n\n\n\n\n\n\nDilated Casual Convolution Process2\n\n\n\n\n\n\n\n\n\nDilated Convolution Pattern6\n\n\n\nCode 구현으로 살펴보면 아래와 같이 구현할 수 있습니다. Casual 특성을 반영하기 위해 self.ignoreOutIndex 을 만들어서 dilation 값을 고려하여 (kernel_size - 1) * dilation으로 계산한 후에 잘라내주는 것을 확인할 수 있습니다.\nclass CasualDilatedConv1D(nn.Module):\n    def __init__(self, in_channels, out_channels, kernel_size, dilation, padding=1):\n        super().__init__()\n        self.conv1D = nn.Conv1d(in_channels, out_channels, kernel_size, dilation=dilation, bias=False, padding='same')\n        self.ignoreOutIndex = (kernel_size - 1) * dilation # casual\n\n    def forward(self, x):\n        return self.conv1D(x)[..., :-self.ignoreOutIndex] # casual"
-  },
-  {
-    "objectID": "posts/paper/2022-09-17-wavenet.html#residual-connection-gated-activation-units",
-    "href": "posts/paper/2022-09-17-wavenet.html#residual-connection-gated-activation-units",
-    "title": "📃WaveNet",
-    "section": "2. Residual Connection & Gated Activation Units",
-    "text": "2. Residual Connection & Gated Activation Units\n다음으로 Dilated Causal Convolution을 거친 후 통과하게 되는 Residual Connection & Gated Activation Units 부분에 대해서 살펴보겠습니다.\n\n\n\n\n\nWaveNet에서 사용된 Gated Activation Units는 PixelCNN에서 사용된 매커니즘을 차용했습니다. 아래의 그림에서 보이는 보라색 Dilated Conv가 앞에서 설명한 DCC이며 이를 거친 후 Convoltion layer와 각각 tanh, sigmoid activation을 통과하여 Filter, Gate가 됩니다. 이 2가지 경로로 계산된 값은 elementwise product를 통해 하나의 벡터로 변환됩니다. 이떄 Dilated를 통과하기 전 값을 Residual Connection을 통해 연결함으로써 딥러닝 모델이 레이어를 더 깊게 쌓을 수 있도록 돕고 더 빠르게 학습할 수 있도록 할 수 있었다고 합니다.\n\n\n\n\n\n\nResidual Connection & Gated Activation Units6"
-  },
-  {
-    "objectID": "posts/paper/2022-09-17-wavenet.html#skip-connection",
-    "href": "posts/paper/2022-09-17-wavenet.html#skip-connection",
-    "title": "📃WaveNet",
-    "section": "3. Skip Connection",
-    "text": "3. Skip Connection\n\n\n\n\n\nSkip Connection은 Dilated Convolution을 통해 다양한 Receptive Field를 가진 각 레이어들의 값을 활용하여 output을 만들어낼 수 있도록 했습니다. 앞서 설명했던 대로 각 Residual Block의 Dilation 값이 다 다르기 때문에 각 Residual Block의 output은 서로 다른 Receptive Field를 가지게 됩니다.\n\n\n\n\n\n\nSkip Connection6\n\n\n\nResidual Connection과 Skip Connection을 Code로 구현하면 다음과 같습니다. 위에서 설명했던 Gated Activation Units의 tanh, sigmoid activation을 각각의 activation function을 거친후 self.resConv1D을 통과하는 것을 확인할 수 있습니다. 또한 Skip Connection을 구현하는 부분은 self.skipConv1D에서 확인할 수 있습니다. 마지막 return에서 resOutput, skipOutput으로 2개의 output이 나오는 것을 알 수 있습니다.\nclass ResBlock(nn.Module):\n    def __init__(self, res_channels, skip_channels, kernel_size, dilation):\n        super().__init__()\n        self.casualDilatedConv1D = CasualDilatedConv1D(res_channels, res_channels, kernel_size, dilation=dilation)\n        self.resConv1D = nn.Conv1d(res_channels, res_channels, kernel_size=1)\n        self.skipConv1D = nn.Conv1d(res_channels, skip_channels, kernel_size=1)\n        self.tanh = nn.Tanh()\n        self.sigmoid = nn.Sigmoid()\n\n    def forward(self, inputX, skipSize):\n        x = self.casualDilatedConv1D(inputX)\n        x1 = self.tanh(x)\n        x2 = self.sigmoid(x)\n        x = x1 * x2\n        resOutput = self.resConv1D(x)\n        resOutput = resOutput + inputX[..., -resOutput.size(2):]\n        skipOutput = self.skipConv1D(x)\n        skipOutput = skipOutput[..., -skipSize:]\n        return resOutput, skipOutput\n위와 같은 ResBlock은 전체 구조에서 보시다시피 여러개가 stacked 되어 있으므로 StackOfResBlocks class로 구현하여 WaveNet에 넣어주게 됩니다.\nclass StackOfResBlocks(nn.Module):\n\n    def __init__(self, stack_size, layer_size, res_channels, skip_channels, kernel_size):\n        super().__init__()\n        buildDilationFunc = np.vectorize(self.buildDilation)\n        dilations = buildDilationFunc(stack_size, layer_size)\n        self.resBlocks = []\n        for s,dilationPerStack in enumerate(dilations):\n            for l,dilation in enumerate(dilationPerStack):\n                resBlock=ResBlock(res_channels, skip_channels, kernel_size, dilation)\n                self.add_module(f'resBlock_{s}_{l}', resBlock) # Add modules manually\n                self.resBlocks.append(resBlock)\n\n    def buildDilation(self, stack_size, layer_size):\n        # stack1=[1,2,4,8,16,...512]\n        dilationsForAllStacks = []\n        for stack in range(stack_size):\n            dilations = []\n            for layer in range(layer_size):\n                dilations.append(2 ** layer)\n            dilationsForAllStacks.append(dilations)\n        return dilationsForAllStacks\n\n    def forward(self, x, skipSize):\n        resOutput = x\n        skipOutputs = []\n        for resBlock in self.resBlocks:\n            resOutput, skipOutput = resBlock(resOutput, skipSize)\n            skipOutputs.append(skipOutput)\n        return resOutput, torch.stack(skipOutputs)"
-  },
-  {
-    "objectID": "posts/paper/2022-09-17-wavenet.html#conditional-wavenets",
-    "href": "posts/paper/2022-09-17-wavenet.html#conditional-wavenets",
-    "title": "📃WaveNet",
-    "section": "4. Conditional WaveNets",
-    "text": "4. Conditional WaveNets\n\n\n\n\n\n\n\n\n\n\n\nConditional modeling 6\n\n\n\nConditional Modeling은 Autoregressive model인 WaveNet에 적용하기 쉽고 이 또한 PixelCNN에서의 아이디어와 유사합니다. Feature h 벡터를 조건 부분에 추가하여 음성 데이터에 조건을 추가할 수 있습니다.\n\np(\\mathbf{x} \\mid \\mathbf{h})=\\prod_{t=1}^T p\\left(x_t \\mid x_1, \\ldots, x_{t-1}, \\mathbf{h}\\right)\n\nCondition에는 크게 2가지로 Global과 Local이 있습니다. 먼저 Global은 Time-invariant한 조건으로 시점에 따라 변하지 않는 조건 정보를 추가하는 것을 말합니다. 예를 들어 한 발화자의 음성은 해당 음성 파일의 어떤 시점에서나 똑같은 condition이기 때문에 Global condition이라고 할 수 있습니다. 이때의 Feature vector h는 linear projection을 거친 후 data x와 더하게 됩니다.\n\n\n\n\n\n다음으로 Time-variant한 Local condition은 시점에 따라 변하는 조건 정보를 추가하는 것을 말하는데 음성 데이터보다 길이가 짧지만 순서가 있는 일정 길이의 Sequence vector라고 생각할 수 있습니다. 같은 발화자여도 어떤 단어를 말하느냐에 따라 음성학적인 특징(linguistic feature)가 다를 수 있기 떄문에 local한 조건은 한 음성 파일에 여러개가 있을 수 있습니다. 이때 Feature vector h는 음성 파일과 길이가 다르기 때문에 Upsampling을 거친후 1x1 convolution을 거쳐서 data x와 더해집니다."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Curieux.JY",
+    "objectID": "posts/note/2022-10-29-gueltto-the-end.html",
+    "href": "posts/note/2022-10-29-gueltto-the-end.html",
+    "title": "📘Gueltto End",
     "section": "",
-    "text": "Je suis curieux de tout.\n\n\n📃 Paper Review | 🧩 Storage | 👩‍💻 Code\n\n\n\n \n\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n👩‍💻class ⟷ dict ⟷ yaml\n\n\n\n\n\n\n\nconfig\n\n\nyaml\n\n\ncode\n\n\n\n\n여러 파라미터들을 기록하기 위한 config 관리\n\n\n\n\n\n\nDec 26, 2022\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻torch.Tensor vs torch.tensor\n\n\n\n\n\n\n\ntorch\n\n\ntensor\n\n\ninverted\n\n\ncode\n\n\n\n\ntorch Tensor 객체 생성 방법 비교와 Inverted 연산 확인하기\n\n\n\n\n\n\nDec 21, 2022\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻Linux GPU 상태 확인하기\n\n\n\n\n\n\n\nlinux\n\n\ngpu\n\n\ncode\n\n\n\n\n리눅스에서 GPU 상태를 확인하는 여러가지 방법을 알아봅니다.\n\n\n\n\n\n\nDec 14, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃Robust Recovery Controller\n\n\n\n\n\n\n\nrl\n\n\ntrpo\n\n\ngae\n\n\nquadruped\n\n\npaper\n\n\n\n\nRobust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning\n\n\n\n\n\n\nOct 16, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃VAE\n\n\n\n\n\n\n\ngenerative\n\n\nvariational inference\n\n\npaper\n\n\n\n\nAuto-Encoding Variational Bayes\n\n\n\n\n\n\nOct 2, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃WaveNet\n\n\n\n\n\n\n\nautoregressive\n\n\ngenerative\n\n\npaper\n\n\n\n\nA Generative Model for Raw Audio\n\n\n\n\n\n\nSep 17, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃GN-Block\n\n\n\n\n\n\n\ngnn\n\n\nsystem identification\n\n\nmpc\n\n\nrl\n\n\npaper\n\n\n\n\nGraph Networks as Learnable Physics Engines for Inference and Control\n\n\n\n\n\n\nAug 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃Legged Robots that Keep on Learning\n\n\n\n\n\n\n\nquadruped\n\n\nrl\n\n\nredq\n\n\npaper\n\n\n\n\nFine-Tuning Locomotion Policies in the Real World\n\n\n\n\n\n\nJun 26, 2022\n\n\n\n\n\n\n  \n\n\n\n\n📃NerveNet\n\n\n\n\n\n\n\ngnn\n\n\nrl\n\n\npaper\n\n\n\n\nLearning Structured Policy with Graph Neural Networks\n\n\n\n\n\n\nJun 10, 2022\n\n\n\n\n\n\n  \n\n\n\n\n🧩GNN Intro\n\n\n\n\n\n\n\ngnn\n\n\nstorage\n\n\n\n\nGNN 처음 알아보기\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻Import custom module\n\n\n\n\n\n\n\npython\n\n\ncode\n\n\n\n\ncustom module을 불러오는 방법\n\n\n\n\n\n\nJul 20, 2020\n\n\n\n\n\n\n  \n\n\n\n\n🧩My Reinforcement Learning Roadmap\n\n\n\n\n\n\n\nrl\n\n\nstudy\n\n\nstorage\n\n\n\n\n내가 공부했던 강화학습 Roadmap\n\n\n\n\n\n\nJul 17, 2020\n\n\n\n\n\n\n  \n\n\n\n\n👩‍💻Install Mujoco in Windows10\n\n\n\n\n\n\n\nmujoco\n\n\ncode\n\n\n\n\nRL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기\n\n\n\n\n\n\nJul 13, 2020\n\n\n\n\n\n\nNo matching items"
+    "text": "이번 post는 지난 2022년 5월 15일부터 10월 16일까지 활동했던 글쓰는 또라이 7기 활동을 마치고 회고한 글입니다. 처음 시작을 다짐으로 시작하여 9월 14일에 중간 점검글도 잠깐 쓰고 이제 마지막 이글로 회고를 하면서 마무리 지어보려고 합니다."
+  },
+  {
+    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#the-bottom-line",
+    "href": "posts/note/2022-10-29-gueltto-the-end.html#the-bottom-line",
+    "title": "📘Gueltto End",
+    "section": "The bottom line …",
+    "text": "The bottom line …\n글또 활동 보증금으로 10만원을 내고 시작했고 모든 권장 활동을 충실히 지킨 결과, 굿즈 구입비 1만원도 커피챗 2회 보상(5000원x2)으로 보충되어 그대로 10만원을 받을 수 있었습니다."
+  },
+  {
+    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#본질",
+    "href": "posts/note/2022-10-29-gueltto-the-end.html#본질",
+    "title": "📘Gueltto End",
+    "section": "본질",
+    "text": "본질\n처음에 글또에 참여하겠다고 설문지를 작성하던 그때를 떠올리고 오리엔테이션을 마치고 처음 다짐글을 다시 읽으면서 되새겨보면, 제게 가장 강력했던 동기는 글쓰기 힘 기르기였습니다. 글은 장르와 목적에 따라 어떻게 작성하는게 명확하고 전달력이 좋은지 차이가 크고 콘텐츠를 보는 사람의 즉각적인 피드백을 얻기 힘들기 때문에 머릿속을 빙빙도는 스토리들을 잘 만드는 사람이 되고 싶었습니다. 처음 다짐글에 감상적인 글보다는 IT, 개발관련 글을 쓰고 싶었다고 생각한 이유는 생각이나 감정을 배제하고 싶다는 생각보다는 일기와 같은 글에서는 내 이야기 중심이다보니 나 이외의 독자를 배려하거나 고려할 수 있는 힘을 기를 수 없기 때문이었습니다. 같은 맥락으로 사실 블로그에 내가 공부한 것들을 정리한 정리노트 서랍장이 되지 않기를 바랐던 것도 있었습니다. 나 이외의 독자(들)도 이해를 하고 도움을 받을 수 있을까? 나는 내 글로 다른 사람들이 이 글을 읽을 가치가 있다고 설득할 수 있을까? 고민들을 했었습니다. 물론 지금도 이 질문들에 완벽한 답변이 될 만한 포스트들을 작성하고 있지 못하지만 글또에서 조금은 나아졌다고 생각합니다. 단순히 느낌만 그런것이 아니라, 같은 팀내에서 피드백들을 받고 저보다 글을 더 논리정연하게 쓰고 설득할 줄 아는 분들의 어깨너머로 확실이 배울 수 있었습니다.\n활동 보증금이 있어서 정말 완벽한 의지로 글을 쓰는 습관을 들인 것은 아니지만 그래도 활동 보증금을 다 받을 수 있을 정도 만큼은 성장했다는 것에 만족합니다. 일단 1차 목표였고 한 단계를 밟았기 때문입니다. 사실 이 작은 성장을 시작으로 본질 밑바닥에 깔려있던 흑심은 블로그 포스팅으로 서술하는 능력을 길러서 좋은 논문을 내는 연구자가 되고 싶었던 마음이 있었습니다. 연구가 아직 내 적성에 맞는지는 확신이 서지 않지만 일단 석사과정을 시작한 한 미약한 연구자로써 글을 잘쓰고 싶었기 때문입니다. 큰 학술지는 아니었지만 학부과정에서 2번정도 논문들을 쓸 기회가 있었는데 솔직히 CV에는 한줄이라도 쓰기 위해 논문들을 적어놓지만 남보여주기에는 부끄러웠습니다. 저 이외의 연구자들을 전혀 고려하지 않은 서술들이었기 때문이었습니다. 또한 여러 논문들을 읽다보면 어떤 논문은 정말 감탄이 나올정도로 설계도 깔끔하고 서술도 완벽에 가까운데 반해 어떤 논문은 뭘 말하고자 하는지 왜 이렇게 써야했는지 이해하기 어려운데 적어도 저의 석사논문 만큼은 같은 동료 연구자들에게 고개를 끄덕일 수 있도록 퀄리티가 좋았으면..하는 희망이 있습니다. 이 마음 저 생각이 모여 글또로 시작을 열 생각을 하게된 것 같고 그 본질과 흑심을 표면 밖으로 끄집에 내게 해준 글또 활동들이 소중했습니다.\n본질과는 조금 동떨어지지만 글쓰는 작은 변화가 근래에 있었습니다. 영어공부도 할겸 영어 실력을 향상시키기 위해 daily english 시리즈로 글을 되도록 자주 올리도록 노력하게 되었습니다. 이야말로 위에서 말했던 정리노트 서랍장을 만들 수도 있을 위험이 크지만 그래도 영어표현이나 팁들을 다른 사람들도 보기 쉽게 소비하고 도움을 받을 수 있도록 정리하려고 합니다. 실제로 제가 다른분들의 짧은 영어 포스팅들로 도움을 많이 받기 때문에 이와 같은 일환으로 시작하게 되었습니다."
+  },
+  {
+    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#처음-다짐",
+    "href": "posts/note/2022-10-29-gueltto-the-end.html#처음-다짐",
+    "title": "📘Gueltto End",
+    "section": "처음 다짐",
+    "text": "처음 다짐\n\n글의 주제\n\n달성정도: 2/5\n처음 다짐에 로봇 제어(이론이나 시뮬레이션 툴 등), 로봇 연구에서의 강화학습, Julia 언어로 하는 Robotics로 글을 쓰고 싶다고 적었었습니다. 하지만 거의 논문 리뷰 위주로 글을 쓰다보니 해당 주제들에서 많이 벗어난 글들도 있었고 로봇 연구에서의 강화학습에 해당하는 글들만 조금 쓸 수 있었던 것 같습니다.\n\n활동 목표\n\n달성정도: 5/5\n활동 목표로 처음 활동 보증금을 모두 회수할 수 있는 미니멈으로 목표를 정했었습니다. 그리고 중간중간 위험하게 마감을 못지킬 것 같은 순간들도 있었지만 결과적으로 100% 회수할 수 있는 활동기록으로 마무리했습니다. 사실 이게 가장 중요하게 생각한 목표였기 때문에 정말 뿌듯했습니다.\n\n생활 목표\n\n달성정도: 2/5\n알고리즘 문제 풀기와 운동 꾸준히 하기를 생활목표로 정했었는데 우선 알고리즘 문제 풀기는 중간에 연구장학생 준비를 위해 조금 했기 때문에 1점 + 운동은 꾸준히는 아니지만 간헐적으로 시간있을 때 챙길려고 노력하기 때문에 1점 해서 총 2점입니다."
+  },
+  {
+    "objectID": "posts/note/2022-10-29-gueltto-the-end.html#중간-점검",
+    "href": "posts/note/2022-10-29-gueltto-the-end.html#중간-점검",
+    "title": "📘Gueltto End",
+    "section": "중간 점검",
+    "text": "중간 점검\n\n매일 커밋하기\n\n달성정도: 3/5\n커뮤니티에서 1001일 매일 커밋하신 분을 보고 모티베이션을 얻어서 정한 목표였는데 역시 매일 커밋은 정말 어려운 일이었습니다. 솔직히 하루 무너지니 다짐이 도미노처럼 우르르 무너져 3-4일간 하기 싫은 적도 있었는데 글또에서 피드백 주셨던 것처럼 의미없는 커밋에 마음 뺏기지 말고 의미있는 커밋에 좀 더 중점을 두고 꾸준히 노력해봐야겠습니다. 본질을 생각해야겠죠.\n\n코드가 들어가는 포스팅 작성하기\n\n달성정도: 0/5\n지금까지 작성해보지 않았던 코드와 함께하는 포스팅을 도전하겠다 해놓고 아직까지도 도전 준비중 상태입니다. 코드를 글에 적기 위해서는 실습을 해보는 시간 + 적절한 편집 실력도 필요해서 더 망설여지는 것 같습니다. 그렇지만 아직 하지 않았을 뿐이지 하지 않을 것은 아니기 때문에 조만간 학교 수업에서 듣는 코드들도 조금씩 작성해보려고 합니다.\n\n멘탈관리를 위해 딴짓하기\n\n달성정도: 3/5\n조만간 특별한 취미생활이라며 중간 다짐글에 적어놓지 않았었는데 그 취미는 클라리넷이었습니다. 사실 어렸을 때부터 악기를 매우매우 좋아해서 이것저것 많이 했었는데 그 중 고1때까지 했던 클라리넷 상자가 어느날 제 눈을 사로잡았습니다. 입시만 끝나면 다시 끄낼 줄 알았던 그 상자가 어느새 대학 졸업하고 대학원에 들어왔는데도 열리지 않았는데 멘탈을 위해, 딴짓을 위해 이것저것 생각하다보니 떠올라서 다시 열게되었습니다. 다행히도 학교 근처에서 렛슨을 하는데가 있어서 다시 시작할 수 있었고 2011.00.00 렛슨 날짜가 적혀있는 교본을 다시 꺼내서 2022.00.00날짜를 적으니 감회가 새로웠습니다. 이에 더해 몸이 기억하고 있는 운지법은 정말 신기했던 것 같습니다.\n\n\n마지막 한 줄로 글또 7기를 정리하자면,\n\n좋은 시도, 경험, 마무리였다."
+  },
+  {
+    "objectID": "posts/note/2022-10-03-daily-english-001.html",
+    "href": "posts/note/2022-10-03-daily-english-001.html",
+    "title": "🌎Casual English Phrases 001",
+    "section": "",
+    "text": "영어 회화 표현이나 논문에서 쓸 수 있는 유용한 표현들을 조금씩 익히기 위해 시작한 1000일 시리즈 포스트 입니다. 공부 리소스는 유튜브, 리얼클래스, PN님의 블로그, cake 어플, 책, 논문, 기사 등 다양한 출처에서 보고 기록합니다.\n\n\n갑자기\nout of the blue\n\nA cockroach appeared out of the blue. And then I really wanted to get out of there. 갑자기 바퀴벌레가 나타나서 진짜 거기서 나오고 싶었어.\nI just thought about that out of the blue. 그냥 갑자기 생각나서.\nIt happened out of the blue, so I could not handle that situation. 그 일이 너무 갑자기 일어나서 어떻게 할 수가 없었어.\n\n\n\n듣고있어\nI’m all ears\n\nJust keep talking about it. I’m all ears. 계속 말해. 나 듣고 있어.\nWhen you have a conversation with someone, you should be all ears. 누군가와 대화를 하면 귀기울여서 들어야해.\nDon’t pretend to be all ears. 듣고 있는 척 하지마.\n\n\n\n들킬것 같이 위태롭고 불안한\nprecarious\n\nI hate precarious situations. They make me very vexed. 난 진짜 조마조마한 상황들이 싫어. 진짜 나를 초조하게 만들거든.\n\nvexed : 초조한\n\nReal liars don’t have a precarious feelings. Instead, They enjoy the situations and make more fakes. 진짜 거짓말 쟁이들은 불안한 감정을 느끼지 않아. 오히려 그들은 그 상황을 즐기고 더 많은 거짓들을 만들어내지.\nJust tell the truth to her, not make yourself more precarious. 그냥 그녀에게 진실을 털어놔 더 너 자신을 위태롭게 만들지 말고."
+  },
+  {
+    "objectID": "posts/note/2022-10-11-daily-english-002.html",
+    "href": "posts/note/2022-10-11-daily-english-002.html",
+    "title": "🌎Casual English Phrases 002",
+    "section": "",
+    "text": "영어 회화 표현이나 논문에서 쓸 수 있는 유용한 표현들을 조금씩 익히기 위해 시작한 1000일 시리즈 포스트 입니다. 공부 리소스는 유튜브, 리얼클래스, PN님의 블로그, cake 어플, 책, 논문, 기사 등 다양한 출처에서 보고 기록합니다.\n\n\n속마음을 보여주다\nwear your heart on your sleeve\n\nIf you wear your heart on your sleeve, you openly show your feelings or emotions rather than keeping them hidden. 속마음을 보여준다는 말은, 너의 감정이나 느낌들을 숨기기보다 보여준다는 거야.\nIt takes courage to wear your heart on your sleeve, which is why few people do it. 속마음을 털어놓는다는 건 용기가 필요한 일이기 때문에 많은 사람들이 하지 못하는 일이지.\nI need someone whom I can wear my heart on my sleeve. 내 속마음을 털어놓을 사람이 필요해.\n\n\n\n고지식하거나 융통성 없는 성격\n약간 모범생 이미지\nsquare\nIf you are a SQUARE: You are an organized, logical, and hardworking person who likes structure and rules.\n\nBe there, or be square. : The expression be there or be square means that if one declines to attend an event, one is considered “uncool.” It implies that the event will be exciting.\nDon’t be square. 고리타분하게 굴지마\nShe is such a square - I’ve never met anyone so boring. 그녀는 진짜 고지식한 사람이야 이때껏 그사람처럼 지루한 사람은 처음봤어.\n\n\n\n위선적인\ntwo-faced\n\nDon’t trust her - I suspect she’s a bit two-faced. 그녀를 믿지마. 그녀가 조금 위선적인 사람인 것 같아.\nHe’s a two-faced cheater. 그는 두얼굴을 사진 사기꾼이야.\nHe had been devious and two-faced. 그는 기만적인고 양면적이었다.\n\ndevious : 정직하지 못한, 기만적인"
+  },
+  {
+    "objectID": "posts/note/2022-09-04-retrospective.html",
+    "href": "posts/note/2022-09-04-retrospective.html",
+    "title": "📘2022 글또 중간점검",
+    "section": "",
+    "text": "이번 post는 2022년도 상반기 회고록에 관한 내용을 담고 있습니다. 지난 8월 25일에 있었던 글또콘 후기와 글또를 처음 시작했을 때의 다짐을 기반으로 회고를 해보았습니다."
+  },
+  {
+    "objectID": "posts/note/2022-09-04-retrospective.html#section",
+    "href": "posts/note/2022-09-04-retrospective.html#section",
+    "title": "📘2022 글또 중간점검",
+    "section": "1",
+    "text": "1\n글또에서 활동하기 시작하면서 개인적으로 Github의 커밋도 되도록이면 매일하는 목표를 이루고 싶었는데 상반기에 열심히 노력했으나 벌써 몇몇 빈구석이 있습니다. 최근에 1001일 매일 커밋하신 분을 봤었는데 하반기에는 더욱 더 노력을 해보려고 합니다. 더욱더 부지런하게..!"
+  },
+  {
+    "objectID": "posts/note/2022-09-04-retrospective.html#section-1",
+    "href": "posts/note/2022-09-04-retrospective.html#section-1",
+    "title": "📘2022 글또 중간점검",
+    "section": "2",
+    "text": "2\n글의 퀄리티는 항상 신경쓰지만 쉽게 올리기 힘든 것 같습니다. 개인적으로 글의 퀄리티라는 것은 내가 타겟으로 하는 독자들의 만족감이라고 생각하는데 우선 스스로 독자가 되어 되돌아봐도 아직 모자른 내용들이기에 아직 많이 모자른 것 같습니다. 개인 기록용으로 처음에 목표를 낮게 잡긴했지만 그래도 좀 더 욕심을 내보아서 다른 누군가에게 도움이 되고 이후에는 입소문도 날 수 있는 블로그가 되기를 기대해봅니다. 또한 글의 콘텐츠는 사실 하고 싶은 것이 많지만 하반기에는 특별히 지금까지 작성해보지 않았던 코드와 함께하는 포스팅을 도전해보려고 합니다."
+  },
+  {
+    "objectID": "posts/note/2022-09-04-retrospective.html#section-2",
+    "href": "posts/note/2022-09-04-retrospective.html#section-2",
+    "title": "📘2022 글또 중간점검",
+    "section": "3",
+    "text": "3\n삶의 풍요로움과 멘탈관리를 위해 조만간 특별한 취미생활을 시작할 것 같은데 글또 커뮤니티에 용기내서 공유할 수 있었으면 좋겠습니다. 사실 지금 글을 작성하면서도 이 취미생활을 할 수 있을까 많이 고민되기 떄문에 구체적으로 적진 않고 Slack에서 인사드리겠습니다.\n\n\n\n\n\n\n이번 포스팅에서는 글의 서두에 적은 것처럼 일기처럼 2022년도의 상반기를 한가닥 묶어보았습니다. 연말에 이글을 또 다시 읽어보며 조금 더 성장해있기를 바랍니다. :)"
+  },
+  {
+    "objectID": "posts/note/2022-10-24-daily-english-004.html",
+    "href": "posts/note/2022-10-24-daily-english-004.html",
+    "title": "🌎IT English Experssions 004",
+    "section": "",
+    "text": "영어 회화 표현이나 논문에서 쓸 수 있는 유용한 표현들을 조금씩 익히기 위해 시작한 1000일 시리즈 포스트 입니다. 공부 리소스는 유튜브, 리얼클래스, PN님의 블로그, cake 어플, 책, 논문, 기사 등 다양한 출처에서 보고 기록합니다."
+  },
+  {
+    "objectID": "posts/note/2022-10-24-daily-english-004.html#git으로-세련되게-협업하는-방법",
+    "href": "posts/note/2022-10-24-daily-english-004.html#git으로-세련되게-협업하는-방법",
+    "title": "🌎IT English Experssions 004",
+    "section": "Git으로 세련되게 협업하는 방법",
+    "text": "Git으로 세련되게 협업하는 방법\n\nConventional Commits\n\n커밋 메세지는 Subject (Title), Body, Footer로 구분\n구조\n\n<type>[optional scope]:<description>\n[optional body]\n[optional footer(s)]\n\n예시(http://www.conventionalcommits.org/)\n\nfix: prevent racing of requests                           ---> Subject or Title\nIntroduce a request id and a reference to latest request. ---> Body\nReviewed-by : Z                                           ---> Footer(s)\nRefs : #123\n\n\nSubject(Title) 작성법\n커밋 메세지의 제목은 변경사항을 대표하는 텍스트이므로 대표적인 타입들이 있다.\n\nfeat: 코드에 새로운 기능(=feature) 추가\nfix: 버그 수정\nBREAKING CHANGE: 이전 버전과 호환되지 않는 변경 내역. !으로 표시할 수 있음. e.g.) feat!:\ndocs: 개발 문서 변경\nstyle: 들여쓰기, 따옴표, 세미콜론 등 코드 형식 및 스타일 변경\nci: CI/CD(continueout integration and deployment) 관련 코드 변경\nrefactor: 중복된 코드 제거, 변수명 변경, 코드 단순화 등 리팩터링\ntest: 테스트 관련 코드 변경\nbuild: 빌드 시스템 관련 코드 변경\nperf: 성능 개선 관련 코드 변경\nchore: 기타 코드 변경\n\n예시\n\nfix: remove deprecated features 수정: 권장되지 않는 기능 삭제\nfeat: add parameters to getImage 기능: getImage에 매개변수 추가\ndocs(readme): update build instructions 문서(readme): 빌드 지침 업데이트\nchore: update np dependencies to latest version 기타: npm 의존성 최신버전으로 업테이트\n\n나만의 예시 연습\n\ndocs(readme): add new papers \"THE TITLE OF PAPER\"\nfeat: add getJointPosition function\nrefactor: delete overlapped constants and variables of robot model\n\n\n\n5가지 커밋 작성법\n\n동사 원형으로 시작\n\n\n제목은 명령적 어조(Imperative Mood)의 동사원형으로 시작\nBody, Footer는 명령문이 아니어도 됨\n상황에 따라 과거형(e.g. Added) 또는 3인칭 단수 현재형(e.g. Adds)를 사용하기도 함\n커밋 메세지에 자주 등장하는 동사\n\nFix: 수정하다\nImprove: 개선하다\nHandle: 처리하다\nOptimize: 최적화하다\nUpdate: 업데이트하다\nImplement: 구현하다, 적용하다\nRefactor: 리펙터링하다\nAdd: 추가하다\nRevert: 되돌리다\nChange: 변경하다\nReplace: 대체하다\nMerge: 병합하다\nDocument: 문서를 작성하다\nBump: 버전을 올리다\nSimplify: 단순화시키다\nEnable: 가능하게 하다\nRun: 실행하다\nClean: 제거하다, 정리하다\nWrap: 감싸다, 그룹화하다\nDeploy: 배포하다\nModify: 변경하다\nRemove: 제거하다\nRename: 이름을 바꾸다\nMove: 이동하다, 이동시키다\n\n\n\n모두 소문자로 또는 첫 글자만 대문자로\n\n\nConventional Commits 형식에서는 모든 문자를 소문자로 작성. type: description에 맞추어 메세지 작성\nConventional Commits 형식을 적용하지 않는 경우, 일반적으로 앞부분만 대문자 사용하고 type 생략\n예시\n\n[1] docs: update build.md with detailed instructions\n[2] Update build.md with detailed instructions\n\n관사(a, an, the와 같은 Article) 생략\n\n\n커밋 타이틀은 최대 50글자 제한\n핵심 키워드만 활용하여 메세지를 작성하기 위해 관사 생략\n예시\n\n[X] Fix a typo in the header\n[O] Fix typo in header\n\n마침표와 같은 구두점(Punctuation Mark) 생략\n\n\n반드시 필요한 경우가 아니면 쉼표, 하이픈 등 생략\n예시\n\n[X] feat: implement google analytics.\n[O] feat: implement google analytics\n\n변경한 이유, 상세한 설명은 본문(Body)에\n\n\n코드 변경 사유와 상세 설명은 커밋 본문에 씀\n\n\n\nGit 주요 실무 영어\n\nSquash the last 3 commits: 최근 3개 커밋을 합치다\nPush commits to a repository: 리포지터리(코드 저장소)로 커밋을 전달하다\nMerge a feature branch into the base branch: 기능 브랜치를 기본 브랜치에 병합하다\nRevert a pull request: 풀 리퀘스트를 되돌리다(이전 상태로 되돌리다)\nRequest a review: 검토를 요청하다\nComment on a pull request: 풀 리퀘스트에 댓글을 남기다\nResolve a merge conflict: 병합 충돌을 해결하다\nRebase onto another branch: 다른 브랜치로 리베이스(base를 재설정하여 커밋 재적용)하다\nClone a repository: 리포지터리를 복제하다\nClose a pull request without merging it onto the branch: 풀 리퀘스트를 병합하지 않고 종료하다"
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html",
+    "title": "📘Goodbye 2020",
+    "section": "",
+    "text": "구글 캘린더의 도움을 받아 조금은 늦은 2020 회고록을 적어봤다. 기억이 희미하고 상기하면서 왜곡된 추억을 회상할 수도 있겠지만, 2020을 보내고 2021을 맞이하기에 충분한 시간을 가지는 건 이 시간이 아니면 할 수 없기에 소중하게 생각하며 한 글자 한 글자 적어봤다. 월마다 1~2개의 이야기를 쓰게 될 것 같으니 한 해를 12개 정도의 이야기로 잘 풀어가봐야 겠다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---2월",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---2월",
+    "title": "📘Goodbye 2020",
+    "section": "1월 - 2월",
+    "text": "1월 - 2월\n독서실 알바를 했었다. 벌써 1년전 일이라서 잊고 있었던 일이었는데..2020년도 일이었다니 새삼 놀랍다. 아빠의 해외 출장에 마음이 헛헛해지기도 하고, 방학 때 쉽게 쳐질 수 있는 생활 패턴도 잡고, 돈도 벌고자 찾은 아르바이트였다. 그동안 대치동 학원 알바도 해보고 동네 수학학원 보조교사도 해봤었는데 이번에는 처음으로 대면(?)알바가 아니었다. 청소담당을 지원했었는데 당시 실장님 면접 때 여자인 내가 와서 고개를 갸우뚱하셨던게 기억에 남는다. 나름 아침형 인간인지라 사람이 오기전 6~8시 사이에 독서실 모든 공간을 청소기 돌리고 물걸레질을 부지런히 했었다.(부모님이 제일 반대하던 알바였는데.. 생각해보면 은근 말 안듣는 딸인 듯)\n그때 청소를 하면서 독서실 위에 놓여진 공시, 어학 책들을 보며, (삼수생이었던 못난 면모를 아직 벗어던지지 못해서 그런지 겨울만 되면 센치해지는 감성때문일수도) 열심히 공부하는 청춘들의 시간이 왜 안타까워보이기만 했다. 오지랖일순 있지만.. 취업시장이 좁아지고, 스펙과 자격증만 바라보게 되고, 좁은 독서실 자리로 향해야한다는 현실이 너무 답답했다. 각설하고 그때 공짜로 받은 자리에서 공부했던 걸 생각해보면 Udacity RL 코스를 열심히 했던 것 같다. TOEFL도 준비하겠다고 옆에 책을 쌓아두긴 했었지만 제대로 공부 안한건 2021에 그대로 업보로 받아 이어지고 있다.(으이구🤪)\n\n오랜만에 가족들과 속초여행을 갔었다. 당시에 코로나가 조금씩 심해지고 있었는데 그땐 “여름까지 코로나가 계속되면 안되는데..”라고 걱정하고 있었다. 왠걸..2020 한 해를 온전히 코로나랑 함께할 줄은 몰랐다.😥 친구들과도 갔었던 속초였지만 가족들과 함께했던 속초는 또 다른 모습으로 즐길 수 있어서 좋았다. 타임랩스로 바다위로 떠오르는 태양을 찍었던 기억이 생생하다. 물회는 맛있었고, 겨울바다의 소리는 정말 맑고 시원했다.\n\n사실 2019 겨울부터해서 2월까지 KPMG Ideation이라는 대회에 멋진 분들과 함께 준비하고 있었다. 다른 대회보다 달랐던 점은 정말 나에게는 도전 그 자체였기에 더 기억에 남는다. 그 동안 기술적인 성격의 대회들은 대부분 숫자로 표현된 성적으로 판단하는게 대부분이었는데 이 대회는 아이디어 제안 성격을 가지고 있었기에 엔지니어 마인드보다 기획자 마인드를 배우게 되었던 것 같다. 또한 잘 몰랐던 NLP 분야에 대해 공부할 수 있는 기회였고, 특허라는 분야, 변리사라는 직업에 대한 이야기 등 새로운 세상 이야기 좋아하는 나에게는 진짜 재밌었던 시간이었다. 잊지못할 해프닝이 있던 대회이기도 했는데, 본선 대회 당일 대회장에 도착하자 마자 집으로 돌아가라고 통보(?) 받았던 대회였기도 했다. 혹시라도 밝히고 싶지 않으실 수도 있으니까 최대한 말을 아끼고 내 마음속에 저장하겠지만, 정말 감사했던 점은 함께 해주셨던 팀원분들이 정말 다 멋진 분들이었다는 것이다. 밤을 새워가며 함께 나누었던 이야기들이나 생각들 모두 너무 좋았고 평생 남을만한 따뜻한 추억이 생겼다는게 행복했다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---6월",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---6월",
+    "title": "📘Goodbye 2020",
+    "section": "3월 - 6월",
+    "text": "3월 - 6월\n본격적으로 코로나로 인한 대혼란이 시작됐다. 상황이 좋아질 기미가 보이지 않고 개강이 미뤄졌다. 지금은 익숙하지만 처음접하게 된 온라인 수업은 정말 당황 그 자체였다. 등하교 3시간 통학러인 나에게는 시간을 세이브할 수 있는 장점도 있긴 했지만 집에서 하루종일 노트북만 보고 있으면서 “이게 뭐하는 건가..”싶은 생각이 든게 한 두번이 아니었다. 진짜 대학의 역할에 대해 진지하게 고민도 했었다. 그래도 바쁘게 1학기를 잘 보냈고 랩실 생활도 열심히 했던 것 같다. 아 생각해보니 이때부터 나그네처럼 랩실을 다녔던 생활을 마치고 정식으로 학부연구생으로 인정받아 돈을 받으면서 연구하게 되었다.\n\n종강을 하고 미래연구소 14기 서브튜터를 하게되었다. 내가 처음으로 딥러닝을 공부하게 된 곳에서 서브튜터로 일하게 되었다는 게 정말 신기하고 감사했다. 대학교 가자마자 우연히 보게된 글을 보고 (지금 생각해보면 겁도 없이 혼자 찾아간게 신기하지만) 미래연구소 1기로 딥러닝을 공부했다. 오랜만에 랩장님도 보고 몰라보게 커진 미래연구소 모습을 보면서 괜시리 뿌듯하기도 했다. 사실 메인튜터님이 많이 배려해주시기도 하시고 서브튜터 업무 자체는 크게 부담스럽지는 않았지만 돈을 받고 일하는 자리는 항상 긴장하게 되기 때문에 조금 스트레스를 받았던 것 같긴하다. 14기 분들 중 완전 입문자를 위한 파이썬 기초 스터디는 따로 혼자 운영해야 했기 때문에 좀 더 긴장했던 것 같기도 하다. 그래도 항상 DL 공부 관련해서 INPUT만 했던 입장에서 처음으로 OUTPUT을 하게되는 도전적인 경험이었고, 지식적인 면으로나 태도적인 면으로나 성장할 수 있었던 큰 도약점이 됬었다. 부족한 서브튜터를 만났지만 열심히 공부하셨던 14기 분들이 모두 성공하셔서 나중에 커뮤니티에서 만나뵈면 정말 행복할 것 같다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---8월",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---8월",
+    "title": "📘Goodbye 2020",
+    "section": "7월 - 8월",
+    "text": "7월 - 8월\n여름방학에 역시 많은 일들이 있었다. 우선 정말 다이나믹했던 2020 국제창작자동차대회 PostNomad팀으로 참가한 이야기.🦈 4학년 분들의 졸업프로젝트였지만 운좋게도 참여할 수 있는 기회가 주어져서 제어팀으로 합류할 수 있었다. 후에는 딥러닝 테스크 비중이 높은 비젼팀으로 옮겨가야만 했지만. 그동안은 학교내에서 팀을 꾸려서 대회에 나가기보다는 대외 스터디나 모임에서 만난 분들과 프로젝트들을 했었기 때문에 또 다른 느낌이었다. 대형학과이다 보니 사실상 같은 학과여도 서로 잘 모르기 때문에 졸업할 때까지 모르는 동기도 많다. 평소에 아싸생활을 하는 나로써는 더더욱 학과 사람들이랑 친해질 기회가 없었는데 처음으로 기계과 사람들과 함께할 수 있었던 시간이 아니었나 싶다. 지금 회고하는 이 시점에서는 대회 결과도 아쉽고😢 준비하는 과정에서 랩뷰만 써야하는 답답함, 협업하면서 느꼈던 어려움과 실망했던 점들도 많지만, 진짜 소중한 시간들이었다. 지하 작업실에서 회의하고, 함께 공구들을 나르고, 덥고 습한 K-City에서 다같이 고생하고 고민했던 모든 시간들이 감사하다. 이 회고록을 빌려 고백을 하자면.. 우리 팀에게 조금 더 잘하지 못한 게 죄송하다. 다들 열심히 하시고 항상 나를 배려해주셨던 것 같은데 그에 비해 나는 잘 따라가는 팀원은 아니었던 것 같다.\n\n랩실 연구를 비롯해서 TOEFL 공부까지 하느라 정말 열심히 살았는데, 사실 이때 제대로 공부하지 않아서 후에 고생하게 된 건 안비밀이다. 항상 느끼는 것이긴 한데 나는 한가지 일을 집중해서 끝내는 능력이 아직도 부족한 것 같다. 이에 더하여 2020 Korea Health Datathon에 참가하여 부비동 데이터셋으로 최종 4위를 했었다. NSML 플랫폼은 할말하않이긴 하지만 꾸준히 데이터톤 경험을 갖게 해주신 것만으로도 감사하다. 2019 대회에도 참여했었는데 그때보다 발전된 성적을 가질 수 있어서 좋았다.\n\n산티아고 순례길을 걷고 싶다는 버킷리스트가 생겼다. 그래서 하나씩 뭘 준비해야 하나 고민하는 중에 체력을 길러야 겠다는 생각을 했다. 이에 더해 코로나로 떨어진 활동성을 보충하고자 등하교를 따릉이로 하기 시작했다. 가는데에만 2시간 걸리는 여정이었지만 한강을 따라 가는 길이 나쁘지 않았기 때문에 충분히 좋은 도전이었다. 처음에는 다들 미친 짓(?)이라고 만류했었고 나도 반신반의 했었지만 막상 해보니 죽을 정도는 아니었고 자전거 타고 보는 한강은 다리아픈 것 따위 다 잊게 만들정도로 예뻤다. 아침은 아침대로, 저녁은 저녁대로, 맑으면 맑은대로, 흐리면 흐린대로. 때로는 상수나들목 공사때문에 당황하기도 했지만 길은 항상 찾으면 되는 거였다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월---10월",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#월---10월",
+    "title": "📘Goodbye 2020",
+    "section": "9월 - 10월",
+    "text": "9월 - 10월\n2학기도 여전히 코로나로 인해 온라인으로 진행됐다. 학기중에는 거의 수업에 집중하다보니 딱히 회고록에 적을 내용이 없는 것 같아서 한빛미디어에서 “나는 리뷰어다”로 참여했던 경험을 적어볼까 한다. 리뷰어로 활동을 하면서 2개의 도전이 있었다. 첫째는 글쓰는 것 자체에 대한 도전이었는데, 예전에는(그러니까 고2때 까지만 하더라도) 글을 쓰는데 어려움이 없었던 것 같다. 그리고 나름 글을 잘 쓴다고 인정도 받았던 것 같은데 이후에 딱히 글을 쓸 기회가 없었고 쓰지 않다보니 리뷰를 쓴다는 것 자체가 어색했다. 그리고 “독후감”과는 다른 목적이 있는 “리뷰”라는 글에 대한 고민이 있었다. 출판사에서 책을 주면서 나에게 리뷰를 쓰기를 원하는 니즈는 분명 있는 것이고, 다른 사람들에게 책의 내용이 잘 어필이 되길 바라는 것일터였다. 그러면 단순히 책의 장단점을 나 혼자 판단하고 즐기고 끝나는 것이 아닌 다른 사람들에게 잘 전달될 수 있도록 표현해야 한다는 것이었다. 두번째로는 빠르게 기술서를 봐야한다는 도전이었다. 사실 IT전공도 아니고 원래는 1개의 책도 적어도 2~3개월을 봐야하는 거북이 속도인데 리뷰를 하려면 1달에 1권을 무조건 다 보고 리뷰까지 완성해야 했다. 몇개의 책들은 사실 다 보지도 못하고 리뷰 적기에 급급했던 것도 사실이다. 제대로 리뷰어로 활동하지 못해 관계자분들께 죄송하다. 그래도 몇몇 리뷰는 제대로 적었다는 것에 스스로 조금 위안을 삼아본다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#월",
+    "title": "📘Goodbye 2020",
+    "section": "11월",
+    "text": "11월\n지금까지 인생의 경험들 중에 최악과 최고를 다 뽑으라고 하면 2020.11월에 다 있다. 좋은 것부터 먼저. 우선 최고는 내 인생 처음으로 학회에서 내가 한 연구를 가지고 발표를 완성도 있게 마무리 할 수 있었고 인정도 받아서 우수논문상까지 받게 된 경험이다. 진짜 학회 발표 전 리허설하는 랩미팅에서 울면서 나가기도 했었고 발표 전날까지도 결과가 잘 나오지 않아 정말 힘들었다. “힘들었다”라는 4글자로 밖에 표현 못한다는 게 억울할 정도로 최고의 스트레스를 받은 시간이었다. 그래도 진짜 주변에 천사들을 심어 놓으신 것인지 기적적으로 도움도 받고 몇일 밤을 새서 어찌저찌 마무리 할 수 있었고 IPNT에서 구두발표도 잘 마무리하여 우수논문상도 받게되었다.(지금생각해도 기적이라고 말할 수 밖에 없다.) 진짜 힘들었던 만큼 최고의 성취감은 말로 할 수 없었다.\n다음으로 최악의 경험은 사실 최고의 경험과 관련이 깊다. 앞서 적은 “최고의 스트레스”가 복선이었다. 학회를 마치고 체력이 바닥으로 떨어질대로 떨어졌고 긴장은 완전히 풀어진 상태에서 몸이 엄청 아팠다. 감을 먹고 체한 탓도 있었지만 몸이 정말 아팠고 힘이 빠지면서 “이대로 죽을 수도 있겠구나..” 싶은 생각이 들었다. 인생 처음으로 자다가 새벽에 구급차를 불러 응급실에 갔던 게 최악의 경험이지 않나 싶다. 근데 유감스럽게도 구급대원분들이 오시면서 급속도로 괜찮아져서 정말 난처하고 민망했다. 나중에 새벽 4시쯤 엄마랑 응급실을 나와서 걸어서 집으로 돌아갔다. 이때의 일은 가족들에게도 큰 충격을 주어서 지금도 아빠는 잊을만 하면 이야기를 하시는데 하지말라고 장난스럽게 말을 하면서도 죄송한 마음이 들기도 한다. 웃프긴 하지만 이 일 이후로 내가 제일 좋아하는 “감”은 금지어가 되었다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#월-1",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#월-1",
+    "title": "📘Goodbye 2020",
+    "section": "12월",
+    "text": "12월\n사랑하는 양가의 조부모님들이 몇년전만 해도 다 살아계셨다. 하지만 근 2년 정도 매년 겨울에 사랑하는 분들을 떠나보내게 되었다. 외할아버지, 친할아버지, 그리고 외할머니까지. 올해 후반에 건강이 급속도로 나빠지신 외할머니가 결국 우리곁을 떠나셨다. 4분의 할머니 할아버지 가운데 가장 사랑의 표현도 아끼시지 않고 항상 전화도 먼저 걸어주셨던 멋진 할머니였다. 지금 이렇게 “할머니 사랑해요”라고 말하던게 이렇게 그리워할 것이었다면 살아계셨을때 왜 그렇게 어색해하고 표현하기 부끄러워 했는지. 코로나로 인해 좋았던 점 하나는 장례식에 손님들 없이 식구들끼리 할머니를 추억하면서 얼마나 멋진 분이셨는지 되새길수 있어서 좋았다. 진짜 멋진 분이셨다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#bnm2h",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#bnm2h",
+    "title": "📘Goodbye 2020",
+    "section": "BNM2h",
+    "text": "BNM2h\n2020년도에 감사했던 많은 일들이 있었지만, 지금 나름 뿌듯하고 보람찬 시간들을 회고할 수 있도록 도와준 많은 분들이 있었다. 스터디를 통해서 만나는 인연들이 대부분이다. 물론 많은 스터디에 참여해보고 도전 받을 수 있는 좋은 시간들이었다. 그래도 가장 애정가는 스터디는 아무래도 BNM2h가 아닐까 싶다. 그렇다. 사실 가장 애정가는 이유 중 하나는 아무래도 내가 만든 스터디였기에 가장 책임을 느꼈고 가장 스트레스도 많이 받고 가장 노력했음을 나 스스로도 느꼈기 때문일 것이다.\n처음에는 진짜 가벼운 마음으로 시작했다. 따지고 보면 2019년도에 Kaggle KR에서 스터디 리더를 뽑는다는 글을 보고 마침 캐글에서 Connect-X라는 강화학습 대회가 베타수준으로 시도하기 시작했던 때라 “내가 한번 캐글 강화학습 스터디 리더가 되어보자!”라는 생각과 패기로 시작했던 거였다. 패기는 패기였던 걸로.. 그렇게 시작했으나 함께할 팀원분들이 모집되지 않아 그냥 한 순간의 불꽃으로 끝날 뻔 했다. 다행이도 다른 리더분들 중에 나와 같은 처지였던 분이 계셨었고 감사하게도 같이 공부하자 먼저 손을 내밀어 주셔서 BNM2h라는 스터디가 생기게 되었다!🙌\n그때 그때 마다 인연이 되는대로 지금까지 이어져오고 있는 스터디에서 강화학습을 공부하고 있다. 최고의 스터디라고 자랑할 순 없지만 최애 스터디라고는 할 수 있다. 아직도 강화학습이라는 분야에 대해, 스터디에서 함께 공부하는 방식에 대해, 스터디 매니징하는 것에 대해, 감사함과 겸손함을 표현하는 것에 대해 한참 모자른 애송이이지만 매주 스터디에 나와주셔서 나에게 성장할 기회를 주고 그런 시간들을 함께 보내주시는 BNM2h 스터디원분들은 천사들이신 것 같다. 나도 그런 분들에게 조금이나마 도움이 되고 함께 성장하기 위해 조금 더 노력하는 사람이 되어야겠다고 느낀 한 해였다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Goodbye-2020.html#마무리",
+    "href": "posts/note/2021-01-03-Goodbye-2020.html#마무리",
+    "title": "📘Goodbye 2020",
+    "section": "마무리",
+    "text": "마무리\n물론 당연히도 여기에 적지 못한 많은 이야기들이 있다. 이야기들은 열정을 담기도 하고, 아쉬움을 담기도 하고, 기쁨을 담기도 하고, 슬픔을 담기도 한다. 그 이야기들은 지금의 나의 마음이나 기억 속 어딘가에 잘 살아있겠지.\n멋있는 개발자분들의 회고록 같은 것을 기대했으나 적고나서 읽어보니 아직은 어디에 내놓기 부끄러운 새벽감성의 회고록이니 그냥 조용히 블로그에 남기기로 생각했다.😂\n잘가요 2020"
+  },
+  {
+    "objectID": "posts/note/2022-05-06-geultto-7th-start.html",
+    "href": "posts/note/2022-05-06-geultto-7th-start.html",
+    "title": "📘Geultto Start",
+    "section": "",
+    "text": "전부터 알고 있었던 글쓰는 또라이, 글또는 언젠가 꼭 들어가고 싶은 모임이었다. 내가 아는 지식에 대해 이야기 할 줄 아는 능력이 멋져보이기도 했고 무엇보다 다른 사람들에게 도움이 되기도 하겠지만 글을 쓰면서 오히려 내 머릿속에서 정리되고 나에게 가장 큰 도움이 되기 때문에(과거의 내가 미래의 나를 다시 가르쳐줄거란 생각으로) 글을 쓰고 싶었다. 글을 쓰는 걸 좋아하긴 하지만 IT, 개발관련 글을 쓰는 건 평소에 쉽게 써내려가는 감성적이고 주관적인 글쓰기와는 조금 거리가 있기 때문에 좀 망설였던 부분도 있었다. 혹시나 틀린 정보나 생각을 적으면 어떡하지 등의 걱정과 함께 계속해서 미뤄져온 글쓰기는 이제는 좀 마음의 짐을 덜고 현재에 최선을 다해서 적으면 된다라는 생각으로 시작하려고 한다.\n블로그 방황기에 대해 말하자면 그 역사가 2년 정도 되는데, 그 기간동안 Github pages, 유명한 Jekyll, Go언어 써보기 위해서 도전한 Hugo, 빠르게 포스팅할 수 있어서 잠시 돌아간 Naver blog, 코딩과는 안맞는 것 같아서 그만둔 Brunch, 영어로 포스팅하는 거 연습하기 위해서 해본 Medium, 쉽게 생각했다가 커스텀하기 더 어려워서 그만둔 Tistory, 기록용으로는 좋지만 Github과 연동이 안되어서 아쉬운 Notion까지.. 가능한 블로그 플랫폼들은 다 해봤던 것 같다. 그 중에 글또와 함께 정착할 플랫폼은 Fastai에서 만들어준 Fastpages로 결정했다. 다음은 내가 블로그 플랫폼을 결정할 때 생각했던 우선순위들인데, Fastpages가 가장 잘 만족하는 플랫폼이었다.\n\n작성하는 방법이 어렵지 않은 지\n(해외 검색까지 고려해서)Googling이 가능하도록 한 지\nGithub과 연동(기록)이 되는 지\n수식작성과 Table of Contents(TOC), 태그 설정이 가능한 지\n블로그내 포스팅 검색이 가능한 지\n광고가 붙지 않는지(컨텐츠에 집중할 수 있는 깔끔함)\n\nMarkdown과 Jupyter Notebook 형식의 작성을 모두 지원하면서 검색이나 태그 설정이 만들어져 있었고 형식이 깔끔하다. 다크 템플릿을 위해서 조금 설정을 해준 것 말고는 힘들게 셋팅하는 부분들이 없었다.\n인생은 타이밍이라는 말처럼 어떤 일을 할 때의 시기가 있다고 생각한다. 시간적인 여유를 생각했을 때는 대학생 때 작성하는 습관을 들이는 걸 연습하기에 좋다고 생각할 수 있지만, 그때의 나를 돌이켜보면 다른 사람들의 포스팅을 보면서 배우기에도 급급했던 것 같다. 지금 석사과정을 시작하면서 내가 배운 것들을 최대한 기록하고, 그 기록들을 발판삼아 더 성장하는 공학자가 되기 위한 타이밍이 지금이 아닐까 싶다. 글또를 통해 이전의 블로그 방황기와 간헐적이었던 글쓰기를 멈출 수 있기를 기대한다.\n\n\n글또 7기를 진행하면서 약 10-20여개의 글을 쓰게 되는데, 한 가지 주제에만 집중해서 쭉 포스팅하는 것이 좋겠지만 크게 제약을 두지 않고 시작하려고 한다. 한 가지 주제만 해야한다는 생각에 미루게 되는 핑계를 스스로 만들지 않고 그때 내가 배운, 내가 나누고 싶은 이야기를 적는 걸로 계획했다. 하지만 큰 글감들로는 아래와 같은 내용들을 생각하고 있다.\n\n로봇 제어(이론이나 시뮬레이션 툴 등)\n로봇 연구에서의 강화학습\nJulia 언어로 하는 Robotics\n\n\n\n\n글또 7기에서 꼭 이뤘으면 하는 목표는 다음과 같다.\n\n공식적인 포스팅 작성 횟수 다 채우기\n커피챗 참여\n\n추가적인 목표로는, 글또 7기 Slack에 많은 채널들이 있는데(#멍또, #냥또는 사랑입니다❣️) 그 중에서 #알또와 #헬또를 통해 알고리즘 실력과 운동도 챙기고 싶다.\n\n1주일에 1알고리즘 문제 풀기\n주 3일 운동하기\n\n최근에 한해의 Github commit을 3D로 만들어주는 기능을 알게 되었는데 글또와 함께한 2022 커밋은 대도시의 건물 숲처럼 더 멋지게 만들어졌으면 좋겠다.🏙"
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Hello-2021.html",
+    "href": "posts/note/2021-01-03-Hello-2021.html",
+    "title": "📘Hello 2021",
+    "section": "",
+    "text": "2021에 이루고 싶은 일들, 하고 싶은 일들, 바라는 일들, 2021 회고록을 쓰면서 “그땐 이런 생각을 하며 살려고 노력했었구나” 할 만한 이야기를 적어보자."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Hello-2021.html#해야하는하고싶은-공부",
+    "href": "posts/note/2021-01-03-Hello-2021.html#해야하는하고싶은-공부",
+    "title": "📘Hello 2021",
+    "section": "해야하는/하고싶은 공부",
+    "text": "해야하는/하고싶은 공부\n구체적인 실천 목표들은 다이어리에 적고 여기에는 크게 대략적인 목표지점들을 적어보려고 한다.\n\n영어\n이젠 피하고 싶다는 생각보다는 해내야만 한다는 생각이 더 크다. 다른 공부들도 그렇지만 영어야 말로 이제는 output을 내야하기 때문에 간절함이 더 커졌다. - 영어루틴 - 토플 90점 이상 - 외국인 친구 만들기\n\n\nRL\n아직도 잘 모르겠지만 아직도 내 호기심을 자극시키는 분야라 계속 공부하고 싶다.\n\n스터디(기초이론과 논문읽기)\n구현능력 올리기\n연구에 활용하는 능력 기르기\n\n\n\nGNN\n\n기초 이론 입문하기\n\n\n\nQC\n\n기초 이론 입문하기(feat. 모두연)\nQiskit Challenge 도전하기"
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Hello-2021.html#하고싶은-취미",
+    "href": "posts/note/2021-01-03-Hello-2021.html#하고싶은-취미",
+    "title": "📘Hello 2021",
+    "section": "하고싶은 취미",
+    "text": "하고싶은 취미\n2020에 회고하면서 한 가지 느꼈던 게 있었다. 취미라 할 만한 활동을 하질 않았었다. 그래서 더 쉽게 지쳤고 멀리 나가지 못했던 것 같아 2021에는 취미도 생각하면서 살고 싶어서 한번 적어보았다.\n\n피아노\n부모님의 반대를 무릅쓰고 산 전자 피아노가 하나 있는데 많이 쳐보지를 못했다. 원래 쳤던 곡들도 좋고 재즈 피아노나 마피아에서 산 몇곡 악보를 제대로 연습해보고 싶다. 예전에는 피아노한테 힐링도 많이 받았었는데..왜 이렇게 멀어졌을까🤔\n\n박터틀의 재즈 피아노\nTido Kang의 노래\n피아노 치는 이정환님의 노래 이건 불가능하겠지만🤣\n\n\n\n책 읽기\n유튜브 보는 시간을 좀 줄여보고 한 달에 딱 1권은 인문이나 사회 분야 등과 같이 내가 쉽게 접할 수 없는 분야의 책들을 읽어보려 한다. 기술서 같은 경우에는 필요에 의해 손이 많이 가지만 이외의 책들은 정말 안 읽게 되는 것 같다. 간략히 남기고 싶은 문구나 독후감은 다이어리에 남겨보자."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Hello-2021.html#만들고-싶은-습관",
+    "href": "posts/note/2021-01-03-Hello-2021.html#만들고-싶은-습관",
+    "title": "📘Hello 2021",
+    "section": "만들고 싶은 습관",
+    "text": "만들고 싶은 습관\n\n운동\n체력과 건강을 무시 못할 시기가 온 것 같다. 지금은 코로나로 인해 헬스장이 언제 열릴지는 모르겠으나 일단은 기본적인 걷기나 자전거, 간단한 홈트 동작들을 꾸준히 아침 루틴으로 하는 것이 목표다.\n\n\n블로깅\n지금 쓰고 있는 github 블로그에 꾸준히 기술관련 포스팅을 하는 것이 목표다. 아직은 개발자도 아니고 유의미한 output 포스팅을 하기엔 실력이 없지만, 내가 그때 그때 마다 알게 된 것, 이후의 나에게 도움이 될 만한 내용이라고 판단되면 적어보려고 한다. 나부터 나를 가르쳐보면서 어떤 글이 잘 쓰여진 글인지 스스로 체크해보며 블로깅하는 실력을 길러보는 한 해가 되었으면 좋겠다.\n\n\n다이어리\n블로깅이 주로 기술관련(특히 it 분야겠지만)이라면 다이어리는 내 내면과 생각을 정리해보고 싶어서 만들고 싶은 습관이다. 생각보다 하루하루 내가 느낀 것들은 많은데 막상 돌이켜 보면 잘 기억이 나지 않고 내면의 단단함이 쉽게 물러지는 느낌이 든다. 그냥 생각없이 산 것 같기도 하고 내 삶을 소중히 생각하지 않은 것 같은 느낌이 들 때. 순간의 나도 이런 생각을 하고 고민을 하며 살아왔다는 흔적을 남기는 연습을 하고 싶다. 예전에 삼수를 할 때 비교적 생활 패턴이 규칙적이고 고요할 때(?)는 다이어리에 기록하는게 어렵지 않았는데 지금은 다이어리 루틴을 만든다는 게 쉽지 않은 것 같다. 2021은 남겨보려고 노력해보고 싶다."
+  },
+  {
+    "objectID": "posts/note/2021-01-03-Hello-2021.html#신년다짐과-생각",
+    "href": "posts/note/2021-01-03-Hello-2021.html#신년다짐과-생각",
+    "title": "📘Hello 2021",
+    "section": "신년다짐과 생각",
+    "text": "신년다짐과 생각\n송구영신 예배와 신년 축복예배에서 받은 말씀은 기대의 차원을 높이자와 대장부가 되자였다. 남에게 기대하기 보다 나에게 기대하는 삶을, 나보단 하나님께 근거있는 삶을 바라며 나에게 주어진 새로운 시간들을 잘보냈으면 좋겠다. 그리고 지금까지 살면서 느껴왔던 것처럼 삶을 살아가면서 내가 생각지 못한 경험들의 스펙트럼은 점점 넓어진다는 걸 알았다. 좋은 쪽으로만 범위가 넓어지는 것이 아니기에. 내가 감당치 못할 어려움을 주시는 분이 아니시기에 당장 눈 앞에 커보이는 두려움을 담대하게 맞설 수 있다는 믿음을 더 확고히 할 수 있는 한 해가 될 수 있도록.\n어쩌다보니 대학생활도 마지막에 접어들었다. 생각없이 보내기엔 다시 돌아오지 않을 시간들이기에 좀 더 정신차리고 최선을 다해보고 싶다. 내 것이 되기전에는 한 없이 미웠었지만 지금은 그 어떤 대학보다 나의 가능성을 확인시켜 준 내 학교에서 마지막 생활은 어떨까. 안녕 2021"
+  },
+  {
+    "objectID": "posts/note/2022-10-17-daily-english-003.html",
+    "href": "posts/note/2022-10-17-daily-english-003.html",
+    "title": "🌎Casual English Phrases 003",
+    "section": "",
+    "text": "영어 회화 표현이나 논문에서 쓸 수 있는 유용한 표현들을 조금씩 익히기 위해 시작한 1000일 시리즈 포스트 입니다. 공부 리소스는 유튜브, 리얼클래스, PN님의 블로그, cake 어플, 책, 논문, 기사 등 다양한 출처에서 보고 기록합니다.\n\n\n속마음을 보여주다\nwear your heart on your sleeve\n\nIf you wear your heart on your sleeve, you openly show your feelings or emotions rather than keeping them hidden. 속마음을 보여준다는 말은, 너의 감정이나 느낌들을 숨기기보다 보여준다는 거야.\nIt takes courage to wear your heart on your sleeve, which is why few people do it. 속마음을 털어놓는다는 건 용기가 필요한 일이기 때문에 많은 사람들이 하지 못하는 일이지.\nI need someone whom I can wear my heart on my sleeve. 내 속마음을 털어놓을 사람이 필요해.\n\n\n\n기억력이 좋은\na memory like an elephant\n\nShe has a memory like an elephant. 그녀는 기억력이 굉장히 좋아\nYou can remember his name even if you don’t have a memory like an elephant. 니가 기억력이 엄청 좋지 않더라도 그의 이름은 기억할껄?\nThe menual is so simple. Don’t worrry that you don’t have a memory like an elephant. 메뉴얼이 엄청 간단해. 기억력이 좋지 않다고 걱정할 필요 없어.\n\n\n\n입장바꿔 생각해봐\nput yourself in one’s shoes\n\nPlease put yourself in his shoes before blurting it out. 그냥 말을 하기전에 그의 입장도 생각해봐\n\nblurt out : 말을 내뱉다\n\nIt’s hard to put myself in other people’s shoes from the my heart. 진심으로 다른 사람들의 입장이 되어보는 것은 어려워\n\nfrom the (bottom of one’s) heart : 진심으로\n\nWould you mind putting yourself in my shoes? 제 입장에서 한번만 생각해주실 수 있으실까요?\n\n참고 기억력 상징이 코끼리가 된 이유"
   }
 ]

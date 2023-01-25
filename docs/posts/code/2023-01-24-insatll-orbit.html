@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-12-15">
-<meta name="description" content="여러 실험 파라미터들을 관리해주는 Hydra">
+<meta name="dcterms.date" content="2023-01-24">
+<meta name="description" content="Isaac Orbit Series 001">
 
-<title>Curieux.JY - 👩‍💻Hydra로 실험관리 하기</title>
+<title>Curieux.JY - 👩‍💻Orbit 설치하기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,10 +109,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a>
-  <ul class="collapse">
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
-  </ul></li>
+  <li><a href="#orbit을-설치하기-전에" id="toc-orbit을-설치하기-전에" class="nav-link active" data-scroll-target="#orbit을-설치하기-전에">Orbit을 설치하기 전에</a></li>
+  <li><a href="#orbit-설치하기" id="toc-orbit-설치하기" class="nav-link" data-scroll-target="#orbit-설치하기">Orbit 설치하기</a></li>
   </ul>
 </nav>
     </div>
@@ -121,16 +119,17 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">👩‍💻Hydra로 실험관리 하기</h1>
+<h1 class="title">👩‍💻Orbit 설치하기</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">hydra</div>
+    <div class="quarto-category">orbit</div>
+    <div class="quarto-category">isaacsim</div>
     <div class="quarto-category">code</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    여러 실험 파라미터들을 관리해주는 Hydra
+    Isaac Orbit Series 001
   </div>
 </div>
 
@@ -141,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 15, 2022</p>
+      <p class="date">January 24, 2023</p>
     </div>
   </div>
   
@@ -151,25 +150,56 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 한다. 이를 위해 여러가지 방법이 있지만, 이번 포스팅에서는 FacebookResearch에서 만든 <a href="https://hydra.cc/">Hydra</a>를 사용해보자 합니다.</p>
+<p>Nvidia의 <a href="https://github.com/NVIDIA-Omniverse/Orbit">Omniverse Isaac Orbit</a>를 사용해보기 위해 <a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#">Orbit Docs - Installation Guide</a>를 따라 설치과정을 기록해보았습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://hydra.cc/img/logo.svg" class="img-fluid figure-img"></p>
+<p><img src="https://github.com/NVIDIA-Omniverse/Orbit/raw/main/docs/source/_static/tasks.jpg" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<section id="section" class="level1">
-<h1></h1>
-<section id="reference" class="level3">
-<h3 class="anchored" data-anchor-id="reference">Reference</h3>
-<ul>
-<li><p>https://lucaseo.github.io/posts/2021-11-07-hydra-for-machine-learning/</p></li>
-<li><p>https://only-wanna.tistory.com/entry/Hydra-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%A0%95%EB%A6%AC</p></li>
-<li><p>https://www.sscardapane.it/tutorials/hydra-tutorial/</p></li>
-<li><p>https://github.com/sscardapane/hydra-tutorial</p></li>
-</ul>
-
-
+<blockquote class="blockquote">
+<p>Isaac Orbit (or orbit in short) is a unified and modular framework for robot learning powered by NVIDIA Isaac Sim.</p>
+</blockquote>
+<section id="orbit을-설치하기-전에" class="level1">
+<h1>Orbit을 설치하기 전에</h1>
+<ol type="1">
+<li><p><a href="https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_workstation.html#">공식 홈페이지에 소개되어 있는 IsaacSim 설치방법</a>을 따라 Omniverse를 통해 <code>Isaac Sim 2022.2</code>을 설치합니다.</p>
+<pre><code>설치 진행 환경
+- Ubuntu 20.04 LTS
+- Nvidia RTX 4080
+- Driver Version: 525.60.13</code></pre></li>
+<li><p>Python Environment Setting</p>
+<p><a href="https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_python.html#default-python-environment">IsaacSim Default Python Environment</a></p>
+<p><a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#configuring-the-environment-variables">Configuring the environment variables</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/a6xY3xo.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<p><code>~/.bashrc</code></p>
+<pre class="cmd"><code>gedit ~/.bashrc</code></pre>
+<pre><code># Isaac Sim root directory
+export ISAACSIM_PATH="${HOME}/.local/share/ov/pkg/isaac_sim-2022.2.0"
+# Isaac Sim python executable
+export ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"</code></pre>
+<pre class="cmd"><code>source ~/.bashrc</code></pre>
+<p><a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#running-the-simulator">Running the simulator</a></p>
+<pre><code># note: you can pass the argument `--help` to see all arguments possible.
+$ISAACSIM_PATH/isaac-sim.sh</code></pre>
+<pre><code># checks that python path is set correctly
+$ISAACSIM_PYTHON_EXE -c "print('Isaac Sim configuration is now complete.')"
+# checks that Isaac Sim can be launched from python
+$ISAACSIM_PYTHON_EXE $ISAACSIM_PATH/standalone_examples/api/omni.isaac.core/add_cubes.py</code></pre></li>
+</ol>
 </section>
+<section id="orbit-설치하기" class="level1">
+<h1>Orbit 설치하기</h1>
+<ol type="1">
+<li><p>git clone</p>
+<pre><code></code></pre></li>
+</ol>
+
+
 </section>
 
 </main> <!-- /main -->
