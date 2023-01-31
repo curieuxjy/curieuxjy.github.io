@@ -1,8 +1,9 @@
 ---
 draft: true
-title: "📘2022 "
-description: 반오십이 된 2021 맞이하기
-date: "2021-01-03"
-categories: [diary, 2021]
+title: "📘2022 그리고 2023"
+description: 마지막 양심은 지킨 회고록과 신년 맞이
+date: "2023-01-31"
+categories: [diary, 2023]
 toc: true
 ---
+

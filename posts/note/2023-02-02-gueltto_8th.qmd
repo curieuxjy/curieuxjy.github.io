@@ -1,0 +1,9 @@
+---
+draft: true
+title: "📘글또 8기 다짐글 "
+description: ChatGPT와 함께하는 글또 다짐글
+date: "2022-02-02"
+categories: [diary, 2023]
+toc: true
+---
+
