@@ -2,7 +2,7 @@
 title: "📘Learning myself using Gueltto 8th"
 description: 글또 8기 시작과 함께 나를 다시 관찰해보기
 date: "2023-02-02"
-categories: [diary, 2023]
+categories: [gueltto, 2023]
 toc: true
 ---
 
