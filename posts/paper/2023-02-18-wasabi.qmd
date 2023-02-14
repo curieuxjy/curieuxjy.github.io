@@ -1,0 +1,13 @@
+---
+draft: true
+title: "📃WASABI"
+description: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations
+date: "2023-02-18"
+categories: [rl, gan, paper]
+toc: true
+---
+
+이번 포스팅은 [WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations](https://arxiv.org/abs/2206.11693) 논문을 읽고 정리한 내용입니다.
+
+# Introduction
+
