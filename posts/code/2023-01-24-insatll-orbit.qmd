@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "👩‍💻Orbit 설치하기"
 toc: true
 date: "2023-01-24"
@@ -69,3 +70,16 @@ Nvidia의 [Omniverse Isaac Orbit](https://github.com/NVIDIA-Omniverse/Orbit)를 
     ```
 
     ```
+
+
+2. orbit 명령어 등록 `./orbit.sh` == `orbit`
+
+3. `sudo apt install cmake build-essential`
+
+4. `conda create -n orbit python=3.8`
+
+5. `orbit --install`
+
+6. `orbit --extra`
+
+7. `orbit -p source/standalone/demo/play_empty.py`
