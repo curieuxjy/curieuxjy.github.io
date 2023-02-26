@@ -6,119 +6,119 @@ categories: [rl, gan, paper]
 toc: true
 ---
 
-![Imgur](https://i.imgur.com/JFJxLbR.png)
+![](https://i.imgur.com/JFJxLbR.png)
 
 이번 포스팅은 [WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations](https://arxiv.org/abs/2206.11693) 논문을 읽고 정리한 내용입니다.
 
-![Imgur](https://i.imgur.com/4uX3Ypk.png)
+![](https://i.imgur.com/4uX3Ypk.png)
 
 # Introduction
 
-![Imgur](https://i.imgur.com/1bAIZR7.png)
+![](https://i.imgur.com/1bAIZR7.png)
 
-![Imgur](https://i.imgur.com/RVyXmCY.png)
+![](https://i.imgur.com/RVyXmCY.png)
 
-![Imgur](https://i.imgur.com/grSsR8I.png)
+![](https://i.imgur.com/grSsR8I.png)
 
 ## GAN
 
-![Imgur](https://i.imgur.com/ge1VZdI.png)
+![](https://i.imgur.com/ge1VZdI.png)
 
 
-![Imgur](https://i.imgur.com/caSRhra.png)
+![](https://i.imgur.com/caSRhra.png)
 
 
-![Imgur](https://i.imgur.com/ednff5I.png)
+![](https://i.imgur.com/ednff5I.png)
 
-![Imgur](https://i.imgur.com/PRohEhz.png)
+![](https://i.imgur.com/PRohEhz.png)
 
 
-![Imgur](https://i.imgur.com/nLFrh1I.png)
+![](https://i.imgur.com/nLFrh1I.png)
 
-![Imgur](https://i.imgur.com/W390bdP.png)
+![](https://i.imgur.com/W390bdP.png)
 
-![Imgur](https://i.imgur.com/9zG3oU1.png)
+![](https://i.imgur.com/9zG3oU1.png)
 
 ## WGAN
 
-![Imgur](https://i.imgur.com/8JEzbak.png)
+![](https://i.imgur.com/8JEzbak.png)
 
-![Imgur](https://i.imgur.com/T2RcnRe.png)
+![](https://i.imgur.com/T2RcnRe.png)
 
-![Imgur](https://i.imgur.com/LzexuQs.png)
+![](https://i.imgur.com/LzexuQs.png)
 
 ## RL with GAN
 
-![Imgur](https://i.imgur.com/QlP3aFv.png)
+![](https://i.imgur.com/QlP3aFv.png)
 
 # Method
 
 ## Problem Definition
 
-![Imgur](https://i.imgur.com/msxpT4a.png)
+![](https://i.imgur.com/msxpT4a.png)
 
-![Imgur](https://i.imgur.com/D6FEQEE.png)
+![](https://i.imgur.com/D6FEQEE.png)
 
 ## Reward Design
 
-![Imgur](https://i.imgur.com/0wg8bM0.png)
+![](https://i.imgur.com/0wg8bM0.png)
 
-![Imgur](https://i.imgur.com/z8U8CC6.png)
+![](https://i.imgur.com/z8U8CC6.png)
 
 ### Imitation(Task) Reward
 
-![Imgur](https://i.imgur.com/8DRZBxx.png)
+![](https://i.imgur.com/8DRZBxx.png)
 
-![Imgur](https://i.imgur.com/NXdF03E.png)
+![](https://i.imgur.com/NXdF03E.png)
 
-![Imgur](https://i.imgur.com/v1lt07o.png)
+![](https://i.imgur.com/v1lt07o.png)
 
-![Imgur](https://i.imgur.com/rXawMI8.png)
+![](https://i.imgur.com/rXawMI8.png)
 
-![Imgur](https://i.imgur.com/Oqh2wGI.png)
+![](https://i.imgur.com/Oqh2wGI.png)
 
 ### Regularization Reward
 
-![Imgur](https://i.imgur.com/H5pvaF8.png)
+![](https://i.imgur.com/H5pvaF8.png)
 
 ### Termination Reward
 
-![Imgur](https://i.imgur.com/UwAzXUZ.png)
+![](https://i.imgur.com/UwAzXUZ.png)
 
 ### Total Reward
 
-![Imgur](https://i.imgur.com/XSJWcDx.png)
+![](https://i.imgur.com/XSJWcDx.png)
 
 # Result
 
-![Imgur](https://i.imgur.com/CsTqUZw.png)
+![](https://i.imgur.com/CsTqUZw.png)
 
-![Imgur](https://i.imgur.com/PBnpWKR.png)
+![](https://i.imgur.com/PBnpWKR.png)
 
 ## Induced Imitation Reward Distributions
 
-![Imgur](https://i.imgur.com/7HPHwPA.png)
+![](https://i.imgur.com/7HPHwPA.png)
 
 ## Learning to Mimic Rough Demonstrations
 
 ### Dynamic Time Warping
 
-![Imgur](https://i.imgur.com/xPDivSD.png)
+![](https://i.imgur.com/xPDivSD.png)
 
-![Imgur](https://i.imgur.com/8mpyySq.png)
+![](https://i.imgur.com/8mpyySq.png)
 
 
 ### Handcrafted Task Reward
 
-![Imgur](https://i.imgur.com/NhqRkfs.png)
+![](https://i.imgur.com/NhqRkfs.png)
 
 ## Evaluation on Real Robot
 
-![Imgur](https://i.imgur.com/hNAIFbK.png)
+![](https://i.imgur.com/hNAIFbK.png)
 
 ## Cross-platform Imitation
 
-![Imgur](https://i.imgur.com/dtIbRK7.png)
+![](https://i.imgur.com/dtIbRK7.png)
 
 # Conclusion
 
