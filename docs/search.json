@@ -501,7 +501,70 @@
     "href": "posts/paper/2023-02-26-wasabi.html",
     "title": "📃WASABI",
     "section": "",
-    "text": "Imgur\n\n\n이번 포스팅은 WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations 논문을 읽고 정리한 내용입니다.\n\nIntroduction\n\n\n\nImgur\n\n\n\n\n\nImgur"
+    "text": "Imgur\n이번 포스팅은 WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations 논문을 읽고 정리한 내용입니다."
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#gan",
+    "href": "posts/paper/2023-02-26-wasabi.html#gan",
+    "title": "📃WASABI",
+    "section": "GAN",
+    "text": "GAN\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#wgan",
+    "href": "posts/paper/2023-02-26-wasabi.html#wgan",
+    "title": "📃WASABI",
+    "section": "WGAN",
+    "text": "WGAN\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#rl-with-gan",
+    "href": "posts/paper/2023-02-26-wasabi.html#rl-with-gan",
+    "title": "📃WASABI",
+    "section": "RL with GAN",
+    "text": "RL with GAN\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#problem-definition",
+    "href": "posts/paper/2023-02-26-wasabi.html#problem-definition",
+    "title": "📃WASABI",
+    "section": "Problem Definition",
+    "text": "Problem Definition\n\n\n\nImgur\n\n\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#reward-design",
+    "href": "posts/paper/2023-02-26-wasabi.html#reward-design",
+    "title": "📃WASABI",
+    "section": "Reward Design",
+    "text": "Reward Design\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\nImitation(Task) Reward\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\nRegularization Reward\n\n\n\nImgur\n\n\n\n\nTermination Reward\n\n\n\nImgur\n\n\n\n\nTotal Reward\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#induced-imitation-reward-distributions",
+    "href": "posts/paper/2023-02-26-wasabi.html#induced-imitation-reward-distributions",
+    "title": "📃WASABI",
+    "section": "Induced Imitation Reward Distributions",
+    "text": "Induced Imitation Reward Distributions\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#learning-to-mimic-rough-demonstrations",
+    "href": "posts/paper/2023-02-26-wasabi.html#learning-to-mimic-rough-demonstrations",
+    "title": "📃WASABI",
+    "section": "Learning to Mimic Rough Demonstrations",
+    "text": "Learning to Mimic Rough Demonstrations\n\nDynamic Time Warping\n\n\n\nImgur\n\n\n\n\n\nImgur\n\n\n\n\nHandcrafted Task Reward\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#evaluation-on-real-robot",
+    "href": "posts/paper/2023-02-26-wasabi.html#evaluation-on-real-robot",
+    "title": "📃WASABI",
+    "section": "Evaluation on Real Robot",
+    "text": "Evaluation on Real Robot\n\n\n\nImgur"
+  },
+  {
+    "objectID": "posts/paper/2023-02-26-wasabi.html#cross-platform-imitation",
+    "href": "posts/paper/2023-02-26-wasabi.html#cross-platform-imitation",
+    "title": "📃WASABI",
+    "section": "Cross-platform Imitation",
+    "text": "Cross-platform Imitation\n\n\n\nImgur"
   },
   {
     "objectID": "posts/note/2021-01-31-ML-tu-berlin-2021.html",

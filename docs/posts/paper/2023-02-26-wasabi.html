@@ -109,7 +109,36 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#gan" id="toc-gan" class="nav-link" data-scroll-target="#gan">GAN</a></li>
+  <li><a href="#wgan" id="toc-wgan" class="nav-link" data-scroll-target="#wgan">WGAN</a></li>
+  <li><a href="#rl-with-gan" id="toc-rl-with-gan" class="nav-link" data-scroll-target="#rl-with-gan">RL with GAN</a></li>
+  </ul></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a>
+  <ul class="collapse">
+  <li><a href="#problem-definition" id="toc-problem-definition" class="nav-link" data-scroll-target="#problem-definition">Problem Definition</a></li>
+  <li><a href="#reward-design" id="toc-reward-design" class="nav-link" data-scroll-target="#reward-design">Reward Design</a>
+  <ul class="collapse">
+  <li><a href="#imitationtask-reward" id="toc-imitationtask-reward" class="nav-link" data-scroll-target="#imitationtask-reward">Imitation(Task) Reward</a></li>
+  <li><a href="#regularization-reward" id="toc-regularization-reward" class="nav-link" data-scroll-target="#regularization-reward">Regularization Reward</a></li>
+  <li><a href="#termination-reward" id="toc-termination-reward" class="nav-link" data-scroll-target="#termination-reward">Termination Reward</a></li>
+  <li><a href="#total-reward" id="toc-total-reward" class="nav-link" data-scroll-target="#total-reward">Total Reward</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#result" id="toc-result" class="nav-link" data-scroll-target="#result">Result</a>
+  <ul class="collapse">
+  <li><a href="#induced-imitation-reward-distributions" id="toc-induced-imitation-reward-distributions" class="nav-link" data-scroll-target="#induced-imitation-reward-distributions">Induced Imitation Reward Distributions</a></li>
+  <li><a href="#learning-to-mimic-rough-demonstrations" id="toc-learning-to-mimic-rough-demonstrations" class="nav-link" data-scroll-target="#learning-to-mimic-rough-demonstrations">Learning to Mimic Rough Demonstrations</a>
+  <ul class="collapse">
+  <li><a href="#dynamic-time-warping" id="toc-dynamic-time-warping" class="nav-link" data-scroll-target="#dynamic-time-warping">Dynamic Time Warping</a></li>
+  <li><a href="#handcrafted-task-reward" id="toc-handcrafted-task-reward" class="nav-link" data-scroll-target="#handcrafted-task-reward">Handcrafted Task Reward</a></li>
+  </ul></li>
+  <li><a href="#evaluation-on-real-robot" id="toc-evaluation-on-real-robot" class="nav-link" data-scroll-target="#evaluation-on-real-robot">Evaluation on Real Robot</a></li>
+  <li><a href="#cross-platform-imitation" id="toc-cross-platform-imitation" class="nav-link" data-scroll-target="#cross-platform-imitation">Cross-platform Imitation</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul>
 </nav>
     </div>
@@ -156,6 +185,12 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>이번 포스팅은 <a href="https://arxiv.org/abs/2206.11693">WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations</a> 논문을 읽고 정리한 내용입니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/4uX3Ypk.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <div class="quarto-figure quarto-figure-center">
@@ -170,6 +205,270 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/grSsR8I.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<section id="gan" class="level2">
+<h2 class="anchored" data-anchor-id="gan">GAN</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/ge1VZdI.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/caSRhra.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/ednff5I.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/PRohEhz.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/nLFrh1I.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/W390bdP.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/9zG3oU1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="wgan" class="level2">
+<h2 class="anchored" data-anchor-id="wgan">WGAN</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/8JEzbak.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/T2RcnRe.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/LzexuQs.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="rl-with-gan" class="level2">
+<h2 class="anchored" data-anchor-id="rl-with-gan">RL with GAN</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/QlP3aFv.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="method" class="level1">
+<h1>Method</h1>
+<section id="problem-definition" class="level2">
+<h2 class="anchored" data-anchor-id="problem-definition">Problem Definition</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/msxpT4a.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/D6FEQEE.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="reward-design" class="level2">
+<h2 class="anchored" data-anchor-id="reward-design">Reward Design</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/0wg8bM0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/z8U8CC6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<section id="imitationtask-reward" class="level3">
+<h3 class="anchored" data-anchor-id="imitationtask-reward">Imitation(Task) Reward</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/8DRZBxx.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/NXdF03E.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/v1lt07o.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/rXawMI8.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Oqh2wGI.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="regularization-reward" class="level3">
+<h3 class="anchored" data-anchor-id="regularization-reward">Regularization Reward</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/H5pvaF8.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="termination-reward" class="level3">
+<h3 class="anchored" data-anchor-id="termination-reward">Termination Reward</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/UwAzXUZ.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="total-reward" class="level3">
+<h3 class="anchored" data-anchor-id="total-reward">Total Reward</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/XSJWcDx.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="result" class="level1">
+<h1>Result</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/CsTqUZw.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/PBnpWKR.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<section id="induced-imitation-reward-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="induced-imitation-reward-distributions">Induced Imitation Reward Distributions</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/7HPHwPA.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="learning-to-mimic-rough-demonstrations" class="level2">
+<h2 class="anchored" data-anchor-id="learning-to-mimic-rough-demonstrations">Learning to Mimic Rough Demonstrations</h2>
+<section id="dynamic-time-warping" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-time-warping">Dynamic Time Warping</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/xPDivSD.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/8mpyySq.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="handcrafted-task-reward" class="level3">
+<h3 class="anchored" data-anchor-id="handcrafted-task-reward">Handcrafted Task Reward</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/NhqRkfs.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="evaluation-on-real-robot" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation-on-real-robot">Evaluation on Real Robot</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/hNAIFbK.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="cross-platform-imitation" class="level2">
+<h2 class="anchored" data-anchor-id="cross-platform-imitation">Cross-platform Imitation</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/dtIbRK7.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+</section>
+<section id="reference" class="level1">
+<h1>Reference</h1>
+<ul>
+<li><a href="https://arxiv.org/abs/2206.11693">Original Paper: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations</a></li>
+<li><a href="https://sites.google.com/view/corl2022-wasabi/home">Original Project Homepage: CoRL2022-WASABI</a></li>
+<li><a href="https://youtu.be/9j2a1oAHDL8">Learning Quadrupedal Locomotion over Challenging Terrain</a></li>
+<li><a href="https://youtu.be/69tqQq1EpEI">Joonho Lee: Learning Quadrupedal Locomotion over Challenging Terrain</a></li>
+<li><a href="https://youtu.be/kEdr0ARq48A">Advanced Skills through Multiple Adversarial Motion Priors in Reinforcement Learning</a></li>
+<li><a href="https://freecontent.manning.com/what-are-gans/">What Are GANs?</a></li>
+<li><a href="https://youtu.be/odpjk7_tGY0">1시간만에 GAN(Generative Adversarial Network) 완전 정복하기</a></li>
+<li><a href="https://youtu.be/RdC4XeExDeY?t=454">CS 182: Lecture 19: Part 3: GANs</a></li>
+<li><a href="https://ydata.ai/resources/gans-for-synthetic-data-generation">GANs for Synthetic Data Generation</a></li>
+<li><a href="https://ieeexplore.ieee.org/document/9015985/">An Open Torque-Controlled Modular Robot Architecture for Legged Locomotion Research</a></li>
+<li><a href="https://no-never-no.tistory.com/19">DTW(Dynamic Time Warping)</a></li>
+<li><a href="https://hamait.tistory.com/862">파이썬 코딩으로 말하는 데이터 분석 - 10. DTW (Dynamic time wrapping)</a></li>
+<li><a href="https://youtu.be/ERKDHZyZDwA">Dynamic time warping 1: Motivation</a></li>
+</ul>
 
 
 </section>

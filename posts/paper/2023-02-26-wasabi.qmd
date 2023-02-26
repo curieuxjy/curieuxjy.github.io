@@ -10,8 +10,132 @@ toc: true
 
 이번 포스팅은 [WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations](https://arxiv.org/abs/2206.11693) 논문을 읽고 정리한 내용입니다.
 
+![Imgur](https://i.imgur.com/4uX3Ypk.png)
+
 # Introduction
 
 ![Imgur](https://i.imgur.com/1bAIZR7.png)
 
 ![Imgur](https://i.imgur.com/RVyXmCY.png)
+
+![Imgur](https://i.imgur.com/grSsR8I.png)
+
+## GAN
+
+![Imgur](https://i.imgur.com/ge1VZdI.png)
+
+
+![Imgur](https://i.imgur.com/caSRhra.png)
+
+
+![Imgur](https://i.imgur.com/ednff5I.png)
+
+![Imgur](https://i.imgur.com/PRohEhz.png)
+
+
+![Imgur](https://i.imgur.com/nLFrh1I.png)
+
+![Imgur](https://i.imgur.com/W390bdP.png)
+
+![Imgur](https://i.imgur.com/9zG3oU1.png)
+
+## WGAN
+
+![Imgur](https://i.imgur.com/8JEzbak.png)
+
+![Imgur](https://i.imgur.com/T2RcnRe.png)
+
+![Imgur](https://i.imgur.com/LzexuQs.png)
+
+## RL with GAN
+
+![Imgur](https://i.imgur.com/QlP3aFv.png)
+
+# Method
+
+## Problem Definition
+
+![Imgur](https://i.imgur.com/msxpT4a.png)
+
+![Imgur](https://i.imgur.com/D6FEQEE.png)
+
+## Reward Design
+
+![Imgur](https://i.imgur.com/0wg8bM0.png)
+
+![Imgur](https://i.imgur.com/z8U8CC6.png)
+
+### Imitation(Task) Reward
+
+![Imgur](https://i.imgur.com/8DRZBxx.png)
+
+![Imgur](https://i.imgur.com/NXdF03E.png)
+
+![Imgur](https://i.imgur.com/v1lt07o.png)
+
+![Imgur](https://i.imgur.com/rXawMI8.png)
+
+![Imgur](https://i.imgur.com/Oqh2wGI.png)
+
+### Regularization Reward
+
+![Imgur](https://i.imgur.com/H5pvaF8.png)
+
+### Termination Reward
+
+![Imgur](https://i.imgur.com/UwAzXUZ.png)
+
+### Total Reward
+
+![Imgur](https://i.imgur.com/XSJWcDx.png)
+
+# Result
+
+![Imgur](https://i.imgur.com/CsTqUZw.png)
+
+![Imgur](https://i.imgur.com/PBnpWKR.png)
+
+## Induced Imitation Reward Distributions
+
+![Imgur](https://i.imgur.com/7HPHwPA.png)
+
+## Learning to Mimic Rough Demonstrations
+
+### Dynamic Time Warping
+
+![Imgur](https://i.imgur.com/xPDivSD.png)
+
+![Imgur](https://i.imgur.com/8mpyySq.png)
+
+
+### Handcrafted Task Reward
+
+![Imgur](https://i.imgur.com/NhqRkfs.png)
+
+## Evaluation on Real Robot
+
+![Imgur](https://i.imgur.com/hNAIFbK.png)
+
+## Cross-platform Imitation
+
+![Imgur](https://i.imgur.com/dtIbRK7.png)
+
+# Conclusion
+
+
+
+# Reference
+
+- [Original Paper: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations](https://arxiv.org/abs/2206.11693)
+- [Original Project Homepage: CoRL2022-WASABI](https://sites.google.com/view/corl2022-wasabi/home)
+- [Learning Quadrupedal Locomotion over Challenging Terrain](https://youtu.be/9j2a1oAHDL8)
+- [Joonho Lee: Learning Quadrupedal Locomotion over Challenging Terrain](https://youtu.be/69tqQq1EpEI)
+- [Advanced Skills through Multiple Adversarial Motion Priors in Reinforcement Learning](https://youtu.be/kEdr0ARq48A)
+- [What Are GANs?](https://freecontent.manning.com/what-are-gans/)
+- [1시간만에 GAN(Generative Adversarial Network) 완전 정복하기](https://youtu.be/odpjk7_tGY0)
+- [CS 182: Lecture 19: Part 3: GANs](https://youtu.be/RdC4XeExDeY?t=454)
+- [GANs for Synthetic Data Generation](https://ydata.ai/resources/gans-for-synthetic-data-generation)
+- [An Open Torque-Controlled Modular Robot Architecture for Legged Locomotion Research](https://ieeexplore.ieee.org/document/9015985/)
+- [DTW(Dynamic Time Warping)](https://no-never-no.tistory.com/19)
+- [파이썬 코딩으로 말하는 데이터 분석 - 10. DTW (Dynamic time wrapping)](https://hamait.tistory.com/862)
+- [Dynamic time warping 1: Motivation](https://youtu.be/ERKDHZyZDwA)
