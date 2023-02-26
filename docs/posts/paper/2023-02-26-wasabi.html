@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-01-24">
-<meta name="description" content="Isaac Orbit Series 001">
+<meta name="dcterms.date" content="2023-02-26">
+<meta name="description" content="Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations">
 
-<title>Curieux.JY - 👩‍💻Orbit 설치하기</title>
+<title>Curieux.JY - 📃WASABI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,8 +109,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#orbit을-설치하기-전에" id="toc-orbit을-설치하기-전에" class="nav-link active" data-scroll-target="#orbit을-설치하기-전에">Orbit을 설치하기 전에</a></li>
-  <li><a href="#orbit-설치하기" id="toc-orbit-설치하기" class="nav-link" data-scroll-target="#orbit-설치하기">Orbit 설치하기</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   </ul>
 </nav>
     </div>
@@ -119,17 +118,17 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">👩‍💻Orbit 설치하기</h1>
+<h1 class="title">📃WASABI</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">orbit</div>
-    <div class="quarto-category">isaacsim</div>
-    <div class="quarto-category">code</div>
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">gan</div>
+    <div class="quarto-category">paper</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Isaac Orbit Series 001
+    Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations
   </div>
 </div>
 
@@ -140,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 24, 2023</p>
+      <p class="date">February 26, 2023</p>
     </div>
   </div>
   
@@ -150,60 +149,27 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Nvidia의 <a href="https://github.com/NVIDIA-Omniverse/Orbit">Omniverse Isaac Orbit</a>를 사용해보기 위해 <a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#">Orbit Docs - Installation Guide</a>를 따라 설치과정을 기록해보았습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://github.com/NVIDIA-Omniverse/Orbit/raw/main/docs/source/_static/tasks.jpg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-<blockquote class="blockquote">
-<p>Isaac Orbit (or orbit in short) is a unified and modular framework for robot learning powered by NVIDIA Isaac Sim.</p>
-</blockquote>
-<section id="orbit을-설치하기-전에" class="level1">
-<h1>Orbit을 설치하기 전에</h1>
-<ol type="1">
-<li><p><a href="https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_workstation.html#">공식 홈페이지에 소개되어 있는 IsaacSim 설치방법</a>을 따라 Omniverse를 통해 <code>Isaac Sim 2022.2</code>을 설치합니다.</p>
-<pre><code>설치 진행 환경
-- Ubuntu 20.04 LTS
-- Nvidia RTX 4080
-- Driver Version: 525.60.13</code></pre></li>
-<li><p>Python Environment Setting</p>
-<p><a href="https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_python.html#default-python-environment">IsaacSim Default Python Environment</a></p>
-<p><a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#configuring-the-environment-variables">Configuring the environment variables</a></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/a6xY3xo.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/JFJxLbR.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
 </figure>
 </div>
-<p><code>~/.bashrc</code></p>
-<pre class="cmd"><code>gedit ~/.bashrc</code></pre>
-<pre><code># Isaac Sim root directory
-export ISAACSIM_PATH="${HOME}/.local/share/ov/pkg/isaac_sim-2022.2.0"
-# Isaac Sim python executable
-export ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"</code></pre>
-<pre class="cmd"><code>source ~/.bashrc</code></pre>
-<p><a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#running-the-simulator">Running the simulator</a></p>
-<pre><code># note: you can pass the argument `--help` to see all arguments possible.
-$ISAACSIM_PATH/isaac-sim.sh</code></pre>
-<pre><code># checks that python path is set correctly
-$ISAACSIM_PYTHON_EXE -c "print('Isaac Sim configuration is now complete.')"
-# checks that Isaac Sim can be launched from python
-$ISAACSIM_PYTHON_EXE $ISAACSIM_PATH/standalone_examples/api/omni.isaac.core/add_cubes.py</code></pre></li>
-</ol>
-</section>
-<section id="orbit-설치하기" class="level1">
-<h1>Orbit 설치하기</h1>
-<ol type="1">
-<li><p>git clone</p>
-<pre><code></code></pre></li>
-<li><p>orbit 명령어 등록 <code>./orbit.sh</code> == <code>orbit</code></p></li>
-<li><p><code>sudo apt install cmake build-essential</code></p></li>
-<li><p><code>conda create -n orbit python=3.8</code></p></li>
-<li><p><code>orbit --install</code></p></li>
-<li><p><code>orbit --extra</code></p></li>
-<li><p><code>orbit -p source/standalone/demo/play_empty.py</code></p></li>
-</ol>
+<p>이번 포스팅은 <a href="https://arxiv.org/abs/2206.11693">WASABI: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations</a> 논문을 읽고 정리한 내용입니다.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/1bAIZR7.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/RVyXmCY.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Imgur</figcaption><p></p>
+</figure>
+</div>
 
 
 </section>
