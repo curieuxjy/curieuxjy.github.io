@@ -174,15 +174,15 @@ mapping function을 통해 차원을 맞춘 $\phi(s)$ 와 $ㅐ$는 GAN의 object
 
 ## Learning to Mimic Rough Demonstrations
 
-그럼 정말로 Demo 모션 데이터들을 얼만큼 잘 따라 학습할 수 있었을까? 이에 대한 지표는 단순히 reward가 높다고 판단할 수 있는 것이 아니라 모션의 유사성을 판단할 수 있는 다른 metric이 필요합니다.
+그럼 정말로 Demo 모션 데이터들을 얼만큼 잘 따라 학습할 수 있었을까요? 이에 대한 지표는 단순히 reward가 높다고 판단할 수 있는 것이 아니라 모션의 유사성을 판단할 수 있는 다른 metric이 필요합니다.
 
 ### Dynamic Time Warping
 
-Dynamic Time Warping이란 각 데이터의 시간의 길이도 다르고 데이터 포인트의 수도 다른 2개의 시계열 데이터를 비교할 때 사용하는 방법으로 기존의 Euclidean distance라면 측정할 수 없거나 정확한 비교가 어려운 점을 DTW를 이용하면 시간적인 밀림이나 소실된 데이터 포인트까지 고려하여 시계열 데이터 간의 유사도를 판단할 수 있다. 바로 이 방법을 이용해서 사람이 들고 만들었던 demo의 모션 데이터와 실제 학습 후 policy에서 만들어낸 모션 데이터 간의 차이를 측정해보았다.
+Dynamic Time Warping이란 각 데이터의 시간의 길이도 다르고 데이터 포인트의 수도 다른 2개의 시계열 데이터를 비교할 때 사용하는 방법으로 기존의 Euclidean distance라면 측정할 수 없거나 정확한 비교가 어려운 점을 DTW를 이용하면 시간적인 밀림이나 소실된 데이터 포인트까지 고려하여 시계열 데이터 간의 유사도를 판단할 수 있습니다. 바로 이 방법을 이용해서 사람이 들고 만들었던 demo의 모션 데이터와 실제 학습 후 policy에서 만들어낸 모션 데이터 간의 차이를 측정해보았습니다.
 
 ![](https://i.imgur.com/xPDivSD.png)
 
-$\tau_\pi$는 policy에서 만들어진 trajectory를, $\tau_M$은 demo에서 따온 trajectory를 말하며 아래의 실험 결과표는 각각 WASABI와 LSGAN에서의 4 task에 대한 DTW를 구한 값을 나타내고 있다. DTW가 낮을수록 demo 데이터와의 유사성이 높은 것이며 잘 모션을 따라 학습했다고 볼 수 있다.(아래 Stand Still은 단순히 가만히 서 있는 모션의 데이터와 demo 데이터 간의 DTW 값을 나타낸 것이며 비교를 위한 DTW의 최대 상한선을 나타낸 것으로 볼 수 있습니다.)
+$\tau_\pi$는 policy에서 만들어진 trajectory를, $\tau_M$은 demo에서 따온 trajectory를 말하며 아래의 실험 결과표는 각각 WASABI와 LSGAN에서의 4 task에 대한 DTW를 구한 값을 나타내고 있습니다. DTW가 낮을수록 demo 데이터와의 유사성이 높은 것이며 잘 모션을 따라 학습했다고 볼 수 있습니다.(아래 Stand Still은 단순히 가만히 서 있는 모션의 데이터와 demo 데이터 간의 DTW 값을 나타낸 것이며 비교를 위한 DTW의 최대 상한선을 나타낸 것으로 볼 수 있습니다.)
 
 ![](https://i.imgur.com/8mpyySq.png)
 
