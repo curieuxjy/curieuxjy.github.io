@@ -234,6 +234,7 @@ $\tau_\pi$는 policy에서 만들어진 trajectory를, $\tau_M$은 demo에서 �
 
 - [Original Paper: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations](https://arxiv.org/abs/2206.11693)
 - [Original Project Homepage: CoRL2022-WASABI](https://sites.google.com/view/corl2022-wasabi/home)
+- [CoRL 2022 Oral Presentation](https://youtu.be/JLtwdgjbuUA)
 - [Learning Quadrupedal Locomotion over Challenging Terrain](https://youtu.be/9j2a1oAHDL8)
 - [Joonho Lee: Learning Quadrupedal Locomotion over Challenging Terrain](https://youtu.be/69tqQq1EpEI)
 - [Advanced Skills through Multiple Adversarial Motion Priors in Reinforcement Learning](https://youtu.be/kEdr0ARq48A)

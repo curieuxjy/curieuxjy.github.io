@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -98,17 +98,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">Jung Yeon Lee</span></a>
+    <a class="nav-link" href="../../about.html">Jung Yeon Lee</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../note.html">
- <span class="menu-text">✒️Note</span></a>
+    <a class="nav-link" href="../../note.html">✒️Note</a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+ </a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -187,7 +185,6 @@ ul.task-list li input[type="checkbox"] {
       <p class="date">March 12, 2023</p>
     </div>
   </div>
-  
     
   </div>
   
@@ -323,20 +320,20 @@ ul.task-list li input[type="checkbox"] {
 <p>학습이 시뮬레이션에서만 멈춘다면 당연히 의미가 없는 것이므로 실제 로봇을 가지고 해당 policy의 학습 결과를 확인해봐야 합니다. 따라서 WASABI로 학습한 policy를 가지고 실제 로봇으로 작동을 해보고 이때 10개의 marker를 이용해서 모션 데이터를 얻어 DTW를 측정해보았습니다. 그 결과 표에서 볼 수 있듯이 Sim-to-Real의 퍼포먼스 차이가 거의 없었고 실제 로봇에서도 4가지 task 모두 다 잘 수행하는 것을 확인할 수 있었습니다. 이 부분은 실험영상에서 직접 확인할 수 있습니다.</p>
 <p><img src="https://i.imgur.com/hNAIFbK.png" class="img-fluid"></p>
 <p><strong>Leap</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/sO7Kn6dNwTo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p></p>
 <p><strong>Wave</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/25ZCCkwSztc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p></p>
 <p><strong>Stand up</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/sjFd5pZkKao" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p></p>
 <p><strong>Backflip</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/GDlylFsp9so" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p></p>
 </section>
 <section id="cross-platform-imitation" class="level2">
 <h2 class="anchored" data-anchor-id="cross-platform-imitation">Cross-platform Imitation</h2>
 <p>사실 강화학습은 특정 로봇 플랫폼에서 학습한 결과를 다른 configuration을 가진 로봇 플랫폼에 바로 적용하기 어렵습니다. 하지만 WASABI 알고리즘은 처음에 Rough하고 Partial한 demo 데이터를 가지고 학습했기 때문에 다른 로봇 플랫폼에 적용해보는 것이 가능했으며 기존에 Solo 8 로봇 플랫폼을 가지고 학습한 policy를 단순히 로봇 플랫폼의 크기 차이만을 고려하여 base height를 0.25m 조금 더 큰값으로 수정해서 Anymal-C 로봇 플랫폼에 적용했을 때 특별한 추가적인 학습 과정없이도 적용할 수 있었다고 합니다. 이때에도 DTW 값을 찍어서 확인한 결과, 낮은 DTW 값과 함께 시뮬레이션으로 roll-out을 했을 때에 로봇이 잘 작동되는 것을 확인할 수 있었다고 합니다.</p>
 <p><img src="https://i.imgur.com/dtIbRK7.png" class="img-fluid"></p>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/asfvXhBJiuc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/9UUAUt3XdGA" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p></p>
+<p></p>
 </section>
 </section>
 <section id="conclusion" class="level1">
@@ -348,6 +345,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><a href="https://arxiv.org/abs/2206.11693">Original Paper: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations</a></li>
 <li><a href="https://sites.google.com/view/corl2022-wasabi/home">Original Project Homepage: CoRL2022-WASABI</a></li>
+<li><a href="https://youtu.be/JLtwdgjbuUA">CoRL 2022 Oral Presentation</a></li>
 <li><a href="https://youtu.be/9j2a1oAHDL8">Learning Quadrupedal Locomotion over Challenging Terrain</a></li>
 <li><a href="https://youtu.be/69tqQq1EpEI">Joonho Lee: Learning Quadrupedal Locomotion over Challenging Terrain</a></li>
 <li><a href="https://youtu.be/kEdr0ARq48A">Advanced Skills through Multiple Adversarial Motion Priors in Reinforcement Learning</a></li>
@@ -406,24 +404,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -459,42 +440,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
