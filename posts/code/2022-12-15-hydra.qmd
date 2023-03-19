@@ -5,6 +5,8 @@ toc: true
 date: "2022-12-15"
 description: 여러 실험 파라미터들을 관리해주는 Hydra
 categories: [hydra, code]
+execute:
+  freeze: auto 
 ---
 
 ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 한다. 이를 위해 여러가지 방법이 있지만, 이번 포스팅에서는 FacebookResearch에서 만든 [Hydra](https://hydra.cc/)를 사용해보자 합니다.

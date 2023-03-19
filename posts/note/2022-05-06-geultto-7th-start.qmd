@@ -4,6 +4,8 @@ description: 안녕하세요 글또 7기입니다
 date: "2022-05-06"
 categories: [geultto, 2022]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ## 글쓰는 또라이, [글또](https://github.com/geultto)

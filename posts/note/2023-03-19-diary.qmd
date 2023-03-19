@@ -1,0 +1,15 @@
+---
+title: "📘Comfort Zone"
+description: 그들과 나의 차이, 적어도 지금은
+date: "2023-03-19"
+categories: [diary, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+<img src="https://i.imgur.com/7PUa9I8.png" style="zoom:50%;" />
+
+![](../../images/2023-03-19-diary/123.jpg)
+
+<img src="../../images/2023-03-19-diary/1678688888463.jpeg" alt="1678688888463" style="zoom:50%;" />

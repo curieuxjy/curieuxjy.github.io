@@ -5,6 +5,8 @@ date: "2022-10-29"
 categories: [geultto, 2022]
 toc: true
 image: ../../def.png
+execute:
+  freeze: auto 
 ---
 
 

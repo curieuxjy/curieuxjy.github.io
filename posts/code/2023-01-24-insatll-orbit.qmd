@@ -5,6 +5,8 @@ toc: true
 date: "2023-01-24"
 description: Isaac Orbit Series 001
 categories: [orbit, isaacsim, code]
+execute:
+  freeze: auto 
 ---
 
 Nvidia의 [Omniverse Isaac Orbit](https://github.com/NVIDIA-Omniverse/Orbit)를 사용해보기 위해 [Orbit Docs - Installation Guide](https://isaac-orbit.github.io/orbit/source/setup/installation.html#)를 따라 설치과정을 기록해보았습니다.

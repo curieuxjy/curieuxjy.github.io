@@ -5,6 +5,8 @@ description: blog post
 date: ""
 categories: [daily, paper]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ![](https://i.imgur.com/1iPfFJZ.png)

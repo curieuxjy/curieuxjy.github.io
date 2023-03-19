@@ -4,6 +4,8 @@ description: Robust Recovery Controller for a Quadrupedal Robot using Deep Reinf
 date: "2022-10-16"
 categories: [rl, trpo, gae, quadruped, paper]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ![](https://i.imgur.com/mts8weC.jpg)

@@ -5,5 +5,7 @@ description: 마지막 양심은 지킨 회고록과 신년 맞이
 date: "2023-01-31"
 categories: [diary, 2023]
 toc: true
+execute:
+  freeze: auto 
 ---
 

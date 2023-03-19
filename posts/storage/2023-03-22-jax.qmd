@@ -1,0 +1,14 @@
+---
+draft: true
+title: "🧩JAX"
+description: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations
+date: "2023-03-26"
+categories: [rl, gan, paper]
+toc: true
+---
+
+[What is JAX?](https://youtu.be/uySOfXq-II0)
+
+[Who uses JAX?](https://youtu.be/C7FJc9mfS_U)
+
+[How to use JAX?](https://youtu.be/9U6Ld2weKjQ)

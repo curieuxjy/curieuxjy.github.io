@@ -23,5 +23,5 @@ format:
 # https://quarto.org/docs/websites/website-blog.html#themes 
 # sketchy simplex standstone minty pulse lux
 
-execute: 
-  freeze: auto
+execute:
+  freeze: auto 

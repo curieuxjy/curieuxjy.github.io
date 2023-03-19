@@ -4,6 +4,8 @@ description: Graph Networks as Learnable Physics Engines for Inference and Contr
 date: "2022-08-07"
 categories: [gnn, system identification, mpc, rl, paper]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 

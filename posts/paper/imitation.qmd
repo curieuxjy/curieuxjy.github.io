@@ -5,6 +5,8 @@ description: Reproducing the diverse and agile locomotion skills of animals
 date: ""
 categories: [quadruped, rl, imitation, paper]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ![](https://i.imgur.com/1Fh5MaD.png?1)

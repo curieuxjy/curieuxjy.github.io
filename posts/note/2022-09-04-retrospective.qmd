@@ -4,6 +4,8 @@ description: 2022 상반기 회고
 date: "2022-09-04"
 categories: [geultto, 2022]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 이번 post는 2022년도 상반기 회고록에 관한 내용을 담고 있습니다. 지난 8월 25일에 있었던 [글또콘](https://github.com/geultto/geultto-conference) 후기와 글또를 처음 시작했을 때의 [다짐](https://curieuxjy.github.io/blog/geultto/resolution/2022/05/06/geultto-7th-start.html)을 기반으로 회고를 해보았습니다.

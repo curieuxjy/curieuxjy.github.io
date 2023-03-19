@@ -4,6 +4,8 @@ description: custom module을 불러오는 방법
 date: "2020-07-20"
 categories: [python, code]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ## Structure

@@ -4,6 +4,8 @@ description: TU Berlin Winter University Online 2021으로 Machine Learning 배�
 date: "2021-01-31"
 categories: [diary, 2021]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ## TU Berlin Winter University Online 2021

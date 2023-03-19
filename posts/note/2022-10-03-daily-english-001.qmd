@@ -4,6 +4,8 @@ description: Daily English Series
 date: "2022-10-03"
 categories: [daily, english, casual, 2022]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 > 영어 회화 표현이나 논문에서 쓸 수 있는 유용한 표현들을 조금씩 익히기 위해 시작한 1000일 시리즈 포스트 입니다. 공부 리소스는 유튜브, 리얼클래스, [PN님의 블로그](https://in.naver.com/sw4r), cake 어플, 책, 논문, 기사 등 다양한 출처에서 보고 기록합니다.

@@ -4,6 +4,8 @@ description: 반오십이 된 2021 맞이하기
 date: "2021-01-03"
 categories: [diary, 2021]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 2021에 이루고 싶은 일들, 하고 싶은 일들, 바라는 일들, 2021 회고록을 쓰면서 "그땐 이런 생각을 하며 살려고 노력했었구나" 할 만한 이야기를 적어보자.

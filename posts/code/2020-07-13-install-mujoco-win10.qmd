@@ -5,6 +5,8 @@ date: "2020-07-13"
 description: RL에서 많이 쓰이는 시뮬레이션 Mujoco Windows10에 설치하기
 categories: [mujoco, code]
 image: ../../images/gif1.gif
+execute:
+  freeze: auto 
 ---
 
 

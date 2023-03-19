@@ -5,6 +5,8 @@ description: sds
 date: "2022-10-31"
 categories: [paper]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ![](https://i.imgur.com/1iPfFJZ.png)

@@ -4,6 +4,8 @@ description: A Generative Model for Raw Audio
 date: "2022-09-17"
 categories: [autoregressive, generative, paper]
 toc: true
+execute:
+  freeze: auto 
 ---
 
 ![](https://i.imgur.com/s1pIkp9.jpg){fig-align="default"}
