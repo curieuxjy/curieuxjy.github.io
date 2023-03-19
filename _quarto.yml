@@ -22,6 +22,8 @@ format:
       - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes 
 # sketchy simplex standstone minty pulse lux
+# https://quarto.org/docs/output-formats/html-themes.html#custom-themes
+# https://quarto.org/docs/output-formats/html-themes-more.html
 
 execute:
   freeze: auto 

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "📘Comfort Zone"
 description: 그들과 나의 차이, 적어도 지금은
 date: "2023-03-19"

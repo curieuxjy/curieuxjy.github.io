@@ -4,8 +4,6 @@ description: Learning Agile Skills via Adversarial Imitation of Rough Partial De
 date: "2023-03-12"
 categories: [rl, gan, paper]
 toc: true
-execute:
-  freeze: auto 
 ---
 
 ![](https://i.imgur.com/JFJxLbR.png)
