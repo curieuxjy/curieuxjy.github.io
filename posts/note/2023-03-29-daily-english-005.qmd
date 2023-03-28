@@ -1,0 +1,51 @@
+---
+title: "🌎Casual English Phrases 005"
+description: Daily English Series
+date: "2023-03-29"
+categories: [daily, english, casual, 2022]
+toc: true
+execute:
+  freeze: auto 
+---
+
+### 그거 참 위로가 되네
+
+**Well, that's very comforting**
+
+- That's very comforting↘️. Thanks a lot.
+`위안이 되네. 진짜 고마워`
+
+- **That's** very comforting↗️. 
+`하나도 위로가 되지 않네요.`
+
+> 문맥과 강약을 어떻게 주느냐에 따라 같은 말도 비꼬는 말이 될 수 있다.
+
+### 자는 것도 점점 더 어려워지네.
+
+**Even sleeping is getting too complicated.**
+
+- Even meeting people is getting too complicated.
+`심지어 사람들 만나는 것도 점점 어려워져`
+
+- Even expressing my own feeling literally is getting too difficult.
+`내 감정을 말 그대로 표현하는 것조차 어려워지고 있어`
+
+### 실수로
+
+**by mistake**
+
+- This filter paper I bought by mistake has only two holes.
+`실수로 리필 용지는 2구짜리로 샀거든요`
+
+- I made a reservation for tomorrow by mistake.
+`실수로 예약을 내일로 잡았어`
+
+### 복수하겠어
+
+**I'll get you for this**
+
+- As soon as I find out what's going on, I'll get you for this.
+`무슨 일인지 알아내기만 하면 반드시 복수하겠어`
+
+- How dare you! I'll get you for this.
+`어떻게 니가 그럴 수 있어! 내가 갚아줄거야`
