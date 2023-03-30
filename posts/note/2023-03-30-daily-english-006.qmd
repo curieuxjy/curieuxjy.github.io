@@ -1,0 +1,88 @@
+---
+title: "🌎Casual English Phrases 006"
+description: Daily English Series
+date: "2023-03-30"
+categories: [daily, english, casual, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+### 불만족스러운, 불편한
+
+**not (too) happy**
+
+- Stomach's not too happy, is it?
+`배가 고프구나?(아프구나)`
+
+- My stomach's not happy with me.
+`배가 아파.(고파)`
+
+> 가끔씩 대화를 하다가 맥락을 서로가 알고 있는 상황이면 a 나 your 등을 생략하는 경우가 있음.(Stomach)
+
+### 유감스럽게도
+
+**I'm afraid ~**
+
+- I'm afraid I haven't heard any cookies calling you, plain or otherwise.
+`유감이지만 그냥 쿠키든 아니든 널 부르는 쿠키는 없었어.`
+
+- I'm afraid your suggestion is not accepted.
+`유감이지만 네 제안이 받아들여지지 않았어.`
+
+- I'm afriad I can't go to your party.
+`미안하지만 네 파티에 못 갈 것 같아.`
+
+
+### 속이다
+
+**put (someone) on**
+
+- He must be wondering if I was just putting him on.
+`내가 자기를 속이고 있는 건지 궁금해하고 있을 게 뻔해.`
+
+- Don't believe it! She's putting you on!
+`믿지마! 그녀는 너를 속이고 있어.`
+
+### 기다리다 / 견디다, 버티다
+
+**hang on**
+
+- Hang on a few more minutes, I'm looking.
+`조금만 더 기다려, 찾고 있으니까.`
+
+- Hang on a moment.
+`네 잠시만 기다리세요.`
+
+- If you can just hang on for a little longer, we'll finish soon.
+`네가 조금만 더 버텨준다면, 우리는 곧 끝낼거야.`
+
+
+### ~로 만들어지다
+
+**be made of**
+
+- What's it made of, rotten zombie eyes or something?
+`대체 뭐로 만든거야, 썩은 좀비 눈 같은 건가?`
+
+- This desk is made of baobab wood.
+`이 책상은 바오밥 나무로 만들어졌다.`
+
+> be made from : 재료의 형태를 알아 볼수없는 경우. Cheese is made from milk.
+
+### 역겨운
+
+**sick**
+
+- Just looking at it almost makes me sick.
+`그냥 보기만 해도 구역질 나와.`
+
+- He makes me sick!
+`그가 하는 짓은 역겨워!`
+
+- Just thinking about it makes me sick to the stomach.
+`그거 생각하는 것만으로도 정말 역겨워.`
+
+
+
+

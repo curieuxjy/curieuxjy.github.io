@@ -2,7 +2,7 @@
 title: "🌎Casual English Phrases 005"
 description: Daily English Series
 date: "2023-03-29"
-categories: [daily, english, casual, 2022]
+categories: [daily, english, casual, 2023]
 toc: true
 execute:
   freeze: auto 
