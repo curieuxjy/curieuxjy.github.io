@@ -42,6 +42,7 @@ execute:
 ## Graph representation of a physical system
 
 물리시스템을 어떻게 그래프로 나타낼 수 있는지 몇가지 용어와 수식들을 정리해보겠습니다.
+
 - 물리 시스템의 body는 그래프의 `node`로 표현합니다.
 - 물리 시스템의 joint는 그래프의 `edge`로 표현합니다.
 - 물리 시스템의 global한 속성은 `global feature`로 표현합니다.

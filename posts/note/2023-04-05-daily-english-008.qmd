@@ -1,0 +1,90 @@
+---
+title: "🌎Casual English Phrases 008"
+description: Daily English Series
+date: "2023-04-05"
+categories: [daily, english, casual, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+### 내가 그럴 줄 알았어!
+
+**I knew it!**
+
+> 어쩐지..이상하다 그랬어. 라는 뉘앙스
+
+- I knew I had the wrong code.
+`(어쩐지..) 내가 잘못된 코드를 가지고 있었던 걸 알고있었어.`
+
+- I knew it! It was the wrong size!
+`역시! 사이즈가 잘못된 거였어!`
+
+### 생각해보니
+
+**Upon reflection**
+
+- Upon reflection, I think Charlie Brown was wrong.
+`생각해보니 찰리가 틀린 것 같아.`
+
+- Upon reflection, I think we have to change the main color of this banner.
+`다시 생각해보니 내 생각에 이 배너의 메인 색을 바꿔야 할 것 같아.`
+
+- Upon reflection, I prefer this option.
+`다시 생각해보니 이 옵션이 좋은 것 같아요.`
+
+### 배짱이 좋다./뻔뻔하다.
+
+**have(got) the(a/some/a lot) nerve**
+
+> `nerve`: 용기, 대담성, 뻔뻔스러움
+
+> have the nerve + to 동사원형
+
+- He had the nerve to say that I'm not perfect!
+`내가 완벽하지 않다고 하다니 배짱도 좋지!`
+
+- Wow, you have the nerve to criticize my report.
+`와, 당신이 내 리포트를 비평하다니 배짱이 있으시네요.`
+
+- You really have a nerve, arriving an hour late for the event.
+`넌 그 행사에 1시간이나 늦게 도착하다니 참 뻔뻔하다.`
+
+### ~을 정리하다, 정돈하다
+
+**straighten up**
+
+- Instead of watching TV, you could be straighten up your room.
+`TV 보는 대신에 방 청소를 할 수도 있지.`
+
+- I'm going to straighten up my room.
+`내 방 정리정돈 할거야.`
+
+- Straigthen up your back!
+`너 허리 똑바로 펴!`
+
+### 진심이야?
+
+**Do you mean it?**
+
+- Yes, I mean it. `응 진심이야.`
+
+### 넌 절대 마음 바꿀 생각 없나 보네?
+
+**I suppose you're not going to change your mind.**
+
+### 평소와 달리/기분 전환으로
+
+**for a change**
+
+- You look pretty clean today for a change.
+`오늘은 평소와 달리 깨끗해 보여.`
+
+- We always go to the movies. Let's go shopping for a change!
+`우리 맨날 영화만 보러가니까 오늘은 평소와 다르게 쇼핑가자!`
+
+- I think I'm going to do an intense workout for a change.
+`나 오랜만에 강도 높은 운동을 해야 할 것 같아.`
+
+- I want to go my hometown and visit my parents for a change.
+`기분 전환하게 오랜만에 고향에 가서 부모님을 보고 싶어.`
