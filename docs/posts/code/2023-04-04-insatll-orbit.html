@@ -112,6 +112,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#orbit" id="toc-orbit" class="nav-link active" data-scroll-target="#orbit"><span class="toc-section-number">1</span>  Orbit?</a></li>
   <li><a href="#orbit을-설치하기-전에" id="toc-orbit을-설치하기-전에" class="nav-link" data-scroll-target="#orbit을-설치하기-전에"><span class="toc-section-number">2</span>  Orbit을 설치하기 전에</a></li>
   <li><a href="#orbit-설치하기" id="toc-orbit-설치하기" class="nav-link" data-scroll-target="#orbit-설치하기"><span class="toc-section-number">3</span>  Orbit 설치하기</a></li>
+  <li><a href="#orbit에서-가상환경-설정" id="toc-orbit에서-가상환경-설정" class="nav-link" data-scroll-target="#orbit에서-가상환경-설정"><span class="toc-section-number">4</span>  Orbit에서 가상환경 설정</a></li>
+  <li><a href="#extensions-설치" id="toc-extensions-설치" class="nav-link" data-scroll-target="#extensions-설치"><span class="toc-section-number">5</span>  Extensions 설치</a></li>
+  <li><a href="#closing" id="toc-closing" class="nav-link" data-scroll-target="#closing"><span class="toc-section-number">6</span>  Closing</a></li>
   </ul>
 </nav>
     </div>
@@ -170,8 +173,8 @@ Overview
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://github.com/NVIDIA-Omniverse/Orbit/raw/main/docs/source/_static/tasks.jpg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Orbit Github Main Image</figcaption><p></p>
+<p><img src="https://github.com/NVIDIA-Omniverse/Orbit/raw/main/docs/source/_static/tasks.jpg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 <p>소개글을 보면, 크게 2가지 특징을 살펴볼 수 있습니다. 첫번째로는 <strong>Robot learning을 위한 모듈화된 프레임워크</strong>라는 점을 알 수 있고 두번째로는 <strong>Omniverse와 Isaac Sim이라는 것에 기반</strong>한 프로그램이라는 것 입니다. Robot learning을 위한 이라는 말에서 Github 메인 사진에서도 볼 수 있듯이 로봇 작동을 위한 모든 learning 과정을 지원하기 위한 프레임 워크라는 것을 알 수 있습니다. 매니퓰레이터부터 핸드 로봇, 사족보행 로봇에 이르기까지 다양하고 폭넓은 로봇의 작동 시나리오를 지원해주는 프로그램이라는 것을 볼 수 있습니다.</p>
@@ -237,8 +240,8 @@ IsaacSim과 Orbit의 차이에 대한 <a href="https://forums.developer.nvidia.c
 <p>Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있으므로 자세하게 설명하진 않겠습니다. 아래와 같이 Omniverse App에서 Isaac Sim이 보이고 <code>LANCH</code>라는 버튼을 눌러 실행할 수 있으면 설치에 성공한 것 입니다. (23.04.05 기준) 최신 버젼 <strong><code>2022.2.1</code></strong>이 맞는지 꼭 확인해주시고 만약 최신 버젼이 아니라면 <code>LANCH</code> 옆의 list 버튼을 눌러서 최신 버젼을 다운받고 버젼을 선택할 수 있습니다. 아래 사진에서 처럼 <code>2022.2.1</code> 버젼으로 선택되어 있는 것을 확인할 수 있습니다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../images/2023-04-04-insatll-orbit/app-1680625441812-3.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Omniverse App에서 Isaac Sim 버젼 확인하기</figcaption><p></p>
+<p><img src="../../images/2023-04-04-insatll-orbit/app-1680625441812-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 <ol start="2" type="1">
@@ -247,52 +250,101 @@ IsaacSim과 Orbit의 차이에 대한 <a href="https://forums.developer.nvidia.c
 ./python.sh path/to/script.py</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../images/2023-04-04-insatll-orbit/fd.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Isaac Sim의 Default Folder</figcaption><p></p>
+<p><img src="../../images/2023-04-04-insatll-orbit/fd.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 <p>하지만 이와 같이 매번 Isaac Sim의 내부 python 실행파일 경로를 입력하여 python 스크립트를 돌리는 것은 매우 번거로우므로 <a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#configuring-the-environment-variables">시스템 환경 변수 설정</a>를 통해 간단히 내부 python을 불러올 수 있습니다. Linux Ubuntu에서는 시스템 환경 변수를 설정하는 파일은 <code>~/.bashrc</code> 나 <code>~/.zshrc</code>를 사용합니다. 아래와 같이 리눅스 GUI 환경에서 지원하는 텍스트 에디터인 gedit을 이용하여 시스템 환경 변수를 설정해보겠습니다. Terminal 창을 열어서 command를 입력합니다.</p>
 <pre class="cmd"><code>gedit ~/.bashrc</code></pre>
 <p>팝업되는 .bashrc 파일의 맨 아래에 다음과 같이 입력합니다. <code>#</code>으로 훗날 여러 시스템 환경 변수들을 왜 설정했는지 메모하기 위해서 주석을 달아놓는 것을 권장합니다.(Orbit을 사용하지 않고 Isaac Sim만 설치하는 공식 문서에서는 같은 파이썬 실행파일을 다른 환경 변수로 설치하기 때문에 중복되어 이름을 설치 하지 않도록 주의합니다.) 추가한 후 저장하고 창을 닫습니다.</p>
 <pre><code># Isaac Sim root directory
-export ISAACSIM_PATH="${HOME}/.local/share/ov/pkg/isaac_sim-2022.2.0"
+export ISAACSIM_PATH="${HOME}/.local/share/ov/pkg/isaac_sim-2022.2.1"
 # Isaac Sim python executable
 export ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"</code></pre>
 <p>파일을 편집했다고 바로 추가된 환경 변수가 바로 적용되는 것이 아니라 아래의 command까지 터미널에서 실행시키고 나서 적용이 됩니다.</p>
 <pre class="cmd"><code>source ~/.bashrc</code></pre></li>
-<li><p><strong>실행 확인</strong> : 프로그램 설치와 환경변수까지 제대로 설정되었는지 확인하기 위해 <a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#running-the-simulator">Running the simulator</a>에 안내되어 있는 몇가지 점검 command를 실행시켜 보겠습니다.</p>
+<li><p><strong>실행 확인</strong> : 프로그램 설치와 환경변수까지 제대로 설정되었는지 확인하기 위해 <a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html#running-the-simulator">Running the simulator</a>에 안내되어 있는 몇 가지 점검 command를 실행시켜 보겠습니다.</p>
 <ul>
 <li><p>시뮬레이터 실행 파일(<code>isaac-sim.sh</code>) 확인</p>
 <pre><code># note: you can pass the argument `--help` to see all arguments possible.
 $ISAACSIM_PATH/isaac-sim.sh --help</code></pre>
 <p><img src="../../images/2023-04-04-insatll-orbit/cmd1.png" class="img-fluid"></p></li>
-<li><p>시뮬레이터 내부 파이썬 실행 파일(<code>python.sh</code>) 확인 ​<br>
-<code># checks that python path is set correctly      $ISAACSIM_PYTHON_EXE -c "print('Isaac Sim configuration is now complete.')"</code></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/2023-04-04-insatll-orbit/cmdq.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">cmdq</figcaption><p></p>
-</figure>
-</div></li>
+<li><p>시뮬레이터 내부 파이썬 실행 파일(<code>python.sh</code>) 확인</p>
+<pre><code># checks that python path is set correctly
+$ISAACSIM_PYTHON_EXE -c "print('Isaac Sim configuration is now complete.')"</code></pre>
+<p><img src="../../images/2023-04-04-insatll-orbit/cmdq.png" class="img-fluid"></p></li>
 <li><p>시뮬레이터 standalone 예제(<code>add_cubes.py</code>)로 실행 확인</p>
 <pre><code># checks that Isaac Sim can be launched from python
-$ISAACSIM_PYTHON_EXE $ISAACSIM_PATH/standalone_examples/api/omni.isaac.core/add_cubes.py</code></pre></li>
+$ISAACSIM_PYTHON_EXE $ISAACSIM_PATH/standalone_examples/api/omni.isaac.core/add_cubes.py</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">add_cubes.py 실행 결과</figcaption><p></p>
+<p><img src="../../images/2023-04-04-insatll-orbit/cube.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ul></li>
 </ol>
 </section>
 <section id="orbit-설치하기" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Orbit 설치하기</h1>
+<p>이제 Orbit을 본격적으로 설치해보려고 합니다. 앞서 Isaac Sim이 제대로 설치가 되고 예제까지 돌아가는지 꼭 확인을 한 후 진행해주시기 바랍니다.</p>
 <ol type="1">
-<li><p>git clone</p>
-<pre><code></code></pre></li>
-<li><p>orbit 명령어 등록 <code>./orbit.sh</code> == <code>orbit</code></p></li>
-<li><p><code>sudo apt install cmake build-essential</code></p></li>
-<li><p><code>conda create -n orbit python=3.8</code></p></li>
-<li><p><code>orbit --install</code></p></li>
-<li><p><code>orbit --extra</code></p></li>
-<li><p><code>orbit -p source/standalone/demo/play_empty.py</code></p></li>
+<li><p>Orbit repository를 <code>git clone</code> 해오기</p>
+<pre class="cmd"><code># Option 1: With SSH
+git clone git@github.com:NVIDIA-Omniverse/orbit.git
+# Option 2: With HTTPS
+git clone https://github.com/NVIDIA-Omniverse/Orbit.git</code></pre></li>
+<li><p>Symbolic link 생성하기: <a href="https://server-talk.tistory.com/140">심볼릭 링크</a>란 원본 파일을 가리키도록 하는 윈도우에서의 <code>바로가기</code> 아이콘과 같은 의미로 이해하시면 됩니다. 위에서 <code>git clone</code>한 repo의 위치로 들어가서 다음과 같은 명령어를 통해 심볼릭 링크를 만들어 줍니다.</p>
+<pre class="cmd"><code># enter the cloned repository
+cd Orbit
+# create a symbolic link
+ln -s $ISAACSIM_PATH _isaac_sim</code></pre></li>
+<li><p>Orbit 실행파일 명령어 등록하기: orbit을 실행하기 위해서는 매번 git clone 한 repository에 있는 <code>orbit.sh</code> 파일을 써주어야 합니다. 만약 <code>orbit.sh</code>이 있는 위치에서 실행시킨다면 <code>./orbit.sh</code> 로 간단하겠지만 다른 위치의 파일을 Orbit에서 실행시키고 싶을 때 단축키가 있다면 훨씬 간편하게 실행할 수 있어 편리할 것 입니다. Orbit을 편리하게 실행시킬 수 있는 명령어로는 <code>orbit</code>으로 정해서 즉, <code>./orbit.sh</code> 와 <code>orbit</code> 이 같도록 하는 작업을 진행해보겠습니다. 앞서 리눅스의 시스템 환경변수를 설정하는 방법에서 <code>.bashrc</code> 파일을 이용하여 명령어 별칭을 등록하는 방법을 이용합니다.</p>
+<pre><code>echo -e "alias orbit=$(pwd)/orbit.sh" &gt;&gt; ${HOME}/.bashrc</code></pre>
+<p>별칭 등록을 적용하기 위해 <code>source ~/.bashrc</code>도 잊지 않고 실행해주세요.(명령어가 제대로 등록됐는지 확인해보려면 <code>gedit ~/.bashrc</code>를 통해 파일에서 맨 아랫줄에 <code>alias orbit=$(Orbit 레포지토리 위치)/orbit.sh</code>이 써있는지 확인해보면 됩니다.) 터미널에서 아래의 명령어를 입력했을때 다음과 같은 창이 나온다면 명령어 별칭 등록이 잘 된 것 입니다.</p>
+<pre><code>orbit --help</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">orbit 명령어 별칭 확인</figcaption><p></p>
+<p><img src="../../images/2023-04-04-insatll-orbit/orbit.png" class="img-fluid figure-img"></p>
+</figure>
+</div></li>
 </ol>
-<p>[1] https://forums.developer.nvidia.com/t/issac-sim-vs-orbit/244656</p>
+</section>
+<section id="orbit에서-가상환경-설정" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Orbit에서 가상환경 설정</h1>
+<p>Orbit에서는 <code>orbit -p</code>라는 명령어를 통해 Isaac Sim의 파이썬 실행파일을 자동으로 가져와서 사용합니다. (혹은 위에서 명령어 별칭을 등록안했다면 Orbit repo 위치에서 <code>./orbit.sh -p</code>라고 입력해도 됩니다.) 하지만 가상환경을 사용하고 싶다면 <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html">Conda</a>를 이용하면 됩니다.</p>
+<pre><code>orbit -c (또는 --conda)</code></pre>
+<p>위와 같이 입력하면 자동으로 <code>orbit</code>이라는 이름의 가상환경이 만들어지고 앞으로 이 가상환경을 사용하고 싶다면 <code>conda activate orbit</code>을 통해 활성화 시킬 수 있습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Conda를 이용하여 가상환경 설치 및 확인</figcaption><p></p>
+<p><img src="../../images/2023-04-04-insatll-orbit/conda.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="extensions-설치" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Extensions 설치</h1>
+<ul>
+<li><p><code>apt</code>를 이용해서 우분투에서 디펜던시를 설치합니다.</p>
+<pre><code>sudo apt install cmake build-essential</code></pre></li>
+<li><p>Orbit repo에 있는 <code>source/extensions</code> 폴더의 확장프로그램들을 설치합니다. 이때 <code>--editable</code> flag로 편집 가능한 모드로 설치하게 되어 개발자가 확장 기능을 수정하게 되면 변경사항이 즉시 적용됩니다.</p>
+<pre><code>orbit --install # or orbit -i</code></pre></li>
+<li><p>(<a href="https://github.com/leggedrobotics/rsl_rl">rsl-rl</a> 같은)Learning framework 등의 여러 디펜던시 프로그램들을 설치합니다.</p>
+<pre><code>orbit --extra # or orbit -e</code></pre></li>
+</ul>
+</section>
+<section id="closing" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Closing</h1>
+<p>마지막까지 설치과정을 잘 마치셨다면 아래의 명령어를 입력 했을 때 사족보행 로봇들이 나오면서 Orbit이 잘 실행되는 것을 확인하실 수 있습니다!👏👏👏(처음 실행시 시간이 조금 걸릴 수 있으니 기다려주세요.)</p>
+<pre><code>orbit -p source/standalone/demo/play_quadrupeds.py</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">play_quadrupeds.py 실행 결과</figcaption><p></p>
+<p><img src="../../images/2023-04-04-insatll-orbit/quad.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>이번 포스팅에서는 Nvidia의 Orbit에 대해 간단히 알아보고 설치까지 진행해보았습니다. 아직 공식 Documentation도 업데이트 중이고 프로그램 자체도 업데이트가 활발히 되고 있어서 이후에 이번 포스팅이 버젼에 따라 도움이 안될 수도 있겠지만 많은 분들께 참고가 되었으면 좋겠습니다. 설치과정에 대해 다른 옵션들이나 자세하게 알고 싶으신 분들은 <a href="https://isaac-orbit.github.io/orbit/source/setup/installation.html">공식 설치 Documentation</a>을 참고하시면 업데이트 되는 소식들과 함께 더 자세하고 많은 정보를 얻으실 수 있을 것 같습니다. 이어지는 포스팅에서는 각 예제들을 통해서 Orbit에 대해 더 알아보도록 하겠습니다.</p>
 
 
 </section>
