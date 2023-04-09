@@ -1,0 +1,12 @@
+---
+title: "📘이 도끼가 네 도끼냐"
+description: 어떤게 제 도끼인지 저도 모르겠는데요
+date: "2023-04-10"
+categories: [diary, jjijil, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+유학가고 싶습니다.
+
