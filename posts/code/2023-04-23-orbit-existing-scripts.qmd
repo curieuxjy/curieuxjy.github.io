@@ -7,6 +7,7 @@ description: Isaac Orbit Series 002
 categories: [orbit, isaacsim, code]
 callout-appearance: default
 fig-cap-location: top
+image: ../../images/2023-04-23-orbit-existing-scripts/orbit2-5.png
 execute:
   freeze: auto 
 ---
