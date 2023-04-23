@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-04-23">
+<meta name="description" content="Isaac Orbit Series 002">
+
+<title>Curieux.JY - 👩‍💻Orbit Exising Scripts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html">
+ <span class="menu-text">✒️Note</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#api-demos" id="toc-api-demos" class="nav-link active" data-scroll-target="#api-demos"><span class="toc-section-number">1</span>  API Demos</a></li>
+  <li><a href="#code-살펴보기" id="toc-code-살펴보기" class="nav-link" data-scroll-target="#code-살펴보기"><span class="toc-section-number">2</span>  Code 살펴보기</a>
+  <ul class="collapse">
+  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules"><span class="toc-section-number">2.1</span>  Modules</a></li>
+  <li><a href="#helpers" id="toc-helpers" class="nav-link" data-scroll-target="#helpers"><span class="toc-section-number">2.2</span>  Helpers</a></li>
+  <li><a href="#main" id="toc-main" class="nav-link" data-scroll-target="#main"><span class="toc-section-number">2.3</span>  Main</a></li>
+  </ul></li>
+  <li><a href="#closing" id="toc-closing" class="nav-link" data-scroll-target="#closing"><span class="toc-section-number">3</span>  Closing</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">👩‍💻Orbit Exising Scripts</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">orbit</div>
+    <div class="quarto-category">isaacsim</div>
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Isaac Orbit Series 002
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Orbit 시리즈의 두번째 포스팅으로 이번에는 Orbit에서 제공하는 scripts를 살펴보며 Orbit으로 어떤 프로그래밍을 할 수 있을지 살펴보겠습니다. 공식 Documents에서 <a href="https://isaac-orbit.github.io/orbit/source/setup/sample.html#">Running existing scripts</a>를 따라가보며 진행될 예정입니다.</p>
+<section id="api-demos" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> API Demos</h1>
+<p>Orbit의 메인 기능들을 제공하는 모듈은 <code>omni.isaac.orbit</code> 입니다. 해당 모듈에서는 로봇들의 actuator나 object, sensor 등을 편하게 사용할 수 있는 interface를 제공하고 있습니다. <a href="https://curieuxjy.github.io/posts/code/2023-04-04-insatll-orbit.html">앞선 시리즈 포스팅</a>에서 간단하게 4족 보행로봇들을 띄워보는 script를 실행 시켜보았었는데 이와 같은 <code>standlone/demo</code>에서 제공하는 몇가지 예제들을 실행해보겠습니다.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+예제 파일 위치와 실행 전제
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Orbit 시리즈 포스팅을 기반으로 이전 포스팅에 이어서 진행되는 포스팅이므로 <code>Orbit</code> 파일을 Github에서 다운받고 orbit 설치를 전제로 진행됩니다. 이전에 Orbit repository를 다운 받은 위치에서 진행해주세요. orbit 실행 명령어도 <code>orbit</code>으로 동일합니다. <code>-p</code> 옵션은 Isaac Sim의 python.sh를 사용하여 python 파일을 실행시키도록 하는 옵션입니다.</p>
+</div>
+</div>
+<ul>
+<li><p>4족 보행 로봇들을 놓고 발(feet) marker를 시각화하고 stadning pose를 유지하도록 position command를 적용시킨 예제</p>
+<pre><code>orbit -p source/standalone/demo/play_quadrupeds.py</code></pre>
+<p><img src="../../images/2023-04-23-orbit-existing-scripts/orbit2-5.png" alt="orbit2-5" style="zoom:50%;"></p></li>
+<li><p>2대의 Franka 매니퓰레이터를 놓고 랜덤한 position command를 적용시켜서 움직이게 하는 예제</p>
+<pre><code>orbit -p source/standalone/demo/play_arms.py --robot franka_panda</code></pre>
+<p><img src="../../images/2023-04-23-orbit-existing-scripts/orbit2-1.png" alt="orbit2-1" style="zoom:50%;"></p></li>
+<li><p>128대의 Franka 매니퓰레이터를 놓고 inverse kinematics controller를 이용하여 제어하는 예제</p>
+<pre><code>orbit -p source/standalone/demo/play_ik_control.py --robot franka_panda --num_envs 128</code></pre>
+<p><img src="../../images/2023-04-23-orbit-existing-scripts/orbit2-2.png" alt="orbit2-2" style="zoom:50%;"></p></li>
+<li><p>카메라를 설정하고 pointcloud를 얻는 예제(cpu와 gpu 선택가능)</p>
+<pre><code># CPU
+orbit -p source/standalone/demo/play_camera.py
+# GPU
+orbit -p source/standalone/demo/play_camera.py --gpu</code></pre>
+<p><img src="../../images/2023-04-23-orbit-existing-scripts/orbit2-3.png" alt="orbit2-3" style="zoom:50%;"></p></li>
+</ul>
+</section>
+<section id="code-살펴보기" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Code 살펴보기</h1>
+<p>앞의 예제코드들 중 <code>source/standalone/demo/play_quadrupeds.py</code>를 하나씩 코드를 살펴보며 orbit에서 어떤 모듈들을 제공하는지 살펴보겠습니다. 해당 예제에서는 3종류의 4족 보행로봇을 불러와 진행하는데 각 로봇의 플랫폼에 대해 궁금하신 분들은 아래 링크를 눌러서 확인해보시면 됩니다.</p>
+<ul>
+<li><a href="https://github.com/ANYbotics/anymal_b_simple_description">ANYmal-B</a> (from ANYbotics)</li>
+<li><a href="https://github.com/ANYbotics/anymal_c_simple_description">ANYmal-C</a> (from ANYbotics)</li>
+<li><a href="https://unitreerobotics.net/robotdog/unitree-a1/">A1</a> (from Unitree Robotics)</li>
+</ul>
+<section id="modules" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="modules"><span class="header-section-number">2.1</span> Modules</h2>
+<p>Orbit이 기반하고 있는 Isaac Sim Simulator을 먼저 키기 위해 <code>SimulationApp</code> class를 이용하여 시뮬레이터 앱을 설정해줍니다. 이때 <code>headless</code>는 시뮬레이터의 GUI를 띄우지 않고 실행하는 옵션을 가리킵니다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Launch Isaac Sim Simulator first."""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.kit <span class="im">import</span> SimulationApp</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add argparse arguments</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> argparse.ArgumentParser(<span class="st">"Welcome to Orbit: Omniverse Robotics Environments!"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>parser.add_argument(<span class="st">"--headless"</span>, action<span class="op">=</span><span class="st">"store_true"</span>, default<span class="op">=</span><span class="va">False</span>, <span class="bu">help</span><span class="op">=</span><span class="st">"Force display off at all times."</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>args_cli <span class="op">=</span> parser.parse_args()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># launch omniverse app</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> {<span class="st">"headless"</span>: args_cli.headless}</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>simulation_app <span class="op">=</span> SimulationApp(config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>다음으로 import하는 orbit의 <code>core</code>모듈을 살펴보겠습니다.</p>
+<ul>
+<li><p><code>prim_utils</code> : 현재 USD stage에 prim을 생성하기 위한 모듈. (자세한 prim에 대한 내용은 다음 포스팅에서 다루도록 하겠습니다. 우선 간단하게 시뮬레이터의 오브젝트들을 <code>prim</code>으로 본다고 생각하고 진행하겠습니다.)</p></li>
+<li><p><code>SimulationContext</code> : 타임라인 관련 이벤트를 처리하고(simulator 일시 중지, 재생, 단계적 실행 또는 중지 등), stage를 구성하며(stage 단위나 상/하 방향과 같은 설정), <code>physicsScene</code> prim을 생성합니다(중력 방향 및 크기, 시뮬레이션 시간 간격 크기, 고급 솔버 알고리즘 설정과 같은 물리 시뮬레이션 매개 변수를 제공). 여기서 <code>physicsScene</code> prim은 물리 시뮬레이션을 위한 초기화 및 설정을 담당하는 객체를 말하며, <code>SimulationContext</code>는 이러한 <code>physicsScene</code> prim을 생성하고 물리 시뮬레이션 설정을 관리하며, 타임라인 관련 이벤트 처리와 스테이지 설정을 담당합니다.</p></li>
+<li><p><code>set_camera_view</code> : stage에서 카메라 prim의 위치와 대상을 설정하고, 해당 prim의 경로를 지정합니다. 여기서 카메라 prim은 stage 카메라로 사용될 객체를 의미하며, <strong>위치(location)</strong>와 <strong>대상(target)</strong>은 각각 카메라의 위치와 카메라가 바라보는 대상의 위치를 지정하는 것을 의미합니다. <strong>경로(path)</strong>는 스테이지에서 해당 카메라 prim을 가리키는 이름이나 경로를 의미합니다.</p></li>
+</ul>
+<p>이외의 모듈중에서 <code>kit_utils</code>는 시뮬레이터에서 제공하는 ground를 불러오기 위한(<code>create_ground_plane</code>) 모듈이며 로봇의 발 위치 마커를 표시하기 위해 <a href="https://isaac-orbit.github.io/orbit/source/api/orbit.markers.html?highlight=markers#module-omni.isaac.orbit.markers"><code>markers</code></a> 모듈에서 <code>PointMarker</code>, <code>StaticMarker</code>를 불러옵니다.</p>
+<p>다음으로 <code>robot</code> 모듈에서 4족보행로봇들을 위한 configuration들을 불러올 수 있습니다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from core</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> omni.isaac.core.utils.prims <span class="im">as</span> prim_utils</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.core.simulation_context <span class="im">import</span> SimulationContext</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.core.utils.viewports <span class="im">import</span> set_camera_view</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> omni.isaac.orbit.utils.kit <span class="im">as</span> kit_utils</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.markers <span class="im">import</span> PointMarker, StaticMarker</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.robots.config.anymal <span class="im">import</span> ANYMAL_B_CFG, ANYMAL_C_CFG</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.robots.config.unitree <span class="im">import</span> UNITREE_A1_CFG</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.robots.legged_robot <span class="im">import</span> LeggedRobot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="helpers" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="helpers"><span class="header-section-number">2.2</span> Helpers</h2>
+<p>Main 코드에서 시뮬레이터의 Scene을 구성하기 위해서 <code>Ground-plane</code>, <code>Lights</code>들을 편하게 구성하기 위해서 helper 함수 <code>design_scene()</code>를 만들어줍니다. 앞서 import했던 <code>kit_utils</code>를 이용해서 ground를 불러오고 <code>prim_utils</code>를 이용하여 빛 설정을 해줍니다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> design_scene():</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add prims to the scene."""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ground-plane</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    kit_utils.create_ground_plane(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/World/defaultGroundPlane"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        static_friction<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        dynamic_friction<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        restitution<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        improve_patch_friction<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lights-1</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    prim_utils.create_prim(</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/World/Light/GreySphere"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SphereLight"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        translation<span class="op">=</span>(<span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">10.0</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        attributes<span class="op">=</span>{<span class="st">"radius"</span>: <span class="fl">2.5</span>, <span class="st">"intensity"</span>: <span class="fl">600.0</span>, <span class="st">"color"</span>: (<span class="fl">0.75</span>, <span class="fl">0.75</span>, <span class="fl">0.75</span>)},</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lights-2</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    prim_utils.create_prim(</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/World/Light/WhiteSphere"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SphereLight"</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        translation<span class="op">=</span>(<span class="op">-</span><span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">10.0</span>),</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        attributes<span class="op">=</span>{<span class="st">"radius"</span>: <span class="fl">2.5</span>, <span class="st">"intensity"</span>: <span class="fl">600.0</span>, <span class="st">"color"</span>: (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>)},</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="main" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="main"><span class="header-section-number">2.3</span> Main</h2>
+<p>메인 코드에서는 먼저 <code>SimulationContext</code>를 이용하여 시뮬레이터의 시간관련 설정 등을 진행합니다. dt가 0.005라는 것은 시간 단위가 second로 시간간격이 0.005초로 설정하는 것을 말합니다. 또한 backend는 이후 포스팅에서도 설명하겠지만 물리 시뮬레이터에서 반환되는 tensor들을 어떤 backend로 캐스팅할 것인지 설정하는 부분입니다. 현재 orbit에서는 <code>torch</code>만 지원하고 있습니다.</p>
+<p>시뮬레이터의 시점이 되는 카메라를 설정하고 각 로봇을 어디에 놓을지 정하는 <code>translation</code> 파라미터와 함께 spawning하고 마지막으로 helper 함수로 만들어주었던 <code>design_scene()</code>을 이용하여 ground와 light를 설정합니다.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Imports all legged robots supported in Orbit and applies zero actions."""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load kit helper</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sim <span class="op">=</span> SimulationContext(stage_units_in_meters<span class="op">=</span><span class="fl">1.0</span>, physics_dt<span class="op">=</span><span class="fl">0.005</span>, rendering_dt<span class="op">=</span><span class="fl">0.005</span>, backend<span class="op">=</span><span class="st">"torch"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set main camera</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>set_camera_view(eye<span class="op">=</span>[<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="fl">3.5</span>], target<span class="op">=</span>[<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Spawn things into stage</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># -- anymal-b</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>robot_b <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>ANYMAL_B_CFG)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>robot_b.spawn(<span class="st">"/World/Anymal_b/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>robot_b.spawn(<span class="st">"/World/Anymal_b/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># -- anymal-c</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>robot_c <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>ANYMAL_C_CFG)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>robot_c.spawn(<span class="st">"/World/Anymal_c/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>robot_c.spawn(<span class="st">"/World/Anymal_c/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># -- unitree a1</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>robot_a <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>UNITREE_A1_CFG)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>robot_a.spawn(<span class="st">"/World/Unitree_A1/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="fl">0.42</span>))</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>robot_a.spawn(<span class="st">"/World/Unitree_A1/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="fl">0.42</span>))</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># design props</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>design_scene()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>시뮬레이터를 초기화하는 reset을 먼저 진행해줍니다. 각 로봇의 handle 또한 초기화를 시켜줍니다. 로봇의 각 정보를 담기 위한 buffer도 reset을 해서 본격적인 실행을 준비합니다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Play the simulator</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sim.reset()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire handles</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize handles</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>robot_b.initialize(<span class="st">"/World/Anymal_b/Robot.*"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>robot_c.initialize(<span class="st">"/World/Anymal_c/Robot.*"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>robot_a.initialize(<span class="st">"/World/Unitree_A1/Robot.*"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset states</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>robot_b.reset_buffers()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>robot_c.reset_buffers()</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>robot_a.reset_buffers()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>4족 보행 로봇은 제어를 할 때 <strong>발의 움직임</strong>이 매우 중요합니다. 발의 위치에 마커를 위치시켜서 발에 대한 정보를 얻기 위해 marker를 설정해줍니다. 발의 x, y, z 축을 시각화하기 위해서 <code>StaticMarker</code>를 이용하여 설정하고 발이 contact 포인트를 보기 위해 <code>PointMarker</code>를 설정합니다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debug visualization markers.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -- feet markers</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>feet_markers: List[StaticMarker] <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>feet_contact_markers: List[PointMarker] <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate over robots</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> robot_name <span class="kw">in</span> [<span class="st">"Anymal_b"</span>, <span class="st">"Anymal_c"</span>, <span class="st">"Unitree_A1"</span>]:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># foot</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    marker <span class="op">=</span> StaticMarker(<span class="ss">f"/World/Visuals/</span><span class="sc">{</span>robot_name<span class="sc">}</span><span class="ss">/feet"</span>, <span class="dv">4</span> <span class="op">*</span> robot_c.count, scale<span class="op">=</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    feet_markers.append(marker)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># contact</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    marker <span class="op">=</span> PointMarker(<span class="ss">f"/World/Visuals/</span><span class="sc">{</span>robot_name<span class="sc">}</span><span class="ss">/feet_contact"</span>, <span class="dv">4</span> <span class="op">*</span> robot_c.count, radius<span class="op">=</span><span class="fl">0.035</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    feet_contact_markers.append(marker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>각 로봇은 action을 하게되고 이를 로봇을 제어한다고 볼 수 있습니다. <code>get_default_dof_state()</code>은 로봇의 각 객체에 있는 method로 각 로봇의 standing 자세에 대한 joint position(dof) 정보가 들어있습니다.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dummy action</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>actions <span class="op">=</span> torch.zeros(robot_a.count, robot_a.num_actions, device<span class="op">=</span>robot_a.device)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define simulation stepping</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sim_dt <span class="op">=</span> sim.get_physics_dt()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sim_time <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate physics</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> simulation_app.is_running():</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If simulation is stopped, then exit.</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sim.is_stopped():</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If simulation is paused, then skip.</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> sim.is_playing():</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        sim.step(render<span class="op">=</span><span class="kw">not</span> args_cli.headless)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># reset</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> count <span class="op">%</span> <span class="dv">1000</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># reset counters</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        sim_time <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># reset dof state</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> robot <span class="kw">in</span> [robot_a, robot_b, robot_c]:</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>            dof_pos, dof_vel <span class="op">=</span> robot.get_default_dof_state()</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>            robot.set_dof_state(dof_pos, dof_vel)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>            robot.reset_buffers()</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># reset command</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        actions <span class="op">=</span> torch.zeros(robot_a.count, robot_a.num_actions, device<span class="op">=</span>robot_a.device)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Reset!"</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># apply actions</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    robot_b.apply_action(actions)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    robot_c.apply_action(actions)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    robot_a.apply_action(actions)</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># perform step</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    sim.step()</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update sim-time</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    sim_time <span class="op">+=</span> sim_dt</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    count <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>시뮬레이터 초기화할 때 reset했던 buffer에 각 로봇의 정보를 담습니다. marker로 설정해두었던 <code>foot_marker</code>와 <code>contact_marker</code>도 각 로봇에서 불러와서 state update를 진행합니다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note: to deal with timeline events such as stopping, we need to check if the simulation is playing</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> sim.is_playing():</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update buffers</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    robot_b.update_buffers(sim_dt)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    robot_c.update_buffers(sim_dt)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    robot_a.update_buffers(sim_dt)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update marker positions</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> foot_marker, contact_marker, robot <span class="kw">in</span> <span class="bu">zip</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        feet_markers, feet_contact_markers, [robot_b, robot_c, robot_a]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># feet</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        foot_marker.set_world_poses(</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>            robot.data.feet_state_w[..., <span class="dv">0</span>:<span class="dv">3</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>), robot.data.feet_state_w[..., <span class="dv">3</span>:<span class="dv">7</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># contact sensors</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        contact_marker.set_world_poses(</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>            robot.data.feet_state_w[..., <span class="dv">0</span>:<span class="dv">3</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>), robot.data.feet_state_w[..., <span class="dv">3</span>:<span class="dv">7</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        contact_marker.set_status(torch.where(robot.data.feet_air_time.view(<span class="op">-</span><span class="dv">1</span>) <span class="op">&gt;</span> <span class="fl">0.0</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="closing" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Closing</h1>
+<p>이번 포스팅에서는 standalone example로 나와있던 <code>play_quadrupeds.py</code>코드의 전체적인 구성과 코드에 대해 알아보았습니다. 아직 orbit의 많은 모듈들에 익숙하지 않아 rough하게 코드의 흐름을 살펴보았지만 다음 포스팅에서는 가장 간단한 empty scene에서 시작하면서 좀 더 자세히 살펴볼 예정이니 다음 포스팅에서 좀 더 orbit과 친해져봅시다.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="curieuxjy/curieuxjy.github.io" data-repo-id="R_kgDOIa8jzg" data-category="General" data-category-id="DIC_kwDOIa8jzs4CShZ1" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_high_contrast" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
