@@ -1,0 +1,27 @@
+---
+title: "📃K-Accessibility for RL"
+description: Accessibility-Based Clustering for Efficient Learning of Locomotion Skills
+date: "2023-05-07"
+categories: [rl, clustering, quadruped, recovery, backflip, paper]
+toc: true
+---
+
+
+이번 포스팅은 [Accessibility-Based Clustering for Efficient Learning of Locomotion Skills](https://arxiv.org/abs/2109.11191) 논문을 읽고 정리한 내용입니다. 
+
+# Introduction
+
+강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다. 
+
+## GAN
+
+적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다. GAN은 
+
+# Conclusion
+
+로봇의 모션제어를 강화학습으로 풀어가려고 할 때 가장 어려운 부분인 task reward를 더 이상 handcrafted 적인 디자인에 의존하지 않고 reward distribution의 관점으로 접근하여 생성 모델 분야의 아이디어인 GAN의 아이디어를 빌려 접근한 것이 정말 신선한 논문이었습니다. Policy를 GAN에서의 Generator로 바라보고 문제를 디자인한 것도 정말 신기했으며 여러가지 GAN 알고리즘 중에서 LSGAN과 WGAN의 차이를 명확히 보여주며 비교를 수치적으로 보여주고 해석한 점도 인상적인 연구였습니다. 
+
+
+# Reference
+
+- [Original Paper: Accessibility-Based Clustering for Efficient Learning of Locomotion Skills](https://arxiv.org/abs/2109.11191)
