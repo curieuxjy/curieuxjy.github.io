@@ -6,7 +6,7 @@ categories: [rl, clustering, quadruped, recovery, backflip, paper]
 toc: true
 ---
 
-![1](../../images/2023-05-07-accessibility/1.png)
+![](../../images/2023-05-07-accessibility/1.png)
 
 
 
@@ -14,7 +14,7 @@ toc: true
 
 # Introduction
 
-![3](../../images/2023-05-07-accessibility/3.png)
+![](../../images/2023-05-07-accessibility/3.png)
 
 
 
@@ -25,19 +25,19 @@ toc: true
 ## Initial state distrubutions
 
 
-![4](../../images/2023-05-07-accessibility/4.png)
-
-
-
-![5](../../images/2023-05-07-accessibility/5.png)
-
-
-![6](../../images/2023-05-07-accessibility/6.png)
-
+![](../../images/2023-05-07-accessibility/4.png)
 
 # Motivation & Contribution
 
 
+
+![](../../images/2023-05-07-accessibility/5.png)
+
+![](../../images/2023-05-07-accessibility/6.png)
+
+![](../../images/2023-05-07-accessibility/7.png)
+
+![](../../images/2023-05-07-accessibility/8.png)
 
 - 강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다. 
 
@@ -49,22 +49,50 @@ toc: true
 
 Overview
 
-![9](../../images/2023-05-07-accessibility/9.png)
+![](../../images/2023-05-07-accessibility/9.png)
 
 
 ## Sampling Static Poses
 
-적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다. 
+
+
+![](../../images/2023-05-07-accessibility/10.png)
+
+
+
+
 
 ## Estimating Accessibility Values
+
+
+
+
 
 ## Clustering
 
 ### K-Access Algorithm
 
+![](../../images/2023-05-07-accessibility/11.png)
+
+![](../../images/2023-05-07-accessibility/12.png)
+
+
+
+![](../../images/2023-05-07-accessibility/13.png)
+
+
+
 ## Reinforcement Learning Process
 
+
+
+![](../../images/2023-05-07-accessibility/14.png)
+
 ### Reward Functions
+
+![](../../images/2023-05-07-accessibility/15.png)
+
+
 
 ### Other Tasks
 
@@ -79,12 +107,26 @@ Overview
 - 1-Pose: One lying pose
 - RND: Random static poses 
 
+![](../../images/2023-05-07-accessibility/17.png)
+
+![](../../images/2023-05-07-accessibility/19.png)
+
+![](../../images/2023-05-07-accessibility/21.png)
+
+
+
 ## Backflip
+
+![](../../images/2023-05-07-accessibility/18.png)
+
+
+
+![](../../images/2023-05-07-accessibility/20.png)
+
 
 
 # Conclusion
 
-로봇의 모션제어를 강화학습으로 풀어가려고 할 때 가장 어려운 부분인 task reward를 더 이상 handcrafted 적인 디자인에 의존하지 않고 reward distribution의 관점으로 접근하여 생성 모델 분야의 아이디어인 GAN의 아이디어를 빌려 접근한 것이 정말 신선한 논문이었습니다. Policy를 GAN에서의 Generator로 바라보고 문제를 디자인한 것도 정말 신기했으며 여러가지 GAN 알고리즘 중에서 LSGAN과 WGAN의 차이를 명확히 보여주며 비교를 수치적으로 보여주고 해석한 점도 인상적인 연구였습니다. 
 
 
 # Reference
