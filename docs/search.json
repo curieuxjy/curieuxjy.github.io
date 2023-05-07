@@ -543,14 +543,63 @@
     "href": "posts/paper/2023-05-07-accessibility.html",
     "title": "📃K-Accessibility for RL",
     "section": "",
-    "text": "이번 포스팅은 Accessibility-Based Clustering for Efficient Learning of Locomotion Skills 논문을 읽고 정리한 내용입니다."
+    "text": "1\n이번 포스팅은 Accessibility-Based Clustering for Efficient Learning of Locomotion Skills 논문을 읽고 정리한 내용입니다."
   },
   {
-    "objectID": "posts/paper/2023-05-07-accessibility.html#gan",
-    "href": "posts/paper/2023-05-07-accessibility.html#gan",
+    "objectID": "posts/paper/2023-05-07-accessibility.html#distance-between-poses",
+    "href": "posts/paper/2023-05-07-accessibility.html#distance-between-poses",
     "title": "📃K-Accessibility for RL",
-    "section": "GAN",
-    "text": "GAN\n적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다. GAN은"
+    "section": "Distance between poses",
+    "text": "Distance between poses"
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#initial-state-distrubutions",
+    "href": "posts/paper/2023-05-07-accessibility.html#initial-state-distrubutions",
+    "title": "📃K-Accessibility for RL",
+    "section": "Initial state distrubutions",
+    "text": "Initial state distrubutions\n\n\n\n4\n\n\n\n\n\n5\n\n\n\n\n\n6"
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#sampling-static-poses",
+    "href": "posts/paper/2023-05-07-accessibility.html#sampling-static-poses",
+    "title": "📃K-Accessibility for RL",
+    "section": "Sampling Static Poses",
+    "text": "Sampling Static Poses\n적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다."
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#estimating-accessibility-values",
+    "href": "posts/paper/2023-05-07-accessibility.html#estimating-accessibility-values",
+    "title": "📃K-Accessibility for RL",
+    "section": "Estimating Accessibility Values",
+    "text": "Estimating Accessibility Values"
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#clustering",
+    "href": "posts/paper/2023-05-07-accessibility.html#clustering",
+    "title": "📃K-Accessibility for RL",
+    "section": "Clustering",
+    "text": "Clustering\n\nK-Access Algorithm"
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#reinforcement-learning-process",
+    "href": "posts/paper/2023-05-07-accessibility.html#reinforcement-learning-process",
+    "title": "📃K-Accessibility for RL",
+    "section": "Reinforcement Learning Process",
+    "text": "Reinforcement Learning Process\n\nReward Functions\n\n\nOther Tasks"
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#recovery",
+    "href": "posts/paper/2023-05-07-accessibility.html#recovery",
+    "title": "📃K-Accessibility for RL",
+    "section": "Recovery",
+    "text": "Recovery\n\nKA: Centroids of the obtained 43 clusters by K-Access\nKM: Centroids of the obtained 33 clusters by K-Means++ based on the generalized Dunn’s index ν43\nWKM: Centroids of the obtained 14 clusters by weighted KMeans++ based on ν43 (gravity vector weighted by 2)\n9-Pose: Nine initial poses\n1-Pose: One lying pose\nRND: Random static poses"
+  },
+  {
+    "objectID": "posts/paper/2023-05-07-accessibility.html#backflip",
+    "href": "posts/paper/2023-05-07-accessibility.html#backflip",
+    "title": "📃K-Accessibility for RL",
+    "section": "Backflip",
+    "text": "Backflip"
   },
   {
     "objectID": "posts/paper/2022-10-16-recovery.html",

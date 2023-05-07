@@ -6,16 +6,81 @@ categories: [rl, clustering, quadruped, recovery, backflip, paper]
 toc: true
 ---
 
+![1](../../images/2023-05-07-accessibility/1.png)
+
+
 
 이번 포스팅은 [Accessibility-Based Clustering for Efficient Learning of Locomotion Skills](https://arxiv.org/abs/2109.11191) 논문을 읽고 정리한 내용입니다. 
 
 # Introduction
 
-강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다. 
+![3](../../images/2023-05-07-accessibility/3.png)
 
-## GAN
 
-적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다. GAN은 
+
+## Distance between poses
+
+
+
+## Initial state distrubutions
+
+
+![4](../../images/2023-05-07-accessibility/4.png)
+
+
+
+![5](../../images/2023-05-07-accessibility/5.png)
+
+
+![6](../../images/2023-05-07-accessibility/6.png)
+
+
+# Motivation & Contribution
+
+
+
+- 강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다. 
+
+- 2가지 Task, Recovery Task와 Backflip Task에 대해서 학습
+
+
+
+# Method
+
+Overview
+
+![9](../../images/2023-05-07-accessibility/9.png)
+
+
+## Sampling Static Poses
+
+적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다. 
+
+## Estimating Accessibility Values
+
+## Clustering
+
+### K-Access Algorithm
+
+## Reinforcement Learning Process
+
+### Reward Functions
+
+### Other Tasks
+
+# Results
+
+## Recovery
+
+- KA: Centroids of the obtained 43 clusters by K-Access
+- KM: Centroids of the obtained 33 clusters by K-Means++ based on the generalized Dunn’s index ν43
+- WKM: Centroids of the obtained 14 clusters by weighted KMeans++ based on ν43 (gravity vector weighted by 2)
+- 9-Pose: Nine initial poses 
+- 1-Pose: One lying pose
+- RND: Random static poses 
+
+## Backflip
+
 
 # Conclusion
 

@@ -111,7 +111,28 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#gan" id="toc-gan" class="nav-link" data-scroll-target="#gan">GAN</a></li>
+  <li><a href="#distance-between-poses" id="toc-distance-between-poses" class="nav-link" data-scroll-target="#distance-between-poses">Distance between poses</a></li>
+  <li><a href="#initial-state-distrubutions" id="toc-initial-state-distrubutions" class="nav-link" data-scroll-target="#initial-state-distrubutions">Initial state distrubutions</a></li>
+  </ul></li>
+  <li><a href="#motivation-contribution" id="toc-motivation-contribution" class="nav-link" data-scroll-target="#motivation-contribution">Motivation &amp; Contribution</a></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a>
+  <ul class="collapse">
+  <li><a href="#sampling-static-poses" id="toc-sampling-static-poses" class="nav-link" data-scroll-target="#sampling-static-poses">Sampling Static Poses</a></li>
+  <li><a href="#estimating-accessibility-values" id="toc-estimating-accessibility-values" class="nav-link" data-scroll-target="#estimating-accessibility-values">Estimating Accessibility Values</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a>
+  <ul class="collapse">
+  <li><a href="#k-access-algorithm" id="toc-k-access-algorithm" class="nav-link" data-scroll-target="#k-access-algorithm">K-Access Algorithm</a></li>
+  </ul></li>
+  <li><a href="#reinforcement-learning-process" id="toc-reinforcement-learning-process" class="nav-link" data-scroll-target="#reinforcement-learning-process">Reinforcement Learning Process</a>
+  <ul class="collapse">
+  <li><a href="#reward-functions" id="toc-reward-functions" class="nav-link" data-scroll-target="#reward-functions">Reward Functions</a></li>
+  <li><a href="#other-tasks" id="toc-other-tasks" class="nav-link" data-scroll-target="#other-tasks">Other Tasks</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#recovery" id="toc-recovery" class="nav-link" data-scroll-target="#recovery">Recovery</a></li>
+  <li><a href="#backflip" id="toc-backflip" class="nav-link" data-scroll-target="#backflip">Backflip</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
@@ -157,13 +178,100 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">1</figcaption><p></p>
+</figure>
+</div>
 <p>이번 포스팅은 <a href="https://arxiv.org/abs/2109.11191">Accessibility-Based Clustering for Efficient Learning of Locomotion Skills</a> 논문을 읽고 정리한 내용입니다.</p>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다.</p>
-<section id="gan" class="level2">
-<h2 class="anchored" data-anchor-id="gan">GAN</h2>
-<p>적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다. GAN은</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">3</figcaption><p></p>
+</figure>
+</div>
+<section id="distance-between-poses" class="level2">
+<h2 class="anchored" data-anchor-id="distance-between-poses">Distance between poses</h2>
+</section>
+<section id="initial-state-distrubutions" class="level2">
+<h2 class="anchored" data-anchor-id="initial-state-distrubutions">Initial state distrubutions</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">4</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">5</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">6</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="motivation-contribution" class="level1">
+<h1>Motivation &amp; Contribution</h1>
+<ul>
+<li><p>강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다.</p></li>
+<li><p>2가지 Task, Recovery Task와 Backflip Task에 대해서 학습</p></li>
+</ul>
+</section>
+<section id="method" class="level1">
+<h1>Method</h1>
+<p>Overview</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/9.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">9</figcaption><p></p>
+</figure>
+</div>
+<section id="sampling-static-poses" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-static-poses">Sampling Static Poses</h2>
+<p>적대적 신경망에 대해 기본적인 이론부터 시작해보겠습니다.</p>
+</section>
+<section id="estimating-accessibility-values" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-accessibility-values">Estimating Accessibility Values</h2>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<section id="k-access-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="k-access-algorithm">K-Access Algorithm</h3>
+</section>
+</section>
+<section id="reinforcement-learning-process" class="level2">
+<h2 class="anchored" data-anchor-id="reinforcement-learning-process">Reinforcement Learning Process</h2>
+<section id="reward-functions" class="level3">
+<h3 class="anchored" data-anchor-id="reward-functions">Reward Functions</h3>
+</section>
+<section id="other-tasks" class="level3">
+<h3 class="anchored" data-anchor-id="other-tasks">Other Tasks</h3>
+</section>
+</section>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<section id="recovery" class="level2">
+<h2 class="anchored" data-anchor-id="recovery">Recovery</h2>
+<ul>
+<li>KA: Centroids of the obtained 43 clusters by K-Access</li>
+<li>KM: Centroids of the obtained 33 clusters by K-Means++ based on the generalized Dunn’s index ν43</li>
+<li>WKM: Centroids of the obtained 14 clusters by weighted KMeans++ based on ν43 (gravity vector weighted by 2)</li>
+<li>9-Pose: Nine initial poses</li>
+<li>1-Pose: One lying pose</li>
+<li>RND: Random static poses</li>
+</ul>
+</section>
+<section id="backflip" class="level2">
+<h2 class="anchored" data-anchor-id="backflip">Backflip</h2>
 </section>
 </section>
 <section id="conclusion" class="level1">
