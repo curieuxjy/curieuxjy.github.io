@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -126,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#reinforcement-learning-process" id="toc-reinforcement-learning-process" class="nav-link" data-scroll-target="#reinforcement-learning-process">Reinforcement Learning Process</a>
   <ul class="collapse">
   <li><a href="#reward-functions" id="toc-reward-functions" class="nav-link" data-scroll-target="#reward-functions">Reward Functions</a></li>
-  <li><a href="#other-tasks" id="toc-other-tasks" class="nav-link" data-scroll-target="#other-tasks">Other Tasks</a></li>
+  <li><a href="#other-tasks---backflip" id="toc-other-tasks---backflip" class="nav-link" data-scroll-target="#other-tasks---backflip">Other Tasks - Backflip</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
@@ -179,10 +179,13 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p><img src="../../images/2023-05-07-accessibility/1.png" class="img-fluid"></p>
-<p>이번 포스팅은 <a href="https://arxiv.org/abs/2109.11191">Accessibility-Based Clustering for Efficient Learning of Locomotion Skills</a> 논문을 읽고 정리한 내용입니다.</p>
+<p>이번 포스팅은 <a href="https://arxiv.org/abs/2109.11191">Accessibility-Based Clustering for Efficient Learning of Locomotion Skills</a> 논문을 읽고 정리한 내용입니다. <strong>강화학습으로 로봇 제어를 학습할 때 어떻게 효율적으로 initial state distribution을 탐색하도록 만들어 줄 수 있을까?</strong>라는 질문을 K-means++ 알고리즘과 유사한 <strong>K-Access</strong>라는 알고리즘을 고안하여 해결한 논문입니다. 해당 논문에서는 quadruped robot의 <strong>Recovery와 Backflip</strong> 모션 학습을 보여주었습니다.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/wuZ-eQLXhVE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
+<p>이 세상에는 많은 로봇들이 있습니다. 그 중 <strong>족형 로봇(legged-robots)</strong>, 즉 다리 매커니즘을 이용하여 지면과의 상호작용을 하여 이동하는 로봇들은 바퀴형 이동 로봇(wheeled-robots)에 비해 바퀴로 가기 힘든 울퉁불퉁한 지형, 연속적이지 않은 지형 상에서 이동할 수 있다는 장점이 있습니다. 족형 로봇과 바퀴형 로봇 모두 이동을 기본 전제로 사람에게 유용한 다양한 task를 하는 것이 목적이기 때문에 족형 로봇의 이동을 <strong>보행(locomotion) task</strong>, 바퀴형 로봇의 이동을 <strong>주행(drive) task</strong>이라고 합니다. <code>기본 전제</code>라고 표현했듯이 이동은 로봇의 Main task라고 볼 수 있으며 <code>걷는</code> 모션을 생각해 봤을 때 일정한 주기로 같은 모션이 반복되어 진행(cyclic)되는 것을 파악할 수 있습니다. 또한 Locomotion은 오랜시간 동안 동물들의 모션과 같은 reference motion들을 통해 연구되어 오면서 수학적인 모델링이 잘 연구되어 있습니다. 마지막으로 Locomotion의 특성을 강화학습의 policy가 학습해야 하는 로봇의 joint 제어측면에서 search space로 파악해본다면, Narrow한 search space를 가지고 있다고 표현할 수 있습니다.</p>
 <p><img src="../../images/2023-05-07-accessibility/3.png" class="img-fluid"></p>
+<p>반면</p>
 <section id="distance-between-poses" class="level2">
 <h2 class="anchored" data-anchor-id="distance-between-poses">Distance between poses</h2>
 </section>
@@ -217,7 +220,12 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
 <section id="k-access-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="k-access-algorithm">K-Access Algorithm</h3>
-<p><img src="../../images/2023-05-07-accessibility/11.png" class="img-fluid"></p>
+<details>
+<summary>
+<b>Pseudo Code of K-Access</b>
+</summary>
+<img width="100%" src="../../images/2023-05-07-accessibility/11.png" title="Cost Table">
+</details>
 <p><img src="../../images/2023-05-07-accessibility/12.png" class="img-fluid"></p>
 <p><img src="../../images/2023-05-07-accessibility/13.png" class="img-fluid"></p>
 </section>
@@ -227,10 +235,16 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="../../images/2023-05-07-accessibility/14.png" class="img-fluid"></p>
 <section id="reward-functions" class="level3">
 <h3 class="anchored" data-anchor-id="reward-functions">Reward Functions</h3>
-<p><img src="../../images/2023-05-07-accessibility/15.png" class="img-fluid"></p>
+<details>
+<summary>
+<b>Symbols of Reward Terms for DRL</b>
+</summary>
+<img width="100%" src="../../images/2023-05-07-accessibility/15.png" title="Cost Table">
+</details>
 </section>
-<section id="other-tasks" class="level3">
-<h3 class="anchored" data-anchor-id="other-tasks">Other Tasks</h3>
+<section id="other-tasks---backflip" class="level3">
+<h3 class="anchored" data-anchor-id="other-tasks---backflip">Other Tasks - Backflip</h3>
+<p>해당 논문에서는 Recovery 뿐만 아니라 Locomotion 보다 더 다이나믹한 모션도 학습하는 것을 보여주기 위해 Backflip 학습도 K-Accessibility 알고리즘을 이용하여 학습을 진행하였습니다. (이전에 리뷰했던 <a href="https://curieuxjy.github.io/posts/paper/2023-03-12-wasabi.html">WASABI</a> 논문에서도 다이나믹한 모션 4가지 중 하나를 Backflip으로 학습 결과를 보여주었던 것과 같은 맥락으로 해당 모션 Task를 설정했다고 보시면 됩니다.)</p>
 </section>
 </section>
 </section>
@@ -258,11 +272,16 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
+<p>해당 논문에 대해서 좀 더 알아보고 싶으신 분들은 저자들이 공개한 Youtube 발표 영상도 확인해보시길 권장해드립니다.</p>
 </section>
 <section id="reference" class="level1">
 <h1>Reference</h1>
 <ul>
 <li><a href="https://arxiv.org/abs/2109.11191">Original Paper: Accessibility-Based Clustering for Efficient Learning of Locomotion Skills</a></li>
+<li><a href="https://youtu.be/7cZMThUn0rU">Original Paper Presentation on Youtube</a></li>
+<li><a href="https://youtu.be/wuZ-eQLXhVE">“과로 한 거니?” 박람회서 짐 나르던 2족 보행 로봇 ‘꽈당’ / JTBC 상암동 클라스</a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
 </ul>
 
 
