@@ -571,21 +571,21 @@
     "href": "posts/paper/2023-05-07-accessibility.html#sampling-static-poses",
     "title": "📃K-Accessibility for RL",
     "section": "3.1 Sampling Static Poses",
-    "text": "3.1 Sampling Static Poses"
+    "text": "3.1 Sampling Static Poses\n전복된 다양한 자세들을 샘플링하기 위해서 로봇의 base frame의 roll, pitch 각도를 일정 범위에서 랜덤하게 샘플링하고 12개의 joint position도 로봇의 configuration을 고려하여 upper/lower limit range에 있는 각도로 자세를 set해서 전복된 자세를 만듭니다. (이때 yaw 방향은 flat terrain에선 의미가 없기 때문에 0으로 셋팅합니다.) 샘플링된 자세로 pose를 set 했을 때 self-collision을 확인한 뒤 self-collision이 되지 않은 자세 2.4k개를 sampling 합니다."
   },
   {
     "objectID": "posts/paper/2023-05-07-accessibility.html#estimating-accessibility-values",
     "href": "posts/paper/2023-05-07-accessibility.html#estimating-accessibility-values",
     "title": "📃K-Accessibility for RL",
     "section": "3.2 Estimating Accessibility Values",
-    "text": "3.2 Estimating Accessibility Values"
+    "text": "3.2 Estimating Accessibility Values\npose들 간의 거리를 Accessibility라는 metric으로 정의하는 방법에 대해 알아보겠습니다."
   },
   {
     "objectID": "posts/paper/2023-05-07-accessibility.html#clustering",
     "href": "posts/paper/2023-05-07-accessibility.html#clustering",
     "title": "📃K-Accessibility for RL",
     "section": "3.3 Clustering",
-    "text": "3.3 Clustering\n\n3.3.1 K-Access Algorithm\n\n\nPseudo Code of K-Access"
+    "text": "3.3 Clustering\nK-Access Algorithm\nAccessibility 값을 기반으로 Clustering을 하는 K-Access 알고리즘이 해당 논문의 주요 Contribution입니다. 몇개의 cluster가 적절할까요?\n\n\n\nPseudo Code of K-Access\n\n\n\nClustering Analysis\n논문에서 사용한  로봇 플랫폼으로 clustering을 진행했을 때 43개의 cluster가 최적의 갯수로 정해집니다."
   },
   {
     "objectID": "posts/paper/2023-05-07-accessibility.html#reinforcement-learning-process",
