@@ -4,6 +4,7 @@ description: Accessibility-Based Clustering for Efficient Learning of Locomotion
 date: "2023-05-07"
 categories: [rl, clustering, quadruped, recovery, backflip, paper]
 toc: true
+number-sections: true
 ---
 
 ![](../../images/2023-05-07-accessibility/1.png)
@@ -30,32 +31,35 @@ toc: true
 
 ![](../../images/2023-05-07-accessibility/3.png)
 
-앞서 족형 로봇의`기본 전제`는 이동이라고 했듯이 **Locomotion**은 로봇의 Main task라고 볼 수 있으며 `걷는` 모션을 생각해 봤을 때 일정한 주기로 같은 모션이 반복되어 진행(cyclic)되는 것을 파악할 수 있습니다. 또한 Locomotion은 오랜시간 동안 동물들의 모션과 같은 reference motion들을 통해 연구되어 오면서 수학적인 모델링이 잘 연구되어 있습니다. 마지막으로 Locomotion의 특성을 강화학습의 policy가 학습해야 하는 로봇의 joint 제어측면에서 search space로 파악해본다면, Narrow한 search space를 가지고 있다고 표현할 수 있습니다. 반면 **Recovery**는 지속적인 운용을 뒷받침해주는 Support Task이자 Non-cyclic한 모션을 요구하는 task라고 할 수 있습니다. 넘어진 전복 자세에서 구체적으로 어떻게 정상 상태로 회복하라고 모션을 타임스텝 별로 정의하기가 어려우며 보다 Broad한 search space를 가지고 있는 task 입니다.
+앞서 족형 로봇의`기본 전제`는 이동이라고 했듯이 **Locomotion**은 로봇의 Main task라고 볼 수 있으며 `걷는` 모션을 생각해 봤을 때 일정한 주기로 같은 모션이 반복되어 진행(cyclic)되는 것을 파악할 수 있습니다. 또한 Locomotion은 오랜시간 동안 동물들의 모션과 같은 reference motion들을 통해 연구되어 오면서 수학적인 모델링이 잘 연구되어 있습니다. 마지막으로 Locomotion의 특성을 강화학습의 policy가 학습해야 하는 로봇의 joint 제어측면에서 search space로 파악해본다면, Narrow한 search space를 가지고 있다고 표현할 수 있습니다. 반면 **Recovery**는 지속적인 운용을 뒷받침해주는 Support Task이자 Non-cyclic한 모션을 요구하는 task라고 할 수 있습니다. 넘어진 전복 자세에서 구체적으로 어떻게 정상 상태로 회복하라고 모션을 타임스텝 별로 정의하기가 어려우며 보다 Broad한 search space를 가지고 있는 task 입니다. 
 
->  사실 Locomotion과 Recovery에 대한 비교는 이전에 작성한 [포스팅](https://curieuxjy.github.io/posts/paper/2022-10-16-recovery.html#locomotion-vs-recovery)에서도 한번 다룬 적이 있으니 참고하시기 바랍니다.)
-
-
-
-## Distance between poses
-
-4족 보행 로봇의 **자세(pose)**는 어떻게 표현할 수 있을까요?
+>  Locomotion과 Recovery에 대한 비교는 이전에 작성한 [포스팅](https://curieuxjy.github.io/posts/paper/2022-10-16-recovery.html#locomotion-vs-recovery)에서도 한번 다룬 적이 있으니 참고하시기 바랍니다.)
 
 ## Initial state distrubutions
 
-
-![](../../images/2023-05-07-accessibility/4.png)
-
-# Motivation & Contribution
-
-
+앞서 Locomotion과 Recovery를 비교하며 살펴보았는데 강화학습으로 하는 로봇 제어의 관점에서 **매우 큰 차이점** 하나가 더 있습니다. 바로 **Initial State Distribution**, 강화학습의 Robot Agent가 학습 Episode를 시작하는 맨 처음의 State들의 분포입니다. Locomotion에서는 command(컨트롤러로 조작하는 로봇의 desired velocity 혹은 간단하게 방향키 조작으로 생각할 수 있음)를 따라 움직이는 것이기 때문에 Initial State로 로봇의 standing 자세를 가지고 학습 Episode를 시작하게 됩니다. 반면 Recovery는 **로봇이 넘어진 상황(자세)**가 각 Episode의 Initial State가 됩니다. 넘어진 자세는 매우 다양하기 때문에 어떤 넘어진 자세는 정상상태로 회복하기가 상대적으로 쉬운 반면, 어떤 자세는 정상상태로 회복하기가 어렵기 때문에 Recovery task에서는 RL(Reinforcement Learning) agent가 Initial State Distribution을 잘 탐색하고 학습할 수 있도록 만들어주는 것이 매우 중요합니다.
 
 ![](../../images/2023-05-07-accessibility/5.png)
 
+위 사진에서 처럼 RL Agent가 탐색해야하는 전체 **State Space**와 어떤 한 Initial state(혹은 Initial pose, orange dot)와 유사한 state들의 집합 영역 **Effective Exploration Region(EER)**을 주황색 원 영역으로 표시할 수 있습니다. 여기서 주황색 원 안의 영역의 State들은 원 중심의 하나의 Initial State를 탐색하고 학습하고 나면 어렵지 않게 강화학습 Policy가 잘 학습할 수 있는 State들이라고 볼 수 있습니다. **Case 1**은 전체 탐색해야 하는 State Space를 빈틈의 최소화하도록 많은 Initial state를 학습하지만 각 EER들이 많이 중복되어 학습되기 때문에 학습 효율이 매우 떨어지는 것을 알 수 있습니다. **Case 2**에서는 적은 Initial state로 학습해서 State Space가 잘 커버되지 않았을 뿐만 아니라 목표로하는 `Target State`도 잘 학습되지 않아 학습 Policy의 성능이 매우 떨어지는 것을 알 수 있습니다. **Case 3**는 목표로하는 `Target State`는 EER에 들어가서 Policy가 학습한 state라고 할 수 있지만 전체 State Space에서 커버되지 못한 state들이 있기 때문에 Corner case들(Policy가 잘 작동되지 않는 경우)이 있어 Policy의 robustness가 떨어진다고 볼 수 있습니다. 따라서 가장 이상적인 상황은 **Case 4**에서처럼 Target State도 EER의 범주에 들어가 있고 전체 State Space도 적절한 수의 Initial State들로 탐색되어 Policy의 Robust한 상황이라고 할 수 있습니다.
+
+## Pose of Quadruped Robots
+
+그렇다면 Initial State, 즉 4족 보행 로봇의 **자세(pose)**는 어떻게 표현할 수 있을까요? 전복된 상황은 넘어져 있는 로봇의 자세로 표현할 수 있을 것 입니다. 
+
+![](../../images/2023-05-07-accessibility/4.png)
+
+전복된 상황은 움직임이 없는 넘어진 정적(Static) 상황이라 가정하고 로봇의 상황을 다음과 같이 2가지 정보로 표현할 수 있습니다. 첫번째로는 몸체의 기울어짐을 표현하는 **Projected gravity vector**로 지구 중력 방향의 벡터를 `(0, 0, -1)`이라고 했을 때, 로봇 몸체의 프레임에 gravity vector를 projection하고 normalized한 3차원의 벡터 정보는 몸체의 기울어짐을 표현할 수 있습니다. 두번째 요소는 로봇의 각 다리에 3개씩 배치되어 관절이 되는 **12개의 revolute joint(motor) angle** 입니다. 
+
+## Distance between poses
+
+Pose를 정의한 다음으로 살펴볼 부분은 **여러 pose들 간의 관계를 어떻게 정의할 수 있을까**에 대한 부분을 고민해볼 수 있습니다. 여러 pose들 간에 `가깝다(비슷하다)`, `멀다`를 파악하기 위해서는 **거리(Distance)**를 정의할 수 있어야 합니다. 가장 직관적으로 pose를 이루고 있는 요소들 간의 유클리디안 거리를 생각해볼 수 있습니다. 앞서 정적인 자세를 구성하는 `Projected gravity vector` 와 `Joint angles`의 유클리디안 거리를 계산해서 나온 수치를 기반으로 pose가 서로 비슷하다, 많이 다르다를 판단할 수 있을 것 입니다.
+
 ![](../../images/2023-05-07-accessibility/6.png)
 
-![](../../images/2023-05-07-accessibility/7.png)
+하지만 그림에서의 예시를 통해 유클리디안 거리가 Non-sense하다는 것을 볼 수 있습니다. 3가지 자세, `Backward Leaning(B)`, `Forward Leaning(F)`, `Lying(L)`를 가지고 유클리디안 거리를 계산해보면 **B-F의 거리**가 **F-L의 거리**보다 큰 수치인 것을 확인해볼 수 있습니다. 하지만 로봇을 직접 제어해서 자세를 transition한다고 생각했을 때, **F에서 B로의 transition**이 **F에서 L로의 transition**이 훨씬 어렵기 때문에 단순하게 구성 요소들의 유클리디안 거리로 pose들 간의 거리를 정의하는 것은 제어적인 측면에서 말이 된다고 볼 수 없습니다.
 
-![](../../images/2023-05-07-accessibility/8.png)
+# Motivation
 
 - 강화학습은 정말 매력적인 인공지능 학습법 중 하나라고 생각합니다. 
 
@@ -82,7 +86,9 @@ Overview
 
 ## Estimating Accessibility Values
 
+![](../../images/2023-05-07-accessibility/7.png)
 
+![](../../images/2023-05-07-accessibility/8.png)
 
 
 
@@ -178,5 +184,8 @@ Overview
 - [Original Paper: Accessibility-Based Clustering for Efficient Learning of Locomotion Skills](https://arxiv.org/abs/2109.11191)
 - [Original Paper Presentation on Youtube](https://youtu.be/7cZMThUn0rU)
 - ["과로 한 거니?" 박람회서 짐 나르던 2족 보행 로봇 '꽈당' / JTBC 상암동 클라스](https://youtu.be/wuZ-eQLXhVE)
-- []()
-- []()
+- [Radial Basis Fuction (RBF) Kernel 이란?](h﻿ttps://m.blog.naver.com/sw4r/221497261535)
+- [The Radial Basis Function Kernel](https://pages.cs.wisc.edu/~matthewb/pages/notes/pdf/svms/RBFKernel.pdf)
+- [106 RBF Kernel](https://youtu.be/NYwVM6_EuxQ)
+- [Lecture 16 - Radial Basis Functions](https://youtu.be/O8CfrnOPtLc) - [Slides](https://home.work.caltech.edu/slides/slides16.pdf)
+- [Radial Basis Function (RBF) Kernel: The Go-To Kernel](https://towardsdatascience.com/radial-basis-function-rbf-kernel-the-go-to-kernel-acf0d22c798a)
