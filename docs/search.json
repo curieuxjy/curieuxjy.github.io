@@ -697,7 +697,7 @@
     "href": "posts/paper/2023-05-07-accessibility.html#distance-between-poses",
     "title": "📃K-Accessibility for RL",
     "section": "Distance between poses",
-    "text": "Distance between poses"
+    "text": "Distance between poses\n4족 보행 로봇의 자세(pose)는 어떻게 표현할 수 있을까요?"
   },
   {
     "objectID": "posts/paper/2023-05-07-accessibility.html#initial-state-distrubutions",
