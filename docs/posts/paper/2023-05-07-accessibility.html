@@ -180,10 +180,17 @@ ul.task-list li input[type="checkbox"] {
 
 <p><img src="../../images/2023-05-07-accessibility/1.png" class="img-fluid"></p>
 <p>이번 포스팅은 <a href="https://arxiv.org/abs/2109.11191">Accessibility-Based Clustering for Efficient Learning of Locomotion Skills</a> 논문을 읽고 정리한 내용입니다. <strong>강화학습으로 로봇 제어를 학습할 때 어떻게 효율적으로 initial state distribution을 탐색하도록 만들어 줄 수 있을까?</strong>라는 질문을 K-means++ 알고리즘과 유사한 <strong>K-Access</strong>라는 알고리즘을 고안하여 해결한 논문입니다. 해당 논문에서는 quadruped robot의 <strong>Recovery와 Backflip</strong> 모션 학습을 보여주었습니다.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/wuZ-eQLXhVE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>이 세상에는 많은 로봇들이 있습니다. 그 중 <strong>족형 로봇(legged-robots)</strong>, 즉 다리 매커니즘을 이용하여 지면과의 상호작용을 하여 이동하는 로봇들은 바퀴형 이동 로봇(wheeled-robots)에 비해 바퀴로 가기 힘든 울퉁불퉁한 지형, 연속적이지 않은 지형 상에서 이동할 수 있다는 장점이 있습니다. 족형 로봇과 바퀴형 로봇 모두 이동을 기본 전제로 사람에게 유용한 다양한 task를 하는 것이 목적이기 때문에 족형 로봇의 이동을 <strong>보행(locomotion) task</strong>, 바퀴형 로봇의 이동을 <strong>주행(drive) task</strong>이라고 합니다. <code>기본 전제</code>라고 표현했듯이 이동은 로봇의 Main task라고 볼 수 있으며 <code>걷는</code> 모션을 생각해 봤을 때 일정한 주기로 같은 모션이 반복되어 진행(cyclic)되는 것을 파악할 수 있습니다. 또한 Locomotion은 오랜시간 동안 동물들의 모션과 같은 reference motion들을 통해 연구되어 오면서 수학적인 모델링이 잘 연구되어 있습니다. 마지막으로 Locomotion의 특성을 강화학습의 policy가 학습해야 하는 로봇의 joint 제어측면에서 search space로 파악해본다면, Narrow한 search space를 가지고 있다고 표현할 수 있습니다.</p>
+<p>이 세상에는 많은 로봇들이 있습니다. 그 중 <strong>족형 로봇(legged-robots)</strong>, 즉 다리 매커니즘을 이용하여 지면과의 상호작용을 하여 이동하는 로봇들은 바퀴형 이동 로봇(wheeled-robots)에 비해 바퀴로 가기 힘든 울퉁불퉁한 지형, 연속적이지 않은 지형 상에서 이동할 수 있다는 장점이 있습니다. 족형 로봇과 바퀴형 로봇 모두 이동을 기본 전제로 사람에게 유용한 다양한 task를 하는 것이 목적이기 때문에 족형 로봇의 이동을 <strong>보행(locomotion) task</strong>, 바퀴형 로봇의 이동을 <strong>주행(drive) task</strong>이라고 합니다.</p>
+<p>족형 로봇은 대표적으로 사람과 같은 보행을 하는 2족 보행 로봇과 강아지와 같은 보행을 하는 4족 보행 로봇으로 나눠볼 수 있는데 그 중 2족 보행 로봇인 <a href="https://robots.ieee.org/robots/digit/">Digit</a>과 관련한 재밌는 뉴스 클립이 하나 있어서 본격적으로 논문을 살펴보기 전에 보려고 합니다.</p>
+<div class="quarto-video"><iframe src="https://www.youtube.com/embed/wuZ-eQLXhVE" width="60%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<blockquote class="blockquote">
+<p>전후좌우 자유롭게 움직이고 제자리에서 돌거나 웅크릴 수 있는 유연성 … 한 마디로 고도의 기술 집합체라는 소린데, … <strong>어째 점점 속도가 느려지는가 싶더니 다리가 풀리면서 쓰러지고 맙니다.</strong></p>
+<p>… 박람회 참가 전 여러 날에 거쳐 <strong>약 20시간의 라이브 테스트를 진행</strong> … <strong>99%의 성공률</strong>을 보였음에도 불구하고 또 사람들이 보는 앞에서 이런 사고가 …</p>
+</blockquote>
+<p>뉴스에서 보신 것처럼 데모를 매우 오랜시간 준비하고 점검하였지만 예측하지 못한 변수로 인해 로봇이 넘어지는 모습을 볼 수 있습니다. 이미 잘 구성된 데모 환경에서도 미처 생각지 못한 일로 인해 로봇이 넘어지는데 실제 로봇이 상품이 된다면 로봇이 놓이게 되는 환경은 정말 다양해서 절대 넘어지지 않을 것이라는 보장을 하기에 어려울 것 입니다.</p>
+<p><code>기본 전제</code>라고 표현했듯이 이동은 로봇의 Main task라고 볼 수 있으며 <code>걷는</code> 모션을 생각해 봤을 때 일정한 주기로 같은 모션이 반복되어 진행(cyclic)되는 것을 파악할 수 있습니다. 또한 Locomotion은 오랜시간 동안 동물들의 모션과 같은 reference motion들을 통해 연구되어 오면서 수학적인 모델링이 잘 연구되어 있습니다. 마지막으로 Locomotion의 특성을 강화학습의 policy가 학습해야 하는 로봇의 joint 제어측면에서 search space로 파악해본다면, Narrow한 search space를 가지고 있다고 표현할 수 있습니다.</p>
 <p><img src="../../images/2023-05-07-accessibility/3.png" class="img-fluid"></p>
 <p>반면</p>
 <section id="distance-between-poses" class="level2">
