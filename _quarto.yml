@@ -21,7 +21,7 @@ format:
     page-layout: full
     html-math-method: katex
     theme:
-      - simplex
+      - minty
       - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes 
 # sketchy simplex standstone minty pulse lux
