@@ -1,0 +1,22 @@
+---
+draft: true
+title: "📘나를 대하는 나의 자세"
+description: 실패와 감정에 초점을 두고
+date: "2023-05-11"
+categories: [gueltto, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+# Introduction
+
+쉬는 시간에 유튜브를 키면 자주 보는 클립들은 사람사는 이야기들 입니다.
+
+이쯤해서 돌아보는 자축 글또 1주년
+
+실패를 대하는 우리의 자세
+
+감정을 대하는 우리의 자세
+
+감정도 만들어지는 거라니..

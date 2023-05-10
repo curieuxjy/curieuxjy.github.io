@@ -1,5 +1,5 @@
 ---
-title: "✒️Note"
+title: "Note"
 listing:
   contents: 
     - "posts/note/*.qmd"
@@ -17,5 +17,7 @@ listing:
 page-layout: full
 # title-block-banner: true
 ---
-<img src="note.png" style="width:100%">
-
+<center>
+##### 📘 Diary | 🌎 Language
+<img src="note.png" style="width:65%">
+</center>

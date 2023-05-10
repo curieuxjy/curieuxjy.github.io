@@ -20,16 +20,17 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
-<p> </p>
 
-### *Je suis curieux de tout.*
+<center>
 
-<p> </p>
+#### *Je suis **curieux** de tout.*
 
-| 📃 Paper Review | 🧩 Storage | 👩‍💻 Code
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcurieuxjy.github.io&count_bg=%2378C3AE&title_bg=%23555555&icon=smugmug.svg&icon_color=%23E7E7E7&title=HELLO&edge_flat=true"/></a>
 
-<p> </p>
+##### 📃 Paper Review | 🧩 Storage | 👩‍💻 Code
 
-<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:80%">
+<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:75%">
 
-<br> </br>
+</center>
+
+---
