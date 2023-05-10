@@ -235,29 +235,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><code>utils_foo.py</code></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> utils_test():</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"utils_foo"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"HERE: utils_foo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> utils_test():</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="bu">print</span>(<span class="st">"utils_foo"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="bu">print</span>(<span class="st">"HERE: utils_foo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><code>env_foo.py</code></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>utils_foo.utils_test()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"HERE: env_foo"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> env_test():</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"env_foo"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>utils_foo.utils_test()</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="bu">print</span>(<span class="st">"HERE: env_foo"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">def</span> env_test():</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="bu">print</span>(<span class="st">"env_foo"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><code>main_foo.py</code></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> env_foo</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>utils_foo.utils_test()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>env_foo.env_test()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">from</span> gym_foo <span class="im">import</span> env_foo</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>utils_foo.utils_test()</span>
+<span id="cb3-5"><a href="#cb3-5"></a>env_foo.env_test()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="goal" class="level2">
 <h2 class="anchored" data-anchor-id="goal">Goal</h2>
@@ -278,20 +278,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>python main_foo.py</code> 실행에서는 <code>from gym_foo import *</code>코드를 읽을 때 <code>env_foo.py</code>내의 <code>from gym_foo import utils_foo</code>를 불러올 수 없다고 error가 난다.(상위 위치)</li>
 </ul></li>
 </ul>
-<pre class="cmd"><code>$ python main_foo.py 
-Traceback (most recent call last):
-File "main_foo.py", line 4, in &lt;module&gt;
-    env_foo.env_test()
-NameError: name 'env_foo' is not defined</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource cmd number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ python main_foo.py </span>
+<span id="cb4-2"><a href="#cb4-2"></a>Traceback (most recent call last):</span>
+<span id="cb4-3"><a href="#cb4-3"></a>File "main_foo.py", line 4, in &lt;module&gt;</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    env_foo.env_test()</span>
+<span id="cb4-5"><a href="#cb4-5"></a>NameError: name 'env_foo' is not defined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>env_foo.py에서 utils_foo module을 불러올 때, <code>from gym_foo import utils_foo</code>로 불러온다. 상위 위치인 <code>gym_foo</code>를 거쳐서 import해야한다는 뜻이다. 그러면 <code>python main_foo.py</code> 실행시 잘 작동한다.</li>
 </ul>
-<pre class="cmd"><code>$ python main_foo.py 
-HERE: utils_foo
-utils_foo
-HERE: env_foo
-utils_foo
-env_foo</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cmd number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>$ python main_foo.py </span>
+<span id="cb5-2"><a href="#cb5-2"></a>HERE: utils_foo</span>
+<span id="cb5-3"><a href="#cb5-3"></a>utils_foo</span>
+<span id="cb5-4"><a href="#cb5-4"></a>HERE: env_foo</span>
+<span id="cb5-5"><a href="#cb5-5"></a>utils_foo</span>
+<span id="cb5-6"><a href="#cb5-6"></a>env_foo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><p>한 가지 더 주의해야할 점이 있다. <code>main_foo.py</code>에서 <code>utils_foo</code>와 <code>env_foo</code>를 import 할 때이다.</p>
 <p><code>from gym_foo import *</code> 코드로 utils_foo와 env_foo가 모두 불러와질 것이라고 생각했으나, <code>main_foo.py</code>를 실행했을 때 import 하지 못한다. 따라서 위에 <code>main_foo.py</code>에서 볼 수 있듯이 <code>from gym_foo import utils_foo</code>, <code>from gym_foo import env_foo</code>각각 따로 import 해줘야 한다.</p></li>

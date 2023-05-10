@@ -1,6 +1,6 @@
 ---
-title: "🧩GNN Intro"
-description: GNN 처음 알아보기
+title: "🧩GNN Materials"
+description: GNN 자료들 모음
 date: "2021-01-02"
 categories: [gnn, storage]
 toc: true
@@ -72,38 +72,43 @@ GNN에 관심을 가지게 된 계기는 [RoboGrammar](https://cdfg.mit.edu/publ
 
 #### An Introduction to Graph Neural Networks: Models and Applications
 
-{% include youtube.html content='https://www.youtube.com/embed/zCEYiCxrL_0' %}
+{{< video https://www.youtube.com/embed/zCEYiCxrL_0 >}}
 
 #### Graph Convolutional Networks using only NumPy
 
-{% include youtube.html content='https://www.youtube.com/embed/8qTnNXdkF1Q' %}
+{{< video https://www.youtube.com/embed/8qTnNXdkF1Q >}}
 
 #### Geometric Deep Learning on Graphs and Manifolds
 
-{% include youtube.html content='https://www.youtube.com/embed/LvmjbXZyoP0' %}
+{{< video https://www.youtube.com/embed/LvmjbXZyoP0 >}}
+
 
 #### Graph Nets: The Next Generation
 * [Link](https://www.ias.edu/video/machinelearning/2020/0721-MaxWelling)
 
-{% include youtube.html content='https://www.youtube.com/embed/Wx8J-Kw3fTA' %}
+{{< video https://www.youtube.com/embed/Wx8J-Kw3fTA >}}
 
 #### Recent Developments of Graph Network Architectures
+
 * [Slide](https://rb.gy/quo3n6)
 * 2019-2020에 발표된 GNN 방법론들을 정리
 * GNN의 expressiveness, 그중에서도 invariance and equvariance
 
-{% include youtube.html content='https://www.youtube.com/embed/M60huxIvKbE' %}
+{{< video https://www.youtube.com/embed/M60huxIvKbE >}}
 
 #### Deep learning on graphs: successes, challenges, and next steps
 
-{% include youtube.html content='https://www.youtube.com/embed/PLGcx65MhCc' %}
+
+{{< video https://www.youtube.com/embed/PLGcx65MhCcA >}}
 
 #### Graph Representation Learning for Algorithmic Reasoning
 - [Slide](https://petar-v.com/talks/Algo-WWW.pdf)
 
-{% include youtube.html content='https://www.youtube.com/embed/IPQ6CPoluok' %}
+
+{{< video https://www.youtube.com/embed/IPQ6CPoluok >}}
 
 #### How Uber uses Graph Neural Networks to recommend you food
 - [Post](https://eng.uber.com/uber-eats-graph-learning/)
 
-{% include youtube.html content='https://www.youtube.com/embed/9O9osybNvyY' %}
+
+{{< video https://www.youtube.com/embed/9O9osybNvyY >}}

@@ -214,13 +214,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>소문자</strong>는 한개의 Config 클래스 객체 내에서의 하위 class 순서</p></li>
 </ul>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AConfig():</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config:</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        element01 <span class="op">=</span> <span class="st">"element01"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        element02 <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_b_Config:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        element03 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        element04 <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> AConfig():</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw">class</span> A_a_Config:</span>
+<span id="cb1-3"><a href="#cb1-3"></a>        element01 <span class="op">=</span> <span class="st">"element01"</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>        element02 <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="kw">class</span> A_b_Config:</span>
+<span id="cb1-6"><a href="#cb1-6"></a>        element03 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>        element04 <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>BConfig는</p>
 <ul>
@@ -229,13 +229,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>B_a_Config</code> 추가</p></li>
 </ul>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BConfig(AConfig):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config:</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        element02 <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># class A_b_Config:</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     pass</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> B_a_Config:</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        element05 <span class="op">=</span> {<span class="st">"key"</span>:<span class="st">"value"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">class</span> BConfig(AConfig):</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">class</span> A_a_Config:</span>
+<span id="cb2-3"><a href="#cb2-3"></a>        element02 <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="co"># class A_b_Config:</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="co">#     pass</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="kw">class</span> B_a_Config:</span>
+<span id="cb2-7"><a href="#cb2-7"></a>        element05 <span class="op">=</span> {<span class="st">"key"</span>:<span class="st">"value"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>CConfig는</p>
 <ul>
@@ -244,13 +244,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>C_a_Config</code> 추가</p></li>
 </ul>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CConfig(AConfig):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config:</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        element02 <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_b_Config:</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> C_a_Config:</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        element05 <span class="op">=</span> {<span class="st">"key"</span>:<span class="st">"value"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> CConfig(AConfig):</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">class</span> A_a_Config:</span>
+<span id="cb3-3"><a href="#cb3-3"></a>        element02 <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="kw">class</span> A_b_Config:</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="cf">pass</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="kw">class</span> C_a_Config:</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        element05 <span class="op">=</span> {<span class="st">"key"</span>:<span class="st">"value"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>DConfig는</p>
 <ul>
@@ -258,55 +258,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>AConfig의 <code>A_b_Config</code>를 인자로 받아 override</p></li>
 </ul>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DConfig(AConfig):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_a_Config(AConfig.A_a_Config):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        element02 <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> A_b_Config(AConfig.A_b_Config):</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">class</span> DConfig(AConfig):</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="kw">class</span> A_a_Config(AConfig.A_a_Config):</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        element02 <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="kw">class</span> A_b_Config(AConfig.A_b_Config):</span>
+<span id="cb4-5"><a href="#cb4-5"></a>        <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>EConfig는</p>
 <ul>
 <li><code>__init__(super)</code>로 <code>Aconfig</code> 상속</li>
 </ul>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EConfig(AConfig):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="bu">super</span>): <span class="cf">pass</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> E_a_Config:</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        element06 <span class="op">=</span> (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">class</span> EConfig(AConfig):</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="bu">super</span>): <span class="cf">pass</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="kw">class</span> E_a_Config:</span>
+<span id="cb5-4"><a href="#cb5-4"></a>        element06 <span class="op">=</span> (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="class-to-dict" class="level1">
 <h1>Class to Dict</h1>
 <p>class 객체를 dictionary로 만들기</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> class_to_dict(obj) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(obj, <span class="st">"__dict__"</span>):                <span class="co"># __dict__ : 클래스 객체의 속성 정보를 확인하기 위해 사용. 객체가 가진 여러가지 속성들을 딕셔너리 형태로 편하게 확인</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> obj</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}                                     <span class="co"># 빈 dict 객체 만들기</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> <span class="bu">dir</span>(obj):                            <span class="co"># dir(): 어떤 객체를 인자로 넣어주면 해당 객체가 어떤 변수와 메소드(method)를 가지고 있는지 나열</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key.startswith(<span class="st">"_"</span>):                     <span class="co"># startswith: str.startswith(str or tuple) 형식으로 사용하면 되고, 반환 값으로는 True, False를 반환</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        element <span class="op">=</span> []                                <span class="co"># 리스트 요소에 대비</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        val <span class="op">=</span> <span class="bu">getattr</span>(obj, key)                     <span class="co"># getattr: object에 존재하는 속성의 값을 가져옴</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(val, <span class="bu">list</span>):                   <span class="co"># isinstance로 list 객체인지 확인 e.g.) isinstance(object, type)</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> item <span class="kw">in</span> val:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                element.append(class_to_dict(item))</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:                                       <span class="co"># 리스트가 아닌 모든 요소들 처리</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            element <span class="op">=</span> class_to_dict(val)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        result[key] <span class="op">=</span> element                       <span class="co"># 결과 dict에 저장</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> class_to_dict(obj) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(obj, <span class="st">"__dict__"</span>):                <span class="co"># __dict__ : 클래스 객체의 속성 정보를 확인하기 위해 사용. 객체가 가진 여러가지 속성들을 딕셔너리 형태로 편하게 확인</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>        <span class="cf">return</span> obj</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    result <span class="op">=</span> {}                                     <span class="co"># 빈 dict 객체 만들기</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="cf">for</span> key <span class="kw">in</span> <span class="bu">dir</span>(obj):                            <span class="co"># dir(): 어떤 객체를 인자로 넣어주면 해당 객체가 어떤 변수와 메소드(method)를 가지고 있는지 나열</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>        <span class="cf">if</span> key.startswith(<span class="st">"_"</span>):                     <span class="co"># startswith: str.startswith(str or tuple) 형식으로 사용하면 되고, 반환 값으로는 True, False를 반환</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>            <span class="cf">continue</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>        element <span class="op">=</span> []                                <span class="co"># 리스트 요소에 대비</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>        val <span class="op">=</span> <span class="bu">getattr</span>(obj, key)                     <span class="co"># getattr: object에 존재하는 속성의 값을 가져옴</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(val, <span class="bu">list</span>):                   <span class="co"># isinstance로 list 객체인지 확인 e.g.) isinstance(object, type)</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>            <span class="cf">for</span> item <span class="kw">in</span> val:</span>
+<span id="cb6-12"><a href="#cb6-12"></a>                element.append(class_to_dict(item))</span>
+<span id="cb6-13"><a href="#cb6-13"></a>        <span class="cf">else</span>:                                       <span class="co"># 리스트가 아닌 모든 요소들 처리</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>            element <span class="op">=</span> class_to_dict(val)</span>
+<span id="cb6-15"><a href="#cb6-15"></a>        result[key] <span class="op">=</span> element                       <span class="co"># 결과 dict에 저장</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>    <span class="cf">return</span> result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-outputid="23336f3c-cf13-4d2b-de52-01903c388268" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>AConfigDict <span class="op">=</span> class_to_dict(AConfig)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>AConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>AConfigDict <span class="op">=</span> class_to_dict(AConfig)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>AConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>{'A_a_Config': {'element01': 'element01', 'element02': True},
  'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}</code></pre>
 </div>
 </div>
 <div class="cell" data-outputid="0a983f4f-d786-4532-f44c-754f1d67ee47" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>BConfigDict <span class="op">=</span> class_to_dict(BConfig)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>BConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>BConfigDict <span class="op">=</span> class_to_dict(BConfig)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>BConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>{'A_a_Config': {'element02': False},
  'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},
@@ -314,8 +314,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell" data-outputid="1b9b94e2-fb08-42cd-cb37-1b18bf02afac" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>CConfigDict <span class="op">=</span> class_to_dict(CConfig)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>CConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>CConfigDict <span class="op">=</span> class_to_dict(CConfig)</span>
+<span id="cb11-2"><a href="#cb11-2"></a>CConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>{'A_a_Config': {'element02': False},
  'A_b_Config': {},
@@ -323,16 +323,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell" data-outputid="bf0f1854-484a-43fd-9dd5-ee55acfa1e49" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DConfigDict <span class="op">=</span> class_to_dict(DConfig)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>DConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>DConfigDict <span class="op">=</span> class_to_dict(DConfig)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>DConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>{'A_a_Config': {'element01': 'element01', 'element02': False},
  'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}</code></pre>
 </div>
 </div>
 <div class="cell" data-outputid="20f382c8-42e1-42fb-9c96-e654570187b8" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>EConfigDict <span class="op">=</span> class_to_dict(EConfig)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>EConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>EConfigDict <span class="op">=</span> class_to_dict(EConfig)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>EConfigDict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>{'A_a_Config': {'element01': 'element01', 'element02': True},
  'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},
@@ -344,13 +344,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="dict-to-yaml" class="level1">
 <h1>Dict to Yaml</h1>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="im">import</span> yaml</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-outputid="9da7eb65-0b98-49c3-e83e-b992f88bfdce" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>AConfigDictYaml <span class="op">=</span> yaml.dump(AConfigDict)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(AConfigDictYaml)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(AConfigDictYaml))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>AConfigDictYaml <span class="op">=</span> yaml.dump(AConfigDict)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="bu">print</span>(AConfigDictYaml)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="bu">print</span>(<span class="bu">type</span>(AConfigDictYaml))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>A_a_Config:
   element01: element01
@@ -369,8 +369,8 @@ A_b_Config:
 <section id="yaml-to-dict" class="level1">
 <h1>Yaml to Dict</h1>
 <div class="cell" data-outputid="ea263381-7888-455b-fec6-4c9ebad29ad5" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>AYamlDict <span class="op">=</span> yaml.safe_load(AConfigDictYaml)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>pprint(AYamlDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>AYamlDict <span class="op">=</span> yaml.safe_load(AConfigDictYaml)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>pprint(AYamlDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'A_a_Config': {'element01': 'element01', 'element02': True},
  'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}</code></pre>
@@ -383,27 +383,27 @@ A_b_Config:
 <li>속성값으로 만들어주는 것이기 때문에 내부 메소드나 내부 클래스가 아닌, 내부 변수와 같음</li>
 </ul>
 <div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Dict2Class(<span class="bu">object</span>):</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_dict):</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key <span class="kw">in</span> input_dict:</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Set arribute: "</span>, key)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">setattr</span>(<span class="va">self</span>, key, input_dict[key]) <span class="co"># object에 존재하는 속성의 값을 바꾸거나, 새로운 속성을 생성하여 값을 부여</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">class</span> Dict2Class(<span class="bu">object</span>):</span>
+<span id="cb22-2"><a href="#cb22-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_dict):</span>
+<span id="cb22-3"><a href="#cb22-3"></a>        <span class="cf">for</span> key <span class="kw">in</span> input_dict:</span>
+<span id="cb22-4"><a href="#cb22-4"></a>            <span class="bu">print</span>(<span class="st">"Set arribute: "</span>, key)</span>
+<span id="cb22-5"><a href="#cb22-5"></a>            <span class="bu">setattr</span>(<span class="va">self</span>, key, input_dict[key]) <span class="co"># object에 존재하는 속성의 값을 바꾸거나, 새로운 속성을 생성하여 값을 부여</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-outputid="caf8e699-dfea-40a3-bb9a-520103bec0bb" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>AYamlDictClass <span class="op">=</span> Dict2Class(AYamlDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>AYamlDictClass <span class="op">=</span> Dict2Class(AYamlDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Set arribute:  A_a_Config
 Set arribute:  A_b_Config</code></pre>
 </div>
 </div>
 <div class="cell" data-outputid="38bd7686-cbe1-40fc-bde3-19d94b6e1c98" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>AYamlDictClass.A_a_Config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>AYamlDictClass.A_a_Config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <pre><code>{'element01': 'element01', 'element02': True}</code></pre>
 </div>
 </div>
 <div class="cell" data-outputid="a16fbe3f-d6f7-4e0d-c4d7-3cc7e5fbc711" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>AYamlDictClass.A_b_Config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>AYamlDictClass.A_b_Config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <pre><code>{'element03': 0, 'element04': [2, 4, 6]}</code></pre>
 </div>

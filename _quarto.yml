@@ -15,6 +15,9 @@ website:
 format:
   html:
     # title-block-style: default
+    fontsize: 12pt
+    linestretch: 2.0
+    code-line-numbers: true
     page-layout: full
     html-math-method: katex
     theme:

@@ -14,15 +14,15 @@ execute:
 # Abstract
 
 > Understanding and interacting with everyday physical scenes requires rich knowledge about the structure of the world, represented either implicitly in a value or policy function, or explicitly in a transition model. Here we introduce a new class of learnable models—`based on graph networks—which implement an inductive bias` for object- and relation-centric representations of complex, dynamical systems. Our results show that as a `forward model`, our approach supports accurate predictions from real and simulated data, and surprisingly strong and efficient generalization, across eight distinct physical systems which we varied parametrically and structurally. We also found that our `inference model` can perform system identification. Our models are also `differentiable, and support online planning via gradient-based trajectory optimization`, as well as `offline policy optimization`. Our framework offers new opportunities for harnessing and exploiting rich knowledge about the world and takes a key step toward building machines with `more human-like representations of the world`.
-> 
+
 
 # 1. Introduction
 
 사람은 걸을때 마찰력, 작용 반작용 법칙을 생각하면서 걷지 않습니다. 많은 물리 문제들과 법칙들을 이해하기 어렵지만 복잡한 물리적 작용들이 일어나는 걷는 행동에 있어서 어려움이 없습니다. 사실 사람이 태어나서 수없이 많은 경험들의 누적으로 우리는 크게 신경쓰지 않아도 어떻게 힘을 주면 다리가 움직이는 지 알고있기 때문입니다. 이처럼 인공지능도 *어떻게 하면 복잡한 시스템을 이해하고 잘 작동할 수 있을까?* 라는 물음을 **GN-Block**이라는 Graph 아이디어로 해결할 수 있다고 주장하는 논문입니다.
 
-<aside>
+```
 ❓ How can an intelligent agent understand and control such complex systems?
-</aside>
+```
 
 인공지능이 이렇게 사람이 자연스럽게 익히는 세상의 물리적인 현상을 이해하고 상호작용 작용하려면  암시적이든 명시적으로든 세계에 대한 풍부한(rich) 표현과 지식이 필요합니다. 다시 말해, 시스템에 있는 objects들과 objects간의 관계를 표현해서 동일 object에는 동일한 **object-wise한 계산**을, 이들 사이에 일어나는 interation들에 대해서는 **relation-wise 계산**을 적용해서 학습을 할 수 있어야 합니다. 마치 레고 블럭들 하나하나를 이해하고 어떻게 하면 성을 쌓을 수 있는지 아는 것처럼 `combinatorial generalization` 능력을 가질 수 있는 것이라고 생각해 볼 수 있습니다. 
 
@@ -83,7 +83,7 @@ $$
 본 논문의 핵심 아이디어인 GN 블록의 구조에 대해 알아보겠습니다.
 - A core GN block
 
-    ![](https://i.imgur.com/3PffG3H.png?1){fig-align="default"}
+![](https://i.imgur.com/3PffG3H.png?1){fig-align="default"}
     
     - 3개의 sub function, MLP로 이루어져 있습니다.
         - edge-wise $f_e$ : 모든 edge들에 대한 update를 진행합니다.

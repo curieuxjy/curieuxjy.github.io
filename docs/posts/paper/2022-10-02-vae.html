@@ -188,19 +188,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#variational-bound" id="toc-variational-bound" class="nav-link" data-scroll-target="#variational-bound">Variational Bound</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
+  <li><a href="#variational-bound" id="toc-variational-bound" class="nav-link" data-scroll-target="#variational-bound"><span class="toc-section-number">2</span>  Variational Bound</a>
   <ul class="collapse">
-  <li><a href="#regularization-term" id="toc-regularization-term" class="nav-link" data-scroll-target="#regularization-term">Regularization term</a></li>
-  <li><a href="#reconstruction-error-term" id="toc-reconstruction-error-term" class="nav-link" data-scroll-target="#reconstruction-error-term">Reconstruction error term</a>
+  <li><a href="#regularization-term" id="toc-regularization-term" class="nav-link" data-scroll-target="#regularization-term"><span class="toc-section-number">2.1</span>  Regularization term</a></li>
+  <li><a href="#reconstruction-error-term" id="toc-reconstruction-error-term" class="nav-link" data-scroll-target="#reconstruction-error-term"><span class="toc-section-number">2.2</span>  Reconstruction error term</a>
   <ul class="collapse">
-  <li><a href="#reparametrization-trick" id="toc-reparametrization-trick" class="nav-link" data-scroll-target="#reparametrization-trick">Reparametrization Trick</a></li>
+  <li><a href="#reparametrization-trick" id="toc-reparametrization-trick" class="nav-link" data-scroll-target="#reparametrization-trick"><span class="toc-section-number">2.2.1</span>  Reparametrization Trick</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#vae-structure" id="toc-vae-structure" class="nav-link" data-scroll-target="#vae-structure">VAE Structure</a></li>
-  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment">Experiment</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#improved-work" id="toc-improved-work" class="nav-link" data-scroll-target="#improved-work">Improved Work</a></li>
+  <li><a href="#vae-structure" id="toc-vae-structure" class="nav-link" data-scroll-target="#vae-structure"><span class="toc-section-number">3</span>  VAE Structure</a></li>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="toc-section-number">4</span>  Experiment</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5</span>  Conclusion</a></li>
+  <li><a href="#improved-work" id="toc-improved-work" class="nav-link" data-scroll-target="#improved-work"><span class="toc-section-number">6</span>  Improved Work</a></li>
   </ul>
 </nav>
     </div>
@@ -242,272 +242,266 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <p><img src="https://i.imgur.com/ASS0s9R.jpg" class="img-fluid"></p>
 <p>이번 포스트는 생성모델에서 유명한 Variational Auto-Encoder(VAE)를 다루고 있는 <code>Auto-Encoding Variational Bayes</code>라는 논문 리뷰입니다. 이번 포스트를 정리하면서 가장 많이 인용하고 도움을 받은 <a href="https://youtu.be/o_peo6U7IRM">오토 인코더의 모든 것</a>를 보시면 훨씬 더 자세하고 깊은 이해를 하실 수 있습니다. 포스트의 순서는 아래와 같이 진행됩니다.</p>
-<p><img src="https://i.imgur.com/Dt8qaGu.jpg" class="img-fluid"></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<p><img src="https://i.imgur.com/Dt8qaGu.jpg" style="zoom:60%;"></p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>VAE는 생성모델(Generative Model)에서 유명한 모델입니다. 그렇다면 생성 모델이란 무엇을 말하는 걸까요? 예를 들어 우리가 찍은 적이 없는 강아지 사진을 <code>만들어내고 싶다</code>고 해봅시다. 그렇지만 강아지 사진이 실제 강아지들을 찍은 사진들과 너무 동떨어져서 이질감을 느끼지 않아야 합니다. 이런 맥락에서 우리가 원하는 것은 train database에 있는 사진들, 즉 실제로 강아지들을 찍은 사진들의 <strong>분포</strong>를 알고 싶습니다. 여기서 <strong>분포</strong>를 알고 싶은 이유는 우리가 분포(distribution)을 알아야 분포에서 data를 샘플링해서 <strong>생성</strong>할 수 있기 때문입니다. 다시 정리하자면, 현재 데이터들과 <strong>비슷한 새로운 데이터를 생성 하기 위해</strong> 현재 train DB의 데이터들의 분포 <strong><span class="math inline">p(x)</span></strong> 를 알고 싶습니다.</p>
 <p>데이터 <span class="math inline">x</span>를 생성하는 <strong>Generator</strong>를 작동시킬 <strong>controller</strong>가 필요합니다. <code>어떤 데이터를 생성하도록 Generator를 trigger</code> 해주는 부분이기 때문에 우리가 <code>다루기 쉽게</code> 만들어 줘야 이후 생성모델을 사용할 때 편리할 것 입니다. controller 역할을 하는 latent variable <span class="math inline">z</span>는 <span class="math inline">p(z)</span>에서 샘플링되며 데이터 <span class="math inline">x</span>보다 차원이 작게 만듭니다.</p>
-<p><img src="https://i.imgur.com/xn7xVol.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Generative Model<sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/xn7xVol.jpg" style="zoom:50%;">
+<figcaption>
+Generative Model<sup>6</sup>
+</figcaption>
+</center>
 <p>다시 목표였던 <span class="math inline">p(x)</span>를 생각해보면, <code>prior probability</code> <span class="math inline">p(z)</span>와 conditional probabability의 곱 적분으로 생각해볼 수 있습니다. 적분 이때 적분을 단순히 sampling한 여러 데이터들을 summation해서 maximum likelihood estimation을 바로 할 수 있지 않을까? 생각할 수도 있지만 이는 샘플링하는 과정에서 우리가 원하지 않는 샘플들이 더 많이 뽑힐 수 있기 때문에 이 방법을 쓸 수 없습니다.</p>
-<p><img src="https://i.imgur.com/Nc4rQ75.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>The reason why it is hard to measure the likelihood of images under a model using only sampling<sup>11</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/Nc4rQ75.jpg" style="zoom:50%;">
+<figcaption>
+The reason why it is hard to measure the likelihood of images under a model using only sampling<sup>11</sup>
+</figcaption>
+</center>
 <p><strong>우리가 원하지 않는 샘플들이 더 많이 뽑히는 현상</strong>을 예시를 들어 살펴보겠습니다. MINST 데이터 중 2를 나타내는 이미지 (a)가 있고, (a)를 일부 지운 (b)와 (a)를 오른쪽으로 1 pixel 만큼 옮긴 (c)가 있습니다. 이때 우리는 (a)와 유사한 데이터를 더 많이 뽑고 싶고, (b)보다는 (c)가 (a)와 더 가깝다고 생각하므로 (c)와 같은 데이터들이 더 많이 뽑히기리 원합니다. 하지만 보통 Generator가 Normal distribution으로 디자인 되고 MSE 거리 계산을 통해 (a)와 더 가까운 데이터 샘플로 Normal distribution의 평균을 옮겨간다고 했을 때, (c)보다 (b)가 (a)와의 MSE가 적기 때문에 (b)와 비슷한 값이 정규분포의 평균이 되고 (b)와 비슷한 샘플들이 더 많이 나오게 됩니다. 하지만 결과적으로 (c)가 (a)와 비슷한 것이 더 좋은 샘플링이 되는 것이라고 볼 수 있습니다.</p>
 <p>좋은 sampling function이란, 앞선 예시에서 볼 수 있었듯이 train DB에 있는 data <span class="math inline">x</span>와 유사한 샘플이 나올 수 있는 확률분포라고 할 수 있습니다. 따라서 그냥 샘플링 함수를 만들기 보다 evidence로 x를 given(조건)으로 하여 z를 뽑아내는 확률분포 <span class="math inline">p(z\|x)</span>를 만들어내는 것이 목적입니다. 하지만 여기서 또 문제인 점은 true distridution인 해당 분포를 만들어내기위해 Variational Inference 방법을 이용합니다. 분포 추정을 위한 family, 예를 들면 guassian 분포들을 Approximation Class로 두고 true distribution을 추정합니다. 이때 gaussian 분포의 파라미터인 <em>ϕ</em>는 mean과 std 값이 될 것 이고 이런 여러 gaussian 분포들과 true posterior 간의 KL divergence를 구하여 추정해갑니다.</p>
-<p><img src="https://i.imgur.com/ksIIEL5.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Variational Inference<sup>12</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/ksIIEL5.jpg" style="zoom:50%;">
+<figcaption>
+Variational Inference<sup>12</sup>
+</figcaption>
+</center>
 <p>따라서 정리해보면 아래 그림과 같이 생성모델인 Generator를 학습하기 위해 Variational Inference 방법을 사용하게 되었고 그러다 보니 AutoEncoder와 비슷한 모델 구조가 되었습니다. 그러나 <code>데이터 압축</code>이 목표인 AutoEncoder와 <code>데이터 생성</code>이 목표인 VAE는 각자의 목표에 맞춰 필요한 방법론을 더하게 되면서 그 모델 구조가 비슷해보이게 된 것이지 같지않습니다.</p>
-<p><img src="https://i.imgur.com/AegDpTA.jpg" class="img-fluid"></p>
+<center>
+<img src="https://i.imgur.com/AegDpTA.jpg" style="zoom: 50%;">
+</center>
 <p>VAE의 전체 구조는 <strong>[1] Decoder, Generator, Generation Network</strong> 라고 부르는 부분과 <strong>[2] Encoder, Posterior, Inference Network</strong>라고 부르는 부분, 크게 2가지 파트로 이루어져 있습니다.</p>
-<p><img src="https://i.imgur.com/1Jz0Hih.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>VAE Structure<sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/1Jz0Hih.jpg" style="zoom: 50%;">
+<figcaption>
+VAE Structure<sup>6</sup>
+</figcaption>
+</center>
 </section>
-<section id="variational-bound" class="level1">
-<h1>Variational Bound</h1>
+<section id="variational-bound" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Variational Bound</h1>
 <p>위의 흐름을 이어가보면, 처음에 알고 싶었던 것은 <strong>(1) <span class="math inline">p(x)</span></strong>였으나 우리가 원하는 데이터들로 샘플링(컨트롤)하기 위해 <strong>(2) <span class="math inline">p(z\|x)</span></strong> (true posterior)가 필요해졌고, true posterior를 알 수 없으니 이를 추정(Variational Inference)하기 위해서 <strong>(3) <span class="math inline">qϕ(z\|x)</span></strong>가 필요했습니다. 따라서 우리는 이 3개의 분포들의 관계를 좀 더 살펴보고 어떻게 생성모델을 학습해나갈 것인지 고민해봐야 합니다.</p>
-<p><img src="https://i.imgur.com/C8Gwxez.jpg" class="img-fluid"></p>
+<center>
+<img src="https://i.imgur.com/C8Gwxez.jpg" style="zoom:50%;">
+</center>
 <p>처음의 목표였던 <span class="math inline">p(x)</span> 에 log를 씌워서 아래와 같은 식 변형을 진행하면 2개의 term으로 나눠집니다. 첫번째 term은 이번 장의 주인공인 Evidence LowerBOund라는 ELBO이고 두번째 term은 Variational Inference에서 봤었던 true posterior와 approximator 사이의 거리를 나타내는 KL 값입니다. 여기서 <span class="math inline">log(p(x))</span> 가 일정할 때 KL 값을 줄이는 것이 목표(=true posterior를 잘 approximation하는 것)이고 KL은 항상 양수이기 때문에, 역으로 생각해보면 첫번째 term이었던 ELBO 값을 최대화하는 것이라고 생각할 수 있습니다. 이를 간단히 그래프로 나타내보면 오른쪽 그림에서 볼 수 있듯이 우리가 원하는 것은 ELBO값이 커질 수 있는 <span class="math inline">ϕ</span>를 찾아가는 과정이라고 볼 수 있습니다.</p>
-<p><img src="https://i.imgur.com/j6YYr7m.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Decomposition of <span class="math inline">log(p(x))</span><sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/j6YYr7m.jpg" style="zoom:45%;">
+<figcaption>
+Decomposition of <span class="math inline">log(p(x))</span><sup>6</sup>
+</figcaption>
+</center>
 <p>따라서 ELBO값이 커질 수 있는 <span class="math inline">ϕ</span>를 찾아가는 최적화를 수식을 변형하여 또 다시 2개의 term 즉, (1) <code>Reconstructino Error</code>와 (2) <code>Regularization</code> 으로 볼 수 있습니다.</p>
-<p><img src="https://i.imgur.com/OnM9Zvj.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>The relationship of <span class="math inline">log(p(x))</span>, KL, and ELBO<sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/OnM9Zvj.jpg" style="zoom:50%;">
+<figcaption>
+The relationship of <span class="math inline">log(p(x))</span>, KL, and ELBO<sup>6</sup>
+</figcaption>
+</center>
 <p>먼저 <strong>Reconstructino Error</strong>은 학습 데이터인 <span class="math inline">x</span>가 들어갔을 때 <span class="math inline">x</span>가 나오도록 하는 <code>복원(Reconstruction)</code>을 하도록 하는 term이며, <strong>Regularization</strong>은 prior distribution인 <span class="math inline">q</span>의 형태를 제한해주는 역할을 하는 term입니다.</p>
-<p><img src="https://i.imgur.com/l3GYAED.jpg" class="img-fluid"></p>
-<section id="regularization-term" class="level2">
-<h2 class="anchored" data-anchor-id="regularization-term">Regularization term</h2>
+<center>
+<img src="https://i.imgur.com/l3GYAED.jpg" style="zoom:45%;">
+</center>
+<section id="regularization-term" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="regularization-term"><span class="header-section-number">2.1</span> Regularization term</h2>
 <p>ELBO term을 나누었을 때 나왔던 첫번째 Regularization term에 대해 보겠습니다. True posterior를 추정하기 위한 <span class="math inline">q_\phi(\mathrm{z} \mid \mathrm{x})</span>은 KL 값을 계산하기 쉽도록 하기 위해 Multivariate gaussian distribution으로 설계합니다. 또한 앞서 이야기했던 것 처럼 controller 부분인 <span class="math inline">p(z)</span>는 다루기 쉬운 분포이어야 하기 때문에 정규분포로 만들어 줍니다. 그러면 논문의 <code>Appendix F.1</code>에서 볼 수 있듯이 가우시안 분포들 사이의 KL 값은 mean과 std를 사용하여 다음과 같이 쉽게 계산될 수 있습니다.</p>
-<p><img src="https://i.imgur.com/YVzizMJ.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Regularization term<sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/YVzizMJ.jpg" style="zoom:50%;">
+<figcaption>
+Regularization term<sup>6</sup>
+</figcaption>
+</center>
 </section>
-<section id="reconstruction-error-term" class="level2">
-<h2 class="anchored" data-anchor-id="reconstruction-error-term">Reconstruction error term</h2>
+<section id="reconstruction-error-term" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="reconstruction-error-term"><span class="header-section-number">2.2</span> Reconstruction error term</h2>
 <p>ELBO의 두번째 term인 Reconstruction error에 대해 살펴보겠습니다. Reconstruction error의 expectation 표현을 integral로 표현하면 다음과 같고 이는 몬테카를로 샘플링을 통해 <span class="math inline">L</span>개의 <span class="math inline">z_{i, l}</span>를 가지고 평균을 내서 구할 수 있습니다. 여기에서 index <span class="math inline">i</span>는 데이터 <span class="math inline">x</span>의 넘버링이고 index <span class="math inline">l</span>은 generator의 distribution에서 샘플링하는 횟수에 대한 넘버링입니다. VAE는 한정된 몬테카를로 샘플링을 통해 효과적으로 optimization을 수행합니다.</p>
-<p><img src="https://i.imgur.com/9LLLgAo.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Recontruction error term<sup>6</sup></p>
-</div>
-<p>
-</p>
-<section id="reparametrization-trick" class="level3">
-<h3 class="anchored" data-anchor-id="reparametrization-trick">Reparametrization Trick</h3>
+<center>
+<img src="https://i.imgur.com/9LLLgAo.jpg" style="zoom:50%;">
+<figcaption>
+Recontruction error term<sup>6</sup>
+</figcaption>
+</center>
+<section id="reparametrization-trick" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="reparametrization-trick"><span class="header-section-number">2.2.1</span> Reparametrization Trick</h3>
 <p>위에서 Reconstruction error를 구하기 위해 샘플링하는 과정에서 backpropation을 하기 위해 <strong>Reparametrization trick</strong>을 사용하게 됩니다. 단순히 정규분포에서 샘플링 하면 random node인 <span class="math inline">z</span>에 대해서 gradient를 계산할 수 없기 때문에 random성을 정규분포에서 샘플링 되는 <span class="math inline">ϵ</span>으로 만들어주고 이를 reparametrization을 해주어서 deterministic node가 된 <span class="math inline">z</span>를 backpropagation 할 수 있게 됩니다.</p>
-<p><img src="https://i.imgur.com/9189AAx.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Reparametrization trick<sup>6</sup></p>
-</div>
-<p>
-</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sampling by re-parameterization technique</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> mu <span class="op">+</span> sigma <span class="op">*</span> tf.random_normal(tf.shape(mu), <span class="dv">0</span>, <span class="dv">1</span>, dtype<span class="op">=</span>tf.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<center>
+<img src="https://i.imgur.com/9189AAx.jpg" style="zoom:50%;">
+<figcaption>
+Reparametrization trick<sup>6</sup>
+</figcaption>
+</center>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># sampling by re-parameterization technique</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>z <span class="op">=</span> mu <span class="op">+</span> sigma <span class="op">*</span> tf.random_normal(tf.shape(mu), <span class="dv">0</span>, <span class="dv">1</span>, dtype<span class="op">=</span>tf.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="math inline">z</span>를 샘플링하는 generator의 distribution은 Bernoulli로 디자인할 경우 NLL이 Cross Entropy가 되며 Gaussian 분포로 디자인할 경우 MSE가 되어서 보통 계산하기 용이한 2개의 분포 중 하나를 사용하게 됩니다. 모델 디자인의 조건은 데이터의 분포에 따라 결정되는데 데이터의 분포가 continuous 하다면 Gaussian 분포에 가깝기 때문에 Gaussian으로 디자인하고, 데이터의 분포가 discrete 하다면 Bernoulli분포에 가깝기 때문에 Bernoulli로 디자인합니다.</p>
-<p><img src="https://i.imgur.com/ZKjm62G.jpg" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Types of generator distributions<sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/ZKjm62G.jpg" style="zoom:50%;">
+<figcaption>
+Types of generator distributions<sup>6</sup>
+</figcaption>
+</center>
 </section>
 </section>
 </section>
-<section id="vae-structure" class="level1">
-<h1>VAE Structure</h1>
+<section id="vae-structure" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> VAE Structure</h1>
 <p>지금까지 살펴본 VAE 구조는 Encoder와 Decoder를 각각 어떤 분포로 디자인해주는 냐에 따라 Reconstruction error와 Regularization을 계산하는 식만 조금씩 달라지게 됩니다. Encoder 부분은 Reconstruction error의 계산의 용이성 때문에 모든 유형에서 <strong>가우시안</strong> 분포를 사용하게 되고 Decoder 부분만 변형하여 아래의 여러 유형들이 나타나게 됩니다. 우선 모든 VAE에서 공통적으로 사용하고 있는 <strong>Encoder</strong>를 코드로 구현하면 아래와 같습니다.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gateway</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> autoencoder(x_hat, x, dim_img, dim_z, n_hidden, keep_prob):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># encoding</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    mu, sigma <span class="op">=</span> gaussian_MLP_encoder(x_hat, n_hidden, dim_z, keep_prob)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sampling by re-parameterization technique</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> mu <span class="op">+</span> sigma <span class="op">*</span> tf.random_normal(tf.shape(mu), <span class="dv">0</span>, <span class="dv">1</span>, dtype<span class="op">=</span>tf.float32)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># decoding</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> bernoulli_MLP_decoder(z, n_hidden, dim_img, keep_prob)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tf.clip_by_value(y, <span class="fl">1e-8</span>, <span class="dv">1</span> <span class="op">-</span> <span class="fl">1e-8</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># loss</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    marginal_likelihood <span class="op">=</span> tf.reduce_sum(x <span class="op">*</span> tf.log(y) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> x) <span class="op">*</span> tf.log(<span class="dv">1</span> <span class="op">-</span> y), <span class="dv">1</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    KL_divergence <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> tf.reduce_sum(tf.square(mu) <span class="op">+</span> tf.square(sigma) <span class="op">-</span> tf.log(<span class="fl">1e-8</span> <span class="op">+</span> tf.square(sigma)) <span class="op">-</span> <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    marginal_likelihood <span class="op">=</span> tf.reduce_mean(marginal_likelihood)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    KL_divergence <span class="op">=</span> tf.reduce_mean(KL_divergence)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    ELBO <span class="op">=</span> marginal_likelihood <span class="op">-</span> KL_divergence</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="op">-</span>ELBO</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y, z, loss, <span class="op">-</span>marginal_likelihood, KL_divergence</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> decoder(z, dim_img, n_hidden):</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> bernoulli_MLP_decoder(z, n_hidden, dim_img, <span class="fl">1.0</span>, reuse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Gateway</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">def</span> autoencoder(x_hat, x, dim_img, dim_z, n_hidden, keep_prob):</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="co"># encoding</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    mu, sigma <span class="op">=</span> gaussian_MLP_encoder(x_hat, n_hidden, dim_z, keep_prob)</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>    <span class="co"># sampling by re-parameterization technique</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>    z <span class="op">=</span> mu <span class="op">+</span> sigma <span class="op">*</span> tf.random_normal(tf.shape(mu), <span class="dv">0</span>, <span class="dv">1</span>, dtype<span class="op">=</span>tf.float32)</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="co"># decoding</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    y <span class="op">=</span> bernoulli_MLP_decoder(z, n_hidden, dim_img, keep_prob)</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    y <span class="op">=</span> tf.clip_by_value(y, <span class="fl">1e-8</span>, <span class="dv">1</span> <span class="op">-</span> <span class="fl">1e-8</span>)</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="co"># loss</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>    marginal_likelihood <span class="op">=</span> tf.reduce_sum(x <span class="op">*</span> tf.log(y) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> x) <span class="op">*</span> tf.log(<span class="dv">1</span> <span class="op">-</span> y), <span class="dv">1</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a>    KL_divergence <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> tf.reduce_sum(tf.square(mu) <span class="op">+</span> tf.square(sigma) <span class="op">-</span> tf.log(<span class="fl">1e-8</span> <span class="op">+</span> tf.square(sigma)) <span class="op">-</span> <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a>    marginal_likelihood <span class="op">=</span> tf.reduce_mean(marginal_likelihood)</span>
+<span id="cb2-19"><a href="#cb2-19"></a>    KL_divergence <span class="op">=</span> tf.reduce_mean(KL_divergence)</span>
+<span id="cb2-20"><a href="#cb2-20"></a></span>
+<span id="cb2-21"><a href="#cb2-21"></a>    ELBO <span class="op">=</span> marginal_likelihood <span class="op">-</span> KL_divergence</span>
+<span id="cb2-22"><a href="#cb2-22"></a></span>
+<span id="cb2-23"><a href="#cb2-23"></a>    loss <span class="op">=</span> <span class="op">-</span>ELBO</span>
+<span id="cb2-24"><a href="#cb2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25"></a>    <span class="cf">return</span> y, z, loss, <span class="op">-</span>marginal_likelihood, KL_divergence</span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="kw">def</span> decoder(z, dim_img, n_hidden):</span>
+<span id="cb2-28"><a href="#cb2-28"></a></span>
+<span id="cb2-29"><a href="#cb2-29"></a>    y <span class="op">=</span> bernoulli_MLP_decoder(z, n_hidden, dim_img, <span class="fl">1.0</span>, reuse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-30"><a href="#cb2-30"></a></span>
+<span id="cb2-31"><a href="#cb2-31"></a>    <span class="cf">return</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>(1) Encoder: Gaussian / Decoder: Bernoulli</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/JPOVTlK.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Encoder: Gaussian / Decoder: Bernoulli</figcaption><p></p>
-</figure>
-</div>
-<div style="text-align:center">
-<p>VAE type 1 <sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/JPOVTlK.jpg" alt="Encoder: Gaussian / Decoder: Bernoulli" style="zoom:45%;">
+<figcaption>
+VAE type 1 <sup>6</sup>
+</figcaption>
+</center>
 <p>위 모델을 코드로 구현하면 다음과 같습니다.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bernoulli MLP as decoder</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bernoulli_MLP_decoder(z, n_hidden, n_output, keep_prob, reuse<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tf.variable_scope(<span class="st">"bernoulli_MLP_decoder"</span>, reuse<span class="op">=</span>reuse):</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># initializers</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        w_init <span class="op">=</span> tf.contrib.layers.variance_scaling_initializer()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        b_init <span class="op">=</span> tf.constant_initializer(<span class="fl">0.</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 1st hidden layer</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        w0 <span class="op">=</span> tf.get_variable(<span class="st">'w0'</span>, [z.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        b0 <span class="op">=</span> tf.get_variable(<span class="st">'b0'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> tf.matmul(z, w0) <span class="op">+</span> b0</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> tf.nn.tanh(h0)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> tf.nn.dropout(h0, keep_prob)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 2nd hidden layer</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        w1 <span class="op">=</span> tf.get_variable(<span class="st">'w1'</span>, [h0.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        b1 <span class="op">=</span> tf.get_variable(<span class="st">'b1'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> tf.matmul(h0, w1) <span class="op">+</span> b1</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> tf.nn.elu(h1)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> tf.nn.dropout(h1, keep_prob)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># output layer-mean</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        wo <span class="op">=</span> tf.get_variable(<span class="st">'wo'</span>, [h1.get_shape()[<span class="dv">1</span>], n_output], initializer<span class="op">=</span>w_init)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        bo <span class="op">=</span> tf.get_variable(<span class="st">'bo'</span>, [n_output], initializer<span class="op">=</span>b_init)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> tf.sigmoid(tf.matmul(h1, wo) <span class="op">+</span> bo)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Bernoulli MLP as decoder</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">def</span> bernoulli_MLP_decoder(z, n_hidden, n_output, keep_prob, reuse<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">with</span> tf.variable_scope(<span class="st">"bernoulli_MLP_decoder"</span>, reuse<span class="op">=</span>reuse):</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="co"># initializers</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>        w_init <span class="op">=</span> tf.contrib.layers.variance_scaling_initializer()</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        b_init <span class="op">=</span> tf.constant_initializer(<span class="fl">0.</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>        <span class="co"># 1st hidden layer</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>        w0 <span class="op">=</span> tf.get_variable(<span class="st">'w0'</span>, [z.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>        b0 <span class="op">=</span> tf.get_variable(<span class="st">'b0'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        h0 <span class="op">=</span> tf.matmul(z, w0) <span class="op">+</span> b0</span>
+<span id="cb3-13"><a href="#cb3-13"></a>        h0 <span class="op">=</span> tf.nn.tanh(h0)</span>
+<span id="cb3-14"><a href="#cb3-14"></a>        h0 <span class="op">=</span> tf.nn.dropout(h0, keep_prob)</span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a>        <span class="co"># 2nd hidden layer</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>        w1 <span class="op">=</span> tf.get_variable(<span class="st">'w1'</span>, [h0.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
+<span id="cb3-18"><a href="#cb3-18"></a>        b1 <span class="op">=</span> tf.get_variable(<span class="st">'b1'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
+<span id="cb3-19"><a href="#cb3-19"></a>        h1 <span class="op">=</span> tf.matmul(h0, w1) <span class="op">+</span> b1</span>
+<span id="cb3-20"><a href="#cb3-20"></a>        h1 <span class="op">=</span> tf.nn.elu(h1)</span>
+<span id="cb3-21"><a href="#cb3-21"></a>        h1 <span class="op">=</span> tf.nn.dropout(h1, keep_prob)</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a>        <span class="co"># output layer-mean</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>        wo <span class="op">=</span> tf.get_variable(<span class="st">'wo'</span>, [h1.get_shape()[<span class="dv">1</span>], n_output], initializer<span class="op">=</span>w_init)</span>
+<span id="cb3-25"><a href="#cb3-25"></a>        bo <span class="op">=</span> tf.get_variable(<span class="st">'bo'</span>, [n_output], initializer<span class="op">=</span>b_init)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>        y <span class="op">=</span> tf.sigmoid(tf.matmul(h1, wo) <span class="op">+</span> bo)</span>
+<span id="cb3-27"><a href="#cb3-27"></a></span>
+<span id="cb3-28"><a href="#cb3-28"></a>    <span class="cf">return</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>(2) Encoder: Gaussian / Decoder: Gaussian</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/fNma1fZ.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Encoder: Gaussian / Decoder: Gaussian</figcaption><p></p>
-</figure>
-</div>
-<div style="text-align:center">
-<p>VAE type 2 <sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/fNma1fZ.jpg" alt="Encoder: Gaussian / Decoder: Gaussian" style="zoom:45%;">
+<figcaption>
+VAE type 2 <sup>6</sup>
+</figcaption>
+</center>
 <p>위 모델을 코드로 구현하면 다음과 같습니다.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussian MLP as encoder</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gaussian_MLP_encoder(x, n_hidden, n_output, keep_prob):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tf.variable_scope(<span class="st">"gaussian_MLP_encoder"</span>):</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># initializers</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        w_init <span class="op">=</span> tf.contrib.layers.variance_scaling_initializer()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        b_init <span class="op">=</span> tf.constant_initializer(<span class="fl">0.</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 1st hidden layer</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        w0 <span class="op">=</span> tf.get_variable(<span class="st">'w0'</span>, [x.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        b0 <span class="op">=</span> tf.get_variable(<span class="st">'b0'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> tf.matmul(x, w0) <span class="op">+</span> b0</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> tf.nn.elu(h0)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> tf.nn.dropout(h0, keep_prob)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 2nd hidden layer</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        w1 <span class="op">=</span> tf.get_variable(<span class="st">'w1'</span>, [h0.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        b1 <span class="op">=</span> tf.get_variable(<span class="st">'b1'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> tf.matmul(h0, w1) <span class="op">+</span> b1</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> tf.nn.tanh(h1)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> tf.nn.dropout(h1, keep_prob)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># output layer</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># borrowed from https: // github.com / altosaar / vae / blob / master / vae.py</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        wo <span class="op">=</span> tf.get_variable(<span class="st">'wo'</span>, [h1.get_shape()[<span class="dv">1</span>], n_output <span class="op">*</span> <span class="dv">2</span>], initializer<span class="op">=</span>w_init)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        bo <span class="op">=</span> tf.get_variable(<span class="st">'bo'</span>, [n_output <span class="op">*</span> <span class="dv">2</span>], initializer<span class="op">=</span>b_init)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        gaussian_params <span class="op">=</span> tf.matmul(h1, wo) <span class="op">+</span> bo</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The mean parameter is unconstrained</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> gaussian_params[:, :n_output]</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The standard deviation must be positive. Parametrize with a softplus and</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add a small epsilon for numerical stability</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        stddev <span class="op">=</span> <span class="fl">1e-6</span> <span class="op">+</span> tf.nn.softplus(gaussian_params[:, n_output:])</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mean, stddev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Gaussian MLP as encoder</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">def</span> gaussian_MLP_encoder(x, n_hidden, n_output, keep_prob):</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="cf">with</span> tf.variable_scope(<span class="st">"gaussian_MLP_encoder"</span>):</span>
+<span id="cb4-4"><a href="#cb4-4"></a>        <span class="co"># initializers</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>        w_init <span class="op">=</span> tf.contrib.layers.variance_scaling_initializer()</span>
+<span id="cb4-6"><a href="#cb4-6"></a>        b_init <span class="op">=</span> tf.constant_initializer(<span class="fl">0.</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a>        <span class="co"># 1st hidden layer</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>        w0 <span class="op">=</span> tf.get_variable(<span class="st">'w0'</span>, [x.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>        b0 <span class="op">=</span> tf.get_variable(<span class="st">'b0'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>        h0 <span class="op">=</span> tf.matmul(x, w0) <span class="op">+</span> b0</span>
+<span id="cb4-12"><a href="#cb4-12"></a>        h0 <span class="op">=</span> tf.nn.elu(h0)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>        h0 <span class="op">=</span> tf.nn.dropout(h0, keep_prob)</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a>        <span class="co"># 2nd hidden layer</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>        w1 <span class="op">=</span> tf.get_variable(<span class="st">'w1'</span>, [h0.get_shape()[<span class="dv">1</span>], n_hidden], initializer<span class="op">=</span>w_init)</span>
+<span id="cb4-17"><a href="#cb4-17"></a>        b1 <span class="op">=</span> tf.get_variable(<span class="st">'b1'</span>, [n_hidden], initializer<span class="op">=</span>b_init)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>        h1 <span class="op">=</span> tf.matmul(h0, w1) <span class="op">+</span> b1</span>
+<span id="cb4-19"><a href="#cb4-19"></a>        h1 <span class="op">=</span> tf.nn.tanh(h1)</span>
+<span id="cb4-20"><a href="#cb4-20"></a>        h1 <span class="op">=</span> tf.nn.dropout(h1, keep_prob)</span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a>        <span class="co"># output layer</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>        <span class="co"># borrowed from https: // github.com / altosaar / vae / blob / master / vae.py</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>        wo <span class="op">=</span> tf.get_variable(<span class="st">'wo'</span>, [h1.get_shape()[<span class="dv">1</span>], n_output <span class="op">*</span> <span class="dv">2</span>], initializer<span class="op">=</span>w_init)</span>
+<span id="cb4-25"><a href="#cb4-25"></a>        bo <span class="op">=</span> tf.get_variable(<span class="st">'bo'</span>, [n_output <span class="op">*</span> <span class="dv">2</span>], initializer<span class="op">=</span>b_init)</span>
+<span id="cb4-26"><a href="#cb4-26"></a>        gaussian_params <span class="op">=</span> tf.matmul(h1, wo) <span class="op">+</span> bo</span>
+<span id="cb4-27"><a href="#cb4-27"></a></span>
+<span id="cb4-28"><a href="#cb4-28"></a>        <span class="co"># The mean parameter is unconstrained</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a>        mean <span class="op">=</span> gaussian_params[:, :n_output]</span>
+<span id="cb4-30"><a href="#cb4-30"></a>        <span class="co"># The standard deviation must be positive. Parametrize with a softplus and</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>        <span class="co"># add a small epsilon for numerical stability</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a>        stddev <span class="op">=</span> <span class="fl">1e-6</span> <span class="op">+</span> tf.nn.softplus(gaussian_params[:, n_output:])</span>
+<span id="cb4-33"><a href="#cb4-33"></a></span>
+<span id="cb4-34"><a href="#cb4-34"></a>    <span class="cf">return</span> mean, stddev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>(3) Encoder: Gaussian / Decoder: Gaussian w/ Identity Covariance</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/Si4xjNg.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Encoder: Gaussian / Decoder: Gaussian w/ Identity Covariance</figcaption><p></p>
-</figure>
-</div>
-<div style="text-align:center">
-<p>VAE type 3 <sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/Si4xjNg.jpg" alt="Encoder: Gaussian / Decoder: Gaussian w/ Identity Covariance" style="zoom:45%;">
+<figcaption>
+VAE type 3 <sup>6</sup>
+</figcaption>
+</center>
 <p>MNIST data을 예시로 들어서 VAE 구조를 나타내보면 다음과 같습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://i.imgur.com/FqjKwdF.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">MNIST VAE</figcaption><p></p>
-</figure>
-</div>
-<div style="text-align:center">
-<p>VAE with MNIST <sup>6</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/FqjKwdF.jpg" style="zoom:45%;">
+<figcaption>
+VAE with MNIST <sup>6</sup>
+</figcaption>
+</center>
 </section>
-<section id="experiment" class="level1">
-<h1>Experiment</h1>
+<section id="experiment" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Experiment</h1>
 <p>해당 논문에서 실험은 총 2가지를 진행했는데 앞에서는 계속 VAE로 나타냈지만 논문에서는 해당 알고리즘을 <code>AEVB</code>로 지칭하기 때문에 이를 VAE 알고리즘으로 생각하고 실험 결과들을 보면 됩니다. 우선 첫번째로 <strong>MNIST 데이터셋</strong>과 <strong>Frey Face 데이터셋</strong>을 사용하여 베이스라인으로 wake-sleep 알고리즘과 성능을 비교했습니다.</p>
-<p><img src="https://i.imgur.com/nc6Sy7a.jpg" class="img-fluid"></p>
+<center>
+<img src="https://i.imgur.com/nc6Sy7a.jpg" style="zoom:33%;">
+</center>
 <p>ELBO값을 최대화하는 것이 목표이므로 y축의 값이 클수록 좋은 것으로 해석할 수 있습니다. 아래의 그래프들에서 실선과 점선은 각각 train과 test 데이터셋에 대해 ELBO 값을 plotting한 것으로 latent variable인 <span class="math inline">z</span>의 차원의 크기에 따라 ELBO 값이 어떤 양상을 나타내는지 보여줍니다. Experiment I을 보면 트레이닝 포인트가 많을 때 즉 x축 값이 클때 test와 training의 ELBO값이 점점 벌어지는것이 관찰이 되는데 이는 오버피팅으로 보입니다. 저자는 오버피팅을 방지하기위해 데이터셋의 하이퍼파라미터를 수정하는 작업을 했다고 합니다.</p>
-<p><img src="https://i.imgur.com/7l0FkhX.jpg" class="img-fluid"></p>
+<center>
+<img src="https://i.imgur.com/7l0FkhX.jpg" style="zoom:40%;">
+</center>
 <p>두번째로는 MNIST 데이터셋에 대해서 <span class="math inline">z</span>의 차원이 1000, 50000일때의 각 알고리즘들의 성능을 학습 샘플수에 따라 Marginal log-likelihood를 plotting하여 나타냈습니다. 이 실험에서는 베이스라인으로 Wake-Sleep과 MCEM을 사용했으며 여기서는 AEVB(=VAE)가 convergence speed 측면에서 베이스라인보다 우수한 성능을 보여줍니다.</p>
-<p><img src="https://i.imgur.com/ORzThE8.jpg" class="img-fluid"></p>
+<center>
+<img src="https://i.imgur.com/ORzThE8.jpg" style="zoom:35%;">
+</center>
 </section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
+<section id="conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
 <p>본 논문에서는 연속적인 latent variable을 효율적으로 inference 하기위해 Stochastic Gradient VB로 variational lower bound의 estimation 하는 방법론을 제시하였습니다. 가우시안 분포에서 랜덤하게 샘플링하는 방법은 back propgataion이 불가능하기 때문에 VAE는 Reparametrization trick을 이용하여 가우시안 분포로부터 샘플링한 estimator는 미분 가능하고 SGD로 최적화 됩니다. 또한 VAE는 i.i.d의 데이터셋과 같이 각 datapoint가 연속적인 latent variable를 가지는 high dimensional 데이터에 대비해 Auto-Encoding VB 알고리즘으로 SGVB task를 해결하였습니다. VAE는 이미지로부터 저차원의 가우시안 분포를 학습한 다음 원본 이미지로 복원하는 생성모델입니다. 하지만 복잡한 분포로 구성된 이미지를 가우시안 분포로 차원축소한 학습방법은 문제점이 있습니다. 핵심적인 정보를 가우시안 분포모양으로 압축하는 방법은 매우 힘들며 function loss는 존재할 수 밖에 없습니다. 이를 posterior collapse라고 합니다. VAE 이후 Posterior collapse를 해결하기 위한 다양한 연구들이 진행되었는데요, VQ-VAE와 같이 VAE를 업그레이드한 다양한 latent variable 모델들을 만나보세요!</p>
-<p><img src="https://i.imgur.com/V65OdKY.jpg" class="img-fluid"></p>
+<center>
+<img src="https://i.imgur.com/V65OdKY.jpg" style="zoom:26%;">
+</center>
 </section>
-<section id="improved-work" class="level1">
-<h1>Improved Work</h1>
+<section id="improved-work" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Improved Work</h1>
 <p>VAE와 생성적 적대 네트워크(GAN)를 사용하여 Auto-Encoder의 posterior를 임의의 prior 분포와 matching함으로써 variational inference를 하는 <a href="https://arxiv.org/abs/1511.05644">Advarsarial AutoEncoder(AAE)</a>라는 연구가 있었습니다. GAN의 Discriminator가 생성된 이미지의 분포와 진짜 데이터셋에서 온 이미지의 분포를 판별하면서 prior distribution을 매칭하게 됩니다. Posterior distribution을 prior distribution과 matching 함으로써 latent space(prior distribution)에서 샘플들이 어떤 의미를 가지고 분포되어 있는지 알 수 있습니다. AAE의 encoder는 원하는 prior distribution에 data 분포를 만들게 되고 decoder는 해당 prior에서 의미를 찾을 수 있는 샘플들을 생성할 수 있게 됩니다.</p>
-<p><img src="https://i.imgur.com/2o85wBe.png" class="img-fluid"></p>
-<div style="text-align:center">
-<p>Advarsarial AutoEncoder <sup>13</sup></p>
-</div>
-<p>
-</p>
+<center>
+<img src="https://i.imgur.com/2o85wBe.png" style="zoom:65%;">
+<figcaption>
+Advarsarial AutoEncoder <sup>13</sup>
+</figcaption>
+</center>
 <hr>
 <p><strong>Reference</strong></p>
 <p>[1] original paper: <a href="https://arxiv.org/abs/1312.6114">https://arxiv.org/abs/1312.6114</a></p>

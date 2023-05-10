@@ -265,19 +265,19 @@ orbit -p source/standalone/demo/play_camera.py --gpu</code></pre>
 <section id="modules" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="modules"><span class="header-section-number">2.1</span> Modules</h2>
 <p>Orbit이 기반하고 있는 Isaac Sim Simulator을 먼저 키기 위해 <code>SimulationApp</code> class를 이용하여 시뮬레이터 앱을 설정해줍니다. 이때 <code>headless</code>는 시뮬레이터의 GUI를 띄우지 않고 실행하는 옵션을 가리킵니다.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Launch Isaac Sim Simulator first."""</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.kit <span class="im">import</span> SimulationApp</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add argparse arguments</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> argparse.ArgumentParser(<span class="st">"Welcome to Orbit: Omniverse Robotics Environments!"</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>parser.add_argument(<span class="st">"--headless"</span>, action<span class="op">=</span><span class="st">"store_true"</span>, default<span class="op">=</span><span class="va">False</span>, <span class="bu">help</span><span class="op">=</span><span class="st">"Force display off at all times."</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>args_cli <span class="op">=</span> parser.parse_args()</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># launch omniverse app</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> {<span class="st">"headless"</span>: args_cli.headless}</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>simulation_app <span class="op">=</span> SimulationApp(config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">"""Launch Isaac Sim Simulator first."""</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="im">from</span> omni.isaac.kit <span class="im">import</span> SimulationApp</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="im">import</span> argparse</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># add argparse arguments</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>parser <span class="op">=</span> argparse.ArgumentParser(<span class="st">"Welcome to Orbit: Omniverse Robotics Environments!"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>parser.add_argument(<span class="st">"--headless"</span>, action<span class="op">=</span><span class="st">"store_true"</span>, default<span class="op">=</span><span class="va">False</span>, <span class="bu">help</span><span class="op">=</span><span class="st">"Force display off at all times."</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>args_cli <span class="op">=</span> parser.parse_args()</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># launch omniverse app</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>config <span class="op">=</span> {<span class="st">"headless"</span>: args_cli.headless}</span>
+<span id="cb5-13"><a href="#cb5-13"></a>simulation_app <span class="op">=</span> SimulationApp(config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>다음으로 import하는 orbit의 <code>core</code>모듈을 살펴보겠습니다.</p>
 <ul>
 <li><p><code>prim_utils</code> : 현재 USD stage에 prim을 생성하기 위한 모듈. (자세한 prim에 대한 내용은 다음 포스팅에서 다루도록 하겠습니다. 우선 간단하게 시뮬레이터의 오브젝트들을 <code>prim</code>으로 본다고 생각하고 진행하겠습니다.)</p></li>
@@ -286,157 +286,157 @@ orbit -p source/standalone/demo/play_camera.py --gpu</code></pre>
 </ul>
 <p>이외의 모듈중에서 <code>kit_utils</code>는 시뮬레이터에서 제공하는 ground를 불러오기 위한(<code>create_ground_plane</code>) 모듈이며 로봇의 발 위치 마커를 표시하기 위해 <a href="https://isaac-orbit.github.io/orbit/source/api/orbit.markers.html?highlight=markers#module-omni.isaac.orbit.markers"><code>markers</code></a> 모듈에서 <code>PointMarker</code>, <code>StaticMarker</code>를 불러옵니다.</p>
 <p>다음으로 <code>robot</code> 모듈에서 4족보행로봇들을 위한 configuration들을 불러올 수 있습니다.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from core</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> omni.isaac.core.utils.prims <span class="im">as</span> prim_utils</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.core.simulation_context <span class="im">import</span> SimulationContext</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.core.utils.viewports <span class="im">import</span> set_camera_view</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> omni.isaac.orbit.utils.kit <span class="im">as</span> kit_utils</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.markers <span class="im">import</span> PointMarker, StaticMarker</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.robots.config.anymal <span class="im">import</span> ANYMAL_B_CFG, ANYMAL_C_CFG</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.robots.config.unitree <span class="im">import</span> UNITREE_A1_CFG</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> omni.isaac.orbit.robots.legged_robot <span class="im">import</span> LeggedRobot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># from core</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="im">import</span> omni.isaac.core.utils.prims <span class="im">as</span> prim_utils</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="im">from</span> omni.isaac.core.simulation_context <span class="im">import</span> SimulationContext</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="im">from</span> omni.isaac.core.utils.viewports <span class="im">import</span> set_camera_view</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="im">import</span> omni.isaac.orbit.utils.kit <span class="im">as</span> kit_utils</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="im">from</span> omni.isaac.orbit.markers <span class="im">import</span> PointMarker, StaticMarker</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="im">from</span> omni.isaac.orbit.robots.config.anymal <span class="im">import</span> ANYMAL_B_CFG, ANYMAL_C_CFG</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="im">from</span> omni.isaac.orbit.robots.config.unitree <span class="im">import</span> UNITREE_A1_CFG</span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="im">from</span> omni.isaac.orbit.robots.legged_robot <span class="im">import</span> LeggedRobot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="helpers" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="helpers"><span class="header-section-number">2.2</span> Helpers</h2>
 <p>Main 코드에서 시뮬레이터의 Scene을 구성하기 위해서 <code>Ground-plane</code>, <code>Lights</code>들을 편하게 구성하기 위해서 helper 함수 <code>design_scene()</code>를 만들어줍니다. 앞서 import했던 <code>kit_utils</code>를 이용해서 ground를 불러오고 <code>prim_utils</code>를 이용하여 빛 설정을 해줍니다.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> design_scene():</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add prims to the scene."""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ground-plane</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    kit_utils.create_ground_plane(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/World/defaultGroundPlane"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        static_friction<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        dynamic_friction<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        restitution<span class="op">=</span><span class="fl">0.8</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        improve_patch_friction<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lights-1</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    prim_utils.create_prim(</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/World/Light/GreySphere"</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SphereLight"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        translation<span class="op">=</span>(<span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">10.0</span>),</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        attributes<span class="op">=</span>{<span class="st">"radius"</span>: <span class="fl">2.5</span>, <span class="st">"intensity"</span>: <span class="fl">600.0</span>, <span class="st">"color"</span>: (<span class="fl">0.75</span>, <span class="fl">0.75</span>, <span class="fl">0.75</span>)},</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lights-2</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    prim_utils.create_prim(</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/World/Light/WhiteSphere"</span>,</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SphereLight"</span>,</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        translation<span class="op">=</span>(<span class="op">-</span><span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">10.0</span>),</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        attributes<span class="op">=</span>{<span class="st">"radius"</span>: <span class="fl">2.5</span>, <span class="st">"intensity"</span>: <span class="fl">600.0</span>, <span class="st">"color"</span>: (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>)},</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> design_scene():</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="co">"""Add prims to the scene."""</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="co"># Ground-plane</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    kit_utils.create_ground_plane(</span>
+<span id="cb7-5"><a href="#cb7-5"></a>        <span class="st">"/World/defaultGroundPlane"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>        static_friction<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>        dynamic_friction<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>        restitution<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb7-9"><a href="#cb7-9"></a>        improve_patch_friction<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    )</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="co"># Lights-1</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>    prim_utils.create_prim(</span>
+<span id="cb7-13"><a href="#cb7-13"></a>        <span class="st">"/World/Light/GreySphere"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>        <span class="st">"SphereLight"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15"></a>        translation<span class="op">=</span>(<span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">10.0</span>),</span>
+<span id="cb7-16"><a href="#cb7-16"></a>        attributes<span class="op">=</span>{<span class="st">"radius"</span>: <span class="fl">2.5</span>, <span class="st">"intensity"</span>: <span class="fl">600.0</span>, <span class="st">"color"</span>: (<span class="fl">0.75</span>, <span class="fl">0.75</span>, <span class="fl">0.75</span>)},</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    )</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="co"># Lights-2</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>    prim_utils.create_prim(</span>
+<span id="cb7-20"><a href="#cb7-20"></a>        <span class="st">"/World/Light/WhiteSphere"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21"></a>        <span class="st">"SphereLight"</span>,</span>
+<span id="cb7-22"><a href="#cb7-22"></a>        translation<span class="op">=</span>(<span class="op">-</span><span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">10.0</span>),</span>
+<span id="cb7-23"><a href="#cb7-23"></a>        attributes<span class="op">=</span>{<span class="st">"radius"</span>: <span class="fl">2.5</span>, <span class="st">"intensity"</span>: <span class="fl">600.0</span>, <span class="st">"color"</span>: (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>)},</span>
+<span id="cb7-24"><a href="#cb7-24"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="main" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="main"><span class="header-section-number">2.3</span> Main</h2>
 <p>메인 코드에서는 먼저 <code>SimulationContext</code>를 이용하여 시뮬레이터의 시간관련 설정 등을 진행합니다. dt가 0.005라는 것은 시간 단위가 second로 시간간격이 0.005초로 설정하는 것을 말합니다. 또한 backend는 이후 포스팅에서도 설명하겠지만 물리 시뮬레이터에서 반환되는 tensor들을 어떤 backend로 캐스팅할 것인지 설정하는 부분입니다. 현재 orbit에서는 <code>torch</code>만 지원하고 있습니다.</p>
 <p>시뮬레이터의 시점이 되는 카메라를 설정하고 각 로봇을 어디에 놓을지 정하는 <code>translation</code> 파라미터와 함께 spawning하고 마지막으로 helper 함수로 만들어주었던 <code>design_scene()</code>을 이용하여 ground와 light를 설정합니다.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Imports all legged robots supported in Orbit and applies zero actions."""</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load kit helper</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sim <span class="op">=</span> SimulationContext(stage_units_in_meters<span class="op">=</span><span class="fl">1.0</span>, physics_dt<span class="op">=</span><span class="fl">0.005</span>, rendering_dt<span class="op">=</span><span class="fl">0.005</span>, backend<span class="op">=</span><span class="st">"torch"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set main camera</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>set_camera_view(eye<span class="op">=</span>[<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="fl">3.5</span>], target<span class="op">=</span>[<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Spawn things into stage</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># -- anymal-b</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>robot_b <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>ANYMAL_B_CFG)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>robot_b.spawn(<span class="st">"/World/Anymal_b/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.65</span>))</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>robot_b.spawn(<span class="st">"/World/Anymal_b/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.65</span>))</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># -- anymal-c</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>robot_c <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>ANYMAL_C_CFG)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>robot_c.spawn(<span class="st">"/World/Anymal_c/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.65</span>))</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>robot_c.spawn(<span class="st">"/World/Anymal_c/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.65</span>))</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># -- unitree a1</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>robot_a <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>UNITREE_A1_CFG)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>robot_a.spawn(<span class="st">"/World/Unitree_A1/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="fl">0.42</span>))</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>robot_a.spawn(<span class="st">"/World/Unitree_A1/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="fl">0.42</span>))</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># design props</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>design_scene()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">"""Imports all legged robots supported in Orbit and applies zero actions."""</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># Load kit helper</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>sim <span class="op">=</span> SimulationContext(stage_units_in_meters<span class="op">=</span><span class="fl">1.0</span>, physics_dt<span class="op">=</span><span class="fl">0.005</span>, rendering_dt<span class="op">=</span><span class="fl">0.005</span>, backend<span class="op">=</span><span class="st">"torch"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># Set main camera</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>set_camera_view(eye<span class="op">=</span>[<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="fl">3.5</span>], target<span class="op">=</span>[<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co"># Spawn things into stage</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co"># -- anymal-b</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>robot_b <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>ANYMAL_B_CFG)</span>
+<span id="cb8-11"><a href="#cb8-11"></a>robot_b.spawn(<span class="st">"/World/Anymal_b/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-12"><a href="#cb8-12"></a>robot_b.spawn(<span class="st">"/World/Anymal_b/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co"># -- anymal-c</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>robot_c <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>ANYMAL_C_CFG)</span>
+<span id="cb8-15"><a href="#cb8-15"></a>robot_c.spawn(<span class="st">"/World/Anymal_c/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-16"><a href="#cb8-16"></a>robot_c.spawn(<span class="st">"/World/Anymal_c/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.65</span>))</span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co"># -- unitree a1</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>robot_a <span class="op">=</span> LeggedRobot(cfg<span class="op">=</span>UNITREE_A1_CFG)</span>
+<span id="cb8-19"><a href="#cb8-19"></a>robot_a.spawn(<span class="st">"/World/Unitree_A1/Robot_1"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="fl">0.42</span>))</span>
+<span id="cb8-20"><a href="#cb8-20"></a>robot_a.spawn(<span class="st">"/World/Unitree_A1/Robot_2"</span>, translation<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="fl">0.42</span>))</span>
+<span id="cb8-21"><a href="#cb8-21"></a></span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co"># design props</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a>design_scene()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>시뮬레이터를 초기화하는 reset을 먼저 진행해줍니다. 각 로봇의 handle 또한 초기화를 시켜줍니다. 로봇의 각 정보를 담기 위한 buffer도 reset을 해서 본격적인 실행을 준비합니다.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Play the simulator</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sim.reset()</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire handles</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize handles</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>robot_b.initialize(<span class="st">"/World/Anymal_b/Robot.*"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>robot_c.initialize(<span class="st">"/World/Anymal_c/Robot.*"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>robot_a.initialize(<span class="st">"/World/Unitree_A1/Robot.*"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset states</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>robot_b.reset_buffers()</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>robot_c.reset_buffers()</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>robot_a.reset_buffers()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Play the simulator</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>sim.reset()</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># Acquire handles</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># Initialize handles</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>robot_b.initialize(<span class="st">"/World/Anymal_b/Robot.*"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>robot_c.initialize(<span class="st">"/World/Anymal_c/Robot.*"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a>robot_a.initialize(<span class="st">"/World/Unitree_A1/Robot.*"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co"># Reset states</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>robot_b.reset_buffers()</span>
+<span id="cb9-10"><a href="#cb9-10"></a>robot_c.reset_buffers()</span>
+<span id="cb9-11"><a href="#cb9-11"></a>robot_a.reset_buffers()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>4족 보행 로봇은 제어를 할 때 <strong>발의 움직임</strong>이 매우 중요합니다. 발의 위치에 마커를 위치시켜서 발에 대한 정보를 얻기 위해 marker를 설정해줍니다. 발의 x, y, z 축을 시각화하기 위해서 <code>StaticMarker</code>를 이용하여 설정하고 발이 contact 포인트를 보기 위해 <code>PointMarker</code>를 설정합니다.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debug visualization markers.</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -- feet markers</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>feet_markers: List[StaticMarker] <span class="op">=</span> <span class="bu">list</span>()</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>feet_contact_markers: List[PointMarker] <span class="op">=</span> <span class="bu">list</span>()</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate over robots</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> robot_name <span class="kw">in</span> [<span class="st">"Anymal_b"</span>, <span class="st">"Anymal_c"</span>, <span class="st">"Unitree_A1"</span>]:</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># foot</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    marker <span class="op">=</span> StaticMarker(<span class="ss">f"/World/Visuals/</span><span class="sc">{</span>robot_name<span class="sc">}</span><span class="ss">/feet"</span>, <span class="dv">4</span> <span class="op">*</span> robot_c.count, scale<span class="op">=</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    feet_markers.append(marker)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># contact</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    marker <span class="op">=</span> PointMarker(<span class="ss">f"/World/Visuals/</span><span class="sc">{</span>robot_name<span class="sc">}</span><span class="ss">/feet_contact"</span>, <span class="dv">4</span> <span class="op">*</span> robot_c.count, radius<span class="op">=</span><span class="fl">0.035</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    feet_contact_markers.append(marker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Debug visualization markers.</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co"># -- feet markers</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>feet_markers: List[StaticMarker] <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb10-4"><a href="#cb10-4"></a>feet_contact_markers: List[PointMarker] <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># iterate over robots</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="cf">for</span> robot_name <span class="kw">in</span> [<span class="st">"Anymal_b"</span>, <span class="st">"Anymal_c"</span>, <span class="st">"Unitree_A1"</span>]:</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    <span class="co"># foot</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>    marker <span class="op">=</span> StaticMarker(<span class="ss">f"/World/Visuals/</span><span class="sc">{</span>robot_name<span class="sc">}</span><span class="ss">/feet"</span>, <span class="dv">4</span> <span class="op">*</span> robot_c.count, scale<span class="op">=</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb10-9"><a href="#cb10-9"></a>    feet_markers.append(marker)</span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="co"># contact</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>    marker <span class="op">=</span> PointMarker(<span class="ss">f"/World/Visuals/</span><span class="sc">{</span>robot_name<span class="sc">}</span><span class="ss">/feet_contact"</span>, <span class="dv">4</span> <span class="op">*</span> robot_c.count, radius<span class="op">=</span><span class="fl">0.035</span>)</span>
+<span id="cb10-12"><a href="#cb10-12"></a>    feet_contact_markers.append(marker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>각 로봇은 action을 하게되고 이를 로봇을 제어한다고 볼 수 있습니다. <code>get_default_dof_state()</code>은 로봇의 각 객체에 있는 method로 각 로봇의 standing 자세에 대한 joint position(dof) 정보가 들어있습니다.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dummy action</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>actions <span class="op">=</span> torch.zeros(robot_a.count, robot_a.num_actions, device<span class="op">=</span>robot_a.device)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define simulation stepping</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sim_dt <span class="op">=</span> sim.get_physics_dt()</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sim_time <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate physics</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> simulation_app.is_running():</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If simulation is stopped, then exit.</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sim.is_stopped():</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If simulation is paused, then skip.</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> sim.is_playing():</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        sim.step(render<span class="op">=</span><span class="kw">not</span> args_cli.headless)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># reset</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> count <span class="op">%</span> <span class="dv">1000</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># reset counters</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        sim_time <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># reset dof state</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> robot <span class="kw">in</span> [robot_a, robot_b, robot_c]:</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>            dof_pos, dof_vel <span class="op">=</span> robot.get_default_dof_state()</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>            robot.set_dof_state(dof_pos, dof_vel)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>            robot.reset_buffers()</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># reset command</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        actions <span class="op">=</span> torch.zeros(robot_a.count, robot_a.num_actions, device<span class="op">=</span>robot_a.device)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Reset!"</span>)</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># apply actions</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    robot_b.apply_action(actions)</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    robot_c.apply_action(actions)</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    robot_a.apply_action(actions)</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># perform step</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    sim.step()</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update sim-time</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    sim_time <span class="op">+=</span> sim_dt</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    count <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># dummy action</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>actions <span class="op">=</span> torch.zeros(robot_a.count, robot_a.num_actions, device<span class="op">=</span>robot_a.device)</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># Define simulation stepping</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>sim_dt <span class="op">=</span> sim.get_physics_dt()</span>
+<span id="cb11-6"><a href="#cb11-6"></a>sim_time <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co"># Simulate physics</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="cf">while</span> simulation_app.is_running():</span>
+<span id="cb11-10"><a href="#cb11-10"></a>    <span class="co"># If simulation is stopped, then exit.</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>    <span class="cf">if</span> sim.is_stopped():</span>
+<span id="cb11-12"><a href="#cb11-12"></a>        <span class="cf">break</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>    <span class="co"># If simulation is paused, then skip.</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a>    <span class="cf">if</span> <span class="kw">not</span> sim.is_playing():</span>
+<span id="cb11-15"><a href="#cb11-15"></a>        sim.step(render<span class="op">=</span><span class="kw">not</span> args_cli.headless)</span>
+<span id="cb11-16"><a href="#cb11-16"></a>        <span class="cf">continue</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>    <span class="co"># reset</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>    <span class="cf">if</span> count <span class="op">%</span> <span class="dv">1000</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb11-19"><a href="#cb11-19"></a>        <span class="co"># reset counters</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>        sim_time <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a>        count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a>        <span class="co"># reset dof state</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a>        <span class="cf">for</span> robot <span class="kw">in</span> [robot_a, robot_b, robot_c]:</span>
+<span id="cb11-24"><a href="#cb11-24"></a>            dof_pos, dof_vel <span class="op">=</span> robot.get_default_dof_state()</span>
+<span id="cb11-25"><a href="#cb11-25"></a>            robot.set_dof_state(dof_pos, dof_vel)</span>
+<span id="cb11-26"><a href="#cb11-26"></a>            robot.reset_buffers()</span>
+<span id="cb11-27"><a href="#cb11-27"></a>        <span class="co"># reset command</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a>        actions <span class="op">=</span> torch.zeros(robot_a.count, robot_a.num_actions, device<span class="op">=</span>robot_a.device)</span>
+<span id="cb11-29"><a href="#cb11-29"></a>        <span class="bu">print</span>(<span class="st">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Reset!"</span>)</span>
+<span id="cb11-30"><a href="#cb11-30"></a>    <span class="co"># apply actions</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a>    robot_b.apply_action(actions)</span>
+<span id="cb11-32"><a href="#cb11-32"></a>    robot_c.apply_action(actions)</span>
+<span id="cb11-33"><a href="#cb11-33"></a>    robot_a.apply_action(actions)</span>
+<span id="cb11-34"><a href="#cb11-34"></a>    <span class="co"># perform step</span></span>
+<span id="cb11-35"><a href="#cb11-35"></a>    sim.step()</span>
+<span id="cb11-36"><a href="#cb11-36"></a>    <span class="co"># update sim-time</span></span>
+<span id="cb11-37"><a href="#cb11-37"></a>    sim_time <span class="op">+=</span> sim_dt</span>
+<span id="cb11-38"><a href="#cb11-38"></a>    count <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>시뮬레이터 초기화할 때 reset했던 buffer에 각 로봇의 정보를 담습니다. marker로 설정해두었던 <code>foot_marker</code>와 <code>contact_marker</code>도 각 로봇에서 불러와서 state update를 진행합니다.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note: to deal with timeline events such as stopping, we need to check if the simulation is playing</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> sim.is_playing():</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update buffers</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    robot_b.update_buffers(sim_dt)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    robot_c.update_buffers(sim_dt)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    robot_a.update_buffers(sim_dt)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update marker positions</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> foot_marker, contact_marker, robot <span class="kw">in</span> <span class="bu">zip</span>(</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        feet_markers, feet_contact_markers, [robot_b, robot_c, robot_a]</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    ):</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># feet</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        foot_marker.set_world_poses(</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>            robot.data.feet_state_w[..., <span class="dv">0</span>:<span class="dv">3</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>), robot.data.feet_state_w[..., <span class="dv">3</span>:<span class="dv">7</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># contact sensors</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        contact_marker.set_world_poses(</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>            robot.data.feet_state_w[..., <span class="dv">0</span>:<span class="dv">3</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>), robot.data.feet_state_w[..., <span class="dv">3</span>:<span class="dv">7</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        contact_marker.set_status(torch.where(robot.data.feet_air_time.view(<span class="op">-</span><span class="dv">1</span>) <span class="op">&gt;</span> <span class="fl">0.0</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># note: to deal with timeline events such as stopping, we need to check if the simulation is playing</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="cf">if</span> sim.is_playing():</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="co"># update buffers</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>    robot_b.update_buffers(sim_dt)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    robot_c.update_buffers(sim_dt)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    robot_a.update_buffers(sim_dt)</span>
+<span id="cb12-7"><a href="#cb12-7"></a>    <span class="co"># update marker positions</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>    <span class="cf">for</span> foot_marker, contact_marker, robot <span class="kw">in</span> <span class="bu">zip</span>(</span>
+<span id="cb12-9"><a href="#cb12-9"></a>        feet_markers, feet_contact_markers, [robot_b, robot_c, robot_a]</span>
+<span id="cb12-10"><a href="#cb12-10"></a>    ):</span>
+<span id="cb12-11"><a href="#cb12-11"></a>        <span class="co"># feet</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>        foot_marker.set_world_poses(</span>
+<span id="cb12-13"><a href="#cb12-13"></a>            robot.data.feet_state_w[..., <span class="dv">0</span>:<span class="dv">3</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>), robot.data.feet_state_w[..., <span class="dv">3</span>:<span class="dv">7</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb12-14"><a href="#cb12-14"></a>        )</span>
+<span id="cb12-15"><a href="#cb12-15"></a>        <span class="co"># contact sensors</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>        contact_marker.set_world_poses(</span>
+<span id="cb12-17"><a href="#cb12-17"></a>            robot.data.feet_state_w[..., <span class="dv">0</span>:<span class="dv">3</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>), robot.data.feet_state_w[..., <span class="dv">3</span>:<span class="dv">7</span>].view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>        )</span>
+<span id="cb12-19"><a href="#cb12-19"></a>        contact_marker.set_status(torch.where(robot.data.feet_air_time.view(<span class="op">-</span><span class="dv">1</span>) <span class="op">&gt;</span> <span class="fl">0.0</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="closing" class="level1" data-number="3">

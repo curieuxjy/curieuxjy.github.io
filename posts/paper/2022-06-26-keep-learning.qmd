@@ -112,6 +112,7 @@ agent가 학습하는 동안에 경험하게 되는 environment와 테스트 시
     - 너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.
     
 (자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 `Algorithm 1`을 참고)
+
 ![](https://i.imgur.com/sBvIszd.png?1){fig-align="default"}
 
 # III. System Design
@@ -313,9 +314,6 @@ $$
 # Reference
 
 - [Original Paper](https://arxiv.org/abs/2110.05457)
-
 - [Project Homepage](https://sites.google.com/berkeley.edu/fine-tuning-locomotion)
-
 - [Randomized Ensembled Double Q-Learning: Learning Fast Without a Model](https://arxiv.org/abs/2101.05982)
-
 - [REDQ REVIEW](https://github.com/utilForever/rl-paper-study/blob/main/4th/210510%20-%20Randomized%20Ensembled%20Double%20Q-Learning%20Learning%20Fast%20Without%20a%20Model%2C%20X.%20Chen%20et%20al%2C%202021.pdf)
