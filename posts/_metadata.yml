@@ -9,6 +9,12 @@ execute:
 # title-block-banner: false
 # title-block-banner-color: <#ffffff>
 
+format:
+  html:
+    # title-block-style: default
+    fontsize: 12pt
+    linestretch: 2.0
+
 comments:
   giscus:
     repo: curieuxjy/curieuxjy.github.io

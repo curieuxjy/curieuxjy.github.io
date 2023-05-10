@@ -30,6 +30,6 @@ title-block-banner: true
 
 <p> </p>
 
-<img src="https://ghchart.rshah.org/curieuxjy" style="width:80%">
+<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:80%">
 
 <br> </br>
