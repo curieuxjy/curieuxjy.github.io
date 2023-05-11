@@ -3,6 +3,7 @@ title: "📃Legged Robots that Keep on Learning"
 description: Fine-Tuning Locomotion Policies in the Real World
 date: "2022-06-26"
 categories: [quadruped, rl, redq, paper]
+image: https://i.imgur.com/2q4OYul.png?1
 toc: true
 execute:
   freeze: auto 
@@ -83,37 +84,44 @@ agent가 학습하는 동안에 경험하게 되는 environment와 테스트 시
 - `REDQ` 알고리즘으로 이용해서 sample efficiency를 높일 수 있었다.
 - 학습된 `reset policy`를 이용해서 여러개의 episode들을 이어서(stitch together) 학습시켰다.
 
-## a) Overview
+## Overview
+
+아래 사진의 전체 시스템의 개략도에서 볼 수 있듯이 **각각의 policy**는 **하나의 desired skill**을 학습하게 된다. 즉 하나의 policy는 **forward**를, 다른 policy는 **backward**를, 마지막 다른 policy는 **reset**을 담당하여 학습하게 된다. 이렇게 다양한 task를 수행할 수 있도록 만든 프레임워크 이기 때문에 **Multitask framework**인 것이다.
 
 ![](https://i.imgur.com/2q4OYul.png?1){fig-align="default"}
 
+---
+
+**Pseudo Algorithm**
+
+시스템 개략도에서 봤듯이 논문에 나와있는 시스템 전체를 보여주는 `Algorithm2` 알고리즘은 크게 2개의 과정으로 진행된다. 
+
 ![](https://i.imgur.com/kIL9RPT.png?1){fig-align="default"}
 
-- 위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 **각각의 policy**는 **하나의 desired skill**을 학습하게 된다. (forward, backward, reset)
-- Agent의 policy는 **시뮬레이션에서 pretrained** 한다. (Algorithm2: line 2~7)
+1. Agent의 policy는 **시뮬레이션에서 pretrained** 한다. (Algorithm 2 `line 2~7`)
     - 각 에피소드가 끝날 때마다 **학습된 recovery policy**가 로봇을 다음 rollout을 할 수 있도록 준비시켜준다.
     - 각 skill을 위한 policy들은 **독립적으로 학습**되고 recovery policy도 마찬가지로 독립적으로 학습된다.
-- **Fine-tuning을 실제 물리적인 환경에서** 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm2: line 8~14)
-    - 시뮬레이션과 실제 환경의 차이를 고려하여 **각 policy들의 replay buffer는 초기화** 시켜준다.(Algorithm2: line 12)
-- **Multitask framework**를 사용했다.(Algorithm2 참고)
+2. **Fine-tuning을 실제 물리적인 환경에서** 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm 2 `line 8~14`)
+    - 시뮬레이션과 실제 환경의 차이를 고려하여 **각 policy들의 replay buffer는 초기화** 시켜준다.(Algorithm 2 `line 12`)
 
-## b) Motion Imitation
-
-- `Motion Imiation` 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 [`Learning Agile Robotic Locomotion Skills by Imitating Animals`](https://arxiv.org/abs/2004.00784)라는 논문에서 제시한 방법을 따라했다. (Algorithm 1: line1~4)
-- **Reference motion $M$**이 주어지면 agent의일련의 pose들과 비교하여 section `III-B`에서 소개될 reward function을 기반으로 학습한다.
-    - 이 방법을 통해 **reference motion data**만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.
-    - **recovery policy**를 학습하기 위해서 **standing pose**를 모방하도록 할 수 있다.(`III-C` 참고)
-
-## c) Off-policy RL
-
-- off-policy 알고리즘인 **REDQ algorithm** 사용했다.(Algorithm 1: line5~9)
-    - SAC 알고리즘을 더 발전시킨 알고리즘
-    - time step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.
-    - 너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.
-    
-(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 `Algorithm 1`을 참고)
+## Motion Imitation & Off-policy RL
 
 ![](https://i.imgur.com/sBvIszd.png?1){fig-align="default"}
+
+**Motion Imitation**
+
+`Motion Imiation` 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 [`Learning Agile Robotic Locomotion Skills by Imitating Animals`](https://arxiv.org/abs/2004.00784)라는 논문에서 제시한 방법을 따라했다. (Algorithm 1 `line1~4`)
+
+**Reference motion $M$**이 주어지면 agent의일련의 pose들과 비교하여 section `III-B`에서 소개될 reward function을 기반으로 학습한다.
+- 이 방법을 통해 **reference motion data**만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.
+- **recovery policy**를 학습하기 위해서 **standing pose**를 모방하도록 할 수 있다.(`III-C` 참고)
+
+**Off-policy RL**
+
+off-policy 알고리즘인 **REDQ algorithm** 사용했다.(Algorithm 1 `line5~9`)
+- SAC 알고리즘을 더 발전시킨 알고리즘
+- time step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.
+- 너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.
 
 # III. System Design
 
@@ -155,7 +163,7 @@ $$
 ---
 
 - $r_{t}^{\mathrm{p}}$ : 로봇의 **joint rotation** 값들을 reference motion의 joint rotation과 맞추도록 하는 reward term
-    
+  
     $$
     r_{t}^{\mathrm{p}}=\exp \left[-5 \sum_{j}\left\|\hat{q}_{t}^{j}-q_{t}^{j}\right\|^{2}\right]
     $$
@@ -208,49 +216,45 @@ $$
 💡 실험 결과에서 주목해서 봐야할 질문 3가지!
 
 1. 본 논문에서 제시한 finetuning-based method가 이전의 방법들에 비해 `시뮬레이션 trianing을 충분히 활용`하고 `실제 물리 환경에서 적응`할 수 있었는가?
-
 2. 본 논문에서 제시한 시스템 디자인 요소들이 `feasibility of real-world training`에 어떤 영향을 주었는가?
-
 3. `얼마나 다양한 실제 물리적인 환경들`에서 autonomous, online fine-tuning 방법이 로봇의 skill을 향상시켰는가?
 
 ## A. Simulation Experiments
 
 - agent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 **학습된 시뮬레이션과 또 다른** 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.
--  **Learned forward pacing gait**가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.
+- **Learned forward pacing gait**가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.
 - **Standard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)**으로 Pre-train을 **flat** ground에서 진행했다.
 
-- The test terrains : test 환경들로는 총 3가지로 실험하였다.
-    1. **a flat ground** : pre-training 과정의 시뮬레이션 셋팅과 유사한 test 환경 
-    2. pre-training 과정의 시뮬레이션 셋팅과 다소 다른 test 환경 :
-        1. **randomized heightfield** : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형
-        2. **a low friction surface** : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)
 
--  비교군
-    1. `latent space` : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습
-    2. `RMA`: dynamics randomization한 모델. 위에서 언급한 `Adaptation Module`을 가지고 학습
-    3. `Vanilla SAC` : Soft Actor-Critic 알고리즘으로 학습
-    4. `Ours(REDQ)`: 10개의 Q-functions을 가지고 randomly sample 2로 학습
+**The test terrains**
+
+test 환경들로는 총 3가지로 실험하였으며 pre-training 과정의 시뮬레이션 셋팅과 **유사한** test 환경 [1]과 pre-training 과정의 시뮬레이션 셋팅과 **다소 다른** test 환경 [2], [3]에서 진행됐다.
+
+1. **a flat ground**
+2. **randomized heightfield** : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형
+3. **a low friction surface** : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)
+
+**비교군**
+
+1. `latent space` : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습
+2. `RMA`: dynamics randomization한 모델. 위에서 언급한 `Adaptation Module`을 가지고 학습
+3. `Vanilla SAC` : Soft Actor-Critic 알고리즘으로 학습
+4. `Ours(REDQ)`: 10개의 Q-functions을 가지고 randomly sample 2로 학습
 
 ---
 
-실험 결과는 아래와 같았다. 
-
-- `RMA`는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.
-- `SAC`에 비해서 `Ours`가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.
-
 ![](https://i.imgur.com/BCyV1Xk.png?1){fig-align="default"}
+
+실험 결과를 살펴보면, `RMA`는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다. `SAC`에 비해서 `REDQ(Ours)`가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.
 
 
 ## B. Real-World Experiments
 
-- 시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다.
-
-- 모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 **fine-tuning** 해주었다.
+시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다. 모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 **fine-tuning** 해주었다.
 
 1. Outdoor `grassy lawn`:
     - **slippery surface**를 가지고 있어서 발이 잔디에서 미끄러지거나 흙에 빠질 수 있다.
-    - 앞 혹은 뒤로 움직이는 **pacing gait**를 fine-tuning 하도록 했다.
-        - pacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새
+    - 앞 혹은 뒤로 움직이는 **pacing gait**를 fine-tuning 하도록 했다.(pacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새)
 
     - Pre-trained **forward** pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained **backward** pacing policy는 잘 넘어지는 경향이 있었다. 
     
@@ -279,13 +283,10 @@ $$
 
     - 그러나 각 지형 셋팅에서 **2.5 시간 이내로** 로봇이 비틀거림 없이 skill을 수행할 수 있었다.
 
----
-
-실험 결과는 아래와 같았다. 
+## C. Semi-autonomous training
 
 ![](https://i.imgur.com/NRNMAex.png?1){fig-align="default"}
 
-## C. Semi-autonomous training
 - 전반적인 모든 실험들에서, the recovery policy는 100% 성공적이었다.
 - 본 논문에서 제시된 방법으로 학습된 reset controller와 Unitree에서 제공한 built-in rollover controller를 비교해보았다.
     - **On hard surfaces** : 두 가지 controllers 모두 효과적으로 잘 작동했지만 **built-in** 컨트롤러는 **learned policy**에 비해 상당히 느렸다.

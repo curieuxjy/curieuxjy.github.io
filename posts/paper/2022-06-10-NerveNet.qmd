@@ -206,43 +206,51 @@ $$
         ![](https://i.imgur.com/cKfht87.png){fig-align="default"}
         
     
-- NerverNet과 비교군
-    - `NerveNet` : small agent가 학습한 모델을 바로 large agent에 적용할 수 있었다. agent의 구조가 반복적이기 때문에 반복되는 부분을 더 늘리기만 하면 되기 때문이다.
-    - `MLP Pre-trained (MLPP)`: agent의 크기가 커짐에 따라 input size가 달라지므로 가장 straightforward하게 첫번째 hidden layer를 그대로 output layer로 사용하고 input layer의 사이즈만 키워서 추가하고 이 input layer는 랜덤 초기화를 해준다.
-    - `MLP Activation Assigning (MLPAA)`: small agent의 weight들을 바로 large agent의 모델에 넣어주고 weight들의 남는 부분들을 0으로 초기화 해준다.
-    - `TreeNet`: MLPAA처럼 스케일을 키워서 0으로 초기화 해준다.
-    - `Random` : action space에서 uniformly하게 샘플링을 하는 policy이다.
-- 결과
-    1. Centipede
-        1. Pretraining
-            - 6-다리 모델과 4-다리 모델로 `NerveNet`, `MLP`, `TreeNet` 에서의 퍼포먼스를 비교했다. 여기서 3개의 모델은 앞서 benchmark 비교 실험에서 사용한 비교군들과 동일하다.
-                
-                ![](https://i.imgur.com/M64FY71.png){fig-align="default"}
-                
-            - 4-다리 모델에서는 NerveNet이 가장 Reward가 높고, 6-다리 모델에서는 MLP가 가장 Reward가 높음을 알 수 있다. TreeNet은 두 환경 모두에서 가장 낮다.
-            - 6-다리 모델과 4-다리 모델로 pretraining을 진행한 후 transferable을 실험했다.
-        2. Zero-shot
-            - fine tuning 없이 퍼포먼스를 측정했다.
-            - 퍼포먼스를 쉽게 비교할 수 있도록 `average reward`와 `average running-length`를 normalization해서 색으로 아래와 같이 표현했다.(green-good, red-bad)
-                
-                ![](https://i.imgur.com/qAbGhpb.png){fig-align="default"}
-                
-            - 눈으로 확실히 확인할 수 있듯이 NerveNet의 퍼포먼스가 다른 비교군에 비해 월등히 transferable함을 알 수 있었다.
-            - 또한 learning curve에서 볼 수 있듯이 NerveNet+Pretrain 이 다른 Pretrain 비교군들에 비해 훨씬 높은 reward 시작점에서 시작하고 더 적은 timestep으로 solved 점수에 도달하는 것을 보아 그래프의 구조적 이점을 확실히 활용하고 있음을 알 수 있다.
-                
-                ![](https://i.imgur.com/yU47fAC.png?1){fig-align="default"}
-                
-            - NerveNet의 agent들은 다른 비교군 agent들에서 보이지 않는 `walk-cycle`을 가지고 있음을 확인할 수 있었는데, 이는 보행 로봇들은 걸음새에서 반복적인 움직임을 하게 되어 있기 때문에 자연스럽게 cycle을 가지게 되는 것을 agent가 학습했음을 알 수 있다. (반면 MLP는 8-다리 모델에서 모든 다리를 움직이지 않는 모습을 보이기도 했다.)
-    2. Snake
-        - snake환경에서도 NerveNet이 다른 비교군들에 비해 뛰어난 reward 점수를 보여주며 transferable 함을 아래의 도표에서처럼 보여주었다.
-        - 350점 정도가 `snakeThree`에서 solved된 상태라고 볼 수 있는데 NerveNet의 시작 점수들이 대부분 300점대에서 시작한 것으로 보아 이는 상당한 zero-shot 역량이 있음을 알 수 있다.
-        - 다른 비교군들은 overfitting이 심해서 Random보다 안좋은 결과를 보여주는 점도 흥미롭다.
+**비교군**
+
+- `NerveNet` : small agent가 학습한 모델을 바로 large agent에 적용할 수 있었다. agent의 구조가 반복적이기 때문에 반복되는 부분을 더 늘리기만 하면 되기 때문이다.
+- `MLP Pre-trained (MLPP)`: agent의 크기가 커짐에 따라 input size가 달라지므로 가장 straightforward하게 첫번째 hidden layer를 그대로 output layer로 사용하고 input layer의 사이즈만 키워서 추가하고 이 input layer는 랜덤 초기화를 해준다.
+- `MLP Activation Assigning (MLPAA)`: small agent의 weight들을 바로 large agent의 모델에 넣어주고 weight들의 남는 부분들을 0으로 초기화 해준다.
+- `TreeNet`: MLPAA처럼 스케일을 키워서 0으로 초기화 해준다.
+- `Random` : action space에서 uniformly하게 샘플링을 하는 policy이다.
+
+**Result**
+
+1. Centipede
+
+    1-1. Pretraining
+
+    - 6-다리 모델과 4-다리 모델로 `NerveNet`, `MLP`, `TreeNet` 에서의 퍼포먼스를 비교했다. 여기서 3개의 모델은 앞서 benchmark 비교 실험에서 사용한 비교군들과 동일하다.
         
-        ![](https://i.imgur.com/QvZG8di.png){fig-align="default"}
+    ![](https://i.imgur.com/M64FY71.png){fig-align="default"}
         
-        - zero-shot 뿐만 아니라 fine tuning을 하는 learning curve에서도 NerveNet은 Pretrain의 이점을 다른 비교군들에 비해 잘 활용하고 있음을 볼 수 있었다. `NerveNet+Pretrain`의 시작 reward가 높으며, 특정 size transfer 실험에서는 scratch NerveNet이 넘지 못한 MLP 점수를 `NerveNet+Pretrain`이 따라잡았다.
-            
-            ![](https://i.imgur.com/NLlKmqT.png?1){fig-align="default"}
+    - 4-다리 모델에서는 NerveNet이 가장 Reward가 높고, 6-다리 모델에서는 MLP가 가장 Reward가 높음을 알 수 있다. TreeNet은 두 환경 모두에서 가장 낮다.
+    - 6-다리 모델과 4-다리 모델로 pretraining을 진행한 후 transferable을 실험했다.
+
+    1-2. Zero-shot
+
+    - fine tuning 없이 퍼포먼스를 측정했다.
+    - 퍼포먼스를 쉽게 비교할 수 있도록 `average reward`와 `average running-length`를 normalization해서 색으로 아래와 같이 표현했다.(green-good, red-bad)
+        
+    ![](https://i.imgur.com/qAbGhpb.png){fig-align="default"}
+        
+    - 눈으로 확실히 확인할 수 있듯이 NerveNet의 퍼포먼스가 다른 비교군에 비해 월등히 transferable함을 알 수 있었다.
+    - 또한 learning curve에서 볼 수 있듯이 NerveNet+Pretrain 이 다른 Pretrain 비교군들에 비해 훨씬 높은 reward 시작점에서 시작하고 더 적은 timestep으로 solved 점수에 도달하는 것을 보아 그래프의 구조적 이점을 확실히 활용하고 있음을 알 수 있다.
+        
+    ![](https://i.imgur.com/yU47fAC.png?1){fig-align="default"}
+        
+    - NerveNet의 agent들은 다른 비교군 agent들에서 보이지 않는 `walk-cycle`을 가지고 있음을 확인할 수 있었는데, 이는 보행 로봇들은 걸음새에서 반복적인 움직임을 하게 되어 있기 때문에 자연스럽게 cycle을 가지게 되는 것을 agent가 학습했음을 알 수 있다. (반면 MLP는 8-다리 모델에서 모든 다리를 움직이지 않는 모습을 보이기도 했다.)
+
+2. Snake
+    - snake환경에서도 NerveNet이 다른 비교군들에 비해 뛰어난 reward 점수를 보여주며 transferable 함을 아래의 도표에서처럼 보여주었다.
+    - 350점 정도가 `snakeThree`에서 solved된 상태라고 볼 수 있는데 NerveNet의 시작 점수들이 대부분 300점대에서 시작한 것으로 보아 이는 상당한 zero-shot 역량이 있음을 알 수 있다.
+    - 다른 비교군들은 overfitting이 심해서 Random보다 안좋은 결과를 보여주는 점도 흥미롭다.
+    
+    ![](https://i.imgur.com/QvZG8di.png){fig-align="default"}
+    
+    - zero-shot 뿐만 아니라 fine tuning을 하는 learning curve에서도 NerveNet은 Pretrain의 이점을 다른 비교군들에 비해 잘 활용하고 있음을 볼 수 있었다. `NerveNet+Pretrain`의 시작 reward가 높으며, 특정 size transfer 실험에서는 scratch NerveNet이 넘지 못한 MLP 점수를 `NerveNet+Pretrain`이 따라잡았다.
+        
+    ![](https://i.imgur.com/NLlKmqT.png?1){fig-align="default"}
             
 
 ## 3. Multi-task learning
@@ -251,21 +259,24 @@ NerveNet은 네트워크에 structure prior를 포함한 것이기 때문에 mul
 
 - 2d-walker 환경들 5개 - `Walker-HalfHumanoid`, `Walker-Hopper`, `Walker-Horse`, `Walker-Ostrich, Walker-Wolf`
 - 1개의 통합된 network로 학습
-- NerveNet과 비교군
-    - `NerveNet` : agent들의 형태가 달라 weight들이 다를 수 밖에 없기 때문에 propagation과정에서의 weight matrices와 output만 공유했다.
-    - `MLP Sharing` : hidden layer들 간의 weight matrices 를 공유
-    - `MLP Aggregation` : 차원이 다른 observation들을 aggregation과정을 통해 첫번째 hidden layer의 크기로 다 맞춰주어서 input으로 넣어줌
-    - `TreeNet`: TreeNet도 weight를 공유를 할 수 있지만 agent의 구조적인 정보는 알 수 없다. 단순히 root node를 중심으로 모든 노드의 정보다 aggregation 되기 때문이다.
-    - `MLPs`: 각 agent마다 따로 MLP policy를 만들어서 학습(single-task)
-- 결과
-    - multi-task learning 실험이기 때문에 한 두개 러닝 그래프만 볼 수 없고 5개의 러닝 그래프를 같이 봐야 한다.
-    - Single-task policy를 제외하고 모든 환경에서 NerveNet의 퍼포먼스가 좋음을 알 수 있다.
-        
-        ![](https://i.imgur.com/FpUeo5x.png){fig-align="default"}
-        
-    - 테이블에서 Ratio가 single-task policy에 비해 multi-task policy의 성능을 percentage로 나타낸 수치인데, MLP의 퍼포먼스가 single-task에서 multi-task로 넘어갔을 때 42%나 퍼포먼스가 줄어드는 것을 확인할 수 있다. (Average-58.6%) 반면에 NerveNet은 성능이 전혀 떨어지지 않는 결과를 보여주었다.
-        
-        ![](https://i.imgur.com/HMSZPgc.png?1){fig-align="default"}
+
+**비교군**
+
+- `NerveNet` : agent들의 형태가 달라 weight들이 다를 수 밖에 없기 때문에 propagation과정에서의 weight matrices와 output만 공유했다.
+- `MLP Sharing` : hidden layer들 간의 weight matrices 를 공유
+- `MLP Aggregation` : 차원이 다른 observation들을 aggregation과정을 통해 첫번째 hidden layer의 크기로 다 맞춰주어서 input으로 넣어줌
+- `TreeNet`: TreeNet도 weight를 공유를 할 수 있지만 agent의 구조적인 정보는 알 수 없다. 단순히 root node를 중심으로 모든 노드의 정보다 aggregation 되기 때문이다.
+- `MLPs`: 각 agent마다 따로 MLP policy를 만들어서 학습(single-task)
+
+**Result**
+- multi-task learning 실험이기 때문에 한 두개 러닝 그래프만 볼 수 없고 5개의 러닝 그래프를 같이 봐야 한다.
+- Single-task policy를 제외하고 모든 환경에서 NerveNet의 퍼포먼스가 좋음을 알 수 있다.
+    
+![](https://i.imgur.com/FpUeo5x.png){fig-align="default"}
+    
+- 테이블에서 Ratio가 single-task policy에 비해 multi-task policy의 성능을 percentage로 나타낸 수치인데, MLP의 퍼포먼스가 single-task에서 multi-task로 넘어갔을 때 42%나 퍼포먼스가 줄어드는 것을 확인할 수 있다. (Average-58.6%) 반면에 NerveNet은 성능이 전혀 떨어지지 않는 결과를 보여주었다.
+    
+![](https://i.imgur.com/HMSZPgc.png?1){fig-align="default"}
         
 
 ## 4. Robustness of learnt policies
@@ -298,8 +309,6 @@ Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 
 
 # Conclusion
 
-본 논문을 정리하면 다음과 같다.
-
 - NerveNet이라는 그래프 구조를 활용한 policy를 가지고 RL agent의 body structure를 활용할 수 있는 알고리즘을 제안
     - 각 body와 joint의 observation을 받아 GNN을 통해 non-linear message들을 계산하고 propagation하는 모델링
     - propagation은 엣지로 표현된 joint간의 물리적으로 연결성을 가지고 본래 있는 의존성을 기반으로 이루어짐
@@ -310,7 +319,7 @@ Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 
 
 # Review
 
-논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.
+> 논문 리뷰후의 주관적인 장단점을 정리하면 다음과 같다.
 
 - Pros **👍**
     - 로봇의 구조적인 특징을 기반으로 효율적인 feature embedding이었음을 보여줌

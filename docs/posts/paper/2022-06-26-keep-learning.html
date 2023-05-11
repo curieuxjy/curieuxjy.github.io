@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -144,9 +144,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#ii.-fine-tuning-locomotion-in-the-real-world" id="toc-ii.-fine-tuning-locomotion-in-the-real-world" class="nav-link" data-scroll-target="#ii.-fine-tuning-locomotion-in-the-real-world">II. Fine-tuning Locomotion in the Real World</a>
   <ul class="collapse">
-  <li><a href="#a-overview" id="toc-a-overview" class="nav-link" data-scroll-target="#a-overview">a) Overview</a></li>
-  <li><a href="#b-motion-imitation" id="toc-b-motion-imitation" class="nav-link" data-scroll-target="#b-motion-imitation">b) Motion Imitation</a></li>
-  <li><a href="#c-off-policy-rl" id="toc-c-off-policy-rl" class="nav-link" data-scroll-target="#c-off-policy-rl">c) Off-policy RL</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#motion-imitation-off-policy-rl" id="toc-motion-imitation-off-policy-rl" class="nav-link" data-scroll-target="#motion-imitation-off-policy-rl">Motion Imitation &amp; Off-policy RL</a></li>
   </ul></li>
   <li><a href="#iii.-system-design" id="toc-iii.-system-design" class="nav-link" data-scroll-target="#iii.-system-design">III. System Design</a>
   <ul class="collapse">
@@ -288,59 +287,46 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><code>REDQ</code> 알고리즘으로 이용해서 sample efficiency를 높일 수 있었다.</li>
 <li>학습된 <code>reset policy</code>를 이용해서 여러개의 episode들을 이어서(stitch together) 학습시켰다.</li>
 </ul>
-<section id="a-overview" class="level2">
-<h2 class="anchored" data-anchor-id="a-overview">a) Overview</h2>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>아래 사진의 전체 시스템의 개략도에서 볼 수 있듯이 <strong>각각의 policy</strong>는 <strong>하나의 desired skill</strong>을 학습하게 된다. 즉 하나의 policy는 <strong>forward</strong>를, 다른 policy는 <strong>backward</strong>를, 마지막 다른 policy는 <strong>reset</strong>을 담당하여 학습하게 된다. 이렇게 다양한 task를 수행할 수 있도록 만든 프레임워크 이기 때문에 <strong>Multitask framework</strong>인 것이다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/2q4OYul.png?1" class="img-fluid figure-img"></p>
 </figure>
 </div>
+<hr>
+<p><strong>Pseudo Algorithm</strong></p>
+<p>시스템 개략도에서 봤듯이 논문에 나와있는 시스템 전체를 보여주는 <code>Algorithm2</code> 알고리즘은 크게 2개의 과정으로 진행된다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/kIL9RPT.png?1" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<ul>
-<li>위 사진의 전체 시스템의 개략도에서 볼 수 있듯이 <strong>각각의 policy</strong>는 <strong>하나의 desired skill</strong>을 학습하게 된다. (forward, backward, reset)</li>
-<li>Agent의 policy는 <strong>시뮬레이션에서 pretrained</strong> 한다. (Algorithm2: line 2~7)
+<ol type="1">
+<li>Agent의 policy는 <strong>시뮬레이션에서 pretrained</strong> 한다. (Algorithm 2 <code>line 2~7</code>)
 <ul>
 <li>각 에피소드가 끝날 때마다 <strong>학습된 recovery policy</strong>가 로봇을 다음 rollout을 할 수 있도록 준비시켜준다.</li>
 <li>각 skill을 위한 policy들은 <strong>독립적으로 학습</strong>되고 recovery policy도 마찬가지로 독립적으로 학습된다.</li>
 </ul></li>
-<li><strong>Fine-tuning을 실제 물리적인 환경에서</strong> 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm2: line 8~14)
+<li><strong>Fine-tuning을 실제 물리적인 환경에서</strong> 진행하면서 training process를 계속 이어나갈 수 있다. (Algorithm 2 <code>line 8~14</code>)
 <ul>
-<li>시뮬레이션과 실제 환경의 차이를 고려하여 <strong>각 policy들의 replay buffer는 초기화</strong> 시켜준다.(Algorithm2: line 12)</li>
+<li>시뮬레이션과 실제 환경의 차이를 고려하여 <strong>각 policy들의 replay buffer는 초기화</strong> 시켜준다.(Algorithm 2 <code>line 12</code>)</li>
 </ul></li>
-<li><strong>Multitask framework</strong>를 사용했다.(Algorithm2 참고)</li>
-</ul>
+</ol>
 </section>
-<section id="b-motion-imitation" class="level2">
-<h2 class="anchored" data-anchor-id="b-motion-imitation">b) Motion Imitation</h2>
-<ul>
-<li><code>Motion Imiation</code> 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 <a href="https://arxiv.org/abs/2004.00784"><code>Learning Agile Robotic Locomotion Skills by Imitating Animals</code></a>라는 논문에서 제시한 방법을 따라했다. (Algorithm 1: line1~4)</li>
-<li><strong>Reference motion <span class="math inline">M</span></strong>이 주어지면 agent의일련의 pose들과 비교하여 section <code>III-B</code>에서 소개될 reward function을 기반으로 학습한다.
-<ul>
-<li>이 방법을 통해 <strong>reference motion data</strong>만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다.</li>
-<li><strong>recovery policy</strong>를 학습하기 위해서 <strong>standing pose</strong>를 모방하도록 할 수 있다.(<code>III-C</code> 참고)</li>
-</ul></li>
-</ul>
-</section>
-<section id="c-off-policy-rl" class="level2">
-<h2 class="anchored" data-anchor-id="c-off-policy-rl">c) Off-policy RL</h2>
-<ul>
-<li>off-policy 알고리즘인 <strong>REDQ algorithm</strong> 사용했다.(Algorithm 1: line5~9)
-<ul>
-<li>SAC 알고리즘을 더 발전시킨 알고리즘</li>
-<li>time step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다.</li>
-<li>너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.</li>
-</ul></li>
-</ul>
-<p>(자세한 모방학습과 강화학습 알고리즘의 training 과정 알고리즘은 <code>Algorithm 1</code>을 참고)</p>
+<section id="motion-imitation-off-policy-rl" class="level2">
+<h2 class="anchored" data-anchor-id="motion-imitation-off-policy-rl">Motion Imitation &amp; Off-policy RL</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/sBvIszd.png?1" class="img-fluid figure-img"></p>
 </figure>
 </div>
+<p><strong>Motion Imitation</strong></p>
+<p><code>Motion Imiation</code> 방법을 이용하여 reference motion clip들의 skill들을 모방 학습하도록 했는데 이는 <a href="https://arxiv.org/abs/2004.00784"><code>Learning Agile Robotic Locomotion Skills by Imitating Animals</code></a>라는 논문에서 제시한 방법을 따라했다. (Algorithm 1 <code>line1~4</code>)</p>
+<p><strong>Reference motion <span class="math inline">M</span></strong>이 주어지면 agent의일련의 pose들과 비교하여 section <code>III-B</code>에서 소개될 reward function을 기반으로 학습한다. - 이 방법을 통해 <strong>reference motion data</strong>만 바꿔주면 바로 다른 여러 skill들을 배울 수 있다. - <strong>recovery policy</strong>를 학습하기 위해서 <strong>standing pose</strong>를 모방하도록 할 수 있다.(<code>III-C</code> 참고)</p>
+<p><strong>Off-policy RL</strong></p>
+<p>off-policy 알고리즘인 <strong>REDQ algorithm</strong> 사용했다.(Algorithm 1 <code>line5~9</code>) - SAC 알고리즘을 더 발전시킨 알고리즘 - time step에 대한 gradient step비율을 증가시켜서 강화학습 알고리즘의sample efficiency를 높였다. - 너무 많은 gradient step을 할 경우에 일어날 수 있는 overestimation issue를 앙상블 기법을 이용해서 완화할 수 있었다.</p>
 </section>
 </section>
 <section id="iii.-system-design" class="level1">
@@ -449,59 +435,47 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <h1>IV. Experiments</h1>
 <p>💡 실험 결과에서 주목해서 봐야할 질문 3가지!</p>
 <ol type="1">
-<li><p>본 논문에서 제시한 finetuning-based method가 이전의 방법들에 비해 <code>시뮬레이션 trianing을 충분히 활용</code>하고 <code>실제 물리 환경에서 적응</code>할 수 있었는가?</p></li>
-<li><p>본 논문에서 제시한 시스템 디자인 요소들이 <code>feasibility of real-world training</code>에 어떤 영향을 주었는가?</p></li>
-<li><p><code>얼마나 다양한 실제 물리적인 환경들</code>에서 autonomous, online fine-tuning 방법이 로봇의 skill을 향상시켰는가?</p></li>
+<li>본 논문에서 제시한 finetuning-based method가 이전의 방법들에 비해 <code>시뮬레이션 trianing을 충분히 활용</code>하고 <code>실제 물리 환경에서 적응</code>할 수 있었는가?</li>
+<li>본 논문에서 제시한 시스템 디자인 요소들이 <code>feasibility of real-world training</code>에 어떤 영향을 주었는가?</li>
+<li><code>얼마나 다양한 실제 물리적인 환경들</code>에서 autonomous, online fine-tuning 방법이 로봇의 skill을 향상시켰는가?</li>
 </ol>
 <section id="a.-simulation-experiments" class="level2">
 <h2 class="anchored" data-anchor-id="a.-simulation-experiments">A. Simulation Experiments</h2>
 <ul>
-<li><p>agent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 <strong>학습된 시뮬레이션과 또 다른</strong> 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.</p></li>
-<li><p><strong>Learned forward pacing gait</strong>가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.</p></li>
-<li><p><strong>Standard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)</strong>으로 Pre-train을 <strong>flat</strong> ground에서 진행했다.</p></li>
-<li><p>The test terrains : test 환경들로는 총 3가지로 실험하였다.</p>
+<li>agent의 policy를 먼저 특정 시뮬레이션 셋팅에서 학습시킨 후에 <strong>학습된 시뮬레이션과 또 다른</strong> 시뮬레이션 환경 셋팅에 “deployed”한 후 결과를 살펴보았다.</li>
+<li><strong>Learned forward pacing gait</strong>가 테스트 환경들에서 얼마나 빨리 적용되는지 확인해보았다.</li>
+<li><strong>Standard dynamics randomization (mass, inertia, motor strength, friction, latency 변동)</strong>으로 Pre-train을 <strong>flat</strong> ground에서 진행했다.</li>
+</ul>
+<p><strong>The test terrains</strong></p>
+<p>test 환경들로는 총 3가지로 실험하였으며 pre-training 과정의 시뮬레이션 셋팅과 <strong>유사한</strong> test 환경 [1]과 pre-training 과정의 시뮬레이션 셋팅과 <strong>다소 다른</strong> test 환경 [2], [3]에서 진행됐다.</p>
 <ol type="1">
-<li><strong>a flat ground</strong> : pre-training 과정의 시뮬레이션 셋팅과 유사한 test 환경</li>
-<li>pre-training 과정의 시뮬레이션 셋팅과 다소 다른 test 환경 :
-<ol type="1">
+<li><strong>a flat ground</strong></li>
 <li><strong>randomized heightfield</strong> : 랜덤하게 지형의 높이를 설정한 울퉁불퉁한 지형</li>
 <li><strong>a low friction surface</strong> : 낮은 마찰계수를 가지는 지형, 빙판길과 같은 미끄러운 지형(Training 과정에서 경험한 마찰계수 분포와 한참 동떨어진 마찰계수를 가지고 있음)</li>
-</ol></li>
-</ol></li>
-<li><p>비교군</p>
+</ol>
+<p><strong>비교군</strong></p>
 <ol type="1">
 <li><code>latent space</code> : 호율적인 다양한 dynamics parameters에 대한 학습을 하기 위해 latent space에 표현된 behaviors을 학습</li>
 <li><code>RMA</code>: dynamics randomization한 모델. 위에서 언급한 <code>Adaptation Module</code>을 가지고 학습</li>
 <li><code>Vanilla SAC</code> : Soft Actor-Critic 알고리즘으로 학습</li>
 <li><code>Ours(REDQ)</code>: 10개의 Q-functions을 가지고 randomly sample 2로 학습</li>
-</ol></li>
-</ul>
+</ol>
 <hr>
-<p>실험 결과는 아래와 같았다.</p>
-<ul>
-<li><code>RMA</code>는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다.</li>
-<li><code>SAC</code>에 비해서 <code>Ours</code>가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.</li>
-</ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/BCyV1Xk.png?1" class="img-fluid figure-img"></p>
 </figure>
 </div>
+<p>실험 결과를 살펴보면, <code>RMA</code>는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다. <code>SAC</code>에 비해서 <code>REDQ(Ours)</code>가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.</p>
 </section>
 <section id="b.-real-world-experiments" class="level2">
 <h2 class="anchored" data-anchor-id="b.-real-world-experiments">B. Real-World Experiments</h2>
-<ul>
-<li><p>시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다.</p></li>
-<li><p>모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 <strong>fine-tuning</strong> 해주었다.</p></li>
-</ul>
+<p>시뮬레이션에서 학습된 Agent를 4개의 real-world 환경(Outdoor 1개, Indoor 3개)에서 test 했다. 모든 (real-world) test 지형 실험은 시뮬레이션의 flat ground에서 pre-training된 agent로 실험한 것이었으며, 처음에 buffer를 5000 samples로 초기화 해주고 시작한 다음 test real world 환경에서 policy를 <strong>fine-tuning</strong> 해주었다.</p>
 <ol type="1">
 <li><p>Outdoor <code>grassy lawn</code>:</p>
 <ul>
 <li><p><strong>slippery surface</strong>를 가지고 있어서 발이 잔디에서 미끄러지거나 흙에 빠질 수 있다.</p></li>
-<li><p>앞 혹은 뒤로 움직이는 <strong>pacing gait</strong>를 fine-tuning 하도록 했다.</p>
-<ul>
-<li>pacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새</li>
-</ul></li>
+<li><p>앞 혹은 뒤로 움직이는 <strong>pacing gait</strong>를 fine-tuning 하도록 했다.(pacing gait: 좌나 우의 2개의 다리가 한번에 움직이는 걸음새)</p></li>
 <li><p>Pre-trained <strong>forward</strong> pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained <strong>backward</strong> pacing policy는 잘 넘어지는 경향이 있었다.</p></li>
 <li><p><strong>작동한 지 약 2시간 만에</strong>, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.</p></li>
 </ul>
@@ -540,16 +514,14 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><p>그러나 각 지형 셋팅에서 <strong>2.5 시간 이내로</strong> 로봇이 비틀거림 없이 skill을 수행할 수 있었다.</p></li>
 </ul></li>
 </ol>
-<hr>
-<p>실험 결과는 아래와 같았다.</p>
+</section>
+<section id="c.-semi-autonomous-training" class="level2">
+<h2 class="anchored" data-anchor-id="c.-semi-autonomous-training">C. Semi-autonomous training</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://i.imgur.com/NRNMAex.png?1" class="img-fluid figure-img"></p>
 </figure>
 </div>
-</section>
-<section id="c.-semi-autonomous-training" class="level2">
-<h2 class="anchored" data-anchor-id="c.-semi-autonomous-training">C. Semi-autonomous training</h2>
 <ul>
 <li>전반적인 모든 실험들에서, the recovery policy는 100% 성공적이었다.</li>
 <li>본 논문에서 제시된 방법으로 학습된 reset controller와 Unitree에서 제공한 built-in rollover controller를 비교해보았다.

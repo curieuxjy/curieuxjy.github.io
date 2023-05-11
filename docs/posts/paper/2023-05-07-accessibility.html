@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -255,7 +255,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/2023-05-07-accessibility/10.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">예시 사진 속 로봇 플랫폼은 해당 논문의 코드를 연구실에서 개발된 AiDIN-VIII 로봇 플랫폼입니다</figcaption><p></p>
+<p></p><figcaption class="figure-caption">예시 사진은 해당 논문의 코드를 연구실에서 개발된 AiDIN-VIII 로봇에 적용한 모습입니다</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -302,7 +302,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="reinforcement-learning-process" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="reinforcement-learning-process"><span class="header-section-number">3.4</span> Reinforcement Learning Process</h2>
 <p>마치 Machine Learning에서 Feature Engineering이 많은 주의를 요하는 작업이듯이 앞서 Initial State를 정하는 작업을 진행하고 드디어 강화학습 과정에 들어오게 되었습니다. 유명한 강화학습 알고리즘인 SAC(Soft-Actor-Critic)을 단순한 MLP 레이어로 만들어서 사용했고 Policy Network의 Input과 Ouput 설계도 관련 연구들의 convention과 크게 다르지 않기 때문에 자세한 설명은 생략하고 특징적인 부분을 살펴보겠습니다.</p>
-<p><strong>Reward Functions</strong></p>
+<p><strong>Reward Functions w/ RBF</strong></p>
 <p><img src="../../images/2023-05-07-accessibility/14.png" class="img-fluid"></p>
 <p>해당 논문에서 다른 논문들의 강화학습 MDP 설계와 다른 특징적인 부분은 보상함수 설계 부분이었습니다. 일반적으로 Reward function은 각 Reward Term들을 <strong>Linear Weigthed Sum</strong>형식을 가집니다. 하지만 해당 논문에서는 <a href="https://youtu.be/O8CfrnOPtLc"><strong>RBF(Radial Basis Function)</strong></a>를 사용하여 각 Reward를 weighted sum한 값으로 최종 reward를 계산한 것을 알 수 있습니다. 사실 Reward Function을 설계하는 부분은 강화학습 연구에서 Reward Engineering 이슈가 큰 것처럼, 다분히 설계자의 의도와 설명이 필요한 부분이지만 논문에서 자세히 설명이 되어 있지 않고 Main Contribution이 아니라고 생각해서 그런지 Linear sum과 비교한 실험값도 있지 않아서 RBF를 사용한 이유를 파악하기 어려웠습니다.</p>
 <center>
@@ -330,6 +330,7 @@ Lecture 16 - Radial Basis Functions Slides(Caltech)
 <section id="results" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
 <p>실험 결과는 각 다리에 2개의 joint가 있는 총 8 DoF인 <a href="https://www.petoi.com/products/petoi-bittle-robot-dog">Bittle</a> 로봇 플랫폼을 가지고 총 2가지 Task, Recovery와 Backflip에 대해서 진행되었으며, 비교군으로는 아래와 같이 총 5개(proposed method 제외) 설정하여 결과를 비교했습니다.</p>
+<p><strong>Models</strong></p>
 <ul>
 <li><strong>KA</strong><code>[Paper's suggestion]</code>: K-Access 알고리즘으로 얻은 43 clusters의 centroid로 initial pose 설정</li>
 <li><strong>KM</strong>: K-Means++ 알고리즘으로 얻은 33 clusters의 centroid 로 initial pose 설정</li>
@@ -344,7 +345,7 @@ Lecture 16 - Radial Basis Functions Slides(Caltech)
 <p><img src="../../images/2023-05-07-accessibility/21.png" class="img-fluid"></p>
 <p>Recovery를 성공한 케이스에 대한 timestep snapshot과 약 1.2초 동안 회복자세로 돌아가는 동안의 8개의 joint 각도 변화에 대해 plot한 그래프입니다.</p>
 <p><img src="../../images/2023-05-07-accessibility/17.png" class="img-fluid"></p>
-<p>Backflip에 대해서도 Recovery와 같이 실험한 결과를 확인했으며 크게 다른 점이 없고 제안된 방법이 Recovery에만 국한되어 있지 않고 다양한 다이나믹한 모션 학습에서도 효과가 있다는 것을 보여주기 위해 추가적으로 붙여진 부분같아 자세한 설명은 생략하겠습니다. 관련 실험 결과는 아래에서 확인해주세요.</p>
+<p>Backflip에 대해서도 Recovery와 같이 실험한 결과를 확인했으며 Recovery와 크게 다른 점이 없고 제안된 방법이 Recovery에만 국한되어 있지 않고 다양한 다이나믹한 모션 학습에서도 효과가 있다는 것을 보여주기 위해 추가적으로 붙여진 부분같아 자세한 설명은 생략하겠습니다. 관련 실험 결과는 아래에서 확인해주세요.</p>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -366,7 +367,9 @@ Backflip Task
 <section id="conclusion" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
 <p>이번에 리뷰한 논문은 강화학습의 Initial pose에 대해 심도있게 관찰해보고 어떻게 설계하고 학습해야 하는지 제안한 논문으로 매우 의미가 있는 연구였다고 생각합니다. 학습을 위해 State Space를 어떻게 분석하고 탐색할 수 있도록 유도하는 Accessibility라는 개념과 K-Access 알고리즘이 Contribution 초점으로 잘 잡혀있다고 생각하며 다만 실제 로봇을 가지고 검증해보지 못해서 조금 아쉬웠습니다. 논문에서 Future Work로 제시한 것처럼 Accessibility Estimation과 Clustering 방법에 Learning 기법을 가지고 좀 더 보완해보는 것도 좋은 연구방향이라고 생각합니다.</p>
+<blockquote class="blockquote">
 <p>해당 논문에 대해서 좀 더 알아보고 싶으신 분들은 저자들이 공개한 Youtube 발표 영상도 확인해보시면 좋을 것 같습니다.</p>
+</blockquote>
 <div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/7cZMThUn0rU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
 <section id="reference" class="level1" data-number="6">

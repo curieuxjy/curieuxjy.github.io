@@ -87,8 +87,7 @@ Pose를 정의한 다음으로 살펴볼 부분은 **여러 pose들 간의 관�
 
 전복된 다양한 자세들을 샘플링하기 위해서 로봇의 base frame의 roll, pitch 각도를 일정 범위에서 랜덤하게 샘플링하고 12개의 joint position도 로봇의 configuration을 고려하여 upper/lower limit range에 있는 각도로 자세를 set해서 전복된 자세를 만듭니다. (이때 yaw 방향은 flat terrain에선 의미가 없기 때문에 0으로 셋팅합니다.) 샘플링된 자세로 pose를 set 했을 때 self-collision을 확인한 뒤 self-collision이 되지 않은 자세 2.4k개를 sampling 합니다.
 
-![예시 사진 속 로봇 플랫폼은 해당 논문의 코드를 연구실에서 개발된 AiDIN-VIII 로봇 플랫폼입니다](../../images/2023-05-07-accessibility/10.png)
-
+![예시 사진은 해당 논문의 코드를 연구실에서 개발된 AiDIN-VIII 로봇에 적용한 모습입니다](../../images/2023-05-07-accessibility/10.png)
 
 
 ## Estimating Accessibility Values
@@ -148,7 +147,7 @@ K-Access 알고리즘은 기존에 ML에서 자주 사용되는 클러스터링 
 
 마치 Machine Learning에서 Feature Engineering이 많은 주의를 요하는 작업이듯이 앞서 Initial State를 정하는 작업을 진행하고 드디어 강화학습 과정에 들어오게 되었습니다. 유명한 강화학습 알고리즘인 SAC(Soft-Actor-Critic)을 단순한 MLP 레이어로 만들어서 사용했고 Policy Network의 Input과 Ouput 설계도 관련 연구들의 convention과 크게 다르지 않기 때문에 자세한 설명은 생략하고 특징적인 부분을 살펴보겠습니다.
 
-**Reward Functions**
+**Reward Functions w/ RBF**
 
 ![](../../images/2023-05-07-accessibility/14.png)
 
@@ -182,6 +181,8 @@ K-Access 알고리즘은 기존에 ML에서 자주 사용되는 클러스터링 
 
 실험 결과는 각 다리에 2개의 joint가 있는 총 8 DoF인 [Bittle](https://www.petoi.com/products/petoi-bittle-robot-dog) 로봇 플랫폼을 가지고 총 2가지 Task, Recovery와 Backflip에 대해서 진행되었으며, 비교군으로는 아래와 같이 총 5개(proposed method 제외) 설정하여 결과를 비교했습니다. 
 
+**Models**
+
 - **KA**`[Paper's suggestion]`: K-Access 알고리즘으로 얻은 43 clusters의 centroid로 initial pose 설정 
 - **KM**: K-Means++ 알고리즘으로 얻은 33 clusters의 centroid 로 initial pose 설정
 - **WKM**: K-Means++ 알고리즘으로 얻은 14 clusters의 centroid 로 initial pose 설정 (`gravity vector weighted by 2`)
@@ -201,7 +202,7 @@ Recovery를 성공한 케이스에 대한 timestep snapshot과 약 1.2초 동안
 
 ![](../../images/2023-05-07-accessibility/17.png)
 
-Backflip에 대해서도 Recovery와 같이 실험한 결과를 확인했으며 크게 다른 점이 없고 제안된 방법이 Recovery에만 국한되어 있지 않고 다양한 다이나믹한 모션 학습에서도 효과가 있다는 것을 보여주기 위해 추가적으로 붙여진 부분같아 자세한 설명은 생략하겠습니다. 관련 실험 결과는 아래에서 확인해주세요.
+Backflip에 대해서도 Recovery와 같이 실험한 결과를 확인했으며 Recovery와 크게 다른 점이 없고 제안된 방법이 Recovery에만 국한되어 있지 않고 다양한 다이나믹한 모션 학습에서도 효과가 있다는 것을 보여주기 위해 추가적으로 붙여진 부분같아 자세한 설명은 생략하겠습니다. 관련 실험 결과는 아래에서 확인해주세요.
 
 ::: {.callout-note collapse="true" icon="false"}
 
@@ -217,7 +218,7 @@ Backflip에 대해서도 Recovery와 같이 실험한 결과를 확인했으며 
 
 이번에 리뷰한 논문은 강화학습의 Initial pose에 대해 심도있게 관찰해보고 어떻게 설계하고 학습해야 하는지 제안한 논문으로 매우 의미가 있는 연구였다고 생각합니다. 학습을 위해 State Space를 어떻게 분석하고 탐색할 수 있도록 유도하는 Accessibility라는 개념과  K-Access 알고리즘이 Contribution 초점으로 잘 잡혀있다고 생각하며 다만 실제 로봇을 가지고 검증해보지 못해서 조금 아쉬웠습니다. 논문에서 Future Work로 제시한 것처럼 Accessibility Estimation과 Clustering 방법에 Learning 기법을 가지고 좀 더 보완해보는 것도 좋은 연구방향이라고 생각합니다.
 
-해당 논문에 대해서 좀 더 알아보고 싶으신 분들은 저자들이 공개한 Youtube 발표 영상도 확인해보시면 좋을 것 같습니다.
+> 해당 논문에 대해서 좀 더 알아보고 싶으신 분들은 저자들이 공개한 Youtube 발표 영상도 확인해보시면 좋을 것 같습니다.
 
 {{< video https://youtu.be/7cZMThUn0rU >}}
 
