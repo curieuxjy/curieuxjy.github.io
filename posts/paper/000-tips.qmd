@@ -1,0 +1,41 @@
+---
+draft: true
+title: "📃포스팅 작성시 확인"
+description: 이미지 크기/정렬/캡션
+date: "0000-00-00"
+categories: [tips]
+toc: true
+number-sections: true
+---
+
+```html
+<center>
+<img src="../../images/2023-05-07-accessibility/22.png" alt="22" width="67%" />
+<img src="../../images/2023-05-07-accessibility/23.png" alt="23" width="67%" />
+    <figcaption>Lecture 16 - Radial Basis Functions Slides(Caltech)</figcaption>
+</center>
+```
+
+글자 색
+```html
+<span style="color: blue">Learning a **forward** model for a **single** system</span>
+```
+
+콜아웃
+```html
+::: {.callout-tip icon="false"}
+# Overview
+
+Isaac Orbit (or orbit in short) is **a unified and modular framework**, built on top of [NVIDIA Omniverse](https://docs.omniverse.nvidia.com/) and [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html), **for robot learning**. It offers a modular design to easily and efficiently create robot learning environments with photo-realistic scenes, and fast and efficient simulation.
+:::
+
+```
+
+토글
+```html
+<details>
+<summary><b>Pseudo Code of K-Access</b></summary>
+<img width="100%" src="../../images/2023-05-07-accessibility/11.png" title="Cost Table" />
+</details>
+
+```

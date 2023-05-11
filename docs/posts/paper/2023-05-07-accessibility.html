@@ -296,14 +296,12 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Reward Functions</strong></p>
 <p><img src="../../images/2023-05-07-accessibility/14.png" class="img-fluid"></p>
 <p>해당 논문에서 다른 논문들의 강화학습 MDP 설계와 다른 특징적인 부분은 보상함수 설계 부분이었습니다. 일반적으로 Reward function은 각 Reward Term들을 <strong>Linear Weigthed Sum</strong>형식을 가집니다. 하지만 해당 논문에서는 <a href="https://youtu.be/O8CfrnOPtLc"><strong>RBF(Radial Basis Function)</strong></a>를 사용하여 각 Reward를 weighted sum한 값으로 최종 reward를 계산한 것을 알 수 있습니다. 사실 Reward Function을 설계하는 부분은 강화학습 연구에서 Reward Engineering 이슈가 큰 것처럼, 다분히 설계자의 의도와 설명이 필요한 부분이지만 논문에서 자세히 설명이 되어 있지 않고 Main Contribution이 아니라고 생각해서 그런지 Linear sum과 비교한 실험값도 있지 않아서 RBF를 사용한 이유를 파악하기 어려웠습니다.</p>
-<p>
-</p><center>
-<img src="../../images/2023-05-07-accessibility/22.png" alt="22" style="zoom: 67.05%;"> <img src="../../images/2023-05-07-accessibility/23.png" alt="23" style="zoom: 74.4%;">
+<center>
+<img src="../../images/2023-05-07-accessibility/22.png" alt="22" width="67%"> <img src="../../images/2023-05-07-accessibility/23.png" alt="23" width="67%">
 <figcaption>
 Lecture 16 - Radial Basis Functions Slides(Caltech)
 </figcaption>
 </center>
-<p></p>
 <p><code>따라서 이 부분은 RBF 커널에 대해 공부하고 나서 제가 생각한 이유를 덧붙이겠습니다.</code> RBF 커널은 기본적으로 Gaussian Distribution 모습으로 target value와 data 간의 radial한 거리 가중치를 주게 되는데, linear sum과 비교했을 때 무한 차원 영역에서 매우 멀리 떨어져 있는 data로부터 영향을 덜 받을 수 있는 장점을 가지고 있습니다. 따라서 Reward를 계산하는 데에 RBF 커널을 통해 계산한 의도는 Maximization해야 하는 Reward term들을 단순히 Linear sum하는 것보다 여러 카테고리의 Reward target 값들에 민감하게 반응할 수 있는 정도를 <span class="math inline">\alpha</span>값(Slide에서는 <span class="math inline">\gamma</span>로 표현)을 이용하여 학습의 좋은 지표가 될 수 있는 Reward space를 설계한 것으로 보입니다.</p>
 <blockquote class="blockquote">
 <p>Reward Term에서 사용된 Symbol의 의미가 궁금하신 분들은 아래 table을 확인해주세요.</p>
