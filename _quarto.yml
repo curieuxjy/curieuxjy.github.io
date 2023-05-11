@@ -5,7 +5,7 @@ project:
 website:
   title: "Curieux.JY"
   favicon: profile.png
-  google-analytics: "G-Q2PB4SRNNS"
+  google-analytics: "G-2NVZN2MJZT"
   navbar:
     right:
       - about.qmd
