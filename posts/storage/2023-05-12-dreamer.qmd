@@ -1,0 +1,35 @@
+---
+draft: true
+title: "🧩Dreamer"
+description: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations
+date: "2023-03-26"
+categories: [rl, gan, paper]
+toc: true
+---
+
+https://danijar.com/project/dreamer/
+
+https://github.com/danijar/dreamer
+
+https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html
+
+https://github.com/danijar/dreamerv2
+
+https://ai.googleblog.com/2021/02/mastering-atari-with-discrete-world.html
+
+https://github.com/danijar/dreamerv3
+
+---
+
+
+https://github.com/kc-ml2/SimpleDreamer
+
+https://github.com/juliusfrost/dreamer-pytorch
+
+https://github.com/NM512/dreamerv3-torch
+
+https://pytorch.org/rl/reference/generated/torchrl.modules.DreamerActor.html
+
+---
+
+https://bair.berkeley.edu/blog/2020/10/06/plan2explore/
