@@ -19,6 +19,8 @@ https://ai.googleblog.com/2021/02/mastering-atari-with-discrete-world.html
 
 https://github.com/danijar/dreamerv3
 
+https://github.com/ThibaultLSDC/DreamerV3
+
 ---
 
 
