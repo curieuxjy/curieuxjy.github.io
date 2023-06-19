@@ -130,7 +130,7 @@
     "href": "posts/code/2023-06-18-chord.html",
     "title": "👩‍💻Chord Graph",
     "section": "",
-    "text": "이전 Accessibility-Based Clustering for Efficient Learning of Locomotion Skills 논문을 리뷰하면서 로봇의 static pose들을 가지고 K-Acc Clustering하는 과정 이후에 Clustering Analysis에서 Inter-cluster accessibility를 Visulization을 하는 부분이 있었습니다.\n오른쪽에 보이는 그래프가 Hord Graph인데 각 Top-20 cluster에 속한 sample pose들을 하나의 node로 표현하고 각 sample pose들이이 다른 pose로 transition되는 과정에서 accessiblity 값이 높은 부분은 진한 edge로 accessibility가 낮은 부분은 옅은 edge로 그려서 연결성을 보여줍니다. 따라서 이런 시각화를 통해 cluster 간의 inter-cluster accessibility를 표현할 수 있는 것 입니다.(자세한 내용은 이전 논문 리뷰 포스팅을 참고 바랍니다.) 이번 포스팅은 바로 이 Chord graph를 Holoviews라는 파이썬 패키지를 이용해서 시각화 하는 방법에 대해 다룰 것 입니다."
+    "text": "이전 Accessibility-Based Clustering for Efficient Learning of Locomotion Skills 논문을 리뷰하면서 로봇의 static pose들을 가지고 K-Acc Clustering하는 과정 이후에 Clustering Analysis에서 Inter-cluster accessibility를 Visulization을 하는 부분이 있었습니다.\n오른쪽에 보이는 그래프가 Chord Graph인데 각 Top-20 cluster에 속한 sample pose들을 하나의 node로 표현하고 각 sample pose들이 다른 pose로 transition되는 시간을 기반으로 계산된 accessiblity 값이 높은 부분은 진한 edge로 accessibility가, 낮은 부분은 옅은 edge로 시각화하여 포즈들 간의 관계성을 보여줍니다. 따라서 이런 시각화를 통해 cluster 간의 inter-cluster accessibility를 파악할 수 있는 것 입니다.(자세한 내용은 이전 논문 리뷰 포스팅을 참고 바랍니다.) 이번 포스팅은 바로 이 Chord graph를 Holoviews라는 파이썬 패키지를 이용해서 시각화 하는 방법에 대해 다룰 것 입니다."
   },
   {
     "objectID": "posts/code/2023-06-18-chord.html#accesstimetable",
