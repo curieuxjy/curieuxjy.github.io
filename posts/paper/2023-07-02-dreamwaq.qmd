@@ -5,15 +5,122 @@ date: "2023-07-02"
 categories: [context, rl, paper]
 toc: true
 number-sections: true
+image: ../../images/2023-07-02-dreamwaq/dw1.png
 ---
 
 
 
-이번 포스팅은 DeepMind에서 발표된 [DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning](https://arxiv.org/abs/2301.10602) 논문을 읽고 정리한 내용입니다. 
+이번 포스팅은 DeepMind에서 발표된 [DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning](https://arxiv.org/abs/2301.10602) 논문을 읽고 정리한 내용입니다. 최근 ICRA 2023 런던에서 5월 30일부터 6월 1일까지 진행된 [Autonomous Quadruped Robot Challenge (QRC)](https://quadruped-robot-challenges.notion.site/)에서 KAIST 연구팀이 1등을 하여 큰 이슈가 되었었습니다. 이번 포스팅에서 리뷰하는 이 논문이 바로 대회에서 사용되었던 강화학습 기반의 보행제어 알고리즘에 대한 내용을 담고 있는 논문입니다. 
 
-# Abstrct 
+<center>
+<img src="https://camo.githubusercontent.com/6c0b95a9fbd78cd0f7836fc978a36b5cfe7422a5d0253a943cf74df78c4ef833/68747470733a2f2f7175616472757065642d726f626f742d6368616c6c656e6765732e6e6f74696f6e2e736974652f696d6167652f687474707325334125324625324673332d75732d776573742d322e616d617a6f6e6177732e636f6d2532467365637572652e6e6f74696f6e2d7374617469632e636f6d25324662306536653131302d303464622d346162332d623033352d37336362666363656630366325324639313637393239373934325f2e7069635f68642e6a70673f69643d61343631393235612d363865632d343735372d613965622d353665346636353839353837267461626c653d626c6f636b26737061636549643d39383964343435392d643163312d343435342d383137352d6537383535376236656139322677696474683d32303030267573657249643d2663616368653d7632" width="67%" />
+    <figcaption>2023 Autonomous Quadruped Robot Challenge</figcaption>
+</center>
 
-Reinforcement Learning (RL) techniques havedrawn great attention in many challenging tasks,but their performance deteriorates dramaticallywhen applied to real-world problems. Variousmethods, such as domain randomization, have beenproposed to deal with such situations by trainingagents under different environmental setups, andtherefore they can be generalized to different envi-ronments during deployment. However, they usu-ally do not incorporate the underlying environmen-tal factor information that the agents interact withproperly and thus can be overly conservative whenfacing changes in the surroundings. In this paper,we first formalize the task of adapting to changingenvironmental dynamics in RL as a generaliza-tion problem using Contextual Markov DecisionProcesses (CMDPs). We then propose the Asym-metric Actor-Critic in Contextual RL (AACC) asan end-to-end actor-critic method to deal with suchgeneralization tasks. We demonstrate the essen-tial improvements in the performance of AACCover existing baselines experimentally in a rangeof simulated environments
+# Introduction
+
+논문을 소개해드리면서 말씀드린바와 같이 오늘 리뷰할 DreamWaQ라는 논문에 나와있는 강화학습 알고리즘을 활용한 보행제어 알고리즘으로 KAIST 연구팀이 MIT 연구팀을 제치고 1등을 하여 다시한번 우리나라 기술력을 세계에 알린 기회가 되었다는 좋은 [뉴스](https://youtu.be/mhD5N6-SuGc)를 들을 수 있었습니다. 
+
+**Finals Team DREAM STEP KAIST**
+
+{{< video https://youtu.be/3ZFu7kyQyoY >}}
+
+세계 로봇 연구팀들이 참여한 대회에서 KAIST의 DREAM STEP 팀의 결승 대회 영상입니다. 사족 보행로봇의 다양한 험지에서의 자율적인 보행을 테스트하기 위해 대회에서 사용된 지형은 정말 다양하고 로봇이 안정적으로 완주하기에 굉장히 어려운 코스임을 알 수 있습니다. 실제로 대회에 참가한 [다른 팀들의 영상들](https://www.youtube.com/@rise-lab-skku/videos)을 보시면 대회 코스의 한 부분 부분마다 각자 고군분투하며 걸어가는 로봇들의 모습을 다양하게 보실 수 있습니다. 뉴스에서 나왔던 것처럼 유명한 대학 연구팀들을 제치고 1등을 한 자랑스러운 KAIST 연구팀의 1등 비결을 담은 강화학습 알고리즘을 기반으로 한 DreamWaQ 알고리즘을 한번 살펴보겠습니다.
+
+# DreamWaQ
+
+## Key Contribution
+
+
+
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw1.png" width="67%" />
+    <figcaption>Overview of DreamWaQ</figcaption>
+</center>
+
+DreamWaQ 알고리즘의 전체적인 흐름은 위의 사진과 같습니다. "Dream"이라는 워딩과 알고리즘 개괄도에서 생각 풍선 모양 표현에서 볼 수 있듯이 DreamWaQ 논문의 주요 Contribution으로는 **Implicit Terrain Imagination**을 할 수 있도록 **Context-Aided Estimator Network(CENet)**을 도입하여 강화학습 보행 제어기를 설계한 점을 들 수 있습니다.
+
+
+
+## Implicit Terrain Imagination
+
+앞서 챌린지에서 사용된 환경에서 볼 수 있듯이 사족보행로봇은 다양한 지형(Terrain)을 극복하며 보행할 수 있는 능력이 중요합니다. 그럼 다양한 지형을 나타낼 수 있는 속성들에는 무엇이 있을까요? **지형의 마찰계수, 반발계수, 놓여져 있는 장애물, 울퉁불퉁한 정도 등등** 여러가지 속성들로 지형의 특징을 나타낼 수 있을 것입니다. 그리고 그러한 특징을 어떻게 4개의 다리를 이용하여 보행의 어려운 점들을 극복하며 원하는 방향으로 이동할 수 있도록 하는 것이 관건인 것입니다. 
+
+이런 지형의 특징을 파악하기 위해 많은 연구들이 카메라나 라이다와 같은 비젼센서를 부착하여 환경을 인식한 뒤 극복하기 위한 방법을 고안하는 방향으로 연구되고 있습니다. 하지만 KAIST 연구진이 제안한 DreamWaQ에서는 지형을 인식할 수 있는 부차적인 비젼센서 없이 **로봇의 자체의 정보(proprioception)를 이용**하여 지형을 극복하기 위해 explicit한 환경 정보가 아닌, **implicit한 terrain imagination**을 할 수 있는 방법론은 제시했습니다.
+
+사실 Implicit하게 로봇 주변의 지형이나 환경정보를 강화학습 로봇 에이전트가 인식할 수 있도록 하는 연구는 다양하게 진행되어왔었습니다. 앞선 주요 방법은로는 **Teacher-Student Network**를 이용하여 모든 환경정보를 학습한 `Teacher Network`로부터 `Student Network`가 추후에 따라 학습하는 방식이 있었지만, 해당 방법은 Teacher Network를 학습과 Student Network 학습을 따로 2개의 단계를 거쳐 학습을 해야한다는 데이터 비효율적인 학습 방법이라는 단점이 있었습니다. 따라서 DreamWaQ에서는 **Asymmetric Actor-Critic**이라는 기존의 Actor-Critic 강화학습 알고리즘에 약간 변형을 준 모델을 사용하여 Teacher-Student Network처럼 두 단계로 나누어서 학습하지 않고도 Implicit하게 Terrain 정보를 Actor-Critic 구조에 녹여들 수 있도록 했습니다.
+
+## Asymmetric Actor-Critic
+
+기존의 PPO, SAC와 같은 Policy Gradient의 강화학습 알고리즘들의 주요 구성요소로 **Actor Network**와 **Critic(Value) Network**가 있습니다. **Actor**는 강화학습 에이전트가 취해야하는 `action` 값을 출력하는 네트워크이며 **Critic**는 에이전트의 학습 방향을 보여주는 `value`값을 출력하여 이 2개의 네트워크들이 Policy Gradient 알고리즘의 목적식을 따라 `Return(누적 보상)`값을 최대화하는 방향으로 학습하게 되는 것입니다. 보통 2개의 네트워크 모두에게 같은 state(혹은 observation) 정보가 입력값으로 들어가게 되기 때문에 Actor 네트워크와 Critic 네트워크는 서로 **Symmetric**하다고 할 수 있습니다.
+
+하지만 앞서 로봇이 센서 없이는 얻을 수 없는 지형 정보가 강화학습 알고리즘에 사용되는 네트워크의 인풋으로 들어간다면 실제 로봇에서 알고리즘이 돌아갈 때 넣어줄 지형정보가 없기 때문에 제어 알고리즘이 돌아갈 수 없을 것 입니다. 그래서 DreamWaQ에서는 Actor/Critic Network의 상호작용 과정에서 강화학습 에이전트가 얻을 수 있는 시간적 정보들을 기반으로 terrain 정보를 `상상`할 수 있도록, Actor 네트워크에 들어가는 입력값과 Critic 네트워크에 들어가는 입력값을 다르게 설계하였고 이를 **Asymmetric**한 구조라고 볼 수 있습니다.
+
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw2-1688297136432-3.png" width="67%" />
+    <figcaption>Asymmetric Actor-Critic</figcaption>
+</center>
+
+
+
+위에 보이시는 것처럼 **Actor Network에는** Observation $o_t$, estimated velocity $v_t$, latent vector $z_t$가 입력으로 들어가게 됩니다. $v_t$와 $z_t$는 다음 파트에서 좀 더 살펴볼 예정이므로 여기에서는 우선 observation vecter인 $o_t$에 초점을 맞추어서 보겠습니다. observation 정보는 강화학습 MDP를 정의하는 한 요소로 강화학습 에이전트가 학습할 때 `관측(혹은 접근 가능한 정보)`하는 정보입니다. 따라서 로봇에 특별한 비젼 센서 추가 없이 로봇 자체 하드웨어에서 얻을 수 있는 정보인 proprioceptive 정보를 기반으로 몸체의 각속도 $\omega_t$, 중력방향 벡터 $g_t$ 등등의 정보가 observation vector의 요소로 들어가게 됩니다. 반면, **Critic Network**에는 State $s_t$가 입력값으로 들어가는 것을 알 수 있는데 이는 위에서 Observation과 State를 비교해놓은 것과 같이 state가 observation보다 많은 정보를 포함한 것을 알 수 있습니다. 여기에서 주목해서 볼 수 있는 점이 바로 지형에 대한 정보인 **heightmap scan $h_t$**가 한 요소임을 알 수 있고 이를 통해 implicit한 terrain imagination이 가능한 것 입니다. Heightmap scan에 대해 조금 더 설명을 덧붙이자면, 지형의 heightmap scan 정보는 실제 로봇에서 얻을 수 있는 정보는 아니고 강화학습 에이전트가 학습하게 되는 시뮬레이션에서만 얻을 수 있는 정보로 **지형의 z축 방향의 높이 정보**를 말합니다. 
+
+
+
+## Context-Aided Estimator Network
+
+이번 파트에서 살펴보게 될 **Context-Aided Estimator Network**는 센서로 인식할 수 없는 지형 정보를 에이전트가 유추할 수 있도록 하는 일등공신 아이디어 입니다.
+
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw3.png" width="67%" />
+    <figcaption>The architecture of CENet</figcaption>
+</center>
+
+CENet의 구조는 위와 같이 $\beta$-VAE구조를 활용하여 구성되어 있습니다. 
+
+
+
+
+
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw.png" width="67%" />
+    <figcaption>The loss of CENet</figcaption>
+</center>
+
+
+
+# Experiments
+
+
+
+**Compared Methods**
+
+- **Baseline**: 
+- **AdaptationNet**: 
+- **EstimatorNet**: 
+- **DreamWaQ w/o AdaBoot**: 
+- **DreamWaQ w/ AdaBoot**: 
+
+
+
+
+
+## Simultation
+
+시뮬레이션에서의 학습결과를 살펴보면, 
+
+
+
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw4.png" width="67%" />
+    <figcaption>The loss of CENet</figcaption>
+</center>
+
+
+
+## Real-world
+
+
 
 # Discussion & Conclusion
 
@@ -21,3 +128,5 @@ Reinforcement Learning (RL) techniques havedrawn great attention in many challen
 # Reference
 
 - [Original Paper: DreamWaQ](https://arxiv.org/abs/2301.10602)
+
+- [ICRA 2023 Quadruped Robot Challenges](https://quadruped-robot-challenges.notion.site/)
