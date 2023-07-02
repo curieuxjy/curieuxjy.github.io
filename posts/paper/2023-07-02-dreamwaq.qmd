@@ -1,8 +1,7 @@
 ---
-draft: true
-title: "📃AACC"
-description: Asymmetric Actor-Critic in Contextual Reinforcement Learning
-date: "2023-06-29"
+title: "📃DreamWaQ"
+description: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning
+date: "2023-07-02"
 categories: [context, rl, paper]
 toc: true
 number-sections: true
@@ -10,7 +9,7 @@ number-sections: true
 
 
 
-이번 포스팅은 DeepMind에서 발표된 [AACC: Asymmetric Actor-Critic in Contextual Reinforcement Learning](https://arxiv.org/abs/2208.02376) 논문을 읽고 정리한 내용입니다. 
+이번 포스팅은 DeepMind에서 발표된 [DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning](https://arxiv.org/abs/2301.10602) 논문을 읽고 정리한 내용입니다. 
 
 # Abstrct 
 
@@ -21,4 +20,4 @@ Reinforcement Learning (RL) techniques havedrawn great attention in many challen
 
 # Reference
 
-- [Original Paper: Asymmetric Actor-Critic in Contextual Reinforcement Learning](https://arxiv.org/abs/2208.023762)
+- [Original Paper: DreamWaQ](https://arxiv.org/abs/2301.10602)

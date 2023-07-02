@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-06-29">
-<meta name="description" content="Asymmetric Actor-Critic in Contextual Reinforcement Learning">
+<meta name="dcterms.date" content="2023-07-02">
+<meta name="description" content="Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning">
 
-<title>Curieux.JY - 📃AACC</title>
+<title>Curieux.JY - 📃DreamWaQ</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">📃AACC</h1>
+<h1 class="title">📃DreamWaQ</h1>
   <div class="quarto-categories">
     <div class="quarto-category">context</div>
     <div class="quarto-category">rl</div>
@@ -139,7 +139,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <div>
   <div class="description">
-    Asymmetric Actor-Critic in Contextual Reinforcement Learning
+    Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning
   </div>
 </div>
 
@@ -150,7 +150,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 29, 2023</p>
+      <p class="date">July 2, 2023</p>
     </div>
   </div>
   
@@ -160,7 +160,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 </header>
 
-<p>이번 포스팅은 DeepMind에서 발표된 <a href="https://arxiv.org/abs/2208.02376">AACC: Asymmetric Actor-Critic in Contextual Reinforcement Learning</a> 논문을 읽고 정리한 내용입니다.</p>
+<p>이번 포스팅은 DeepMind에서 발표된 <a href="https://arxiv.org/abs/2301.10602">DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning</a> 논문을 읽고 정리한 내용입니다.</p>
 <section id="abstrct" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Abstrct</h1>
 <p>Reinforcement Learning (RL) techniques havedrawn great attention in many challenging tasks,but their performance deteriorates dramaticallywhen applied to real-world problems. Variousmethods, such as domain randomization, have beenproposed to deal with such situations by trainingagents under different environmental setups, andtherefore they can be generalized to different envi-ronments during deployment. However, they usu-ally do not incorporate the underlying environmen-tal factor information that the agents interact withproperly and thus can be overly conservative whenfacing changes in the surroundings. In this paper,we first formalize the task of adapting to changingenvironmental dynamics in RL as a generaliza-tion problem using Contextual Markov DecisionProcesses (CMDPs). We then propose the Asym-metric Actor-Critic in Contextual RL (AACC) asan end-to-end actor-critic method to deal with suchgeneralization tasks. We demonstrate the essen-tial improvements in the performance of AACCover existing baselines experimentally in a rangeof simulated environments</p>
@@ -171,7 +171,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="reference" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Reference</h1>
 <ul>
-<li><a href="https://arxiv.org/abs/2208.023762">Original Paper: Asymmetric Actor-Critic in Contextual Reinforcement Learning</a></li>
+<li><a href="https://arxiv.org/abs/2301.10602">Original Paper: DreamWaQ</a></li>
 </ul>
 
 
