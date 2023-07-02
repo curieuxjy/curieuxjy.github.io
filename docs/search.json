@@ -480,7 +480,7 @@
     "href": "posts/paper/2023-07-02-dreamwaq.html#key-contribution",
     "title": "📃DreamWaQ",
     "section": "2.1 Key Contribution",
-    "text": "2.1 Key Contribution\n\n\n\nOverview of DreamWaQ\n\n\nDreamWaQ 알고리즘의 전체적인 흐름은 위의 사진과 같습니다. “Dream”이라는 워딩과 알고리즘 개괄도에서 생각 풍선 모양 표현에서 볼 수 있듯이 DreamWaQ 논문의 주요 Contribution으로는 Implicit Terrain Imagination을 할 수 있도록 Context-Aided Estimator Network(CENet)을 도입하여 강화학습 보행 제어기를 설계한 점을 들 수 있습니다."
+    "text": "2.1 Key Contribution\n\n\n\nOverview of DreamWaQ\n\n\nDreamWaQ 알고리즘의 전체적인 흐름은 위의 사진과 같습니다. “Dream”이라는 워딩과 알고리즘 개괄도에서 생각 풍선 모양 표현에서 볼 수 있듯이 DreamWaQ 논문의 주요 Contribution으로는 Implicit Terrain Imagination을 할 수 있도록 Context-Aided Estimator Network(CENet)을 도입하였고 안정적으로 Policy가 학습될 수 있도록 Adaptive Bootstrapping(AdaBoot)방법을 제안하여 강화학습 보행 제어기를 설계한 점을 들 수 있습니다."
   },
   {
     "objectID": "posts/paper/2023-07-02-dreamwaq.html#implicit-terrain-imagination",
@@ -494,28 +494,28 @@
     "href": "posts/paper/2023-07-02-dreamwaq.html#asymmetric-actor-critic",
     "title": "📃DreamWaQ",
     "section": "2.3 Asymmetric Actor-Critic",
-    "text": "2.3 Asymmetric Actor-Critic\n기존의 PPO, SAC와 같은 Policy Gradient의 강화학습 알고리즘들의 주요 구성요소로 Actor Network와 Critic(Value) Network가 있습니다. Actor는 강화학습 에이전트가 취해야하는 action 값을 출력하는 네트워크이며 Critic는 에이전트의 학습 방향을 보여주는 value값을 출력하여 이 2개의 네트워크들이 Policy Gradient 알고리즘의 목적식을 따라 Return(누적 보상)값을 최대화하는 방향으로 학습하게 되는 것입니다. 보통 2개의 네트워크 모두에게 같은 state(혹은 observation) 정보가 입력값으로 들어가게 되기 때문에 Actor 네트워크와 Critic 네트워크는 서로 Symmetric하다고 할 수 있습니다.\n하지만 앞서 로봇이 센서 없이는 얻을 수 없는 지형 정보가 강화학습 알고리즘에 사용되는 네트워크의 인풋으로 들어간다면 실제 로봇에서 알고리즘이 돌아갈 때 넣어줄 지형정보가 없기 때문에 제어 알고리즘이 돌아갈 수 없을 것 입니다. 그래서 DreamWaQ에서는 Actor/Critic Network의 상호작용 과정에서 강화학습 에이전트가 얻을 수 있는 시간적 정보들을 기반으로 terrain 정보를 상상할 수 있도록, Actor 네트워크에 들어가는 입력값과 Critic 네트워크에 들어가는 입력값을 다르게 설계하였고 이를 Asymmetric한 구조라고 볼 수 있습니다.\n\n\n\nAsymmetric Actor-Critic\n\n\n위에 보이시는 것처럼 Actor Network에는 Observation o_t, estimated velocity v_t, latent vector z_t가 입력으로 들어가게 됩니다. v_t와 z_t는 다음 파트에서 좀 더 살펴볼 예정이므로 여기에서는 우선 observation vecter인 o_t에 초점을 맞추어서 보겠습니다. observation 정보는 강화학습 MDP를 정의하는 한 요소로 강화학습 에이전트가 학습할 때 관측(혹은 접근 가능한 정보)하는 정보입니다. 따라서 로봇에 특별한 비젼 센서 추가 없이 로봇 자체 하드웨어에서 얻을 수 있는 정보인 proprioceptive 정보를 기반으로 몸체의 각속도 \\omega_t, 중력방향 벡터 g_t 등등의 정보가 observation vector의 요소로 들어가게 됩니다. 반면, Critic Network에는 State s_t가 입력값으로 들어가는 것을 알 수 있는데 이는 위에서 Observation과 State를 비교해놓은 것과 같이 state가 observation보다 많은 정보를 포함한 것을 알 수 있습니다. 여기에서 주목해서 볼 수 있는 점이 바로 지형에 대한 정보인 heightmap scan h_t가 한 요소임을 알 수 있고 이를 통해 implicit한 terrain imagination이 가능한 것 입니다. Heightmap scan에 대해 조금 더 설명을 덧붙이자면, 지형의 heightmap scan 정보는 실제 로봇에서 얻을 수 있는 정보는 아니고 강화학습 에이전트가 학습하게 되는 시뮬레이션에서만 얻을 수 있는 정보로 지형의 z축 방향의 높이 정보를 말합니다."
+    "text": "2.3 Asymmetric Actor-Critic\n기존의 PPO, SAC와 같은 Policy Gradient의 강화학습 알고리즘들의 주요 구성요소로 Actor Network와 Critic(Value) Network가 있습니다. Actor는 강화학습 에이전트가 취해야하는 action 값을 출력하는 네트워크이며 Critic는 에이전트의 학습 방향을 보여주는 value값을 출력하여 이 2개의 네트워크들이 Policy Gradient 알고리즘의 목적식을 따라 Return(누적 보상)값을 최대화하는 방향으로 학습하게 되는 것입니다. 보통 2개의 네트워크 모두에게 같은 state(혹은 observation) 정보가 입력값으로 들어가게 되기 때문에 Actor 네트워크와 Critic 네트워크는 서로 Symmetric하다고 할 수 있습니다.\n하지만 앞서 로봇이 센서 없이는 얻을 수 없는 지형 정보가 강화학습 알고리즘에 사용되는 네트워크의 인풋으로 들어간다면 실제 로봇에서 알고리즘이 돌아갈 때 넣어줄 지형정보가 없기 때문에 제어 알고리즘이 돌아갈 수 없을 것 입니다. 그래서 DreamWaQ에서는 Actor/Critic Network의 상호작용 과정에서 강화학습 에이전트가 얻을 수 있는 시간적 정보들을 기반으로 terrain 정보를 상상할 수 있도록, Actor 네트워크에 들어가는 입력값과 Critic 네트워크에 들어가는 입력값을 다르게 설계하였고 이를 Asymmetric한 구조라고 볼 수 있습니다.\n\n\n\nAsymmetric Actor-Critic\n\n\n위에 보이시는 것처럼 Actor Network에는 Observation o_t, estimated velocity v_t, latent vector z_t가 입력으로 들어가게 됩니다. v_t와 z_t는 다음 파트에서 좀 더 살펴볼 예정이므로 여기에서는 우선 observation vecter인 o_t에 초점을 맞추어서 보겠습니다. observation 정보는 강화학습 MDP를 정의하는 한 요소로 강화학습 에이전트가 학습할 때 관측(혹은 접근 가능한 정보)하는 정보입니다. 따라서 로봇에 특별한 비젼 센서 추가 없이 로봇 자체 하드웨어에서 얻을 수 있는 정보인 proprioceptive 정보를 기반으로 몸체의 각속도 \\omega_t, 중력방향 벡터 g_t 등등의 정보가 observation vector의 요소로 들어가게 됩니다. 반면, Critic Network에는 State s_t가 입력값으로 들어가는 것을 알 수 있는데 이는 위에서 Observation과 State를 비교해놓은 것과 같이 state가 observation보다 많은 정보를 포함한 것을 알 수 있습니다. 여기에서 주목해서 볼 수 있는 점이 바로 지형에 대한 정보인 heightmap scan h_t가 한 요소임을 알 수 있고 이를 통해 implicit한 terrain imagination이 가능한 것 입니다. Heightmap scan에 대해 조금 더 설명을 덧붙이자면, 지형의 heightmap scan 정보는 실제 로봇에서 얻을 수 있는 정보는 아니고 강화학습 에이전트가 학습하게 되는 시뮬레이션에서만 얻을 수 있는 정보로 지형의 z축 방향의 높이 정보를 말합니다.\n환경을 정의하는 변수이고 시뮬레이션에서는 가상공간이기 때문에 프로그램에서 얻을 수 있는 물리적 정보이지만 실제로 로봇이 이용할 수 없는 정보를 privileged observation이라고 부르기도 합니다. 따라서 기존에 강화학습에서 State가 환경에서 에이전트가 놓여있는 상황을 설명할 수 있는 모든 정보를 말하고 Observation이 환경에 놓여있는 에이전트가 관찰할 수 있는 일부 상태 정보를 뜻하기 때문에 State = Observation + Privileged Observation 포함관계로 이해할 수 있습니다.(논문에서는 privileged observation이라는 표기를 state를 뜻하는 것으로 표기하고 있기 때문에 헷갈릴 수 있습니다.)"
   },
   {
     "objectID": "posts/paper/2023-07-02-dreamwaq.html#context-aided-estimator-network",
     "href": "posts/paper/2023-07-02-dreamwaq.html#context-aided-estimator-network",
     "title": "📃DreamWaQ",
     "section": "2.4 Context-Aided Estimator Network",
-    "text": "2.4 Context-Aided Estimator Network\n이번 파트에서 살펴보게 될 Context-Aided Estimator Network는 센서로 인식할 수 없는 지형 정보를 에이전트가 유추할 수 있도록 하는 일등공신 아이디어 입니다.\n\n\n\nThe architecture of CENet\n\n\nCENet의 구조는 위와 같이 \\beta-VAE구조를 활용하여 구성되어 있습니다.\n\n\n\nThe loss of CENet"
+    "text": "2.4 Context-Aided Estimator Network\n이번 파트에서 살펴보게 될 Context-Aided Estimator Network는 센서로 인식할 수 없는 지형 정보를 에이전트가 유추할 수 있도록 하는 일등공신 아이디어 입니다.\n\n\n\nThe architecture of CENet\n\n\nCENet의 구조는 위와 같이 \\beta-VAE구조를 활용하여 구성되어 있습니다. 일정 time horizon H동안 모은 observation이 Encoder에 들어가면 latent vector z와 몸체의 선속도 추정값인 v_t가 출력값으로 나오게 됩니다. Auto-Encoder의 일반적인 구조를 따라 이 값들이 Decoder의 인풋으로 들어가고 Decoder의 출력값으로는 time horizon을 지난 다음 observation vector o_{t+1}을 reconstruction할 수 있도록 학습하게 되는 것 입니다.\n\n\n\nThe loss of CENet\n\n\n그래서 CENet의 loss function은 크게 2개의 파트 L_{est}와 L_{VAE}로 나누어져 있는 것을 확인할 수 있습니다. 먼저 L_{est}는 보행하는 로봇 에이전트의 속도 추정을 CENet에서 할 수 있도록 학습하기 위한 부분으로, 로봇 몸체의 선속도 추정값 \\tilde{v}_t는 실제 정답값 v_t는 시뮬레이션에서는 얻을 수 있는 값이기 때문에 Encoder에서 추정한 값 \\tilde{v}_t와의 MSE(mean square error)를 구할 수 있습니다. 다음으로 L_{VAE}는 time horizon H동안 누적되 여러개의 observation 정보를 가지고 다음 observation o_{t+1}을 오토인코더 구조로 잘 reconstruction한지를 보는 첫번째 term과 추정 분포를 맞추는 부분인 KL-divergence 제약 조건 두번째 term으로 이루어져 있습니다. (VAE loss에 대해서 더 자세한 정보를 알고 싶으신 분은 이전에 VAE 논문을 리뷰한 포스팅을 참고해주세요.)\n이와 같은 loss 구성으로 학습된 CENet은 여러 타임 스텝동안 관찰된 observation 정보들을 기반으로 에이전트가 privileged observation을 유추할 것으로 기대할 수 있는 이유는 privileged observation을 기반으로 가치를 추정하는 Critic(Value) Network를 통해서 Actor Network가 업데이트 되는 Policy gradient과정을 거치기 때문입니다. 이러한 Asymmetric Actor-Critic구조와의 시너지 효과가 기존의 Context RL 분야에서도 사용되는 아이디어 인데(참조논문: AACC) 이와 비교해보았을 때, Critic Network가 deploy되는 과정에서 쓰이지 않기 때문에 Actor보다 더 많은 정보를 받아서 더 정확한 가치를 추정할 수 있게 한다는 기조는 비슷하지만 time-invarient한 context vector를 만드는 Context RL에서의 Asymmetric Actor-Critic과 다르게 DreamWaQ에서는 time-varient한 변수들을 추정하여 implicit하게 추정할 수 있도록 했다는 점이 다릅니다.\nAdaptive Bootstrapping(AdaBoot)\nAdaptive bootstrapping은 policy 학습과정 중에 Estimator network인 CENet이 안정적으로 학습되도록 하기 위해 domain randomized로 다양화된 여러 환경요소에 대해 에피소드별 reward의 평균값에 대한 표준 편차의 비율인 변동 계수(CV)에 의해 제어되는 방법을 말합니다. 핵심 아이디어는 부정확한 가치 추정에 대한 정책을 보다 견고하게 만들기 위해 m개의 에이전트 reward의 CV가 작을 때 부트스트래핑을 하게됩니다. 반대로 에이전트가 충분히 학습하지 않은 경우에는 reward에서 큰 CV로 표시된 것처럼 부트스트랩을 해서는 안하도록 합니다.\n\n\n\nAdaptive Bootstrapping Probability"
   },
   {
-    "objectID": "posts/paper/2023-07-02-dreamwaq.html#simultation",
-    "href": "posts/paper/2023-07-02-dreamwaq.html#simultation",
+    "objectID": "posts/paper/2023-07-02-dreamwaq.html#simultation-result",
+    "href": "posts/paper/2023-07-02-dreamwaq.html#simultation-result",
     "title": "📃DreamWaQ",
-    "section": "3.1 Simultation",
-    "text": "3.1 Simultation\n시뮬레이션에서의 학습결과를 살펴보면,\n\n\n\nThe loss of CENet"
+    "section": "3.1 Simultation Result",
+    "text": "3.1 Simultation Result\n\n\n\nThe loss of CENet\n\n\nIsaac Gym 시뮬레이터를 이용하여 PPO 강화학습 알고리즘 이용하여 학습과정 동안의 Episodic Reward 그래프 변화를 살펴보면, EstimatorNet은 처음에는 AdaptationNet보다 평균 에피소드 보상이 높지만, 더 많은 training step 후에 더 어려운 지형과 마주치기 때문에 더 많은 반복 후에 성능이 저하됨을 알 수 있습니다. 반대로 DreamWaQ는 학습 지형이 점점 어려워 짐에도 다른 모든 방법들을 능가하는 퍼포먼스를 보여줍니다. 외부 인식 없이 걷는 것임에도 DreamWaQ는 주변 지형의 heightmap을 다 알 수 있는 오라클 policy만큼 성능이 좋은 것을 볼 수 있습니다.\nExplicit Estimation Comparison\n시뮬레이션에서 한번 지형정보를 Implicit가 아닌 Explicit하게 알려주고 학습한다면 어떤 유의미한 차이가 있는지 알아보는 실험도 진행했습니다.\n\n\n\nAdaptive Bootstrapping Probability\n\n\nTimestep이 늘어날 수록 더 어려운 계단지형에서 보행하도록 학습시킨 결과 Explicit하게 지형정보를 학습한 Estimator는 지형이 어려워지자 Foot stumble 현상이 심하게 있었지만 DreamWaQ는 지형이 어려워져도 작은 foot stumble이 있음을 확인하여 오히려 Implicit하게 지형정보를 학습하는 것인 robust한 보행을 하는 것을 확인할 수 있었다고 합니다."
   },
   {
-    "objectID": "posts/paper/2023-07-02-dreamwaq.html#real-world",
-    "href": "posts/paper/2023-07-02-dreamwaq.html#real-world",
+    "objectID": "posts/paper/2023-07-02-dreamwaq.html#real-world-result",
+    "href": "posts/paper/2023-07-02-dreamwaq.html#real-world-result",
     "title": "📃DreamWaQ",
-    "section": "3.2 Real-world",
-    "text": "3.2 Real-world"
+    "section": "3.2 Real-world Result",
+    "text": "3.2 Real-world Result\n\n\n\n실제 로봇 플랫폼을 가지고 Command tracking error를 plot 해보았을 때도 다른 비교 모델들과 비교해보았을 때 error 값이 적은 것을 확인할 수 있습니다. 특히나 AdaBoot방법이 있고 없고에 따라 error값의 크기가 다른 것을 통해 AdaBoot 방법이 policy 학습에 필요한 것을 확인할 수 있습니다."
   },
   {
     "objectID": "posts/paper/2022-06-26-keep-learning.html",

@@ -144,10 +144,10 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments"><span class="toc-section-number">3</span>  Experiments</a>
   <ul class="collapse">
-  <li><a href="#simultation" id="toc-simultation" class="nav-link" data-scroll-target="#simultation"><span class="toc-section-number">3.1</span>  Simultation</a></li>
-  <li><a href="#real-world" id="toc-real-world" class="nav-link" data-scroll-target="#real-world"><span class="toc-section-number">3.2</span>  Real-world</a></li>
+  <li><a href="#simultation-result" id="toc-simultation-result" class="nav-link" data-scroll-target="#simultation-result"><span class="toc-section-number">3.1</span>  Simultation Result</a></li>
+  <li><a href="#real-world-result" id="toc-real-world-result" class="nav-link" data-scroll-target="#real-world-result"><span class="toc-section-number">3.2</span>  Real-world Result</a></li>
   </ul></li>
-  <li><a href="#discussion-conclusion" id="toc-discussion-conclusion" class="nav-link" data-scroll-target="#discussion-conclusion"><span class="toc-section-number">4</span>  Discussion &amp; Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">4</span>  Conclusion</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="toc-section-number">5</span>  Reference</a></li>
   </ul>
 </nav>
@@ -212,7 +212,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 Overview of DreamWaQ
 </figcaption>
 </center>
-<p>DreamWaQ 알고리즘의 전체적인 흐름은 위의 사진과 같습니다. “Dream”이라는 워딩과 알고리즘 개괄도에서 생각 풍선 모양 표현에서 볼 수 있듯이 DreamWaQ 논문의 주요 Contribution으로는 <strong>Implicit Terrain Imagination</strong>을 할 수 있도록 <strong>Context-Aided Estimator Network(CENet)</strong>을 도입하여 강화학습 보행 제어기를 설계한 점을 들 수 있습니다.</p>
+<p>DreamWaQ 알고리즘의 전체적인 흐름은 위의 사진과 같습니다. “Dream”이라는 워딩과 알고리즘 개괄도에서 생각 풍선 모양 표현에서 볼 수 있듯이 DreamWaQ 논문의 주요 Contribution으로는 <strong>Implicit Terrain Imagination</strong>을 할 수 있도록 <strong>Context-Aided Estimator Network(CENet)</strong>을 도입하였고 안정적으로 Policy가 학습될 수 있도록 <strong>Adaptive Bootstrapping(AdaBoot)</strong>방법을 제안하여 강화학습 보행 제어기를 설계한 점을 들 수 있습니다.</p>
 </section>
 <section id="implicit-terrain-imagination" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="implicit-terrain-imagination"><span class="header-section-number">2.2</span> Implicit Terrain Imagination</h2>
@@ -231,6 +231,7 @@ Asymmetric Actor-Critic
 </figcaption>
 </center>
 <p>위에 보이시는 것처럼 <strong>Actor Network에는</strong> Observation <span class="math inline">o_t</span>, estimated velocity <span class="math inline">v_t</span>, latent vector <span class="math inline">z_t</span>가 입력으로 들어가게 됩니다. <span class="math inline">v_t</span>와 <span class="math inline">z_t</span>는 다음 파트에서 좀 더 살펴볼 예정이므로 여기에서는 우선 observation vecter인 <span class="math inline">o_t</span>에 초점을 맞추어서 보겠습니다. observation 정보는 강화학습 MDP를 정의하는 한 요소로 강화학습 에이전트가 학습할 때 <code>관측(혹은 접근 가능한 정보)</code>하는 정보입니다. 따라서 로봇에 특별한 비젼 센서 추가 없이 로봇 자체 하드웨어에서 얻을 수 있는 정보인 proprioceptive 정보를 기반으로 몸체의 각속도 <span class="math inline">\omega_t</span>, 중력방향 벡터 <span class="math inline">g_t</span> 등등의 정보가 observation vector의 요소로 들어가게 됩니다. 반면, <strong>Critic Network</strong>에는 State <span class="math inline">s_t</span>가 입력값으로 들어가는 것을 알 수 있는데 이는 위에서 Observation과 State를 비교해놓은 것과 같이 state가 observation보다 많은 정보를 포함한 것을 알 수 있습니다. 여기에서 주목해서 볼 수 있는 점이 바로 지형에 대한 정보인 <strong>heightmap scan <span class="math inline">h_t</span></strong>가 한 요소임을 알 수 있고 이를 통해 implicit한 terrain imagination이 가능한 것 입니다. Heightmap scan에 대해 조금 더 설명을 덧붙이자면, 지형의 heightmap scan 정보는 실제 로봇에서 얻을 수 있는 정보는 아니고 강화학습 에이전트가 학습하게 되는 시뮬레이션에서만 얻을 수 있는 정보로 <strong>지형의 z축 방향의 높이 정보</strong>를 말합니다.</p>
+<p>환경을 정의하는 변수이고 시뮬레이션에서는 가상공간이기 때문에 프로그램에서 얻을 수 있는 물리적 정보이지만 실제로 로봇이 이용할 수 없는 정보를 <strong>privileged observation</strong>이라고 부르기도 합니다. 따라서 기존에 강화학습에서 State가 환경에서 에이전트가 놓여있는 상황을 설명할 수 있는 모든 정보를 말하고 Observation이 환경에 놓여있는 에이전트가 <code>관찰</code>할 수 있는 <code>일부</code> 상태 정보를 뜻하기 때문에 <strong>State = Observation + Privileged Observation</strong> 포함관계로 이해할 수 있습니다.(논문에서는 privileged observation이라는 표기를 state를 뜻하는 것으로 표기하고 있기 때문에 헷갈릴 수 있습니다.)</p>
 </section>
 <section id="context-aided-estimator-network" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="context-aided-estimator-network"><span class="header-section-number">2.4</span> Context-Aided Estimator Network</h2>
@@ -241,47 +242,74 @@ Asymmetric Actor-Critic
 The architecture of CENet
 </figcaption>
 </center>
-<p>CENet의 구조는 위와 같이 <span class="math inline">\beta</span>-VAE구조를 활용하여 구성되어 있습니다.</p>
+<p>CENet의 구조는 위와 같이 <span class="math inline">\beta</span>-VAE구조를 활용하여 구성되어 있습니다. 일정 time horizon <span class="math inline">H</span>동안 모은 observation이 Encoder에 들어가면 latent vector <span class="math inline">z</span>와 몸체의 선속도 추정값인 <span class="math inline">v_t</span>가 출력값으로 나오게 됩니다. Auto-Encoder의 일반적인 구조를 따라 이 값들이 Decoder의 인풋으로 들어가고 Decoder의 출력값으로는 time horizon을 지난 다음 observation vector <span class="math inline">o_{t+1}</span>을 reconstruction할 수 있도록 학습하게 되는 것 입니다.</p>
 <center>
 <img src="../../images/2023-07-02-dreamwaq/dw.png" width="67%">
 <figcaption>
 The loss of CENet
 </figcaption>
 </center>
+<p>그래서 CENet의 loss function은 크게 2개의 파트 <span class="math inline">L_{est}</span>와 <span class="math inline">L_{VAE}</span>로 나누어져 있는 것을 확인할 수 있습니다. 먼저 <span class="math inline">L_{est}</span>는 보행하는 로봇 에이전트의 속도 추정을 CENet에서 할 수 있도록 학습하기 위한 부분으로, 로봇 몸체의 선속도 추정값 <span class="math inline">\tilde{v}_t</span>는 실제 정답값 <span class="math inline">v_t</span>는 시뮬레이션에서는 얻을 수 있는 값이기 때문에 Encoder에서 추정한 값 <span class="math inline">\tilde{v}_t</span>와의 MSE(mean square error)를 구할 수 있습니다. 다음으로 <span class="math inline">L_{VAE}</span>는 time horizon <span class="math inline">H</span>동안 누적되 여러개의 observation 정보를 가지고 다음 observation <span class="math inline">o_{t+1}</span>을 오토인코더 구조로 잘 reconstruction한지를 보는 첫번째 term과 추정 분포를 맞추는 부분인 KL-divergence 제약 조건 두번째 term으로 이루어져 있습니다. (VAE loss에 대해서 더 자세한 정보를 알고 싶으신 분은 이전에 VAE 논문을 리뷰한 <a href="https://curieuxjy.github.io/posts/paper/2022-10-02-vae.html">포스팅</a>을 참고해주세요.)</p>
+<p>이와 같은 loss 구성으로 학습된 CENet은 여러 타임 스텝동안 관찰된 observation 정보들을 기반으로 에이전트가 privileged observation을 유추할 것으로 기대할 수 있는 이유는 privileged observation을 기반으로 가치를 추정하는 Critic(Value) Network를 통해서 Actor Network가 업데이트 되는 Policy gradient과정을 거치기 때문입니다. 이러한 Asymmetric Actor-Critic구조와의 시너지 효과가 기존의 <strong>Context RL</strong> 분야에서도 사용되는 아이디어 인데(참조논문: <a href="https://arxiv.org/abs/2208.02376">AACC</a>) 이와 비교해보았을 때, Critic Network가 deploy되는 과정에서 쓰이지 않기 때문에 Actor보다 더 많은 정보를 받아서 더 정확한 가치를 추정할 수 있게 한다는 기조는 비슷하지만 time-invarient한 context vector를 만드는 Context RL에서의 Asymmetric Actor-Critic과 다르게 DreamWaQ에서는 time-varient한 변수들을 추정하여 implicit하게 추정할 수 있도록 했다는 점이 다릅니다.</p>
+<p><strong>Adaptive Bootstrapping(AdaBoot)</strong></p>
+<p>Adaptive bootstrapping은 policy 학습과정 중에 Estimator network인 CENet이 안정적으로 학습되도록 하기 위해 domain randomized로 다양화된 여러 환경요소에 대해 에피소드별 reward의 평균값에 대한 표준 편차의 비율인 변동 계수(CV)에 의해 제어되는 방법을 말합니다. 핵심 아이디어는 부정확한 가치 추정에 대한 정책을 보다 견고하게 만들기 위해 m개의 에이전트 reward의 CV가 작을 때 부트스트래핑을 하게됩니다. 반대로 에이전트가 충분히 학습하지 않은 경우에는 reward에서 큰 CV로 표시된 것처럼 부트스트랩을 해서는 안하도록 합니다.</p>
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw5.png" width="67%">
+<figcaption>
+Adaptive Bootstrapping Probability
+</figcaption>
+</center>
 </section>
 </section>
 <section id="experiments" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Experiments</h1>
+<p>DreamWaQ의 효과를 실험을 통해 살펴보기 위해 다음과 같은 비교 모델군을 설정했습니다.</p>
 <p><strong>Compared Methods</strong></p>
 <ul>
-<li><strong>Baseline</strong>:</li>
-<li><strong>AdaptationNet</strong>:</li>
-<li><strong>EstimatorNet</strong>:</li>
-<li><strong>DreamWaQ w/o AdaBoot</strong>:</li>
-<li><strong>DreamWaQ w/ AdaBoot</strong>:</li>
+<li><strong>Baseline</strong>: Adaptation을 하는 부분이 없는 기본 모델 구조</li>
+<li><strong>AdaptationNet</strong>: Teacher-Student 구조를 활용하여 두 단계 학습을 거텨 implicit한 환경정보를 학습하는 모델</li>
+<li><strong>EstimatorNet</strong>: Context 추정이 없이 explicit하게 환경정보를 추정하는 Estimator network가 있는 모델</li>
+<li><strong>DreamWaQ w/o AdaBoot</strong>: AdaBoot를 하지 않은 DreamWaQ</li>
+<li><strong>DreamWaQ w/ AdaBoot</strong>: <code>[proposed method]</code> AdaBoot를 한 DreamWaQ</li>
 </ul>
-<section id="simultation" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="simultation"><span class="header-section-number">3.1</span> Simultation</h2>
-<p>시뮬레이션에서의 학습결과를 살펴보면,</p>
+<section id="simultation-result" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="simultation-result"><span class="header-section-number">3.1</span> Simultation Result</h2>
 <center>
 <img src="../../images/2023-07-02-dreamwaq/dw4.png" width="67%">
 <figcaption>
 The loss of CENet
 </figcaption>
 </center>
+<p>Isaac Gym 시뮬레이터를 이용하여 PPO 강화학습 알고리즘 이용하여 학습과정 동안의 Episodic Reward 그래프 변화를 살펴보면, EstimatorNet은 처음에는 AdaptationNet보다 평균 에피소드 보상이 높지만, 더 많은 training step 후에 더 어려운 지형과 마주치기 때문에 더 많은 반복 후에 성능이 저하됨을 알 수 있습니다. 반대로 DreamWaQ는 학습 지형이 점점 어려워 짐에도 다른 모든 방법들을 능가하는 퍼포먼스를 보여줍니다. 외부 인식 없이 걷는 것임에도 DreamWaQ는 주변 지형의 heightmap을 다 알 수 있는 오라클 policy만큼 성능이 좋은 것을 볼 수 있습니다.</p>
+<p><strong>Explicit Estimation Comparison</strong></p>
+<p>시뮬레이션에서 한번 지형정보를 Implicit가 아닌 <strong>Explicit하게 알려주고 학습한다면 어떤 유의미한 차이가 있는지</strong> 알아보는 실험도 진행했습니다.</p>
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw8.png" width="67%">
+<figcaption>
+Adaptive Bootstrapping Probability
+</figcaption>
+</center>
+<p>Timestep이 늘어날 수록 더 어려운 계단지형에서 보행하도록 학습시킨 결과 Explicit하게 지형정보를 학습한 Estimator는 지형이 어려워지자 Foot stumble 현상이 심하게 있었지만 DreamWaQ는 지형이 어려워져도 작은 foot stumble이 있음을 확인하여 오히려 Implicit하게 지형정보를 학습하는 것인 robust한 보행을 하는 것을 확인할 수 있었다고 합니다.</p>
 </section>
-<section id="real-world" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="real-world"><span class="header-section-number">3.2</span> Real-world</h2>
+<section id="real-world-result" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="real-world-result"><span class="header-section-number">3.2</span> Real-world Result</h2>
+<center>
+<img src="../../images/2023-07-02-dreamwaq/dw6.png" width="67%">
+</center>
+<p>실제 로봇 플랫폼을 가지고 Command tracking error를 plot 해보았을 때도 다른 비교 모델들과 비교해보았을 때 error 값이 적은 것을 확인할 수 있습니다. 특히나 AdaBoot방법이 있고 없고에 따라 error값의 크기가 다른 것을 통해 AdaBoot 방법이 policy 학습에 필요한 것을 확인할 수 있습니다.</p>
 </section>
 </section>
-<section id="discussion-conclusion" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Discussion &amp; Conclusion</h1>
+<section id="conclusion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
+<p>리뷰를 하면서 논문에서 애매하게 그려진 부분도 있어서 아쉽다는 생각이 들었지만 보행로봇이 비정형적이고 다양한 지형을 극복할 수 있도록 하는 것이 여전히 풀기 어려운 문제로 남아있는데 이를 추가적인 비젼센서 정보 없이 CENet과 AdaBoot라는 아이디어로 풀어내고 실제 학회에서 열린 대회에서도 좋은 퍼포먼스를 냈다는 점에서 좋은 연구라고 생각합니다.</p>
 </section>
 <section id="reference" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Reference</h1>
 <ul>
 <li><p><a href="https://arxiv.org/abs/2301.10602">Original Paper: DreamWaQ</a></p></li>
 <li><p><a href="https://quadruped-robot-challenges.notion.site/">ICRA 2023 Quadruped Robot Challenges</a></p></li>
+<li><p><a href="https://youtu.be/mhD5N6-SuGc">카이스트 사족보행 로봇 ··· MIT 제치고 세계대회 우승 비결은?</a></p></li>
+<li><p><a href="https://arxiv.org/abs/2208.02376">AACC: Asymmetric Actor-Critic in Contextual Reinforcement Learning</a></p></li>
 </ul>
 
 
