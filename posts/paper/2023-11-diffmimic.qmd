@@ -1,0 +1,9 @@
+---
+draft: true
+title: "📃DiffMimic"
+description: Learning Arm-Assisted Fall Damage Reduction and Recovery for Legged Mobile Manipulators
+date: "2023-11"
+categories: [diffusion, quadruped, paper]
+toc: true
+---
+
