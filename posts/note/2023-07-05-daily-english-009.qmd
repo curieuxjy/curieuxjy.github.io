@@ -1,0 +1,57 @@
+---
+title: "🌎Casual English Phrases 009"
+description: Daily English Series
+date: "2023-07-05"
+categories: [daily, english, casual, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+### 지지하다/응원하다
+
+**root for sm/sth**
+
+> to support or encourage somebody in a sports competition or when they are in a difficult situation
+
+- Most of the crowd were rooting for the home team.
+`대부분의 관중들이 홈팀을 응원하고 있었다.`
+
+- Good luck, I'm rooting for you! You'll be amazing.
+`행운을 빌어, 난 널 믿어! 넌 최고야.`
+
+- His whole hometown was rooting for him as he made his professional boxing debut on live television.
+`그의 고향 사람들은 그가 생방송으로 전문 복싱 데뷔를 하는 것을 응원했습니다.`
+
+- I've always rooted for the company to succeed, since they made some of my most cherished games growing up.
+`나는 어릴 적부터 그 회사가 성공하기를 항상 바래왔습니다. 그들은 내가 가장 소중히 여기는 게임들을 만들어왔기 때문이죠.`
+
+### 너 T야?(2nd meaning)
+
+**tone-deaf**
+
+> 1. unable to perceive public attitudes or preferences
+>
+> 2. lacking emotional insight; insensitive or unsympathetic to others
+
+- They're tone-deaf to the opinions of local people; they're telling them where the new hospital will be without listening to them.
+`그들은 현지 주민들의 의견을 무시하고 있습니다; 현지 주민들의 의견을 듣지 않고 새로운 병원이 어디에 위치할 것인지 말하고 있습니다.`
+
+- The council's politically tone-deaf plan would cost lower income residents an extra 100 dollars a year. They simply can't afford it.
+`시의 여론을 반영하지 않는(정치적으로 귀담아 듣지 못하는) 계획은 저소득 주민들에게 매년 추가로 100달러의 비용이 들게 할 것입니다. 그들은 당연히 그 비용을 감당할 수 없습니다.`
+
+- She is often tone-deaf to her daughter's needs.
+`그녀는 가끔 딸의 도움(정서적 교류의 필요)에 귀기울이지 못한다.`
+
+### 내 손바닥 안이야
+
+**have someone in one's pocket**
+
+> to have complete control over someone
+
+- Don't worry about the mayor. She'll cooperate. I've got her in my pocket.
+
+
+- John will do just what I tell him. I've got him and his brother in my pocket.
+
+- I hear that the boss has half the police force in his pocket.
