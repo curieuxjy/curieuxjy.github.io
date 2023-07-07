@@ -1,5 +1,5 @@
 ---
-title: "📘Gueltto End"
+title: "📘Gueltto 7th End"
 description: 글또 7기를 마무리하며
 date: "2022-10-29"
 categories: [geultto, 2022]

@@ -1,5 +1,5 @@
 ---
-title: "📘Geultto Start"
+title: "📘Geultto 7th Start"
 description: 안녕하세요 글또 7기입니다
 date: "2022-05-06"
 categories: [geultto, 2022]
