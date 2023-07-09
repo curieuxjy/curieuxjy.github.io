@@ -1,6 +1,6 @@
 ---
-title: "📘Machine Learning using Python-Theory and Application"
-description: TU Berlin Winter University Online 2021으로 Machine Learning 배운 후기
+title: "📘2021 TU Berlin Winter Course 수강 후기 "
+description: Machine Learning using Python - Theory and Application Online Course
 date: "2021-01-31"
 categories: [diary, 2021]
 toc: true
