@@ -3,7 +3,7 @@ draft: true
 title: "📘나를 대하는 나의 자세"
 description: 실패와 감정에 초점을 두고
 date: "2023-05-11"
-categories: [gueltto, 2023]
+categories: [diary, 2023]
 toc: true
 execute:
   freeze: auto 
