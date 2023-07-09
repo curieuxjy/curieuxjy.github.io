@@ -1,6 +1,6 @@
 ---
 title: "Jung Yeon Lee"
-image: profile.png
+image: pic.png
 about:
   template: trestles
   image-shape: round
@@ -63,4 +63,4 @@ My current motto is "Stop Wishing, Start Doing", and I'm looking forward to the 
 * Completed Accereditation Board for Engineering Education of Korea(ABEEK)
 * Undergraduate research student at [Autonomous Navigation Lab](https://sites.google.com/view/autonav/home)
 
-> If you want to know more details about my experiences, you can find them in my CURRICULUM VITAE.📃 [CV_2022](https://drive.google.com/file/d/1a-q7JUfFW58ScA9GtKwkiv1nZfOUbr94/view?usp=sharing)
+> If you want to know more details about my experiences, you can find them in [my CURRICULUM VITAE.📃](https://www.overleaf.com/read/rxbyjzvjvmvd)
