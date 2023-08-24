@@ -1,0 +1,136 @@
+---
+draft: true
+title: "👩‍💻JAX"
+description: 2023 Pycon JAX Tutorial
+date: "2023-08-21"
+categories: [context, rl, paper]
+toc: true
+number-sections: true
+---
+
+
+# JAX 101
+
+- JAX is Autograd and XLA, brought together for high-performance numerical computing `JAX는 XLA와 Autograd를 이용해 머신러닝 연구와 고성능 연산작업을 위해 만든 프레임 워크`
+
+- NumPy와 비슷하다
+- 연산장치(CPU/GPU/TPU)별 이동이 자유롭다?
+
+1. Numpy와 유사하게 사용
+
+```python
+import jax
+import jax.numpy as jnp
+
+import
+
+```
+
+**BUT** 차이점은 있다.
+- NumPy의 Array는 **가변적**
+- JAX NumPy Array는 **불변적**: `y = x.at[idx].set(value)`와 같은 방식으로 변경해야 함
+
+1-1. Numpy case
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3])
+
+def in_place_modify(x):
+    x[0] = 123
+    return None
+
+in_place_modify(x)
+x
+```
+
+1-2. JAX case
+```python
+def jax_in_place_modify(x):
+    return x.at[0].set(123)
+
+y = jnp.array([1, 2, 3])
+jax_in_place_modify(y)
+```
+
+2. JIT(Just-In-Time) Compilation
+
+- Interpreter와 Compiler의 절충안
+- 런타임 실행 시 코드의 일부분을 컴파일하여 속도를 향상
+- JAX에서는 `@jit` 또는 `jsx.jit()`으로 사용
+
+**XLA** 다시보기!
+
+```
+XLA(Accelerated Linear Algebra)는 CPU, GPU 및 맞춤형 액셀러레이터(like TPU)와 같은 연산기기에 대해 JIT 컴파일 기법을 사용하여 런타임에 사용자가 생성한 연산 그래프를 분석하고 실제 런타임 차원과 유형에 맞게 최적화하며, 여러 연산을 함께 합성하고 이에 대한 효율적인 네이티브 기계어 코드를 내보낸다.
+
+```
+
+JIT 효과 확인하기
+
+```python
+import jax
+import jax.numpy as jnp
+
+def selu(x, alpha=1.67, lambda_=1.05):
+    return lambda_ * jnp.where(x>0, x, alpha * jnp.exp(x) - alpha)
+
+x = jnp.arange(100000)
+%timeit selu(x).block_until_ready() # JIT 사용하지 않을 때
+
+selu_jit = jax.jit(selu)
+
+# Warm up
+selu_jit(x).block_until_ready()
+
+%timeit selu_jit(x).block_until_ready() # JIT 사용했을 때
+
+```
+
+3. Autograd
+
+- `jax.grad()`로 자동 미분
+
+```python
+import jax
+
+f = lambda x: x**3 + 2*x**2 - 3*x + 1
+
+dfdx = jax.grad(f)
+d2fdx = jax.grad(dfdx)
+d3fdx = jax.grad(d2fdx)
+d4fdx = jax.grad(d3fdx)
+
+```
+
+- `stop_gradient()`: 모델이 여러개 있을 때, 특정 모델이 학습하는 동안 다른 모델은 학습을 멈추길 바랄 때
+    - meta learning 기법에서 사용 가능
+
+```python 
+class blabla(nn.Module):
+
+class A(nn.Module):
+
+class B(nn.Module):
+
+def __cal__:
+    a = A(input)
+    b = B(a)
+    return b
+```
+
+```python
+def train_fn(A_params, B_params, x, y):
+    a = model_A.apply({'params': A_params}, x)
+    b = model_B.apply({'params': B_params}, a)
+    return loss_fn(b, y)
+
+def train_fn_A_learn(A_params, B_params, x, y):
+    return train_fn(A_params, jax.lax.stop_gradient(B_params), x, y)
+
+def train_fn_B_learn(A_params, B_params, )
+```
+
+
+
