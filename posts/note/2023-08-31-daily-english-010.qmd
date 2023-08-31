@@ -1,0 +1,64 @@
+---
+title: "🌎Casual English Phrases 010"
+description: Daily English Series
+date: "2023-08-31"
+categories: [daily, english, casual, 2023]
+toc: true
+execute:
+  freeze: auto 
+---
+
+### 최고야
+
+**Nothing beats ~**
+
+> 가장 좋아하는 것을 말할 때 유용한 표현
+
+- Nothing beats "About Time"
+`"About Time" 영화가 최고야.`
+
+- Nothing beats a good nap.
+`좋은 낮잠이 최고야.`
+
+- Nothing beats pizza.
+`피자보다 좋은 건 없어.`
+
+### 완전 동의/공감해!
+
+**I couldn't agree more!**
+
+**It's hard to go wrong with that choice!**
+
+
+### 꼭 명심해야 할 점은
+
+**Rule number one,**
+
+
+- Rule number one, don't get yourself into this situation again.
+`첫 번쨰 규칙, 다시는 이런 상황을 만들지 마.`
+
+- Rule number one. Don't be late. Our boss hates being late.
+`꼭 명심해야 될 게 있어. 절대 늦으면 안돼. 우리 상사가 늦는 거 진짜 싫어해.`
+
+- Rule number one. The customer is always right.
+`첫번째 규칙, 가장 중요한 원칙: 손님은 언제나 옳다.`
+
+### 정신 차리고 제대로 살기 시작하다, 제대로 돌아가기 시작하다
+
+**get oneself together**
+
+
+- Got myself together. So now we'll see. `정신 차렸다고요. 이젠 어떻게 될지 두고봐야죠.`
+
+- You've got to stop drinking every day. Get yourself together! `너 매일 술 마시는 것 좀 그만하고 정신 좀 차려!`
+
+- The company got itself together and turned a profit. `그 회사는 재정비를 마치고 제대로 돌아가기 시작하면서 이윤을 내기 시작했다.`
+
+### 감정을 추스리다, 감정을 컨트롤하다
+
+**pull oneself together**
+
+- Pull yourself together. There's no point getting angry about it. `진정하고 감정 추스려. 화내 봤자 소용없어.`
+
+- Pull yourself together. You can't just sit here and cry. `감정 추스려. 여기 앉아서 울고만 있을 순 없잖아.`
