@@ -36,7 +36,7 @@ execute:
 
 
 - Rule number one, don't get yourself into this situation again.
-`첫 번쨰 규칙, 다시는 이런 상황을 만들지 마.`
+`첫 번째 규칙, 다시는 이런 상황을 만들지 마.`
 
 - Rule number one. Don't be late. Our boss hates being late.
 `꼭 명심해야 될 게 있어. 절대 늦으면 안돼. 우리 상사가 늦는 거 진짜 싫어해.`
