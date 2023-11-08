@@ -4,6 +4,7 @@ toc: true
 date: "2022-12-14"
 description: 리눅스에서 GPU 상태를 확인하는 여러가지 방법을 알아봅니다.
 categories: [linux, gpu, code]
+image: https://developer.download.nvidia.com/devblogs/GPUDashboard_Pic1.gif
 execute:
   freeze: auto 
 ---

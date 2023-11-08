@@ -3,6 +3,7 @@ title: "📃GN-Block"
 description: Graph Networks as Learnable Physics Engines for Inference and Control
 date: "2022-08-07"
 categories: [gnn, system identification, mpc, rl, paper]
+image: https://i.imgur.com/yN3GlTK.png?1
 toc: true
 execute:
   freeze: auto 

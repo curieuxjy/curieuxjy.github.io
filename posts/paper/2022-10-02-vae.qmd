@@ -4,6 +4,7 @@ description: Auto-Encoding Variational Bayes
 date: "2022-10-02"
 categories: [generative, variational inference, paper]
 toc: true
+image: https://i.imgur.com/ASS0s9R.jpg
 number-sections: true
 execute:
   freeze: auto 

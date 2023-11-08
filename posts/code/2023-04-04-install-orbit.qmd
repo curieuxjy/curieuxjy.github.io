@@ -7,6 +7,7 @@ description: Isaac Orbit Series 001
 categories: [orbit, isaacsim, code]
 callout-appearance: default
 fig-cap-location: top
+image: https://github.com/NVIDIA-Omniverse/Orbit/raw/main/docs/source/_static/tasks.jpg
 execute:
   freeze: auto 
 ---

@@ -3,6 +3,7 @@ title: "📃K-Accessibility for RL"
 description: Accessibility-Based Clustering for Efficient Learning of Locomotion Skills
 date: "2023-05-07"
 categories: [rl, clustering, quadruped, recovery, backflip, paper]
+image: ../../images/2023-05-07-accessibility/1.png
 toc: true
 number-sections: true
 ---

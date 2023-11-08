@@ -3,6 +3,7 @@ title: "📃WaveNet"
 description: A Generative Model for Raw Audio
 date: "2022-09-17"
 categories: [autoregressive, generative, paper]
+image: https://i.imgur.com/s1pIkp9.jpg
 toc: true
 execute:
   freeze: auto 

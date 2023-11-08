@@ -3,12 +3,15 @@ title: "🧩My Reinforcement Learning Roadmap"
 toc: true
 date: "2020-07-17"
 description: 내가 공부했던 강화학습 Roadmap
+image: ../../images/2020-07-17-rl-study-roadmap/ rlstudy.png
 categories: [rl, study, storage]
 ---
 
 강화학습을 공부했던 roadmap을 기록하고자 글을 쓰게 되었다.
 
 짧게 기록할 수 있는 정보들과 내 느낌들을 간략하게 적어보고자 한다.
+
+![](../../images/2020-07-17-rl-study-roadmap/ rlstudy.png)
 
 ## My RL study road map
 

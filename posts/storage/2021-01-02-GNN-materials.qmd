@@ -2,11 +2,14 @@
 title: "🧩GNN Materials"
 description: GNN 자료들 모음
 date: "2021-01-02"
+image: ../../images/2021-01-02-GNN-materials/gnn.png
 categories: [gnn, storage]
 toc: true
 ---
 
 GNN에 관심을 가지게 된 계기는 [RoboGrammar](https://cdfg.mit.edu/publications/robogrammar-graph-grammar-for-terrain-optimized-robot-design)라는 [paper](https://cdfg.mit.edu/assets/files/robogrammar.pdf)였다. 예전부터 하고 싶었던 Robot design 아이디어를 GNN을 가지고 실현시킨 것이 너무 신기해서 공부해보고 싶었다. 이번 포스팅에서는 GNN과 첫만남인 만큼 공부할 자료들을 정리해보려 한다.
+
+![](../../images/2021-01-02-GNN-materials/gnn.png)
 
 ## Materials
 - [Tobigs Graph Study](https://tobigs.gitbook.io/tobigs-graph-study)
