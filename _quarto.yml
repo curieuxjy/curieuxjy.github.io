@@ -13,7 +13,9 @@ website:
       - icon: github
         href: https://github.com/curieuxjy
   comments: 
-    hypothesis: true
+    hypothesis:
+      theme: clean
+      openSidebar: false
 
 format:
   html:
