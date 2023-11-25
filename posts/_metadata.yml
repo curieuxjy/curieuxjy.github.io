@@ -14,9 +14,3 @@ format:
     # title-block-style: default
     fontsize: 12pt
     linestretch: 2.0
-
-comments:
-  giscus:
-    repo: curieuxjy/curieuxjy.github.io
-    reactions-enabled: true
-    theme: light_high_contrast

@@ -16,6 +16,11 @@ website:
     hypothesis: 
       theme: clean
       openSidebar: false
+  page-footer: 
+    left: "Copyright 2023, Jung Yeon Lee" 
+    right: 
+      - icon: github
+        href: https://github.com/curieuxjy
 
 format:
   html:
@@ -26,8 +31,10 @@ format:
     page-layout: full
     html-math-method: katex
     theme:
-      - minty
-      - custom.scss
+      light: minty
+      dark: darkly
+      # - minty
+      # - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes 
 # sketchy simplex standstone minty pulse lux
 # https://quarto.org/docs/output-formats/html-themes.html#custom-themes
