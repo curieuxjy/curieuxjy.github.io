@@ -12,6 +12,8 @@ website:
       - note.qmd
       - icon: github
         href: https://github.com/curieuxjy
+  comments: 
+    hypothesis: true
 
 format:
   html:
