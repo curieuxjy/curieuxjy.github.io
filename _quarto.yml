@@ -12,10 +12,15 @@ website:
       - note.qmd
       - icon: github
         href: https://github.com/curieuxjy
-  comments: 
-    hypothesis:
-      theme: clean
-      openSidebar: false
+#  comments: 
+#    hypothesis:
+#      theme: clean
+#      openSidebar: false
+  comments:
+    giscus:
+      repo: curieuxjy/curieuxjy.github.io
+      reactions-enabled: true
+      theme: light_high_contrast
 
 format:
   html:
