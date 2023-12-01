@@ -13,10 +13,12 @@ execute:
 # 현재까지 글또 7기 활동
 
 3월 6일의 [다짐글](https://curieuxjy.github.io/blog/geultto/resolution/2022/05/06/geultto-7th-start.html)을 시작으로 현재까지 글또 활동 결산은 다음과 같습니다.
+
 - 총 9회차 중 7회의 글을 작성(해당 포스트 포함)
     - 개인 블로그 **5 posts**
     - GNN study CS224W **2 posts**
     - 2회 패스권 사용(시험기간)
+
 - 총 5x2=10회의 피드백 댓글
 - `딥러닝 리서치`채널의 맴버분들과 1회의 커피챗
 - 글또콘 참석
