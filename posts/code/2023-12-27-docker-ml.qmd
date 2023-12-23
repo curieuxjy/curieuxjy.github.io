@@ -1,0 +1,43 @@
+---
+draft: true
+title: "👩‍💻Docker 시작하기"
+toc: true
+date: "2023-12-27"
+description: Docker & Kubernetes (1)
+categories: [docker, kubernetes, code]
+---
+
+# Docker란?
+
+도커를 
+
+<center>
+<img src="../../images/2023-12-20-docker-ml/docker.png" alt="Docker Logo" width="67%" />
+    <figcaption>Docker Logo</figcaption>
+</center>
+
+
+# 왜 Docker와 컨테이너를 사용할까?
+
+# VM vs. Docker Container
+
+# Docker in Linux
+
+[Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)에서 참고하여 진행했습니다.
+
+
+# Docker Tools
+
+# IDE 설치 & 구성
+
+
+> [글또 X Udemy] Udemy의 `Docker & Kubernetes : 실전 가이드` 강의를 기반으로 스터디한 내용을 정리한 포스트 입니다.
+
+
+**Reference**
+
+- [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+
+- [Docker로 쾌적한 딥러닝 실험 환경 구성하기](https://pebpung.github.io/development/2022/01/11/Docker-1.html)
+
+- [Docker를 활용하여 딥러닝/머신러닝 환경을 10분만에 구성하고 jupyter notebook 원격 연결하기](https://teddylee777.github.io/linux/docker%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EB%94%A5%EB%9F%AC%EB%8B%9D-%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1/)
