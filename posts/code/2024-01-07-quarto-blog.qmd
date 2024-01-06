@@ -1,0 +1,36 @@
+---
+title: "👩‍💻Quarto Blog"
+toc: true
+date: "2024-01-07"
+description: Quarto로 속편한 Github Blog 구축하기
+categories: [blog, quarto, code]
+image: ../../images/2024-01-07-quarto-blog/blog (1).png
+---
+
+이번 포스팅은 Github Blog를 만들어갔던 경험과 그 경험들을 통해 [Qaurto](https://quarto.org/)라는 좋은 툴을 소개하기 위한 글로 준비를 했습니다. 본격적인 Quarto로 속편한 Github Blog를 구축하는 방법을 소개하기 전에 어떻게 Quarto를 알게 되었고 적극적으로 소개하게 되었는지 이야기를 드릴려고 합니다.
+
+
+<center>
+<img src="../../images/2023-12-20-quarto-blog/8bjluc.jpg" width="40%" />
+</center>
+
+ooo
+
+<center>
+<img src="../../images/2024-01-07-quarto-blog/blog (1).png" width="80%" />
+</center>
+
+
+# Qaurto
+
+
+# VSCode
+
+# Typora
+
+# Site 만들기
+
+
+**Reference**
+
+- [Quarto Homepage](https://quarto.org/)
