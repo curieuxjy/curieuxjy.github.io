@@ -361,7 +361,28 @@
     "href": "posts/code/2024-01-07-quarto-blog.html",
     "title": "👩‍💻Quarto Blog",
     "section": "",
-    "text": "이번 포스팅은 Github Blog를 만들어갔던 경험과 그 경험들을 통해 Qaurto라는 좋은 툴을 소개하기 위한 글로 준비를 했습니다. 본격적인 Quarto로 속편한 Github Blog를 구축하는 방법을 소개하기 전에 어떻게 Quarto를 알게 되었고 적극적으로 소개하게 되었는지 이야기를 드릴려고 합니다.\n\n\n\nooo\n\n\n\n\nQaurto\n\n\nVSCode\n\n\nTypora\n\n\nSite 만들기\nReference\n\nQuarto Homepage"
+    "text": "이번 포스팅은 Github Blog를 만들어갔던 경험과 그 경험들을 통해 Qaurto라는 좋은 툴을 소개하기 위한 글로 준비를 했습니다. 본격적인 Quarto로 속편한 Github Blog를 구축하는 방법을 소개하기 전에 어떻게 Quarto를 알게 되었고 적극적으로 소개하게 되었는지 이야기를 드릴려고 합니다.\n이전에 글또 7기를 시작하는 다짐글에서 잠깐 기술 블로그 방황기에 대해 언급을 한 적이 있었습니다. 하지만 기술 블로그를 작성해보고 싶은 계기부터 잠깐 이야기해보려고 합니다. 학부 전공은 기계공학과인지라 컴퓨터, IT 관련글들을 볼 기회가 많았던 것은 아니지만 어쩌다보니 AI, 인공지능의 매력에 빠져서 공부를 하다보니 책보다는 구글링과 유튜브로 많은 지식들을 배우게 되는 경험들이 자연스럽게 기술 블로그를 작성하는 문화에 젖어들게 만들었었습니다. 저와 같이 아무것도 모르는 사람들을 위해 친절한 설명들과 단계별 캡쳐 사진들을 따라가다보면 원하는 프로그램을 실행시킬 수 있었고, 때론 내가 막혀있던 점들을 푼 이전의 누군가의 간단히라도 적어둔 팁을 확인하고 도움을 얻을 수 있었기 때문에 잘 키워가는 기술 블로그 하나 열 책 안 부러울 정도로 기술 블로그에 대한 막연한 동경이 있었습니다.\n그러다가 어느 정도 공부를 하다보니 “나도 한번 내 기술 블로그를 운영해볼까?”라는 호기가 생겼습니다.\n시작도 하기 전에 (살짝은) 비장했던 마음도 있었고 설렜던 마음도 있었습니다. 아직 어떻게 블로그를 만들지 생각도 없었지만 나도 무언가를 아카이빙하고 그 글들이 다른 많은 사람들에게 도움이 되고 유명해지면 어떨까..?라는 행복회로를 돌리며 다들 어떻게 기술 블로그를 만드는지 찾아보기 시작했습니다. 나름 AI 공부를 하며 코딩을 할 줄 아니까 Markdown까지는 문서를 작성하는 규칙이니 쉽게 적응을 했지만, 웹개발은 정말 잘 모르는 분야에다가 웹개발 공부를 해서까지 Giithub 블로그를 만들 수는 없었기에 눈앞이 깜깜해지는 기분이었습니다.\n물론..! 이전에 Hugo, Notion 개인 도메인, Velog 등등 여러 블로그 구축 방법들도 있었지만 커스텀하기가 어려운 점도 있었고 새로운 언어를 더 공부해야 하는 경우들도 있었기 때문에 저는 최대한 블로그의 내가 쓸 내용 Contents에 집중할 수 있도록 내용이 Rendering되는 건 알아서 해주면 좋겠다는 바람이 있었습니다. (왜 Github Blog를 선택했는지는 여러 조건과 개인적 선호를 반영한 내용이 있으니 이전글을 참고해주세요!) 그러던 중에 FastAI에서 딥러닝 기술 블로그를 가장 심플하고 빠르게 작성할 수 있는 FastPages를 만들었다는 걸 알게 되었고 이 FastPages를 활용해서 잘 작성하고 있었습니다. FastPages의 최대 장점은 AI에서 많이 사용하는 Jupyter Notebook 형식의 파일을 그대로 포스팅을 할 수 있는 기능 등을 통해 원래 제가 원했던 점인 정말 Contents에 집중할 수 있는 환경을 만들어주는 Build 프로그램이었기에 정말 마음에 쏙 들었고 그대로 기술 블로그를 만들었습니다.\n그렇게 이제는 더이상 블로그 이사를 안할 줄 알았지만..(블로그 이사는 정말 품이 많이 드는 것 같아요🥲) fastpages repository에 청천벽력과 같은 공지가 붙게 되었습니다.\n아예 fastpages 서비스를 닫아서 블로그가 아예 안열리는 것은 아니었지만, 더 나은 블로그 지속성을 위해 마지막 블로그 이사를 Quarto로 하게 되었고 결과적으로는 fastpages보다 Quarto가 훨씬 사용하기도 편하고 잘 옮겼다는 생각이 들어서 오늘 이 포스팅을 통해 많은 분들께 알리고 싶어서 글을 작성하게 되었습니다. 생각보다 많은 분들이 알고 계시지 않은 것 같아 앞으로 주변에 더더욱 열심히 홍보하려고 합니다. Quarto를 중심으로 VSCode(+Copliot), Typora를 사용하면 더욱 쾌적인 블로그르르 만들 수 있기 때문에 Quarto를 메인으로 다른 프로그램들은 가볍게 서포트 프로그램이라고 생각해주시면 될 것 같습니다.\n그럼 프로그램들을 하나씩 살펴본 후에 Github repository를 하나 만들어서 블로그(Website)를 하나 만들어보는 실습까지 가보도록 하겠습니다!"
+  },
+  {
+    "objectID": "posts/code/2024-01-07-quarto-blog.html#테마-설정",
+    "href": "posts/code/2024-01-07-quarto-blog.html#테마-설정",
+    "title": "👩‍💻Quarto Blog",
+    "section": "테마 설정",
+    "text": "테마 설정"
+  },
+  {
+    "objectID": "posts/code/2024-01-07-quarto-blog.html#포스팅-대표-이미지-설정",
+    "href": "posts/code/2024-01-07-quarto-blog.html#포스팅-대표-이미지-설정",
+    "title": "👩‍💻Quarto Blog",
+    "section": "포스팅 대표 이미지 설정",
+    "text": "포스팅 대표 이미지 설정"
+  },
+  {
+    "objectID": "posts/code/2024-01-07-quarto-blog.html#comment-기능-feat.-hypothesis",
+    "href": "posts/code/2024-01-07-quarto-blog.html#comment-기능-feat.-hypothesis",
+    "title": "👩‍💻Quarto Blog",
+    "section": "Comment 기능 (feat. Hypothesis)",
+    "text": "Comment 기능 (feat. Hypothesis)\nReference\n\nQuarto Homepage"
   },
   {
     "objectID": "posts/code/2022-12-21-torch-tensor-inverted.html",
