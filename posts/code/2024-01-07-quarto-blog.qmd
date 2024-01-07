@@ -96,14 +96,11 @@ Quarto를 가지고 이제 본격적으로 Blog를 만드는 실습을 하기 �
 
 1. 블로그를 만들 Github Repository 하나 만들기
 2. Repository를 Clone 하여 Quarto project 시작하기
-3. Markdown으로 test.qmd 작성 후 local로 글 확인하기
-4. rendering 한 후 포스팅 publish하기
+3. Default Blog localhost로 확인하기
+4. Rendering 한 후 Blog publish하기
 
-<center>
-<img src="../../images/2024-01-07-quarto-blog/111.png" width="80%" />
-</center>
 
-## Repository 하나 만들기
+## 1. Repository 하나 만들기
 
 블로그를 만들 Repository를 Github에 하나 만들어 줍니다. Repository는 어떤 이름을 가지고 있어도 상관없지만 보통 Github에서 개인 블로그 주소를 본인의 `nickname.github.io`로 만들기 때문에 저는 아래와 같이 블로그를 위한 Repository를 만들었습니다.
 
@@ -122,7 +119,7 @@ Quarto를 가지고 이제 본격적으로 Blog를 만드는 실습을 하기 �
 다음으로 해당 repository를 원하는 경로에 clone 해서 블로그를 작성할 폴더를 준비합니다.
 
 
-## Quarto Project 시작
+## 2. Quarto Project 시작
 
 이제 VSCode를 열어서 확장 프로그램에서 `Quarto`를 검색한 후 해당 확장 프로그램을 VSCode에 깔아줍니다.
 
@@ -155,7 +152,7 @@ Blog Porject를 선택합니다. 이때 프로젝트 이름은 아무거나 입�
 </center>
 
 
-## test.qmd 작성 후 local 확인
+## 3. Default Blog localhost로 확인
 
 이제 VSCode에서 Blog Repository(`test_blog`)가 열린 프로젝트 창에서 터미널을 열어서 아래의 명령어를 입력해봅니다.
 
@@ -175,7 +172,7 @@ quarto preview
 </center>
 
 
-## Publish
+## Blog Publish
 
 이전 단계에서는 localhost로 페이지를 랜더링해서 확인한 것이기 때문에 publish가 되지 않았습니다. quarto에서 프로젝트를 rendering하기 위해서는 publish를 하는 명령어를 실행해야 합니다.
 

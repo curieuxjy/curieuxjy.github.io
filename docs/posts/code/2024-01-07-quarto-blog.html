@@ -135,10 +135,10 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#typora" id="toc-typora" class="nav-link" data-scroll-target="#typora">Typora</a></li>
   <li><a href="#blogwebsite-만들기" id="toc-blogwebsite-만들기" class="nav-link" data-scroll-target="#blogwebsite-만들기">Blog(Website) 만들기</a>
   <ul class="collapse">
-  <li><a href="#repository-하나-만들기" id="toc-repository-하나-만들기" class="nav-link" data-scroll-target="#repository-하나-만들기">Repository 하나 만들기</a></li>
-  <li><a href="#quarto-project-시작" id="toc-quarto-project-시작" class="nav-link" data-scroll-target="#quarto-project-시작">Quarto Project 시작</a></li>
-  <li><a href="#test.qmd-작성-후-local-확인" id="toc-test.qmd-작성-후-local-확인" class="nav-link" data-scroll-target="#test.qmd-작성-후-local-확인">test.qmd 작성 후 local 확인</a></li>
-  <li><a href="#publish" id="toc-publish" class="nav-link" data-scroll-target="#publish">Publish</a></li>
+  <li><a href="#repository-하나-만들기" id="toc-repository-하나-만들기" class="nav-link" data-scroll-target="#repository-하나-만들기">1. Repository 하나 만들기</a></li>
+  <li><a href="#quarto-project-시작" id="toc-quarto-project-시작" class="nav-link" data-scroll-target="#quarto-project-시작">2. Quarto Project 시작</a></li>
+  <li><a href="#default-blog-localhost로-확인" id="toc-default-blog-localhost로-확인" class="nav-link" data-scroll-target="#default-blog-localhost로-확인">3. Default Blog localhost로 확인</a></li>
+  <li><a href="#blog-publish" id="toc-blog-publish" class="nav-link" data-scroll-target="#blog-publish">Blog Publish</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -244,14 +244,11 @@ Typora Image 경로 설정
 <ol type="1">
 <li>블로그를 만들 Github Repository 하나 만들기</li>
 <li>Repository를 Clone 하여 Quarto project 시작하기</li>
-<li>Markdown으로 test.qmd 작성 후 local로 글 확인하기</li>
-<li>rendering 한 후 포스팅 publish하기</li>
+<li>Default Blog localhost로 확인하기</li>
+<li>Rendering 한 후 Blog publish하기</li>
 </ol>
-<center>
-<img src="../../images/2024-01-07-quarto-blog/111.png" width="80%">
-</center>
 <section id="repository-하나-만들기" class="level2">
-<h2 class="anchored" data-anchor-id="repository-하나-만들기">Repository 하나 만들기</h2>
+<h2 class="anchored" data-anchor-id="repository-하나-만들기">1. Repository 하나 만들기</h2>
 <p>블로그를 만들 Repository를 Github에 하나 만들어 줍니다. Repository는 어떤 이름을 가지고 있어도 상관없지만 보통 Github에서 개인 블로그 주소를 본인의 <code>nickname.github.io</code>로 만들기 때문에 저는 아래와 같이 블로그를 위한 Repository를 만들었습니다.</p>
 <center>
 <img src="../../images/2024-01-07-quarto-blog/7.png" width="30%">
@@ -263,7 +260,7 @@ Typora Image 경로 설정
 <p>다음으로 해당 repository를 원하는 경로에 clone 해서 블로그를 작성할 폴더를 준비합니다.</p>
 </section>
 <section id="quarto-project-시작" class="level2">
-<h2 class="anchored" data-anchor-id="quarto-project-시작">Quarto Project 시작</h2>
+<h2 class="anchored" data-anchor-id="quarto-project-시작">2. Quarto Project 시작</h2>
 <p>이제 VSCode를 열어서 확장 프로그램에서 <code>Quarto</code>를 검색한 후 해당 확장 프로그램을 VSCode에 깔아줍니다.</p>
 <center>
 <img src="../../images/2024-01-07-quarto-blog/9.png" width="60%">
@@ -290,8 +287,8 @@ Blog project 시작
 </figcaption>
 </center>
 </section>
-<section id="test.qmd-작성-후-local-확인" class="level2">
-<h2 class="anchored" data-anchor-id="test.qmd-작성-후-local-확인">test.qmd 작성 후 local 확인</h2>
+<section id="default-blog-localhost로-확인" class="level2">
+<h2 class="anchored" data-anchor-id="default-blog-localhost로-확인">3. Default Blog localhost로 확인</h2>
 <p>이제 VSCode에서 Blog Repository(<code>test_blog</code>)가 열린 프로젝트 창에서 터미널을 열어서 아래의 명령어를 입력해봅니다.</p>
 <pre><code>quarto preview</code></pre>
 <center>
@@ -305,8 +302,8 @@ Default Blog
 </figcaption>
 </center>
 </section>
-<section id="publish" class="level2">
-<h2 class="anchored" data-anchor-id="publish">Publish</h2>
+<section id="blog-publish" class="level2">
+<h2 class="anchored" data-anchor-id="blog-publish">Blog Publish</h2>
 <p>이전 단계에서는 localhost로 페이지를 랜더링해서 확인한 것이기 때문에 publish가 되지 않았습니다. quarto에서 프로젝트를 rendering하기 위해서는 publish를 하는 명령어를 실행해야 합니다.</p>
 <p><em>하지만 그전에!</em></p>
 <p>page들을 publish할 directory를 <code>/docs</code>로 따로 설정을 해주었기 때문에 해당 폴더에 랜더링된 html 파일들을 만들 수 있도록 아래와 같이 <code>._quarto.yml</code> 설정파일을 아래와 같이 작성해줍니다.</p>
