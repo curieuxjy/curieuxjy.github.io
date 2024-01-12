@@ -1,8 +1,8 @@
 ---
-title: "👩‍💻Quarto Blog"
+title: "👩‍💻Quarto Blog(1)"
 toc: true
 date: "2024-01-07"
-description: Quarto로 속편한 Github Blog 구축하기
+description: Quarto로 속편한 Github Blog 구축하기(1)
 categories: [blog, quarto, code]
 image: ../../images/2024-01-07-quarto-blog/blog (1).png
 ---
@@ -32,16 +32,15 @@ image: ../../images/2024-01-07-quarto-blog/blog (1).png
 </center>
 
 <center>
+<img src="../../images/2024-01-07-quarto-blog/5.jpg" width="30%" />
+</center>
+
+<center>
 ...
 </center>
 
 
-<center>
-<img src="../../images/2024-01-07-quarto-blog/5.jpg" width="30%" />
-</center>
-
-
-아예 fastpages 서비스를 닫아서 블로그가 아예 안열리는 것은 아니었지만, 더 나은 블로그 지속성을 위해 마지막 블로그 이사를 Quarto로 하게 되었고 결과적으로는 fastpages보다 Quarto가 훨씬 사용하기도 편하고 잘 옮겼다는 생각이 들어서 오늘 이 포스팅을 통해 많은 분들께 알리고 싶어서 글을 작성하게 되었습니다. 생각보다 많은 분들이 알고 계시지 않은 것 같아 앞으로 주변에 더더욱 열심히 홍보하려고 합니다. Quarto를 중심으로 VSCode(+Copliot), Typora를 사용하면 더욱 쾌적인 블로그르르 만들 수 있기 때문에 Quarto를 메인으로 다른 프로그램들은 가볍게 서포트 프로그램이라고 생각해주시면 될 것 같습니다.
+아예 fastpages 서비스를 닫아서 블로그가 아예 안열리는 것은 아니었지만, 더 나은 블로그 지속성을 위해 마지막 블로그 이사를 Quarto로 하게 되었고 결과적으로는 fastpages보다 Quarto가 훨씬 사용하기도 편하고 잘 옮겼다는 생각이 들어서 오늘 이 포스팅을 통해 많은 분들께 알리고 싶어서 글을 작성하게 되었습니다. 생각보다 많은 분들이 알고 계시지 않은 것 같아 앞으로 주변에 더더욱 열심히 홍보하려고 합니다. Quarto를 중심으로 VSCode(+Copliot), Typora를 사용하면 더욱 쾌적한 블로그를 만들 수 있기 때문에 Quarto를 메인으로 다른 프로그램들은 가볍게 서포트 프로그램이라고 생각해주시면 될 것 같습니다.
 
 
 <center>

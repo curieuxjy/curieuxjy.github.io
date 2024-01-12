@@ -1,0 +1,52 @@
+---
+title: "👩‍💻Quarto Blog(2)"
+toc: true
+date: "2024-01-12"
+description: Quarto로 속편한 Github Blog 구축하기(2)
+categories: [blog, quarto, code]
+image: ../../images/2024-01-12-quarto-blog2/blog2.jpg
+---
+
+이전 포스팅에 이어서 블로그를 좀 더 Customizing하는 몇가지 사항들에 대해 설명하려고 합니다.
+사실 블로그 Customizing은 삽질의 시작이며 처음 시작은 그리 어렵지 않지만 하나씩 옵션들을 내맘대로 건드리가 보면 시간이 훌쩍 지나가버리는 마법을 경험할 수 있습니다.
+
+<center>
+<img src="../../images/2024-01-12-quarto-blog2/blog2.jpg" width="40%" />
+</center>
+
+# Theme
+
+## TOC
+
+
+# Comments
+
+
+# Github 잔디
+
+
+# Jupyter notebook
+
+# Code Snippets
+
+## 이미지 넣기 
+
+1. 포스팅에 html 사용
+
+2. 포스팅 대표 이미지 설정
+
+## Toggle text 
+
+## Buttons
+
+
+# 여러개 website 만들기
+
+
+**Reference**
+
+- [Quarto Homepage](https://quarto.org/)
+
+- [Typora Homepage](https://typora.io/)
+
+- [Hypothesis](https://web.hypothes.is/)
