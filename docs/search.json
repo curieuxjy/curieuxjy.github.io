@@ -683,21 +683,21 @@
     "href": "posts/code/2024-01-17-quarto-advnaced.html#이미지-넣기",
     "title": "👩‍💻Quarto Blog(2)",
     "section": "이미지 넣기",
-    "text": "이미지 넣기\n\n포스팅에 html 사용\n포스팅 대표 이미지 설정"
+    "text": "이미지 넣기\n이미지와 관련된 작성 코드 스니펫드을 소개드리겠습니다.\n\n포스팅에 html 사용\n\n기본 markdown에 이미지를 넣는 문법은 ![이미지 캡션](이미지 경로)\n\n\n포스팅 대표 이미지 설정\n\n.qmd파일의 맨 윗부분에 설정해주는 문서 configuration에 image: ... 라인을 추가하고, ...부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다.\n---\ntitle: \"👩‍💻Quarto Blog(2)\"\ntoc: true\ndate: \"2024-01-17\"\ndescription: Quarto로 속편한 Github Blog 구축하기(2)\ncategories: [blog, quarto, code]\nimage: ../../images/2024-01-12-quarto-blog2/blog2.jpg\n---"
   },
   {
-    "objectID": "posts/code/2024-01-17-quarto-advnaced.html#toggle-text",
-    "href": "posts/code/2024-01-17-quarto-advnaced.html#toggle-text",
+    "objectID": "posts/code/2024-01-17-quarto-advnaced.html#callout-block",
+    "href": "posts/code/2024-01-17-quarto-advnaced.html#callout-block",
     "title": "👩‍💻Quarto Blog(2)",
-    "section": "Toggle text",
-    "text": "Toggle text"
+    "section": "Callout Block",
+    "text": "Callout Block"
   },
   {
     "objectID": "posts/code/2024-01-17-quarto-advnaced.html#buttons",
     "href": "posts/code/2024-01-17-quarto-advnaced.html#buttons",
     "title": "👩‍💻Quarto Blog(2)",
     "section": "Buttons",
-    "text": "Buttons"
+    "text": "Buttons\n\n마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.\nQaurto Blog(1)포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며\nReference\n\nQuarto Homepage\nTypora Homepage\nHypothesis"
   },
   {
     "objectID": "posts/scabble/2023-03-28-jjijil-his-001.html",

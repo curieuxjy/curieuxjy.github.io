@@ -18,8 +18,16 @@ image: ../../images/2024-01-12-quarto-blog2/blog2.jpg
 
 ## TOC
 
+```
+
+```
+
 
 # Comments
+
+```
+
+```
 
 
 
@@ -31,7 +39,6 @@ ghchart
 
 ```
 
-
 # Jupyter notebook
 
 
@@ -40,16 +47,49 @@ ghchart
 
 ## 이미지 넣기 
 
+이미지와 관련된 작성 코드 스니펫드을 소개드리겠습니다.
+
 1. 포스팅에 html 사용
 
-1. 포스팅 대표 이미지 설정
+기본 markdown에 이미지를 넣는 문법은 `![이미지 캡션](이미지 경로)`
 
-## Toggle text 
+```
+
+```
+
+2. 포스팅 대표 이미지 설정
+
+`.qmd`파일의 맨 윗부분에 설정해주는 문서 configuration에 `image: ...` 라인을 추가하고, `...`부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다.
+
+```markdown
+---
+title: "👩‍💻Quarto Blog(2)"
+toc: true
+date: "2024-01-17"
+description: Quarto로 속편한 Github Blog 구축하기(2)
+categories: [blog, quarto, code]
+image: ../../images/2024-01-12-quarto-blog2/blog2.jpg
+---
+
+```
+
+
+## Callout Block
+
+```
+
+```
 
 ## Buttons
 
+```
 
-# 여러개 website 만들기
+```
+
+
+마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.
+
+[Qaurto Blog(1)]()포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며
 
 
 **Reference**
