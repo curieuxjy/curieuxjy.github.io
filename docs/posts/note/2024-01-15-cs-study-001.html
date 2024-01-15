@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-01-15">
+<meta name="description" content="CS Study Series">
+
+<title>Curieux.JY - 📝Operating System 001</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html">
+ <span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#운영체제란" id="toc-운영체제란" class="nav-link active" data-scroll-target="#운영체제란">운영체제란</a>
+  <ul class="collapse">
+  <li><a href="#운영체제의-역할" id="toc-운영체제의-역할" class="nav-link" data-scroll-target="#운영체제의-역할">운영체제의 역할</a>
+  <ul class="collapse">
+  <li><a href="#각-역할에-대한-자세한-설명" id="toc-각-역할에-대한-자세한-설명" class="nav-link" data-scroll-target="#각-역할에-대한-자세한-설명">각 역할에 대한 자세한 설명</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#프로세스-vs-스레드" id="toc-프로세스-vs-스레드" class="nav-link" data-scroll-target="#프로세스-vs-스레드">프로세스 vs 스레드</a>
+  <ul class="collapse">
+  <li><a href="#멀티-프로세스" id="toc-멀티-프로세스" class="nav-link" data-scroll-target="#멀티-프로세스">멀티 프로세스</a></li>
+  <li><a href="#멀티-스레드" id="toc-멀티-스레드" class="nav-link" data-scroll-target="#멀티-스레드">멀티 스레드</a></li>
+  </ul></li>
+  <li><a href="#프로세스-주소-공간" id="toc-프로세스-주소-공간" class="nav-link" data-scroll-target="#프로세스-주소-공간">프로세스 주소 공간</a></li>
+  <li><a href="#인터럽트interrupt" id="toc-인터럽트interrupt" class="nav-link" data-scroll-target="#인터럽트interrupt">인터럽트(Interrupt)</a>
+  <ul class="collapse">
+  <li><a href="#외부-인터럽트" id="toc-외부-인터럽트" class="nav-link" data-scroll-target="#외부-인터럽트">외부 인터럽트</a></li>
+  <li><a href="#내부-인터럽트" id="toc-내부-인터럽트" class="nav-link" data-scroll-target="#내부-인터럽트">내부 인터럽트</a></li>
+  <li><a href="#소프트웨어-인터럽트" id="toc-소프트웨어-인터럽트" class="nav-link" data-scroll-target="#소프트웨어-인터럽트">소프트웨어 인터럽트</a></li>
+  <li><a href="#인터럽트-발생-처리-과정" id="toc-인터럽트-발생-처리-과정" class="nav-link" data-scroll-target="#인터럽트-발생-처리-과정">인터럽트 발생 처리 과정</a></li>
+  </ul></li>
+  <li><a href="#시스템-콜system-call" id="toc-시스템-콜system-call" class="nav-link" data-scroll-target="#시스템-콜system-call">시스템 콜(System Call)</a>
+  <ul class="collapse">
+  <li><a href="#fork" id="toc-fork" class="nav-link" data-scroll-target="#fork">Fork</a></li>
+  <li><a href="#wait" id="toc-wait" class="nav-link" data-scroll-target="#wait">wait</a></li>
+  <li><a href="#exec" id="toc-exec" class="nav-link" data-scroll-target="#exec">exec</a></li>
+  </ul></li>
+  <li><a href="#pcb와-context-switching" id="toc-pcb와-context-switching" class="nav-link" data-scroll-target="#pcb와-context-switching">PCB와 Context Switching</a>
+  <ul class="collapse">
+  <li><a href="#process-management" id="toc-process-management" class="nav-link" data-scroll-target="#process-management">Process Management</a></li>
+  <li><a href="#pcbprocess-control-block" id="toc-pcbprocess-control-block" class="nav-link" data-scroll-target="#pcbprocess-control-block">PCB(Process Control Block)</a></li>
+  <li><a href="#pcb가-왜-필요한가요" id="toc-pcb가-왜-필요한가요" class="nav-link" data-scroll-target="#pcb가-왜-필요한가요">PCB가 왜 필요한가요?</a></li>
+  <li><a href="#pcb는-어떻게-관리되나요" id="toc-pcb는-어떻게-관리되나요" class="nav-link" data-scroll-target="#pcb는-어떻게-관리되나요">PCB는 어떻게 관리되나요?</a></li>
+  <li><a href="#context-switching" id="toc-context-switching" class="nav-link" data-scroll-target="#context-switching">Context Switching</a></li>
+  <li><a href="#context-switching의-overhead란" id="toc-context-switching의-overhead란" class="nav-link" data-scroll-target="#context-switching의-overhead란">Context Switching의 OverHead란?</a></li>
+  </ul></li>
+  <li><a href="#ipcinter-process-communication" id="toc-ipcinter-process-communication" class="nav-link" data-scroll-target="#ipcinter-process-communication">IPC(Inter Process Communication)</a>
+  <ul class="collapse">
+  <li><a href="#ipc-종류" id="toc-ipc-종류" class="nav-link" data-scroll-target="#ipc-종류">IPC 종류</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📝Operating System 001</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">cs</div>
+    <div class="quarto-category">study</div>
+    <div class="quarto-category">2024</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    CS Study Series
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 15, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<blockquote class="blockquote">
+<p>Originial Repository: <a href="https://github.com/gyoogle/tech-interview-for-developer">https://github.com/gyoogle/tech-interview-for-developer</a>를 공부하며 2차 편집한 내용입니다.</p>
+</blockquote>
+<pre><code>Operating System 001
+- 운영체제란
+- 프로세스 vs 스레드
+- 프로세스 주소 공간
+- 인터럽트(Interrupt)
+- 시스템 콜(System Call)
+- PCB와 Context Switching
+- IPC(Inter Process Communication)</code></pre>
+<section id="운영체제란" class="level1">
+<h1>운영체제란</h1>
+<blockquote class="blockquote">
+<dl>
+<dt><strong>운영 체제(OS, Operating System)</strong></dt>
+<dd>
+<p>하드웨어를 관리하고, 컴퓨터 시스템의 자원들을 효율적으로 관리하며, 응용 프로그램과 하드웨어 간의 인터페이스로써 다른 응용 프로그램이 유용한 작업을 할 수 있도록 환경을 제공해준다.</p>
+</dd>
+</dl>
+<p>즉, 운영 체제는 <strong>사용자가 컴퓨터를 편리하고 효과적으로 사용할 수 있도록 환경을 제공하는 시스템 소프트웨어</strong>라고 할 수 있다.</p>
+<p>(<em>종류로는 Windows, Linux, UNIX, MS-DOS 등이 있으며, 시스템의 역할 구분에 따라 각각 용이점이 있다.</em>)</p>
+</blockquote>
+<hr>
+<section id="운영체제의-역할" class="level2">
+<h2 class="anchored" data-anchor-id="운영체제의-역할">운영체제의 역할</h2>
+<table class="table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 21%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>1. 프로세스 관리</th>
+<th>2. 저장장치 관리</th>
+<th>3. 네트워킹</th>
+<th>4. 사용자 관리</th>
+<th>5. 디바이스 드라이버</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>프로세스, 스레드 <br>스케줄링 <br>동기화 <br>IPC 통신</td>
+<td>메모리 관리<br> 가상 메모리<br> 파일 시스템</td>
+<td>TCP/IP<br> 기타 프로토콜</td>
+<td>계정 관리<br> 접근권한 관리</td>
+<td>순차접근 장치 <br>임의접근 장치 <br>네트워크 장치</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<section id="각-역할에-대한-자세한-설명" class="level3">
+<h3 class="anchored" data-anchor-id="각-역할에-대한-자세한-설명">각 역할에 대한 자세한 설명</h3>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+1. 프로세스 관리
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>운영체제에서 작동하는 응용 프로그램을 관리하는 기능이다.</p>
+<p>어떤 의미에서는 프로세서(CPU) 관리하는 것이라고 볼 수도 있다. 현재 CPU를 점유해야 할 프로세스를 결정하고, 실제로 CPU를 프로세스에 할당하며, 이 프로세스 간 공유 자원 접근과 통신 등을 관리하게 된다.</p>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+2. 저장장치 관리
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1차 저장장치에 해당하는 메인 메모리와 2차 저장장치에 해당하는 하드디스크, NAND 등을 관리하는 기능이다.</p>
+<ul>
+<li>1차 저장장치(Main Memory)
+<ul>
+<li>프로세스에 할당하는 메모리 영역의 할당과 해제</li>
+<li>각 메모리 영역 간의 침범 방지</li>
+<li>메인 메모리의 효율적 활용을 위한 가상 메모리 기능</li>
+</ul></li>
+<li>2차 저장장치(HDD, NAND Flash Memory 등)
+<ul>
+<li>파일 형식의 데이터 저장</li>
+<li>이런 파일 데이터 관리를 위한 파일 시스템을 OS에서 관리</li>
+<li><code>FAT, NTFS, EXT2, JFS, XFS</code> 등 많은 파일 시스템들이 개발되어 사용 중</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+3. 네트워킹
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>네트워킹은 컴퓨터 활용의 핵심과도 같아졌다.</p>
+<p>TCP/IP 기반의 인터넷에 연결하거나, 응용 프로그램이 네트워크를 사용하려면 <strong>운영체제에서 네트워크 프로토콜을 지원</strong>해야 한다. 현재 상용 OS들은 다양하고 많은 네트워크 프로토콜을 지원한다.</p>
+<p>이처럼 운영체제는 사용자와 컴퓨터 하드웨어 사이에 위치해서, 하드웨어를 운영 및 관리하고 명령어를 제어하여 응용 프로그램 및 하드웨어를 소프트웨어적으로 제어 및 관리를 해야한다.</p>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+4. 사용자 관리
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>우리가 사용하는 PC는 오직 한 사람만의 것일까? 아니다.</p>
+<p>하나의 PC로도 여러 사람이 사용하는 경우가 많다. 그래서 운영체제는 한 컴퓨터를 여러 사람이 사용하는 환경도 지원해야 한다. 가족들이 각자의 계정을 만들어 PC를 사용한다면, 이는 하나의 컴퓨터를 여러 명이 사용한다고 말할 수 있다.</p>
+<p>따라서, 운영체제는 각 계정을 관리할 수 있는 기능이 필요하다. 사용자 별로 프라이버시와 보안을 위해 개인 파일에 대해선 다른 사용자가 접근할 수 없도록 해야 한다. 이 밖에도 파일이나 시스템 자원에 접근 권한을 지정할 수 있도록 지원하는 것이 사용자 관리 기능이다.</p>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+5. 디바이스 드라이버
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>운영체제는 시스템의 자원, 하드웨어를 관리한다. 시스템에는 여러 하드웨어가 붙어있는데, 이들을 운영체제에서 인식하고 관리하게 만들어 응용 프로그램이 하드웨어를 사용할 수 있게 만들어야 한다.</p>
+<p>따라서, 운영체제 안에 하드웨어를 추상화 해주는 계층이 필요하다. 이 계층이 바로 디바이스 드라이버라고 불린다. 하드웨어의 종류가 많은 만큼, 운영체제 내부의 디바이스 드라이버도 많이 존재한다.</p>
+<p>이러한 수많은 디바이스 드라이버들을 관리하는 기능 또한 운영체제가 맡고 있다.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="프로세스-vs-스레드" class="level1">
+<h1>프로세스 vs 스레드</h1>
+<blockquote class="blockquote">
+<p><strong>프로세스</strong> : 프로그램을 메모리 상에서 실행중인 작업</p>
+<p><strong>스레드</strong> : 프로세스 안에서 실행되는 여러 흐름 단위</p>
+</blockquote>
+<p>기본적으로 프로세스마다 최소 1개의 스레드 소유 (메인 스레드 포함)</p>
+<center>
+<img src="../../images/2024-01-15-cs-study-001/image.png" alt="22" width="50%">
+<figcaption>
+Process vs.&nbsp;Thread
+</figcaption>
+</center>
+<p><strong>프로세스</strong>는 각각 별도의 주소공간 할당 (독립적)</p>
+<ul>
+<li>Code : 코드 자체를 구성하는 메모리 영역(프로그램 명령)</li>
+<li>Data : 전역변수, 정적변수, 배열 등
+<ul>
+<li>초기화 된 데이터는 data 영역에 저장</li>
+<li>초기화 되지 않은 데이터는 bss 영역에 저장</li>
+</ul></li>
+<li>Heap : 동적 할당 시 사용 (new(), malloc() 등)</li>
+<li>Stack : 지역변수, 매개변수, 리턴 값 (임시 메모리 영역)</li>
+</ul>
+<hr>
+<p><strong>스레드</strong>는 Stack만 따로 할당 받고 나머지 영역은 서로 공유</p>
+<ul>
+<li>Stack 영역만 따로 할당 받는 이유
+<ul>
+<li>쓰레드는 독립적인 동작을 수행하기 위해 존재 한다</li>
+<li>즉 독립적으로 함수를 호출 할 수 있어야 한다</li>
+<li>때문에 함수의 매개변수, 지역변수등을 저장하는 스택 메모리 영역은 독립적으로 할당 받아야 한다</li>
+</ul></li>
+</ul>
+<p>하나의 프로세스가 생성될 때, 기본적으로 하나의 스레드 같이 생성</p>
+<p><strong>프로세스는 자신만의 고유 공간과 자원을 할당받아 사용</strong>하는데 반해, <strong>스레드는 다른 스레드와 공간, 자원을 공유하면서 사용</strong>하는 차이가 존재함</p>
+<section id="멀티-프로세스" class="level2">
+<h2 class="anchored" data-anchor-id="멀티-프로세스">멀티 프로세스</h2>
+<blockquote class="blockquote">
+<p>하나의 프로그램을 여러개의 프로세스로 구성하여 각 프로세스가 병렬적으로 작업을 수행하는 것</p>
+</blockquote>
+<p><strong>장점</strong> : 안전성 (메모리 침범 문제를 OS 차원에서 해결)</p>
+<p><strong>단점</strong> : 각각 독립된 메모리 영역을 갖고 있어, 작업량 많을 수록 오버헤드 발생. Context Switching으로 인한 성능 저하</p>
+<p><strong><em>Context Switching</em>이란?</strong></p>
+<blockquote class="blockquote">
+<p>프로세스의 상태 정보를 저장하고 복원하는 일련의 과정</p>
+<p>즉, 동작 중인 프로세스가 대기하면서 해당 프로세스의 상태를 보관하고, 대기하고 있던 다음 순번의 프로세스가 동작하면서 이전에 보관했던 프로세스 상태를 복구하는 과정을 말함</p>
+<p>→ 프로세스는 각 독립된 메모리 영역을 할당받아 사용되므로, 캐시 메모리 초기화와 같은 무거운 작업이 진행되었을 때 오버헤드가 발생할 문제가 존재함</p>
+</blockquote>
+</section>
+<section id="멀티-스레드" class="level2">
+<h2 class="anchored" data-anchor-id="멀티-스레드">멀티 스레드</h2>
+<blockquote class="blockquote">
+<p>하나의 응용 프로그램에서 여러 스레드를 구성해 각 스레드가 하나의 작업을 처리하는 것</p>
+</blockquote>
+<p>스레드들이 공유 메모리를 통해 다수의 작업을 동시에 처리하도록 해줌</p>
+<p><strong>장점</strong> : 독립적인 프로세스에 비해 공유 메모리만큼의 시간, 자원 손실이 감소 전역 변수와 정적 변수에 대한 자료 공유 가능</p>
+<p><strong>단점</strong> : 안전성 문제. 하나의 스레드가 데이터 공간 망가뜨리면, 모든 스레드가 작동 불능 상태 (공유 메모리를 갖기 때문)</p>
+<ul>
+<li><p>멀티스레드의 안전성에 대한 단점은 Critical Section 기법을 통해 대비함</p>
+<blockquote class="blockquote">
+<p>하나의 스레드가 공유 데이터 값을 변경하는 시점에 다른 스레드가 그 값을 읽으려할 때 발생하는 문제를 해결하기 위한 동기화 과정</p>
+<pre><code>상호 배제, 진행, 한정된 대기를 충족해야함</code></pre>
+</blockquote></li>
+</ul>
+</section>
+</section>
+<section id="프로세스-주소-공간" class="level1">
+<h1>프로세스 주소 공간</h1>
+<blockquote class="blockquote">
+<p>프로그램이 CPU에 의해 실행됨 → 프로세스가 생성되고 메모리에 ’<strong>프로세스 주소 공간</strong>’이 할당됨</p>
+</blockquote>
+<p>프로세스 주소 공간에는 코드, 데이터, 스택으로 이루어져 있다.</p>
+<ul>
+<li><strong>코드 Segment</strong> : 프로그램 소스 코드 저장</li>
+<li><strong>데이터 Segment</strong> : 전역 변수 저장</li>
+<li><strong>스택 Segment</strong> : 함수, 지역 변수 저장</li>
+</ul>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong><em>왜 이렇게 구역을 나눈건가요?</em></strong>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>최대한 데이터를 공유하여 메모리 사용량을 줄여야 합니다.</p>
+<p>Code는 같은 프로그램 자체에서는 모두 같은 내용이기 때문에 따로 관리하여 공유함</p>
+<p>Stack과 데이터를 나눈 이유는, 스택 구조의 특성과 전역 변수의 활용성을 위한 것!</p>
+</div>
+</div>
+</div>
+<center>
+<img src="../../images/2024-01-15-cs-study-001/img2.png" alt="22" width="50%">
+<figcaption>
+Process Memory
+</figcaption>
+</center>
+<pre><code>프로그램의 함수와 지역 변수는, LIFO(가장 나중에 들어간게 먼저 나옴)특성을 가진 스택에서 실행된다. 
+따라서 이 함수들 안에서 공통으로 사용하는 '전역 변수'는 따로 지정해주면 메모리를 아낄 수 있다.</code></pre>
+</section>
+<section id="인터럽트interrupt" class="level1">
+<h1>인터럽트(Interrupt)</h1>
+<blockquote class="blockquote">
+<p>프로그램을 실행하는 도중에 예기치 않은 상황이 발생할 경우 현재 실행 중인 작업을 즉시 중단하고, 발생된 상황에 대한 우선 처리가 필요함을 CPU에게 알리는 것</p>
+<p>지금 수행 중인 일보다 더 중요한 일(ex. 입출력, 우선 순위 연산 등)이 발생하면 그 일을 먼저 처리하고 나서 하던 일을 계속해야한다.</p>
+</blockquote>
+<ol type="1">
+<li>외부/내부 인터럽트는 <code>CPU의 하드웨어 신호에 의해 발생</code></li>
+<li>소프트웨어 인터럽트는 <code>명령어의 수행에 의해 발생</code></li>
+</ol>
+<section id="외부-인터럽트" class="level2">
+<h2 class="anchored" data-anchor-id="외부-인터럽트">외부 인터럽트</h2>
+<p>입출력 장치, 타이밍 장치, 전원 등 외부적인 요인으로 발생</p>
+<blockquote class="blockquote">
+<p>전원 이상, 기계 착오, 외부 신호, 입출력</p>
+</blockquote>
+</section>
+<section id="내부-인터럽트" class="level2">
+<h2 class="anchored" data-anchor-id="내부-인터럽트">내부 인터럽트</h2>
+<p>Trap이라고 부르며, 잘못된 명령이나 데이터를 사용할 때 발생</p>
+<blockquote class="blockquote">
+<p>0으로 나누기가 발생, 오버플로우, 명령어를 잘못 사용한 경우 (Exception)</p>
+</blockquote>
+</section>
+<section id="소프트웨어-인터럽트" class="level2">
+<h2 class="anchored" data-anchor-id="소프트웨어-인터럽트">소프트웨어 인터럽트</h2>
+<p>프로그램 처리 중 명령의 요청에 의해 발생한 것 (SVC 인터럽트)</p>
+<blockquote class="blockquote">
+<p>사용자가 프로그램을 실행시킬 때 발생</p>
+<p>소프트웨어 이용 중에 다른 프로세스를 실행시키면 시분할 처리를 위해 자원 할당 동작이 수행된다.</p>
+</blockquote>
+</section>
+<section id="인터럽트-발생-처리-과정" class="level2">
+<h2 class="anchored" data-anchor-id="인터럽트-발생-처리-과정">인터럽트 발생 처리 과정</h2>
+<p>주 프로그램이 실행되다가 인터럽트가 발생했다.</p>
+<center>
+<img src="../../images/2024-01-15-cs-study-001/img3.png" alt="22" width="70%">
+<figcaption>
+Handling Interrupts
+</figcaption>
+</center>
+<p>현재 수행 중인 프로그램을 멈추고, 상태 레지스터와 PC 등을 스택에 잠시 저장한 뒤에 인터럽트 서비스 루틴으로 간다.</p>
+<p>(잠시 저장하는 이유는, 인터럽트 서비스 루틴이 끝난 뒤 다시 원래 작업으로 돌아와야 하기 때문)</p>
+<p>만약 <strong>인터럽트 기능이 없었다면</strong>, 컨트롤러는 특정한 어떤 일을 할 시기를 알기 위해 계속 체크를 해야 한다.</p>
+<p>(이를 <strong>폴링(Polling)</strong>이라고 한다)</p>
+<p>폴링을 하는 시간에는 원래 하던 일에 집중할 수가 없게 되어 많은 기능을 제대로 수행하지 못하는 단점이 있었다.</p>
+<p>즉, 컨트롤러가 입력을 받아들이는 방법(우선순위 판별방법)에는 두가지가 있다.</p>
+<ol type="1">
+<li>폴링 방식
+<ul>
+<li>사용자가 명령어를 사용해 입력 핀의 값을 계속 읽어 변화를 알아내는 방식</li>
+<li>인터럽트 요청 플래그를 차례로 비교하여 우선순위가 가장 높은 인터럽트 자원을 찾아 이에 맞는 인터럽트 서비스 루틴을 수행한다. (하드웨어에 비해 속도 느림)</li>
+</ul></li>
+<li>인터럽트 방식
+<ul>
+<li>MCU 자체가 하드웨어적으로 변화를 체크하여 변화 시에만 일정한 동작을 하는 방식</li>
+<li>Daisy Chain</li>
+<li>병렬 우선순위 부여</li>
+</ul></li>
+</ol>
+<p>인터럽트 방식은 하드웨어로 지원을 받아야 하는 제약이 있지만, 폴링에 비해 신속하게 대응하는 것이 가능하다. 따라서 <strong>‘실시간 대응’</strong>이 필요할 때는 필수적인 기능이다.</p>
+<p>즉, 인터럽트는 <strong>발생시기를 예측하기 힘든 경우에 컨트롤러가 가장 빠르게 대응할 수 있는 방법</strong>이다.</p>
+</section>
+</section>
+<section id="시스템-콜system-call" class="level1">
+<h1>시스템 콜(System Call)</h1>
+<p><code>fork( )</code>, <code>exec( )</code>, <code>wait( )</code>와 같은 것들은 Process 생성과 제어를 위한 System call임.</p>
+<ul>
+<li>fork, exec는 새로운 Process 생성과 관련이 되어 있다.</li>
+<li>wait는 Process (Parent)가 만든 다른 Process(child) 가 끝날 때까지 기다리는 명령어임.</li>
+</ul>
+<hr>
+<section id="fork" class="level2">
+<h2 class="anchored" data-anchor-id="fork">Fork</h2>
+<blockquote class="blockquote">
+<p>새로운 Process를 생성할 때 사용.</p>
+<p>그러나, 이상한 방식임.</p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>    printf<span class="op">(</span><span class="st">"pid : %d"</span><span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> getpid<span class="op">());</span> <span class="co">// pid : 29146</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    </span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="dt">int</span> rc <span class="op">=</span> fork<span class="op">();</span>                    <span class="co">// 주목</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>    </span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="cf">if</span> <span class="op">(</span>rc <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>        exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="op">}</span>                                   <span class="co">// (1) fork 실패</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>rc <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span>                 <span class="co">// (2) child 인 경우 (fork 값이 0)</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>        printf<span class="op">(</span><span class="st">"child (pid : %d)"</span><span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> getpid<span class="op">());</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>    <span class="op">}</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>    <span class="cf">else</span> <span class="op">{</span>                              <span class="co">// (3) parent case</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>        printf<span class="op">(</span><span class="st">"parent of %d (pid : %d)"</span><span class="op">,</span> rc<span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>getpid<span class="op">());</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>    <span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>pid : 29146</p>
+<p>parent of 29147 (pid : 29146)</p>
+<p>child (pid : 29147)</p>
+</blockquote>
+<p>을 출력함 (parent와 child의 순서는 non-deterministic함. 즉, 확신할 수 없음. scheduler가 결정하는 일임.)</p>
+<p>[해석]</p>
+<p>PID : 프로세스 식별자. UNIX 시스템에서는 PID는 프로세스에게 명령을 할 때 사용함.</p>
+<p>Fork()가 실행되는 순간. 프로세스가 하나 더 생기는데, 이 때 생긴 프로세스(Child)는 fork를 만든 프로세스(Parent)와 (almost) 동일한 복사본을 갖게 된다. <strong><u>이 때 OS는 위와 똑같은 2개의 프로그램이 동작한다고 생각하고, fork()가 return될 차례라고 생각한다.</u></strong> 그 때문에 새로 생성된 Process (child)는 main에서 시작하지 않고, if 문부터 시작하게 된다.</p>
+<p>그러나, 차이점이 있었다. 바로 child와 parent의 fork() 값이 다르다는 점이다. 따라서, 완전히 동일한 복사본이라 할 수 없다.</p>
+<blockquote class="blockquote">
+<p>Parent의 fork()값 =&gt; child의 pid 값</p>
+<p>Child의 fork()값 =&gt; 0</p>
+</blockquote>
+<p>Parent와 child의 fork 값이 다르다는 점은 매우 유용한 방식이다.</p>
+<p>그러나! Scheduler가 부모를 먼저 수행할지 아닐지 확신할 수 없다. 따라서 아래와 같이 출력될 수 있다.</p>
+<blockquote class="blockquote">
+<p>pid : 29146</p>
+<p>child (pid : 29147)</p>
+<p>parent of 29147 (pid : 29146)</p>
+</blockquote>
+<hr>
+</section>
+<section id="wait" class="level2">
+<h2 class="anchored" data-anchor-id="wait">wait</h2>
+<blockquote class="blockquote">
+<p>child 프로세스가 종료될 때까지 기다리는 작업</p>
+</blockquote>
+<p>위의 예시에 int wc = wait(NULL)만 추가함.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    printf<span class="op">(</span><span class="st">"pid : %d"</span><span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> getpid<span class="op">());</span> <span class="co">// pid : 29146</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    </span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="dt">int</span> rc <span class="op">=</span> fork<span class="op">();</span>                    <span class="co">// 주목</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>    </span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="cf">if</span> <span class="op">(</span>rc <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>        exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>    <span class="op">}</span>                                   <span class="co">// (1) fork 실패</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>rc <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span>                 <span class="co">// (2) child 인 경우 (fork 값이 0)</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a>        printf<span class="op">(</span><span class="st">"child (pid : %d)"</span><span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> getpid<span class="op">());</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>    <span class="op">}</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>    <span class="cf">else</span> <span class="op">{</span>                              <span class="co">// (3) parent case</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>        <span class="dt">int</span> wc <span class="op">=</span> wait<span class="op">(</span>NULL<span class="op">)</span>             <span class="co">// 추가된 부분</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>        printf<span class="op">(</span><span class="st">"parent of %d (wc : %d / pid : %d)"</span><span class="op">,</span> wc<span class="op">,</span> rc<span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>getpid<span class="op">());</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>    <span class="op">}</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>pid : 29146</p>
+<p>child (pid : 29147)</p>
+<p>parent of 29147 (wc : 29147 / pid : 29146)</p>
+</blockquote>
+<p>wait를 통해서, child의 실행이 끝날 때까지 기다려줌. parent가 먼저 실행되더라도, wait ()는 child가 끝나기 전에는 return하지 않으므로, 반드시 child가 먼저 실행됨.</p>
+<hr>
+</section>
+<section id="exec" class="level2">
+<h2 class="anchored" data-anchor-id="exec">exec</h2>
+<p>단순 fork는 동일한 프로세스의 내용을 여러 번 동작할 때 사용함.</p>
+<p>child에서는 parent와 다른 동작을 하고 싶을 때는 exec를 사용할 수 있음.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>    printf<span class="op">(</span><span class="st">"pid : %d"</span><span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> getpid<span class="op">());</span> <span class="co">// pid : 29146</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>    </span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="dt">int</span> rc <span class="op">=</span> fork<span class="op">();</span>                    <span class="co">// 주목</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>    </span>
+<span id="cb6-11"><a href="#cb6-11"></a>    <span class="cf">if</span> <span class="op">(</span>rc <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>        exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="op">}</span>                                   <span class="co">// (1) fork 실패</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>rc <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span>                 <span class="co">// (2) child 인 경우 (fork 값이 0)</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>        printf<span class="op">(</span><span class="st">"child (pid : %d)"</span><span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> getpid<span class="op">());</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>        <span class="dt">char</span> <span class="op">*</span>myargs<span class="op">[</span><span class="dv">3</span><span class="op">];</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>        myargs<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> strdup<span class="op">(</span><span class="st">"wc"</span><span class="op">);</span>       <span class="co">// 내가 실행할 파일 이름</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>        myargs<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> strdup<span class="op">(</span><span class="st">"p3.c"</span><span class="op">);</span>     <span class="co">// 실행할 파일에 넘겨줄 argument</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>        myargs<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> NULL<span class="op">;</span>               <span class="co">// end of array</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>        execvp<span class="op">(</span>myarges<span class="op">[</span><span class="dv">0</span><span class="op">],</span> myargs<span class="op">);</span>     <span class="co">// wc 파일 실행.</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>        printf<span class="op">(</span><span class="st">"this shouldn't print out"</span><span class="op">)</span> <span class="co">// 실행되지 않음.</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>    <span class="op">}</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="cf">else</span> <span class="op">{</span>                              <span class="co">// (3) parent case</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>        <span class="dt">int</span> wc <span class="op">=</span> wait<span class="op">(</span>NULL<span class="op">)</span>             <span class="co">// 추가된 부분</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>        printf<span class="op">(</span><span class="st">"parent of %d (wc : %d / pid : %d)"</span><span class="op">,</span> wc<span class="op">,</span> rc<span class="op">,</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>getpid<span class="op">());</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>    <span class="op">}</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>exec가 실행되면,</p>
+<p>execvp( 실행 파일, 전달 인자 ) 함수는, code segment 영역에 실행 파일의 코드를 읽어와서 덮어 씌운다.</p>
+<p>씌운 이후에는, heap, stack, 다른 메모리 영역이 초기화되고, OS는 그냥 실행한다. 즉, 새로운 Process를 생성하지 않고, 현재 프로그램에 wc라는 파일을 실행한다. 그로인해서, execvp() 이후의 부분은 실행되지 않는다.</p>
+</section>
+</section>
+<section id="pcb와-context-switching" class="level1">
+<h1>PCB와 Context Switching</h1>
+<section id="process-management" class="level2">
+<h2 class="anchored" data-anchor-id="process-management">Process Management</h2>
+<blockquote class="blockquote">
+<p>CPU가 프로세스가 여러개일 때, CPU 스케줄링을 통해 관리하는 것을 말함</p>
+</blockquote>
+<p>이때, CPU는 각 프로세스들이 누군지 알아야 관리가 가능함</p>
+<p>프로세스들의 특징을 갖고있는 것이 바로 <code>Process Metadata</code></p>
+<ul>
+<li>Process Metadata
+<ul>
+<li>Process ID</li>
+<li>Process State</li>
+<li>Process Priority</li>
+<li>CPU Registers</li>
+<li>Owner</li>
+<li>CPU Usage</li>
+<li>Memeory Usage</li>
+</ul></li>
+</ul>
+<p>이 메타데이터는 프로세스가 생성되면 <code>PCB(Process Control Block)</code>이라는 곳에 저장됨</p>
+</section>
+<section id="pcbprocess-control-block" class="level2">
+<h2 class="anchored" data-anchor-id="pcbprocess-control-block">PCB(Process Control Block)</h2>
+<blockquote class="blockquote">
+<p>프로세스 메타데이터들을 저장해 놓는 곳, 한 PCB 안에는 한 프로세스의 정보가 담김</p>
+</blockquote>
+<center>
+<img src="../../images/2024-01-15-cs-study-001/img4.png" alt="22" width="50%">
+<figcaption>
+PCB
+</figcaption>
+</center>
+<p><strong>다시 정리해보면?</strong></p>
+<pre><code>프로그램 실행 → 프로세스 생성 → 프로세스 주소 공간에 (코드, 데이터, 스택) 생성 
+→ 이 프로세스의 메타데이터들이 PCB에 저장</code></pre>
+</section>
+<section id="pcb가-왜-필요한가요" class="level2">
+<h2 class="anchored" data-anchor-id="pcb가-왜-필요한가요">PCB가 왜 필요한가요?</h2>
+<blockquote class="blockquote">
+<p>CPU에서는 프로세스의 상태에 따라 교체작업이 이루어진다. (interrupt가 발생해서 할당받은 프로세스가 waiting 상태가 되고 다른 프로세스를 running으로 바꿔 올릴 때)</p>
+<p>이때, <strong>앞으로 다시 수행할 대기 중인 프로세스에 관한 저장 값을 PCB에 저장해두는 것</strong>이다.</p>
+</blockquote>
+</section>
+<section id="pcb는-어떻게-관리되나요" class="level2">
+<h2 class="anchored" data-anchor-id="pcb는-어떻게-관리되나요">PCB는 어떻게 관리되나요?</h2>
+<blockquote class="blockquote">
+<p>Linked List 방식으로 관리함</p>
+<p>PCB List Head에 PCB들이 생성될 때마다 붙게 된다. 주소값으로 연결이 이루어져 있는 연결리스트이기 때문에 삽입 삭제가 용이함.</p>
+<p>즉, 프로세스가 생성되면 해당 PCB가 생성되고 프로세스 완료시 제거됨</p>
+</blockquote>
+<p>이렇게 수행 중인 프로세스를 변경할 때, CPU의 레지스터 정보가 변경되는 것을 <code>Context Switching</code>이라고 한다.</p>
+</section>
+<section id="context-switching" class="level2">
+<h2 class="anchored" data-anchor-id="context-switching">Context Switching</h2>
+<blockquote class="blockquote">
+<p>CPU가 이전의 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재하는 과정</p>
+</blockquote>
+<p>보통 인터럽트가 발생하거나, 실행 중인 CPU 사용 허가시간을 모두 소모하거나, 입출력을 위해 대기해야 하는 경우에 Context Switching이 발생</p>
+<p><code>즉, 프로세스가 Ready → Running, Running → Ready, Running → Waiting처럼 상태 변경 시 발생!</code></p>
+</section>
+<section id="context-switching의-overhead란" class="level2">
+<h2 class="anchored" data-anchor-id="context-switching의-overhead란">Context Switching의 OverHead란?</h2>
+<p>overhead는 과부하라는 뜻으로 보통 안좋은 말로 많이 쓰인다.</p>
+<p>하지만 프로세스 작업 중에는 OverHead를 감수해야 하는 상황이 있다.</p>
+<pre><code>프로세스를 수행하다가 입출력 이벤트가 발생해서 대기 상태로 전환시킴
+이때, CPU를 그냥 놀게 놔두는 것보다 다른 프로세스를 수행시키는 것이 효율적</code></pre>
+<p>즉, CPU에 계속 프로세스를 수행시키도록 하기 위해서 다른 프로세스를 실행시키고 Context Switching 하는 것</p>
+<p>CPU가 놀지 않도록 만들고, 사용자에게 빠르게 일처리를 제공해주기 위한 것이다.</p>
+</section>
+</section>
+<section id="ipcinter-process-communication" class="level1">
+<h1>IPC(Inter Process Communication)</h1>
+<p>프로세스는 독립적으로 실행된다.</p>
+<p>즉, 독립 되어있다는 것은 다른 프로세스에게 영향을 받지 않는다고 말할 수 있다. (스레드는 프로세스 안에서 자원을 공유하므로 영향을 받는다)</p>
+<p>이런 독립적 구조를 가진 <strong>프로세스 간의 통신</strong>을 해야 하는 상황이 있을 것이다. 이를 가능하도록 해주는 것이 바로 IPC 통신이다.</p>
+<center>
+<img src="../../images/2024-01-15-cs-study-001/img5.jpeg" alt="22" width="50%">
+<figcaption>
+IPC
+</figcaption>
+</center>
+<p>프로세스는 커널이 제공하는 IPC 설비를 이용해 프로세스간 통신을 할 수 있게 된다.</p>
+<p><strong><em>커널이란?</em></strong></p>
+<blockquote class="blockquote">
+<p>운영체제의 핵심적인 부분으로, 다른 모든 부분에 여러 기본적인 서비스를 제공해줌</p>
+</blockquote>
+<p>IPC 설비 종류도 여러가지가 있다. 필요에 따라 IPC 설비를 선택해서 사용해야 한다.</p>
+<section id="ipc-종류" class="level2">
+<h2 class="anchored" data-anchor-id="ipc-종류">IPC 종류</h2>
+<ol type="1">
+<li><p>익명 PIPE</p>
+<blockquote class="blockquote">
+<p>파이프는 두 개의 프로세스를 연결하는데 하나의 프로세스는 데이터를 쓰기만 하고, 다른 하나는 데이터를 읽기만 할 수 있다.</p>
+<p><strong>한쪽 방향으로만 통신이 가능한 반이중 통신</strong>이라고도 부른다.</p>
+<p>따라서 양쪽으로 모두 송/수신을 하고 싶으면 2개의 파이프를 만들어야 한다.</p>
+<p>매우 간단하게 사용할 수 있는 장점이 있고, 단순한 데이터 흐름을 가질 땐 파이프를 사용하는 것이 효율적이다. 단점으로는 전이중 통신을 위해 2개를 만들어야 할 때는 구현이 복잡해지게 된다.</p>
+</blockquote></li>
+<li><p>Named PIPE(FIFO)</p>
+<blockquote class="blockquote">
+<p>익명 파이프는 통신할 프로세스를 명확히 알 수 있는 경우에 사용한다. (부모-자식 프로세스 간 통신처럼)</p>
+<p>Named 파이프는 전혀 모르는 상태의 프로세스들 사이 통신에 사용한다.</p>
+<p>즉, 익명 파이프의 확장된 상태로 <strong>부모 프로세스와 무관한 다른 프로세스도 통신이 가능한 것</strong> (통신을 위해 이름있는 파일을 사용)</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>하지만, Named 파이프 역시 읽기/쓰기 동시에 불가능함. 따라서 전이중 통신을 위해서는 익명 파이프처럼 2개를 만들어야 가능</p>
+</blockquote></li>
+<li><p>Message Queue</p>
+<blockquote class="blockquote">
+<p>입출력 방식은 Named 파이프와 동일함</p>
+<p>다른점은 메시지 큐는 파이프처럼 데이터의 흐름이 아니라 메모리 공간이다.</p>
+<p>사용할 데이터에 번호를 붙이면서 여러 프로세스가 동시에 데이터를 쉽게 다룰 수 있다.</p>
+</blockquote></li>
+<li><p>공유 메모리</p>
+<blockquote class="blockquote">
+<p>파이프, 메시지 큐가 통신을 이용한 설비라면, <strong>공유 메모리는 데이터 자체를 공유하도록 지원하는 설비</strong>다.</p>
+<p>프로세스의 메모리 영역은 독립적으로 가지며 다른 프로세스가 접근하지 못하도록 반드시 보호돼야한다. 하지만 다른 프로세스가 데이터를 사용하도록 해야하는 상황도 필요할 것이다. 파이프를 이용해 통신을 통해 데이터 전달도 가능하지만, 스레드처럼 메모리를 공유하도록 해준다면 더욱 편할 것이다.</p>
+<p>공유 메모리는 <strong>프로세스간 메모리 영역을 공유해서 사용할 수 있도록 허용</strong>해준다.</p>
+<p>프로세스가 공유 메모리 할당을 커널에 요청하면, 커널은 해당 프로세스에 메모리 공간을 할당해주고 이후 모든 프로세스는 해당 메모리 영역에 접근할 수 있게 된다.</p>
+<ul>
+<li><strong>중개자 없이 곧바로 메모리에 접근할 수 있어서 IPC 중에 가장 빠르게 작동함</strong></li>
+</ul>
+</blockquote>
+<p><br></p></li>
+<li><p>메모리 맵</p>
+<blockquote class="blockquote">
+<p>공유 메모리처럼 메모리를 공유해준다. 메모리 맵은 <strong>열린 파일을 메모리에 맵핑시켜서 공유</strong>하는 방식이다. (즉 공유 매개체가 파일+메모리)</p>
+<p>주로 파일로 대용량 데이터를 공유해야 할 때 사용한다.</p>
+</blockquote></li>
+<li><p>소켓</p>
+<blockquote class="blockquote">
+<p>네트워크 소켓 통신을 통해 데이터를 공유한다.</p>
+<p>클라이언트와 서버가 소켓을 통해서 통신하는 구조로, 원격에서 프로세스 간 데이터를 공유할 때 사용한다.</p>
+<p>서버(bind, listen, accept), 클라이언트(connect)</p>
+</blockquote></li>
+</ol>
+<p>이러한 IPC 통신에서 프로세스 간 데이터를 동기화하고 보호하기 위해 세마포어와 뮤텍스를 사용한다. (공유된 자원에 한번에 하나의 프로세스만 접근시킬 때)</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2023, Jung Yeon Lee</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

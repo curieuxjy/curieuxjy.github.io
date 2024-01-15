@@ -2,6 +2,7 @@
   {
     "listing": "/note.html",
     "items": [
+      "/posts/note/2024-01-15-cs-study-001.html",
       "/posts/note/2023-12-01-geultto-9th-start.html",
       "/posts/note/2023-08-31-daily-english-010.html",
       "/posts/note/2023-07-07-geultto-8th-end.html",
@@ -27,7 +28,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/code/2024-01-12-quarto-advnaced.html",
+      "/posts/code/2024-01-17-quarto-advnaced.html",
       "/posts/code/2024-01-07-quarto-blog.html",
       "/posts/paper/2023-07-02-dreamwaq.html",
       "/posts/code/2023-06-18-chord.html",

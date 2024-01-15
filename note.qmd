@@ -18,6 +18,6 @@ page-layout: full
 # title-block-banner: true
 ---
 <center>
-##### 📘 Diary | 🌎 Language
+##### 📘 Diary | 🌎 Language | 📝 Study
 <img src="note.png" style="width:65%">
 </center>
