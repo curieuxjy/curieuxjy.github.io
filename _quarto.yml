@@ -17,7 +17,7 @@ website:
       theme: clean
       openSidebar: false
   page-footer: 
-    left: "Copyright 2023, Jung Yeon Lee" 
+    left: "Copyright 2024, Jung Yeon Lee" 
     right: 
       - icon: github
         href: https://github.com/curieuxjy
