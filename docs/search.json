@@ -567,41 +567,6 @@
     "text": "How\n\nmain_foo.py에서 env_foo.py를 import한다.\nenv_foo.py에서 utils_foo.py를 import 한다.\n이때 env_foo.py에서 import utils_foo로 utils_foo를 불러오면,\n\npython env_foo.py 실행시 잘 작동되지만(같은 위치)\npython main_foo.py 실행에서는 from gym_foo import *코드를 읽을 때 env_foo.py내의 from gym_foo import utils_foo를 불러올 수 없다고 error가 난다.(상위 위치)\n\n\n$ python main_foo.py \nTraceback (most recent call last):\nFile \"main_foo.py\", line 4, in <module>\n    env_foo.env_test()\nNameError: name 'env_foo' is not defined\n\nenv_foo.py에서 utils_foo module을 불러올 때, from gym_foo import utils_foo로 불러온다. 상위 위치인 gym_foo를 거쳐서 import해야한다는 뜻이다. 그러면 python main_foo.py 실행시 잘 작동한다.\n\n$ python main_foo.py \nHERE: utils_foo\nutils_foo\nHERE: env_foo\nutils_foo\nenv_foo\n\n한 가지 더 주의해야할 점이 있다. main_foo.py에서 utils_foo와 env_foo를 import 할 때이다.\nfrom gym_foo import * 코드로 utils_foo와 env_foo가 모두 불러와질 것이라고 생각했으나, main_foo.py를 실행했을 때 import 하지 못한다. 따라서 위에 main_foo.py에서 볼 수 있듯이 from gym_foo import utils_foo, from gym_foo import env_foo각각 따로 import 해줘야 한다."
   },
   {
-    "objectID": "posts/code/2024-01-21-quarto-advnaced.html",
-    "href": "posts/code/2024-01-21-quarto-advnaced.html",
-    "title": "👩‍💻Quarto Blog(2)",
-    "section": "",
-    "text": "이전 포스팅에 이어서 블로그를 좀 더 Customizing하는 몇가지 사항들에 대해 설명하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며 처음 시작은 그리 어렵지 않지만 하나씩 옵션들을 내맘대로 건드리가 보면 시간이 훌쩍 지나가버리는 마법을 경험할 수 있습니다."
-  },
-  {
-    "objectID": "posts/code/2024-01-21-quarto-advnaced.html#toc",
-    "href": "posts/code/2024-01-21-quarto-advnaced.html#toc",
-    "title": "👩‍💻Quarto Blog(2)",
-    "section": "TOC",
-    "text": "TOC"
-  },
-  {
-    "objectID": "posts/code/2024-01-21-quarto-advnaced.html#이미지-넣기",
-    "href": "posts/code/2024-01-21-quarto-advnaced.html#이미지-넣기",
-    "title": "👩‍💻Quarto Blog(2)",
-    "section": "이미지 넣기",
-    "text": "이미지 넣기\n이미지와 관련된 작성 코드 스니펫드을 소개드리겠습니다.\n\n포스팅에 html 사용\n\n기본 markdown에 이미지를 넣는 문법은 ![이미지 캡션](이미지 경로)\n\n\n포스팅 대표 이미지 설정\n\n.qmd파일의 맨 윗부분에 설정해주는 문서 configuration에 image: ... 라인을 추가하고, ...부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다.\n---\ntitle: \"👩‍💻Quarto Blog(2)\"\ntoc: true\ndate: \"2024-01-17\"\ndescription: Quarto로 속편한 Github Blog 구축하기(2)\ncategories: [blog, quarto, code]\nimage: ../../images/2024-01-12-quarto-blog2/blog2.jpg\n---"
-  },
-  {
-    "objectID": "posts/code/2024-01-21-quarto-advnaced.html#callout-block",
-    "href": "posts/code/2024-01-21-quarto-advnaced.html#callout-block",
-    "title": "👩‍💻Quarto Blog(2)",
-    "section": "Callout Block",
-    "text": "Callout Block"
-  },
-  {
-    "objectID": "posts/code/2024-01-21-quarto-advnaced.html#buttons",
-    "href": "posts/code/2024-01-21-quarto-advnaced.html#buttons",
-    "title": "👩‍💻Quarto Blog(2)",
-    "section": "Buttons",
-    "text": "Buttons\n\n마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.\nQaurto Blog(1)포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며\nReference\n\nQuarto Homepage\nTypora Homepage\nHypothesis"
-  },
-  {
     "objectID": "posts/code/2020-07-13-install-mujoco-win10.html",
     "href": "posts/code/2020-07-13-install-mujoco-win10.html",
     "title": "👩‍💻Install Mujoco in Windows10",
@@ -698,6 +663,41 @@
     "title": "👩‍💻class ⟷ dict ⟷ yaml",
     "section": "",
     "text": "Config Class\n기준이 되는 부모 class AConfig\n\n자식 class가 같은 하위 class에 override 할 때는 이름을 바꾸지 않음\n부모 class에 없었던 하위 class를 만들 경우 자식Class의 이름(e.g. B, C) 활용\n대문자는 Config 객체의 ID\n소문자는 한개의 Config 클래스 객체 내에서의 하위 class 순서\n\n\nclass AConfig():\n    class A_a_Config:\n        element01 = \"element01\"\n        element02 = True\n    class A_b_Config:\n        element03 = 0\n        element04 = [2,4,6]\n\nBConfig는\n\nAConfig의 A_a_Config를 override\nAConfig의 A_b_Config를 override 하지 않음\nB_a_Config 추가\n\n\nclass BConfig(AConfig):\n    class A_a_Config:\n        element02 = False\n    # class A_b_Config:\n    #     pass\n    class B_a_Config:\n        element05 = {\"key\":\"value\"}\n\nCConfig는\n\nAConfig의 A_a_Config를 override\nAConfig의 A_b_Config를 pass로 override\nC_a_Config 추가\n\n\nclass CConfig(AConfig):\n    class A_a_Config:\n        element02 = False\n    class A_b_Config:\n        pass\n    class C_a_Config:\n        element05 = {\"key\":\"value\"}\n\nDConfig는\n\nAConfig의 A_a_Config를 인자로 받아 override\nAConfig의 A_b_Config를 인자로 받아 override\n\n\nclass DConfig(AConfig):\n    class A_a_Config(AConfig.A_a_Config):\n        element02 = False\n    class A_b_Config(AConfig.A_b_Config):\n        pass\n\nEConfig는\n\n__init__(super)로 Aconfig 상속\n\n\nclass EConfig(AConfig):\n    def __init__(super): pass\n    class E_a_Config:\n        element06 = (1,3,5)\n\n\n\nClass to Dict\nclass 객체를 dictionary로 만들기\n\ndef class_to_dict(obj) -> dict:\n    if not hasattr(obj, \"__dict__\"):                # __dict__ : 클래스 객체의 속성 정보를 확인하기 위해 사용. 객체가 가진 여러가지 속성들을 딕셔너리 형태로 편하게 확인\n        return obj\n    result = {}                                     # 빈 dict 객체 만들기\n    for key in dir(obj):                            # dir(): 어떤 객체를 인자로 넣어주면 해당 객체가 어떤 변수와 메소드(method)를 가지고 있는지 나열\n        if key.startswith(\"_\"):                     # startswith: str.startswith(str or tuple) 형식으로 사용하면 되고, 반환 값으로는 True, False를 반환\n            continue\n        element = []                                # 리스트 요소에 대비\n        val = getattr(obj, key)                     # getattr: object에 존재하는 속성의 값을 가져옴\n        if isinstance(val, list):                   # isinstance로 list 객체인지 확인 e.g.) isinstance(object, type)\n            for item in val:\n                element.append(class_to_dict(item))\n        else:                                       # 리스트가 아닌 모든 요소들 처리\n            element = class_to_dict(val)\n        result[key] = element                       # 결과 dict에 저장\n    return result\n\n\nAConfigDict = class_to_dict(AConfig)\nAConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\nBConfigDict = class_to_dict(BConfig)\nBConfigDict\n\n{'A_a_Config': {'element02': False},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},\n 'B_a_Config': {'element05': {'key': 'value'}}}\n\n\n\nCConfigDict = class_to_dict(CConfig)\nCConfigDict\n\n{'A_a_Config': {'element02': False},\n 'A_b_Config': {},\n 'C_a_Config': {'element05': {'key': 'value'}}}\n\n\n\nDConfigDict = class_to_dict(DConfig)\nDConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': False},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\nEConfigDict = class_to_dict(EConfig)\nEConfigDict\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]},\n 'E_a_Config': {'element06': (1, 3, 5)}}\n\n\n\n\n\nDict to Yaml\n\nimport yaml\nfrom pprint import pprint\n\n\nAConfigDictYaml = yaml.dump(AConfigDict)\nprint(AConfigDictYaml)\nprint(type(AConfigDictYaml))\n\nA_a_Config:\n  element01: element01\n  element02: true\nA_b_Config:\n  element03: 0\n  element04:\n  - 2\n  - 4\n  - 6\n\n<class 'str'>\n\n\n\n\nYaml to Dict\n\nAYamlDict = yaml.safe_load(AConfigDictYaml)\npprint(AYamlDict)\n\n{'A_a_Config': {'element01': 'element01', 'element02': True},\n 'A_b_Config': {'element03': 0, 'element04': [2, 4, 6]}}\n\n\n\n\nDict to Class\n\n속성값으로 만들어주는 것이기 때문에 내부 메소드나 내부 클래스가 아닌, 내부 변수와 같음\n\n\nclass Dict2Class(object):\n    def __init__(self, input_dict):\n        for key in input_dict:\n            print(\"Set arribute: \", key)\n            setattr(self, key, input_dict[key]) # object에 존재하는 속성의 값을 바꾸거나, 새로운 속성을 생성하여 값을 부여\n\n\nAYamlDictClass = Dict2Class(AYamlDict)\n\nSet arribute:  A_a_Config\nSet arribute:  A_b_Config\n\n\n\nAYamlDictClass.A_a_Config\n\n{'element01': 'element01', 'element02': True}\n\n\n\nAYamlDictClass.A_b_Config\n\n{'element03': 0, 'element04': [2, 4, 6]}"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html",
+    "href": "posts/code/2024-01-21-quarto-advanced.html",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "",
+    "text": "이전 Quarto를 활용하여 Github 블로그를 구축하는 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 Customizing 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 재밌게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하는 것 같습니다.\n저번 포스팅보다 여러가지 옵션들을 바꿔가면서 확인하는 과정들이 많기 때문에 localhost(로컬 컴퓨터)에서 블로그가 어떻게 바뀌어 가는지 확인하기 위해 아래의 명령어를 VSCode 터미널에 입력하여 창을 띄우며 확인해보세요!"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html#toc",
+    "href": "posts/code/2024-01-21-quarto-advanced.html#toc",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "ToC",
+    "text": "ToC\nToC란 Table of Contents 의 약자로 블로그의 내용들이 여러 제목/소제목들로 구성되어 글이 길어질 경우, 내용을 한눈에 파악하기 쉽도록 목차를 보여주는 기능입니다. Quarto에서는 html 설정 옵션으로 이 기능을 지원하고 있으며 아래 예시 사진에서와 같이 한쪽에 ToC를 보여줘서 포스팅의 독자분들이 쉽게 내용을 파악하고 필요하는 부분만 골라서 확인하기도 용이합니다.\n\n\n\nBlog 포스팅에서 ToC 부분\n\n\nQuarto에서는 다양한 ToC 형식을 지원하고 있는데 작성하는 .qmd파일의 서두에 설정하는 포스팅 설정 부분에 toc: ture라고 추가하면 해당 .qmd파일에 #, ## 등으로 제목으로 작성했던 이름을 기반으로 해당 포스팅의 ToC가 나타나게 됩니다.\n\n\n\nqmd파일에서 ToC 설정하기\n\n\n만약 ToC의 Numbering을 자동으로 나오게 하고 싶다면 아래와 같이 number-sections: true도 포스팅 설정 부분에 추가해준다면 넘버링된 ToC가 나오는 것을 확인할 수 있습니다.\ntoc: true\nnumber-sections: true\n\n\n\nNumbering ToC로 바뀐 모습\n\n\n이 부분도 Quarto Docs에서 더 다양한 옵션들을 확인해보실 수 있으니 다양한 옵션들을 기호에 맞게 바꿔가며 확인해보세요!"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html#이미지-넣기",
+    "href": "posts/code/2024-01-21-quarto-advanced.html#이미지-넣기",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "이미지 넣기",
+    "text": "이미지 넣기\n이미지와 관련된 작성 코드 스니펫을 소개하겠습니다. 이전에 이미지를 Typora를 통해 넣거나 Markdown 문법의 형식으로 작성하게 되면 ![이미지 캡션](이미지 경로)와 같이 코드로 이미지를 넣어주게 됩니다. 하지만 이렇게 이미지들을 넣게 되면 이미지 사이즈 조절이나 정렬 등을 설정해주기가 어렵기 때문에 html 문법형식을 빌려 글에 이미지들을 넣어주는 것을 추천드립니다.\n\nhtml 사용하여 이미지 삽입\n이 코드는 가운데 정렬(centering), 이미지의 (포스팅 대비 상대적인) 너비 조정(width), 이미지 캡션(figcaption)을 html 문법을 빌려 이미지를 삽입해주는 snippet입니다.\n<center>\n<img src=\"../../images/이미지_이름.png\" width=\"50%\" />\n<figcaption>이미지 캡션</figcaption>\n</center>\n포스팅 대표 이미지 설정\n다음으로 작성글의 대표 이미지를 설정하면 블로그 메인 화면에 뜨는 그림을 정해 줄 수 있습니다.\n\n\n\n블로그 메인 화면에서 각 포스팅들의 대표 이미지들\n\n\n.qmd파일의 맨 윗부분에 설정해주는 문서 configuration에 image: ... 라인을 추가하고, ...부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다. 아래는 이번 포스팅의 대표 이미지를 설정하는 예시 configuration 입니다.\n---\ntitle: \"👩‍💻Quarto Blog(2)\"\ntoc: true\ndate: \"2024-01-17\"\ndescription: Quarto로 속편한 Github Blog 구축하기(2)\ncategories: [blog, quarto, code]\nimage: ../../images/2024-01-12-quarto-blog2/blog2.jpg\n---"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html#callout-block",
+    "href": "posts/code/2024-01-21-quarto-advanced.html#callout-block",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "Callout Block",
+    "text": "Callout Block\nCallout Block은 포스팅에서 따로 강조하고 싶거나 토글(Toggling)하고 싶은 내용이 있을 때 사용하면 유용한 작성 방법입니다. Quarto Docs의 Callout Blocks에서 볼 수 있듯이, note, warning, important, tip, caution과 같이 글의 메인 내용과 다른 포인트를 가진 내용이거나 강조하고 싶은 파트를 작성하여 보여줄 수 있습니다.\n::: {.callout-caution collapse=\"true\"}\n# Callout Block 예시\nQuarto의 Callout Block을 활용해봅시다! 생각보다 정말 유용하게 잘 쓰는 기능입니다 :)\n:::\n이 코드 스니펫을 이용하여 글에 삽입하면 아래와 같이 나옵니다. 한번 아래 Block을 클릭해보세요!\n\n\n\n\n\n\nCallout Block 예시\n\n\n\n\n\nQuarto의 Callout Block을 활용해봅시다! 생각보다 정말 유용하게 잘 쓰는 기능입니다 :)\n\n\n\n예시에서 확인할 수 있다시피 collapse=\"true\"등과 같은 Callout Block에 해당하는 다양한 옵션들도 Docs에서 찾아볼 수 있으니 다양하게 시도해보세요!"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html#수학-수식",
+    "href": "posts/code/2024-01-21-quarto-advanced.html#수학-수식",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "수학 수식",
+    "text": "수학 수식\n논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 수식 삽입을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다.\nhtml-math-method: katex\n마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.\nQaurto Blog(1)포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며\nReference\n\nQuarto Homepage\nTypora Homepage\nHypothesis"
   },
   {
     "objectID": "posts/scabble/2023-03-28-jjijil-his-001.html",

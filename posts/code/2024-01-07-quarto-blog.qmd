@@ -90,7 +90,7 @@ Quarto에서는 기본적으로 `.qmd` 파일 형식으로 포스팅 글들을 �
 <figcaption>Typora Image 경로 설정</figcaption>
 </center>
 
-위의 사진에서 처럼 설정하게 되면 작성하고 있는 `.qmd`파일에 `![이미지_캡션](../../images/[포스팅_이름.qmd]/[이미지_이름.png])`와 같이 코드가 작성이 된 것을 확인할 수 있습니다. Markdown에서 이미지를 넣는 형식과 크게 다르지 않지만 만약 html 문법을 이용해서 이미지 정렬, 사이즈 조절과 같은 옵션 설정이 필요하다면 이 포스팅의 이후 시리즈로 작성한[Quarto Blog(2) - 이미지 넣기](https://curieuxjy.github.io/posts/code/2024-01-21-quarto-advnaced.html#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%84%A3%EA%B8%B0)를 참고해주세요!
+위의 사진에서 처럼 설정하게 되면 작성하고 있는 `.qmd`파일에 `![이미지_캡션](../../images/[포스팅_이름.qmd]/[이미지_이름.png])`와 같이 코드가 작성이 된 것을 확인할 수 있습니다. Markdown에서 이미지를 넣는 형식과 크게 다르지 않지만 만약 html 문법을 이용해서 이미지 정렬, 사이즈 조절과 같은 옵션 설정이 필요하다면 이 포스팅의 이후 시리즈로 작성한 [Quarto Blog(2) - 이미지 넣기](https://curieuxjy.github.io/posts/code/2024-01-21-quarto-advnaced.html#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%84%A3%EA%B8%B0)를 참고해주세요!
 
 
 # Blog(Website) 만들기
