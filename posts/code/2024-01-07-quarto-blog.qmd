@@ -203,11 +203,11 @@ quarto render
 
 마지막으로 Github에 Push를 하게 되면 이제 website를 확인할 수 있습니다!(build되는데 약 2-3분 걸릴 수 있습니다.)
 
-이번에는 Quarto Engine을 이용해서 간단하게 Blog Website를 올리는 부분을 진행했습니다. 좀 더 본격적으로 조정할 수 있는 옵션들에 대해서는 다음 포스팅에서 살펴볼 예정입니다. :)
+이번에는 Quarto Engine을 이용해서 간단하게 Blog Website를 올리는 부분을 진행했습니다. 좀 더 본격적으로 조정할 수 있는 옵션들에 대해서는 다음 포스팅에서 살펴볼 예정입니다.
 
+---
 
 **Reference**
 
 - [Quarto Homepage](https://quarto.org/)
-
 - [Typora Homepage](https://typora.io/)

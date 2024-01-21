@@ -244,11 +244,11 @@ Toggle 내용
 
 ---
 
-[Qaurto Blog(1)](https://curieuxjy.github.io/posts/code/2024-01-07-quarto-blog.html)포스팅에서 Quarto로 기본적인 블로그를 만들고 나서 이번 포스팅의 여러 커스텀 옵션들을 활용하면 각자 원하는 Github Blog를 손쉽게 만들 수 있습니다. 그리고 기본적인 html의 문법을 따라가기 때문에 이번 포스팅에서 몇부분들은 html 문법에 익숙하신 분들에게는 당연한 내용이지 않을까 싶습니다. Quarto를 쓰지 않더라도 블로그를 만들 수 있는 방법은 많지만 처음 소개글에서 이야기 했던 제가 Quarto를 알게 된 배경과 니즈를 듣고 저와 같은 비슷한 상황이시라면 정말 좋은 툴이라고 생각하실 거라고 확신합니다. 만약 아직 Github Blog 초심자라면 Quarto를 한번 고려해보시는 것을 다시 한번 권장해드리며 이만 마치겠습니다.
+[Quarto Blog(1)](https://curieuxjy.github.io/posts/code/2024-01-07-quarto-blog.html)포스팅에서 Quarto로 기본적인 블로그를 만들고 나서 이번 포스팅의 여러 커스텀 옵션들을 활용하면 각자 원하는 Github Blog를 손쉽게 만들 수 있습니다. 그리고 기본적인 html의 문법을 따라가기 때문에 이번 포스팅에서 몇부분들은 html 문법에 익숙하신 분들에게는 당연한 내용이지 않을까 싶습니다. Quarto를 쓰지 않더라도 블로그를 만들 수 있는 방법은 많지만 처음 소개글에서 이야기 했던 제가 Quarto를 알게 된 배경과 니즈를 듣고 저와 같은 비슷한 상황이시라면 정말 좋은 툴이라고 생각하실 거라고 확신합니다. 만약 아직 Github Blog 초심자라면 Quarto를 한번 고려해보시는 것을 다시 한번 권장해드리며 이만 마치겠습니다.
 
+---
 
 **Reference**
 
 - [Quarto Homepage](https://quarto.org/)
-
 - [Hypothesis](https://web.hypothes.is/)
