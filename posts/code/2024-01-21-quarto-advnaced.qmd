@@ -1,7 +1,7 @@
 ---
 title: "👩‍💻Quarto Blog(2)"
 toc: true
-date: "2024-01-17"
+date: "2024-01-21"
 description: Quarto로 속편한 Github Blog 구축하기(2)
 categories: [blog, quarto, code]
 image: ../../images/2024-01-12-quarto-blog2/blog2.jpg
