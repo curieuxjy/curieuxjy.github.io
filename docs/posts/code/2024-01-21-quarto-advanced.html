@@ -205,6 +205,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#이미지-넣기" id="toc-이미지-넣기" class="nav-link" data-scroll-target="#이미지-넣기">이미지 넣기</a></li>
   <li><a href="#callout-block" id="toc-callout-block" class="nav-link" data-scroll-target="#callout-block">Callout Block</a></li>
   <li><a href="#수학-수식" id="toc-수학-수식" class="nav-link" data-scroll-target="#수학-수식">수학 수식</a></li>
+  <li><a href="#글자색-설정" id="toc-글자색-설정" class="nav-link" data-scroll-target="#글자색-설정">글자색 설정</a></li>
+  <li><a href="#toggle" id="toc-toggle" class="nav-link" data-scroll-target="#toggle">Toggle</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -245,7 +247,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 </header>
 
-<p>이전 Quarto를 활용하여 Github 블로그를 구축하는 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 <strong>Customizing</strong> 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 재밌게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하는 것 같습니다.</p>
+<p>Quarto를 활용하여 Github 블로그를 구축하는 <a href="https://curieuxjy.github.io/posts/code/2024-01-07-quarto-blog.html">이전 포스팅</a>에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 <strong>Customizing</strong> 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 가볍게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하게 됩니다.</p>
 <center>
 <img src="../../images/2024-01-12-quarto-blog2/blog2.jpg" width="40%">
 </center>
@@ -259,7 +261,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </center>
 <p>정말 다양한 분위기의 테마들을 제공하기 때문에 테마 하나씩 확인해가며 고를 수 있습니다. 마음에 드는 테마를 선택한 후 블로그를 처음 Build한 프로젝트 파일에서 <code>_quarto.yml</code>파일을 열어보면 아래와 같이 창이 작성되어 있는 것을 확인할 수 있습니다.</p>
 <center>
-<img src="../../images/2024-01-21-quarto-advanced/2.png" width="80%">
+<img src="../../images/2024-01-21-quarto-advanced/2.png" width="90%">
 </center>
 <p>파일에서 <code>theme</code>이라는 부분에 default로 적혀 있는 테마의 명칭 대신에 자신이 원하는 theme의 이름을 적어주면 됩니다. 예를 들어 만약 <code>sketchy</code>테마를 선택했다면 아래와 같이 적어주면 됩니다.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="an">format:</span></span>
@@ -303,26 +305,45 @@ Numbering ToC로 바뀐 모습
 <li><a href="https://giscus.app/ko">Giscus</a></li>
 <li><a href="https://web.hypothes.is/">Hypothes.is</a></li>
 </ol>
-<p>Utterances와 Giscus 둘 다 쉽게 댓글 기능을 추가할 수 있지만 Blog Github Repository를 <code>public</code>으로 설정해야만 사용할 수 있는 기능이기에 Blog Repository를 <code>private</code>으로 두고 싶은 저는 <code>Hypothes.is</code>를 선택할 수 밖에 없었고 그래서 아래와 같이 <code>._quarto.yml</code>파일에 Hypothesis를 활용하여 Interacting 기능을 추가해주었습니다. Hypothesis의 단점은 이 플랫폼이 적용되어 있는지 모르고 독자들이 포스팅에 대한 반응을 남기는 방법을 모르기 때문에 블로그에서 피드백을 받기가 어렵습니다.</p>
-<pre><code>website:
-  comments: # https://h.readthedocs.io/projects/client/en/latest/publishers/config.html
-    hypothesis: 
-      theme: clean
-      openSidebar: false</code></pre>
+<p>Utterances와 Giscus 둘 다 쉽게 댓글 기능을 추가할 수 있지만 <strong>Blog Github Repository를 <code>public</code>으로 설정해야만</strong> 사용할 수 있는 기능이기에 Blog Repository를 <code>private</code>으로 두고 싶은 저는 <strong><code>Hypothes.is</code>를 선택</strong>할 수 밖에 없었습니다. 아래와 같이 <code>._quarto.yml</code>파일에 Hypothesis를 활용하여 Interacting 기능을 추가해주었습니다.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1"></a><span class="an">website:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  comments: </span>
+<span id="cb4-3"><a href="#cb4-3"></a>    hypothesis: </span>
+<span id="cb4-4"><a href="#cb4-4"></a>      theme: clean</span>
+<span id="cb4-5"><a href="#cb4-5"></a>      openSidebar: false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>단, Hypothesis의 단점은 일반적인 댓글 UI 창이 있는게 아니라 특정 라인을 선택해서 댓글을 다는 형식이기 때문에, 이 기능이 적용되어 있는지 모르고 독자들이 포스팅에 대한 반응을 많이 남기지 않는 경향이 있어 블로그에서 피드백을 받기가 어렵습니다.</p>
+<center>
+<img src="../../images/2024-01-21-quarto-advanced/hypo.gif" width="50%">
+<figcaption>
+Hypothesis를 활용하여 Comment 남기는 법
+</figcaption>
+</center>
 </section>
 <section id="github-잔디" class="level1">
 <h1>Github 잔디</h1>
-<p>ghchart를 활용하면</p>
+<p>Github 유저로써 프로필에 있는 잔디를 심는 기쁨을 가지고 있는데 이를 Blog 메인에도 똑같이 보여줄 수 있으면 좋겠다 생각해서 아래 사진처럼 잔디 이미지를 넣었었습니다.</p>
 <center>
 <img src="../../images/2024-01-21-quarto-advanced/9.png" width="70%">
 <figcaption>
 Blog Main 화면
 </figcaption>
 </center>
-<pre><code></code></pre>
+<p><a href="https://github.com/akerl/githubchart">githubchart</a>를 활용해서 Github 잔디 연동 이미지를 가져오는 방법은 사실 많이 알려져 있기 때문에 Quarto로 만든 Blog reposiotory에서 블로그 첫화면을 담당하는 <code>index.qmd</code>파일에 아래 한줄을 추가해주면 됩니다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://ghchart.rshah.org/[색상코드]/[GithubID]"</span> <span class="er">style</span><span class="ot">=</span><span class="st">"width:75%"</span><span class="kw">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>[색상코드]</code>와 <code>[GithubID]</code>부분에 각자 원하는 색상과 ID를 적어주면 됩니다. 제 블로그 같은 경우, 적용된 <code>minty</code> 테마와 어울리는 색상 코드를 찾아서 아래와 같이 작성했습니다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://ghchart.rshah.org/FF7A81/curieuxjy"</span> <span class="er">style</span><span class="ot">=</span><span class="st">"width:75%"</span><span class="kw">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="jupyter-notebook" class="level1">
 <h1>Jupyter notebook</h1>
+<p>Jupyter Notebook 혹은 Jputer Lab을 이용하여 코드 블럭마다 실행할 수 있고 바로 바로 실행 결과를 볼 수 있는 <code>.ipynb</code> 파일은 많은 AI/데이터 분야의 사람들에게 사랑 받고 있는 작성 형식입니다. 작성한 <code>.ipynb</code> 파일을 그대로 블로그 포스팅 글로 바꾸고 싶다면 특별한 수정 없이 <code>.ipynb</code>파일 서두에 <code>.qmd</code>파일 처럼 문서 configuration 파트를 추가한 후 rendering하면 그대로 블로그 포스팅으로 만들어 집니다. 아래 문서 configuration 예시는 제 블로그 <a href="https://curieuxjy.github.io/posts/code/2022-12-21-torch-tensor-inverted.html">👩‍💻torch.Tensor vs torch.tensor</a>포스팅에 쓰인 <code>.ipynb</code>파일 서두에 작성한 configuration 입니다.</p>
+<pre><code>---
+title: 👩‍💻torch.Tensor vs torch.tensor
+description: torch Tensor 객체 생성 방법 비교와 Inverted 연산 확인하기
+date: "2022-12-21"
+categories: [torch, tensor, inverted, code]
+toc: true
+---</code></pre>
+<p>이렇게 간편한 <code>.ipynb</code>파일 업로드 후 바로 rendering 되는 기능으로 제 블로그에 작성된 글들은 <a href="https://curieuxjy.github.io/posts/code/2022-12-21-torch-tensor-inverted.html">👩‍💻torch.Tensor vs torch.tensor</a>, <a href="https://curieuxjy.github.io/posts/code/2022-12-26-class-dict-yaml.html">👩‍💻class ⟷ dict ⟷ yaml</a>, <a href="https://curieuxjy.github.io/posts/code/2023-06-18-chord.html">👩‍💻Chord Graph</a> 등이 있습니다. <a href="https://bokeh.org/">Bokeh</a>와 같은 데이터 시각화 툴도 문제없이 랜더링 되므로 데이터 사이언티스트 분들에게는 더할 나위 없이 좋은 기능이라고 생각합니다.</p>
 </section>
 <section id="code-snippets" class="level1">
 <h1>Code Snippets</h1>
@@ -333,10 +354,10 @@ Blog Main 화면
 <ol type="1">
 <li><p><strong>html 사용하여 이미지 삽입</strong></p>
 <p>이 코드는 <strong>가운데 정렬(<code>centering</code>)</strong>, <strong>이미지의 (포스팅 대비 상대적인) 너비 조정(<code>width</code>)</strong>, <strong>이미지 캡션(<code>figcaption</code>)</strong>을 html 문법을 빌려 이미지를 삽입해주는 snippet입니다.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">&lt;center&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../../images/이미지_이름.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"50%"</span> <span class="kw">/&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">&lt;figcaption&gt;</span>이미지 캡션<span class="kw">&lt;/figcaption&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">&lt;/center&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">&lt;center&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../../images/이미지_이름.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"50%"</span> <span class="kw">/&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">&lt;figcaption&gt;</span>이미지 캡션<span class="kw">&lt;/figcaption&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="kw">&lt;/center&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><strong>포스팅 대표 이미지 설정</strong></p>
 <p>다음으로 작성글의 대표 이미지를 설정하면 블로그 메인 화면에 뜨는 그림을 정해 줄 수 있습니다.</p>
 <center>
@@ -346,23 +367,23 @@ Blog Main 화면
 </figcaption>
 </center>
 <p><code>.qmd</code>파일의 맨 윗부분에 설정해주는 문서 configuration에 <code>image: ...</code> 라인을 추가하고, <code>...</code>부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다. 아래는 이번 포스팅의 대표 이미지를 설정하는 예시 configuration 입니다.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">---</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="an">title:</span><span class="co"> "👩‍💻Quarto Blog(2)"</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="an">toc:</span><span class="co"> true</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="an">date:</span><span class="co"> "2024-01-17"</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="an">description:</span><span class="co"> Quarto로 속편한 Github Blog 구축하기(2)</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="an">categories:</span><span class="co"> [blog, quarto, code]</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="an">image:</span><span class="co"> ../../images/2024-01-12-quarto-blog2/blog2.jpg</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="an">title:</span><span class="co"> "👩‍💻Quarto Blog(2)"</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="an">date:</span><span class="co"> "2024-01-17"</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="an">description:</span><span class="co"> Quarto로 속편한 Github Blog 구축하기(2)</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="an">categories:</span><span class="co"> [blog, quarto, code]</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="an">image:</span><span class="co"> ../../images/2024-01-12-quarto-blog2/blog2.jpg</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
 </section>
 <section id="callout-block" class="level2">
 <h2 class="anchored" data-anchor-id="callout-block">Callout Block</h2>
 <p>Callout Block은 포스팅에서 따로 강조하고 싶거나 토글(Toggling)하고 싶은 내용이 있을 때 사용하면 유용한 작성 방법입니다. Quarto Docs의 <a href="https://quarto.org/docs/authoring/callouts.html">Callout Blocks</a>에서 볼 수 있듯이, <code>note</code>, <code>warning</code>, <code>important</code>, <code>tip</code>, <code>caution</code>과 같이 글의 메인 내용과 다른 포인트를 가진 내용이거나 강조하고 싶은 파트를 작성하여 보여줄 수 있습니다.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a>::: {.callout-caution collapse="true"}</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu"># Callout Block 예시</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>Quarto의 Callout Block을 활용해봅시다! 생각보다 정말 유용하게 잘 쓰는 기능입니다 :)</span>
-<span id="cb8-4"><a href="#cb8-4"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1"></a>::: {.callout-caution collapse="true"}</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu"># Callout Block 예시</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>Quarto의 Callout Block을 활용해봅시다! 생각보다 정말 유용하게 잘 쓰는 기능입니다 :)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>이 코드 스니펫을 이용하여 글에 삽입하면 아래와 같이 나옵니다. 한번 아래 Block을 클릭해보세요!</p>
 <div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -384,14 +405,36 @@ Callout Block 예시
 </section>
 <section id="수학-수식" class="level2">
 <h2 class="anchored" data-anchor-id="수학-수식">수학 수식</h2>
-<p>논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 <strong>수식 삽입</strong>을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다.</p>
-<pre><code>html-math-method: katex</code></pre>
-<p>마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.</p>
-<p><a href="">Qaurto Blog(1)</a>포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며</p>
+<p>논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 <strong>수식 삽입</strong>을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다. 사실 Markdown 문법과 다르지 않습니다. Quarto Docs <a href="https://quarto.org/docs/authoring/markdown-basics.html#equations">Equations</a>에서 볼 수 있듯이 <code>$</code>로 수식을 warpping하면 수식이 잘 랜더링 되는 것을 볼 수 있습니다.</p>
+<p>html에서 수식을 다양한 형식으로 rendering할 수 있도록 옵션도 제공하고 있습니다. <a href="https://quarto.org/docs/reference/formats/html.html#format-options">Format Options</a> 테이블에 있는 <code>html-math-method</code>옵션을 활용해서 <code>plain</code>, <code>webtex</code>, <code>gladtex</code>, <code>mathml</code>, <code>mathjax</code>, <code>katex</code> 등과 같은 옵션을 사용할 수 있습니다. 예를들면 아래와 같이 <code>_quarto.yml</code> 설정 파일에 <code>html-math-method: katex</code> 한 줄 추가하면 수식 랜더링 스타일을 바꿀 수 있습니다.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1"></a><span class="an">format:</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  html:</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    html-math-method: katex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="글자색-설정" class="level2">
+<h2 class="anchored" data-anchor-id="글자색-설정">글자색 설정</h2>
+<p>글자색을 기본 테마에서 설정한 색이 아닌, <span style="color: blue">파란색</span>, <span style="color: red">빨간색</span> 등 다른 색을 사용하고 싶다면 아래와 같이 html 문법을 활용하여 작성하면 됩니다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color: blue"</span><span class="kw">&gt;</span>파란색 글씨를 작성<span class="kw">&lt;/span&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="toggle" class="level2">
+<h2 class="anchored" data-anchor-id="toggle">Toggle</h2>
+<p>토글은 Callout Block을 활용해서 작성할 수도 있지만 기본 html 문법을 활용해서 아래와 같이 작성할 수도 있습니다.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">&lt;summary&gt;&lt;b&gt;</span>Toggle 제목<span class="kw">&lt;/b&gt;&lt;/summary&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>Toggle 내용</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="kw">&lt;/details&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>아래와 같이 Toggle 파트가 랜더링 됩니다.</p>
+<details>
+<summary>
+<b>Toggle 제목</b>
+</summary>
+Toggle 내용
+</details>
+<hr>
+<p><a href="https://curieuxjy.github.io/posts/code/2024-01-07-quarto-blog.html">Qaurto Blog(1)</a>포스팅에서 Quarto로 기본적인 블로그를 만들고 나서 이번 포스팅의 여러 커스텀 옵션들을 활용하면 각자 원하는 Github Blog를 손쉽게 만들 수 있습니다. 그리고 기본적인 html의 문법을 따라가기 때문에 이번 포스팅에서 몇부분들은 html 문법에 익숙하신 분들에게는 당연한 내용이지 않을까 싶습니다. Quarto를 쓰지 않더라도 블로그를 만들 수 있는 방법은 많지만 처음 소개글에서 이야기 했던 제가 Quarto를 알게 된 배경과 니즈를 듣고 저와 같은 비슷한 상황이시라면 정말 좋은 툴이라고 생각하실 거라고 확신합니다. 만약 아직 Github Blog 초심자라면 Quarto를 한번 고려해보시는 것을 다시 한번 권장해드리며 이만 마치겠습니다.</p>
 <p><strong>Reference</strong></p>
 <ul>
 <li><p><a href="https://quarto.org/">Quarto Homepage</a></p></li>
-<li><p><a href="https://typora.io/">Typora Homepage</a></p></li>
 <li><p><a href="https://web.hypothes.is/">Hypothesis</a></p></li>
 </ul>
 

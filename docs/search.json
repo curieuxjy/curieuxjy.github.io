@@ -515,7 +515,7 @@
     "href": "posts/code/2024-01-07-quarto-blog.html#blog-publish",
     "title": "👩‍💻Quarto Blog(1)",
     "section": "Blog Publish",
-    "text": "Blog Publish\n이전 단계에서는 localhost로 페이지를 랜더링해서 확인한 것이기 때문에 publish가 되지 않았습니다. quarto에서 프로젝트를 rendering하기 위해서는 publish를 하는 명령어를 실행해야 합니다.\n하지만 그전에!\npage들을 publish할 directory를 /docs로 따로 설정을 해주었기 때문에 해당 폴더에 랜더링된 html 파일들을 만들 수 있도록 아래와 같이 ._quarto.yml 설정파일을 아래와 같이 작성해줍니다.\nproject:\n  type: website\n  output-dir: docs\n\n\n\n위와 같이 render이 잘 완료되었다는 메세지가 확인이 되면 아래의 명령어를 실행하여 publish 합니다.\nquarto render\n마지막으로 Github에 Push를 하게 되면 이제 website를 확인할 수 있습니다!(build되는데 약 2-3분 걸릴 수 있습니다.)\n이번에는 Quarto Engine을 이용해서 간단하게 Blog Website를 올리는 부분을 진행했습니다. 좀 더 본격적으로 조정할 수 있는 옵션들에 대해서는 다음 포스팅에서 살펴볼 예정입니다. :)\nReference\n\nQuarto Homepage\nTypora Homepage\nHypothesis"
+    "text": "Blog Publish\n이전 단계에서는 localhost로 페이지를 랜더링해서 확인한 것이기 때문에 publish가 되지 않았습니다. quarto에서 프로젝트를 rendering하기 위해서는 publish를 하는 명령어를 실행해야 합니다.\n하지만 그전에!\npage들을 publish할 directory를 /docs로 따로 설정을 해주었기 때문에 해당 폴더에 랜더링된 html 파일들을 만들 수 있도록 아래와 같이 ._quarto.yml 설정파일을 아래와 같이 작성해줍니다.\nproject:\n  type: website\n  output-dir: docs\n\n\n\n위와 같이 render이 잘 완료되었다는 메세지가 확인이 되면 아래의 명령어를 실행하여 publish 합니다.\nquarto render\n마지막으로 Github에 Push를 하게 되면 이제 website를 확인할 수 있습니다!(build되는데 약 2-3분 걸릴 수 있습니다.)\n이번에는 Quarto Engine을 이용해서 간단하게 Blog Website를 올리는 부분을 진행했습니다. 좀 더 본격적으로 조정할 수 있는 옵션들에 대해서는 다음 포스팅에서 살펴볼 예정입니다. :)\nReference\n\nQuarto Homepage\nTypora Homepage"
   },
   {
     "objectID": "posts/code/2022-12-21-torch-tensor-inverted.html",
@@ -669,7 +669,7 @@
     "href": "posts/code/2024-01-21-quarto-advanced.html",
     "title": "👩‍💻Quarto Blog(2)",
     "section": "",
-    "text": "이전 Quarto를 활용하여 Github 블로그를 구축하는 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 Customizing 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 재밌게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하는 것 같습니다.\n저번 포스팅보다 여러가지 옵션들을 바꿔가면서 확인하는 과정들이 많기 때문에 localhost(로컬 컴퓨터)에서 블로그가 어떻게 바뀌어 가는지 확인하기 위해 아래의 명령어를 VSCode 터미널에 입력하여 창을 띄우며 확인해보세요!"
+    "text": "Quarto를 활용하여 Github 블로그를 구축하는 이전 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 Customizing 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 가볍게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하게 됩니다.\n저번 포스팅보다 여러가지 옵션들을 바꿔가면서 확인하는 과정들이 많기 때문에 localhost(로컬 컴퓨터)에서 블로그가 어떻게 바뀌어 가는지 확인하기 위해 아래의 명령어를 VSCode 터미널에 입력하여 창을 띄우며 확인해보세요!"
   },
   {
     "objectID": "posts/code/2024-01-21-quarto-advanced.html#toc",
@@ -697,7 +697,21 @@
     "href": "posts/code/2024-01-21-quarto-advanced.html#수학-수식",
     "title": "👩‍💻Quarto Blog(2)",
     "section": "수학 수식",
-    "text": "수학 수식\n논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 수식 삽입을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다.\nhtml-math-method: katex\n마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.\nQaurto Blog(1)포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며\nReference\n\nQuarto Homepage\nTypora Homepage\nHypothesis"
+    "text": "수학 수식\n논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 수식 삽입을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다. 사실 Markdown 문법과 다르지 않습니다. Quarto Docs Equations에서 볼 수 있듯이 $로 수식을 warpping하면 수식이 잘 랜더링 되는 것을 볼 수 있습니다.\nhtml에서 수식을 다양한 형식으로 rendering할 수 있도록 옵션도 제공하고 있습니다. Format Options 테이블에 있는 html-math-method옵션을 활용해서 plain, webtex, gladtex, mathml, mathjax, katex 등과 같은 옵션을 사용할 수 있습니다. 예를들면 아래와 같이 _quarto.yml 설정 파일에 html-math-method: katex 한 줄 추가하면 수식 랜더링 스타일을 바꿀 수 있습니다.\nformat:\n  html:\n    html-math-method: katex"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html#글자색-설정",
+    "href": "posts/code/2024-01-21-quarto-advanced.html#글자색-설정",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "글자색 설정",
+    "text": "글자색 설정\n글자색을 기본 테마에서 설정한 색이 아닌, 파란색, 빨간색 등 다른 색을 사용하고 싶다면 아래와 같이 html 문법을 활용하여 작성하면 됩니다.\n<span style=\"color: blue\">파란색 글씨를 작성</span>"
+  },
+  {
+    "objectID": "posts/code/2024-01-21-quarto-advanced.html#toggle",
+    "href": "posts/code/2024-01-21-quarto-advanced.html#toggle",
+    "title": "👩‍💻Quarto Blog(2)",
+    "section": "Toggle",
+    "text": "Toggle\n토글은 Callout Block을 활용해서 작성할 수도 있지만 기본 html 문법을 활용해서 아래와 같이 작성할 수도 있습니다.\n<details>\n<summary><b>Toggle 제목</b></summary>\nToggle 내용\n</details>\n아래와 같이 Toggle 파트가 랜더링 됩니다.\n\n\nToggle 제목\n\nToggle 내용\n\n\nQaurto Blog(1)포스팅에서 Quarto로 기본적인 블로그를 만들고 나서 이번 포스팅의 여러 커스텀 옵션들을 활용하면 각자 원하는 Github Blog를 손쉽게 만들 수 있습니다. 그리고 기본적인 html의 문법을 따라가기 때문에 이번 포스팅에서 몇부분들은 html 문법에 익숙하신 분들에게는 당연한 내용이지 않을까 싶습니다. Quarto를 쓰지 않더라도 블로그를 만들 수 있는 방법은 많지만 처음 소개글에서 이야기 했던 제가 Quarto를 알게 된 배경과 니즈를 듣고 저와 같은 비슷한 상황이시라면 정말 좋은 툴이라고 생각하실 거라고 확신합니다. 만약 아직 Github Blog 초심자라면 Quarto를 한번 고려해보시는 것을 다시 한번 권장해드리며 이만 마치겠습니다.\nReference\n\nQuarto Homepage\nHypothesis"
   },
   {
     "objectID": "posts/scabble/2023-03-28-jjijil-his-001.html",

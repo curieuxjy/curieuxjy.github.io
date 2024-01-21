@@ -211,5 +211,3 @@ quarto render
 - [Quarto Homepage](https://quarto.org/)
 
 - [Typora Homepage](https://typora.io/)
-
-- [Hypothesis](https://web.hypothes.is/)

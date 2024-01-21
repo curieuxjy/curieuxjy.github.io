@@ -7,8 +7,8 @@ categories: [blog, quarto, code]
 image: ../../images/2024-01-12-quarto-blog2/blog2.jpg
 ---
 
-이전 Quarto를 활용하여 Github 블로그를 구축하는 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 **Customizing** 사항들에 대해 소개하려고 합니다.
-사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 재밌게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하는 것 같습니다.
+Quarto를 활용하여 Github 블로그를 구축하는 [이전 포스팅](https://curieuxjy.github.io/posts/code/2024-01-07-quarto-blog.html)에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 **Customizing** 사항들에 대해 소개하려고 합니다.
+사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 가볍게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하게 됩니다.
 
 <center>
 <img src="../../images/2024-01-12-quarto-blog2/blog2.jpg" width="40%" />
@@ -31,7 +31,7 @@ quarto preview
 정말 다양한 분위기의 테마들을 제공하기 때문에 테마 하나씩 확인해가며 고를 수 있습니다. 마음에 드는 테마를 선택한 후 블로그를 처음 Build한 프로젝트 파일에서 `_quarto.yml`파일을 열어보면 아래와 같이 창이 작성되어 있는 것을 확인할 수 있습니다.
 
 <center>
-<img src="../../images/2024-01-21-quarto-advanced/2.png" width="80%" />
+<img src="../../images/2024-01-21-quarto-advanced/2.png" width="90%" />
 </center>
 
 파일에서 `theme`이라는 부분에 default로 적혀 있는 테마의 명칭 대신에 자신이 원하는 theme의 이름을 적어주면 됩니다. 예를 들어 만약 `sketchy`테마를 선택했다면 아래와 같이 적어주면 됩니다.
@@ -85,32 +85,60 @@ Blog가 일방향 소통의 플랫폼이 아니라 글을 읽어준 다양한 �
 2. [Giscus](https://giscus.app/ko)
 3. [Hypothes.is](https://web.hypothes.is/)
 
-Utterances와 Giscus 둘 다 쉽게 댓글 기능을 추가할 수 있지만 Blog Github Repository를 `public`으로 설정해야만 사용할 수 있는 기능이기에 Blog Repository를 `private`으로 두고 싶은 저는 `Hypothes.is`를 선택할 수 밖에 없었고 그래서 아래와 같이 `._quarto.yml`파일에 Hypothesis를 활용하여 Interacting 기능을 추가해주었습니다. Hypothesis의 단점은 이 플랫폼이 적용되어 있는지 모르고 독자들이 포스팅에 대한 반응을 남기는 방법을 모르기 때문에 블로그에서 피드백을 받기가 어렵습니다.
+Utterances와 Giscus 둘 다 쉽게 댓글 기능을 추가할 수 있지만 **Blog Github Repository를 `public`으로 설정해야만** 사용할 수 있는 기능이기에 Blog Repository를 `private`으로 두고 싶은 저는 **`Hypothes.is`를 선택**할 수 밖에 없었습니다. 아래와 같이 `._quarto.yml`파일에 Hypothesis를 활용하여 Interacting 기능을 추가해주었습니다. 
 
-```
+```markdown
 website:
-  comments: # https://h.readthedocs.io/projects/client/en/latest/publishers/config.html
+  comments: 
     hypothesis: 
       theme: clean
       openSidebar: false
 ```
 
+단, Hypothesis의 단점은 일반적인 댓글 UI 창이 있는게 아니라 특정 라인을 선택해서 댓글을 다는 형식이기 때문에, 이 기능이 적용되어 있는지 모르고 독자들이 포스팅에 대한 반응을 많이 남기지 않는 경향이 있어 블로그에서 피드백을 받기가 어렵습니다.
+
+<center>
+<img src="../../images/2024-01-21-quarto-advanced/hypo.gif" width="50%" />
+<figcaption>Hypothesis를 활용하여 Comment 남기는 법</figcaption>
+</center>
+
 
 # Github 잔디
 
-ghchart를 활용하면 
-
+Github 유저로써 프로필에 있는 잔디를 심는 기쁨을 가지고 있는데 이를 Blog 메인에도 똑같이 보여줄 수 있으면 좋겠다 생각해서 아래 사진처럼 잔디 이미지를 넣었었습니다.
 
 <center>
 <img src="../../images/2024-01-21-quarto-advanced/9.png" width="70%" />
 <figcaption>Blog Main 화면</figcaption>
 </center>
 
+[githubchart](https://github.com/akerl/githubchart)를 활용해서 Github 잔디 연동 이미지를 가져오는 방법은 사실 많이 알려져 있기 때문에 Quarto로 만든 Blog reposiotory에서 블로그 첫화면을 담당하는 `index.qmd`파일에 아래 한줄을 추가해주면 됩니다.
+
+```html
+<img src="https://ghchart.rshah.org/[색상코드]/[GithubID]" style="width:75%">
 ```
 
+`[색상코드]`와 `[GithubID]`부분에 각자 원하는 색상과 ID를 적어주면 됩니다. 제 블로그 같은 경우, 적용된 `minty` 테마와 어울리는 색상 코드를 찾아서 아래와 같이 작성했습니다.
+
+```html
+<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:75%">
 ```
 
 # Jupyter notebook
+
+Jupyter Notebook 혹은 Jputer Lab을 이용하여 코드 블럭마다 실행할 수 있고 바로 바로 실행 결과를 볼 수 있는 `.ipynb` 파일은 많은 AI/데이터 분야의 사람들에게 사랑 받고 있는 작성 형식입니다. 작성한 `.ipynb` 파일을 그대로 블로그 포스팅 글로 바꾸고 싶다면 특별한 수정 없이 `.ipynb`파일 서두에 `.qmd`파일 처럼 문서 configuration 파트를 추가한 후 rendering하면 그대로 블로그 포스팅으로 만들어 집니다. 아래 문서 configuration 예시는 제 블로그 [👩‍💻torch.Tensor vs torch.tensor](https://curieuxjy.github.io/posts/code/2022-12-21-torch-tensor-inverted.html)포스팅에 쓰인 `.ipynb`파일 서두에 작성한 configuration 입니다.
+
+```
+---
+title: 👩‍💻torch.Tensor vs torch.tensor
+description: torch Tensor 객체 생성 방법 비교와 Inverted 연산 확인하기
+date: "2022-12-21"
+categories: [torch, tensor, inverted, code]
+toc: true
+---
+```
+
+이렇게 간편한 `.ipynb`파일 업로드 후 바로 rendering 되는 기능으로 제 블로그에 작성된 글들은 [👩‍💻torch.Tensor vs torch.tensor](https://curieuxjy.github.io/posts/code/2022-12-21-torch-tensor-inverted.html), [👩‍💻class ⟷ dict ⟷ yaml](https://curieuxjy.github.io/posts/code/2022-12-26-class-dict-yaml.html), [👩‍💻Chord Graph](https://curieuxjy.github.io/posts/code/2023-06-18-chord.html) 등이 있습니다. [Bokeh](https://bokeh.org/)와 같은 데이터 시각화 툴도 문제없이 랜더링 되므로 데이터 사이언티스트 분들에게는 더할 나위 없이 좋은 기능이라고 생각합니다.
 
 
 # Code Snippets
@@ -177,24 +205,50 @@ Quarto의 Callout Block을 활용해봅시다! 생각보다 정말 유용하게 
 
 ## 수학 수식
 
-논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 **수식 삽입**을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다.
+논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 **수식 삽입**을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다. 사실 Markdown 문법과 다르지 않습니다. Quarto Docs [Equations](https://quarto.org/docs/authoring/markdown-basics.html#equations)에서 볼 수 있듯이 `$`로 수식을 warpping하면 수식이 잘 랜더링 되는 것을 볼 수 있습니다.
 
+html에서 수식을 다양한 형식으로 rendering할 수 있도록 옵션도 제공하고 있습니다. [Format Options](https://quarto.org/docs/reference/formats/html.html#format-options) 테이블에 있는 `html-math-method`옵션을 활용해서 `plain`, `webtex`, `gladtex`, `mathml`, `mathjax`, `katex` 등과 같은 옵션을 사용할 수 있습니다. 예를들면 아래와 같이 `_quarto.yml` 설정 파일에 `html-math-method: katex` 한 줄 추가하면 수식 랜더링 스타일을 바꿀 수 있습니다.
 
-
+```markdown
+format:
+  html:
+    html-math-method: katex
 ```
-html-math-method: katex
+
+## 글자색 설정
+
+글자색을 기본 테마에서 설정한 색이 아닌, <span style="color: blue">파란색</span>,  <span style="color: red">빨간색</span> 등 다른 색을 사용하고 싶다면 아래와 같이 html 문법을 활용하여 작성하면 됩니다.
+
+```html
+<span style="color: blue">파란색 글씨를 작성</span>
 ```
 
+## Toggle
 
-마지막으로 gitub repository를 여러개 만들고 각각 여러개의 website를 만들 수 있나요? 라는 질문에 답변하면 마치겠습니다.
+토글은 Callout Block을 활용해서 작성할 수도 있지만 기본 html 문법을 활용해서 아래와 같이 작성할 수도 있습니다.
 
-[Qaurto Blog(1)]()포스팅에서 했던 방법처럼 repository를 만든뒤 Quarto project를 설정해주면 용도에 따라 여러개의 website를 제작할 수 있으며
+```html
+<details>
+<summary><b>Toggle 제목</b></summary>
+Toggle 내용
+</details>
+```
+
+아래와 같이 Toggle 파트가 랜더링 됩니다.
+
+<details>
+<summary><b>Toggle 제목</b></summary>
+Toggle 내용
+</details>
+
+
+---
+
+[Qaurto Blog(1)](https://curieuxjy.github.io/posts/code/2024-01-07-quarto-blog.html)포스팅에서 Quarto로 기본적인 블로그를 만들고 나서 이번 포스팅의 여러 커스텀 옵션들을 활용하면 각자 원하는 Github Blog를 손쉽게 만들 수 있습니다. 그리고 기본적인 html의 문법을 따라가기 때문에 이번 포스팅에서 몇부분들은 html 문법에 익숙하신 분들에게는 당연한 내용이지 않을까 싶습니다. Quarto를 쓰지 않더라도 블로그를 만들 수 있는 방법은 많지만 처음 소개글에서 이야기 했던 제가 Quarto를 알게 된 배경과 니즈를 듣고 저와 같은 비슷한 상황이시라면 정말 좋은 툴이라고 생각하실 거라고 확신합니다. 만약 아직 Github Blog 초심자라면 Quarto를 한번 고려해보시는 것을 다시 한번 권장해드리며 이만 마치겠습니다.
 
 
 **Reference**
 
 - [Quarto Homepage](https://quarto.org/)
-
-- [Typora Homepage](https://typora.io/)
 
 - [Hypothesis](https://web.hypothes.is/)
