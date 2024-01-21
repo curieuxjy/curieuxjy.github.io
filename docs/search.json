@@ -669,7 +669,7 @@
     "href": "posts/code/2024-01-21-quarto-advanced.html",
     "title": "👩‍💻Quarto Blog(2)",
     "section": "",
-    "text": "Quarto를 활용하여 Github 블로그를 구축하는 이전 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 Customizing 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 가볍게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하게 됩니다.\n저번 포스팅보다 여러가지 옵션들을 바꿔가면서 확인하는 과정들이 많기 때문에 localhost(로컬 컴퓨터)에서 블로그가 어떻게 바뀌어 가는지 확인하기 위해 아래의 명령어를 VSCode 터미널에 입력하여 창을 띄우며 확인해보세요!"
+    "text": "Quarto를 활용하여 Github 블로그를 구축하는 이전 포스팅에 이어서, Github 블로그를 좀 더 보기 좋게, 혹은 원하는 기능을 좀 더 추가하는 몇가지 Customizing 사항들에 대해 소개하려고 합니다. 사실 블로그 Customizing은 삽질의 시작이며, 처음 시작은 가볍게 시작하지만 하나씩 옵션들을 내맘대로 건드리다가 보면 시간이 훌쩍 지나가버리는 마법을 경험하게 됩니다.\n기본적으로 .qmd파일을 작성하면서 글의 configuration을 설정하는 것은 Tutorial: Authoring에서 제목 작성, category 설정등 기본적인 부분을 확인할 수 있습니다. 기본적인 설정들에 더해서 저번 포스팅보다 여러가지 옵션들을 바꿔가면서 확인하는 과정들이 많기 때문에 localhost(로컬 컴퓨터)에서 블로그가 어떻게 바뀌어 가는지 확인하기 위해 아래의 명령어를 VSCode 터미널에 입력하여 창을 띄우며 확인해보세요!"
   },
   {
     "objectID": "posts/code/2024-01-21-quarto-advanced.html#toc",
@@ -683,7 +683,7 @@
     "href": "posts/code/2024-01-21-quarto-advanced.html#이미지-넣기",
     "title": "👩‍💻Quarto Blog(2)",
     "section": "이미지 넣기",
-    "text": "이미지 넣기\n이미지와 관련된 작성 코드 스니펫을 소개하겠습니다. 이전에 이미지를 Typora를 통해 넣거나 Markdown 문법의 형식으로 작성하게 되면 ![이미지 캡션](이미지 경로)와 같이 코드로 이미지를 넣어주게 됩니다. 하지만 이렇게 이미지들을 넣게 되면 이미지 사이즈 조절이나 정렬 등을 설정해주기가 어렵기 때문에 html 문법형식을 빌려 글에 이미지들을 넣어주는 것을 추천드립니다.\n\nhtml 사용하여 이미지 삽입\n이 코드는 가운데 정렬(centering), 이미지의 (포스팅 대비 상대적인) 너비 조정(width), 이미지 캡션(figcaption)을 html 문법을 빌려 이미지를 삽입해주는 snippet입니다.\n<center>\n<img src=\"../../images/이미지_이름.png\" width=\"50%\" />\n<figcaption>이미지 캡션</figcaption>\n</center>\n포스팅 대표 이미지 설정\n다음으로 작성글의 대표 이미지를 설정하면 블로그 메인 화면에 뜨는 그림을 정해 줄 수 있습니다.\n\n\n\n블로그 메인 화면에서 각 포스팅들의 대표 이미지들\n\n\n.qmd파일의 맨 윗부분에 설정해주는 문서 configuration에 image: ... 라인을 추가하고, ...부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다. 아래는 이번 포스팅의 대표 이미지를 설정하는 예시 configuration 입니다.\n---\ntitle: \"👩‍💻Quarto Blog(2)\"\ntoc: true\ndate: \"2024-01-17\"\ndescription: Quarto로 속편한 Github Blog 구축하기(2)\ncategories: [blog, quarto, code]\nimage: ../../images/2024-01-12-quarto-blog2/blog2.jpg\n---"
+    "text": "이미지 넣기\n이미지와 관련된 작성 코드 스니펫을 소개하겠습니다. 이전에 이미지를 Typora를 통해 넣거나 Markdown 문법의 형식으로 이미지를 삽입하게 되면 ![이미지 캡션](이미지 경로)와 같이 코드로 이미지를 넣어주게 됩니다. 하지만 이렇게 이미지들을 넣게 되면 이미지 사이즈 조절이나 정렬 등을 설정해주기가 어렵기 때문에 html 문법형식을 빌려 글에 이미지들을 넣어주는 것을 추천드립니다.\n\nhtml 사용하여 이미지 삽입\n이 코드는 가운데 정렬(centering), 이미지의 (포스팅 대비 상대적인) 너비 조정(width), 이미지 캡션(figcaption)을 html 문법을 빌려 이미지를 삽입해주는 snippet입니다.\n<center>\n<img src=\"../../images/이미지_이름.png\" width=\"50%\" />\n<figcaption>이미지 캡션</figcaption>\n</center>\n포스팅 대표 이미지 설정\n다음으로 작성글의 대표 이미지를 설정하면 블로그 메인 화면에 뜨는 그림을 정해 줄 수 있습니다.\n\n\n\n블로그 메인 화면에서 각 포스팅들의 대표 이미지들\n\n\n.qmd파일의 맨 윗부분에 설정해주는 문서 configuration에 image: ... 라인을 추가하고, ...부분에 이미지 경로를 설정해주면 포스팅의 대표 이미지를 설정할 수 있습니다. 아래는 이번 포스팅의 대표 이미지를 설정하는 예시 configuration 입니다.\n---\ntitle: \"👩‍💻Quarto Blog(2)\"\ntoc: true\ndate: \"2024-01-17\"\ndescription: Quarto로 속편한 Github Blog 구축하기(2)\ncategories: [blog, quarto, code]\nimage: ../../images/2024-01-12-quarto-blog2/blog2.jpg\n---"
   },
   {
     "objectID": "posts/code/2024-01-21-quarto-advanced.html#callout-block",
