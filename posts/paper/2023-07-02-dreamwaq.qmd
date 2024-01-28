@@ -13,9 +13,10 @@ image: ../../images/2023-07-02-dreamwaq/dw1.png
 이번 포스팅은 DeepMind에서 발표된 [DreamWaQ: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning](https://arxiv.org/abs/2301.10602) 논문을 읽고 정리한 내용입니다. 최근 ICRA 2023 런던에서 5월 30일부터 6월 1일까지 진행된 [Autonomous Quadruped Robot Challenge (QRC)](https://quadruped-robot-challenges.notion.site/)에서 KAIST 연구팀이 1등을 하여 큰 이슈가 되었었습니다. 이번 포스팅에서 리뷰하는 이 논문이 바로 대회에서 사용되었던 강화학습 기반의 보행제어 알고리즘에 대한 내용을 담고 있는 논문입니다. 
 
 <center>
-<img src="https://camo.githubusercontent.com/6c0b95a9fbd78cd0f7836fc978a36b5cfe7422a5d0253a943cf74df78c4ef833/68747470733a2f2f7175616472757065642d726f626f742d6368616c6c656e6765732e6e6f74696f6e2e736974652f696d6167652f687474707325334125324625324673332d75732d776573742d322e616d617a6f6e6177732e636f6d2532467365637572652e6e6f74696f6e2d7374617469632e636f6d25324662306536653131302d303464622d346162332d623033352d37336362666363656630366325324639313637393239373934325f2e7069635f68642e6a70673f69643d61343631393235612d363865632d343735372d613965622d353665346636353839353837267461626c653d626c6f636b26737061636549643d39383964343435392d643163312d343435342d383137352d6537383535376236656139322677696474683d32303030267573657249643d2663616368653d7632" width="67%" />
+<img src="../../images/2023-07-02-dreamwaq/2023qrc.jpeg" width="67%" />
     <figcaption>2023 Autonomous Quadruped Robot Challenge</figcaption>
 </center>
+
 
 # Introduction
 
