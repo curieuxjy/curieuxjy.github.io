@@ -9,7 +9,7 @@ image: ../../images/2024-03-17-vcgs/2.png
 ---
 
 <center>
-<img src="../../images/2024-03-17-vcgs/1.png" width="67%" />
+<img src="../../images/2024-03-17-vcgs/1.png" width="100%" />
 </center>
 
 이번 포스팅은 [Variational Constrained Grasp Sample](https://arxiv.org/abs/2302.10745) 논문을 읽고 정리한 내용입니다. 해당 논문은 IROS 2023 학회에 Accept된 논문으로, 특정 대상 영역에 대한 제약을 가진 6자유도(DoF) Grasp을 샘플링하기 위한 새로운 생성적 그리핑 샘플링 네트워크, VCGS를 소개합니다. 뿐만 아니라 1,400만 개 이상의 훈련 샘플을 포함하는 새로운 데이터셋 CONG를 구축한 내용을 발표했습니다. 제안된 VCGS가 시뮬레이션 및 실제 테스트에서 비교 모델인 GraspNet보다 10-15% 높은 그리핑 성공률을 보이며, 2-3배 더 효율적인 것을 보여준 논문입니다. 
