@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -50,7 +50,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -59,8 +65,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
@@ -79,6 +87,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 }
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -97,43 +110,70 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">Jung Yeon Lee</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../note.html">
- <span class="menu-text">Note</span></a>
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -195,7 +235,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </div>
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
     
     <div>
@@ -209,7 +249,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
@@ -237,9 +279,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="graph-construction">Graph Construction</h2>
 <p>본 논문에서는 사용한 MuJoCo의 agent들은 이미 구조적으로 tree 구조를 가지고 있다. NerveNet의 핵심 아이디어인 그래프를 구성하기 위해 <code>body</code>와 <code>joint</code>, <code>root</code>라는 3가지 종류의 노드를 설정했다. <code>body</code> 노드는 로봇공학에서 말하는 link 기준의 좌표시스템을 나타내는 노드이고, <code>joint</code> 노드는 모션의 자유도(freedom of motion)을 나타내며 2개의 body 노드들을 연결해주는 노드이다.</p>
 <p>아래는 <code>Ant</code> 환경의 예시인데, 한 가지 그림에서 헷갈리지 말아야 할 점은 그림에서는 마치 <code>body</code>와 <code>root</code> 노드만 노드로 만든것 처럼 보이지만 root와 body, body와 body를 연결하는 엣지들도 실제로는 <code>joint</code> 노드들이다.(<em>we omit the joint nodes and use edges to represent the physical connections of joint nodes</em>.)<code>root</code>라는 노드는 agent의 추가적인 정보들을 담을 부분으로 사용하기 위해 추가한 노드 종류로, 예를 들어 agent가 도달해야 하는 target position에 대한 정보 등이 담겨있다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/pjCrsxt.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/pjCrsxt.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -291,9 +333,9 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
   m_{(u, v)}^{t}=M_{c_{(u, v)}}\left(h_{u}^{t}\right)
   </span></p></li>
 <li><p>예를 들어 아래 그림은 <code>CentipedeEight</code> 의 모습인데, 왼쪽은 실제 agent의 모습을 나타내고 있으며 오른쪽은 agent를 그래프로 나타냈을 때의 모습이다. 여기에서 2번째 torso에서 첫번째 세번째 torso에서 보낼 때 같은 메세지 펑션 <span class="math inline">M_{1}</span> 을 사용하고, LeftHip과 RightHip으로 보내는 메세지 펑션 <span class="math inline">M_{2}</span>를 사용하게 되는 것이다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/QFOY9VH.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/QFOY9VH.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 </ul></li>
@@ -330,9 +372,9 @@ h_{u}^{0}=F_{\text {in }}\left(x_{u}\right)
 </span></p>
 <hr>
 <p>여기까지 NerveNet의 각 단계를 <code>Walker-Ostrich</code> 환경에서 예시로 한눈에 보기 쉽게 정리한 그림은 아래와 같다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/lnrF2Pb.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/lnrF2Pb.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -415,9 +457,9 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <ol type="1">
 <li><p>centipede - 지네와 같이 생긴 agent로 torso body들이 여러개 체인처럼 연결 되어 있고 torso를 중심으로 양쪽에 다리가 1쌍으로 붙어 있다. 하나의 다리는 thigh와 shin으로 구성되어 있고 hinge actuator로 구현되어 있다. 커스텀은 다리의 갯수를 다양하게 해서 여러 커스텀 환경들을 만들었는데, 가장 짧은 agent로는 <code>CentipedeFour</code> 부터 가장 긴 agent로는 <code>CentipedeFourty</code> 로 다리가 40개까지(20쌍) 있는 환경을 만들수 있었다. disability로 일부 파트가 작동하지 않는 환경은 <code>Cp(Cripple)</code>로 따로 표기했다. 이 환경에서 y-direction으로 빨리 앞으로 가는게 목표다.</p></li>
 <li><p>snake - <code>swimmer</code> 환경을 기반으로 커스텀했으며 가장 빨리 진행방향으로 움직이는 게 목표다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/cKfht87.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/cKfht87.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 </ol></li>
@@ -437,9 +479,9 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <ul>
 <li>6-다리 모델과 4-다리 모델로 <code>NerveNet</code>, <code>MLP</code>, <code>TreeNet</code> 에서의 퍼포먼스를 비교했다. 여기서 3개의 모델은 앞서 benchmark 비교 실험에서 사용한 비교군들과 동일하다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/M64FY71.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/M64FY71.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
@@ -451,18 +493,18 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li>fine tuning 없이 퍼포먼스를 측정했다.</li>
 <li>퍼포먼스를 쉽게 비교할 수 있도록 <code>average reward</code>와 <code>average running-length</code>를 normalization해서 색으로 아래와 같이 표현했다.(green-good, red-bad)</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/qAbGhpb.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/qAbGhpb.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
 <li>눈으로 확실히 확인할 수 있듯이 NerveNet의 퍼포먼스가 다른 비교군에 비해 월등히 transferable함을 알 수 있었다.</li>
 <li>또한 learning curve에서 볼 수 있듯이 NerveNet+Pretrain 이 다른 Pretrain 비교군들에 비해 훨씬 높은 reward 시작점에서 시작하고 더 적은 timestep으로 solved 점수에 도달하는 것을 보아 그래프의 구조적 이점을 확실히 활용하고 있음을 알 수 있다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/yU47fAC.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/yU47fAC.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
@@ -474,17 +516,17 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li>350점 정도가 <code>snakeThree</code>에서 solved된 상태라고 볼 수 있는데 NerveNet의 시작 점수들이 대부분 300점대에서 시작한 것으로 보아 이는 상당한 zero-shot 역량이 있음을 알 수 있다.</li>
 <li>다른 비교군들은 overfitting이 심해서 Random보다 안좋은 결과를 보여주는 점도 흥미롭다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/QvZG8di.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/QvZG8di.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
 <li>zero-shot 뿐만 아니라 fine tuning을 하는 learning curve에서도 NerveNet은 Pretrain의 이점을 다른 비교군들에 비해 잘 활용하고 있음을 볼 수 있었다. <code>NerveNet+Pretrain</code>의 시작 reward가 높으며, 특정 size transfer 실험에서는 scratch NerveNet이 넘지 못한 MLP 점수를 <code>NerveNet+Pretrain</code>이 따라잡았다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/NLlKmqT.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/NLlKmqT.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 </ol>
@@ -505,17 +547,17 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li><code>MLPs</code>: 각 agent마다 따로 MLP policy를 만들어서 학습(single-task)</li>
 </ul>
 <p><strong>Result</strong> - multi-task learning 실험이기 때문에 한 두개 러닝 그래프만 볼 수 없고 5개의 러닝 그래프를 같이 봐야 한다. - Single-task policy를 제외하고 모든 환경에서 NerveNet의 퍼포먼스가 좋음을 알 수 있다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/FpUeo5x.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/FpUeo5x.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
 <li>테이블에서 Ratio가 single-task policy에 비해 multi-task policy의 성능을 percentage로 나타낸 수치인데, MLP의 퍼포먼스가 single-task에서 multi-task로 넘어갔을 때 42%나 퍼포먼스가 줄어드는 것을 확인할 수 있다. (Average-58.6%) 반면에 NerveNet은 성능이 전혀 떨어지지 않는 결과를 보여주었다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/HMSZPgc.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/HMSZPgc.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -527,9 +569,9 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <li>pretrained agent를 가지고 agent의 질량과 joint의 strength을 변경한 뒤 퍼포먼스 측정</li>
 <li>대부분의 환경과 variation에서 NerveNet의 robustness가 MLP보다 좋음을 알 수 있다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/9Rcl54E.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/9Rcl54E.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -537,24 +579,24 @@ J(\theta)=\mathbb{E}{\pi}\left[\sum{\tau=0}^{\infty} \gamma^{\tau} r\left(s^{\ta
 <h2 class="anchored" data-anchor-id="interpreting-the-learned-representations">5. Interpreting the learned representations</h2>
 <p>실제 폴리시들이 어떤 representation들을 학습했는지 알아보기 위해 <code>CentipedeEight</code> 환경에서 학습된 agent의 final state vector를 가지고 2D, 1D PCA를 진행했다.</p>
 <p>각 다리쌍들(Left Hip-Right Hip)들은 agent의 전체 몸체에서 각기 다른 위치에 있음에도 불구하고 invariant representation을 배울 수 있었음을 PCA를 통해서 알 수 있었다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/osZ7M6U.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/osZ7M6U.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>또한 앞서 Centipede transfer learning 실험 결과에서도 잠깐 언급했던 <code>walk-cycle</code>이 주기성이 뚜렷하게 보였다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/Aw80MM1.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/Aw80MM1.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
 <section id="comparison-of-model-variants" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-model-variants">6. Comparison of model variants</h2>
 <p>Value Network를 어떻게 할 것인지에 따라 NerveNet의 여러 변형이 있을 수 있는데 <code>Swimmer</code>, <code>Reacher</code>, <code>HalfCheetah</code>에서 비교해본 결과, Value Network는 MLP로 한 <code>NerveNet-MLP</code>의 퍼포먼스가 가장 좋았고 <code>NerveNet-1</code>의 퍼포먼스가 2등으로 <code>NerveNet-MLP</code> 와 비슷했다. 이에 대한 잠재적인 이유로 value network와 policy network가 weight를 공유하는 것이 PPO 알고리즘에서의 trust-region based optimitaion에서의 weight <span class="math inline">\alpha</span>를 더 sensitive하게 만들기 때문이라고 추론할 수 있다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/W79cOCW.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/W79cOCW.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -650,6 +692,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -716,13 +785,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -749,9 +820,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -787,10 +872,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -800,8 +884,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -816,6 +909,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -858,7 +1183,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Jung Yeon Lee</div>   
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -871,6 +1201,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

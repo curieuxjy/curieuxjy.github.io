@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -50,7 +50,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -59,8 +65,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
@@ -79,6 +87,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 }
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -97,43 +110,70 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">Jung Yeon Lee</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../note.html">
- <span class="menu-text">Note</span></a>
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -190,7 +230,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </div>
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
     
     <div>
@@ -204,7 +244,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <p>이번 post는 <a href="https://arxiv.org/abs/1806.01242">Graph Networks as Learnable Physics Engines for Inference and Control</a> 라는 논문을 읽고 리뷰한 내용입니다.</p>
 <section id="abstract" class="level1">
@@ -258,9 +300,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li>물리 시스템의 global한 속성은 <code>global feature</code>로 표현합니다.</li>
 </ul>
 <p>아래 사진에서 보이는 half-cheetah에서 직관적으로 어떻게 그래프가 그려질 수 있는지 알 수 있고 이 그래프를 <span class="math inline">G</span>로 나타낼 수 있습니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/yN3GlTK.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/yN3GlTK.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>앞서 설명한 부분을 수식으로 나타내면 다음과 같습니다.</p>
@@ -298,9 +340,9 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <li><code>graph2graph</code> 모듈을 활용하여 인풋을 그래프로 받고 아웃풋도 그래프로 받는 모델입니다. 따라서 아웃풋의 그래프는 인풋 그래프와 다른 edge, node, global features를 가지게 됩니다.</li>
 </ul>
 <p>본 논문의 핵심 아이디어인 GN 블록의 구조에 대해 알아보겠습니다. - A core GN block</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/3PffG3H.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/3PffG3H.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <pre><code>- 3개의 sub function, MLP로 이루어져 있습니다.
@@ -308,9 +350,9 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
     - node-wise $f_n$ : 모든 node들에 대한 update를 진행합니다.
     - global $f_g$ : 마지막으로 global feature들을 update 합니다.</code></pre>
 <p>하나의 feedforward GN pass는 그래프 상에서 message-passing 단계의 한 스텝으로 간주할 수 있습니다. 이러한 GN-block 내에서의 알고리즘은 아래와 같습니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/TjghKvm.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/TjghKvm.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -318,16 +360,16 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <h2 class="anchored" data-anchor-id="forward-models">Forward models</h2>
 <p>Forward model의 목적은 <strong>현재 정보를 기반으로 다음 step의 상태를 예측(prediction)하는 것입니다.</strong> (이는 영어 단어의 비슷한 의미때문에 다음에 나오는 inference model의 목적과 많이 혼동될 수 있으니 잘 정의하고 넘어가는 것이 좋습니다.) forward model은 <em>RNN(GRU)를 도입했는지 여부에 따라</em> 2가지 타입이 있습니다.</p>
 <p><strong>Type1. GNN feed-forward</strong></p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/2tN81Kd.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/2tN81Kd.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>가장 간단한 GNN feed-forward 모델입니다. 그래프는 처음에 <span class="math inline">GN_1</span>을 거쳐 latent graph인 <span class="math inline">G'</span>이 됩니다. 그리고 다음 <span class="math inline">GN_2</span>의 인풋으로는 <span class="math inline">GN_1</span>을 거치긴 전의 그래프였던 <span class="math inline">G</span>와 <span class="math inline">G'</span>를 concatenate를 해서 넣어주게 됩니다. 저자들은 이렇게 디자인한 이유로, 그래프의 모든 노드들과 엣지들이 모두 communicate하게 하기 위함이라고 이야기합니다. 이렇게 <span class="math inline">GN_1</span>, <span class="math inline">GN_2</span>를 거쳐 최종적으로 나오는 <span class="math inline">G^*</span>의 node feature들이 각 body의 상태 prediction 값이 되는 것 입니다.</p>
 <p><strong>Type2. RNN+GNN</strong></p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/7ZKlooE.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/7ZKlooE.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>다음으로 앞서 기본이 되는 모델에 G-GRU를 추가한 타입니다. Type 1과 비슷하게 skip connection, latent graph를 모두 사용하는데 GN block의 GRU 버젼인 G-GRU가 들어가면서 <span class="math inline">G_h</span>라는 RNN에서 hidden vector와 같은 개념의 hidden graph가 추가된 것입니다. 모든 edge, node, global feature들에 대해 각각 RNN이 적용되어 총 3개의 RNN sub-modules이 있습니다.</p>
@@ -339,37 +381,37 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 </ol>
 <p>사실 리뷰를 하면서 forward model과 inference model 사이의 구분이나 모델의 구체적인 프로세스 이해가 pseudo algorithm을 보기 전까지 잘되지 않았습니다. Appendix에 나와있어서 잘 보지 않을 확률이 높지만 논문의 개념을 대략적으로 이해하고 난 후에는 꼭 line by line으로 보시길 추천합니다.</p>
 <p>먼저 <strong>forward model의 학습과정</strong>을 보여주는 pseudo algorithm 입니다. 다시한번 이 모델의 목적을 상기시켜보자면, 현재 상태 <span class="math inline">x^{t_0}</span> 를 기반으로 <span class="math inline">a^{t_0}</span>와 함께 주어졌을 때, <span class="math inline">x^{t_0+1}</span>을 예측하는 것입니다. 앞서 설명한 부분들인, state의 잔차를 학습하는 부분이나 normalization 등이 알고리즘내에 잘 나와있습니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/Fzex7GV.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/Fzex7GV.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>다음은 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">x^{t_0+1}</span>을 어떻게 예측하는지 보여주는 알고리즘입니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/ztG7ZuO.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/ztG7ZuO.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>마지막으로 바로 위 알고리즘과 동일하게 <strong>학습된 forward model</strong>을 가지고 다음 상태인 <span class="math inline">x^{t_0+1}</span>을 어떻게 예측하는지 보여주는 알고리즘이지만 inference model에서 학습된 <span class="math inline">GN_p</span>를 가지고 <code>system identification</code>이 추가된 상태에서 어떻게 알고리즘이 흘러가는지 보여줍니다.(이전에 알고리즘에서는 system parameter <span class="math inline">p</span>라고 표시되었던 부분이 대체된 것입니다.)</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/Snfkuwb.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/Snfkuwb.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
 <section id="inference-models" class="level2">
 <h2 class="anchored" data-anchor-id="inference-models">Inference Models</h2>
 <p>Inference model의 목적을 한 마디로 표현하자면 <code>System identification</code>이라고 할 수 있습니다. System identification이란 <strong>관찰할 수 없는(unobserved) dynamic system의 속성들을 관찰되는(observed) behavior(또는 어떤 양상)를 가지고 추론하는 것</strong>을 말합니다. 즉 암시적으로 system을 구성하는 요소들을 (명시적이지 않아) 측정하거나 관찰할 수 없지만 <strong>latent representations</strong>을 통해 추론할 수 있습니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/4ZMFGU1.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/4ZMFGU1.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>Inference model도 <strong>Recurrent GN-based model</strong> 입니다. forward 모델과 다른 점으로는 오직 trajectory의 <code>dynamic states</code>들만 input으로 받습니다. 따라서 dynamic state graph인 <span class="math inline">G_d</span>와 control input을 받습니다. 아웃풋으로는 일정 time step <span class="math inline">T</span>이후의 <span class="math inline">G^*(T)</span>이 되며, 본 논문에서 이후 실험파트에서 20 step을 사용했습니다.</p>
 <p><strong>inference model 학습과정</strong>의 pseudo 알고리즘은 아래와 같습니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/0FeskwM.png" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/0FeskwM.png" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -379,9 +421,9 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <ol type="1">
 <li><p>MPC(Model Predictive Control)</p>
 <p>GN은 미분 가능하기 때문에 MPC같은 <strong>gradient-based trajectory optimization</strong> 방법으로 model-based planning을 할 수 있습니다. 대표적으로 MPC가 있고 학습기반이 아니라 최적화 알고리즘이며 알고리즘의 흐름은 아래와 같습니다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/4s443v3.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/4s443v3.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 <li><p><a href="https://proceedings.neurips.cc/paper/2015/hash/148510031349642de5ca0c544f31b2ef-Abstract.html">SVG</a>(Stochastic Value Gradients)</p>
@@ -447,46 +489,46 @@ G=\left(\mathbf{g},\left\{\mathbf{n}_{i}\right\}_{i=1 \cdots N_{n}},\left\{\math
 <li><p>random control로 만들어진 데이터들을 가지고 학습된 GN-based model</p>
 <ul>
 <li><p><strong>[Visually]</strong> Swimmer6에서 그림에서 처럼 ground truth와 예측 결과가 구분이 안 갈 정도로 흡사하다.(<a href="https://drive.google.com/file/d/1ez6sqCTZmHdSnf86lK6NEsnzyi-O25-B/view">영상</a>에서도 거의 구분이 안 갈 정도로 잘 예측하고 있음을 알 수 있다.)</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/N6bOymB.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/N6bOymB.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 <li><p><strong>[Quantitatively]</strong> 100 step에서 3축 방향으로의 위치, 선속도, 각속도, 쿼터니안 방향 비교</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/anOJrxE.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/anOJrxE.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 </ul></li>
 <li><p>constant prediction baseline은 아웃풋으로 인풋을 그대로 복사해서 사용했기 때문에 애러 최대치로 normalization 하기 위해 검은색 점선으로 표기</p></li>
 <li><p>우선 검은 점선과 막대기들을 뭉뚱그려서 보면,</p></li>
 <li><p>1 step과 100 step의 rollout 결과를 비교했을 때 검은 점선에 비해 파란색 막대기들의 error 값이 낮음을 알 수 있다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/atKJKme.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/atKJKme.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 <li><p>GN 모델이 MLP-based 보다 더 낮은 애러를 가지는 것을 알 수 있다. 이는 특별히 Swimmer6처럼 에이전트의 구조가 반복적인 경우에 더욱 눈에 띄게 낮음을 알 수 있었다. 이를 통해 GN-based forward 모델이 다양한 물리 시스템들에서 dynamics를 잘 예측함을 알 수 있다.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/u7z0wJP.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/u7z0wJP.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
 <li>GN이 MLP보다 더 generalization이 잘 됨을 확인할 수 있었는데, Swimmer6를 집중적으로 <code>train</code>, <code>valid</code>, <code>test</code> 데이터에 대해 1-step, rollout error를 각각 확인해봤을 때, Best GN의 error 값이 Best MLP보다 낮음을 알 수 있다. 뿐만 아니라 test data의 error 증가율을 봤을 때에도 GN 모델의 test data의 error가 더 적게 증가함을 관찰할 수 있었고 이는 agent의 bodies와 joints들에 대한 inductive bias가 GN을 통해 잘 학습되었음을 증명할 수 있다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/bMJJ6Jb.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/bMJJ6Jb.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>Learning a forward model for <strong>multiple</strong> systems</p>
 <p>한 개의 시스템에서의 forward model을 살펴보았으니 이제 여러 시스템에서의 forward model의 성능을 살펴보자. GN을 사용하면 여러 시스템들의 다양한 변수들도 잘 다룰 수 있다는 가정이 있었다. 이를 확인하기 위해 연속적으로 static parameter들(질량, body의 길이, joint의 각도 등)을 바꿔가면서 forward dynamics를 어떻게 학습해가는지 확인했다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/pM4UKhs.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/pM4UKhs.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 </section>
@@ -567,6 +609,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -633,13 +702,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -666,9 +737,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -704,10 +789,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -717,8 +801,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -733,6 +826,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -775,7 +1100,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Jung Yeon Lee</div>   
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -788,6 +1118,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

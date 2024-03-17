@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -50,7 +50,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -59,8 +65,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
@@ -79,6 +87,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 }
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -97,43 +110,70 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">Jung Yeon Lee</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../note.html">
- <span class="menu-text">Note</span></a>
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -198,7 +238,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </div>
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
     
     <div>
@@ -212,7 +252,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <section id="abstract" class="level1">
 <h1>0. Abstract</h1>
@@ -231,9 +273,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </blockquote>
 <section id="system-process" class="level2">
 <h2 class="anchored" data-anchor-id="system-process">System Process</h2>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/vJJH1oF.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/vJJH1oF.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ol type="1">
@@ -302,17 +344,17 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>아래 사진의 전체 시스템의 개략도에서 볼 수 있듯이 <strong>각각의 policy</strong>는 <strong>하나의 desired skill</strong>을 학습하게 된다. 즉 하나의 policy는 <strong>forward</strong>를, 다른 policy는 <strong>backward</strong>를, 마지막 다른 policy는 <strong>reset</strong>을 담당하여 학습하게 된다. 이렇게 다양한 task를 수행할 수 있도록 만든 프레임워크 이기 때문에 <strong>Multitask framework</strong>인 것이다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/2q4OYul.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/2q4OYul.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <hr>
 <p><strong>Pseudo Algorithm</strong></p>
 <p>시스템 개략도에서 봤듯이 논문에 나와있는 시스템 전체를 보여주는 <code>Algorithm2</code> 알고리즘은 크게 2개의 과정으로 진행된다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/kIL9RPT.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/kIL9RPT.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ol type="1">
@@ -329,9 +371,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </section>
 <section id="motion-imitation-off-policy-rl" class="level2">
 <h2 class="anchored" data-anchor-id="motion-imitation-off-policy-rl">Motion Imitation &amp; Off-policy RL</h2>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/sBvIszd.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/sBvIszd.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p><strong>Motion Imitation</strong></p>
@@ -404,9 +446,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </ul></li>
 <li>이렇게 계산된 <strong>linear velocity</strong>를 로봇의 position 추정값에 통합시킨다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/1DW4hsQ.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/1DW4hsQ.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>위의 그래프들에 볼 수 있듯이(아래에서 위 방향으로),</p>
@@ -422,9 +464,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><strong>reset policy</strong>를 시뮬레이션에서 학습하기 위해 다양한 <strong>initial states</strong>에서 시작하도록 했다.</li>
 </ul>
 <p>→ 로봇을 random한 height &amp; orientation에서 떨어뜨려서 아래 사진에서 볼 수 있듯이 다양한 <strong>initial states</strong>를 설정</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/2soOO1g.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/2soOO1g.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
@@ -473,9 +515,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><code>Ours(REDQ)</code>: 10개의 Q-functions을 가지고 randomly sample 2로 학습</li>
 </ol>
 <hr>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/BCyV1Xk.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/BCyV1Xk.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <p>실험 결과를 살펴보면, <code>RMA</code>는 training 환경에서만 높은 성능을 보여주어 Adaptation Module의 한계점을 명확히 보여주었다. <code>SAC</code>에 비해서 <code>REDQ(Ours)</code>가 sample efficiency가 좋을 뿐만 아니라 수렴하는 Return 값도 높았다.</p>
@@ -491,34 +533,34 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><p>Pre-trained <strong>forward</strong> pacing policy는 매우 조금만 앞으로 갈 수 있었고, pre-trained <strong>backward</strong> pacing policy는 잘 넘어지는 경향이 있었다.</p></li>
 <li><p><strong>작동한 지 약 2시간 만에</strong>, 로봇은 (아주 조금의 넘어짐은 있었지만) 지속적이고 안정적으로 앞 혹은 뒤로 pacing gait를 할 수 있었다.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/EeTTRF8.png?2" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/EeTTRF8.png?2" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div></li>
 <li><p>Indoor</p>
 <ul>
 <li><code>Carpeted room</code>: 높은 마찰계수를 가지는 지형으로 (카펫이 푹신하므로) 로봇의 고무로 마감되어 있는 발이 시뮬레이션에서 학습된 것과 다르게 안정적이지 않은 컨택을 하게 될 수 있다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/Pviw7be.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/Pviw7be.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
 <li><code>Doormat with crevices</code>: 매트 표면에 발이 빠질 수도 있는 환경이다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/865kXHv.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/865kXHv.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
 <li><code>Memory foam</code>: 4cm 정도의 두께의 메모리폼으로 발이 매트리스에 빠지고 평평하고 딱딱한 바닥과 비교했을 때 이 환경에서는 gait(걸음새)가 상당히 변화가 많이 일어날 수 있다.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/EfZvlS5.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/EfZvlS5.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
@@ -529,9 +571,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </section>
 <section id="c.-semi-autonomous-training" class="level2">
 <h2 class="anchored" data-anchor-id="c.-semi-autonomous-training">C. Semi-autonomous training</h2>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-default">
 <figure class="figure">
-<p><img src="https://i.imgur.com/NRNMAex.png?1" class="img-fluid figure-img"></p>
+<p><img src="https://i.imgur.com/NRNMAex.png?1" class="img-fluid quarto-figure quarto-figure-default figure-img"></p>
 </figure>
 </div>
 <ul>
@@ -629,6 +671,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -695,13 +764,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -728,9 +799,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -766,10 +851,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -779,8 +863,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -795,6 +888,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -837,7 +1162,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Jung Yeon Lee</div>   
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -850,6 +1180,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

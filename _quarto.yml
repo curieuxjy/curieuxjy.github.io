@@ -33,6 +33,7 @@ format:
     theme:
       light: minty
       dark: [minty, theme-dark.scss]
+      # [minty, theme-dark.scss]
       # - minty
       # - custom.scss
 # https://quarto.org/docs/websites/website-blog.html#themes 

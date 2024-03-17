@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -50,7 +50,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -59,8 +65,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -108,6 +116,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 }
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -126,43 +139,70 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
- <span class="menu-text">Jung Yeon Lee</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./note.html" aria-current="page">
- <span class="menu-text">Note</span></a>
+    <a class="nav-link active" href="./note.html" aria-current="page"> 
+<span class="menu-text">Note</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/curieuxjy"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -183,7 +223,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -191,7 +231,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <center>
 <section id="diary-language-study" class="level5">
@@ -222,7 +264,6 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
      </select>
   </div>
 </div>
-
 <table class="quarto-listing-table table table-striped table-hover">
 <thead>
 <tr>
@@ -235,197 +276,196 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </tr>
 </thead>
 <tbody class="list">
-<tr data-index="0" data-categories="cs,study,2024" data-listing-date-sort="1705244400000" data-listing-file-modified-sort="1705290773443" data-listing-reading-time-sort="14.875" data-listing-title-sort="📝Operating System 001" data-listing-filename-sort="2024-01-15-cs-study-001.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="0" data-categories="cs,study,2024" data-listing-date-sort="1705244400000" data-listing-file-modified-sort="1705290773443" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2975" data-listing-title-sort="📝Operating System 001" data-listing-filename-sort="2024-01-15-cs-study-001.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Jan 15, 2024
+<td>
+<span class="listing-date">Jan 15, 2024</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2024-01-15-cs-study-001.html" class="title">📝Operating System 001</a>
+<td>
+<a href="./posts/note/2024-01-15-cs-study-001.html" class="title listing-title">📝Operating System 001</a>
 </td>
 </tr>
-<tr data-index="1" data-categories="geultto,2023" data-listing-date-sort="1701356400000" data-listing-file-modified-sort="1703047453396" data-listing-reading-time-sort="4.18" data-listing-title-sort="📘Geultto 9th Start" data-listing-filename-sort="2023-12-01-geultto-9th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="1" data-categories="geultto,2023" data-listing-date-sort="1701356400000" data-listing-file-modified-sort="1703047453396" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="836" data-listing-title-sort="📘Geultto 9th Start" data-listing-filename-sort="2023-12-01-geultto-9th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Dec 1, 2023
+<td>
+<span class="listing-date">Dec 1, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-12-01-geultto-9th-start.html" class="title">📘Geultto 9th Start</a>
+<td>
+<a href="./posts/note/2023-12-01-geultto-9th-start.html" class="title listing-title">📘Geultto 9th Start</a>
 </td>
 </tr>
-<tr data-index="2" data-categories="daily,english,casual,2023" data-listing-date-sort="1693407600000" data-listing-file-modified-sort="1700905654092" data-listing-reading-time-sort="1.03" data-listing-title-sort="🌎Casual English Phrases 010" data-listing-filename-sort="2023-08-31-daily-english-010.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="2" data-categories="daily,english,casual,2023" data-listing-date-sort="1693407600000" data-listing-file-modified-sort="1700905654092" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="206" data-listing-title-sort="🌎Casual English Phrases 010" data-listing-filename-sort="2023-08-31-daily-english-010.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Aug 31, 2023
+<td>
+<span class="listing-date">Aug 31, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-08-31-daily-english-010.html" class="title">🌎Casual English Phrases 010</a>
+<td>
+<a href="./posts/note/2023-08-31-daily-english-010.html" class="title listing-title">🌎Casual English Phrases 010</a>
 </td>
 </tr>
-<tr data-index="3" data-categories="geultto,2023" data-listing-date-sort="1688655600000" data-listing-file-modified-sort="1688954999482" data-listing-reading-time-sort="6.31" data-listing-title-sort="📘Geultto 8th End" data-listing-filename-sort="2023-07-07-geultto-8th-end.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="3" data-categories="geultto,2023" data-listing-date-sort="1688655600000" data-listing-file-modified-sort="1688954999482" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1262" data-listing-title-sort="📘Geultto 8th End" data-listing-filename-sort="2023-07-07-geultto-8th-end.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Jul 7, 2023
+<td>
+<span class="listing-date">Jul 7, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-07-07-geultto-8th-end.html" class="title">📘Geultto 8th End</a>
+<td>
+<a href="./posts/note/2023-07-07-geultto-8th-end.html" class="title listing-title">📘Geultto 8th End</a>
 </td>
 </tr>
-<tr data-index="4" data-categories="daily,english,casual,2023" data-listing-date-sort="1688482800000" data-listing-file-modified-sort="1688873292007" data-listing-reading-time-sort="1.415" data-listing-title-sort="🌎Casual English Phrases 009" data-listing-filename-sort="2023-07-05-daily-english-009.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="4" data-categories="daily,english,casual,2023" data-listing-date-sort="1688482800000" data-listing-file-modified-sort="1688873292007" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="🌎Casual English Phrases 009" data-listing-filename-sort="2023-07-05-daily-english-009.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Jul 5, 2023
+<td>
+<span class="listing-date">Jul 5, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-07-05-daily-english-009.html" class="title">🌎Casual English Phrases 009</a>
+<td>
+<a href="./posts/note/2023-07-05-daily-english-009.html" class="title listing-title">🌎Casual English Phrases 009</a>
 </td>
 </tr>
-<tr data-index="5" data-categories="github,diary,2023" data-listing-date-sort="1685113200000" data-listing-file-modified-sort="1685624786575" data-listing-reading-time-sort="5.375" data-listing-title-sort="📘Github Starstruck 128" data-listing-filename-sort="2023-05-27-twinkle-github-star.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="5" data-categories="github,diary,2023" data-listing-date-sort="1685113200000" data-listing-file-modified-sort="1685624786575" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1075" data-listing-title-sort="📘Github Starstruck 128" data-listing-filename-sort="2023-05-27-twinkle-github-star.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-May 27, 2023
+<td>
+<span class="listing-date">May 27, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-05-27-twinkle-github-star.html" class="title">📘Github Starstruck 128</a>
+<td>
+<a href="./posts/note/2023-05-27-twinkle-github-star.html" class="title listing-title">📘Github Starstruck 128</a>
 </td>
 </tr>
-<tr data-index="6" data-categories="daily,english,casual,2023" data-listing-date-sort="1680620400000" data-listing-file-modified-sort="1680653519701" data-listing-reading-time-sort="1.435" data-listing-title-sort="🌎Casual English Phrases 008" data-listing-filename-sort="2023-04-05-daily-english-008.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="6" data-categories="daily,english,casual,2023" data-listing-date-sort="1680620400000" data-listing-file-modified-sort="1680653519701" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="287" data-listing-title-sort="🌎Casual English Phrases 008" data-listing-filename-sort="2023-04-05-daily-english-008.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Apr 5, 2023
+<td>
+<span class="listing-date">Apr 5, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-04-05-daily-english-008.html" class="title">🌎Casual English Phrases 008</a>
+<td>
+<a href="./posts/note/2023-04-05-daily-english-008.html" class="title listing-title">🌎Casual English Phrases 008</a>
 </td>
 </tr>
-<tr data-index="7" data-categories="daily,english,casual,2023" data-listing-date-sort="1680188400000" data-listing-file-modified-sort="1680508431522" data-listing-reading-time-sort="1.005" data-listing-title-sort="🌎Casual English Phrases 007" data-listing-filename-sort="2023-03-31-daily-english-007.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="7" data-categories="daily,english,casual,2023" data-listing-date-sort="1680188400000" data-listing-file-modified-sort="1680508431522" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="201" data-listing-title-sort="🌎Casual English Phrases 007" data-listing-filename-sort="2023-03-31-daily-english-007.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Mar 31, 2023
+<td>
+<span class="listing-date">Mar 31, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-03-31-daily-english-007.html" class="title">🌎Casual English Phrases 007</a>
+<td>
+<a href="./posts/note/2023-03-31-daily-english-007.html" class="title listing-title">🌎Casual English Phrases 007</a>
 </td>
 </tr>
-<tr data-index="8" data-categories="daily,english,casual,2023" data-listing-date-sort="1680102000000" data-listing-file-modified-sort="1680138633860" data-listing-reading-time-sort="1.165" data-listing-title-sort="🌎Casual English Phrases 006" data-listing-filename-sort="2023-03-30-daily-english-006.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="8" data-categories="daily,english,casual,2023" data-listing-date-sort="1680102000000" data-listing-file-modified-sort="1680138633860" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="233" data-listing-title-sort="🌎Casual English Phrases 006" data-listing-filename-sort="2023-03-30-daily-english-006.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Mar 30, 2023
+<td>
+<span class="listing-date">Mar 30, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-03-30-daily-english-006.html" class="title">🌎Casual English Phrases 006</a>
+<td>
+<a href="./posts/note/2023-03-30-daily-english-006.html" class="title listing-title">🌎Casual English Phrases 006</a>
 </td>
 </tr>
-<tr data-index="9" data-categories="daily,english,casual,2023" data-listing-date-sort="1680015600000" data-listing-file-modified-sort="1680084719682" data-listing-reading-time-sort="0.685" data-listing-title-sort="🌎Casual English Phrases 005" data-listing-filename-sort="2023-03-29-daily-english-005.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="9" data-categories="daily,english,casual,2023" data-listing-date-sort="1680015600000" data-listing-file-modified-sort="1680084719682" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="137" data-listing-title-sort="🌎Casual English Phrases 005" data-listing-filename-sort="2023-03-29-daily-english-005.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Mar 29, 2023
+<td>
+<span class="listing-date">Mar 29, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-03-29-daily-english-005.html" class="title">🌎Casual English Phrases 005</a>
+<td>
+<a href="./posts/note/2023-03-29-daily-english-005.html" class="title listing-title">🌎Casual English Phrases 005</a>
 </td>
 </tr>
-<tr data-index="10" data-categories="geultto,2023" data-listing-date-sort="1675263600000" data-listing-file-modified-sort="1688954999482" data-listing-reading-time-sort="4.625" data-listing-title-sort="📘Geultto 8th Start" data-listing-filename-sort="2023-02-02-geultto-8th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="10" data-categories="geultto,2023" data-listing-date-sort="1675263600000" data-listing-file-modified-sort="1688954999482" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="925" data-listing-title-sort="📘Geultto 8th Start" data-listing-filename-sort="2023-02-02-geultto-8th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Feb 2, 2023
+<td>
+<span class="listing-date">Feb 2, 2023</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2023-02-02-geultto-8th-start.html" class="title">📘Geultto 8th Start</a>
+<td>
+<a href="./posts/note/2023-02-02-geultto-8th-start.html" class="title listing-title">📘Geultto 8th Start</a>
 </td>
 </tr>
-<tr data-index="11" data-categories="geultto,2022" data-listing-date-sort="1666969200000" data-listing-file-modified-sort="1688954999482" data-listing-reading-time-sort="5.865" data-listing-title-sort="📘Gueltto 7th End" data-listing-filename-sort="2022-10-29-geultto-7th-end.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="11" data-categories="geultto,2022" data-listing-date-sort="1666969200000" data-listing-file-modified-sort="1688954999482" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1173" data-listing-title-sort="📘Gueltto 7th End" data-listing-filename-sort="2022-10-29-geultto-7th-end.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Oct 29, 2022
+<td>
+<span class="listing-date">Oct 29, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-10-29-geultto-7th-end.html" class="title">📘Gueltto 7th End</a>
+<td>
+<a href="./posts/note/2022-10-29-geultto-7th-end.html" class="title listing-title">📘Gueltto 7th End</a>
 </td>
 </tr>
-<tr data-index="12" data-categories="daily,english,it,2022" data-listing-date-sort="1666537200000" data-listing-file-modified-sort="1679225037435" data-listing-reading-time-sort="3.37" data-listing-title-sort="🌎IT English Experssions 004" data-listing-filename-sort="2022-10-24-daily-english-004.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="12" data-categories="daily,english,it,2022" data-listing-date-sort="1666537200000" data-listing-file-modified-sort="1679225037435" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="674" data-listing-title-sort="🌎IT English Experssions 004" data-listing-filename-sort="2022-10-24-daily-english-004.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Oct 24, 2022
+<td>
+<span class="listing-date">Oct 24, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-10-24-daily-english-004.html" class="title">🌎IT English Experssions 004</a>
+<td>
+<a href="./posts/note/2022-10-24-daily-english-004.html" class="title listing-title">🌎IT English Experssions 004</a>
 </td>
 </tr>
-<tr data-index="13" data-categories="daily,english,casual,2022" data-listing-date-sort="1665932400000" data-listing-file-modified-sort="1679225034199" data-listing-reading-time-sort="1.295" data-listing-title-sort="🌎Casual English Phrases 003" data-listing-filename-sort="2022-10-17-daily-english-003.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="13" data-categories="daily,english,casual,2022" data-listing-date-sort="1665932400000" data-listing-file-modified-sort="1679225034199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="259" data-listing-title-sort="🌎Casual English Phrases 003" data-listing-filename-sort="2022-10-17-daily-english-003.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Oct 17, 2022
+<td>
+<span class="listing-date">Oct 17, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-10-17-daily-english-003.html" class="title">🌎Casual English Phrases 003</a>
+<td>
+<a href="./posts/note/2022-10-17-daily-english-003.html" class="title listing-title">🌎Casual English Phrases 003</a>
 </td>
 </tr>
-<tr data-index="14" data-categories="daily,english,casual,2022" data-listing-date-sort="1665414000000" data-listing-file-modified-sort="1679225030179" data-listing-reading-time-sort="1.205" data-listing-title-sort="🌎Casual English Phrases 002" data-listing-filename-sort="2022-10-11-daily-english-002.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="14" data-categories="daily,english,casual,2022" data-listing-date-sort="1665414000000" data-listing-file-modified-sort="1679225030179" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="241" data-listing-title-sort="🌎Casual English Phrases 002" data-listing-filename-sort="2022-10-11-daily-english-002.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Oct 11, 2022
+<td>
+<span class="listing-date">Oct 11, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-10-11-daily-english-002.html" class="title">🌎Casual English Phrases 002</a>
+<td>
+<a href="./posts/note/2022-10-11-daily-english-002.html" class="title listing-title">🌎Casual English Phrases 002</a>
 </td>
 </tr>
-<tr data-index="15" data-categories="daily,english,casual,2022" data-listing-date-sort="1664722800000" data-listing-file-modified-sort="1679225026779" data-listing-reading-time-sort="1.11" data-listing-title-sort="🌎Casual English Phrases 001" data-listing-filename-sort="2022-10-03-daily-english-001.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="15" data-categories="daily,english,casual,2022" data-listing-date-sort="1664722800000" data-listing-file-modified-sort="1679225026779" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="222" data-listing-title-sort="🌎Casual English Phrases 001" data-listing-filename-sort="2022-10-03-daily-english-001.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Oct 3, 2022
+<td>
+<span class="listing-date">Oct 3, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-10-03-daily-english-001.html" class="title">🌎Casual English Phrases 001</a>
+<td>
+<a href="./posts/note/2022-10-03-daily-english-001.html" class="title listing-title">🌎Casual English Phrases 001</a>
 </td>
 </tr>
-<tr data-index="16" data-categories="geultto,2022" data-listing-date-sort="1662217200000" data-listing-file-modified-sort="1703047453396" data-listing-reading-time-sort="2.35" data-listing-title-sort="📘2022 상반기 회고" data-listing-filename-sort="2022-09-04-mid-retrospective.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="16" data-categories="geultto,2022" data-listing-date-sort="1662217200000" data-listing-file-modified-sort="1703047453396" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="470" data-listing-title-sort="📘2022 상반기 회고" data-listing-filename-sort="2022-09-04-mid-retrospective.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Sep 4, 2022
+<td>
+<span class="listing-date">Sep 4, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-09-04-mid-retrospective.html" class="title">📘2022 상반기 회고</a>
+<td>
+<a href="./posts/note/2022-09-04-mid-retrospective.html" class="title listing-title">📘2022 상반기 회고</a>
 </td>
 </tr>
-<tr data-index="17" data-categories="geultto,2022" data-listing-date-sort="1651762800000" data-listing-file-modified-sort="1688873292007" data-listing-reading-time-sort="2.17" data-listing-title-sort="📘Geultto 7th Start" data-listing-filename-sort="2022-05-06-geultto-7th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="17" data-categories="geultto,2022" data-listing-date-sort="1651762800000" data-listing-file-modified-sort="1688873292007" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="434" data-listing-title-sort="📘Geultto 7th Start" data-listing-filename-sort="2022-05-06-geultto-7th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-May 6, 2022
+<td>
+<span class="listing-date">May 6, 2022</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2022-05-06-geultto-7th-start.html" class="title">📘Geultto 7th Start</a>
+<td>
+<a href="./posts/note/2022-05-06-geultto-7th-start.html" class="title listing-title">📘Geultto 7th Start</a>
 </td>
 </tr>
-<tr data-index="18" data-categories="diary,2021" data-listing-date-sort="1612018800000" data-listing-file-modified-sort="1688954999482" data-listing-reading-time-sort="5.17" data-listing-title-sort="📘2021 TU Berlin Winter Course 수강 후기" data-listing-filename-sort="2021-01-31-ML-tu-berlin.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="18" data-categories="diary,2021" data-listing-date-sort="1612018800000" data-listing-file-modified-sort="1688954999482" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1034" data-listing-title-sort="📘2021 TU Berlin Winter Course 수강 후기" data-listing-filename-sort="2021-01-31-ML-tu-berlin.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Jan 31, 2021
+<td>
+<span class="listing-date">Jan 31, 2021</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2021-01-31-ML-tu-berlin.html" class="title">📘2021 TU Berlin Winter Course 수강 후기</a>
+<td>
+<a href="./posts/note/2021-01-31-ML-tu-berlin.html" class="title listing-title">📘2021 TU Berlin Winter Course 수강 후기</a>
 </td>
 </tr>
-<tr data-index="19" data-categories="diary,2021" data-listing-date-sort="1609599600000" data-listing-file-modified-sort="1679225008947" data-listing-reading-time-sort="8.11" data-listing-title-sort="📘Goodbye 2020" data-listing-filename-sort="2021-01-03-Goodbye-2020.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="19" data-categories="diary,2021" data-listing-date-sort="1609599600000" data-listing-file-modified-sort="1679225008947" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1622" data-listing-title-sort="📘Goodbye 2020" data-listing-filename-sort="2021-01-03-Goodbye-2020.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Jan 3, 2021
+<td>
+<span class="listing-date">Jan 3, 2021</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2021-01-03-Goodbye-2020.html" class="title">📘Goodbye 2020</a>
+<td>
+<a href="./posts/note/2021-01-03-Goodbye-2020.html" class="title listing-title">📘Goodbye 2020</a>
 </td>
 </tr>
-<tr data-index="20" data-categories="diary,2021" data-listing-date-sort="1609599600000" data-listing-file-modified-sort="1703047453396" data-listing-reading-time-sort="2.49" data-listing-title-sort="📘Hello 2021" data-listing-filename-sort="2021-01-03-Hello-2021.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="20" data-categories="diary,2021" data-listing-date-sort="1609599600000" data-listing-file-modified-sort="1703047453396" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="498" data-listing-title-sort="📘Hello 2021" data-listing-filename-sort="2021-01-03-Hello-2021.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
-<td class="listing-date">
-Jan 3, 2021
+<td>
+<span class="listing-date">Jan 3, 2021</span>
 </td>
-<td class="listing-title">
-<a href="./posts/note/2021-01-03-Hello-2021.html" class="title">📘Hello 2021</a>
+<td>
+<a href="./posts/note/2021-01-03-Hello-2021.html" class="title listing-title">📘Hello 2021</a>
 </td>
 </tr>
 </tbody>
-
 </table>
 <div class="listing-no-matching d-none">
 No matching items
@@ -472,6 +512,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -540,13 +607,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -573,9 +642,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -611,10 +694,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -624,8 +706,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -640,6 +731,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -682,7 +1005,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Jung Yeon Lee</div>   
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -695,6 +1023,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

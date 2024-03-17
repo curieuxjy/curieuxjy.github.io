@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-03-17">
+<meta name="description" content="Variational Constrained Grasp Sample">
+
+<title>Curieux.JY - 📃VCGS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement"><span class="header-section-number">2</span> Problem Statement</a></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">3</span> Method</a>
+  <ul class="collapse">
+  <li><a href="#evaluator-network" id="toc-evaluator-network" class="nav-link" data-scroll-target="#evaluator-network"><span class="header-section-number">3.1</span> Evaluator Network</a></li>
+  <li><a href="#cong-dataset" id="toc-cong-dataset" class="nav-link" data-scroll-target="#cong-dataset"><span class="header-section-number">3.2</span> CONG Dataset</a></li>
+  </ul></li>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">4</span> Experiment</a>
+  <ul class="collapse">
+  <li><a href="#a.-simulated-robotic-grasping" id="toc-a.-simulated-robotic-grasping" class="nav-link" data-scroll-target="#a.-simulated-robotic-grasping"><span class="header-section-number">4.1</span> A. Simulated Robotic Grasping</a></li>
+  </ul></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">5</span> Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃VCGS</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">grasp</div>
+    <div class="quarto-category">pointcloud</div>
+    <div class="quarto-category">paper</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Variational Constrained Grasp Sample
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<center>
+<img src="../../images/2024-03-17-vcgs/1.png" width="67%">
+</center>
+<p>이번 포스팅은 <a href="https://arxiv.org/abs/2302.10745">Variational Constrained Grasp Sample</a> 논문을 읽고 정리한 내용입니다. 해당 논문은 IROS 2023 학회에 Accept된 논문으로, 특정 대상 영역에 대한 제약을 가진 6자유도(DoF) Grasp을 샘플링하기 위한 새로운 생성적 그리핑 샘플링 네트워크, VCGS를 소개합니다. 뿐만 아니라 1,400만 개 이상의 훈련 샘플을 포함하는 새로운 데이터셋 CONG를 구축한 내용을 발표했습니다. 제안된 VCGS가 시뮬레이션 및 실제 테스트에서 비교 모델인 GraspNet보다 10-15% 높은 그리핑 성공률을 보이며, 2-3배 더 효율적인 것을 보여준 논문입니다.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>로봇 팔, Manipulator로 물체를 잡는 Task는 공정에서부터 가정에서 쓰일 수 있는 보조 역할까지 할 수 있는 기본적인 Task라고 볼 수 있습니다. 따라서 물체를 잡는다는 Task, 즉 Grasping(혹은 Gripping)을 인지 단계부터 제어 모션 단계까지 잘 할 수 있는 방법을 찾고자 하는 연구들이 많이 진행되어 왔습니다. 이러한 배경 하에, 특정 객체 부분과의 상호작용을 요구하는 작업에서 정밀한 그리핑 위치를 지정하는 것의 중요성이 부각되었습니다. 본 연구는 이 문제를 해결하기 위해 특정 대상 영역에 대한 제약을 가진 6자유도 그리핑을 샘플링하는 새로운 방법론을 제안합니다.</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/2.png" width="67%">
+<figcaption>
+VCGS Process
+</figcaption>
+</center>
+<p>6자유도 그리핑은 보통 top-down 방식의 4자유도 그리핑보다 더 자유도가 높은 제어를 요구하기 때문에 더 도전적인 Task라고 볼 수 있습니다. 물리 세계의 3d 물체를 인식하기 위해 point cloud data로 3차원 물체를 인식하고 물체를 안정적으로 잡을 grasp pose를 최종적으로 만들어서 Manipulator를 움직이는 것이 목표입니다.</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/3.png" width="67%">
+<figcaption>
+CONG Dataset Comparison
+</figcaption>
+</center>
+<p>해당 연구에서는 VCGS라는 안정적인 grasp pose를 제안할 뿐만 아니라 해당 모델을 잘 학습시킬 수 있고 Constrained Grasp에 대한 데이터셋을 만들어서 <strong>CONG</strong>라는 데이터셋을 만드는 부분에도 기여를 했습니다. Table 1에서도 볼 수 있듯이 다른 데이터셋에 비해서 절대적인 데이터셋의 크기가 클 뿐만 아니라 Task-agnostic한 Constraint에 대한 정보도 들어있는 데이터셋으로 유일하기 때문에 그 특성이 중요하다고 볼 수 있습니다.</p>
+</section>
+<section id="problem-statement" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Problem Statement</h1>
+<p>Grasp pose를 생성하기 위해 다음과 같이 문제의 용어들을 정의합니다.</p>
+<ul>
+<li>G: parallel-jaw grasp poses
+<ul>
+<li>7차원: quaternion[4] + 3d-position[3]</li>
+<li>Target area <strong>A</strong>에 있고 stable(<strong>S</strong>=1)한 조건이 만족될 때</li>
+</ul></li>
+<li><strong>O</strong>: Object Point-cloud (차원: <strong>N</strong>x3)</li>
+<li><strong>A</strong>: Target Area Point-cloud (차원: <strong>M</strong>x3)</li>
+</ul>
+<center>
+<img src="../../images/2024-03-17-vcgs/4.png" width="67%">
+<figcaption>
+Point cloud data와 Joint Probability Separation
+</figcaption>
+</center>
+<p>VCGS가 학습해야 하는 목표는 <span class="math inline">P(G, S | O, A)</span> 를 최대화하는 것 입니다. 이 수식을 풀어서 생각해보면, object의 point cloud data와 잡아야 하는 부분인 target area point cloud data가 주어졌을 때 성공적인(<span class="math inline">S</span>) grasp <span class="math inline">G</span>를 생성하는 확률을 높이는 것 입니다. 이를 Grasp Sampler와 Grasp Evaluator 각각으로 Approximation하는 네트워크로 두어 학습하는 과정을 진행합니다.</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/5.png" width="67%">
+<figcaption>
+Grasp Pose 설명
+</figcaption>
+</center>
+</section>
+<section id="method" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Method</h1>
+<p>VCGS의 기본적인 틀은 VAE 구조를 차용해서 학습 모델을 아래와 같이 만들었습니다.</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/6.png" width="67%">
+<figcaption>
+6
+</figcaption>
+</center>
+<p>Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 차용하여 Gaussian Prior Distribution을 이용해서 가능한 다양한 Grasp pose를 생성할 수 있도록 설계했습니다.</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/7.png" width="67%">
+<figcaption>
+7
+</figcaption>
+</center>
+<section id="evaluator-network" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="evaluator-network"><span class="header-section-number">3.1</span> Evaluator Network</h2>
+<p>학습동안에 좋은 Grasp data만 학습하는 Encoder가 더 다양한 Grasp data를 경험할 수 있도록 Evaluator Network를 추가하여 Bad Grasp에 대한 경험도 할 수 있도록 만들었습니다.</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/8.png" width="67%">
+<figcaption>
+8
+</figcaption>
+</center>
+</section>
+<section id="cong-dataset" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="cong-dataset"><span class="header-section-number">3.2</span> CONG Dataset</h2>
+<center>
+<img src="../../images/2024-03-17-vcgs/9.png" width="67%">
+<figcaption>
+9
+</figcaption>
+</center>
+<p>구성 요소 - <span class="math inline">O</span>: object point cloud - <span class="math inline">G*</span>: target area A에서 랜덤하게 샘플링된 successful grasp</p>
+<p>데이터셋 구축 과정</p>
+<ol type="1">
+<li>object를 원점에 랜덤한 orientation으로 놓고 O[N x 3] rendering</li>
+<li>O에서 query point I[K x 3]를 샘플링(K &lt;&lt; N) - Farthest Point Sampling 사용</li>
+<li>각 query point xi(∈I)에 대해서 반경 ri(~U[0, R]) 이웃한 point Ai들을 모두 찾음
+<ul>
+<li>이때 R은 mesh bounding box의 대각선 길이</li>
+</ul></li>
+<li>[grasp center point]와 [Ai의 어떤 점]이라도 최대 d인 모든 G를 찾아냄</li>
+</ol>
+<center>
+<img src="../../images/2024-03-17-vcgs/10.png" width="67%">
+<figcaption>
+10
+</figcaption>
+</center>
+</section>
+</section>
+<section id="experiment" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Experiment</h1>
+<p>실험에서 주목해봐야할 2가지 질문은 아래와 같습니다. 1. constrained grasping에서 grasp success rate에 대한 정의? 2. constrained grasp sampler가 unconstrained sampler보다 target-driven grasping에서 얼마나 sample efficient한지?</p>
+<center>
+<img src="../../images/2024-03-17-vcgs/11.png" width="67%">
+<figcaption>
+11
+</figcaption>
+</center>
+<p>실험 셋팅은 다음과 같습니다.</p>
+<ul>
+<li>비교군: GraspNet</li>
+<li>Simulation &amp; Real Robot 둘 다 확인</li>
+<li>Evaluation Metric
+<ul>
+<li>successful/total</li>
+<li>successful의 기준: 물체를 들고 predefined motion(linear acc + angular acc)을 진행한 후 물체가 gripper에 안정적으로 들려있는지</li>
+</ul></li>
+</ul>
+<center>
+<img src="../../images/2024-03-17-vcgs/12.png" width="67%">
+<figcaption>
+12
+</figcaption>
+</center>
+<section id="a.-simulated-robotic-grasping" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="a.-simulated-robotic-grasping"><span class="header-section-number">4.1</span> A. Simulated Robotic Grasping</h2>
+<ul>
+<li>best grasp, NOT the best reachable
+<ul>
+<li>grasp: 안정적으로 잡은 상황</li>
+<li>reachable: 도달만 가능?</li>
+</ul></li>
+<li>gripper와 object 둘 다 free-floating 상황</li>
+<li>IsaacGym simulator 사용
+<ul>
+<li>Acronym dataset에서 123개의 random object</li>
+<li>물체의 observation data로는 <strong>depth sensor</strong> 사용</li>
+</ul></li>
+<li>시뮬레이터에서 2개 실험 진행
+<ul>
+<li><strong>Unconstrained sampling</strong>: target area 없이 그냥 grasp을 샘플링. A=O</li>
+<li><strong>Constrained sampling</strong>: target area에서만 grasp 생성</li>
+</ul></li>
+<li>비교군
+<ul>
+<li><strong>GraspNet</strong>: SOTA</li>
+<li><strong>GraspNetTaI</strong>: Target as Input. target area만 grasp sampling network에 넣어준 모델</li>
+</ul></li>
+</ul>
+<center>
+<img src="../../images/2024-03-17-vcgs/13.png" width="67%">
+<figcaption>
+13
+</figcaption>
+</center>
+<ul>
+<li><p>VCGS</p>
+<p>는 GraspNet보다</p>
+<p>3배 이상의 Ratio of grasps kept %</p>
+<p>를 보여줌</p>
+<ul>
+<li>네트워크 입력으로 Constrained grasp sampling을 넣어주는 것의 이점에 대한 증거</li>
+</ul></li>
+<li><p>GraspNetTaI</p>
+<p>는 GraspNet보다</p>
+<p>Success Rate가 낮음</p>
+<ul>
+<li>물체의 전체 정보(global)를 사용하는 것이 특정한 target area에 대한 정보(local)를 사용하는 것보다 좋음을 알 수 있음</li>
+</ul></li>
+<li><p>GraspNet</p>
+<p>은 Success Rate가</p>
+<p># of grasps sampled에 영향을 받음</p>
+<ul>
+<li>만약 Unconstrained 경우라면 더 많은 sampling이 필요하다고 볼 수 있음</li>
+<li>RGK가 #GS에 영향을 받지 않은 결과를 보고도 확인할 수 있는 가설임</li>
+</ul></li>
+</ul>
+<center>
+<img src="../../images/2024-03-17-vcgs/14.png" width="67%">
+<figcaption>
+14
+</figcaption>
+</center>
+<center>
+<img src="../../images/2024-03-17-vcgs/15.png" width="67%">
+<figcaption>
+15
+</figcaption>
+</center>
+<p>마지막으로 해당 논문의 발표영상을 마지막으로 이번 포스팅을 마무리하도록 하겠습니다.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/kTZD6cxTtv8?si=-WMLnODehN9f3rXR" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+</section>
+<section id="reference" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Reference</h1>
+<ul>
+<li><p><a href="https://arxiv.org/abs/2301.10602">Original Paper: DreamWaQ</a></p></li>
+<li><p><a href="https://quadruped-robot-challenges.notion.site/">ICRA 2023 Quadruped Robot Challenges</a></p></li>
+<li><p><a href="https://youtu.be/mhD5N6-SuGc">카이스트 사족보행 로봇 ··· MIT 제치고 세계대회 우승 비결은?</a></p></li>
+<li><p><a href="https://arxiv.org/abs/2208.02376">AACC: Asymmetric Actor-Critic in Contextual Reinforcement Learning</a></p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
