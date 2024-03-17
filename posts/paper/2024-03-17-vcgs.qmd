@@ -2,7 +2,7 @@
 title: "📃VCGS"
 description: Variational Constrained Grasp Sample
 date: "2024-03-17"
-categories: [grasp, pointcloud, paper]
+categories: [grasp, pointcloud, vae, paper]
 toc: true
 number-sections: true
 image: ../../images/2024-03-17-vcgs/2.png
@@ -37,9 +37,9 @@ image: ../../images/2024-03-17-vcgs/2.png
 
 
 
-Grasp pose를 생성하기 위해 다음과 같이 문제의 용어들을 정의합니다.
+Grasp pose를 생성하기 위해 다음과 같이 문제의 용어들을 정의합니다. 연구에서 사용한 Gripper는 단순한 2개의 손가락으로 집는 모션을 하는 그리퍼로 parallel-jaw grasp pose를 정하면 잡는 모션 제어를 할 수 있습니다.
 
-- G: parallel-jaw grasp poses
+- **G**: parallel-jaw grasp poses
   - 7차원: quaternion[4] + 3d-position[3]
   - Target area **A**에 있고 stable(**S**=1)한 조건이 만족될 때
 - **O**: Object Point-cloud (차원: **N**x3)
@@ -62,21 +62,25 @@ VCGS가 학습해야 하는 목표는 $P(G, S | O, A)$ 를 최대화하는 것 �
 
 # Method
 
-VCGS의 기본적인 틀은 VAE 구조를 차용해서 학습 모델을 아래와 같이 만들었습니다.
+이번 장에서는 앞서 설명한 대로 `Grasp Sampler`와 `Grasp Evaluator`로 구성되어 있는 VCGS 모델과 CONG dataset에 대해서 이야기해보려고 합니다.
+
+## Grasp Sampler
+
+VCGS의 Grasp Sampler의 기본적인 틀은 Conditional Variational Autoencoder (CVAE) 구조를 차용해서 아래와 같이 만들었습니다. Grasp pose를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 차용하여 Gaussian Prior Distribution을 이용해서 가능한 다양한 Grasp pose를 생성할 수 있도록 설계했습니다.
 
 <center>
 <img src="../../images/2024-03-17-vcgs/6.png" width="67%" />
     <figcaption>6</figcaption>
 </center>
 
-Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 차용하여 Gaussian Prior Distribution을 이용해서 가능한 다양한 Grasp pose를 생성할 수 있도록 설계했습니다.
+Encoder
 
 <center>
 <img src="../../images/2024-03-17-vcgs/7.png" width="67%" />
     <figcaption>7</figcaption>
 </center>
 
-## Evaluator Network
+## Grasp Evaluator
 
 학습동안에 좋은 Grasp data만 학습하는 Encoder가 더 다양한 Grasp data를 경험할 수 있도록 Evaluator Network를 추가하여 Bad Grasp에 대한 경험도 할 수 있도록 만들었습니다.
 
@@ -86,8 +90,6 @@ Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 �
 </center>
 
 ## CONG Dataset
-
-
 
 <center>
 <img src="../../images/2024-03-17-vcgs/9.png" width="67%" />
@@ -115,7 +117,8 @@ Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 �
 # Experiment
 
 실험에서 주목해봐야할 2가지 질문은 아래와 같습니다.
-1. constrained grasping에서 grasp success rate에 대한 정의?
+
+1. constrained grasping에서 grasp success rate로 나타내지는 성능
 2. constrained grasp sampler가 unconstrained sampler보다 target-driven grasping에서 얼마나 sample efficient한지?
 
 <center>
@@ -135,31 +138,23 @@ Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 �
 <img src="../../images/2024-03-17-vcgs/12.png" width="67%" />
     <figcaption>12</figcaption>
 </center>
+
 ## A. Simulated Robotic Grasping
 
-
-
 - best grasp, NOT the best reachable
-  - grasp: 안정적으로 잡은 상황
-  - reachable: 도달만 가능?
-
-
-
 - gripper와 object 둘 다 free-floating 상황
 - IsaacGym simulator 사용
   - Acronym dataset에서 123개의 random object
   - 물체의 observation data로는 **depth sensor** 사용
 
 
-
 - 시뮬레이터에서 2개 실험 진행
   - **Unconstrained sampling**: target area 없이 그냥 grasp을 샘플링. A=O
   - **Constrained sampling**: target area에서만 grasp 생성
+
 - 비교군
   - **GraspNet**: SOTA
   - **GraspNetTaI**: Target as Input. target area만 grasp sampling network에 넣어준 모델 
-
-
 
 <center>
 <img src="../../images/2024-03-17-vcgs/13.png" width="67%" />
@@ -167,21 +162,12 @@ Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 �
 </center>
 
 - VCGS는 GraspNet보다 3배 이상의 Ratio of grasps kept %를 보여줌
-
   - 네트워크 입력으로 Constrained grasp sampling을 넣어주는 것의 이점에 대한 증거
 
-- GraspNetTaI는 GraspNet보다 
-
-  Success Rate가 낮음
-
+- GraspNetTaI는 GraspNet보다 Success Rate가 낮음
   - 물체의 전체 정보(global)를 사용하는 것이 특정한 target area에 대한 정보(local)를 사용하는 것보다 좋음을 알 수 있음
 
-- GraspNet
-
-  은 Success Rate가 
-
-  \# of grasps sampled에 영향을 받음
-
+- GraspNet은 Success Rate가 \# of grasps sampled에 영향을 받음
   - 만약 Unconstrained 경우라면 더 많은 sampling이 필요하다고 볼 수 있음
   - RGK가 #GS에 영향을 받지 않은 결과를 보고도 확인할 수 있는 가설임
 
@@ -192,33 +178,19 @@ Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 �
 </center>
 
 
-
-
-
 <center>
 <img src="../../images/2024-03-17-vcgs/15.png" width="67%" />
     <figcaption>15</figcaption>
 </center>
 
 
-
-
-
-
-
-
 마지막으로 해당 논문의 발표영상을 마지막으로 이번 포스팅을 마무리하도록 하겠습니다.
-
-
 
 {{< video https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR >}}
 
 
-
 # Reference
 
-- [Original Paper: DreamWaQ](https://arxiv.org/abs/2301.10602)
-
-- [ICRA 2023 Quadruped Robot Challenges](https://quadruped-robot-challenges.notion.site/)
-- [카이스트 사족보행 로봇 ··· MIT 제치고 세계대회 우승 비결은?](https://youtu.be/mhD5N6-SuGc)
-- [AACC: Asymmetric Actor-Critic in Contextual Reinforcement Learning](https://arxiv.org/abs/2208.02376)
+- [Original Paper: VCGS](https://arxiv.org/abs/2302.10745)
+- [Presentation Video](https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR)
+- [Baseline Model: GraspNet paper](https://arxiv.org/abs/1905.10520)

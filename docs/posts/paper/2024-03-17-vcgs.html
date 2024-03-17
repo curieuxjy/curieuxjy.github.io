@@ -190,8 +190,9 @@ window.Quarto = {
   <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement"><span class="header-section-number">2</span> Problem Statement</a></li>
   <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">3</span> Method</a>
   <ul class="collapse">
-  <li><a href="#evaluator-network" id="toc-evaluator-network" class="nav-link" data-scroll-target="#evaluator-network"><span class="header-section-number">3.1</span> Evaluator Network</a></li>
-  <li><a href="#cong-dataset" id="toc-cong-dataset" class="nav-link" data-scroll-target="#cong-dataset"><span class="header-section-number">3.2</span> CONG Dataset</a></li>
+  <li><a href="#grasp-sampler" id="toc-grasp-sampler" class="nav-link" data-scroll-target="#grasp-sampler"><span class="header-section-number">3.1</span> Grasp Sampler</a></li>
+  <li><a href="#grasp-evaluator" id="toc-grasp-evaluator" class="nav-link" data-scroll-target="#grasp-evaluator"><span class="header-section-number">3.2</span> Grasp Evaluator</a></li>
+  <li><a href="#cong-dataset" id="toc-cong-dataset" class="nav-link" data-scroll-target="#cong-dataset"><span class="header-section-number">3.3</span> CONG Dataset</a></li>
   </ul></li>
   <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">4</span> Experiment</a>
   <ul class="collapse">
@@ -210,6 +211,7 @@ window.Quarto = {
   <div class="quarto-categories">
     <div class="quarto-category">grasp</div>
     <div class="quarto-category">pointcloud</div>
+    <div class="quarto-category">vae</div>
     <div class="quarto-category">paper</div>
   </div>
   </div>
@@ -263,9 +265,9 @@ CONG Dataset Comparison
 </section>
 <section id="problem-statement" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Problem Statement</h1>
-<p>Grasp pose를 생성하기 위해 다음과 같이 문제의 용어들을 정의합니다.</p>
+<p>Grasp pose를 생성하기 위해 다음과 같이 문제의 용어들을 정의합니다. 연구에서 사용한 Gripper는 단순한 2개의 손가락으로 집는 모션을 하는 그리퍼로 parallel-jaw grasp pose를 정하면 잡는 모션 제어를 할 수 있습니다.</p>
 <ul>
-<li>G: parallel-jaw grasp poses
+<li><strong>G</strong>: parallel-jaw grasp poses
 <ul>
 <li>7차원: quaternion[4] + 3d-position[3]</li>
 <li>Target area <strong>A</strong>에 있고 stable(<strong>S</strong>=1)한 조건이 만족될 때</li>
@@ -289,22 +291,26 @@ Grasp Pose 설명
 </section>
 <section id="method" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Method</h1>
-<p>VCGS의 기본적인 틀은 VAE 구조를 차용해서 학습 모델을 아래와 같이 만들었습니다.</p>
+<p>이번 장에서는 앞서 설명한 대로 <code>Grasp Sampler</code>와 <code>Grasp Evaluator</code>로 구성되어 있는 VCGS 모델과 CONG dataset에 대해서 이야기해보려고 합니다.</p>
+<section id="grasp-sampler" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="grasp-sampler"><span class="header-section-number">3.1</span> Grasp Sampler</h2>
+<p>VCGS의 Grasp Sampler의 기본적인 틀은 Conditional Variational Autoencoder (CVAE) 구조를 차용해서 아래와 같이 만들었습니다. Grasp pose를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 차용하여 Gaussian Prior Distribution을 이용해서 가능한 다양한 Grasp pose를 생성할 수 있도록 설계했습니다.</p>
 <center>
 <img src="../../images/2024-03-17-vcgs/6.png" width="67%">
 <figcaption>
 6
 </figcaption>
 </center>
-<p>Gasp를 다양하게 Sampling하기 위해 Encoder와 Decoder를 VAE 구조를 차용하여 Gaussian Prior Distribution을 이용해서 가능한 다양한 Grasp pose를 생성할 수 있도록 설계했습니다.</p>
+<p>Encoder</p>
 <center>
 <img src="../../images/2024-03-17-vcgs/7.png" width="67%">
 <figcaption>
 7
 </figcaption>
 </center>
-<section id="evaluator-network" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="evaluator-network"><span class="header-section-number">3.1</span> Evaluator Network</h2>
+</section>
+<section id="grasp-evaluator" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="grasp-evaluator"><span class="header-section-number">3.2</span> Grasp Evaluator</h2>
 <p>학습동안에 좋은 Grasp data만 학습하는 Encoder가 더 다양한 Grasp data를 경험할 수 있도록 Evaluator Network를 추가하여 Bad Grasp에 대한 경험도 할 수 있도록 만들었습니다.</p>
 <center>
 <img src="../../images/2024-03-17-vcgs/8.png" width="67%">
@@ -313,8 +319,8 @@ Grasp Pose 설명
 </figcaption>
 </center>
 </section>
-<section id="cong-dataset" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="cong-dataset"><span class="header-section-number">3.2</span> CONG Dataset</h2>
+<section id="cong-dataset" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="cong-dataset"><span class="header-section-number">3.3</span> CONG Dataset</h2>
 <center>
 <img src="../../images/2024-03-17-vcgs/9.png" width="67%">
 <figcaption>
@@ -342,7 +348,11 @@ Grasp Pose 설명
 </section>
 <section id="experiment" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Experiment</h1>
-<p>실험에서 주목해봐야할 2가지 질문은 아래와 같습니다. 1. constrained grasping에서 grasp success rate에 대한 정의? 2. constrained grasp sampler가 unconstrained sampler보다 target-driven grasping에서 얼마나 sample efficient한지?</p>
+<p>실험에서 주목해봐야할 2가지 질문은 아래와 같습니다.</p>
+<ol type="1">
+<li>constrained grasping에서 grasp success rate로 나타내지는 성능</li>
+<li>constrained grasp sampler가 unconstrained sampler보다 target-driven grasping에서 얼마나 sample efficient한지?</li>
+</ol>
 <center>
 <img src="../../images/2024-03-17-vcgs/11.png" width="67%">
 <figcaption>
@@ -368,11 +378,7 @@ Grasp Pose 설명
 <section id="a.-simulated-robotic-grasping" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="a.-simulated-robotic-grasping"><span class="header-section-number">4.1</span> A. Simulated Robotic Grasping</h2>
 <ul>
-<li>best grasp, NOT the best reachable
-<ul>
-<li>grasp: 안정적으로 잡은 상황</li>
-<li>reachable: 도달만 가능?</li>
-</ul></li>
+<li>best grasp, NOT the best reachable</li>
 <li>gripper와 object 둘 다 free-floating 상황</li>
 <li>IsaacGym simulator 사용
 <ul>
@@ -397,22 +403,15 @@ Grasp Pose 설명
 </figcaption>
 </center>
 <ul>
-<li><p>VCGS</p>
-<p>는 GraspNet보다</p>
-<p>3배 이상의 Ratio of grasps kept %</p>
-<p>를 보여줌</p>
+<li>VCGS는 GraspNet보다 3배 이상의 Ratio of grasps kept %를 보여줌
 <ul>
 <li>네트워크 입력으로 Constrained grasp sampling을 넣어주는 것의 이점에 대한 증거</li>
 </ul></li>
-<li><p>GraspNetTaI</p>
-<p>는 GraspNet보다</p>
-<p>Success Rate가 낮음</p>
+<li>GraspNetTaI는 GraspNet보다 Success Rate가 낮음
 <ul>
 <li>물체의 전체 정보(global)를 사용하는 것이 특정한 target area에 대한 정보(local)를 사용하는 것보다 좋음을 알 수 있음</li>
 </ul></li>
-<li><p>GraspNet</p>
-<p>은 Success Rate가</p>
-<p># of grasps sampled에 영향을 받음</p>
+<li>GraspNet은 Success Rate가 # of grasps sampled에 영향을 받음
 <ul>
 <li>만약 Unconstrained 경우라면 더 많은 sampling이 필요하다고 볼 수 있음</li>
 <li>RGK가 #GS에 영향을 받지 않은 결과를 보고도 확인할 수 있는 가설임</li>
@@ -437,10 +436,9 @@ Grasp Pose 설명
 <section id="reference" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Reference</h1>
 <ul>
-<li><p><a href="https://arxiv.org/abs/2301.10602">Original Paper: DreamWaQ</a></p></li>
-<li><p><a href="https://quadruped-robot-challenges.notion.site/">ICRA 2023 Quadruped Robot Challenges</a></p></li>
-<li><p><a href="https://youtu.be/mhD5N6-SuGc">카이스트 사족보행 로봇 ··· MIT 제치고 세계대회 우승 비결은?</a></p></li>
-<li><p><a href="https://arxiv.org/abs/2208.02376">AACC: Asymmetric Actor-Critic in Contextual Reinforcement Learning</a></p></li>
+<li><a href="https://arxiv.org/abs/2302.10745">Original Paper: VCGS</a></li>
+<li><a href="https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR">Presentation Video</a></li>
+<li><a href="https://arxiv.org/abs/1905.10520">Baseline Model: GraspNet paper</a></li>
 </ul>
 
 
