@@ -1,0 +1,20 @@
+---
+title: "📃6DOF GraspNet"
+draft: true
+description: Nvidia 6-DOF GraspNet
+date: "2024-03-31"
+categories: [grasp, pointcloud, vae, paper]
+toc: true
+number-sections: true
+image: ../../images/2024-03-17-vcgs/2.png
+---
+
+# Introduction
+
+# Method
+
+# Reference
+
+- [Original Paper: VCGS](https://arxiv.org/abs/2302.10745)
+- [Presentation Video](https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR)
+- [Baseline Model: GraspNet paper](https://arxiv.org/abs/1905.10520)
