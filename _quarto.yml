@@ -9,6 +9,7 @@ website:
   navbar:
     right:
       - about.qmd
+      - projects.qmd
       - note.qmd
       - icon: github
         href: https://github.com/curieuxjy

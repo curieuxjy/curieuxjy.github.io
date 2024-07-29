@@ -27,6 +27,12 @@
     ]
   },
   {
+    "listing": "/projects.html",
+    "items": [
+      "/posts/project/tmp.html"
+    ]
+  },
+  {
     "listing": "/note.html",
     "items": [
       "/posts/note/2024-01-15-cs-study-001.html",
