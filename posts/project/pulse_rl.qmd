@@ -1,5 +1,5 @@
 ---
-title: "Deep Reinforcement learning for DME Pulese Design"
+title: "Deep Reinforcement learning for DME Pulse Design"
 description: Nvidia 6-DOF GraspNet
 date: "2020-11-11"
 categories: [deep rl,dme]

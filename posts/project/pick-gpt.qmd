@@ -1,0 +1,10 @@
+---
+title: "Pick-GPT"
+description: Nvidia 6-DOF GraspNet
+date: "2024-04-12"
+categories: [lstm, vision]
+toc: true
+number-sections: true
+---
+
+tbd

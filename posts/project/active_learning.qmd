@@ -1,0 +1,10 @@
+---
+title: " Active Learning Algorithm for Object Detection and Segmentation"
+description: Nvidia 6-DOF GraspNet
+date: "2019-11-12"
+categories: [lstm, vision]
+toc: true
+number-sections: true
+---
+
+tbd

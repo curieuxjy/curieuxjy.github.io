@@ -32,7 +32,7 @@ format:
     page-layout: full
     html-math-method: katex
     theme:
-      light: minty
+      light: [minty, code.scss]
       dark: [minty, theme-dark.scss]
       # [minty, theme-dark.scss]
       # - minty

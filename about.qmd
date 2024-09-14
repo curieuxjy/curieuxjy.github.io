@@ -1,6 +1,6 @@
 ---
 title: "Jung Yeon Lee"
-image: pic.png
+image: pic2.jpg
 about:
   template: trestles
   image-shape: round
@@ -19,39 +19,44 @@ Hello👋 I'm **Jung Yeon Lee**. Thanks for visiting my blog.
 
 It's a place where I record everything I study with curiosity. 👀
 
-My current motto is "Stop Wishing, Start Doing", and I'm looking forward to the world where people and robots coexist dynamically and peacefully.
+My current motto is `Stop Wishing, Start Doing`, and I'm looking forward to the world where people and robots coexist dynamically and peacefully.
 
 > If you want to know more details about my experiences, you can find them in [my CURRICULUM VITAE.📃](https://www.overleaf.com/read/ctdpsgvjdfby)
 
 
-### Fields of interest
+### My Interest Fields are
 * **M**achine learning | **D**eep learning | **R**einforcement learning
 * **B**ioinspired-Robots | **S**imulations for Robotics
-* **Q**uantum computing
+* **O**n-device AI | **Q**uantum computing
 
-<h4 align="left">Languages and Tools</h3>
-<p align="left" > 
-	<a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="5%" height="5%"/> </a> 
-	<a> <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/gtcf20/omniverse/refresh-open-beta/nvidia-omniverse-isaac-sim-icon-128.png" alt="omniverse" width="5%" height="5%"/> </a>
-	<a> <img src="https://avatars.githubusercontent.com/u/6955508?s=200&v=4" alt="pybullet" width="5%" height="5%"/> </a>
-	<a href="https://pytorch.org/"> <img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="5%" height="5%"/> </a> 
-	<a href="https://www.tensorflow.org"> <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="tensorflow" width="5%" height="5%"/> </a> 
-	<a href="https://opencv.org/"> <img src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg" alt="opencv" width="5%" height="5%"/> </a> 
-	<a href="https://pandas.pydata.org/"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="5%" height="5%"/> </a> 
-	<a href="https://scikit-learn.org/"> <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit_learn" width="5%" height="5%"/> </a> 
-	<a> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Created_with_Matplotlib-logo.svg/2048px-Created_with_Matplotlib-logo.svg.png" alt="matplotlib" width="5%" height="5%"/> </a> 
-	<a> <img src="https://static.bokeh.org/branding/icons/bokeh-icon.jpg" alt="bokeh" width="5%" height="5%"/> </a> 
-	<a> <img src="https://holoviews.org/_static/logo.png" alt="holoviews" width="5%" height="5%"/> </a> 
-	<a href="https://git-scm.com/"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="5%" height="5%"/> </a> 
-	<a href="https://www.linux.org/"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="5%" height="5%"/> </a> 
-	<a> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="5%" height="5%"/> </a>
-	<a> <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="matlab" width="5%" height="5%"/> </a> 
-	<a href="https://www.figma.com/"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="5%" height="5%"/> </a>
+<h4 align="left">Skills and Tools:</h4>
+
+<a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="3.5%" height="3.5%"/> </a> 
+<a> <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/gtcf20/omniverse/refresh-open-beta/nvidia-omniverse-isaac-sim-icon-128.png" alt="omniverse" width="3.5%" height="3.5%"/> </a>
+<a> <img src="https://avatars.githubusercontent.com/u/6955508?s=200&v=4" alt="pybullet" width="3.5%" height="3.5%"/> </a>
+<a href="https://pytorch.org/"> <img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="3.5%" height="3.5%"/> </a> 
+<a href="https://ros.org/"> <img src="https://avatars.githubusercontent.com/u/29735195?s=280&v=4" alt="ros2" width="3.5%" height="3.5%"/> </a>
+<a href="https://www.tensorflow.org"> <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="tensorflow" width="3.5%" height="3.5%"/> </a> 
+<a href="https://opencv.org/"> <img src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg" alt="opencv" width="3.5%" height="3.5%"/> </a> 
+<a href="https://pandas.pydata.org/"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="3.5%" height="3.5%"/> </a> 
+<a href="https://scikit-learn.org/"> <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit_learn" width="3.5%" height="3.5%"/> </a> 
+<a> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Created_with_Matplotlib-logo.svg/2048px-Created_with_Matplotlib-logo.svg.png" alt="matplotlib" width="3.5%" height="3.5%"/> </a> 
+<a> <img src="https://static.bokeh.org/branding/icons/bokeh-icon.jpg" alt="bokeh" width="3.5%" height="3.5%"/> </a> 
+<a> <img src="https://holoviews.org/_static/logo.png" alt="holoviews" width="3.5%" height="3.5%"/> </a> 
+<a href="https://git-scm.com/"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="3.5%" height="3.5%"/> </a> 
+<a href="https://www.linux.org/"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="3.5%" height="3.5%"/> </a> 
+<a> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="3.5%" height="3.5%"/> </a>
+<a> <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="matlab" width="3.5%" height="3.5%"/> </a> 
+<a href="https://www.figma.com/"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="3.5%" height="3.5%"/> </a>
+<a href="https://quarto.org/"> <img src="https://rstudio.github.io/cheatsheets/html/images/logo-quarto.png" alt="quarto" width="3.5%" height="3.5%"/> </a>
+
 </p>
+
+---
 
 ### Education
 
-#### _M.Eng. 2022.03~_
+#### M.Eng. 2022.03~2024.02
 * M.S. in MECHANICAL ENGINEERING, SungKyunKwan University(SKKU)
 * Researcher at [Robotics Innovatory Lab.](https://mecha.skku.ac.kr/roboticsinnovatory/index.do) Quadrupedal Walking Robot Team 
 

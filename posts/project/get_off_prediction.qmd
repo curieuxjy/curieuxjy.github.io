@@ -1,0 +1,10 @@
+---
+title: "Self-driving Public Mobility Get-off Safety System"
+description: Nvidia 6-DOF GraspNet
+date: "2020-11-12"
+categories: [lstm, vision]
+toc: true
+number-sections: true
+---
+
+https://github.com/curieuxjy/Safe_Goodbye
