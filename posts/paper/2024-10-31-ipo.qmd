@@ -1,0 +1,39 @@
+---
+title: "📃IPO"
+description: Interior-point Policy Optimization under Constraints
+date: "2024-11-02"
+categories: [paper, rl, cmdp]
+draft: true
+toc: true
+number-sections: true
+image: ../../images/2024-03-17-vcgs/2.png
+---
+
+# Introduction
+
+<!--
+rl에서 reward에만 초점이 맞춰져 있지만 constraint 관점에서 cmdp의 개념을 소개
+
+- constraint 의 종류
+- -->
+
+## Constrained Markov Decision Process(CMDP)
+
+## Policy Gradient Methods
+
+
+# Method
+
+## Interior-point Policy Optimization
+
+## logarithmic barrier function
+
+# Experiment
+
+## 
+
+
+# Reference
+
+- [Original Paper: IPO](https://arxiv.org/abs/1910.09615)
+- [Presentation Video](https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR)
