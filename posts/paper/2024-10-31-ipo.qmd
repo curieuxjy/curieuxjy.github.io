@@ -22,6 +22,26 @@ rl에서 reward에만 초점이 맞춰져 있지만 constraint 관점에서 cmdp
 ## Policy Gradient Methods
 
 
+
+앞 부분에서 살펴본 것과 같이 CMDP Goal은 Reward 값을 최대화하면서 제약식을 만족하는 최적의 policy를 찾는 것이라고 할 수 있습니다. 
+
+![7]()
+
+먼저 제약조건을 잠시 뒤로 두고, 본래 기본적인 강화학습의 목적식인 Reward Maximization은 어떻게 할까요? Policy Gradient는 강화학습의 한 계열로 최적의 policy, 즉 가장 Reward를 많이 받을 수 있는 policy를 찾기 위해 아래와 같은 목적식의 gradient를 계산하게 됩니다. 이때 최적의 policy를 찾기 위해서 $\theta$는 위에서 구한 gradient 값을 기반으로 아래와 같이 업데이트하게 됩니다.
+
+![8]()
+
+**Trust Region Policy Optimization(TRPO)**라는 알고리즘이 PG계열에서 대표적으로 사용되는 알고리즘이며, 최적이 policy를 찾기 위해 surrogate function을 이용하고 policy가 업데이트 되는 step size를 제한하기 위해 KL divergence를 사용합니다. TRPO의 최적화 식은 아래와 같이 표현할 수 있습니다.
+
+![9]()
+
+하지만 TRPO는 [conjugate gradient optimization](https://en.wikipedia.org/wiki/Conjugate_gradient_method)으로 풀리는 2차 미분 최적화를 사용하기 때문에 계산 cost가 큽니다. 따라서 TRPO를 실용적으로 사용할 수 있게한 **Proximal Policy Optimization (PPO)** 알고리즘이 제안되었습니다. PPO의 최적화 식은 TRPO에서 문제였던 2차미분을 1차 미분 surrogate function으로 대체할 수 있었으며 계산복잡성을 줄일 수 있었습니다. 
+
+IPO는 이러한 흐름대로 발전해온 PPO 알고리즘의 최적화 식에서 제약식을 추가하면서 발전하게 됩니다.
+
+
+
+
 # Method
 
 ## Interior-point Policy Optimization
@@ -37,3 +57,4 @@ rl에서 reward에만 초점이 맞춰져 있지만 constraint 관점에서 cmdp
 
 - [Original Paper: IPO](https://arxiv.org/abs/1910.09615)
 - [Presentation Video](https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR)
+- [Lagrangian relaxation method Diagram](https://www.researchgate.net/publication/259246799_A_Near-Optimal_Distributed_QoS_Constrained_Routing_Algorithm_for_Multichannel_Wireless_Sensor_Networks)
