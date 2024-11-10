@@ -210,7 +210,8 @@ window.Quarto = {
   <li><a href="#multiple-constraints" id="toc-multiple-constraints" class="nav-link" data-scroll-target="#multiple-constraints"><span class="header-section-number">3.5</span> Multiple Constraints</a></li>
   <li><a href="#stochastic-environment-effects" id="toc-stochastic-environment-effects" class="nav-link" data-scroll-target="#stochastic-environment-effects"><span class="header-section-number">3.6</span> Stochastic Environment Effects</a></li>
   </ul></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">4</span> Reference</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4</span> Conclusion</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">5</span> Reference</a></li>
   </ul>
 </nav>
     </div>
@@ -291,9 +292,6 @@ Lagrangian relaxation method
 </center>
 <center>
 <img src="../../images/2024-11-10-ipo/3.png" alt="22" width="100%">
-<figcaption>
-Lagrangian relaxation method 도식
-</figcaption>
 </center>
 <p>라그랑지안 승수법은 가장 심플하게 제약 조건들을 메인 최적화식에 녹여내어 풀어내는 방식으로, CMDP 문제들도 해당 방법을 통해 해결하는 것이 통상적인 방법이었지만 라그랑지안 승수법은 정책이 수렴할 때 제약 조건이 만족되지만, 이 접근법은 Lagrange multiplier의 초기값과 학습률에 민감하고 학습 과정에서 얻은 정책이 항상 제약 조건을 일관되게 만족시키지는 않는다는 한계점이 있습니다.</p>
 </section>
@@ -328,69 +326,511 @@ TRPO VS PPO
 <h1 data-number="2"><span class="header-section-number">2</span> Method</h1>
 <section id="interior-point-policy-optimization" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="interior-point-policy-optimization"><span class="header-section-number">2.1</span> Interior-point Policy Optimization</h2>
+<p>IPO이전에 CPO(Constrained policy optimization)라는 알고리즘이 제안되었었습니다. IPO는 CPO의 단점을 보완하여 제안된 알고리즘으로 볼 수 있으며 아래와 같이 2개 알고리즘을 비교해볼 수 있습니다.</p>
 <center>
 <img src="../../images/2024-11-10-ipo/9.png" alt="22" width="100%">
 <figcaption>
 CPO VS IPO
 </figcaption>
 </center>
+<p>우선, CPO는 TRPO에서 제약조건을 추가한 목적식을 사용하여 TRPO의 문제이기도 했던 2차 미분 계산이 필요하다는 특성이 있습니다. 따라서 제약조건들을 추가하거나 mean valued constraint와 같은 누적 제약식을 계산하기 까다롭거나 할 수 없다는 문제점을 가지고 있었습니다. 이에 반해, IPO는 PPO에 제약조건을 추가한 목적식을 기반으로 하여 1차 미분만을 하면 된다는 장점을 가지고 있으며, 다양한 제약조건들을 이후에 설명할 핵심 아이디어인 logarithmic barrier function을 이용하여 쉽게 추가할 수 있습니다.</p>
 </section>
 <section id="logarithmic-barrier-function" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="logarithmic-barrier-function"><span class="header-section-number">2.2</span> Logarithmic Barrier Function</h2>
+<p>우선 IPO의 문제 정의는 아래와 같이 PPO의 목적식에다가 Constraint를 추가한 것으로 정의할 수 있습니다.</p>
 <center>
 <img src="../../images/2024-11-10-ipo/10.png" alt="22" width="100%">
 <figcaption>
 IPO Problem Definition
 </figcaption>
 </center>
+<p>Constraint는 Limit을 고려하여 부등호로 나타낼 수 있으며 이는 <strong>Indicatior Function</strong>에 넣었을때, Constraint를 넘었을 경우 <span class="math inline">-\infin</span>로 나타내고 Constraint를 만족했을 경우 0으로 나타낼 수 있습니다. 하지만 Indicator Function은 불연속적이며 미분 불가능하기 때문에 gradient를 구할 수 없어서 <strong>Logarithmic Barrier Function</strong>을 통해 근사하게 됩니다.</p>
 <center>
 <img src="../../images/2024-11-10-ipo/11.png" alt="22" width="100%">
 <figcaption>
 Logarithmic Barrier Function
 </figcaption>
 </center>
+<p>Logarithmic Barrier Function(<span class="math inline">\phi</span>)은 그래프에서와 같이 하이퍼 파라미터인 <span class="math inline">t</span>의 값이 클수록 Indicator Function과 유사하다는 것을 알 수 있습니다. 그래프에서 초록색 t=50일 때의 그래프가 점선의 Indicator Function과 유사한 것 처럼요. 또한 <span class="math inline">\phi</span>는 이분이 가능하기 때문에 gradient를 통해 최적화할 수 있습니다.</p>
 <center>
 <img src="../../images/2024-11-10-ipo/13.png" alt="22" width="100%">
 <figcaption>
 IPO 결론(목적식과 수도코드)
 </figcaption>
 </center>
+<p>따라서 IPO의 최적화식은 PPO의 목적식 (<span class="math inline">L^{C L I P}(\theta)</span>)에 Logarithmic Barrier Function(<span class="math inline">\phi</span>)을 이용하여 제약조건을 합치게 된(<span class="math inline">\sum_{i=1}^m \phi\left(\widehat{J}_{C_i}^{\pi_i}\right)</span>) 모습이 됩니다.</p>
 </section>
 <section id="performance-guarantee-bound" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="performance-guarantee-bound"><span class="header-section-number">2.3</span> Performance Guarantee Bound</h2>
 <p>그렇다면 IPO의 성능 보장을 이론적으로 검증해보겠습니다.</p>
 <center>
-<img src="../../images/2024-11-10-ipo/14-1.png" alt="22" width="100%"> <img src="../../images/2024-11-10-ipo/15-1.png" alt="22" width="100%">
+<img src="../../images/2024-11-10-ipo/14-1.png" alt="22" width="90%"> <img src="../../images/2024-11-10-ipo/15-1.png" alt="22" width="100%">
 </center>
 <p>이러한 수식적인 검증 과정을 거쳐 IPO의 목적식은 일정 한계 내에 있다는 것(Bounded) 되어있다는 결론을 내릴 수 있습니다.</p>
+<center>
+<img src="../../images/2024-11-10-ipo/16.png" alt="22" width="100%">
+</center>
+<p>수식적으로 Performance Guarantee Bound를 확인하여 <span class="math inline">t</span>(logarithmic barrier function의 하이퍼파라미터)가 클수록 Indicator function에 대한 더 좋은 근사값을 제공하게 되고 더 높은 reward와 cost를 얻을 수 있다는 것을 확인할 수 있습니다. 하지만 <span class="math inline">t</span>가 클수록 최적화 식이 수렴하는 속도는 느려진다는 단점이 있습니다. 또한 수식으로 확인한 단조성(monotonicity)을 이용하여, 수렴 속도와 최적화 성능 사이의 균형을 맞출 수 있는 적절한 <span class="math inline">t</span> 값을 찾기 위해 이진 탐색 알고리즘(binary search)을 사용할 수 있다는 사실도 확인할 수 있습니다.</p>
 </section>
 </section>
 <section id="experiment" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Experiment</h1>
+<p>실험을 통해 확인할 수 있는 IPO(Interior Point Optimization)의 주요 장점은 다음과 같습니다:</p>
+<ul>
+<li><strong>할인 누적 제약(discounted cumulative constraints)</strong>과 <strong>평균 값 제약(mean valued constraints)</strong>을 포함한 보다 일반적인 형태의 누적 제약을 처리할 수 있습니다.</li>
+<li><strong>하이퍼파라미터 설정이 간단</strong>하고 조정이 용이합니다.</li>
+<li><strong>복수의 제약 조건이 있는 최적화 문제</strong>로 쉽게 확장할 수 있습니다.</li>
+<li><strong>확률적인(stochastic) 환경에서도 높은 안정성</strong>과 견고함을 보여줍니다.</li>
+</ul>
+<center>
+<img src="../../images/2024-11-10-ipo/1.gif" alt="22" width="100%">
+<figcaption>
+실험 비교군과 실험 환경
+</figcaption>
+</center>
 <section id="discounted-cumulative-constraints" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="discounted-cumulative-constraints"><span class="header-section-number">3.1</span> Discounted Cumulative Constraints</h2>
+<center>
+<img src="../../images/2024-11-10-ipo/17.png" alt="22" width="100%">
+<figcaption>
+Discounted Cumulative Constraints 실험 결과
+</figcaption>
+</center>
+<ul>
+<li>IPO VS. CPO
+<ul>
+<li>IPO
+<ul>
+<li><strong>최고 성능</strong>을 보여줍니다.</li>
+<li>제약 조건이 충족된 이후에도 <strong>더 나은 정책</strong>을 찾기 위해 탐색을 계속합니다.</li>
+<li>이로 인해 <strong>더 높은 보상</strong>과 <strong>더 낮은 비용</strong>으로 수렴합니다.</li>
+<li><strong>수렴 속도는 느리지만</strong>, 최종 성능은 CPO보다 우수합니다.</li>
+</ul></li>
+<li>CPO
+<ul>
+<li><strong>수렴 속도</strong>가 IPO보다 빠릅니다.</li>
+<li>제약 조건이 충족되면 <strong>개선 작업을 중단</strong>합니다.</li>
+<li>제약 조건을 빠르게 만족시키지만, 그 이후에는 <strong>성능 개선이 멈춥니다</strong>.</li>
+<li>따라서 <strong>보상이나 비용 측면에서 IPO만큼의 최적화</strong>를 이루지 못할 가능성이 있습니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>IPO</th>
+<th>CPO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>수렴 속도</strong></td>
+<td>느림</td>
+<td>빠름</td>
+</tr>
+<tr class="even">
+<td><strong>제약 충족 후 개선</strong></td>
+<td>계속 탐색 (더 나은 정책을 찾음)</td>
+<td>개선 중단 (제약 조건 충족 시)</td>
+</tr>
+<tr class="odd">
+<td><strong>최종 성능</strong></td>
+<td>더 높은 보상과 낮은 비용</td>
+<td>제약 조건 만족 후 개선 없음</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>IPO VS. PDO
+<ul>
+<li>IPO
+<ul>
+<li><strong>최고 성능</strong>을 보여줍니다.</li>
+<li>제약 조건이 충족된 이후에도 <strong>더 나은 정책</strong>을 찾기 위해 탐색을 계속합니다.</li>
+<li><strong>안정적인 학습 과정</strong>을 가지며, 성능의 변동이 적습니다.</li>
+<li>초기화나 학습률에 <strong>덜 민감</strong>합니다.</li>
+</ul></li>
+<li>PDO
+<ul>
+<li>IPO만큼 좋은 정책으로 <strong>수렴 가능</strong>하지만, <strong>훈련 중 성능의 분산(variance)</strong>이 높습니다.</li>
+<li>제약 조건 값을 <strong>한계 이하로 낮추는 정책</strong>을 찾을 수 있으나, 그 결과 <strong>보상(reward)</strong>이 가장 낮아질 수 있습니다.</li>
+<li><strong>Lagrange multiplier</strong>의 초기값과 <strong>학습률(learning rate)</strong>에 <strong>민감</strong>하게 반응합니다.</li>
+<li>초기 설정이 잘못되면, 학습 과정이 불안정해질 수 있습니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>IPO</th>
+<th>PDO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>수렴 성능</strong></td>
+<td>최고 성능에 수렴</td>
+<td>IPO 수준으로 수렴 가능</td>
+</tr>
+<tr class="even">
+<td><strong>훈련 중 성능 변동</strong></td>
+<td>낮음 (안정적)</td>
+<td>높음 (변동이 큼)</td>
+</tr>
+<tr class="odd">
+<td><strong>제약 조건 만족도</strong></td>
+<td>제약 조건을 충족하며 탐색 지속</td>
+<td>제약 조건 값을 한계 이하로 낮춤</td>
+</tr>
+<tr class="even">
+<td><strong>보상 (Reward)</strong></td>
+<td>높은 보상</td>
+<td>가장 낮은 보상 가능성</td>
+</tr>
+<tr class="odd">
+<td><strong>초기화/학습률 민감도</strong></td>
+<td>낮음</td>
+<td>높음</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>(optional)CPO vs.&nbsp;PPO / TRPO</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>CPO</th>
+<th>PPO</th>
+<th>TRPO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>제약 조건 처리 여부</strong></td>
+<td>제약 조건을 고려함</td>
+<td>제약 조건 없음</td>
+<td>제약 조건 없음</td>
+</tr>
+<tr class="even">
+<td><strong>보상 (Reward)</strong></td>
+<td>높음 (제약 조건 내에서)</td>
+<td>가장 높음 (제약 조건 위반 가능성 있음)</td>
+<td>높음 (제약 조건을 간접적으로 완화)</td>
+</tr>
+<tr class="odd">
+<td><strong>제약 조건 위반 가능성</strong></td>
+<td>낮음</td>
+<td>높음</td>
+<td>중간 (신뢰 영역으로 일부 완화)</td>
+</tr>
+<tr class="even">
+<td><strong>학습 안정성</strong></td>
+<td>높음</td>
+<td>높음</td>
+<td>매우 높음</td>
+</tr>
+<tr class="odd">
+<td><strong>계산 복잡도</strong></td>
+<td>중간</td>
+<td>낮음</td>
+<td>높음</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="mean-valued-constraints" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="mean-valued-constraints"><span class="header-section-number">3.2</span> Mean Valued Constraints</h2>
+<center>
+<img src="../../images/2024-11-10-ipo/18.png" alt="22" width="100%">
+<figcaption>
+Mean Valued Constraints 실험 결과
+</figcaption>
+</center>
+<ul>
+<li>IPO VS. PDO
+<ul>
+<li>IPO
+<ul>
+<li><strong>일관된 수렴</strong>: 모든 작업(task)에서 <strong>할인 누적 보상(discounted cumulative reward)</strong>이 높은 정책으로 안정적으로 수렴합니다.</li>
+<li><strong>제약 조건 만족</strong>: 모든 작업에서 <strong>평균 값 제약(mean valued constraints)</strong>을 지속적으로 만족시킵니다.</li>
+<li><strong>안정적인 학습</strong>: 훈련 중 성능의 변동이 적으며, <strong>낮은 분산(variance)</strong>을 보입니다.</li>
+</ul></li>
+<li>PDO
+<ul>
+<li><strong>제약 조건 위반 가능성</strong>: 간혹 제약 조건을 <strong>위반하는 정책</strong>으로 수렴할 수 있습니다. (참조: Figure 3b)</li>
+<li><strong>훈련 중 높은 분산</strong>: 훈련 과정에서 성능의 변동이 크며, <strong>높은 분산</strong>을 보입니다. (참조: Figure 3d 및 Figure 3f)</li>
+<li><strong>높은 보상 가능성</strong>: 때때로 높은 보상을 달성할 수 있지만, 제약 조건을 지키지 못할 위험이 있습니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>IPO</th>
+<th>PDO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>할인 누적 보상</strong></td>
+<td>안정적으로 높은 보상에 수렴</td>
+<td>높은 보상 가능성이 있으나 불안정</td>
+</tr>
+<tr class="even">
+<td><strong>제약 조건 만족도</strong></td>
+<td>항상 제약 조건을 만족함</td>
+<td>간혹 제약 조건을 위반</td>
+</tr>
+<tr class="odd">
+<td><strong>훈련 중 성능 변동 (분산)</strong></td>
+<td>낮음 (안정적)</td>
+<td>높음 (변동이 큼)</td>
+</tr>
+<tr class="even">
+<td><strong>안정성</strong></td>
+<td>매우 안정적</td>
+<td>초기화와 학습률에 민감</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="constraint-effects" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="constraint-effects"><span class="header-section-number">3.3</span> Constraint Effects</h2>
+<p>Point Gather 환경에서 <strong>제약 조건</strong>을 완화하여 임계값을 <strong>1</strong>로 설정한 경우, 각 에이전트는 평균적으로 <strong>최대 1개의 폭탄(bomb)</strong>을 수집할 수 있습니다. Constraint 값을 내려서 완화하게 되면 제약 조건이 <strong>매우 느슨</strong>해져서, 제약 조건이 있는 최적화 문제의 성능이 제약 조건이 없는 경우와 <strong>동일한 수준</strong>으로 나타납니다.</p>
+<ul>
+<li>CPO
+<ul>
+<li>CPO는 여전히 비용을 <strong>증가</strong>시켜 제약 임계값(1)에 도달하려고 합니다.</li>
+<li>이는 때때로 <strong>랜덤 초기화된 정책보다도 성능이 떨어질 수 있습니다</strong>.</li>
+<li>CPO는 항상 비용을 <strong>제약 임계값(1)</strong>까지 밀어 올리려는 경향을 보입니다.</li>
+</ul></li>
+<li>IPO
+<ul>
+<li>IPO는 제약 조건이 충족된 이후에도 <strong>비용을 계속 줄여나갑니다</strong>.</li>
+<li>이로 인해 더 낮은 비용을 달성하며, <strong>더 나은 최종 성능</strong>을 보여줍니다.</li>
+</ul></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>CPO</th>
+<th>IPO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>제약 조건 만족도</strong></td>
+<td>제약 임계값(1)까지 비용 증가</td>
+<td>제약 충족 후에도 비용 감소 지속</td>
+</tr>
+<tr class="even">
+<td><strong>최종 비용 수준</strong></td>
+<td>약 <strong>1</strong></td>
+<td>약 <strong>0.25</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>성능</strong></td>
+<td>제약 충족을 우선시하며 성능 저하 가능</td>
+<td>제약을 충족하면서도 더 나은 성능</td>
+</tr>
+</tbody>
+</table>
+<center>
+<img src="../../images/2024-11-10-ipo/19.png" alt="22" width="100%">
+</center>
+<p>따라서 실험을 통해 다음과 같은 결론을 내릴 수 있습니다.</p>
+<ul>
+<li><strong>CPO</strong>는 제약을 맞추기 위해 비용을 적극적으로 증가시키지만, 그 결과 성능이 <strong>떨어질 가능성</strong>이 있습니다.</li>
+<li><strong>IPO</strong>는 제약을 만족한 이후에도 비용을 줄이며, <strong>더 높은 성능</strong>을 달성할 수 있습니다.</li>
+</ul>
 </section>
 <section id="hyperparameter-tuning" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="hyperparameter-tuning"><span class="header-section-number">3.4</span> Hyperparameter Tuning</h2>
+<ul>
+<li>IPO vs.&nbsp;PDO
+<ul>
+<li>IPO
+<ul>
+<li><strong>하이퍼파라미터 <span class="math inline">t</span>의 튜닝이 용이</strong>합니다.</li>
+<li><strong>보상(reward)</strong>과 <strong>비용(cost)</strong>은 하이퍼파라미터 <span class="math inline">t</span>와 <strong>양의 상관 관계</strong>를 가집니다.</li>
+<li><span class="math inline">t</span> 값이 커질수록, 보상과 비용이 동시에 증가합니다.</li>
+<li><strong>이진 탐색(binary search)</strong>이 가능:</li>
+<li><span class="math inline">t</span> 값을 조정하며 성능을 확인할 수 있으며, 이진 탐색을 통해 빠르게 최적의 값을 찾을 수 있습니다.</li>
+</ul></li>
+<li>PDO
+<ul>
+<li><strong>초기 Lagrange multiplier (<span class="math inline">\lambda</span>)</strong>와 <strong>학습률(learning rate)</strong>의 설정이 까다롭습니다.</li>
+<li>초기 <span class="math inline">\lambda</span> 값이 <strong>0.01에서 0.1</strong> 사이일 때 매우 민감하게 반응합니다.</li>
+<li>잘못된 초기화는 학습 과정의 불안정을 초래할 수 있습니다.</li>
+<li><strong>학습률(learning rate)</strong>의 변화에도 민감합니다.</li>
+<li>학습률이 <strong>0.01에서 0.001</strong>로 작아지면, 정책의 수렴 속도가 <strong>느려집니다</strong>.</li>
+<li>하이퍼파라미터 설정에 <strong>많은 시간과 노력이 필요</strong>합니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>IPO</th>
+<th>PDO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>하이퍼파라미터 튜닝 용이성</strong></td>
+<td>쉬움</td>
+<td>어렵고 복잡함</td>
+</tr>
+<tr class="even">
+<td><strong>보상과 비용의 관계</strong></td>
+<td><span class="math inline">t</span>와 양의 상관 관계</td>
+<td>초기 <span class="math inline">\lambda</span>와 학습률에 민감</td>
+</tr>
+<tr class="odd">
+<td><strong>초기 설정 민감도</strong></td>
+<td>낮음</td>
+<td>높음</td>
+</tr>
+<tr class="even">
+<td><strong>튜닝 방법</strong></td>
+<td>이진 탐색 가능</td>
+<td>초기화와 학습률 설정에 많은 노력 필요</td>
+</tr>
+</tbody>
+</table>
+<center>
+<img src="../../images/2024-11-10-ipo/20.png" alt="22" width="100%">
+</center>
+<p>따라서 실험을 통해 다음과 같은 결론을 내릴 수 있습니다.</p>
+<ul>
+<li><strong>IPO</strong>는 하이퍼파라미터 <span class="math inline">t</span>의 튜닝이 쉽고, 보상과 비용이 <span class="math inline">t</span> 값에 따라 예측 가능하게 변화하기 때문에 <strong>안정적인 최적화</strong>가 가능합니다.</li>
+<li><strong>PDO</strong>는 초기화와 학습률에 민감하여 <strong>튜닝이 까다롭고 학습 과정이 불안정</strong>할 수 있습니다. 특히 초기 <span class="math inline">\lambda</span>와 학습률 설정이 중요한 역할을 합니다.</li>
+</ul>
 </section>
 <section id="multiple-constraints" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="multiple-constraints"><span class="header-section-number">3.5</span> Multiple Constraints</h2>
+<p>IPO (Interior Point Optimization)는 제약 조건을 다룰 때 <strong>유연하고 확장 가능</strong>한 방식으로 설계되어 있습니다. 특히, <strong>logarithmic barrier function</strong>을 사용하여 제약 조건을 쉽게 추가할 수 있습니다. IPO에서는 새로운 제약 조건이 필요할 때, 기존 최적화 함수에 <strong>로그 배리어 항</strong>을 추가하기만 하면 됩니다. 이 방식은 <strong>CPO보다 간단</strong>하게 제약 조건을 추가할 수 있는 이점이 있습니다. <strong>IPO</strong>는 logarithmic barrier function을 사용하여 제약 조건을 쉽게 추가할 수 있어, <strong>확장성과 유연성</strong> 측면에서 CPO보다 유리합니다.</p>
+<ul>
+<li>CPO와의 비교
+<ul>
+<li>CPO (Constrained Policy Optimization)는 제약 조건을 직접적으로 다루지만, 새로운 제약 조건이 추가될 때마다 <strong>문제의 복잡도</strong>가 증가하고, 튜닝이 어려워질 수 있습니다.</li>
+<li>반면, IPO는 <strong>logarithmic barrier function</strong>을 사용하기 때문에, 제약 조건을 쉽게 확장할 수 있으며 <strong>구현과 튜닝이 더 간단</strong>합니다.</li>
+</ul></li>
+<li>Point Gather 실험에서의 제약 조건 확장
+<ul>
+<li>Point Gather 환경에서는 에이전트가 보상을 얻는 과정에서 다양한 제약 조건을 추가할 수 있습니다.</li>
+<li>실험에서 <strong>다양한 제약 조건</strong>을 추가하기 위해, <strong>새로운 타입의 ball (제약 조건에 해당하는 오브젝트)</strong>을 도입할 수 있습니다.</li>
+<li>예를 들어, 기존의 bomb 외에 새로운 제약 조건을 나타내는 여러 종류의 ball을 추가하여, 에이전트가 이들을 <strong>피하면서도 최대한 많은 보상을 얻는</strong> 정책을 학습할 수 있습니다.</li>
+<li>이를 통해 <strong>다중 제약 조건 환경</strong>에서도 IPO의 성능을 평가할 수 있습니다.</li>
+</ul></li>
+</ul>
+<center>
+<img src="../../images/2024-11-10-ipo/21.png" alt="22" width="100%">
+</center>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>IPO</th>
+<th>CPO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>제약 조건 추가 용이성</strong></td>
+<td>로그 배리어 항 추가만으로 가능</td>
+<td>복잡한 추가 작업과 튜닝 필요</td>
+</tr>
+<tr class="even">
+<td><strong>확장성</strong></td>
+<td>간단하게 여러 제약 조건 확장 가능</td>
+<td>제약 조건 추가 시 복잡도 증가</td>
+</tr>
+<tr class="odd">
+<td><strong>Point Gather 실험 적용</strong></td>
+<td>다양한 제약 조건 ball 추가 가능</td>
+<td>제약 조건 추가 시 성능 저하 위험</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="stochastic-environment-effects" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="stochastic-environment-effects"><span class="header-section-number">3.6</span> Stochastic Environment Effects</h2>
+<p>실세계 환경에서의 불확실성 및 랜덤 노이즈 추가 실험 <strong>실제 환경</strong>에서는 항상 <strong>불확실성(uncertainty)</strong>이 존재합니다. 에이전트의 행동 결과는 종종 <strong>랜덤 노이즈(random noise)</strong>에 의해 영향을 받습니다. 예를 들어, 바람, 센서 오류, 마찰 등의 예기치 못한 요인들이 시스템에 영향을 줄 수 있습니다. 해당 실험에서 행동(action)은 <strong>속도(velocity)</strong>와 <strong>진행 방향(heading)</strong>의 벡터로 정의되며, 값의 범위는 <strong>-1에서 1 사이</strong>입니다. <span class="math inline">(-1, 1)</span> 범위의 벡터는 에이전트가 움직일 방향과 속도를 나타냅니다.</p>
+<p>실험에서는 <strong>평균 0</strong>의 랜덤 노이즈를 행동(action)에 추가하여 환경의 불확실성을 모사했습니다.</p>
+<ul>
+<li>노이즈의 분산(variance)은 세 가지 값으로 설정되었습니다:
+<ul>
+<li><span class="math inline">\sigma^2 = 0.2</span></li>
+<li><span class="math inline">\sigma^2 = 0.5</span></li>
+<li><span class="math inline">\sigma^2 = 1.0</span></li>
+</ul></li>
+</ul>
+<center>
+<img src="../../images/2024-11-10-ipo/22.png" alt="22" width="100%">
+</center>
+<ul>
+<li><strong><span class="math inline">\sigma^2 = 0.5</span></strong>일 때도 학습이 <strong>성공적으로 수렴</strong>하는 것을 확인할 수 있었습니다.
+<ul>
+<li>이는 에이전트가 일정 수준의 환경 불확실성에서도 <strong>안정적으로 정책을 학습할 수 있음</strong>을 보여줍니다.</li>
+</ul></li>
+<li><strong><span class="math inline">\sigma^2 = 1.0</span></strong>의 경우, 노이즈가 커져 학습이 불안정해질 가능성이 있으며, 이는 추가 실험에서 확인할 필요가 있습니다.</li>
+<li><strong>실제 환경의 불확실성</strong>을 반영하기 위해 랜덤 노이즈를 추가하는 것은 강화 학습의 <strong>강건성(robustness)</strong> 평가에 중요한 역할을 합니다.</li>
+<li>적절한 수준의 노이즈(<span class="math inline">\sigma^2 = 0.5</span>)에서는 학습이 안정적으로 진행되었으며, 에이전트가 다양한 환경 변동에도 잘 적응할 수 있음을 확인했습니다.</li>
+</ul>
 </section>
 </section>
-<section id="reference" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Reference</h1>
+<section id="conclusion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
+<p>이번 포스팅에서는 <strong>제약조건을 포함한 MDP</strong>의 문제는 어떻게 정의할 수 있고 어떤 방식으로 최적화식을 디자인하여 풀 수 있는지 살펴보며 <strong>IPO 알고리즘</strong>에 대해 알아보았습니다. 강화학습에서 학습의 방향성을 Reward로만 디자인 하게될 경우의 문제들을 Constraint로 바꾸어서 디자인하게 된다면 많은 이점이 있을 수 있고, CMDP를 다룬 다른 알고리즘들에 비해 심플하면서도 사용하기 편한 아이디어라는 생각이 들었습니다.</p>
+</section>
+<section id="reference" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Reference</h1>
 <ul>
 <li><a href="https://arxiv.org/abs/1910.09615">Original Paper: IPO</a></li>
-<li><a href="https://youtu.be/kTZD6cxTtv8?si=-WMLnODehN9f3rXR">Presentation Video</a></li>
 <li><a href="https://www.researchgate.net/publication/259246799_A_Near-Optimal_Distributed_QoS_Constrained_Routing_Algorithm_for_Multichannel_Wireless_Sensor_Networks">Lagrangian relaxation method Diagram</a></li>
 </ul>
 
