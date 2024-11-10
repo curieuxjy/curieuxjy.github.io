@@ -1,2 +1,947 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-06-11">
+<meta name="description" content="Investigation of the use of transformer sequence models as dynamics models (TDMs) for control">
+
+<title>Curieux.JY - 📃A Generalist Dynamics Model for Control</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">2</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#modelling-trajectory-data-with-transformers" id="toc-modelling-trajectory-data-with-transformers" class="nav-link" data-scroll-target="#modelling-trajectory-data-with-transformers"><span class="header-section-number">2.1</span> Modelling trajectory data with transformers</a></li>
+  <li><a href="#model-predictive-control-mpc" id="toc-model-predictive-control-mpc" class="nav-link" data-scroll-target="#model-predictive-control-mpc"><span class="header-section-number">2.2</span> Model Predictive Control (MPC)</a></li>
+  </ul></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">3</span> Method</a>
+  <ul class="collapse">
+  <li><a href="#mpc" id="toc-mpc" class="nav-link" data-scroll-target="#mpc"><span class="header-section-number">3.1</span> MPC</a></li>
+  <li><a href="#training-setups" id="toc-training-setups" class="nav-link" data-scroll-target="#training-setups"><span class="header-section-number">3.2</span> Training Setups</a></li>
+  <li><a href="#environments" id="toc-environments" class="nav-link" data-scroll-target="#environments"><span class="header-section-number">3.3</span> Environments</a></li>
+  </ul></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments"><span class="header-section-number">4</span> Experiments</a></li>
+  <li><a href="#discussion-conclusion" id="toc-discussion-conclusion" class="nav-link" data-scroll-target="#discussion-conclusion"><span class="header-section-number">5</span> Discussion &amp; Conclusion</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">6</span> Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃A Generalist Dynamics Model for Control</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">transformer</div>
+    <div class="quarto-category">control</div>
+    <div class="quarto-category">paper</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Investigation of the use of transformer sequence models as dynamics models (TDMs) for control
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 11, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>이번 포스팅은 DeepMind에서 발표된 <a href="https://arxiv.org/abs/2305.10912">A Generalist Dynamics Model for Control</a> 논문을 읽고 정리한 내용입니다. NLP 분야에서 유명한 <strong>Transformer 아키텍쳐가 Control 분야에서 어떻게 사용되고 그 효과가 어떤지</strong>에 대해 조사한 논문으로 요즘처럼 강력한 베이스 모델인 Transformer가 모든 분야에 뻗어나가고 있는 이때에 Control에서는 어떤 영향력을 가지고 사용되고 있는지 알아보는게 정말 흥미로웠기 때문에 리뷰해보게 되었습니다.</p>
+<p><img src="../../images/2023-06-01-tdms-control/tdm1.png" class="img-fluid"></p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>로봇 공학 연구의 중요한 목표는 복잡한 환경에서 다양한 목표를 수행할 수 있는 에이전트를 만드는 것입니다. 인공지능의 발전과 더불어 복잡한 작업에 대해 유연하고 성공적인 동작들을 보여주지만, 학습을 위한 많은 양의 데이터가 필요하고 한 가지 task 만 잘하는 specialist 에이전트가 됩니다. 로봇 공학에서 현재의 최첨단 접근법 중 많은 부분이 부족한 특징은 <strong>일반성</strong>입니다: 이전의 경험을 보이지 않은 환경에 일반화할 수 있는 능력입니다.</p>
+<p>요즘에는 대량의 데이터로 큰 모델을 훈련시키는 것이 언어 모델링 등과 같은 영역에서 일반성에 큰 도약을 가능하게 했습니다. 이로 인해 큰 모델을 사용하여 구체화된 에이전트의 일반성을 향상시키는 데 대한 관심이 생겼습니다. 이는 고수준 의사 결정에 언어 모델을 사용하는 방법(Driess et al.&nbsp;2023; Huang et al.&nbsp;2023)이나 큰 모델 자체를 사용하여 제어 지시를 출력하는 방법(Reed et al.&nbsp;2022) 중 하나로 이어지기도 합니다. 본 연구는 후자의 접근법, 구체적으로는 transformer sequence 모델을 제어에 사용하는 방법에 초점을 맞추고 있습니다. 대부분의 이전 연구는 정책 학습을 위해 transformers를 사용하는 것을 고려하지만, 우리는 이를 동역학 모델로 사용하는 것을 연구하며, 이를 transformer 동역학 모델(TDMs)이라고 합니다. 전통적으로 명시적인 동역학 모델을 학습하고 제어에 사용하는 동기는 동역학이 목표와 독립적이기 때문입니다. 따라서 학습된 동역학 모델은 다중 목표에 대한 최적 동작을 생성하기 위해 재사용될 수 있습니다. 본 연구에서는 추가적인 장점을 증명합니다: 특정 상황에서 동역학 모델은 동작 정책보다 보이지 않은 환경에 대해 더 좋은 일반화 능력을 가지므로, 모델에 기반한 종합적인 에이전트를 생성하여 모델 없이 학습한 에이전트보다 더 좋은 일반화를 할 수 있습니다.</p>
+<p>논문에서 TDMs의 <strong>두 가지 다른 측면</strong>을 살펴봅니다. 첫째로, 우리는 전문가 모델 학습 환경, 즉 대상 환경과의 상호작용으로 얻은 데이터를 사용하여 모델을 학습할 때 TDMs의 성능이 기준선에 비해 더 좋음을 증명합니다. 둘째로, 우리는 TDMs가 환경 간에 강력하게 일반화되는 것을 보여줍니다. 특히, 우리는 종합적인 TDM이 보이지 않은 환경에 대한 몇 가지 시도 또는 제로샷(제로 샷) 일반화에 사용될 수 있다는 것을 보여줍니다.</p>
+<ol type="1">
+<li>We use transformer sequence models as TDMs for control, and we describe a simple setup to evaluate learned models in an MPC loop together with a random shooting planner.</li>
+<li>In the specialist setting, i.e., when trained on transition data from the target environment, we observe that TDMs are accurate, and outperform baseline models (see section 5.1).</li>
+<li>In the generalist setting, i.e., when trained on transition data from environments different from the target environment, we find strong generalization capabilities, both few-shot and zero-shot:
+<ol type="1">
+<li><ol type="a">
+<li>In a few-shot setting (fine-tuning a generalist), we observe strong generalization effects, which can be exploited to obtain a good dynamics model given limited data. In our experiments, this approach surpasses even lightweight specialist models (see section 5.2.1).</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>In a zero-shot setting, we observe that the generalist TDM generalizes substantially better than its generalist policy counterpart (see section 5.2.2).</li>
+</ol></li>
+</ol></li>
+</ol>
+<hr>
+</section>
+<section id="background" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Background</h1>
+<section id="modelling-trajectory-data-with-transformers" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="modelling-trajectory-data-with-transformers"><span class="header-section-number">2.1</span> Modelling trajectory data with transformers</h2>
+<p>도입 부분에서 파악했던 Recovery task의 특성과 pose들 간의 거리를 위한 새로운 metric의 필요성을 <code>motivation</code>으로 아래와 같은 <code>contribution</code>을 파악해볼 수 있습니다.</p>
+<ul>
+<li><p>Euclidean distance보다 제어적인 측면에서 pose들 간의 거리 metric이 될 수 있는 <strong>Accessibility</strong> 를 제안</p></li>
+<li><p>Accessibility를 기반으로 강화학습을 효율적으로 할 수 있도록(State Space 탐색을 잘하도록) Initial State를 정할 수 있는 <strong>K-Access 알고리즘</strong>을 제안</p></li>
+</ul>
+</section>
+<section id="model-predictive-control-mpc" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="model-predictive-control-mpc"><span class="header-section-number">2.2</span> Model Predictive Control (MPC)</h2>
+<hr>
+</section>
+</section>
+<section id="method" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Method</h1>
+<p><strong>Overview</strong></p>
+<p><img src="../../images/2023-05-07-accessibility/9.png" class="img-fluid"></p>
+<p>전체적인 과정은 다음과 같이 크게 4단계로 진행됩니다.</p>
+<ol type="1">
+<li><strong>Sampling Static Poses</strong>: 전복된 정적 자세를 샘플링합니다.</li>
+<li><strong>Estimating Accessibility Values</strong>: 샘플링된 전복 자세들 간의 거리 metric인 Accessibility Matrix를 계산합니다.</li>
+<li><strong>Clustering</strong>: 측정한 Accessibility를 기반으로 Initial state들을 클러스터링합니다.</li>
+<li><strong>Learning</strong>: Cluster의 Centroid pose를 initial state로 Recovery(혹은 Backflip)을 강화학습 알고리즘으로 학습합니다.</li>
+</ol>
+<section id="mpc" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="mpc"><span class="header-section-number">3.1</span> MPC</h2>
+<p>전복된 다양한 자세들을 샘플링하기 위해서 로봇의 base frame의 roll, pitch 각도를 일정 범위에서 랜덤하게 샘플링하고 12개의 joint position도 로봇의 configuration을 고려하여 upper/lower limit range에 있는 각도로 자세를 set해서 전복된 자세를 만듭니다. (이때 yaw 방향은 flat terrain에선 의미가 없기 때문에 0으로 셋팅합니다.) 샘플링된 자세로 pose를 set 했을 때 self-collision을 확인한 뒤 self-collision이 되지 않은 자세 2.4k개를 sampling 합니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2023-05-07-accessibility/10.png" class="img-fluid figure-img"></p>
+<figcaption>예시 사진은 해당 논문의 코드를 연구실에서 개발된 AiDIN-VIII 로봇에 적용한 모습입니다</figcaption>
+</figure>
+</div>
+</section>
+<section id="training-setups" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="training-setups"><span class="header-section-number">3.2</span> Training Setups</h2>
+</section>
+<section id="environments" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="environments"><span class="header-section-number">3.3</span> Environments</h2>
+<hr>
+<p><strong>Clustering Analysis</strong></p>
+<center>
+<img src="../../images/2023-05-07-accessibility/22.png" alt="22" width="67%"> <img src="../../images/2023-05-07-accessibility/23.png" alt="23" width="67%">
+<figcaption>
+Lecture 16 - Radial Basis Functions Slides(Caltech)
+</figcaption>
+</center>
+<p><code>따라서 이 부분은 RBF 커널에 대해 공부하고 나서 제가 생각한 이유를 덧붙이겠습니다.</code> RBF 커널은 기본적으로 Gaussian Distribution 모습으로 target value와 data 간의 radial한 거리 가중치를 주게 되는데, linear sum과 비교했을 때 무한 차원 영역에서 매우 멀리 떨어져 있는 data로부터 영향을 덜 받을 수 있는 장점을 가지고 있습니다. 따라서 Reward를 계산하는 데에 RBF 커널을 통해 계산한 의도는 Maximization해야 하는 Reward term들을 단순히 Linear sum하는 것보다 여러 카테고리의 Reward target 값들에 민감하게 반응할 수 있는 정도를 <span class="math inline">\alpha</span>값(Slide에서는 <span class="math inline">\gamma</span>로 표현)을 이용하여 학습의 좋은 지표가 될 수 있는 Reward space를 설계한 것으로 보입니다.</p>
+<blockquote class="blockquote">
+<p>Reward Term에서 사용된 Symbol의 의미가 궁금하신 분들은 아래 table을 확인해주세요.</p>
+</blockquote>
+<details>
+<summary>
+<b>Symbols of Reward Terms for DRL</b>
+</summary>
+<img width="100%" src="../../images/2023-05-07-accessibility/15.png" title="Cost Table">
+</details>
+<hr>
+<p><strong>Other Tasks - Backflip</strong></p>
+<p>해당 논문에서는 Recovery 뿐만 아니라 Locomotion 보다 더 다이나믹한 모션도 학습하는 것을 보여주기 위해 Backflip 학습도 K-Accessibility 알고리즘을 이용하여 학습을 진행하였습니다. (이전에 리뷰했던 <a href="https://curieuxjy.github.io/posts/paper/2023-03-12-wasabi.html">WASABI</a> 논문에서도 다이나믹한 모션 4가지 중 하나를 Backflip으로 학습 결과를 보여주었던 것과 같은 맥락으로 해당 모션 Task를 설정했다고 보시면 됩니다.)</p>
+<hr>
+</section>
+</section>
+<section id="experiments" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Experiments</h1>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Backflip Task
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><img src="../../images/2023-05-07-accessibility/20.png" class="img-fluid"></p>
+<p><img src="../../images/2023-05-07-accessibility/18.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="discussion-conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Discussion &amp; Conclusion</h1>
+</section>
+<section id="reference" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Reference</h1>
+<ul>
+<li><a href="https://arxiv.org/abs/2305.10912">Original Paper: A Generalist Dynamics Model for Control</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

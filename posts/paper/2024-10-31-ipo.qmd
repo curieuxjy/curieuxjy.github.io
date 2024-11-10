@@ -1,9 +1,8 @@
 ---
 title: "📃IPO"
 description: Interior-point Policy Optimization under Constraints
-date: "2024-11-02"
+date: "2024-11-10"
 categories: [paper, rl, cmdp]
-draft: true
 toc: true
 number-sections: true
 image: ../../images/2024-03-17-vcgs/2.png
@@ -11,11 +10,6 @@ image: ../../images/2024-03-17-vcgs/2.png
 
 # Introduction
 
-<!--
-rl에서 reward에만 초점이 맞춰져 있지만 constraint 관점에서 cmdp의 개념을 소개
-
-- constraint 의 종류
-- -->
 
 오늘은 "IPO: Interior-point Policy Optimization under Constraints"라는 논문에 대해서 리뷰해보려고 합니다. 흔히 강화학습(Reinforcement Learning)을 처음 개념을 공부하고 나면, 강화학습의 문제를 MDP(Markov Decision Process)로 정의한다는 것을 떠올릴 수 있습니다. 이때 강화학습의 핵심인 Reward, 즉 보상을 잘 설정해주어야 Agent가 원하는 방향대로 학습을 하게 됩니다. 보상은 Agent가 해야하는 행동 양식의 (+)가 되는 방향을 나타내는 지 표이며 우리가 원하는 행동을 Encourage(장려)하는 역할을 하게 됩니다. 
 
@@ -23,7 +17,10 @@ rl에서 reward에만 초점이 맞춰져 있지만 constraint 관점에서 cmdp
 
 조금 더 Constraint에 대해서 자세히 살펴보겠습니다. Constraint는 제약이 발생되는 시점에 따라 2가지로 나누어서 생각해 볼 수 있습니다.
 
-![1]()
+<center>
+<img src="../../images/2024-10-31-ipo/1.png" alt="22" width="67%" />
+    <figcaption>Constraints</figcaption>
+</center>
 
 우선, `instantaneous constraint`는 뜻에서도 알 수 있듯이 일시적으로 constraint를 주는 것을 말합니다. 강화학습에서 Agent가 action을 하게 되는 timestep 마다 제약 상황인지를 판단하여 constraint를 주는 것을 말합니다. 이는 기본적인 강화학습 개념에서 매 timestep마다 reward를 주는 상황과 같습니다. 예를 들어 로봇팔(Manipulator)을 제어하는 상황을 생각해보면, Agent는 적절한 움직임을 위해 로봇팔을 구성하는 모터들을 잘 구동하여 원하는 모션을 만들어야 합니다. 이때 로봇이 움직이는 모든 매 순간마다 각 모터들(joint)이 가동범위에 있어야 하고 과한 토크가 가해지지 않도록 해야 합니다. 이러한 제약 상황들은 매 순간 판단해서 해당 범위들을 넘지 않는 action을 선택하도록 학습해야 하므로 `instantaneous constraint`의 예로 볼 수 있습니다.
 
