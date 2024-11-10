@@ -5,7 +5,7 @@ date: "2024-11-10"
 categories: [paper, rl, cmdp]
 toc: true
 number-sections: true
-image: ../../images/2024-03-17-vcgs/2.png
+image: ../../images/2024-11-10-ipo/ipo_main.png
 ---
 
 # Introduction
@@ -18,9 +18,10 @@ image: ../../images/2024-03-17-vcgs/2.png
 조금 더 Constraint에 대해서 자세히 살펴보겠습니다. Constraint는 제약이 발생되는 시점에 따라 2가지로 나누어서 생각해 볼 수 있습니다.
 
 <center>
-<img src="../../images/2024-10-31-ipo/1.png" alt="22" width="67%" />
+<img src="../../images/2024-11-10-ipo/1-1731239276308-2.png" alt="22" width="100%" />
     <figcaption>Constraints</figcaption>
 </center>
+
 
 우선, `instantaneous constraint`는 뜻에서도 알 수 있듯이 일시적으로 constraint를 주는 것을 말합니다. 강화학습에서 Agent가 action을 하게 되는 timestep 마다 제약 상황인지를 판단하여 constraint를 주는 것을 말합니다. 이는 기본적인 강화학습 개념에서 매 timestep마다 reward를 주는 상황과 같습니다. 예를 들어 로봇팔(Manipulator)을 제어하는 상황을 생각해보면, Agent는 적절한 움직임을 위해 로봇팔을 구성하는 모터들을 잘 구동하여 원하는 모션을 만들어야 합니다. 이때 로봇이 움직이는 모든 매 순간마다 각 모터들(joint)이 가동범위에 있어야 하고 과한 토크가 가해지지 않도록 해야 합니다. 이러한 제약 상황들은 매 순간 판단해서 해당 범위들을 넘지 않는 action을 선택하도록 학습해야 하므로 `instantaneous constraint`의 예로 볼 수 있습니다.
 
@@ -30,37 +31,63 @@ image: ../../images/2024-03-17-vcgs/2.png
 
 앞서 설명드린 `Constraint`가 MDP에 추가된 것을 `Constrained Markov Decision Process(CMDP)`라고 합니다. CMDP에서는 Reward와 같이 현재 State에서 Action을 취하고 다음 State에 도달했을 때 얻게 되므로 아래 사진에서와 같이 Space가 정의되게 됩니다.
 
-![2]()
 
 Constraint는 $(s_n, a_n, s_{n+1})$과 같은 transition tuple로 계산되게 되며, cumulative constraint는 일정 timestep, 즉 transition이 n(서수:t)개 모여서 계산되게 됩니다. 이때 Constraint도 여러 종류가 있을 수 있으므로 constraint의 가짓 수는 m(서수:i)으로 나타낼 수 있습니다. Constraint는 more than better인 reward와 다르게 제약되는 상황을 정의하게 되는 constraint limit이 있게 되고 이를 $\epsilon_i$로 나타내게 됩니다.
 
-![3]()
+<center>
+<img src="../../images/2024-11-10-ipo/4.png" alt="22" width="100%" />
+    <figcaption>Constraint Space and Constraint Limit</figcaption>
+</center>
 
 Constraint의 Expectation은 다음과 같이 정의가 되며 2가지의 constraint 계산방법이 있습니다. 첫번째로는 `discounted cumulative constraint`로 할인율 $\gamma$를 고려한 constraint들을 하나의 policy가 동작하는 동안 누적합한 값을 말합니다. 두번째로는 일정 timestep $T$동안 계산한 constraint들의 평균을 말하는 것으로 `mean values constraint`가 있습니다. 이 2가지 종류의 지표에 대해서 후에 실험에서 다룰 예정이며 CMDP의 목표를 정리해보면, 기존에 $J_R$만을 Maximization했던 강화학습 문제가 $J_{C_i}$를 고려해야 한다는 것이 추가 되었다는 것을 알 수 있습니다.
 
+<center>
+<img src="../../images/2024-11-10-ipo/5.png" alt="22" width="100%" />
+    <figcaption>Constraint Expectation</figcaption>
+</center>
 
+기존의 Constraint가 있는 최적화 문제는 **Lagrangian Relaxation Method**를 통해서 해결했었습니다. 라그랑지안 승수법이라고도 불리는 해당 방법은 기존의 최적화 식 $f(x)$에 constraint $g_i(x)$가 추가된 최적화 문제를 Lagrange Multipilers를 곱하여 기존 최적화 함수 목적식에 더하여서 제약 조건을 푸는 방법입니다.
+
+<center>
+<img src="../../images/2024-11-10-ipo/2.png" alt="22" width="100%" />
+    <figcaption>Lagrangian relaxation method</figcaption>
+</center>
+
+
+<center>
+<img src="../../images/2024-11-10-ipo/3.png" alt="22" width="100%" />
+    <figcaption>Lagrangian relaxation method 도식</figcaption>
+</center>
+
+라그랑지안 승수법은 가장 심플하게 제약 조건들을 메인 최적화식에 녹여내어 풀어내는 방식으로, CMDP 문제들도 해당 방법을 통해 해결하는 것이 통상적인 방법이었지만 라그랑지안 승수법은 정책이 수렴할 때 제약 조건이 만족되지만, 이 접근법은 Lagrange multiplier의 초기값과 학습률에 민감하고 학습 과정에서 얻은 정책이 항상 제약 조건을 일관되게 만족시키지는 않는다는 한계점이 있습니다.
 
 ## Policy Gradient Methods
 
 
-
 앞 부분에서 살펴본 것과 같이 CMDP Goal은 Reward 값을 최대화하면서 제약식을 만족하는 최적의 policy를 찾는 것이라고 할 수 있습니다. 
 
-![7]()
+<center>
+<img src="../../images/2024-11-10-ipo/6.png" alt="22" width="100%" />
+    <figcaption>CMDP Goal</figcaption>
+</center>
 
 먼저 제약조건을 잠시 뒤로 두고, 본래 기본적인 강화학습의 목적식인 Reward Maximization은 어떻게 할까요? Policy Gradient는 강화학습의 한 계열로 최적의 policy, 즉 가장 Reward를 많이 받을 수 있는 policy를 찾기 위해 아래와 같은 목적식의 gradient를 계산하게 됩니다. 이때 최적의 policy를 찾기 위해서 $\theta$는 위에서 구한 gradient 값을 기반으로 아래와 같이 업데이트하게 됩니다.
 
-![8]()
+<center>
+<img src="../../images/2024-11-10-ipo/7.png" alt="22" width="100%" />
+    <figcaption>Policy Gradient Methods</figcaption>
+</center>
 
 **Trust Region Policy Optimization(TRPO)**라는 알고리즘이 PG계열에서 대표적으로 사용되는 알고리즘이며, 최적이 policy를 찾기 위해 surrogate function을 이용하고 policy가 업데이트 되는 step size를 제한하기 위해 KL divergence를 사용합니다. TRPO의 최적화 식은 아래와 같이 표현할 수 있습니다.
 
-![9]()
+<center>
+<img src="../../images/2024-11-10-ipo/8.png" alt="22" width="100%" />
+    <figcaption>TRPO VS PPO></figcaption>
+</center>
 
 하지만 TRPO는 [conjugate gradient optimization](https://en.wikipedia.org/wiki/Conjugate_gradient_method)으로 풀리는 2차 미분 최적화를 사용하기 때문에 계산 cost가 큽니다. 따라서 TRPO를 실용적으로 사용할 수 있게한 **Proximal Policy Optimization (PPO)** 알고리즘이 제안되었습니다. PPO의 최적화 식은 TRPO에서 문제였던 2차미분을 1차 미분 surrogate function으로 대체할 수 있었으며 계산복잡성을 줄일 수 있었습니다. 
 
-IPO는 이러한 흐름대로 발전해온 PPO 알고리즘의 최적화 식에서 제약식을 추가하면서 발전하게 됩니다.
-
-
+IPO는 이러한 흐름대로 발전해온 **PPO 알고리즘의 최적화 식에서 제약식을 추가**하면서 발전하게 됩니다.
 
 
 # Method
