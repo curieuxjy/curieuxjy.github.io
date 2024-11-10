@@ -82,8 +82,9 @@ Constraint의 Expectation은 다음과 같이 정의가 되며 2가지의 constr
 
 <center>
 <img src="../../images/2024-11-10-ipo/8.png" alt="22" width="100%" />
-    <figcaption>TRPO VS PPO></figcaption>
+    <figcaption>TRPO VS PPO</figcaption>
 </center>
+
 
 하지만 TRPO는 [conjugate gradient optimization](https://en.wikipedia.org/wiki/Conjugate_gradient_method)으로 풀리는 2차 미분 최적화를 사용하기 때문에 계산 cost가 큽니다. 따라서 TRPO를 실용적으로 사용할 수 있게한 **Proximal Policy Optimization (PPO)** 알고리즘이 제안되었습니다. PPO의 최적화 식은 TRPO에서 문제였던 2차미분을 1차 미분 surrogate function으로 대체할 수 있었으며 계산복잡성을 줄일 수 있었습니다. 
 
@@ -94,11 +95,62 @@ IPO는 이러한 흐름대로 발전해온 **PPO 알고리즘의 최적화 식�
 
 ## Interior-point Policy Optimization
 
-## logarithmic barrier function
+<center>
+<img src="../../images/2024-11-10-ipo/9.png" alt="22" width="100%" />
+    <figcaption>CPO VS IPO</figcaption>
+</center>
+
+
+
+
+## Logarithmic Barrier Function
+
+
+
+<center>
+<img src="../../images/2024-11-10-ipo/10.png" alt="22" width="100%" />
+    <figcaption>IPO Problem Definition</figcaption>
+</center>
+
+
+
+<center>
+<img src="../../images/2024-11-10-ipo/11.png" alt="22" width="100%" />
+    <figcaption>Logarithmic Barrier Function</figcaption>
+</center>
+
+
+
+<center>
+<img src="../../images/2024-11-10-ipo/13.png" alt="22" width="100%" />
+    <figcaption>IPO 결론(목적식과 수도코드)</figcaption>
+</center>
+
+## Performance Guarantee Bound
+
+그렇다면 IPO의 성능 보장을 이론적으로 검증해보겠습니다.
+
+
+<center>
+<img src="../../images/2024-11-10-ipo/14-1.png" alt="22" width="100%" />
+<img src="../../images/2024-11-10-ipo/15-1.png" alt="22" width="100%" />
+</center>
+이러한 수식적인 검증 과정을 거쳐 IPO의 목적식은 일정 한계 내에 있다는 것(Bounded) 되어있다는 결론을 내릴 수 있습니다.
+
 
 # Experiment
 
-## 
+## Discounted Cumulative Constraints
+
+## Mean Valued Constraints
+
+## Constraint Effects
+
+## Hyperparameter Tuning
+
+## Multiple Constraints
+
+## Stochastic Environment Effects
 
 
 # Reference

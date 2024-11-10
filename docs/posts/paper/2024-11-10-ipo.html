@@ -198,11 +198,17 @@ window.Quarto = {
   <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">2</span> Method</a>
   <ul class="collapse">
   <li><a href="#interior-point-policy-optimization" id="toc-interior-point-policy-optimization" class="nav-link" data-scroll-target="#interior-point-policy-optimization"><span class="header-section-number">2.1</span> Interior-point Policy Optimization</a></li>
-  <li><a href="#logarithmic-barrier-function" id="toc-logarithmic-barrier-function" class="nav-link" data-scroll-target="#logarithmic-barrier-function"><span class="header-section-number">2.2</span> logarithmic barrier function</a></li>
+  <li><a href="#logarithmic-barrier-function" id="toc-logarithmic-barrier-function" class="nav-link" data-scroll-target="#logarithmic-barrier-function"><span class="header-section-number">2.2</span> Logarithmic Barrier Function</a></li>
+  <li><a href="#performance-guarantee-bound" id="toc-performance-guarantee-bound" class="nav-link" data-scroll-target="#performance-guarantee-bound"><span class="header-section-number">2.3</span> Performance Guarantee Bound</a></li>
   </ul></li>
   <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">3</span> Experiment</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.1</span> </a></li>
+  <li><a href="#discounted-cumulative-constraints" id="toc-discounted-cumulative-constraints" class="nav-link" data-scroll-target="#discounted-cumulative-constraints"><span class="header-section-number">3.1</span> Discounted Cumulative Constraints</a></li>
+  <li><a href="#mean-valued-constraints" id="toc-mean-valued-constraints" class="nav-link" data-scroll-target="#mean-valued-constraints"><span class="header-section-number">3.2</span> Mean Valued Constraints</a></li>
+  <li><a href="#constraint-effects" id="toc-constraint-effects" class="nav-link" data-scroll-target="#constraint-effects"><span class="header-section-number">3.3</span> Constraint Effects</a></li>
+  <li><a href="#hyperparameter-tuning" id="toc-hyperparameter-tuning" class="nav-link" data-scroll-target="#hyperparameter-tuning"><span class="header-section-number">3.4</span> Hyperparameter Tuning</a></li>
+  <li><a href="#multiple-constraints" id="toc-multiple-constraints" class="nav-link" data-scroll-target="#multiple-constraints"><span class="header-section-number">3.5</span> Multiple Constraints</a></li>
+  <li><a href="#stochastic-environment-effects" id="toc-stochastic-environment-effects" class="nav-link" data-scroll-target="#stochastic-environment-effects"><span class="header-section-number">3.6</span> Stochastic Environment Effects</a></li>
   </ul></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">4</span> Reference</a></li>
   </ul>
@@ -311,7 +317,7 @@ Policy Gradient Methods
 <center>
 <img src="../../images/2024-11-10-ipo/8.png" alt="22" width="100%">
 <figcaption>
-TRPO VS PPO&gt;
+TRPO VS PPO
 </figcaption>
 </center>
 <p>하지만 TRPO는 <a href="https://en.wikipedia.org/wiki/Conjugate_gradient_method">conjugate gradient optimization</a>으로 풀리는 2차 미분 최적화를 사용하기 때문에 계산 cost가 큽니다. 따라서 TRPO를 실용적으로 사용할 수 있게한 <strong>Proximal Policy Optimization (PPO)</strong> 알고리즘이 제안되었습니다. PPO의 최적화 식은 TRPO에서 문제였던 2차미분을 1차 미분 surrogate function으로 대체할 수 있었으며 계산복잡성을 줄일 수 있었습니다.</p>
@@ -322,15 +328,62 @@ TRPO VS PPO&gt;
 <h1 data-number="2"><span class="header-section-number">2</span> Method</h1>
 <section id="interior-point-policy-optimization" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="interior-point-policy-optimization"><span class="header-section-number">2.1</span> Interior-point Policy Optimization</h2>
+<center>
+<img src="../../images/2024-11-10-ipo/9.png" alt="22" width="100%">
+<figcaption>
+CPO VS IPO
+</figcaption>
+</center>
 </section>
 <section id="logarithmic-barrier-function" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="logarithmic-barrier-function"><span class="header-section-number">2.2</span> logarithmic barrier function</h2>
+<h2 data-number="2.2" class="anchored" data-anchor-id="logarithmic-barrier-function"><span class="header-section-number">2.2</span> Logarithmic Barrier Function</h2>
+<center>
+<img src="../../images/2024-11-10-ipo/10.png" alt="22" width="100%">
+<figcaption>
+IPO Problem Definition
+</figcaption>
+</center>
+<center>
+<img src="../../images/2024-11-10-ipo/11.png" alt="22" width="100%">
+<figcaption>
+Logarithmic Barrier Function
+</figcaption>
+</center>
+<center>
+<img src="../../images/2024-11-10-ipo/13.png" alt="22" width="100%">
+<figcaption>
+IPO 결론(목적식과 수도코드)
+</figcaption>
+</center>
+</section>
+<section id="performance-guarantee-bound" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="performance-guarantee-bound"><span class="header-section-number">2.3</span> Performance Guarantee Bound</h2>
+<p>그렇다면 IPO의 성능 보장을 이론적으로 검증해보겠습니다.</p>
+<center>
+<img src="../../images/2024-11-10-ipo/14-1.png" alt="22" width="100%"> <img src="../../images/2024-11-10-ipo/15-1.png" alt="22" width="100%">
+</center>
+<p>이러한 수식적인 검증 과정을 거쳐 IPO의 목적식은 일정 한계 내에 있다는 것(Bounded) 되어있다는 결론을 내릴 수 있습니다.</p>
 </section>
 </section>
 <section id="experiment" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Experiment</h1>
-<section id="section" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.1</span> </h2>
+<section id="discounted-cumulative-constraints" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="discounted-cumulative-constraints"><span class="header-section-number">3.1</span> Discounted Cumulative Constraints</h2>
+</section>
+<section id="mean-valued-constraints" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="mean-valued-constraints"><span class="header-section-number">3.2</span> Mean Valued Constraints</h2>
+</section>
+<section id="constraint-effects" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="constraint-effects"><span class="header-section-number">3.3</span> Constraint Effects</h2>
+</section>
+<section id="hyperparameter-tuning" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="hyperparameter-tuning"><span class="header-section-number">3.4</span> Hyperparameter Tuning</h2>
+</section>
+<section id="multiple-constraints" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="multiple-constraints"><span class="header-section-number">3.5</span> Multiple Constraints</h2>
+</section>
+<section id="stochastic-environment-effects" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="stochastic-environment-effects"><span class="header-section-number">3.6</span> Stochastic Environment Effects</h2>
 </section>
 </section>
 <section id="reference" class="level1" data-number="4">
