@@ -17,7 +17,31 @@ rl에서 reward에만 초점이 맞춰져 있지만 constraint 관점에서 cmdp
 - constraint 의 종류
 - -->
 
+오늘은 "IPO: Interior-point Policy Optimization under Constraints"라는 논문에 대해서 리뷰해보려고 합니다. 흔히 강화학습(Reinforcement Learning)을 처음 개념을 공부하고 나면, 강화학습의 문제를 MDP(Markov Decision Process)로 정의한다는 것을 떠올릴 수 있습니다. 이때 강화학습의 핵심인 Reward, 즉 보상을 잘 설정해주어야 Agent가 원하는 방향대로 학습을 하게 됩니다. 보상은 Agent가 해야하는 행동 양식의 (+)가 되는 방향을 나타내는 지 표이며 우리가 원하는 행동을 Encourage(장려)하는 역할을 하게 됩니다. 
+
+이번 논문에서는 기본적인 강화학습의 MDP가 아닌 **Constraint**라는 개념을 넣어서 생각을 해보려고 합니다. Constraint(제약)은 가장 단순하게는 `-Reward` 라고 생각해볼 수 도 있습니다. 우리가 Agent가 하지 않았으면 하는 행동을 정의함으로써 negative reward를 준다고 볼 수 있는 것이죠. (마치 Gradient Ascent가 Gradient Discent의 반대로 생각해볼 수 있듯이요.) 따라서 Reward와 Constraint는 서로 (+)/(-) 부호적인 성격이 다르지만 Agent에게 학습의 방향을 제시하는 신호라는 측면에서는 공통점을 가지고 있습니다.
+
+조금 더 Constraint에 대해서 자세히 살펴보겠습니다. Constraint는 제약이 발생되는 시점에 따라 2가지로 나누어서 생각해 볼 수 있습니다.
+
+![1]()
+
+우선, `instantaneous constraint`는 뜻에서도 알 수 있듯이 일시적으로 constraint를 주는 것을 말합니다. 강화학습에서 Agent가 action을 하게 되는 timestep 마다 제약 상황인지를 판단하여 constraint를 주는 것을 말합니다. 이는 기본적인 강화학습 개념에서 매 timestep마다 reward를 주는 상황과 같습니다. 예를 들어 로봇팔(Manipulator)을 제어하는 상황을 생각해보면, Agent는 적절한 움직임을 위해 로봇팔을 구성하는 모터들을 잘 구동하여 원하는 모션을 만들어야 합니다. 이때 로봇이 움직이는 모든 매 순간마다 각 모터들(joint)이 가동범위에 있어야 하고 과한 토크가 가해지지 않도록 해야 합니다. 이러한 제약 상황들은 매 순간 판단해서 해당 범위들을 넘지 않는 action을 선택하도록 학습해야 하므로 `instantaneous constraint`의 예로 볼 수 있습니다.
+
+다음으로 `cumulative constraint`는 Agent가 학습하는 하나의 Episode 내에서 누적해서 나온 값으로 판단하여 제약상황을 판단하는 것을 말합니다. 이때 누적되는 시간은 하나의 Episode가 시작해서 끝날 때까지일 수도 있고 아니면 5 timesteps 동안이라는 특정 timestep 수를 지정하여 계산할 수 있습니다. 로봇팔의 예시로 살펴보자면, 로봇이 펜을 잡는 모션을 할 때까지 100 timestep이 걸렸는데 매 timestep 마다 지연(latency)가 발생하여 이를 제약하고자 합니다.  이러한 상황에서 **100 timestep동안**의 average latency를 구해서 특정 latency를 넘지 못하도록 constraint를 줄 수 있습니다.  이러한 예시처럼 특정 구간 동안의 값을 통해서 constraint를 주는 것을 `cumulative constraint`라고 합니다. 이번 IPO 논문에서는 두번째로 소개드린 `cumulative constraint`에 초점을 맞춰 개발된 알고리즘을 소개하고 있습니다.
+
 ## Constrained Markov Decision Process(CMDP)
+
+앞서 설명드린 `Constraint`가 MDP에 추가된 것을 `Constrained Markov Decision Process(CMDP)`라고 합니다. CMDP에서는 Reward와 같이 현재 State에서 Action을 취하고 다음 State에 도달했을 때 얻게 되므로 아래 사진에서와 같이 Space가 정의되게 됩니다.
+
+![2]()
+
+Constraint는 $(s_n, a_n, s_{n+1})$과 같은 transition tuple로 계산되게 되며, cumulative constraint는 일정 timestep, 즉 transition이 n(서수:t)개 모여서 계산되게 됩니다. 이때 Constraint도 여러 종류가 있을 수 있으므로 constraint의 가짓 수는 m(서수:i)으로 나타낼 수 있습니다. Constraint는 more than better인 reward와 다르게 제약되는 상황을 정의하게 되는 constraint limit이 있게 되고 이를 $\epsilon_i$로 나타내게 됩니다.
+
+![3]()
+
+Constraint의 Expectation은 다음과 같이 정의가 되며 2가지의 constraint 계산방법이 있습니다. 첫번째로는 `discounted cumulative constraint`로 할인율 $\gamma$를 고려한 constraint들을 하나의 policy가 동작하는 동안 누적합한 값을 말합니다. 두번째로는 일정 timestep $T$동안 계산한 constraint들의 평균을 말하는 것으로 `mean values constraint`가 있습니다. 이 2가지 종류의 지표에 대해서 후에 실험에서 다룰 예정이며 CMDP의 목표를 정리해보면, 기존에 $J_R$만을 Maximization했던 강화학습 문제가 $J_{C_i}$를 고려해야 한다는 것이 추가 되었다는 것을 알 수 있습니다.
+
+
 
 ## Policy Gradient Methods
 
