@@ -5,12 +5,58 @@ date: "2024-11-23"
 categories: [paper, tactile, rl, hand]
 toc: true
 number-sections: true
-draft: true
+image: ../../images/2024-11-23-rotating-without-seeing/flow.png
+format:
+  html:
+    code-fold: true
+jupyter: python3
 ---
 
 # Introduction
 
 # Method
+
+<center>
+<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" alt="22" width="70%" />
+    <figcaption>overview</figcaption>
+</center>
+
+## Problem Definition
+
+### Action
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Parameters
+eta = 0.8  # Smoothing factor
+steps = 2  # Step size for x-axis
+n_points = 200  # Number of points
+
+# Generate data
+x = np.arange(0, n_points, steps)
+data = np.sin(x / 5) + np.random.normal(0, 0.3, len(x))  # Random data with noise
+ema = []
+
+# Calculate EMA
+for i, point in enumerate(data):
+    if i == 0:
+        ema.append(point)  # Initialize EMA with the first data point
+    else:
+        ema.append(eta * point + (1 - eta) * ema[-1])
+
+# Plot
+plt.figure(figsize=(8, 3))
+plt.plot(x, data, label="Data", marker="o", linestyle="--", alpha=0.6)
+plt.plot(x, ema, label="Exponential Moving Average (EMA)", linewidth=2)
+plt.xlabel("Step")
+plt.ylabel("Value")
+plt.title(f"Exponential Moving Average (eta={eta}, step={steps}) ")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+```
 
 # Reference
 

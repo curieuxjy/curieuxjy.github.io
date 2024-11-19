@@ -19,5 +19,4 @@ page-layout: full
 ---
 <center>
 ##### 📘 Diary | 🌎 Language | 📝 Study
-<img src="note.png" style="width:65%">
 </center>

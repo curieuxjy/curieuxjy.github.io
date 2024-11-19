@@ -1,0 +1,12 @@
+{
+  "hash": "347d839069ebf3bfd7ac579054e37b45",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"\\U0001F4C3Rotating without Seeing\"\ndescription: Towards In-hand Dexterity through Touch\ndate: '2024-11-23'\ncategories:\n  - paper\n  - tactile\n  - rl\n  - hand\ntoc: true\nnumber-sections: true\nimage: ../../images/2024-11-23-rotating-without-seeing/flow.png\nformat:\n  html:\n    code-fold: true\n---\n\n# Introduction\n\n# Method\n\n<center>\n<img src=\"../../images/2024-11-23-rotating-without-seeing/flow.png\" alt=\"22\" width=\"70%\" />\n    <figcaption>overview</figcaption>\n</center>\n\n## Problem Definition\n\n### Action\n\n::: {#58bb8f7f .cell execution_count=1}\n``` {.python .cell-code}\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Parameters\neta = 0.8  # Smoothing factor\nsteps = 2  # Step size for x-axis\nn_points = 200  # Number of points\n\n# Generate data\nx = np.arange(0, n_points, steps)\ndata = np.sin(x / 5) + np.random.normal(0, 0.3, len(x))  # Random data with noise\nema = []\n\n# Calculate EMA\nfor i, point in enumerate(data):\n    if i == 0:\n        ema.append(point)  # Initialize EMA with the first data point\n    else:\n        ema.append(eta * point + (1 - eta) * ema[-1])\n\n# Plot\nplt.figure(figsize=(8, 3))\nplt.plot(x, data, label=\"Data\", marker=\"o\", linestyle=\"--\", alpha=0.6)\nplt.plot(x, ema, label=\"Exponential Moving Average (EMA)\", linewidth=2)\nplt.xlabel(\"Step\")\nplt.ylabel(\"Value\")\nplt.title(f\"Exponential Moving Average (eta={eta}, step={steps}) \")\nplt.legend()\nplt.grid(True)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](2024-11-23-rotating-without-seeing_files/figure-html/cell-2-output-1.png){width=675 height=302}\n:::\n:::\n\n\n# Reference\n\n- [Original Paper]()\n- [Project Homepage](https://touchdexterity.github.io/)\n\n",
+    "supporting": [
+      "2024-11-23-rotating-without-seeing_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

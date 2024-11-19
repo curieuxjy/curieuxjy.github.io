@@ -1,0 +1,24 @@
+---
+title: "Post"
+listing:
+  contents: 
+    - "posts/paper/*.qmd"
+    - "posts/paper/*.ipynb"
+    - "posts/code/*.qmd"
+    - "posts/code/*.ipynb"
+  sort: "date desc"
+  type: table
+  table-striped: true
+  table-hover: true
+  categories: numbered	
+  # sort-ui: true
+  filter-ui: false
+  image-placeholder: def.png
+  fields: [date, title]
+  
+page-layout: full
+# title-block-banner: true
+---
+<center>
+##### 📃 Paper Review | 🧩 Storage | 👩‍💻 Code
+</center>

@@ -1,5 +1,5 @@
 ---
-title: "👩‍💻Orbit Exising Scripts"
+title: "👩‍💻Orbit Existing Scripts"
 toc: true
 number-sections: true
 date: "2023-04-23"

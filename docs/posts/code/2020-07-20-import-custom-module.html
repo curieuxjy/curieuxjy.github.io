@@ -152,6 +152,10 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <span class="menu-text">Jung Yeon Lee</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../../note.html"> 
 <span class="menu-text">Note</span></a>
   </li>  
@@ -223,48 +227,47 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <section id="structure" class="level2">
 <h2 class="anchored" data-anchor-id="structure">Structure</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/img4.JPG" class="img-fluid figure-img"></p>
-<figcaption>folder_img</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/img5.JPG" class="img-fluid figure-img"></p>
-<figcaption>xmind_img</figcaption>
-</figure>
-</div>
+<p>실제 폴더와 파일들은 아래와 같다.</p>
+<center>
+<img src="../../images/img4.JPG" width="60%">
+</center>
 <p><code>gym_foo</code> folder에 반드시 <code>__init__.py</code>를 만들어야 한다.</p>
+<center>
+<img src="../../images/img5.JPG" width="70%">
+<figcaption>
+파일 구조
+</figcaption>
+</center>
 </section>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
 <ul>
-<li><code>utils_foo.py</code></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> utils_test():</span>
+<li><p><code>utils_foo.py</code></p>
+<div id="93da4012" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> utils_test():</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    <span class="bu">print</span>(<span class="st">"utils_foo"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="bu">print</span>(<span class="st">"HERE: utils_foo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><code>env_foo.py</code></li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a>utils_foo.utils_test()</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="bu">print</span>(<span class="st">"HERE: env_foo"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">def</span> env_test():</span>
-<span id="cb2-8"><a href="#cb2-8"></a>    <span class="bu">print</span>(<span class="st">"env_foo"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><code>main_foo.py</code></li>
-</ul>
+<div class="cell-output cell-output-stdout">
+<pre><code>HERE: utils_foo</code></pre>
+</div>
+</div></li>
+<li><p><code>env_foo.py</code></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="im">from</span> gym_foo <span class="im">import</span> env_foo</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a>utils_foo.utils_test()</span>
-<span id="cb3-5"><a href="#cb3-5"></a>env_foo.env_test()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>utils_foo.utils_test()</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="bu">print</span>(<span class="st">"HERE: env_foo"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw">def</span> env_test():</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="bu">print</span>(<span class="st">"env_foo"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><code>main_foo.py</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">from</span> gym_foo <span class="im">import</span> utils_foo</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="im">from</span> gym_foo <span class="im">import</span> env_foo</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>utils_foo.utils_test()</span>
+<span id="cb4-5"><a href="#cb4-5"></a>env_foo.env_test()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
 </section>
 <section id="goal" class="level2">
 <h2 class="anchored" data-anchor-id="goal">Goal</h2>
@@ -277,30 +280,26 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="how" class="level2">
 <h2 class="anchored" data-anchor-id="how">How</h2>
 <ul>
-<li><code>main_foo.py</code>에서 <code>env_foo.py</code>를 import한다.</li>
-<li><code>env_foo.py</code>에서 <code>utils_foo.py</code>를 import 한다.</li>
-<li>이때 <code>env_foo.py</code>에서 <code>import utils_foo</code>로 utils_foo를 불러오면,
+<li><p><code>main_foo.py</code>에서 <code>env_foo.py</code>를 import한다.</p></li>
+<li><p><code>env_foo.py</code>에서 <code>utils_foo.py</code>를 import 한다.</p></li>
+<li><p>이때 <code>env_foo.py</code>에서 <code>import utils_foo</code>로 utils_foo를 불러오면,</p>
 <ul>
 <li><code>python env_foo.py</code> 실행시 잘 작동되지만(같은 위치)</li>
 <li><code>python main_foo.py</code> 실행에서는 <code>from gym_foo import *</code>코드를 읽을 때 <code>env_foo.py</code>내의 <code>from gym_foo import utils_foo</code>를 불러올 수 없다고 error가 난다.(상위 위치)</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource cmd number-lines code-with-copy"><code class="sourceCode dosbat"><span id="cb4-1"><a href="#cb4-1"></a>$ python main_foo.py </span>
-<span id="cb4-2"><a href="#cb4-2"></a>Traceback (most recent call last<span class="kw">)</span>:</span>
-<span id="cb4-3"><a href="#cb4-3"></a>File <span class="st">"main_foo.py"</span>, line 4, in <span class="kw">&lt;</span>module<span class="kw">&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>    env_foo.env_test()</span>
-<span id="cb4-5"><a href="#cb4-5"></a>NameError: name 'env_foo' is not defined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li>env_foo.py에서 utils_foo module을 불러올 때, <code>from gym_foo import utils_foo</code>로 불러온다. 상위 위치인 <code>gym_foo</code>를 거쳐서 import해야한다는 뜻이다. 그러면 <code>python main_foo.py</code> 실행시 잘 작동한다.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cmd number-lines code-with-copy"><code class="sourceCode dosbat"><span id="cb5-1"><a href="#cb5-1"></a>$ python main_foo.py </span>
-<span id="cb5-2"><a href="#cb5-2"></a>HERE: utils_foo</span>
-<span id="cb5-3"><a href="#cb5-3"></a>utils_foo</span>
-<span id="cb5-4"><a href="#cb5-4"></a>HERE: env_foo</span>
-<span id="cb5-5"><a href="#cb5-5"></a>utils_foo</span>
-<span id="cb5-6"><a href="#cb5-6"></a>env_foo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><p>한 가지 더 주의해야할 점이 있다. <code>main_foo.py</code>에서 <code>utils_foo</code>와 <code>env_foo</code>를 import 할 때이다.</p>
+<span id="cb5-2"><a href="#cb5-2"></a>Traceback (most recent call last<span class="kw">)</span>:</span>
+<span id="cb5-3"><a href="#cb5-3"></a>File <span class="st">"main_foo.py"</span>, line 4, in <span class="kw">&lt;</span>module<span class="kw">&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>    env_foo.env_test()</span>
+<span id="cb5-5"><a href="#cb5-5"></a>NameError: name 'env_foo' is not defined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>env_foo.py에서 utils_foo module을 불러올 때, <code>from gym_foo import utils_foo</code>로 불러온다. 상위 위치인 <code>gym_foo</code>를 거쳐서 import해야한다는 뜻이다. 그러면 <code>python main_foo.py</code> 실행시 잘 작동한다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource cmd number-lines code-with-copy"><code class="sourceCode dosbat"><span id="cb6-1"><a href="#cb6-1"></a>$ python main_foo.py </span>
+<span id="cb6-2"><a href="#cb6-2"></a>HERE: utils_foo</span>
+<span id="cb6-3"><a href="#cb6-3"></a>utils_foo</span>
+<span id="cb6-4"><a href="#cb6-4"></a>HERE: env_foo</span>
+<span id="cb6-5"><a href="#cb6-5"></a>utils_foo</span>
+<span id="cb6-6"><a href="#cb6-6"></a>env_foo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>한 가지 더 주의해야 할 점이 있다. <code>main_foo.py</code>에서 <code>utils_foo</code>와 <code>env_foo</code>를 import 할 때이다.</p>
 <p><code>from gym_foo import *</code> 코드로 utils_foo와 env_foo가 모두 불러와질 것이라고 생각했으나, <code>main_foo.py</code>를 실행했을 때 import 하지 못한다. 따라서 위에 <code>main_foo.py</code>에서 볼 수 있듯이 <code>from gym_foo import utils_foo</code>, <code>from gym_foo import env_foo</code>각각 따로 import 해줘야 한다.</p></li>
 </ul>
 

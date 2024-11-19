@@ -10,6 +10,7 @@ website:
     right:
       - about.qmd
 #      - projects.qmd
+      - post.qmd
       - note.qmd
       - icon: github
         href: https://github.com/curieuxjy
