@@ -11,15 +11,12 @@ about:
     - icon: github
       text: Github
       href: https://github.com/curieuxjy
-
+comments: false
 ---
 
+My name is Jung Yeon Lee, and I am deeply passionate about robotics and reinforcement learning. I enjoy exploring innovative learning methods, solving complex problems, and contributing to the advancement of technology that fosters closer **collaboration between humans and robots**.
 
-Hello👋 I'm **Jung Yeon Lee**. Thanks for visiting my blog.
-
-It's a place where I record everything I study with curiosity. 👀
-
-My current motto is `Stop Wishing, Start Doing`, and I'm looking forward to the world where people and robots coexist dynamically and peacefully.
+My guiding principle is `Stop Wishing, Start Doing`, and I am committed to working toward **a future where humans and robots coexist harmoniously and dynamically**.
 
 [![Gmail Badge](https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=mailto:curieuxjy@gmail.com)](mailto:curieuxjy@gmail.com)
 [![Research Gate Badge](https://img.shields.io/badge/ResearchGate-00CCBB?style=flat-square&logo=ResearchGate&logoColor=white&link=https://www.researchgate.net/profile/Jungyeon-Lee-5)](https://www.researchgate.net/profile/Jungyeon-Lee-5)

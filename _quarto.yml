@@ -8,13 +8,16 @@ website:
   google-analytics: "G-2NVZN2MJZT"
   navbar:
     right:
-      - about.qmd
 #      - projects.qmd
       - post.qmd
       - note.qmd
+      - about.qmd
       - icon: github
         href: https://github.com/curieuxjy
-
+  comments:
+    utterances:
+      repo: "curieuxjy/blog_comments"
+      issue-term: "pathname"
     # <script src="https://utteranc.es/client.js"
     #        repo="curieuxjy/blog_comments"
     #

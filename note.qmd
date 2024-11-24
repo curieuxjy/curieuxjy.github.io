@@ -16,6 +16,7 @@ listing:
   
 page-layout: full
 # title-block-banner: true
+comments: false
 ---
 <center>
 ##### 📘 Diary | 🌎 Language | 📝 Study
