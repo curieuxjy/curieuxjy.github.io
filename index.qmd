@@ -1,5 +1,5 @@
 ---
-# title: "Je suis curieux de tout."
+#title: "Je suis curieux de tout."
 listing:
   contents: 
     - "posts/code/*.qmd"

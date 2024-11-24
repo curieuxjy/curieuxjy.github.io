@@ -9,8 +9,12 @@ image: ../../images/2024-03-17-vcgs/2.png
 ---
 
 <center>
-<img src="../../images/2024-03-17-vcgs/1.png" width="100%" />
+<img src="../../images/2024-03-17-vcgs/vcgs.png" width="100%" />
 </center>
+
+
+
+
 
 이번 포스팅은 [Variational Constrained Grasp Sample](https://arxiv.org/abs/2302.10745) 논문을 읽고 정리한 내용입니다. 해당 논문은 IROS 2023 학회에 Accept된 논문으로, 특정 대상 영역에 대한 제약을 가진 6자유도(DoF) Grasp을 샘플링하기 위한 새로운 생성적 그리핑 샘플링 네트워크, VCGS를 소개합니다. 뿐만 아니라 1,400만 개 이상의 훈련 샘플을 포함하는 새로운 데이터셋 CONG를 구축한 내용을 발표했습니다. 제안된 VCGS가 시뮬레이션 및 실제 테스트에서 비교 모델인 GraspNet보다 10-15% 높은 그리핑 성공률을 보이며, 2-3배 더 효율적인 것을 보여준 논문입니다. 
 
@@ -18,18 +22,22 @@ image: ../../images/2024-03-17-vcgs/2.png
 
 로봇 팔, Manipulator로 물체를 잡는 Task는 공정에서부터 가정에서 쓰일 수 있는 보조 역할까지 할 수 있는 기본적인 Task라고 볼 수 있습니다. 따라서 물체를 잡는다는 Task, 즉 Grasping(혹은 Gripping)을 인지 단계부터 제어 모션 단계까지 잘 할 수 있는 방법을 찾고자 하는 연구들이 많이 진행되어 왔습니다. 이러한 배경 하에, 특정 객체 부분과의 상호작용을 요구하는 작업에서 정밀한 그리핑 위치를 지정하는 것의 중요성이 부각되었습니다. 본 연구는 이 문제를 해결하기 위해 특정 대상 영역에 대한 제약을 가진 6자유도 그리핑을 샘플링하는 새로운 방법론을 제안합니다.
 
+
+6자유도 그리핑은 보통 top-down 방식의 4자유도 그리핑보다 더 자유도가 높은 제어를 요구하기 때문에 더 도전적인 Task라고 볼 수 있습니다. 물리 세계의 3d 물체를 인식하기 위해 point cloud data로 3차원 물체를 인식하고 물체를 안정적으로 잡을 grasp pose를 최종적으로 만들어서 Manipulator를 움직이는 것이 목표입니다.
+
 <center>
 <img src="../../images/2024-03-17-vcgs/2.png" width="67%" />
     <figcaption>VCGS Process</figcaption>
 </center>
 
-6자유도 그리핑은 보통 top-down 방식의 4자유도 그리핑보다 더 자유도가 높은 제어를 요구하기 때문에 더 도전적인 Task라고 볼 수 있습니다. 물리 세계의 3d 물체를 인식하기 위해 point cloud data로 3차원 물체를 인식하고 물체를 안정적으로 잡을 grasp pose를 최종적으로 만들어서 Manipulator를 움직이는 것이 목표입니다.
+해당 연구에서는 VCGS라는 안정적인 grasp pose를 제안할 뿐만 아니라 해당 모델을 잘 학습시킬 수 있고 Constrained Grasp에 대한 데이터셋을 만들어서 **CONG**라는 데이터셋을 만드는 부분에도 기여를 했습니다. Table 1에서도 볼 수 있듯이 다른 데이터셋에 비해서 절대적인 데이터셋의 크기가 클 뿐만 아니라 Task-agnostic한 Constraint에 대한 정보도 들어있는 데이터셋으로 유일하기 때문에 그 특성이 중요하다고 볼 수 있습니다.
+
+
 
 <center>
 <img src="../../images/2024-03-17-vcgs/3.png" width="67%" />
     <figcaption>CONG Dataset Comparison</figcaption>
 </center>
-해당 연구에서는 VCGS라는 안정적인 grasp pose를 제안할 뿐만 아니라 해당 모델을 잘 학습시킬 수 있고 Constrained Grasp에 대한 데이터셋을 만들어서 **CONG**라는 데이터셋을 만드는 부분에도 기여를 했습니다. Table 1에서도 볼 수 있듯이 다른 데이터셋에 비해서 절대적인 데이터셋의 크기가 클 뿐만 아니라 Task-agnostic한 Constraint에 대한 정보도 들어있는 데이터셋으로 유일하기 때문에 그 특성이 중요하다고 볼 수 있습니다.
 
 
 
@@ -70,15 +78,17 @@ VCGS의 Grasp Sampler의 기본적인 틀은 Conditional Variational Autoencoder
 
 <center>
 <img src="../../images/2024-03-17-vcgs/6.png" width="67%" />
-    <figcaption>6</figcaption>
+    <figcaption>C-VAE 구조</figcaption>
 </center>
 
-Encoder
+
+
 
 <center>
 <img src="../../images/2024-03-17-vcgs/7.png" width="67%" />
-    <figcaption>7</figcaption>
+    <figcaption>Loss Function</figcaption>
 </center>
+
 
 ## Grasp Evaluator
 
@@ -86,21 +96,28 @@ Encoder
 
 <center>
 <img src="../../images/2024-03-17-vcgs/8.png" width="67%" />
-    <figcaption>8</figcaption>
+    <figcaption>Input data 형태와  Evaluator Network</figcaption>
 </center>
+
 
 ## CONG Dataset
 
 <center>
-<img src="../../images/2024-03-17-vcgs/9.png" width="67%" />
-    <figcaption>9</figcaption>
+<img src="../../images/2024-03-17-vcgs/9.png" width="90%" />
+    <figcaption>CONG Dataset 구축과정</figcaption>
 </center>
 
-구성 요소
+**구성 요소**
+
+
+
 - $O$: object point cloud
+
 - $G*$: target area A에서 랜덤하게 샘플링된 successful grasp
 
-데이터셋 구축 과정
+  
+
+**데이터셋 구축 과정**
 
 1. object를 원점에 랜덤한 orientation으로 놓고 O[N x 3] rendering
 2. O에서 query point I[K x 3]를 샘플링(K << N) - Farthest Point Sampling 사용
@@ -109,9 +126,10 @@ Encoder
 4. [grasp center point]와 [Ai의 어떤 점]이라도 최대 d인 모든 G를 찾아냄
 
 <center>
-<img src="../../images/2024-03-17-vcgs/10.png" width="67%" />
-    <figcaption>10</figcaption>
+<img src="../../images/2024-03-17-vcgs/10.png" width="90%" />
+    <figcaption>mesh 데이터에서 grasp data를 추출하는 과정</figcaption>
 </center>
+
 
 
 # Experiment
@@ -122,9 +140,10 @@ Encoder
 2. constrained grasp sampler가 unconstrained sampler보다 target-driven grasping에서 얼마나 sample efficient한지?
 
 <center>
-<img src="../../images/2024-03-17-vcgs/11.png" width="67%" />
-    <figcaption>11</figcaption>
+<img src="../../images/2024-03-17-vcgs/11.png" width="90%" />
+    <figcaption>IsaacGym에서 Grasping을 확인하는 모습</figcaption>
 </center>
+
 
 실험 셋팅은 다음과 같습니다.
 
@@ -135,9 +154,10 @@ Encoder
     - successful의 기준: 물체를 들고 predefined motion(linear acc + angular acc)을 진행한 후 물체가 gripper에 안정적으로 들려있는지
 
 <center>
-<img src="../../images/2024-03-17-vcgs/12.png" width="67%" />
-    <figcaption>12</figcaption>
+<img src="../../images/2024-03-17-vcgs/12.png" width="90%" />
+    <figcaption>실험 결과</figcaption>
 </center>
+
 
 ## A. Simulated Robotic Grasping
 

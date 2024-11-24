@@ -1,5 +1,5 @@
 ---
-title: "👩‍💻Quarto Blog(2)"
+title: "👩‍💻Quarto Blog + α"
 toc: true
 date: "2024-01-21"
 description: Quarto로 속편한 Github Blog 구축하기(2)

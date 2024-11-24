@@ -1,7 +1,7 @@
 ---
 title: "📃Rotating without Seeing"
 description: Towards In-hand Dexterity through Touch
-date: "2024-11-23"
+date: "2024-11-30"
 categories: [paper, tactile, rl, hand]
 toc: true
 number-sections: true
@@ -10,9 +10,12 @@ format:
   html:
     code-fold: true
 jupyter: python3
+draft: true
 ---
 
 # Introduction
+
+
 
 # Method
 
