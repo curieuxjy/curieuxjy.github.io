@@ -14,10 +14,18 @@ website:
       - note.qmd
       - icon: github
         href: https://github.com/curieuxjy
-  comments: # https://h.readthedocs.io/projects/client/en/latest/publishers/config.html
-    hypothesis: 
-      theme: clean
-      openSidebar: false
+
+    # <script src="https://utteranc.es/client.js"
+    #        repo="curieuxjy/blog_comments"
+    #
+    #        theme="github-light"
+    #        crossorigin="anonymous"
+    #        async>
+    #</script>
+#    # https://h.readthedocs.io/projects/client/en/latest/publishers/config.html
+#    hypothesis:
+#      theme: clean
+#      openSidebar: false
   page-footer: 
     left: "Copyright 2024, Jung Yeon Lee" 
     right: 

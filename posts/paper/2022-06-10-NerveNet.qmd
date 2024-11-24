@@ -7,6 +7,11 @@ image: https://i.imgur.com/lnrF2Pb.png
 toc: true
 execute:
   freeze: auto 
+
+comments:
+    utterances:
+      repo: "curieuxjy/blog_comments"
+      issue-term: "pathname"
 ---
 
 # Abstract

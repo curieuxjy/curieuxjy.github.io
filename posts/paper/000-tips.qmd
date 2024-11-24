@@ -39,3 +39,8 @@ Isaac Orbit (or orbit in short) is **a unified and modular framework**, built on
 </details>
 
 ```
+
+Tablesets(Tab과 같은 기능)
+
+https://quarto.org/docs/presentations/revealjs/index.html#tabsets
+

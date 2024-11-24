@@ -21,15 +21,25 @@ page-layout: full
 title-block-banner: true
 ---
 
-<center>
-
-#### *Je suis **curieux** de tout.*
-
-<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcurieuxjy.github.io&count_bg=%2378C3AE&title_bg=%23555555&icon=smugmug.svg&icon_color=%23E7E7E7&title=HELLO&edge_flat=true"/></a>
 
 
-<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:75%">
 
-</center>
+<table style="width: 100%; table-layout: fixed;">
+  <tr>
+    <td style="width: 30%; text-align: left; vertical-align: center;">
+      <img src="./blog_index.gif" style="width: 100%;">
+    </td>
+    <td style="width: 70%; text-align: right; vertical-align: center;">
+      <img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width: 100%;">
+    </td>
+  </tr>
+</table>
 
+<!--
+[//]: # (<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcurieuxjy.github.io&count_bg=%2378C3AE&title_bg=%23555555&icon=smugmug.svg&icon_color=%23E7E7E7&title=HELLO&edge_flat=true"/></a>)
+[//]: # (<img src="./blog_index.png" style="width:30%">)
+[//]: # (<center>)
+[//]: # (<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:90%">)
+[//]: # (</center>)
+-->
 ---
