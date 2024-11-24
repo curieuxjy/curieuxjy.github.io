@@ -1,5 +1,5 @@
 ---
-title: "📃VAE"
+title: "📃VAE 리뷰"
 description: Auto-Encoding Variational Bayes
 date: "2022-10-02"
 categories: [generative, vae, paper]

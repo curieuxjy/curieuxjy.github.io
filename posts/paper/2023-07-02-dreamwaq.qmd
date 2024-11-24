@@ -1,5 +1,5 @@
 ---
-title: "📃DreamWaQ"
+title: "📃DreamWaQ 리뷰"
 description: Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning
 date: "2023-07-02"
 categories: [context, rl, paper]

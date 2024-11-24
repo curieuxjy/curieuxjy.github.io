@@ -1,5 +1,5 @@
 ---
-title: "📃GN-Block"
+title: "📃GN-Block 리뷰"
 description: Graph Networks as Learnable Physics Engines for Inference and Control
 date: "2022-08-07"
 categories: [gnn, system identification, mpc, rl, paper]

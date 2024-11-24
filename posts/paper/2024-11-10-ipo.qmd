@@ -1,5 +1,5 @@
 ---
-title: "📃IPO"
+title: "📃IPO 리뷰"
 description: Interior-point Policy Optimization under Constraints
 date: "2024-11-10"
 categories: [paper, rl, cmdp]

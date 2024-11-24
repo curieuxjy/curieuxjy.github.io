@@ -1,5 +1,5 @@
 ---
-title: "📃NerveNet "
+title: "📃NerveNet 리뷰"
 description: Learning Structured Policy with Graph Neural Networks
 date: "2022-06-10"
 categories: [gnn, rl, paper]

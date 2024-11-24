@@ -1,5 +1,5 @@
 ---
-title: "📃Robust Recovery Controller"
+title: "📃Robust Recovery Controller 리뷰"
 description: Robust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning
 date: "2022-10-16"
 categories: [rl, trpo, gae, recovery, quadruped, paper]

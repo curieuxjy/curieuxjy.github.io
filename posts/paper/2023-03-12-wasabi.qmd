@@ -1,5 +1,5 @@
 ---
-title: "📃WASABI"
+title: "📃WASABI 리뷰"
 description: Learning Agile Skills via Adversarial Imitation of Rough Partial Demonstrations
 date: "2023-03-12"
 categories: [rl, gan, quadruped, backflip, paper]

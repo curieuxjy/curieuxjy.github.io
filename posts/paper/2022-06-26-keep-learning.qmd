@@ -1,5 +1,5 @@
 ---
-title: "📃Legged Robots that Keep on Learning"
+title: "📃Legged Robots that Keep on Learning 리뷰"
 description: Fine-Tuning Locomotion Policies in the Real World
 date: "2022-06-26"
 categories: [quadruped, rl, redq, paper]

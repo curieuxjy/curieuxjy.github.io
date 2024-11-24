@@ -1,5 +1,5 @@
 ---
-title: "📃WaveNet"
+title: "📃WaveNet 리뷰"
 description: A Generative Model for Raw Audio
 date: "2022-09-17"
 categories: [autoregressive, generative, paper]
