@@ -29,15 +29,14 @@ comments: false
       <img src="./blog_index2.gif" style="width: 100%;">
     </td>
     <td style="width: 70%; text-align: right; vertical-align: center;">
-    <center>
-    <p style="margin: 0px;">Hello👋 I'm **Jung Yeon Lee**. Thanks for visiting my blog. </p>
-    <p style="margin: 0px;">This is where I document everything I explore with curiosity. </p>
-      <img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width: 100%; margin: 5px;">
-    </center>
+      <center>
+        <p style="margin: 0px;">*Hello👋 I'm Jung Yeon. Thanks for visiting my blog.*</p>
+        <p style="margin: 0px;">*This is where I document everything I explore with curiosity.*</p>
+        <img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width: 100%; margin: 5px;">
+      </center>
     </td>
   </tr>
 </table>
-
 
 
 
@@ -47,5 +46,8 @@ comments: false
 [//]: # (<center>)
 [//]: # (<img src="https://ghchart.rshah.org/FF7A81/curieuxjy" style="width:90%">)
 [//]: # (</center>)
+
+[//]: # (          <img src="./post_btn.png" style="width: 20%; margin: 5px 10px 5px 0;">)
+[//]: # (          <img src="./note_btn.png" style="width: 20%; margin: 5px 0 5px 10px;">)
 -->
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Jung Yeon Lee"
-image: pic2.jpg
+image: pic2.png
 about:
   template: trestles
   image-shape: round
