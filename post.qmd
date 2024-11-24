@@ -6,6 +6,8 @@ listing:
     - "posts/paper/*.ipynb"
     - "posts/code/*.qmd"
     - "posts/code/*.ipynb"
+    - "posts/storage/*.qmd"
+    - "posts/storage/*.ipynb"
   sort: "date desc"
   type: table
   table-striped: true
