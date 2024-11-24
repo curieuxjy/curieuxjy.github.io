@@ -1,0 +1,466 @@
+---
+title: "📝ROS2 - hardware interface"
+toc: true
+date: "2024-11-25"
+description: C++ study 001
+categories: [study, c++]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+# 전체 코드
+
+```{.cpp filename="system_interface.hpp" }
+// Copyright 2020 - 2021 ros2_control Development Team
+
+#ifndef HARDWARE_INTERFACE__SYSTEM_INTERFACE_HPP_
+#define HARDWARE_INTERFACE__SYSTEM_INTERFACE_HPP_
+
+#include <limits>
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
+// 하드웨어 인터페이스와 관련된 여러 헤더 파일들을 포함
+#include "hardware_interface/component_parser.hpp"
+#include "hardware_interface/handle.hpp"
+#include "hardware_interface/hardware_info.hpp"
+#include "hardware_interface/types/hardware_interface_return_values.hpp"
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
+#include "hardware_interface/types/lifecycle_state_names.hpp"
+#include "lifecycle_msgs/msg/state.hpp"
+#include "rclcpp/duration.hpp"
+#include "rclcpp/logger.hpp"
+#include "rclcpp/logging.hpp"
+#include "rclcpp/node_interfaces/node_clock_interface.hpp"
+#include "rclcpp/time.hpp"
+#include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
+#include "rclcpp_lifecycle/state.hpp"
+
+namespace hardware_interface
+{
+// 복잡한 시스템을 ros2_control에 통합할 때 구현해야 하는 가상 클래스
+/**
+ * 이 클래스는 다관절 로봇이나 센서를 포함하는 시스템 등을 ros2_control에 통합하기 위해 사용됩니다.
+ * 
+ * 하드웨어의 상태는 다음과 같은 단계로 나눌 수 있습니다:
+ *
+ * - UNCONFIGURED (on_init, on_cleanup): 하드웨어는 초기화되었으나 통신은 시작되지 않은 상태
+ * - INACTIVE (on_configure, on_deactivate): 하드웨어가 설정되고 통신이 시작되었으나 움직임 제어는 비활성화된 상태
+ * - FINALIZED (on_shutdown): 하드웨어 인터페이스가 언로드 또는 파괴를 준비하는 상태
+ * - ACTIVE (on_activate): 하드웨어가 활성화되고 실제로 움직일 수 있는 상태
+ */
+
+using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+
+class SystemInterface : public rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface
+{
+public:
+  // 생성자: 라이프사이클 상태와 로거 초기화
+  SystemInterface()
+  : lifecycle_state_(rclcpp_lifecycle::State(
+      lifecycle_msgs::msg::State::PRIMARY_STATE_UNKNOWN, lifecycle_state_names::UNKNOWN)),
+    system_logger_(rclcpp::get_logger("system_interface"))
+  {
+  }
+
+  // 복사 생성자를 비활성화 (고유 소유권을 가지므로 복사 불가능)
+  SystemInterface(const SystemInterface & other) = delete;
+
+  SystemInterface(SystemInterface && other) = default;
+
+  virtual ~SystemInterface() = default;
+
+  // 하드웨어 인터페이스 초기화 메소드
+  CallbackReturn init(
+    const HardwareInfo & hardware_info, rclcpp::Logger logger,
+    rclcpp::node_interfaces::NodeClockInterface::SharedPtr clock_interface)
+  {
+    clock_interface_ = clock_interface;
+    system_logger_ = logger.get_child("hardware_component.system." + hardware_info.name);
+    info_ = hardware_info;
+    return on_init(hardware_info);
+  };
+
+  // 하드웨어 초기화를 위한 가상 메소드 (하위 클래스에서 구현)
+  virtual CallbackReturn on_init(const HardwareInfo & hardware_info)
+  {
+    info_ = hardware_info;
+    parse_state_interface_descriptions(info_.joints, joint_state_interfaces_);
+    parse_state_interface_descriptions(info_.sensors, sensor_state_interfaces_);
+    parse_state_interface_descriptions(info_.gpios, gpio_state_interfaces_);
+    parse_command_interface_descriptions(info_.joints, joint_command_interfaces_);
+    parse_command_interface_descriptions(info_.gpios, gpio_command_interfaces_);
+    return CallbackReturn::SUCCESS;
+  };
+
+  // 상태 인터페이스 내보내기
+  [[deprecated(
+    "Replaced by vector<StateInterface::ConstSharedPtr> on_export_state_interfaces() method. "
+    "Exporting is handled "
+    "by the Framework.")]] virtual std::vector<StateInterface>
+  export_state_interfaces()
+  {
+    return {};
+  }
+
+  // URDF 파일에 정의되지 않은 사용자 정의 상태 인터페이스를 내보내기 위한 메소드
+  virtual std::vector<hardware_interface::InterfaceDescription>
+  export_unlisted_state_interface_descriptions()
+  {
+    return {};
+  }
+
+  // 상태 인터페이스를 기본으로 내보내는 메소드
+  std::vector<StateInterface::ConstSharedPtr> on_export_state_interfaces()
+  {
+    // 사용자 정의 상태 인터페이스 가져오기
+    std::vector<hardware_interface::InterfaceDescription> unlisted_interface_descriptions =
+      export_unlisted_state_interface_descriptions();
+
+    // 상태 인터페이스들을 벡터에 저장 후 반환
+    std::vector<StateInterface::ConstSharedPtr> state_interfaces;
+    state_interfaces.reserve(
+      unlisted_interface_descriptions.size() + joint_state_interfaces_.size() +
+      sensor_state_interfaces_.size() + gpio_state_interfaces_.size());
+
+    for (const auto & description : unlisted_interface_descriptions)
+    {
+      auto name = description.get_name();
+      unlisted_state_interfaces_.insert(std::make_pair(name, description));
+      auto state_interface = std::make_shared<StateInterface>(description);
+      system_states_.insert(std::make_pair(name, state_interface));
+      unlisted_states_.push_back(state_interface);
+      state_interfaces.push_back(std::const_pointer_cast<const StateInterface>(state_interface));
+    }
+
+    for (const auto & [name, descr] : joint_state_interfaces_)
+    {
+      auto state_interface = std::make_shared<StateInterface>(descr);
+      system_states_.insert(std::make_pair(name, state_interface));
+      joint_states_.push_back(state_interface);
+      state_interfaces.push_back(std::const_pointer_cast<const StateInterface>(state_interface));
+    }
+
+    // 센서 및 GPIO 상태 인터페이스 추가
+    for (const auto & [name, descr] : sensor_state_interfaces_)
+    {
+      auto state_interface = std::make_shared<StateInterface>(descr);
+      system_states_.insert(std::make_pair(name, state_interface));
+      sensor_states_.push_back(state_interface);
+      state_interfaces.push_back(std::const_pointer_cast<const StateInterface>(state_interface));
+    }
+
+    for (const auto & [name, descr] : gpio_state_interfaces_)
+    {
+      auto state_interface = std::make_shared<StateInterface>(descr);
+      system_states_.insert(std::make_pair(name, state_interface));
+      gpio_states_.push_back(state_interface);
+      state_interfaces.push_back(std::const_pointer_cast<const StateInterface>(state_interface));
+    }
+
+    return state_interfaces;
+  }
+
+  // 명령 인터페이스를 내보내기 위한 메소드
+  [[deprecated(
+    "Replaced by vector<CommandInterface::SharedPtr> on_export_command_interfaces() method. "
+    "Exporting is "
+    "handled "
+    "by the Framework.")]] virtual std::vector<CommandInterface>
+  export_command_interfaces()
+  {
+    return {};
+  }
+
+  virtual std::vector<hardware_interface::InterfaceDescription>
+  export_unlisted_command_interface_descriptions()
+  {
+    return {};
+  }
+
+  std::vector<CommandInterface::SharedPtr> on_export_command_interfaces()
+  {
+    std::vector<hardware_interface::InterfaceDescription> unlisted_interface_descriptions =
+      export_unlisted_command_interface_descriptions();
+
+    std::vector<CommandInterface::SharedPtr> command_interfaces;
+    command_interfaces.reserve(
+      unlisted_interface_descriptions.size() + joint_command_interfaces_.size() +
+      gpio_command_interfaces_.size());
+
+    for (const auto & description : unlisted_interface_descriptions)
+    {
+      auto name = description.get_name();
+      unlisted_command_interfaces_.insert(std::make_pair(name, description));
+      auto command_interface = std::make_shared<CommandInterface>(description);
+      system_commands_.insert(std::make_pair(name, command_interface));
+      unlisted_commands_.push_back(command_interface);
+      command_interfaces.push_back(command_interface);
+    }
+
+    for (const auto & [name, descr] : joint_command_interfaces_)
+    {
+      auto command_interface = std::make_shared<CommandInterface>(descr);
+      system_commands_.insert(std::make_pair(name, command_interface));
+      joint_commands_.push_back(command_interface);
+      command_interfaces.push_back(command_interface);
+    }
+
+    for (const auto & [name, descr] : gpio_command_interfaces_)
+    {
+      auto command_interface = std::make_shared<CommandInterface>(descr);
+      system_commands_.insert(std::make_pair(name, command_interface));
+      gpio_commands_.push_back(command_interface);
+      command_interfaces.push_back(command_interface);
+    }
+    return command_interfaces;
+  }
+
+  // 명령 모드 전환 준비를 위한 메소드 (비실시간 실행)
+  virtual return_type prepare_command_mode_switch(
+    const std::vector<std::string> & /*start_interfaces*/,
+    const std::vector<std::string> & /*stop_interfaces*/)
+  {
+    return return_type::OK;
+  }
+
+  // 명령 모드 전환을 수행하는 메소드 (실시간 실행)
+  virtual return_type perform_command_mode_switch(
+    const std::vector<std::string> & /*start_interfaces*/,
+    const std::vector<std::string> & /*stop_interfaces*/)
+  {
+    return return_type::OK;
+  }
+
+  // 현재 상태 값을 읽어오는 메소드
+  virtual return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) = 0;
+
+  // 현재 명령 값을 액추에이터에 쓰는 메소드
+  virtual return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) = 0;
+
+  // 하드웨어 이름을 반환
+  virtual std::string get_name() const { return info_.name; }
+
+  // 하드웨어 그룹 이름을 반환
+  virtual std::string get_group_name() const { return info_.group; }
+
+  // 하드웨어의 라이프사이클 상태 반환
+  const rclcpp_lifecycle::State & get_lifecycle_state() const { return lifecycle_state_; }
+
+  // 하드웨어의 라이프사이클 상태 설정
+  void set_lifecycle_state(const rclcpp_lifecycle::State & new_state)
+  {
+    lifecycle_state_ = new_state;
+  }
+
+  // 특정 인터페이스 상태 값을 설정
+  void set_state(const std::string & interface_name, const double & value)
+  {
+    system_states_.at(interface_name)->set_value(value);
+  }
+
+  // 특정 인터페이스 상태 값을 반환
+  double get_state(const std::string & interface_name) const
+  {
+    return system_states_.at(interface_name)->get_value();
+  }
+
+  // 특정 명령 값을 설정
+  void set_command(const std::string & interface_name, const double & value)
+  {
+    system_commands_.at(interface_name)->set_value(value);
+  }
+
+  // 특정 명령 값을 반환
+  double get_command(const std::string & interface_name) const
+  {
+    return system_commands_.at(interface_name)->get_value();
+  }
+
+  // SystemInterface의 로거 반환
+  rclcpp::Logger get_logger() const { return system_logger_; }
+
+  // SystemInterface의 시계 반환
+  rclcpp::Clock::SharedPtr get_clock() const { return clock_interface_->get_clock(); }
+
+  // SystemInterface의 하드웨어 정보 반환
+  const HardwareInfo & get_hardware_info() const { return info_; }
+
+protected:
+  // 하드웨어 정보 구조체
+  HardwareInfo info_;
+
+  // 상태 인터페이스와 명령 인터페이스 관련 정보 저장
+  std::unordered_map<std::string, InterfaceDescription> joint_state_interfaces_;
+  std::unordered_map<std::string, InterfaceDescription> joint_command_interfaces_;
+  std::unordered_map<std::string, InterfaceDescription> sensor_state_interfaces_;
+  std::unordered_map<std::string, InterfaceDescription> gpio_state_interfaces_;
+  std::unordered_map<std::string, InterfaceDescription> gpio_command_interfaces_;
+  std::unordered_map<std::string, InterfaceDescription> unlisted_state_interfaces_;
+  std::unordered_map<std::string, InterfaceDescription> unlisted_command_interfaces_;
+
+  // 라이프사이클 상태
+  rclcpp_lifecycle::State lifecycle_state_;
+
+  // 명령 및 상태 인터페이스의 포인터 저장
+  std::vector<StateInterface::SharedPtr> joint_states_;
+  std::vector<CommandInterface::SharedPtr> joint_commands_;
+  std::vector<StateInterface::SharedPtr> sensor_states_;
+  std::vector<StateInterface::SharedPtr> gpio_states_;
+  std::vector<CommandInterface::SharedPtr> gpio_commands_;
+  std::vector<StateInterface::SharedPtr> unlisted_states_;
+  std::vector<CommandInterface::SharedPtr> unlisted_commands_;
+
+private:
+  // 시계 및 로거 관련 멤버 변수
+  rclcpp::node_interfaces::NodeClockInterface::SharedPtr clock_interface_;
+  rclcpp::Logger system_logger_;
+
+  // 상태 및 명령 인터페이스의 포인터 맵
+  std::unordered_map<std::string, StateInterface::SharedPtr> system_states_;
+  std::unordered_map<std::string, CommandInterface::SharedPtr> system_commands_;
+};
+
+}  // namespace hardware_interface
+#endif  // HARDWARE_INTERFACE__SYSTEM_INTERFACE_HPP_
+
+
+```
+
+# 주요 사항
+
+소스코드를 이해하기 위한 10가지 사항들을 확인해보며 c++ 코드를 공부합니다.
+
+### 1. **스마트 포인터 사용 (`std::shared_ptr`, `std::unique_ptr`)**
+스마트 포인터인 `std::shared_ptr`는 하드웨어 인터페이스와 관련된 상태와 명령 인터페이스를 관리하는 데 사용됩니다.
+```cpp
+std::vector<StateInterface::ConstSharedPtr> on_export_state_interfaces()
+{
+  auto state_interface = std::make_shared<StateInterface>(description);
+  state_interfaces.push_back(std::const_pointer_cast<const StateInterface>(state_interface));
+}
+```
+
+### 2. **복사 생성자 삭제 (`= delete`)**
+복사 생성자를 명시적으로 삭제하여 객체가 복사되지 않도록 합니다.
+```cpp
+SystemInterface(const SystemInterface & other) = delete;
+```
+
+### 3. **이동 생성자 (`= default`)**
+이동 생성자를 기본값으로 설정하여 객체 이동을 허용하지만 복사는 방지합니다.
+```cpp
+SystemInterface(SystemInterface && other) = default;
+```
+
+### 4. **`virtual` 키워드와 가상 함수**
+`virtual` 키워드를 사용하여 하위 클래스에서 재정의 가능한 메서드를 정의합니다.
+```cpp
+virtual CallbackReturn on_init(const HardwareInfo & hardware_info)
+{
+  // 초기화 로직
+}
+```
+또한 가상 소멸자를 사용하여 상속된 클래스에서도 올바르게 소멸자를 호출할 수 있도록 합니다.
+```cpp
+virtual ~SystemInterface() = default;
+```
+
+### 5. **`[[deprecated]]` 속성**
+특정 메서드를 더 이상 권장되지 않음을 나타내기 위해 `[[deprecated]]` 속성을 사용합니다.
+```cpp
+[[deprecated(
+  "Replaced by vector<StateInterface::ConstSharedPtr> on_export_state_interfaces() method. "
+  "Exporting is handled by the Framework.")]] 
+virtual std::vector<StateInterface> export_state_interfaces()
+{
+  return {};
+}
+```
+
+### 6. **C++11의 `override` 키워드**
+하위 클래스에서 기본 클래스의 가상 함수를 재정의할 때 `override` 키워드를 사용하여 재정의를 명확히 합니다. (이 코드에서는 `override`는 없지만 이를 사용하는 것이 좋은 방법입니다.)
+
+```cpp
+virtual CallbackReturn read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+```
+
+### 7. **`const`와 `&`의 사용**
+객체의 멤버를 변경하지 않도록 보장하기 위해 `const`를 사용하고, 참조로 전달하여 복사 비용을 줄입니다.
+```cpp
+virtual std::string get_name() const { return info_.name; }
+
+double get_state(const std::string & interface_name) const
+{
+  return system_states_.at(interface_name)->get_value();
+}
+```
+
+### 8. **언어 확장 속성 (`[[nodiscard]]`, `[[deprecated]]` 등)**
+이 코드에서는 `[[deprecated]]`를 사용하여 메서드가 더 이상 권장되지 않음을 나타내고 있습니다.
+```cpp
+[[deprecated(
+  "Replaced by vector<StateInterface::ConstSharedPtr> on_export_state_interfaces() method. "
+  "Exporting is handled by the Framework.")]]
+virtual std::vector<StateInterface> export_state_interfaces()
+{
+  return {};
+}
+```
+
+### 9. **다중 반환 방식 (CallbackReturn)**
+`CallbackReturn` 타입을 사용하여 함수가 여러 가지 결과 상태를 반환하도록 합니다.
+```cpp
+CallbackReturn init(
+  const HardwareInfo & hardware_info, rclcpp::Logger logger,
+  rclcpp::node_interfaces::NodeClockInterface::SharedPtr clock_interface)
+{
+  return CallbackReturn::SUCCESS;
+}
+```
+
+### 10. **`std::unordered_map`의 사용**
+여러 인터페이스를 효율적으로 관리하기 위해 `std::unordered_map`을 사용합니다.
+```cpp
+std::unordered_map<std::string, InterfaceDescription> joint_state_interfaces_;
+std::unordered_map<std::string, CommandInterface::SharedPtr> system_commands_;
+```
+
+<!--
+### 11. **코딩 스타일 팁**
+접근 제한자(`public`, `protected`, `private`)를 명확히 구분하여 각 레벨의 접근을 관리합니다.
+```cpp
+public:
+  SystemInterface();
+  virtual ~SystemInterface();
+
+protected:
+  HardwareInfo info_;
+  rclcpp_lifecycle::State lifecycle_state_;
+
+private:
+  rclcpp::node_interfaces::NodeClockInterface::SharedPtr clock_interface_;
+  rclcpp::Logger system_logger_;
+```
+또한 함수의 역할과 반환 값을 설명하는 주석을 충분히 사용하고 있습니다.
+```cpp
+/// 하드웨어 인터페이스의 이름을 반환하는 메소드
+/**
+ * \return 하드웨어의 이름을 반환합니다.
+ */
+virtual std::string get_name() const { return info_.name; }
+```
+
+이와 같은 코딩 팁과 C++의 특별한 문법을 활용하면 코드의 안전성, 유지보수성, 그리고 가독성을 크게 향상시킬 수 있습니다.
+
+-->
+---
+
+**Reference**
+
+- [Original Code Repository](https://github.com/ros-controls/ros2_control/blob/master/hardware_interface/include/hardware_interface/system_interface.hpp)
