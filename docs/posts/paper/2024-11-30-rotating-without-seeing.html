@@ -115,6 +115,49 @@ gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -172,9 +215,10 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
   <li><a href="#learning-touch-dexterity" id="toc-learning-touch-dexterity" class="nav-link" data-scroll-target="#learning-touch-dexterity"><span class="header-section-number">2</span> Learning Touch Dexterity</a>
   <ul class="collapse">
-  <li><a href="#problem-formulationmdp" id="toc-problem-formulationmdp" class="nav-link" data-scroll-target="#problem-formulationmdp"><span class="header-section-number">2.1</span> Problem Formulation(MDP)</a>
+  <li><a href="#problem-formulation" id="toc-problem-formulation" class="nav-link" data-scroll-target="#problem-formulation"><span class="header-section-number">2.1</span> Problem Formulation</a>
   <ul class="collapse">
-  <li><a href="#action" id="toc-action" class="nav-link" data-scroll-target="#action"><span class="header-section-number">2.1.1</span> Action</a></li>
+  <li><a href="#state" id="toc-state" class="nav-link" data-scroll-target="#state"><span class="header-section-number">2.1.1</span> State</a></li>
+  <li><a href="#action" id="toc-action" class="nav-link" data-scroll-target="#action"><span class="header-section-number">2.1.2</span> Action</a></li>
   </ul></li>
   <li><a href="#domain-randomization" id="toc-domain-randomization" class="nav-link" data-scroll-target="#domain-randomization"><span class="header-section-number">2.2</span> Domain Randomization</a></li>
   <li><a href="#training-procedure" id="toc-training-procedure" class="nav-link" data-scroll-target="#training-procedure"><span class="header-section-number">2.3</span> Training Procedure</a></li>
@@ -259,11 +303,32 @@ Rotate the rubber duck for two cycles without falling, even if it is never prese
 </section>
 <section id="learning-touch-dexterity" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Learning Touch Dexterity</h1>
-<section id="problem-formulationmdp" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="problem-formulationmdp"><span class="header-section-number">2.1</span> Problem Formulation(MDP)</h2>
-<section id="action" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="action"><span class="header-section-number">2.1.1</span> Action</h3>
-<div id="e8cfb4f4" class="cell" data-execution_count="1">
+<p>논문에서 제안된 Touch Dexterity의 AI 모듈이 학습되는 과정에 대해 살펴보겠습니다.</p>
+<section id="problem-formulation" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="problem-formulation"><span class="header-section-number">2.1</span> Problem Formulation</h2>
+<p>Touch Dexterity는 강화학습 방법으로 제어를 하기 때문에 강화학습의 문제 정의 방식인 MDP(Markov Decision Process)의 요소들, State, Action, Reward 순으로 확인해보겠습니다.</p>
+<section id="state" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="state"><span class="header-section-number">2.1.1</span> State</h3>
+<p>State는 Hand Robot Agent의 상태를 나타내는 요소들로 이루어집니다. Allegro hand 로봇의의 joint position(16 차원), sensor observation(16차원), 이전 position target(16차원), 그리고 rotation axis(2차원)로 구성되어 있습니다. 핸드 로봇의 관절(joint) 부분들이 작은 모터들 16개로 이루어져 있고, FSR(<a href="https://en.wikipedia.org/wiki/Force-sensing_resistor">Force Sensing Resistor</a>) 센서들도 총 16개가 아래 그림처럼 손가락과 손바닥에 분포되어 있어 State 벡터의 차원들이 다음과 같이 구성되게 됩니다. 이렇게 구성된 State가 학습 시에 Policy Network의 Input으로 들어가게 되는데 1 time step 정보만으로는 학습하기에 부족한 정보량이기 때문에 현재 시점 기준 이전 스텝 2 time step을 합쳐(concatenation), 총 <strong>3 time step 을 쌓아서</strong> policy network에 input으로 넣어줍니다.</p>
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/4.png" alt="22" width="100%">
+<figcaption>
+State 구성요소
+</figcaption>
+</center>
+</section>
+<section id="action" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="action"><span class="header-section-number">2.1.2</span> Action</h3>
+<p>Hand Agent가 움직이는 Action은 로봇의 각 관절(joint) 모터들이 움직이는 것으로 생각할 수 있습니다. 따라서 Policy network에서는 16차원의 모터와 관련된 어떠한 command 정보가 나오게 됩니다. 하지만 Policy network의 output인 <span class="math inline">a_t</span>를 바로 쓰는 것이 아닌 <a href="https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller">PD Controller</a>에 적용하기 위한 값으로 변환하는 과정을 거치게 됩니다. 결과적으로 PD Controller에서 사용하는 값은 <span class="math inline">\tilde{q}_{t+1}</span> (현재 time step이 <span class="math inline">t</span> 이므로 앞으로 제어할 position의 time step 첨자는 <span class="math inline">t+1</span>)인 것 입니다.</p>
+<p>하지만 여기서 <span class="math inline">\tilde{q}_{t+1}</span>을 바로 적용할 경우 생기는 문제가 있습니다. policy network output 값들이 연속적인 시간 순으로 봤을때 갭이 큰 값들이 나타나게 되면 부드러운 움직임을 가질 수 없습니다. 따라서 해당연구에서는 <a href="https://en.wikipedia.org/wiki/Moving_average">Exponential moving average</a> 방법을 사용하여 smoothing하는 과정을 거치게 됩니다.</p>
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/5.png" alt="22" width="100%">
+<figcaption>
+Action이 적용되는 과정
+</figcaption>
+</center>
+<p>아래 그래프는 논문에서 제시한 파라미터(<span class="math inline">\eta</span>, 2 consecutive steps)로 랜덤한 포인트들을 가지고 smoothing하는 모습을 보여줍니다.</p>
+<div id="120e5ae1" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -305,6 +370,7 @@ Rotate the rubber duck for two cycles without falling, even if it is never prese
 </div>
 </div>
 </div>
+<p>이렇게 최종적으로 계산된 Action값으로 Hand Agent의 모션이 만들어지게 됩니다.</p>
 </section>
 </section>
 <section id="domain-randomization" class="level2" data-number="2.2">
