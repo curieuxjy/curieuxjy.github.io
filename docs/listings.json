@@ -28,8 +28,21 @@
     ]
   },
   {
+    "listing": "/projects.html",
+    "items": [
+      "/posts/project/pick-gpt.html",
+      "/posts/project/quad_recovery.html",
+      "/posts/project/get_off_prediction.html",
+      "/posts/project/pulse_rl.html",
+      "/posts/project/active_learning.html",
+      "/posts/project/kompanion.html",
+      "/posts/project/traffic_signal_od.html"
+    ]
+  },
+  {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2024-11-30-rotating-without-seeing.html",
       "/posts/paper/2024-11-10-ipo.html",
       "/posts/paper/2024-03-17-vcgs.html",
       "/posts/code/2024-01-21-quarto-advanced.html",
@@ -58,6 +71,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2024-11-30-rotating-without-seeing.html",
       "/posts/paper/2024-11-10-ipo.html",
       "/posts/paper/2024-03-17-vcgs.html",
       "/posts/code/2024-01-21-quarto-advanced.html",
@@ -81,18 +95,6 @@
       "/posts/code/2020-07-20-import-custom-module.html",
       "/posts/storage/2020-07-17-rl-study-roadmap.html",
       "/posts/code/2020-07-13-install-mujoco-win10.html"
-    ]
-  },
-  {
-    "listing": "/projects.html",
-    "items": [
-      "/posts/project/pick-gpt.html",
-      "/posts/project/quad_recovery.html",
-      "/posts/project/get_off_prediction.html",
-      "/posts/project/pulse_rl.html",
-      "/posts/project/active_learning.html",
-      "/posts/project/kompanion.html",
-      "/posts/project/traffic_signal_od.html"
     ]
   }
 ]

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2024-11-30">
 <meta name="description" content="Towards In-hand Dexterity through Touch">
 
-<title>Curieux.JY - 📃Rotating without Seeing</title>
+<title>📃Rotating without Seeing – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -130,7 +130,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -154,7 +154,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -170,14 +170,22 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">2</span> Method</a>
+  <li><a href="#learning-touch-dexterity" id="toc-learning-touch-dexterity" class="nav-link" data-scroll-target="#learning-touch-dexterity"><span class="header-section-number">2</span> Learning Touch Dexterity</a>
   <ul class="collapse">
-  <li><a href="#problem-definition" id="toc-problem-definition" class="nav-link" data-scroll-target="#problem-definition"><span class="header-section-number">2.1</span> Problem Definition</a>
+  <li><a href="#problem-formulationmdp" id="toc-problem-formulationmdp" class="nav-link" data-scroll-target="#problem-formulationmdp"><span class="header-section-number">2.1</span> Problem Formulation(MDP)</a>
   <ul class="collapse">
   <li><a href="#action" id="toc-action" class="nav-link" data-scroll-target="#action"><span class="header-section-number">2.1.1</span> Action</a></li>
   </ul></li>
+  <li><a href="#domain-randomization" id="toc-domain-randomization" class="nav-link" data-scroll-target="#domain-randomization"><span class="header-section-number">2.2</span> Domain Randomization</a></li>
+  <li><a href="#training-procedure" id="toc-training-procedure" class="nav-link" data-scroll-target="#training-procedure"><span class="header-section-number">2.3</span> Training Procedure</a></li>
   </ul></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">3</span> Reference</a></li>
+  <li><a href="#tactile-dexterous-manipulation-system" id="toc-tactile-dexterous-manipulation-system" class="nav-link" data-scroll-target="#tactile-dexterous-manipulation-system"><span class="header-section-number">3</span> Tactile Dexterous Manipulation System</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">3.1</span> Setup</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">3.2</span> Discussion</a></li>
+  </ul></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments"><span class="header-section-number">4</span> Experiments</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">5</span> Reference</a></li>
   </ul>
 </nav>
     </div>
@@ -220,22 +228,42 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/1.png" alt="22" width="100%">
+</center>
+<p>이번 포스팅에서 리뷰할 논문은 <a href="https://arxiv.org/abs/2303.10880">Rotating without Seeing: Towards In-hand Dexterity through Touch</a> 입니다. RSS(Robotics: Science and Systems) <a href="https://roboticsconference.org/2023/">2023 학회</a>에서 발표된 해당 논문은 사람이 <strong>시각 없이 촉각만으로</strong> 손안에서 물체를 정교하게 조작하는 능력을 로봇 핸드에 구현하고자, 손바닥, 손가락 관절, 손끝 전체에 넓게 분포된 <strong>저비용의 이진 촉각 센서를 활용</strong>하여, 시뮬레이션에서 <strong>강화학습으로 학습한 정책을 실제 로봇 손에 적용</strong>하고, 이를 통해 학습한 물체뿐만 아니라 <strong>학습하지 않은 새로운 물체까지 조작</strong>할 수 있는 시스템인 <strong><code>Touch Dexterity</code></strong>를 제안합니다.</p>
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-</section>
-<section id="method" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Method</h1>
+<p>대다수의 기존 연구들은 점점 더 <code>고품질</code>의 센서를 활용하여 <code>정밀하고 세밀한 접촉</code>을 다루는 데 초점을 맞추었습니다. 하지만 이러한 연구들은 대개 <code>비싼 센서를 그리퍼나 손의 손가락 끝부분에만 부착</code>할 수 있어, <strong>조작기 전체를 감지하지 못한다는 한계</strong>를 가지고 있습니다. 이로 인해 수행할 수 있는 작업의 범위가 제한됩니다. 또한 복잡한 작업을 위해 대량의 학습 데이터를 필요로 하지만, 고정밀의 센서들을 사용하는 경우 더욱더 벌어지는 Sim2Real 간의 차이로 인해 시뮬레이터를 활용하기 어려운 문제가 존재합니다.</p>
+<p>Touch Dexterity는 물체를 “보고” 조작하는 대신 단순히 <strong>접촉만으로 물체를 회전하거나 조작하는 기술</strong>입니다. 이 접근법은 <strong>손의 한쪽 면(손가락 끝, 링크, 손바닥)에 부착된 저비용의 binary force 센서를 활용</strong>합니다. 이러한 <strong>센서는 접촉 여부만을 판단</strong>하며, 이를 통해 물체의 상태를 “느낄 수” 있게 합니다. 16개의 센서를 조합하면 최대 2¹⁶가지 상태를 표현할 수 있어 강력한 표현력을 가질 수 있고, 또한 Sim2Real 격차는 시뮬레이션을 통해 충분한 데이터를 확보함으로써 해결 가능하며, 이 때 binary 센서는 단순한 구조로 인해 노이즈에 덜 민감하다는 장점이 있습니다.</p>
 <center>
-<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" alt="22" width="70%">
+<img src="../../images/2024-11-30-rotating-without-seeing/3.png" alt="22" width="100%">
 <figcaption>
-overview
+Amazon에서 약 8달러 정도로 저렴하게 판매되고 있는 FSR 센서를 부착한 모습
 </figcaption>
 </center>
-<section id="problem-definition" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="problem-definition"><span class="header-section-number">2.1</span> Problem Definition</h2>
+<p>Touch Dexterity는 다중 손가락 로봇 손을 사용하여 <strong>“보이지 않는” 물체를 x, y, z 축으로 회전시키는 작업</strong>에 초점을 맞추고 있으며, 이는 in-hand re-orientation task의 단순화된 버전으로 볼 수 있습니다. 여기서 <code>보이지 않는</code> 물체란 단순히 시각 센서가 없는 것을 의미할 뿐만 아니라, 학습 중에 보지 못한 물체들을 의미하기도 합니다. 강화 학습(RL) 정책은 binary touch sensing 정보와 로봇의 내부 상태를 입력으로 받아 각 시간 단계에서 폐루프(closed loop) 제어를 위한 행동을 예측합니다. 강화학습 Agent는 물체의 3D 구조와 자세를 암묵적으로 학습하여 이를 기반으로 회전을 수행하며 실제 로봇 시스템 테스트에서는 10개의 다양한 물체를 활용하여 실험을 진행했습니다. 아래의 그림은 Unseen 물체였던 오리 인형을 real world에서 in-hand manipulation을 하는 장면입니다.</p>
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/2.png" alt="22" width="100%">
+<figcaption>
+Rotate the rubber duck for two cycles without falling, even if it is never presented in training
+</figcaption>
+</center>
+<p><strong>Dexterous Manipulation</strong></p>
+<p>기존의 분석적 모델 기반 접근법은 물체와 컨트롤러에 대한 지나치게 많은 가정을 필요로 하여 복잡한 문제로 확장하는 데 한계가 있습니다. 모방 학습(imitation learning)은 주로 시각 입력에 의존하며, proprioception 데이터 내에 포함된 암묵적인 촉각 정보를 통해 물체의 정보를 추론할 수 있지만, 주로 손가락 끝에서의 물체 회전이나 제한된 물체 집합의 회전에만 초점을 맞춥니다. 반면, Touch Dexterity는 촉각 센서를 사용하여 손과 물체 간의 상호작용을 명시적으로 인지하고, 다양한 종류의 물체에 대해 손바닥 위에서의 물체 회전 문제를 풉니다. 이는 복잡한 물체의 움직임을 포함하며, 훨씬 더 도전적인 문제를 다룰 수 있고 학습되지 않은 새로운 물체에 대해서도 일반화가 가능하다는 장점을 가지고 있습니다.</p>
+<p><strong>Tactile Robotic Manipulation</strong></p>
+<p><code>What type of touch information is essential?</code></p>
+<p>기존 연구들은 다양한 센서를 활용하여 조작을 지원하기 위해 국소적인 형상 정보(local geometry), 힘과 토크, 접촉 이벤트, 물질 특성을 추출하는 방법을 제안해왔습니다. 심지어 간단한 binary 접촉 신호를 sparse sensor array로 제공받는 경우에도 high-dimensional manipulation task에서 유용할 수 있습니다. 일례로, <a href="https://en.wikipedia.org/wiki/Shadow_Hand">Shadow Hand</a>에 손바닥에 밀집된 센서 레이아웃을 활용한 <a href="https://ieeexplore.ieee.org/document/7353568">연구</a>도 있었습니다.</p>
+<p><code>How can tactile events be simulated to facilitate Sim2Real transfer?</code></p>
+<p>일반적으로 접촉 표면(contact surface)에서 normal &amp; shear tactile force field을 시뮬레이션합니다. 반면, Touch Dexterity는 별도의 시뮬레이션 설계를 요구하지 않고, 기존 물리 시뮬레이터의 내장된 contact 시뮬레이션을 활용할 수 있다는 점에서 효율적이라고 볼 수 있습니다.</p>
+</section>
+<section id="learning-touch-dexterity" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Learning Touch Dexterity</h1>
+<section id="problem-formulationmdp" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="problem-formulationmdp"><span class="header-section-number">2.1</span> Problem Formulation(MDP)</h2>
 <section id="action" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="action"><span class="header-section-number">2.1.1</span> Action</h3>
-<div id="ddb2e6cd" class="cell" data-execution_count="1">
+<div id="e8cfb4f4" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -272,16 +300,40 @@ overview
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-11-30-rotating-without-seeing_files/figure-html/cell-2-output-1.png" width="675" height="302" class="figure-img"></p>
+<p><img src="2024-11-30-rotating-without-seeing_files/figure-html/cell-2-output-1.png" width="674" height="302" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
+<section id="domain-randomization" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="domain-randomization"><span class="header-section-number">2.2</span> Domain Randomization</h2>
 </section>
-<section id="reference" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Reference</h1>
+<section id="training-procedure" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="training-procedure"><span class="header-section-number">2.3</span> Training Procedure</h2>
+</section>
+</section>
+<section id="tactile-dexterous-manipulation-system" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Tactile Dexterous Manipulation System</h1>
+<section id="setup" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">3.1</span> Setup</h2>
+<center>
+<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" alt="22" width="70%">
+<figcaption>
+overview
+</figcaption>
+</center>
+</section>
+<section id="discussion" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="discussion"><span class="header-section-number">3.2</span> Discussion</h2>
+</section>
+</section>
+<section id="experiments" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Experiments</h1>
+</section>
+<section id="reference" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Reference</h1>
 <ul>
 <li><a href="">Original Paper</a></li>
 <li><a href="https://touchdexterity.github.io/">Project Homepage</a></li>
@@ -470,18 +522,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -513,7 +554,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -521,7 +584,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

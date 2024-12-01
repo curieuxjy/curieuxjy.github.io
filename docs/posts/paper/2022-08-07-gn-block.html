@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2022-08-07">
 <meta name="description" content="Graph Networks as Learnable Physics Engines for Inference and Control">
 
-<title>Curieux.JY - 📃GN-Block 리뷰</title>
+<title>📃GN-Block 리뷰 – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@ gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -96,7 +96,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -139,7 +139,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -163,7 +163,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -254,7 +254,7 @@ window.Quarto = {
 <p>인공지능이 이렇게 사람이 자연스럽게 익히는 세상의 물리적인 현상을 이해하고 상호작용 작용하려면 암시적이든 명시적으로든 세계에 대한 풍부한(rich) 표현과 지식이 필요합니다. 다시 말해, 시스템에 있는 objects들과 objects간의 관계를 표현해서 동일 object에는 동일한 <strong>object-wise한 계산</strong>을, 이들 사이에 일어나는 interation들에 대해서는 <strong>relation-wise 계산</strong>을 적용해서 학습을 할 수 있어야 합니다. 마치 레고 블럭들 하나하나를 이해하고 어떻게 하면 성을 쌓을 수 있는지 아는 것처럼 <code>combinatorial generalization</code> 능력을 가질 수 있는 것이라고 생각해 볼 수 있습니다.</p>
 <p>해당 논문의 목표는 <strong>physical dynamics models을 그래프 기반의 방법으로 학습</strong>하는 것입니다. Graph Neural Network(GN)의 <code>node update function</code>을 가지고 body의 dynamics에 대한 학습을 할 수 있고, <code>edge update function</code>을 가지고 interaction의 dynamics를 인코딩할 수 있으며, <code>global update function</code>을 가지고 global system의 속성들을 인코딩 할 수 있다고 주장합니다. 여기서 다른 논문들과 다르게 특이한 점은 global한 시스템의 속성이라는 부분을 따로 고려를 했다는 점이라고 할 수 있습니다.</p>
 <p>논문의 contribution은 크게 3가지 forward model, inference model, control algorithm 입니다. (하지만 리뷰하면서 느낀 점은 <em>control algorithm</em> 부분은 contribution이라고 하기보다는 GN-based model을 가지고 control pipeline을 잘 붙인 것이라고 생각됩니다.) 다른 physics engine들과 다르게 물리법칙에 대한 사전 지식(prior knowledge)을 전혀 가정하지 않지만 대신 <code>object- and relation-centric inductive bias</code>를 이용하여 <strong>current-state/next-state pairs</strong>에 대한 학습을 합니다. 그래프 기반으로 물리 시스템을 forward model과 inference model이 학습하게 되면 control algorithm은 이 모델들을 이용하여 planning이나 policy learning을 하게 됩니다.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
 <col style="width: 50%">
@@ -737,18 +737,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -780,7 +769,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -788,7 +799,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
