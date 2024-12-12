@@ -1,0 +1,59 @@
+---
+title: "📝Linx Cheetsheet"
+toc: true
+date: "2024-12-12"
+description: 자주 사용하는 Command Sheet
+categories: [study, linux, cheetsheet]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+# library 경로 설정
+
+> conda env lib 연결시
+
+```commandline
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/usr/work/mylib
+
+vi ~/.bashrc (파일명 앞의 .은 숨김파일을 의미)
+export LD_LIBRARY_PATH=/home/user/work/mylib:${LD_LIBRARY_PATH}
+```
+
+# GPU Memory 해제
+
+> 프로세스가 죽지 않을때 강제 종료
+
+```commandline
+ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기
+sudo kill -9 [ID_NUMBER]
+```
+
+# Docker 
+
+- `docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].`
+  - nvidia-container-toolkit 설치 
+      ```commandline
+      $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+         && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+         && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+      $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+    
+      $ sudo systemctl restart docker
+      ```
+    
+- GPU 설정
+  - `docker run -it --gpus '"device=0,1,2,3"'`
+  - `docker run -it --gpus 3` (확인해봐야 함)
+
+
+# terminal zsh/bash
+```commandline
+chsh -s bin/bash
+chsh -s bin/zsh
+
+(@terminal)
+/bin/bash
+/bin/zsh
+```

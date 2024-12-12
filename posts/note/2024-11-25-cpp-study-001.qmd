@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "📝ROS2 - hardware interface"
 toc: true
 date: "2024-11-25"
