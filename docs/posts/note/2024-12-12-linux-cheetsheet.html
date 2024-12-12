@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2024-12-12">
-<meta name="description" content="자주 사용하는 Command Sheet">
+<meta name="description" content="자주 사용하는 Commands">
 
-<title>📝Linx Cheetsheet – Curieux.JY</title>
+<title>📝Linx Cheet Sheet – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,49 +115,6 @@ gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -224,17 +181,17 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">📝Linx Cheetsheet</h1>
+<h1 class="title">📝Linx Cheet Sheet</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">study</div>
     <div class="quarto-category">linux</div>
+    <div class="quarto-category">docker</div>
     <div class="quarto-category">cheetsheet</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    자주 사용하는 Command Sheet
+    자주 사용하는 Commands
   </div>
 </div>
 
@@ -278,13 +235,16 @@ window.Quarto = {
 <section id="docker" class="level1">
 <h1>Docker</h1>
 <ul>
-<li><code>docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].</code>
+<li><code>docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].</code></li>
+<li>nvidia-container-toolkit 설치</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \</span>
+<span id="cb3-2"><a href="#cb3-2"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \</span>
+<span id="cb3-3"><a href="#cb3-3"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list</span>
+<span id="cb3-4"><a href="#cb3-4"></a>$ sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>$ sudo systemctl restart docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li><p>nvidia-container-toolkit 설치 ```commandline $ distribution=$(. /etc/os-release;echo <span class="math inline">ID</span>VERSION_ID)<br>
-&amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -<br>
-&amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list $ sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</p>
-<p>$ sudo systemctl restart docker ```</p></li>
-</ul></li>
 <li>GPU 설정
 <ul>
 <li><code>docker run -it --gpus '"device=0,1,2,3"'</code></li>
@@ -294,12 +254,12 @@ window.Quarto = {
 </section>
 <section id="terminal-zshbash" class="level1">
 <h1>terminal zsh/bash</h1>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>chsh -s bin/bash</span>
-<span id="cb3-2"><a href="#cb3-2"></a>chsh -s bin/zsh</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a>(@terminal)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>/bin/bash</span>
-<span id="cb3-6"><a href="#cb3-6"></a>/bin/zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>chsh -s bin/bash</span>
+<span id="cb4-2"><a href="#cb4-2"></a>chsh -s bin/zsh</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>(@terminal)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>/bin/bash</span>
+<span id="cb4-6"><a href="#cb4-6"></a>/bin/zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

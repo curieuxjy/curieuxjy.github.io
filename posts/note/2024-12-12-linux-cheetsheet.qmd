@@ -1,9 +1,9 @@
 ---
-title: "📝Linx Cheetsheet"
+title: "📝Linx Cheet Sheet"
 toc: true
 date: "2024-12-12"
-description: 자주 사용하는 Command Sheet
-categories: [study, linux, cheetsheet]
+description: 자주 사용하는 Commands
+categories: [linux, docker, cheetsheet]
 format:
   html:
     code-fold: true
@@ -33,15 +33,16 @@ sudo kill -9 [ID_NUMBER]
 # Docker 
 
 - `docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].`
-  - nvidia-container-toolkit 설치 
-      ```commandline
-      $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
-         && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
-         && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-      $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
-    
-      $ sudo systemctl restart docker
-      ```
+- nvidia-container-toolkit 설치 
+
+```commandline
+$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+$ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+
+$ sudo systemctl restart docker
+```
     
 - GPU 설정
   - `docker run -it --gpus '"device=0,1,2,3"'`
