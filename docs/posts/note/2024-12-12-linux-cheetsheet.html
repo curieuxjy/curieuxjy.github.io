@@ -173,6 +173,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#gpu-memory-해제" id="toc-gpu-memory-해제" class="nav-link" data-scroll-target="#gpu-memory-해제">GPU Memory 해제</a></li>
   <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
   <li><a href="#terminal-zshbash" id="toc-terminal-zshbash" class="nav-link" data-scroll-target="#terminal-zshbash">terminal zsh/bash</a></li>
+  <li><a href="#용량-확인" id="toc-용량-확인" class="nav-link" data-scroll-target="#용량-확인">용량 확인</a></li>
   </ul>
 </nav>
     </div>
@@ -260,6 +261,25 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <span id="cb4-4"><a href="#cb4-4"></a>(@terminal)</span>
 <span id="cb4-5"><a href="#cb4-5"></a>/bin/bash</span>
 <span id="cb4-6"><a href="#cb4-6"></a>/bin/zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="용량-확인" class="level1">
+<h1>용량 확인</h1>
+<pre><code>df -h</code></pre>
+<ul>
+<li>해당 경로에 있는 모든 파일과 폴더들을 용량 단위로 표기</li>
+<li>폴더가 1 순위, 파일이 2 순위로 나열</li>
+<li>경로에 있는 모든 폴더들과 각 폴더내에 있는 파일들을 모두 표기</li>
+</ul>
+<pre><code>du -ch [path] | sort -h</code></pre>
+<ul>
+<li>해당 경로의 폴더 기준 트리 구조의 깊이 1만큼의 수준까지 탐색</li>
+<li>용량이 큰 폴더가 아래로, 가장 용량이 큰 10개만 보임</li>
+</ul>
+<pre><code>du -ch [path] --max-depth=1 | sort -h | tail -10</code></pre>
+<ul>
+<li>현재 경로의 파일 용량</li>
+</ul>
+<pre><code>ls -lh</code></pre>
 
 
 </section>
