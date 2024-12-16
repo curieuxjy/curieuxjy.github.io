@@ -82,3 +82,22 @@ du -ch [path] --max-depth=1 | sort -h | tail -10
 ```
 ls -lh
 ```
+
+# 파일 찾기
+
+```
+find [옵션] [경로] [표현식]
+
+# 현재 위치에서 log가 들어가는 파일 모두 찾기
+find . -name "*log*"
+
+# 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제
+find . -name "*.txt" -delete
+
+```
+
+- options
+    - `P` : 심볼릭 링크를 따라가지 않고, 심볼릭 링크 자체 정보 사용.
+    - `L` : 심볼릭 링크에 연결된 파일 정보 사용.
+    - `H` : 심볼릭 링크를 따라가지 않으나, Command Line Argument를 처리할 땐 예외.
+    - `D` : 디버그 메시지 출력.

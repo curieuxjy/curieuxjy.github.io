@@ -174,6 +174,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
   <li><a href="#terminal-zshbash" id="toc-terminal-zshbash" class="nav-link" data-scroll-target="#terminal-zshbash">terminal zsh/bash</a></li>
   <li><a href="#용량-확인" id="toc-용량-확인" class="nav-link" data-scroll-target="#용량-확인">용량 확인</a></li>
+  <li><a href="#파일-찾기" id="toc-파일-찾기" class="nav-link" data-scroll-target="#파일-찾기">파일 찾기</a></li>
   </ul>
 </nav>
     </div>
@@ -280,6 +281,26 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li>현재 경로의 파일 용량</li>
 </ul>
 <pre><code>ls -lh</code></pre>
+</section>
+<section id="파일-찾기" class="level1">
+<h1>파일 찾기</h1>
+<pre><code>find [옵션] [경로] [표현식]
+
+# 현재 위치에서 log가 들어가는 파일 모두 찾기
+find . -name "*log*"
+
+# 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제
+find . -name "*.txt" -delete
+</code></pre>
+<ul>
+<li>options
+<ul>
+<li><code>P</code> : 심볼릭 링크를 따라가지 않고, 심볼릭 링크 자체 정보 사용.</li>
+<li><code>L</code> : 심볼릭 링크에 연결된 파일 정보 사용.</li>
+<li><code>H</code> : 심볼릭 링크를 따라가지 않으나, Command Line Argument를 처리할 땐 예외.</li>
+<li><code>D</code> : 디버그 메시지 출력.</li>
+</ul></li>
+</ul>
 
 
 </section>
