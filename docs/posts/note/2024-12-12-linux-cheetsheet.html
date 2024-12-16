@@ -175,6 +175,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#terminal-zshbash" id="toc-terminal-zshbash" class="nav-link" data-scroll-target="#terminal-zshbash">terminal zsh/bash</a></li>
   <li><a href="#용량-확인" id="toc-용량-확인" class="nav-link" data-scroll-target="#용량-확인">용량 확인</a></li>
   <li><a href="#파일-찾기" id="toc-파일-찾기" class="nav-link" data-scroll-target="#파일-찾기">파일 찾기</a></li>
+  <li><a href="#mount-다중-경로-설정" id="toc-mount-다중-경로-설정" class="nav-link" data-scroll-target="#mount-다중-경로-설정">mount 다중 경로 설정</a></li>
+  <li><a href="#원격과-로컬-사이-파일-복사" id="toc-원격과-로컬-사이-파일-복사" class="nav-link" data-scroll-target="#원격과-로컬-사이-파일-복사">원격과 로컬 사이 파일 복사</a></li>
   </ul>
 </nav>
     </div>
@@ -299,6 +301,64 @@ find . -name "*.txt" -delete
 <li><code>L</code> : 심볼릭 링크에 연결된 파일 정보 사용.</li>
 <li><code>H</code> : 심볼릭 링크를 따라가지 않으나, Command Line Argument를 처리할 땐 예외.</li>
 <li><code>D</code> : 디버그 메시지 출력.</li>
+</ul></li>
+</ul>
+</section>
+<section id="mount-다중-경로-설정" class="level1">
+<h1>mount 다중 경로 설정</h1>
+<ul>
+<li><p>원래 마운트 지점에서 VFS(가상 파일 시스템) 노드를 생성</p>
+<ul>
+<li><code>mount --bind original-dir original-dir</code></li>
+</ul></li>
+<li><p>원래 마운트 지점을 공유로 표시</p>
+<ul>
+<li><code>mount --make-shared original-dir</code></li>
+<li>선택한 마운트 지점과 그 아래의 모든 마운트 지점에 대한 마운트 유형을 <code>변경</code>하려면 <code>--make-shared</code> 대신 <code>--make-r shared</code> 옵션 사용</li>
+</ul></li>
+<li><p>중복 생성</p>
+<ul>
+<li><code>mount --bind original-dir dupulicate-dir</code></li>
+</ul></li>
+<li><p>사용</p>
+<pre><code>
+
+</code></pre></li>
+</ul>
+</section>
+<section id="원격과-로컬-사이-파일-복사" class="level1">
+<h1>원격과 로컬 사이 파일 복사</h1>
+<blockquote class="blockquote">
+<p><code>scp</code> 사용. <code>scp [options] [source] [target]</code></p>
+</blockquote>
+<ul>
+<li>로컬에서 원격으로
+<ul>
+<li><code>scp [source_path] [User]@[IP]:[target_path]</code></li>
+<li><code>scp /media/avery/source/test.txt avery@xxx.xx.x.xxx:mnt/</code></li>
+</ul></li>
+<li>원격에서 로컬로
+<ul>
+<li><code>scp [User]@[IP]:[source_path] [target_path]</code></li>
+<li><code>scp avery@xxx.xx.x.xxx:mnt/test.txt /home/avery/Documents</code></li>
+</ul></li>
+<li>원격(A User)에서 원격(B User)으로
+<ul>
+<li><code>scp [User]@[IP]:[source_path] [User]@[IP]:[target_path]</code></li>
+<li><code>scp ai@xxx.xx.x.xxx:mnt/test.txt avery@xxx.xx.x.xxx:/home/avery/Documents</code></li>
+</ul></li>
+<li>복수의 파일 전송
+<ul>
+<li>여러 경로를 <code>" "</code>을 이용하여 묶어줌</li>
+<li><code>scp [options] [User]@[IP]:"[file_1] [file_2]" [target_path]</code></li>
+</ul></li>
+<li>Options
+<ul>
+<li><code>-r</code>: 폴더를 복사할 때 사용(전송 대상을 폴더로 지정). 모든 폴더들을 재귀적으로 복사</li>
+<li><code>-P</code>: ssh 포트 지정</li>
+<li><code>-i</code>: identity file을 지정해서 사용</li>
+<li><code>-v</code>: 상세 내용을 보면서 디버깅할 때 사용</li>
+<li><code>-p</code>: 전송 시 파일의 수정 시간과 권한을 유지</li>
 </ul></li>
 </ul>
 
