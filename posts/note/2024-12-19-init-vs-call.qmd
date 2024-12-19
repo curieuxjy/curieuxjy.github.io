@@ -1,6 +1,6 @@
 ---
-title: "📝__init__ VS. __call__"
-description: Python __init__ VS. __call__
+title: "📝`__init__` VS. `__call__`"
+description: Python `__init__` VS. `__call__`
 date: "2024-12-19"
 categories: [python, 2024]
 toc: true
@@ -8,7 +8,10 @@ execute:
   freeze: auto 
 ---
 
-Python [Monkey Path]()를 공부하다가 한번 정리하면 좋을 것 같아 Python의 `__init__`과 `__call__`에 대해서 정리해보고자 합니다.
+[Monkey Path](https://en.wikipedia.org/wiki/Monkey_patch)를 공부하다가 한번 정리하면 좋을 것 같아 Python의 `__init__`과 `__call__`에 대해서 정리하고자 합니다.
+
+- `__init__`은 인스턴스 초기화 시 실행
+- `__call__`은 인스턴스 호출 시 실행
 
 ```{python}
 class A:
@@ -22,6 +25,7 @@ class A:
     def myfunc(self):
         print('my')
 
+print("==== OUTPUT ====")
 
 a = A()
 
@@ -31,15 +35,15 @@ a.myfunc()
 
 ```
 
-- `__init__`은 인스턴스 초기화 시 실행
-- `__call__`은 인스턴스 호출 시 실행
-
 
 # Decorator
 
+- 데코레이터는 자신이 수식할 함수나 메소드 내부에 받아 놓아야 함. 그러기 위해서 `__init__`에 데이터 속성 저장. 
+- 데코레이터가 하는 일은 함수를 대리 호출.
+
 ```{python}
 class MyDecorator:
-    def __init__(self,data):
+    def __init__(self, data):
         self.storage = data
 
     def __call__(self):
@@ -49,12 +53,9 @@ class MyDecorator:
 
 @MyDecorator
 def printer():
-	print('I print the empty space')
+	print('I print the empty space.')
 
-print('---start---')
+print('==== start ====')
 printer()
 
 ```
-
-- 데코레이터는 자신이 수식할 함수나 메소드 내부에 받아 놓아야 함. 그러기 위해서 `__init__`에 데이터 속성저장. 
-- 데코레이터가 하는 일은 함수를 대리 호출

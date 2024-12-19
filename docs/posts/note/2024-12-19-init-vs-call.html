@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2024-12-19">
-<meta name="description" content="Python init VS. call">
+<meta name="description" content="Python __init__ VS. __call__">
 
-<title>📝init VS. call – Curieux.JY</title>
+<title>📝__init__ VS. __call__ – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -178,7 +178,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">📝<strong>init</strong> VS. <strong>call</strong></h1>
+<h1 class="title">📝<code>__init__</code> VS. <code>__call__</code></h1>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
     <div class="quarto-category">2024</div>
@@ -187,7 +187,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <div>
   <div class="description">
-    Python <strong>init</strong> VS. <strong>call</strong>
+    Python <code>__init__</code> VS. <code>__call__</code>
   </div>
 </div>
 
@@ -210,8 +210,12 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
-<p>Python <a href="">Monkey Path</a>를 공부하다가 한번 정리하면 좋을 것 같아 Python의 <code>__init__</code>과 <code>__call__</code>에 대해서 정리해보고자 합니다.</p>
-<div id="61b97019" class="cell" data-execution_count="1">
+<p><a href="https://en.wikipedia.org/wiki/Monkey_patch">Monkey Path</a>를 공부하다가 한번 정리하면 좋을 것 같아 Python의 <code>__init__</code>과 <code>__call__</code>에 대해서 정리하고자 합니다.</p>
+<ul>
+<li><code>__init__</code>은 인스턴스 초기화 시 실행</li>
+<li><code>__call__</code>은 인스턴스 호출 시 실행</li>
+</ul>
+<div id="76388804" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> A:</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -223,27 +227,29 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <span id="cb1-9"><a href="#cb1-9"></a>    <span class="kw">def</span> myfunc(<span class="va">self</span>):</span>
 <span id="cb1-10"><a href="#cb1-10"></a>        <span class="bu">print</span>(<span class="st">'my'</span>)</span>
 <span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a>a <span class="op">=</span> A()</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a>a()</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a>a.myfunc()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="bu">print</span>(<span class="st">"==== OUTPUT ===="</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a>a <span class="op">=</span> A()</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>a()</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a>a.myfunc()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>init
+<pre><code>==== OUTPUT ====
+init
 call
 my</code></pre>
 </div>
 </div>
-<ul>
-<li><code>__init__</code>은 인스턴스 초기화 시 실행</li>
-<li><code>__call__</code>은 인스턴스 호출 시 실행</li>
-</ul>
 <section id="decorator" class="level1">
 <h1>Decorator</h1>
-<div id="e0d479e1" class="cell" data-execution_count="2">
+<ul>
+<li>데코레이터는 자신이 수식할 함수나 메소드 내부에 받아 놓아야 함. 그러기 위해서 <code>__init__</code>에 데이터 속성 저장.</li>
+<li>데코레이터가 하는 일은 함수를 대리 호출.</li>
+</ul>
+<div id="f08e2cd6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> MyDecorator:</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,data):</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data):</span>
 <span id="cb3-3"><a href="#cb3-3"></a>        <span class="va">self</span>.storage <span class="op">=</span> data</span>
 <span id="cb3-4"><a href="#cb3-4"></a></span>
 <span id="cb3-5"><a href="#cb3-5"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>):</span>
@@ -253,21 +259,17 @@ my</code></pre>
 <span id="cb3-9"><a href="#cb3-9"></a></span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="at">@MyDecorator</span></span>
 <span id="cb3-11"><a href="#cb3-11"></a><span class="kw">def</span> printer():</span>
-<span id="cb3-12"><a href="#cb3-12"></a>    <span class="bu">print</span>(<span class="st">'I print the empty space'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="bu">print</span>(<span class="st">'I print the empty space.'</span>)</span>
 <span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="bu">print</span>(<span class="st">'---start---'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="bu">print</span>(<span class="st">'==== start ===='</span>)</span>
 <span id="cb3-15"><a href="#cb3-15"></a>printer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>---start---
+<pre><code>==== start ====
 data entered : printer
-I print the empty space
+I print the empty space.
 data exited : printer</code></pre>
 </div>
 </div>
-<ul>
-<li>데코레이터는 자신이 수식할 함수나 메소드 내부에 받아 놓아야 함. 그러기 위해서 <code>__init__</code>에 데이터 속성저장.</li>
-<li>데코레이터가 하는 일은 함수를 대리 호출</li>
-</ul>
 
 
 </section>
