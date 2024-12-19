@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-12-19">
+<meta name="description" content="Python init VS. call">
 
-<title>Note – Curieux.JY</title>
+<title>📝init VS. call – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,30 +22,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./profile.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,35 +105,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
 
 <script type="text/javascript">
@@ -110,49 +115,6 @@ gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -163,7 +125,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Curieux.JY</span>
     </a>
   </div>
@@ -174,15 +136,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./post.html"> 
+    <a class="nav-link" href="../../post.html"> 
 <span class="menu-text">Post</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./note.html" aria-current="page"> 
+    <a class="nav-link" href="../../note.html"> 
 <span class="menu-text">Note</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">Jung Yeon Lee</span></a>
   </li>  
   <li class="nav-item compact">
@@ -203,21 +165,42 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(24)</span></div><div class="category" data-category="MjAyMQ==">2021 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="MjAyMg==">2022 <span class="quarto-category-count">(7)</span></div><div class="category" data-category="MjAyMw==">2023 <span class="quarto-category-count">(10)</span></div><div class="category" data-category="MjAyNA==">2024 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y2FzdWFs">casual <span class="quarto-category-count">(9)</span></div><div class="category" data-category="Y2hlZXRzaGVldA==">cheetsheet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y3M=">cs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGFpbHk=">daily <span class="quarto-category-count">(10)</span></div><div class="category" data-category="ZGlhcnk=">diary <span class="quarto-category-count">(4)</span></div><div class="category" data-category="ZG9ja2Vy">docker <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZW5nbGlzaA==">english <span class="quarto-category-count">(10)</span></div><div class="category" data-category="Z2V1bHR0bw==">geultto <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Z2l0aHVi">github <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aXQ=">it <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGludXg=">linux <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3R1ZHk=">study <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#decorator" id="toc-decorator" class="nav-link active" data-scroll-target="#decorator">Decorator</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Note</h1>
-</div>
+<h1 class="title">📝<strong>init</strong> VS. <strong>call</strong></h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">2024</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    Python <strong>init</strong> VS. <strong>call</strong>
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 19, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -227,268 +210,69 @@ window.Quarto = {
 </header>
 
 
-<center>
-<section id="diary-language-study" class="level5">
-<h5 class="anchored" data-anchor-id="diary-language-study">📘 Diary | 🌎 Language | 📝 Study</h5>
-</section></center>
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-         <option value="listing-title-sort" data-direction="asc">
-          Title
-        </option>
-     </select>
-  </div>
+<p>Python <a href="">Monkey Path</a>를 공부하다가 한번 정리하면 좋을 것 같아 Python의 <code>__init__</code>과 <code>__call__</code>에 대해서 정리해보고자 합니다.</p>
+<div id="61b97019" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> A:</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-4"><a href="#cb1-4"></a>        <span class="bu">print</span>(<span class="st">'init'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>):</span>
+<span id="cb1-7"><a href="#cb1-7"></a>        <span class="bu">print</span>(<span class="st">'call'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="kw">def</span> myfunc(<span class="va">self</span>):</span>
+<span id="cb1-10"><a href="#cb1-10"></a>        <span class="bu">print</span>(<span class="st">'my'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a>a <span class="op">=</span> A()</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>a()</span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a>a.myfunc()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>init
+call
+my</code></pre>
 </div>
-<table class="quarto-listing-table table table-striped table-hover">
-<thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-categories="cHl0aG9uLDIwMjQ=" data-listing-date-sort="1734534000000" data-listing-file-modified-sort="1734573996743" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144" data-listing-title-sort="📝__init__ VS. __call__" data-listing-filename-sort="2024-12-19-init-vs-call.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Dec 19, 2024</span>
-</td>
-<td>
-<a href="./posts/note/2024-12-19-init-vs-call.html" class="title listing-title">📝<strong>init</strong> VS. <strong>call</strong></a>
-</td>
-</tr>
-<tr data-index="1" data-categories="bGludXgsZG9ja2VyLGNoZWV0c2hlZXQsMjAyNA==" data-listing-date-sort="1733929200000" data-listing-file-modified-sort="1734573847193" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="459" data-listing-title-sort="📝Linx Cheet Sheet" data-listing-filename-sort="2024-12-12-linux-cheetsheet.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Dec 12, 2024</span>
-</td>
-<td>
-<a href="./posts/note/2024-12-12-linux-cheetsheet.html" class="title listing-title">📝Linx Cheet Sheet</a>
-</td>
-</tr>
-<tr data-index="2" data-categories="Z2V1bHR0bywyMDI0" data-listing-date-sort="1728399600000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="574" data-listing-title-sort="📘Geultto 10th Start" data-listing-filename-sort="2024-10-09-geultto-10th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Oct 9, 2024</span>
-</td>
-<td>
-<a href="./posts/note/2024-10-09-geultto-10th-start.html" class="title listing-title">📘Geultto 10th Start</a>
-</td>
-</tr>
-<tr data-index="3" data-categories="Y3Msc3R1ZHksMjAyNA==" data-listing-date-sort="1705244400000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2975" data-listing-title-sort="📝Operating System 001" data-listing-filename-sort="2024-01-15-cs-study-001.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Jan 15, 2024</span>
-</td>
-<td>
-<a href="./posts/note/2024-01-15-cs-study-001.html" class="title listing-title">📝Operating System 001</a>
-</td>
-</tr>
-<tr data-index="4" data-categories="Z2V1bHR0bywyMDIz" data-listing-date-sort="1701356400000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="836" data-listing-title-sort="📘Geultto 9th Start" data-listing-filename-sort="2023-12-01-geultto-9th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Dec 1, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-12-01-geultto-9th-start.html" class="title listing-title">📘Geultto 9th Start</a>
-</td>
-</tr>
-<tr data-index="5" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMw==" data-listing-date-sort="1693407600000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="206" data-listing-title-sort="🌎Casual English Phrases 010" data-listing-filename-sort="2023-08-31-daily-english-010.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Aug 31, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-08-31-daily-english-010.html" class="title listing-title">🌎Casual English Phrases 010</a>
-</td>
-</tr>
-<tr data-index="6" data-categories="Z2V1bHR0bywyMDIz" data-listing-date-sort="1688655600000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1262" data-listing-title-sort="📘Geultto 8th End" data-listing-filename-sort="2023-07-07-geultto-8th-end.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Jul 7, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-07-07-geultto-8th-end.html" class="title listing-title">📘Geultto 8th End</a>
-</td>
-</tr>
-<tr data-index="7" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMw==" data-listing-date-sort="1688482800000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="🌎Casual English Phrases 009" data-listing-filename-sort="2023-07-05-daily-english-009.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Jul 5, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-07-05-daily-english-009.html" class="title listing-title">🌎Casual English Phrases 009</a>
-</td>
-</tr>
-<tr data-index="8" data-categories="Z2l0aHViLGRpYXJ5LDIwMjM=" data-listing-date-sort="1685113200000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1075" data-listing-title-sort="📘Github Starstruck 128" data-listing-filename-sort="2023-05-27-twinkle-github-star.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">May 27, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-05-27-twinkle-github-star.html" class="title listing-title">📘Github Starstruck 128</a>
-</td>
-</tr>
-<tr data-index="9" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMw==" data-listing-date-sort="1680620400000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="287" data-listing-title-sort="🌎Casual English Phrases 008" data-listing-filename-sort="2023-04-05-daily-english-008.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Apr 5, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-04-05-daily-english-008.html" class="title listing-title">🌎Casual English Phrases 008</a>
-</td>
-</tr>
-<tr data-index="10" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMw==" data-listing-date-sort="1680188400000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="201" data-listing-title-sort="🌎Casual English Phrases 007" data-listing-filename-sort="2023-03-31-daily-english-007.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Mar 31, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-03-31-daily-english-007.html" class="title listing-title">🌎Casual English Phrases 007</a>
-</td>
-</tr>
-<tr data-index="11" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMw==" data-listing-date-sort="1680102000000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="233" data-listing-title-sort="🌎Casual English Phrases 006" data-listing-filename-sort="2023-03-30-daily-english-006.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Mar 30, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-03-30-daily-english-006.html" class="title listing-title">🌎Casual English Phrases 006</a>
-</td>
-</tr>
-<tr data-index="12" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMw==" data-listing-date-sort="1680015600000" data-listing-file-modified-sort="1730721137565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="137" data-listing-title-sort="🌎Casual English Phrases 005" data-listing-filename-sort="2023-03-29-daily-english-005.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Mar 29, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-03-29-daily-english-005.html" class="title listing-title">🌎Casual English Phrases 005</a>
-</td>
-</tr>
-<tr data-index="13" data-categories="Z2V1bHR0bywyMDIz" data-listing-date-sort="1675263600000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="925" data-listing-title-sort="📘Geultto 8th Start" data-listing-filename-sort="2023-02-02-geultto-8th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Feb 2, 2023</span>
-</td>
-<td>
-<a href="./posts/note/2023-02-02-geultto-8th-start.html" class="title listing-title">📘Geultto 8th Start</a>
-</td>
-</tr>
-<tr data-index="14" data-categories="Z2V1bHR0bywyMDIy" data-listing-date-sort="1666969200000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1173" data-listing-title-sort="📘Gueltto 7th End" data-listing-filename-sort="2022-10-29-geultto-7th-end.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Oct 29, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-10-29-geultto-7th-end.html" class="title listing-title">📘Gueltto 7th End</a>
-</td>
-</tr>
-<tr data-index="15" data-categories="ZGFpbHksZW5nbGlzaCxpdCwyMDIy" data-listing-date-sort="1666537200000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="674" data-listing-title-sort="🌎IT English Experssions 004" data-listing-filename-sort="2022-10-24-daily-english-004.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Oct 24, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-10-24-daily-english-004.html" class="title listing-title">🌎IT English Experssions 004</a>
-</td>
-</tr>
-<tr data-index="16" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMg==" data-listing-date-sort="1665932400000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="259" data-listing-title-sort="🌎Casual English Phrases 003" data-listing-filename-sort="2022-10-17-daily-english-003.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Oct 17, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-10-17-daily-english-003.html" class="title listing-title">🌎Casual English Phrases 003</a>
-</td>
-</tr>
-<tr data-index="17" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMg==" data-listing-date-sort="1665414000000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="241" data-listing-title-sort="🌎Casual English Phrases 002" data-listing-filename-sort="2022-10-11-daily-english-002.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Oct 11, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-10-11-daily-english-002.html" class="title listing-title">🌎Casual English Phrases 002</a>
-</td>
-</tr>
-<tr data-index="18" data-categories="ZGFpbHksZW5nbGlzaCxjYXN1YWwsMjAyMg==" data-listing-date-sort="1664722800000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="222" data-listing-title-sort="🌎Casual English Phrases 001" data-listing-filename-sort="2022-10-03-daily-english-001.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Oct 3, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-10-03-daily-english-001.html" class="title listing-title">🌎Casual English Phrases 001</a>
-</td>
-</tr>
-<tr data-index="19" data-categories="Z2V1bHR0bywyMDIy" data-listing-date-sort="1662217200000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="470" data-listing-title-sort="📘2022 상반기 회고" data-listing-filename-sort="2022-09-04-mid-retrospective.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Sep 4, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-09-04-mid-retrospective.html" class="title listing-title">📘2022 상반기 회고</a>
-</td>
-</tr>
-<tr data-index="20" data-categories="Z2V1bHR0bywyMDIy" data-listing-date-sort="1651762800000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="434" data-listing-title-sort="📘Geultto 7th Start" data-listing-filename-sort="2022-05-06-geultto-7th-start.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">May 6, 2022</span>
-</td>
-<td>
-<a href="./posts/note/2022-05-06-geultto-7th-start.html" class="title listing-title">📘Geultto 7th Start</a>
-</td>
-</tr>
-<tr data-index="21" data-categories="ZGlhcnksMjAyMQ==" data-listing-date-sort="1612018800000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1034" data-listing-title-sort="📘2021 TU Berlin Winter Course 수강 후기" data-listing-filename-sort="2021-01-31-ML-tu-berlin.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Jan 31, 2021</span>
-</td>
-<td>
-<a href="./posts/note/2021-01-31-ML-tu-berlin.html" class="title listing-title">📘2021 TU Berlin Winter Course 수강 후기</a>
-</td>
-</tr>
-<tr data-index="22" data-categories="ZGlhcnksMjAyMQ==" data-listing-date-sort="1609599600000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1622" data-listing-title-sort="📘Goodbye 2020" data-listing-filename-sort="2021-01-03-Goodbye-2020.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Jan 3, 2021</span>
-</td>
-<td>
-<a href="./posts/note/2021-01-03-Goodbye-2020.html" class="title listing-title">📘Goodbye 2020</a>
-</td>
-</tr>
-<tr data-index="23" data-categories="ZGlhcnksMjAyMQ==" data-listing-date-sort="1609599600000" data-listing-file-modified-sort="1730721137564" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="498" data-listing-title-sort="📘Hello 2021" data-listing-filename-sort="2021-01-03-Hello-2021.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-date">Jan 3, 2021</span>
-</td>
-<td>
-<a href="./posts/note/2021-01-03-Hello-2021.html" class="title listing-title">📘Hello 2021</a>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="listing-no-matching d-none">
-No matching items
 </div>
-</div></main> <!-- /main -->
+<ul>
+<li><code>__init__</code>은 인스턴스 초기화 시 실행</li>
+<li><code>__call__</code>은 인스턴스 호출 시 실행</li>
+</ul>
+<section id="decorator" class="level1">
+<h1>Decorator</h1>
+<div id="e0d479e1" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> MyDecorator:</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,data):</span>
+<span id="cb3-3"><a href="#cb3-3"></a>        <span class="va">self</span>.storage <span class="op">=</span> data</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>):</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        <span class="bu">print</span>(<span class="st">'data entered :'</span>, <span class="va">self</span>.storage.<span class="va">__name__</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        <span class="va">self</span>.storage()</span>
+<span id="cb3-8"><a href="#cb3-8"></a>        <span class="bu">print</span>(<span class="st">'data exited :'</span>, <span class="va">self</span>.storage.<span class="va">__name__</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="at">@MyDecorator</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="kw">def</span> printer():</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="bu">print</span>(<span class="st">'I print the empty space'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="bu">print</span>(<span class="st">'---start---'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a>printer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>---start---
+data entered : printer
+I print the empty space
+data exited : printer</code></pre>
+</div>
+</div>
+<ul>
+<li>데코레이터는 자신이 수식할 함수나 메소드 내부에 받아 놓아야 함. 그러기 위해서 <code>__init__</code>에 데이터 속성저장.</li>
+<li>데코레이터가 하는 일은 함수를 대리 호출</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1052,6 +836,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 <footer class="footer">

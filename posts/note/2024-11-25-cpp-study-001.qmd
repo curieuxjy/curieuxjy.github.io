@@ -4,7 +4,7 @@ title: "📝ROS2 - hardware interface"
 toc: true
 date: "2024-11-25"
 description: C++ study 001
-categories: [study, c++]
+categories: [study, c++, 2024]
 format:
   html:
     code-fold: true

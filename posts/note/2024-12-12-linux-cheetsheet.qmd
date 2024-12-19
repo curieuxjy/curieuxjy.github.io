@@ -3,7 +3,7 @@ title: "📝Linx Cheet Sheet"
 toc: true
 date: "2024-12-12"
 description: 자주 사용하는 Commands
-categories: [linux, docker, cheetsheet]
+categories: [linux, docker, cheetsheet, 2024]
 format:
   html:
     code-fold: true
