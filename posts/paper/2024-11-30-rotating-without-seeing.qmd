@@ -1,7 +1,7 @@
 ---
 title: "📃Rotating without Seeing"
 description: Towards In-hand Dexterity through Touch
-date: "2024-11-30"
+date: "2024-12-22"
 categories: [paper, tactile, rl, hand]
 toc: true
 number-sections: true
@@ -127,37 +127,143 @@ plt.show()
 
 ```
 
-이렇게 최종적으로 계산된 Action값으로 Hand Agent의 모션이 만들어지게 됩니다.
+이렇게 최종적으로 계산된 Action 값으로 Hand Agent의 모션이 만들어지게 됩니다.
 
+### Reward
+
+보상함수는 아래와 같이 6개의 term들로 구성되어 있습니다. 각 6개의 reward term들은 linear weighted sum이 되어 해당 timestep에서의 최종 reward가 됩니다.
+
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/6.jpg" alt="22" width="100%" />
+<figcaption>Reward Function</figcaption>
+</center>
+
+
+1. Reward of rotation $r_{rot}$
+   - 회전 축 $k$의 법선 평면 $\Pi$에서 샘플링된 단위 벡터의 회전 각도 $\Delta \theta$로 정의된 회전 보상입니다.
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/7.jpg" width="100%" />
+<figcaption>Reward Function</figcaption>
+</center>
+   - 계산하는 과정
+     - 법선 평면 $\Pi$에서 단위 벡터 $v$를 임의로 샘플링하며, 이 벡터는 object에 부착된 것으로 간주할 수 있습니다. 
+     - 다음 상태에서의 해당 벡터 $v'$를 가져와 $\Pi$에 투영(projection)합니다: $v'_p = \text{Proj}(v', \Pi)$
+     - $\Delta \theta \in [-\pi, \pi)$는 축 $k$에 대해 $v'_p$와 $v$ 사이의 부호 있는 거리로 정의됩니다.
+   - object의 움직임이 매우 복잡한 경우, 시뮬레이터가 제공하는 각속도가 매우 노이즈가 심하기 때문에 보상에 이 각속도를 보상함수에 사용할 경우 특정 자세에서 진동하는 등 바람직하지 않은 object 움직임 패턴이 나타날 수 있습니다. 
+   - 이 유한 차분(finite difference)을 보상으로 사용하는 것이 서로 다른 실행에서도 일관된 회전 동작을 생성할 수 있습니다.
+
+2. Penalty of object's velocity $r_{vel}$
+   - 손이 object를 안정적으로 회전시키도록 장려하며, 훈련된 정책의 transferability을 향상시킵니다.
+
+3. Penalty of falling $r_{fall}$
+   - object가 손바닥에서 떨어질 때 적용되는 negative penalty입니다.
+4. Penalty of the work controller $r_{work}$
+   - 컨트롤러의 일(work)의 양을 패널티로 부과합니다. 이 reward term의 torque $\tau$는 $t$에서 PD 컨트롤러가 출력한 토크입니다. 이 페널티는 손가락 움직임의 부드러움을 향상시키는 데 도움을 줍니다.
+
+5. Penalty of torque $r_{torque}$
+   - 큰 토크 출력값에 패널티를 부과합니다.
+
+6. Reward of distance $r_{dist}$
+   - 거리 보상으로, 손끝이 객체에 가까이 가서 상호작용하도록 장려합니다.
+     - $d(x_{\text{tip}}, x_{\text{obj}})$는 손끝 위치 $x_{\text{tip}}$와 객체 위치 $x_{\text{obj}}$ 사이의 거리입니다.
+     - $\epsilon$은 작은 양으로, 분모가 0이 되는 것을 방지합니다.
+     - $c_2$와 $c_3$는 보상의 클리핑 범위를 정의하는 하한과 상한입니다.
+
+### Reset
+
+불필요한 exploration를 줄이고 학습 과정을 가속화하기 위해 object가 초기 위치(즉, 손바닥의 중심)에서 너무 많이 벗어날 경우 에피소드를 리셋합니다. 또한, object의 주요 축이 회전 축에서 너무 많이 벗어날 경우에도 에피소드를 리셋합니다.
 
 
 
 ## Domain Randomization
 
+강화학습의 Sim2Real Gap을 줄이기 위해 학습 단계에서 Domain Randomization을 적용하는데 해당 연구에서는 2가지 Domain Randomization을 진행합니다.
 
+1. **물리적 랜덤화**:
+
+   - rotation하는 object의 초기 위치, 질량, 형태, 마찰을 랜덤화하여 학습된 정책이 다양한 종류의 객체를 처리할 수 있도록 합니다.
+   - PD 컨트롤러의 게인을 랜덤화하여 실제 환경에서 PD 컨트롤러의 불확실성을 모델링합니다.
+   - 각 촉각 센서를 랜덤화하는 것도 고려합니다. 활성화된 접촉 센서(출력이 1인 경우)에 대해, 확률 $p$로 출력을 0으로 뒤집습니다.
+   - 지수 지연 모델(exponential delay)을 통해 접촉 센서의 신호 지연을 모델링합니다.
+
+2. **비물리적 랜덤화**
+
+   - policy의 observation과 출력된 action에 화이트 노이즈를 주입하여 작은 외란에도 강인하도록 만듭니다.
+
+     
 
 ## Training Procedure
 
+Proximal Policy Optimization (PPO) 알고리즘을 사용하며 policy 네트워크와 value 네트워크 모두에 다층 퍼셉트론(MLP)을 사용했습니다.
 
+- **훈련 설정**:
+  - 이점(advantage) 클립 임계값 ϵ=0.2\epsilon = 0.2와 KL 발산 임계값 0.020.02를 사용
+  - 네트워크에서 활성화 함수로 ELU를 사용
+  - 정책 네트워크는 학습 가능한 상태 독립적인 표준편차를 가지는 가우시안 분포를 출력
+- **비대칭 관찰(asymmetric observation)**:
+  - 정책 및 가치 네트워크의 학습 난이도를 줄이기 위해 asymmetric observation 을 사용
+    - **가치 네트워크**: 입력에 접촉력, object의 ground-truth pose, 물리적 파라미터와 같은 특권 정보를 추가
+    - **정책 네트워크**: 현재 상태와 함께 3개의 과거 상태를 입력으로 사용하며, 특권 정보는 접근할 수 없음
+- **시뮬레이션 설정**:
+  - IsaacGym 시뮬레이션에서 시간 간격($dt$)은 0.01667초로 설정하고, 2 sub step을 사용
+  - 8192개의 병렬 환경에서 시뮬레이션을 실행
+  - 정책 네트워크가 출력하는 행동(제어 목표)은 6단계 동안 실행되며, 이는 실제 환경에서 10Hz의 제어 주파수에 해당
 
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/10.jpg" width="100%" />
+<figcaption>Training Process</figcaption>
+</center>
 
 
 # Tactile Dexterous Manipulation System
 
 
-## Setup
-
+## Real-world System Setup
 
 <center>
-<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" alt="22" width="70%" />
-    <figcaption>overview</figcaption>
+<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" width="70%" />
+    <figcaption>Overview</figcaption>
 </center>
+
+하드웨어 구성은 XArm 로봇 팔과 16자유도(16-DOF)를 가진 Allegro Hand에 접촉 센서 배열을 장착한 형태로 이루어져 있습니다. 손바닥과 손가락 끝을 포함한 Allegro Hand의 여러 부위에 부착된 16개의 접촉 센서로 구성됩니다.
+
+사용된 접촉 센서는 외부 힘이 표면에 가해질 때 저항이 변하는 Force-Sensing Resistor(FSR) 기반입니다. STM32F 마이크로컨트롤러를 사용하여 각 센서의 아날로그 전압 신호를 수집하고, 이를 디지털 신호로 변환하여 호스트로 전달합니다. 이 접촉 센서는 연속적인 접촉력 측정을 출력할 수 있지만, 신호는 일반적으로 비선형적이고 노이즈가 많습니다. 따라서 이를 제어에 사용하기 전에 적절한 전처리가 필요합니다. 선택된 임계값 $\theta_{\text{th}}$에 따라 이 측정값을 이진화(binarize)하고 이 신호를 사용합니다.
+
+**이진 신호를 사용하는 장점**:
+
+- 시뮬레이션과 실제 로봇 간의 차이를 줄이고, Sim2Real 전이 절차를 단순화할 수 있습니다.
+- 이진화된 측정값은 임계값을 조정하여 쉽게 보정(calibrate)할 수 있습니다.
+
+## Simulation Setup
+
+이 논문에서는 IsaacGym 시뮬레이터  사용합니다. 각 접촉 센서는 손가락과 손바닥 링크의 고정된 링크로 시뮬레이션됩니다. 
+시뮬레이터는 매 시뮬레이션 단계에서 각 센서 링크에 대한 순 접촉력 $F=[Fx,Fy,Fz]F = [F_x, F_y, F_z]$를 제공합니다. 
+$\|F\|$을 시뮬레이션된 접촉력 측정값으로 사용한 다음, 이 측정값을 다른 임계값 $\tilde{\theta}_{\text{th}}$으로 이진화합니다.
+
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/9.jpg" width="100%" />
+</center>
+
+
+중요한 점은 센서의 부모 링크에서 제공되는 힘은 순 접촉력에 기여하지 않는다는 것입니다. 
+시뮬레이션에서 실제 환경과 유사한 동작을 보장하기 위해 이 센서들의 임계값 $\tilde{\theta}_{\text{th}}$을 조정합니다. 
+시뮬레이션에서는 $\tilde{\theta}_{\text{th}} = 0.01N$을 사용합니다.
+
+
+## Benchmark: In-hand Rotation
+
+이 논문에서는 시스템의 손재주(dexterity)를 연구하기 위해, 시스템을 사용하여 손 안에서 회전하는 작업(`in-hand rotation task`)을 목표로 합니다. 이 task는 object가 손바닥에 초기화된 상태로 시작하며, 로봇 손은 주어진 회전 축을 따라 객체를 회전시켜야 합니다. 손 안에서 객체를 회전하는 동안, object의 움직임은 손끝 회전(`finger-tip rotation`)보다 훨씬 더 복잡하며 특히, 손 안에서 조작하는 동안 객체는 손바닥에서 미끄러지거나 구를 수 있습니다.
+
+이와 같은 복잡한 움직임 패턴 때문에, 성공적인 조작을 위해 촉각 센서나 비전(vision) 시스템의 명시적인 피드백이 필요합니다. 그렇지 않으면, 현재 객체의 상태를 추론할 수 없으며, 객체를 안전하게 밀거나 회전시키는 데 실패할 수 있습니다.
+
+<!--
+
 
 ## Discussion
 
 # Experiments
 
-
+-->
 
 # Reference
 

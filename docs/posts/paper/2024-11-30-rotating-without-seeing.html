@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-11-30">
+<meta name="dcterms.date" content="2024-12-22">
 <meta name="description" content="Towards In-hand Dexterity through Touch">
 
 <title>📃Rotating without Seeing – Curieux.JY</title>
@@ -72,11 +72,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -219,17 +219,19 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#state" id="toc-state" class="nav-link" data-scroll-target="#state"><span class="header-section-number">2.1.1</span> State</a></li>
   <li><a href="#action" id="toc-action" class="nav-link" data-scroll-target="#action"><span class="header-section-number">2.1.2</span> Action</a></li>
+  <li><a href="#reward" id="toc-reward" class="nav-link" data-scroll-target="#reward"><span class="header-section-number">2.1.3</span> Reward</a></li>
+  <li><a href="#reset" id="toc-reset" class="nav-link" data-scroll-target="#reset"><span class="header-section-number">2.1.4</span> Reset</a></li>
   </ul></li>
   <li><a href="#domain-randomization" id="toc-domain-randomization" class="nav-link" data-scroll-target="#domain-randomization"><span class="header-section-number">2.2</span> Domain Randomization</a></li>
   <li><a href="#training-procedure" id="toc-training-procedure" class="nav-link" data-scroll-target="#training-procedure"><span class="header-section-number">2.3</span> Training Procedure</a></li>
   </ul></li>
   <li><a href="#tactile-dexterous-manipulation-system" id="toc-tactile-dexterous-manipulation-system" class="nav-link" data-scroll-target="#tactile-dexterous-manipulation-system"><span class="header-section-number">3</span> Tactile Dexterous Manipulation System</a>
   <ul class="collapse">
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">3.1</span> Setup</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">3.2</span> Discussion</a></li>
+  <li><a href="#real-world-system-setup" id="toc-real-world-system-setup" class="nav-link" data-scroll-target="#real-world-system-setup"><span class="header-section-number">3.1</span> Real-world System Setup</a></li>
+  <li><a href="#simulation-setup" id="toc-simulation-setup" class="nav-link" data-scroll-target="#simulation-setup"><span class="header-section-number">3.2</span> Simulation Setup</a></li>
+  <li><a href="#benchmark-in-hand-rotation" id="toc-benchmark-in-hand-rotation" class="nav-link" data-scroll-target="#benchmark-in-hand-rotation"><span class="header-section-number">3.3</span> Benchmark: In-hand Rotation</a></li>
   </ul></li>
-  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments"><span class="header-section-number">4</span> Experiments</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">5</span> Reference</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">4</span> Reference</a></li>
   </ul>
 </nav>
     </div>
@@ -260,7 +262,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 30, 2024</p>
+      <p class="date">December 22, 2024</p>
     </div>
   </div>
   
@@ -328,7 +330,7 @@ Action이 적용되는 과정
 </figcaption>
 </center>
 <p>아래 그래프는 논문에서 제시한 파라미터(<span class="math inline">\eta</span>, 2 consecutive steps)로 랜덤한 포인트들을 가지고 smoothing하는 모습을 보여줍니다.</p>
-<div id="120e5ae1" class="cell" data-execution_count="1">
+<div id="38f2c786" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -370,36 +372,160 @@ Action이 적용되는 과정
 </div>
 </div>
 </div>
-<p>이렇게 최종적으로 계산된 Action값으로 Hand Agent의 모션이 만들어지게 됩니다.</p>
+<p>이렇게 최종적으로 계산된 Action 값으로 Hand Agent의 모션이 만들어지게 됩니다.</p>
+</section>
+<section id="reward" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="reward"><span class="header-section-number">2.1.3</span> Reward</h3>
+<p>보상함수는 아래와 같이 6개의 term들로 구성되어 있습니다. 각 6개의 reward term들은 linear weighted sum이 되어 해당 timestep에서의 최종 reward가 됩니다.</p>
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/6.jpg" alt="22" width="100%">
+<figcaption>
+Reward Function
+</figcaption>
+</center>
+<ol type="1">
+<li>Reward of rotation <span class="math inline">r_{rot}</span>
+<ul>
+<li>회전 축 <span class="math inline">k</span>의 법선 평면 <span class="math inline">\Pi</span>에서 샘플링된 단위 벡터의 회전 각도 <span class="math inline">\Delta \theta</span>로 정의된 회전 보상입니다.
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/7.jpg" width="100%">
+<figcaption>
+Reward Function
+</figcaption>
+</center></li>
+<li>계산하는 과정
+<ul>
+<li>법선 평면 <span class="math inline">\Pi</span>에서 단위 벡터 <span class="math inline">v</span>를 임의로 샘플링하며, 이 벡터는 object에 부착된 것으로 간주할 수 있습니다.</li>
+<li>다음 상태에서의 해당 벡터 <span class="math inline">v'</span>를 가져와 <span class="math inline">\Pi</span>에 투영(projection)합니다: <span class="math inline">v'_p = \text{Proj}(v', \Pi)</span></li>
+<li><span class="math inline">\Delta \theta \in [-\pi, \pi)</span>는 축 <span class="math inline">k</span>에 대해 <span class="math inline">v'_p</span>와 <span class="math inline">v</span> 사이의 부호 있는 거리로 정의됩니다.</li>
+</ul></li>
+<li>object의 움직임이 매우 복잡한 경우, 시뮬레이터가 제공하는 각속도가 매우 노이즈가 심하기 때문에 보상에 이 각속도를 보상함수에 사용할 경우 특정 자세에서 진동하는 등 바람직하지 않은 object 움직임 패턴이 나타날 수 있습니다.</li>
+<li>이 유한 차분(finite difference)을 보상으로 사용하는 것이 서로 다른 실행에서도 일관된 회전 동작을 생성할 수 있습니다.</li>
+</ul></li>
+<li>Penalty of object’s velocity <span class="math inline">r_{vel}</span>
+<ul>
+<li>손이 object를 안정적으로 회전시키도록 장려하며, 훈련된 정책의 transferability을 향상시킵니다.</li>
+</ul></li>
+<li>Penalty of falling <span class="math inline">r_{fall}</span>
+<ul>
+<li>object가 손바닥에서 떨어질 때 적용되는 negative penalty입니다.</li>
+</ul></li>
+<li>Penalty of the work controller <span class="math inline">r_{work}</span>
+<ul>
+<li>컨트롤러의 일(work)의 양을 패널티로 부과합니다. 이 reward term의 torque <span class="math inline">\tau</span>는 <span class="math inline">t</span>에서 PD 컨트롤러가 출력한 토크입니다. 이 페널티는 손가락 움직임의 부드러움을 향상시키는 데 도움을 줍니다.</li>
+</ul></li>
+<li>Penalty of torque <span class="math inline">r_{torque}</span>
+<ul>
+<li>큰 토크 출력값에 패널티를 부과합니다.</li>
+</ul></li>
+<li>Reward of distance <span class="math inline">r_{dist}</span>
+<ul>
+<li>거리 보상으로, 손끝이 객체에 가까이 가서 상호작용하도록 장려합니다.
+<ul>
+<li><span class="math inline">d(x_{\text{tip}}, x_{\text{obj}})</span>는 손끝 위치 <span class="math inline">x_{\text{tip}}</span>와 객체 위치 <span class="math inline">x_{\text{obj}}</span> 사이의 거리입니다.</li>
+<li><span class="math inline">\epsilon</span>은 작은 양으로, 분모가 0이 되는 것을 방지합니다.</li>
+<li><span class="math inline">c_2</span>와 <span class="math inline">c_3</span>는 보상의 클리핑 범위를 정의하는 하한과 상한입니다.</li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+<section id="reset" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="reset"><span class="header-section-number">2.1.4</span> Reset</h3>
+<p>불필요한 exploration를 줄이고 학습 과정을 가속화하기 위해 object가 초기 위치(즉, 손바닥의 중심)에서 너무 많이 벗어날 경우 에피소드를 리셋합니다. 또한, object의 주요 축이 회전 축에서 너무 많이 벗어날 경우에도 에피소드를 리셋합니다.</p>
 </section>
 </section>
 <section id="domain-randomization" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="domain-randomization"><span class="header-section-number">2.2</span> Domain Randomization</h2>
+<p>강화학습의 Sim2Real Gap을 줄이기 위해 학습 단계에서 Domain Randomization을 적용하는데 해당 연구에서는 2가지 Domain Randomization을 진행합니다.</p>
+<ol type="1">
+<li><p><strong>물리적 랜덤화</strong>:</p>
+<ul>
+<li>rotation하는 object의 초기 위치, 질량, 형태, 마찰을 랜덤화하여 학습된 정책이 다양한 종류의 객체를 처리할 수 있도록 합니다.</li>
+<li>PD 컨트롤러의 게인을 랜덤화하여 실제 환경에서 PD 컨트롤러의 불확실성을 모델링합니다.</li>
+<li>각 촉각 센서를 랜덤화하는 것도 고려합니다. 활성화된 접촉 센서(출력이 1인 경우)에 대해, 확률 <span class="math inline">p</span>로 출력을 0으로 뒤집습니다.</li>
+<li>지수 지연 모델(exponential delay)을 통해 접촉 센서의 신호 지연을 모델링합니다.</li>
+</ul></li>
+<li><p><strong>비물리적 랜덤화</strong></p>
+<ul>
+<li>policy의 observation과 출력된 action에 화이트 노이즈를 주입하여 작은 외란에도 강인하도록 만듭니다.</li>
+</ul></li>
+</ol>
 </section>
 <section id="training-procedure" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="training-procedure"><span class="header-section-number">2.3</span> Training Procedure</h2>
+<p>Proximal Policy Optimization (PPO) 알고리즘을 사용하며 policy 네트워크와 value 네트워크 모두에 다층 퍼셉트론(MLP)을 사용했습니다.</p>
+<ul>
+<li><strong>훈련 설정</strong>:
+<ul>
+<li>이점(advantage) 클립 임계값 ϵ=0.2= 0.2와 KL 발산 임계값 0.020.02를 사용</li>
+<li>네트워크에서 활성화 함수로 ELU를 사용</li>
+<li>정책 네트워크는 학습 가능한 상태 독립적인 표준편차를 가지는 가우시안 분포를 출력</li>
+</ul></li>
+<li><strong>비대칭 관찰(asymmetric observation)</strong>:
+<ul>
+<li>정책 및 가치 네트워크의 학습 난이도를 줄이기 위해 asymmetric observation 을 사용
+<ul>
+<li><strong>가치 네트워크</strong>: 입력에 접촉력, object의 ground-truth pose, 물리적 파라미터와 같은 특권 정보를 추가</li>
+<li><strong>정책 네트워크</strong>: 현재 상태와 함께 3개의 과거 상태를 입력으로 사용하며, 특권 정보는 접근할 수 없음</li>
+</ul></li>
+</ul></li>
+<li><strong>시뮬레이션 설정</strong>:
+<ul>
+<li>IsaacGym 시뮬레이션에서 시간 간격(<span class="math inline">dt</span>)은 0.01667초로 설정하고, 2 sub step을 사용</li>
+<li>8192개의 병렬 환경에서 시뮬레이션을 실행</li>
+<li>정책 네트워크가 출력하는 행동(제어 목표)은 6단계 동안 실행되며, 이는 실제 환경에서 10Hz의 제어 주파수에 해당</li>
+</ul></li>
+</ul>
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/10.jpg" width="100%">
+<figcaption>
+Training Process
+</figcaption>
+</center>
 </section>
 </section>
 <section id="tactile-dexterous-manipulation-system" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Tactile Dexterous Manipulation System</h1>
-<section id="setup" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">3.1</span> Setup</h2>
+<section id="real-world-system-setup" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="real-world-system-setup"><span class="header-section-number">3.1</span> Real-world System Setup</h2>
 <center>
-<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" alt="22" width="70%">
+<img src="../../images/2024-11-23-rotating-without-seeing/flow.png" width="70%">
 <figcaption>
-overview
+Overview
 </figcaption>
 </center>
+<p>하드웨어 구성은 XArm 로봇 팔과 16자유도(16-DOF)를 가진 Allegro Hand에 접촉 센서 배열을 장착한 형태로 이루어져 있습니다. 손바닥과 손가락 끝을 포함한 Allegro Hand의 여러 부위에 부착된 16개의 접촉 센서로 구성됩니다.</p>
+<p>사용된 접촉 센서는 외부 힘이 표면에 가해질 때 저항이 변하는 Force-Sensing Resistor(FSR) 기반입니다. STM32F 마이크로컨트롤러를 사용하여 각 센서의 아날로그 전압 신호를 수집하고, 이를 디지털 신호로 변환하여 호스트로 전달합니다. 이 접촉 센서는 연속적인 접촉력 측정을 출력할 수 있지만, 신호는 일반적으로 비선형적이고 노이즈가 많습니다. 따라서 이를 제어에 사용하기 전에 적절한 전처리가 필요합니다. 선택된 임계값 <span class="math inline">\theta_{\text{th}}</span>에 따라 이 측정값을 이진화(binarize)하고 이 신호를 사용합니다.</p>
+<p><strong>이진 신호를 사용하는 장점</strong>:</p>
+<ul>
+<li>시뮬레이션과 실제 로봇 간의 차이를 줄이고, Sim2Real 전이 절차를 단순화할 수 있습니다.</li>
+<li>이진화된 측정값은 임계값을 조정하여 쉽게 보정(calibrate)할 수 있습니다.</li>
+</ul>
 </section>
-<section id="discussion" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="discussion"><span class="header-section-number">3.2</span> Discussion</h2>
+<section id="simulation-setup" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="simulation-setup"><span class="header-section-number">3.2</span> Simulation Setup</h2>
+<p>이 논문에서는 IsaacGym 시뮬레이터 사용합니다. 각 접촉 센서는 손가락과 손바닥 링크의 고정된 링크로 시뮬레이션됩니다. 시뮬레이터는 매 시뮬레이션 단계에서 각 센서 링크에 대한 순 접촉력 <span class="math inline">F=[Fx,Fy,Fz]F = [F_x, F_y, F_z]</span>를 제공합니다. <span class="math inline">\|F\|</span>을 시뮬레이션된 접촉력 측정값으로 사용한 다음, 이 측정값을 다른 임계값 <span class="math inline">\tilde{\theta}_{\text{th}}</span>으로 이진화합니다.</p>
+<center>
+<img src="../../images/2024-11-30-rotating-without-seeing/9.jpg" width="100%">
+</center>
+<p>중요한 점은 센서의 부모 링크에서 제공되는 힘은 순 접촉력에 기여하지 않는다는 것입니다. 시뮬레이션에서 실제 환경과 유사한 동작을 보장하기 위해 이 센서들의 임계값 <span class="math inline">\tilde{\theta}_{\text{th}}</span>을 조정합니다. 시뮬레이션에서는 <span class="math inline">\tilde{\theta}_{\text{th}} = 0.01N</span>을 사용합니다.</p>
+</section>
+<section id="benchmark-in-hand-rotation" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="benchmark-in-hand-rotation"><span class="header-section-number">3.3</span> Benchmark: In-hand Rotation</h2>
+<p>이 논문에서는 시스템의 손재주(dexterity)를 연구하기 위해, 시스템을 사용하여 손 안에서 회전하는 작업(<code>in-hand rotation task</code>)을 목표로 합니다. 이 task는 object가 손바닥에 초기화된 상태로 시작하며, 로봇 손은 주어진 회전 축을 따라 객체를 회전시켜야 합니다. 손 안에서 객체를 회전하는 동안, object의 움직임은 손끝 회전(<code>finger-tip rotation</code>)보다 훨씬 더 복잡하며 특히, 손 안에서 조작하는 동안 객체는 손바닥에서 미끄러지거나 구를 수 있습니다.</p>
+<p>이와 같은 복잡한 움직임 패턴 때문에, 성공적인 조작을 위해 촉각 센서나 비전(vision) 시스템의 명시적인 피드백이 필요합니다. 그렇지 않으면, 현재 객체의 상태를 추론할 수 없으며, 객체를 안전하게 밀거나 회전시키는 데 실패할 수 있습니다.</p>
+<!--
+
+
+## Discussion
+
+# Experiments
+
+-->
 </section>
 </section>
-<section id="experiments" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Experiments</h1>
-</section>
-<section id="reference" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Reference</h1>
+<section id="reference" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Reference</h1>
 <ul>
 <li><a href="">Original Paper</a></li>
 <li><a href="https://touchdexterity.github.io/">Project Homepage</a></li>
