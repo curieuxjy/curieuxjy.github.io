@@ -1,5 +1,5 @@
 ---
-title: "📃Rotating without Seeing"
+title: "📃Rotating without Seeing 리뷰"
 description: Towards In-hand Dexterity through Touch
 date: "2024-12-22"
 categories: [paper, tactile, rl, hand]
