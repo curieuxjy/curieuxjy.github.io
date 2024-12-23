@@ -1,7 +1,7 @@
 ---
 title: "📝Linx Cheet Sheet"
 toc: true
-date: "2024-12-12"
+date: "2024-12-23"
 description: 자주 사용하는 Commands
 categories: [linux, docker, cheetsheet, 2024]
 format:
@@ -46,7 +46,6 @@ $ sudo systemctl restart docker
     
 - GPU 설정
   - `docker run -it --gpus '"device=0,1,2,3"'`
-  - `docker run -it --gpus 3` (확인해봐야 함)
 
 
 # terminal zsh/bash
@@ -111,12 +110,8 @@ find . -name "*.txt" -delete
   - 선택한 마운트 지점과 그 아래의 모든 마운트 지점에 대한 마운트 유형을 `변경`하려면 `--make-shared` 대신 `--make-r shared` 옵션 사용
 - 중복 생성
   - `mount --bind original-dir dupulicate-dir`
-- 사용
-  ```
-  
-  
-  
-  ```
+- 지우기
+  - `sudo umount duplicate-dir`  
   
 # 원격과 로컬 사이 파일 복사
 

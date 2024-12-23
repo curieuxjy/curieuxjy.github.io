@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-12-12">
+<meta name="dcterms.date" content="2024-12-23">
 <meta name="description" content="자주 사용하는 Commands">
 
 <title>📝Linx Cheet Sheet – Curieux.JY</title>
@@ -72,11 +72,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -207,7 +207,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 12, 2024</p>
+      <p class="date">December 23, 2024</p>
     </div>
   </div>
   
@@ -253,7 +253,6 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li>GPU 설정
 <ul>
 <li><code>docker run -it --gpus '"device=0,1,2,3"'</code></li>
-<li><code>docker run -it --gpus 3</code> (확인해봐야 함)</li>
 </ul></li>
 </ul>
 </section>
@@ -308,23 +307,23 @@ find . -name "*.txt" -delete
 <section id="mount-다중-경로-설정" class="level1">
 <h1>mount 다중 경로 설정</h1>
 <ul>
-<li><p>원래 마운트 지점에서 VFS(가상 파일 시스템) 노드를 생성</p>
+<li>원래 마운트 지점에서 VFS(가상 파일 시스템) 노드를 생성
 <ul>
 <li><code>mount --bind original-dir original-dir</code></li>
 </ul></li>
-<li><p>원래 마운트 지점을 공유로 표시</p>
+<li>원래 마운트 지점을 공유로 표시
 <ul>
 <li><code>mount --make-shared original-dir</code></li>
 <li>선택한 마운트 지점과 그 아래의 모든 마운트 지점에 대한 마운트 유형을 <code>변경</code>하려면 <code>--make-shared</code> 대신 <code>--make-r shared</code> 옵션 사용</li>
 </ul></li>
-<li><p>중복 생성</p>
+<li>중복 생성
 <ul>
 <li><code>mount --bind original-dir dupulicate-dir</code></li>
 </ul></li>
-<li><p>사용</p>
-<pre><code>
-
-</code></pre></li>
+<li>지우기
+<ul>
+<li><code>sudo umount duplicate-dir</code></li>
+</ul></li>
 </ul>
 </section>
 <section id="원격과-로컬-사이-파일-복사" class="level1">
