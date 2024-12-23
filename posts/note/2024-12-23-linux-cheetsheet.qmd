@@ -135,3 +135,25 @@ find . -name "*.txt" -delete
   - `-i`: identity file을 지정해서 사용
   - `-v`: 상세 내용을 보면서 디버깅할 때 사용
   - `-p`: 전송 시 파일의 수정 시간과 권한을 유지
+
+# `.cache` 용량 해결
+
+- pip와 conda의 .cache 삭제
+
+```
+#pip
+pip cache purge
+
+#conda
+conda clean -a
+```
+
+- `.cache` 위치 변경
+
+```
+# .bashrc를 vim으로 열어서 아래 변수를 추가하기 
+export XDG_CACHE_HOME="/{disk_location}/{user_name}/.cache"
+
+# 해당 경로 생성하기
+mkdir -p /{disk_location}/{user_name}/.cache
+```
