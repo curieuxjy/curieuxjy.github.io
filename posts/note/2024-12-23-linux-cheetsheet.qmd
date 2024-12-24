@@ -47,6 +47,9 @@ $ sudo systemctl restart docker
 - GPU 설정
   - `docker run -it --gpus '"device=0,1,2,3"'`
 
+- container를 image로 저장
+  - `docker commit [CONTAINER_ID] [IMAGE_NAME]`
+
 
 # terminal zsh/bash
 ```commandline
@@ -157,3 +160,21 @@ export XDG_CACHE_HOME="/{disk_location}/{user_name}/.cache"
 # 해당 경로 생성하기
 mkdir -p /{disk_location}/{user_name}/.cache
 ```
+
+# vim 편집
+
+- `:%d`: 전체 내용 삭제 (press Esc to ensure you’re in Normal mode first)
+- `i` 입력 후, `Ctrl + Shift + v`: 새로운 내용 붙여넣기
+- `:wq`: 저장 
+- Normal mode shortcuts:
+  - `gg` (go to the first line of the file)
+  - `dG` (delete from current line to the end of the file)
+
+# python module 경로 파악
+```
+import module
+print(module.__file__)
+```
+
+
+

@@ -215,7 +215,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><code>__init__</code>은 인스턴스 초기화 시 실행</li>
 <li><code>__call__</code>은 인스턴스 호출 시 실행</li>
 </ul>
-<div id="266bdc4b" class="cell" data-execution_count="1">
+<div id="38edc877" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> A:</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -247,7 +247,7 @@ my</code></pre>
 <li>데코레이터는 자신이 수식할 함수나 메소드 내부에 받아 놓아야 함. 그러기 위해서 <code>__init__</code>에 데이터 속성 저장.</li>
 <li>데코레이터가 하는 일은 함수를 대리 호출.</li>
 </ul>
-<div id="92106587" class="cell" data-execution_count="2">
+<div id="87a8abc1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> MyDecorator:</span>
 <span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data):</span>
 <span id="cb3-3"><a href="#cb3-3"></a>        <span class="va">self</span>.storage <span class="op">=</span> data</span>

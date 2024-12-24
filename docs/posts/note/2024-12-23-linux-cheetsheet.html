@@ -178,6 +178,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#mount-다중-경로-설정" id="toc-mount-다중-경로-설정" class="nav-link" data-scroll-target="#mount-다중-경로-설정">mount 다중 경로 설정</a></li>
   <li><a href="#원격과-로컬-사이-파일-복사" id="toc-원격과-로컬-사이-파일-복사" class="nav-link" data-scroll-target="#원격과-로컬-사이-파일-복사">원격과 로컬 사이 파일 복사</a></li>
   <li><a href="#cache-용량-해결" id="toc-cache-용량-해결" class="nav-link" data-scroll-target="#cache-용량-해결"><code>.cache</code> 용량 해결</a></li>
+  <li><a href="#vim-편집" id="toc-vim-편집" class="nav-link" data-scroll-target="#vim-편집">vim 편집</a></li>
+  <li><a href="#python-module-경로-파악" id="toc-python-module-경로-파악" class="nav-link" data-scroll-target="#python-module-경로-파악">python module 경로 파악</a></li>
   </ul>
 </nav>
     </div>
@@ -254,6 +256,10 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li>GPU 설정
 <ul>
 <li><code>docker run -it --gpus '"device=0,1,2,3"'</code></li>
+</ul></li>
+<li>container를 image로 저장
+<ul>
+<li><code>docker commit [CONTAINER_ID] [IMAGE_NAME]</code></li>
 </ul></li>
 </ul>
 </section>
@@ -381,6 +387,24 @@ export XDG_CACHE_HOME="/{disk_location}/{user_name}/.cache"
 
 # 해당 경로 생성하기
 mkdir -p /{disk_location}/{user_name}/.cache</code></pre>
+</section>
+<section id="vim-편집" class="level1">
+<h1>vim 편집</h1>
+<ul>
+<li><code>:%d</code>: 전체 내용 삭제 (press Esc to ensure you’re in Normal mode first)</li>
+<li><code>i</code> 입력 후, <code>Ctrl + Shift + v</code>: 새로운 내용 붙여넣기</li>
+<li><code>:wq</code>: 저장</li>
+<li>Normal mode shortcuts:
+<ul>
+<li><code>gg</code> (go to the first line of the file)</li>
+<li><code>dG</code> (delete from current line to the end of the file)</li>
+</ul></li>
+</ul>
+</section>
+<section id="python-module-경로-파악" class="level1">
+<h1>python module 경로 파악</h1>
+<pre><code>import module
+print(module.__file__)</code></pre>
 
 
 </section>
