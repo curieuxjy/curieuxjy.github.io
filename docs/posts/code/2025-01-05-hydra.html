@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-12-23">
-<meta name="description" content="자주 사용하는 Commands">
+<meta name="dcterms.date" content="2025-01-05">
+<meta name="description" content="여러 실험 파라미터들을 관리해주는 Hydra">
 
-<title>📝Linx Cheet Sheet – Curieux.JY</title>
+<title>👩‍💻Hydra로 실험관리 하기 – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,11 +38,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -169,15 +135,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#library-경로-설정" id="toc-library-경로-설정" class="nav-link active" data-scroll-target="#library-경로-설정">library 경로 설정</a></li>
-  <li><a href="#gpu-memory-해제" id="toc-gpu-memory-해제" class="nav-link" data-scroll-target="#gpu-memory-해제">GPU Memory 해제</a></li>
-  <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
-  <li><a href="#terminal-zshbash" id="toc-terminal-zshbash" class="nav-link" data-scroll-target="#terminal-zshbash">terminal zsh/bash</a></li>
-  <li><a href="#용량-확인" id="toc-용량-확인" class="nav-link" data-scroll-target="#용량-확인">용량 확인</a></li>
-  <li><a href="#파일-찾기" id="toc-파일-찾기" class="nav-link" data-scroll-target="#파일-찾기">파일 찾기</a></li>
-  <li><a href="#mount-다중-경로-설정" id="toc-mount-다중-경로-설정" class="nav-link" data-scroll-target="#mount-다중-경로-설정">mount 다중 경로 설정</a></li>
-  <li><a href="#원격과-로컬-사이-파일-복사" id="toc-원격과-로컬-사이-파일-복사" class="nav-link" data-scroll-target="#원격과-로컬-사이-파일-복사">원격과 로컬 사이 파일 복사</a></li>
-  <li><a href="#cache-용량-해결" id="toc-cache-용량-해결" class="nav-link" data-scroll-target="#cache-용량-해결"><code>.cache</code> 용량 해결</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#exampless" id="toc-exampless" class="nav-link" data-scroll-target="#exampless">Exampless</a>
+  <ul class="collapse">
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -186,18 +148,16 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">📝Linx Cheet Sheet</h1>
+<h1 class="title">👩‍💻Hydra로 실험관리 하기</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">linux</div>
-    <div class="quarto-category">docker</div>
-    <div class="quarto-category">cheetsheet</div>
-    <div class="quarto-category">2024</div>
+    <div class="quarto-category">hydra</div>
+    <div class="quarto-category">code</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    자주 사용하는 Commands
+    여러 실험 파라미터들을 관리해주는 Hydra
   </div>
 </div>
 
@@ -208,7 +168,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 23, 2024</p>
+      <p class="date">January 5, 2025</p>
     </div>
   </div>
   
@@ -220,169 +180,28 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
-<section id="library-경로-설정" class="level1">
-<h1>library 경로 설정</h1>
-<blockquote class="blockquote">
-<p>conda env lib 연결시</p>
-</blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/usr/work/mylib</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>vi ~/.bashrc (파일명 앞의 .은 숨김파일을 의미)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>export LD_LIBRARY_PATH=/home/user/work/mylib:${LD_LIBRARY_PATH}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 한다. 이를 위해 여러가지 방법이 있지만, 이번 포스팅에서는 FacebookResearch에서 만든 <a href="https://hydra.cc/">Hydra</a>를 사용해보자 합니다.</p>
+<center>
+<img src="https://hydra.cc/img/logo.svg" width="60%">
+</center>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 </section>
-<section id="gpu-memory-해제" class="level1">
-<h1>GPU Memory 해제</h1>
-<blockquote class="blockquote">
-<p>프로세스가 죽지 않을때 강제 종료</p>
-</blockquote>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기</span>
-<span id="cb2-2"><a href="#cb2-2"></a>sudo kill -9 [ID_NUMBER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="docker" class="level1">
-<h1>Docker</h1>
+<section id="exampless" class="level1">
+<h1>Exampless</h1>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
 <ul>
-<li><code>docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].</code></li>
-<li>nvidia-container-toolkit 설치</li>
+<li><p>https://github.com/facebookresearch/hydra</p></li>
+<li><p>https://only-wanna.tistory.com/entry/Hydra-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%A0%95%EB%A6%AC</p></li>
+<li><p>https://lucaseo.github.io/posts/2021-11-07-hydra-for-machine-learning/</p></li>
+<li><p>https://only-wanna.tistory.com/entry/Hydra-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%A0%95%EB%A6%AC</p></li>
+<li><p>https://www.sscardapane.it/tutorials/hydra-tutorial/</p></li>
+<li><p>https://github.com/sscardapane/hydra-tutorial</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \</span>
-<span id="cb3-2"><a href="#cb3-2"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \</span>
-<span id="cb3-3"><a href="#cb3-3"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list</span>
-<span id="cb3-4"><a href="#cb3-4"></a>$ sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span>
-<span id="cb3-5"><a href="#cb3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6"></a>$ sudo systemctl restart docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li>GPU 설정
-<ul>
-<li><code>docker run -it --gpus '"device=0,1,2,3"'</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="terminal-zshbash" class="level1">
-<h1>terminal zsh/bash</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>chsh -s bin/bash</span>
-<span id="cb4-2"><a href="#cb4-2"></a>chsh -s bin/zsh</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>(@terminal)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>/bin/bash</span>
-<span id="cb4-6"><a href="#cb4-6"></a>/bin/zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="용량-확인" class="level1">
-<h1>용량 확인</h1>
-<pre><code>df -h</code></pre>
-<ul>
-<li>해당 경로에 있는 모든 파일과 폴더들을 용량 단위로 표기</li>
-<li>폴더가 1 순위, 파일이 2 순위로 나열</li>
-<li>경로에 있는 모든 폴더들과 각 폴더내에 있는 파일들을 모두 표기</li>
-</ul>
-<pre><code>du -ch [path] | sort -h</code></pre>
-<ul>
-<li>해당 경로의 폴더 기준 트리 구조의 깊이 1만큼의 수준까지 탐색</li>
-<li>용량이 큰 폴더가 아래로, 가장 용량이 큰 10개만 보임</li>
-</ul>
-<pre><code>du -ch [path] --max-depth=1 | sort -h | tail -10</code></pre>
-<ul>
-<li>현재 경로의 파일 용량</li>
-</ul>
-<pre><code>ls -lh</code></pre>
-</section>
-<section id="파일-찾기" class="level1">
-<h1>파일 찾기</h1>
-<pre><code>find [옵션] [경로] [표현식]
-
-# 현재 위치에서 log가 들어가는 파일 모두 찾기
-find . -name "*log*"
-
-# 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제
-find . -name "*.txt" -delete
-</code></pre>
-<ul>
-<li>options
-<ul>
-<li><code>P</code> : 심볼릭 링크를 따라가지 않고, 심볼릭 링크 자체 정보 사용.</li>
-<li><code>L</code> : 심볼릭 링크에 연결된 파일 정보 사용.</li>
-<li><code>H</code> : 심볼릭 링크를 따라가지 않으나, Command Line Argument를 처리할 땐 예외.</li>
-<li><code>D</code> : 디버그 메시지 출력.</li>
-</ul></li>
-</ul>
-</section>
-<section id="mount-다중-경로-설정" class="level1">
-<h1>mount 다중 경로 설정</h1>
-<ul>
-<li>원래 마운트 지점에서 VFS(가상 파일 시스템) 노드를 생성
-<ul>
-<li><code>mount --bind original-dir original-dir</code></li>
-</ul></li>
-<li>원래 마운트 지점을 공유로 표시
-<ul>
-<li><code>mount --make-shared original-dir</code></li>
-<li>선택한 마운트 지점과 그 아래의 모든 마운트 지점에 대한 마운트 유형을 <code>변경</code>하려면 <code>--make-shared</code> 대신 <code>--make-r shared</code> 옵션 사용</li>
-</ul></li>
-<li>중복 생성
-<ul>
-<li><code>mount --bind original-dir dupulicate-dir</code></li>
-</ul></li>
-<li>지우기
-<ul>
-<li><code>sudo umount duplicate-dir</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="원격과-로컬-사이-파일-복사" class="level1">
-<h1>원격과 로컬 사이 파일 복사</h1>
-<blockquote class="blockquote">
-<p><code>scp</code> 사용. <code>scp [options] [source] [target]</code></p>
-</blockquote>
-<ul>
-<li>로컬에서 원격으로
-<ul>
-<li><code>scp [source_path] [User]@[IP]:[target_path]</code></li>
-<li><code>scp /media/avery/source/test.txt avery@xxx.xx.x.xxx:mnt/</code></li>
-</ul></li>
-<li>원격에서 로컬로
-<ul>
-<li><code>scp [User]@[IP]:[source_path] [target_path]</code></li>
-<li><code>scp avery@xxx.xx.x.xxx:mnt/test.txt /home/avery/Documents</code></li>
-</ul></li>
-<li>원격(A User)에서 원격(B User)으로
-<ul>
-<li><code>scp [User]@[IP]:[source_path] [User]@[IP]:[target_path]</code></li>
-<li><code>scp ai@xxx.xx.x.xxx:mnt/test.txt avery@xxx.xx.x.xxx:/home/avery/Documents</code></li>
-</ul></li>
-<li>복수의 파일 전송
-<ul>
-<li>여러 경로를 <code>" "</code>을 이용하여 묶어줌</li>
-<li><code>scp [options] [User]@[IP]:"[file_1] [file_2]" [target_path]</code></li>
-</ul></li>
-<li>Options
-<ul>
-<li><code>-r</code>: 폴더를 복사할 때 사용(전송 대상을 폴더로 지정). 모든 폴더들을 재귀적으로 복사</li>
-<li><code>-P</code>: ssh 포트 지정</li>
-<li><code>-i</code>: identity file을 지정해서 사용</li>
-<li><code>-v</code>: 상세 내용을 보면서 디버깅할 때 사용</li>
-<li><code>-p</code>: 전송 시 파일의 수정 시간과 권한을 유지</li>
-</ul></li>
-</ul>
-</section>
-<section id="cache-용량-해결" class="level1">
-<h1><code>.cache</code> 용량 해결</h1>
-<ul>
-<li>pip와 conda의 .cache 삭제</li>
-</ul>
-<pre><code>#pip
-pip cache purge
-
-#conda
-conda clean -a</code></pre>
-<ul>
-<li><code>.cache</code> 위치 변경</li>
-</ul>
-<pre><code># .bashrc를 vim으로 열어서 아래 변수를 추가하기 
-export XDG_CACHE_HOME="/{disk_location}/{user_name}/.cache"
-
-# 해당 경로 생성하기
-mkdir -p /{disk_location}/{user_name}/.cache</code></pre>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

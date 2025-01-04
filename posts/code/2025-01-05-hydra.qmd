@@ -1,7 +1,7 @@
 ---
 title: "👩‍💻Hydra로 실험관리 하기"
 toc: true
-date: "2024-12-20"
+date: "2025-01-05"
 description: 여러 실험 파라미터들을 관리해주는 Hydra
 categories: [hydra, code]
 execute:
@@ -14,9 +14,12 @@ ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 한다. �
 <img src="https://hydra.cc/img/logo.svg" width="60%" />
 </center>
 
-# 
+# Introduction
+
+# Exampless
 
 ### Reference 
+
 - https://github.com/facebookresearch/hydra
 
 - https://only-wanna.tistory.com/entry/Hydra-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%A0%95%EB%A6%AC

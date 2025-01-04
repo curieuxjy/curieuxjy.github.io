@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/code/2025-01-05-hydra.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
-      "/posts/code/hydra.html",
       "/posts/paper/2024-11-10-ipo.html",
       "/posts/paper/2024-03-17-vcgs.html",
       "/posts/code/2024-01-21-quarto-advanced.html",
@@ -32,8 +32,8 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/code/2025-01-05-hydra.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
-      "/posts/code/hydra.html",
       "/posts/paper/2024-11-10-ipo.html",
       "/posts/paper/2024-03-17-vcgs.html",
       "/posts/code/2024-01-21-quarto-advanced.html",
