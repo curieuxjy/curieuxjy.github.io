@@ -1,9 +1,9 @@
 ---
 title: "📝Linx Cheet Sheet"
 toc: true
-date: "2024-12-23"
+date: "2025-01-06"
 description: 자주 사용하는 Commands
-categories: [linux, docker, cheetsheet, 2024]
+categories: [linux, docker, cheetsheet, 2025]
 format:
   html:
     code-fold: true
@@ -103,6 +103,12 @@ find . -name "*.txt" -delete
     - `L` : 심볼릭 링크에 연결된 파일 정보 사용.
     - `H` : 심볼릭 링크를 따라가지 않으나, Command Line Argument를 처리할 땐 예외.
     - `D` : 디버그 메시지 출력.
+
+# 폴더나 파일 갯수 찾기
+
+- 현재 위치에서의 **폴더** 개수 `ls -l | grep ^d | wc -l`
+- 현재 위치에서의 **파일** 개수 `ls -l | grep ^- | wc -l`
+- 현재 폴더의 하위 파일 개수 `find . -type f | wc -l`
 
 # mount 다중 경로 설정
 
