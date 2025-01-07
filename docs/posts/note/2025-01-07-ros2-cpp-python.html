@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-01-07">
+<meta name="description" content="ROS2의 패키지를 C++과 Python 혼합하여 만들기">
+
+<title>📝ROS2 C++과 Python 혼합 패키지 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ros2-cpp-package-만들기" id="toc-ros2-cpp-package-만들기" class="nav-link active" data-scroll-target="#ros2-cpp-package-만들기">1. ROS2 Cpp package 만들기</a></li>
+  <li><a href="#c-node-header-추가하기" id="toc-c-node-header-추가하기" class="nav-link" data-scroll-target="#c-node-header-추가하기">2. C++ node + header 추가하기</a></li>
+  <li><a href="#python-노드와-모듈-추가하기" id="toc-python-노드와-모듈-추가하기" class="nav-link" data-scroll-target="#python-노드와-모듈-추가하기">3. Python 노드와 모듈 추가하기</a>
+  <ul class="collapse">
+  <li><a href="#recap-ros2-package-architecture" id="toc-recap-ros2-package-architecture" class="nav-link" data-scroll-target="#recap-ros2-package-architecture">Recap ROS2 Package Architecture</a></li>
+  </ul></li>
+  <li><a href="#package.xml-정리하기" id="toc-package.xml-정리하기" class="nav-link" data-scroll-target="#package.xml-정리하기">4. <code>package.xml</code> 정리하기</a></li>
+  <li><a href="#cmakelists.txt-정리하기" id="toc-cmakelists.txt-정리하기" class="nav-link" data-scroll-target="#cmakelists.txt-정리하기">5. <code>CMakeLists.txt</code> 정리하기</a></li>
+  <li><a href="#ros2-패키지-compile" id="toc-ros2-패키지-compile" class="nav-link" data-scroll-target="#ros2-패키지-compile">6. ROS2 패키지 Compile</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📝ROS2 C++과 Python 혼합 패키지</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">ros2</div>
+    <div class="quarto-category">2025</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    ROS2의 패키지를 C++과 Python 혼합하여 만들기
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>ROS2 공식 문서에서는 C++와 Python Node를 별개로 만드는 튜토리얼과 설명만 있기 때문에 C++와 Python 모두 사용하여 노드를 만들고 하나의 ROS2 패키지로 만들기 위한 방법에 대해 알아보겠습니다. 각 단계마다 변경되는 사항에 대해서는 🟢로 표시되어 있으니 단계를 넘어갈때마다 확인해보시기 바랍니다.</p>
+<section id="ros2-cpp-package-만들기" class="level1">
+<h1>1. ROS2 Cpp package 만들기</h1>
+<p>ROS2 패키지를 만들 <code>src</code> 폴더에서 스탠다드 C++ package를 만들어 줍니다. (<a href="https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html#create-a-package">official docs</a>와 동일)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>$ cd ~<span class="at">/ros2_ws/src</span>/</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>$ ros2 pkg create my_cpp_py_pkg -<span class="at">-build-type</span> ament_cmake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>ros2 pkg create</code>: 패키지 생성 명령어</li>
+<li><code>my_cpp_py_pkg</code>: 패키지 이름</li>
+<li><code>--build-type ament_cmake</code>: 스탠다드 C++ package 형식으로 패키지틀 생성</li>
+</ul>
+<p>그러면 아래와 같이 폴더와 파일 구조들이 생성됩니다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_cpp_py_pkg/</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>├── CMakeLists.txt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>├── include</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>│   └── my_cpp_py_pkg</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>├── package.xml</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>└── src</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="c-node-header-추가하기" class="level1">
+<h1>2. C++ node + header 추가하기</h1>
+<p><code>my_cpp_py_pkg/src/</code> 폴더에 <code>.cpp</code> 소스 코드들을 추가합니다. (<code>cpp_node.cpp</code>) <code>my_cpp_py_pkg/include/cpp_pkg</code> 폴더에 <code>.hpp</code> 소스 코드들을 추가합니다. (<code>cpp_header.hpp</code>)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$ cd my_cpp_py_pkg/</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>$ touch src<span class="at">/cpp_node</span>.cpp</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>$ touch include<span class="at">/my_cpp_py_pkg/cpp_header</span>.hpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>cpp_header.hpp</code>코드에는 <a href="https://roboticsbackend.com/write-minimal-ros2-cpp-node/">가장 간단한 c++ code</a>를 추가합니다. 아래 코드는 단순하게 logger로 “TEST Cpp node”라는 문장을 출력합니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cpp_header.hpp</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="cpp_header.hpp"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">class</span> MyCppNode <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="kw">public</span><span class="op">:</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>        MyCppNode<span class="op">()</span> <span class="op">:</span> Node<span class="op">(</span><span class="st">"my_cpp_node_name"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>            RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"TEST Cpp node"</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>        <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>    </span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="kw">private</span><span class="op">:</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>cpp_node.cpp</code>코드에는 아래와 같이 코드를 작성합니다. <code>my_cpp_py_pkg/cpp_header.hpp</code> 헤더가 추가되었고, 헤더에 있는 <code>MyCppNode</code> 노드가 코드에 있는 것을 확인할 수 있습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cpp_node.cpp</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="cpp_node.cpp"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="pp">#include </span><span class="im">"my_cpp_py_pkg/cpp_header.hpp"</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>argv<span class="op">)</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>    rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="kw">auto</span> node <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>MyCppNode<span class="op">&gt;();</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    rclcpp<span class="op">::</span>spin<span class="op">(</span>node<span class="op">);</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    rclcpp<span class="op">::</span>shutdown<span class="op">();</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>여기까지 완료했을때, 폴더와 파일 구조는 아래와 같습니다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_cpp_py_pkg/</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>├── CMakeLists.txt</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>├── include</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>│   └── my_cpp_py_pkg </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>│       └── cpp_header.hpp 🟢</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>├── package.xml</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>└── src</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    └── cpp_node.cpp 🟢</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="python-노드와-모듈-추가하기" class="level1">
+<h1>3. Python 노드와 모듈 추가하기</h1>
+<p>Python package 폴더의 이름은 <code>my_cpp_py_pkg</code>로 만들어 줍니다. 이때 “my_cpp_py_pkg”이라는 네이밍이 헷갈릴 수 있지만 하나의 ROS2 패키지로 인식하게끔 하기위해 이름을 맞춰주는 과정이므로 꼭 “my_cpp_py_pkg”이름으로 폴더를 만들어야 합니다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>$ mkdir my_cpp_py_pkg</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>$ touch my_cpp_py_pkg/__init__.py</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>$ cd my_cpp_py_pkg</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>$ touch module_to_import.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>여기까지 진행했을때 파일과 폴더 구조는 아래와 같습니다.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_cpp_py_pkg/</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>├── CMakeLists.txt</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>├── include</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>│   └── my_cpp_py_pkg </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>│       └── cpp_header.hpp </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>├── my_cpp_py_pkg 🟢</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>│   ├── __init__.py 🟢</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>│   └── module_to_import.py 🟢</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>├── package.xml</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>└── src</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    └── cpp_node.cpp </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>module_to_import.py</code> 파일에는 아래와 같은 Python 코드를 작성합니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>module_to_import.py</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" data-filename="module_to_import.py"><pre class="sourceCode numberSource py number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="im">import</span> rclpy</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="im">from</span> rclpy.node <span class="im">import</span> Node</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="kw">class</span> MyPyNode(Node):</span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb9-8"><a href="#cb9-8"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="st">"my_py_node"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9"></a>        <span class="va">self</span>.get_logger().info(<span class="st">"TEST Python node"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>최상위 <code>my_cpp_py_pkg</code>에 <code>scripts</code> 폴더를 추가합니다. <code>scripts</code> 폴더에는 python ros2 node 소스코드들이 작성됩니다. 이때 반드시 <code>py_node.py</code>가 실행 가능할 수 있도록 <code>chmod +x</code>명령어를 통해 파일 모드를 변경합니다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>$ mkdir scripts/</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>$ cd scripts/</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>$ touch py_node.py</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>$ chmod +x py_node.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>그러면 아래와 같은 구조가 됩니다.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>my_cpp_py_pkg/</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>├── CMakeLists.txt</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>├── include</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>│   └── my_cpp_py_pkg </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>│       └── cpp_header.hpp </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>├── my_cpp_py_pkg</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>│   ├── __init__.py </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>│   └── module_to_import.py</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>├── package.xml</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>├── scripts 🟢</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>│   └── py_node.py 🟢</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>└── src</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    └── cpp_node.cpp </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>py_node.py</code>에는 아래와 같은 코드를 작성합니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>py_node.py</strong></pre>
+</div>
+<div class="sourceCode" id="cb12" data-filename="py_node.py"><pre class="sourceCode numberSource py number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="im">import</span> rclpy</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="im">from</span> my_cpp_py_pkg.module_to_import <span class="im">import</span> MyPyNode</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="kw">def</span> main(args<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb12-7"><a href="#cb12-7"></a>    rclpy.init(args<span class="op">=</span>args)</span>
+<span id="cb12-8"><a href="#cb12-8"></a>    node <span class="op">=</span> MyPyNode()</span>
+<span id="cb12-9"><a href="#cb12-9"></a>    rclpy.spin(node)</span>
+<span id="cb12-10"><a href="#cb12-10"></a>    rclpy.shutdown()</span>
+<span id="cb12-11"><a href="#cb12-11"></a>    </span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb12-13"><a href="#cb12-13"></a>    main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="recap-ros2-package-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="recap-ros2-package-architecture">Recap ROS2 Package Architecture</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>my_cpp_py_pkg/</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>🟡 패키지 정보, 구성, 및 컴파일</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>├── CMakeLists.txt</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>├── package.xml</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>🟡 Python 관련 Stuff</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>├── my_cpp_py_pkg</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>│   ├── __init__.py</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>│   └── module_to_import.py</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>├── scripts</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>│   └── py_node.py</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>🟡 Cpp 관련 Stuff</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>├── include</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>│   └── my_cpp_py_pkg</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>│       └── cpp_header.hpp</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>└── src</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    └── cpp_node.cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="package.xml-정리하기" class="level1">
+<h1>4. <code>package.xml</code> 정리하기</h1>
+<p><a href="https://curieuxjy.github.io/posts/note/2025-01-07-ros2-cpp-python.html#ros2-cpp-package-만들기">1단계</a>에서 자동으로 <code>package.xml</code>을 만들었고 해당 내용은 아래와 같았습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>package.xml</strong></pre>
+</div>
+<div class="sourceCode" id="cb14" data-filename="package.xml"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="fu">?&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">&lt;?xml-model</span> href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"<span class="fu">?&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>&lt;<span class="kw">package</span><span class="ot"> format=</span><span class="st">"3"</span>&gt;</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  &lt;<span class="kw">name</span>&gt;my_cpp_py_pkg&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  &lt;<span class="kw">version</span>&gt;0.0.0&lt;/<span class="kw">version</span>&gt;</span>
+<span id="cb14-6"><a href="#cb14-6"></a>  &lt;<span class="kw">description</span>&gt;TODO: Package description&lt;/<span class="kw">description</span>&gt;</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  &lt;<span class="kw">maintainer</span><span class="ot"> email=</span><span class="st">"your_email_address&gt;avery</span><span class="er">&lt;</span><span class="st">/maintainer&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="st">  </span><span class="er">&lt;</span><span class="st">license&gt;TODO: License declaration</span><span class="er">&lt;</span><span class="st">/license&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="st">  </span><span class="er">&lt;</span><span class="st">buildtool_depend&gt;ament_cmake</span><span class="er">&lt;</span><span class="st">/buildtool_depend&gt;</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="st">  </span><span class="er">&lt;</span><span class="st">test_depend&gt;ament_lint_auto</span><span class="er">&lt;</span><span class="st">/test_depend&gt;</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="st">  </span><span class="er">&lt;</span><span class="st">test_depend&gt;ament_lint_common</span><span class="er">&lt;</span><span class="st">/test_depend&gt;</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="st">  </span><span class="er">&lt;</span><span class="st">export&gt;</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="st">    </span><span class="er">&lt;</span><span class="st">build_type&gt;ament_cmake</span><span class="er">&lt;</span><span class="st">/build_type&gt;</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="st">  </span><span class="er">&lt;</span><span class="st">/export&gt;</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a><span class="er">&lt;</span><span class="st">/package&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>여기에 Python build와 관련된 사항들을 추가합니다. - <code>&lt;buildtool_depend&gt;ament_cmake_python&lt;/buildtool_depend&gt;</code></p>
+<p>또한 필요한 패키지들을 추가합니다. - <code>&lt;depend&gt;rclcpp&lt;/depend&gt;</code> - <code>&lt;depend&gt;rclpy&lt;/depend&gt;</code></p>
+<p>최종 수정 <code>package.xml</code> 파일은 아래와 같습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>package.xml</strong></pre>
+</div>
+<div class="sourceCode" id="cb15" data-filename="package.xml"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="fu">?&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">&lt;?xml-model</span> href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"<span class="fu">?&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>&lt;<span class="kw">package</span><span class="ot"> format=</span><span class="st">"3"</span>&gt;</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  &lt;<span class="kw">name</span>&gt;my_cpp_py_pkg&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  &lt;<span class="kw">version</span>&gt;0.0.0&lt;/<span class="kw">version</span>&gt;</span>
+<span id="cb15-6"><a href="#cb15-6"></a>  &lt;<span class="kw">description</span>&gt;TODO: Package description&lt;/<span class="kw">description</span>&gt;</span>
+<span id="cb15-7"><a href="#cb15-7"></a>  &lt;<span class="kw">maintainer</span><span class="ot"> email=</span><span class="st">"curieuxjy@gmail.com"</span>&gt;avery&lt;/<span class="kw">maintainer</span>&gt;</span>
+<span id="cb15-8"><a href="#cb15-8"></a>  &lt;<span class="kw">license</span>&gt;TODO: License declaration&lt;/<span class="kw">license</span>&gt;</span>
+<span id="cb15-9"><a href="#cb15-9"></a></span>
+<span id="cb15-10"><a href="#cb15-10"></a>  &lt;<span class="kw">buildtool_depend</span>&gt;ament_cmake&lt;/<span class="kw">buildtool_depend</span>&gt; </span>
+<span id="cb15-11"><a href="#cb15-11"></a>  &lt;<span class="kw">buildtool_depend</span>&gt;ament_cmake_python&lt;/<span class="kw">buildtool_depend</span>&gt; 🟢</span>
+<span id="cb15-12"><a href="#cb15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a>  &lt;<span class="kw">depend</span>&gt;rclcpp&lt;/<span class="kw">depend</span>&gt; 🟢</span>
+<span id="cb15-14"><a href="#cb15-14"></a>  &lt;<span class="kw">depend</span>&gt;rclpy&lt;/<span class="kw">depend</span>&gt; 🟢</span>
+<span id="cb15-15"><a href="#cb15-15"></a></span>
+<span id="cb15-16"><a href="#cb15-16"></a>  &lt;<span class="kw">test_depend</span>&gt;ament_lint_auto&lt;/<span class="kw">test_depend</span>&gt;</span>
+<span id="cb15-17"><a href="#cb15-17"></a>  &lt;<span class="kw">test_depend</span>&gt;ament_lint_common&lt;/<span class="kw">test_depend</span>&gt;</span>
+<span id="cb15-18"><a href="#cb15-18"></a></span>
+<span id="cb15-19"><a href="#cb15-19"></a>  &lt;<span class="kw">export</span>&gt;</span>
+<span id="cb15-20"><a href="#cb15-20"></a>    &lt;<span class="kw">build_type</span>&gt;ament_cmake&lt;/<span class="kw">build_type</span>&gt;</span>
+<span id="cb15-21"><a href="#cb15-21"></a>  &lt;/<span class="kw">export</span>&gt;</span>
+<span id="cb15-22"><a href="#cb15-22"></a>&lt;/<span class="kw">package</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cmakelists.txt-정리하기" class="level1">
+<h1>5. <code>CMakeLists.txt</code> 정리하기</h1>
+<p><a href="https://curieuxjy.github.io/posts/note/2025-01-07-ros2-cpp-python.html#ros2-cpp-package-만들기">1단계</a>에서 자동으로 <code>CMakeLists.txt</code>을 만들었고 해당 내용은 아래와 같았습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>CMakeLists.txt</strong></pre>
+</div>
+<div class="sourceCode" id="cb16" data-filename="CMakeLists.txt"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1"></a>cmake_minimum_required(VERSION 3.8)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>project(my_cpp_py_pkg)</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a>if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  add_compile_options(-Wall -Wextra -Wpedantic)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>endif()</span>
+<span id="cb16-7"><a href="#cb16-7"></a></span>
+<span id="cb16-8"><a href="#cb16-8"></a># find dependencies</span>
+<span id="cb16-9"><a href="#cb16-9"></a>find_package(ament_cmake REQUIRED)</span>
+<span id="cb16-10"><a href="#cb16-10"></a># uncomment the following section in order to fill in</span>
+<span id="cb16-11"><a href="#cb16-11"></a># further dependencies manually.</span>
+<span id="cb16-12"><a href="#cb16-12"></a># find_package(&lt;dependency&gt; REQUIRED)</span>
+<span id="cb16-13"><a href="#cb16-13"></a></span>
+<span id="cb16-14"><a href="#cb16-14"></a>if(BUILD_TESTING)</span>
+<span id="cb16-15"><a href="#cb16-15"></a>  find_package(ament_lint_auto REQUIRED)</span>
+<span id="cb16-16"><a href="#cb16-16"></a>  # the following line skips the linter which checks for copyrights</span>
+<span id="cb16-17"><a href="#cb16-17"></a>  # comment the line when a copyright and license is added to all source files</span>
+<span id="cb16-18"><a href="#cb16-18"></a>  set(ament_cmake_copyright_FOUND TRUE)</span>
+<span id="cb16-19"><a href="#cb16-19"></a>  # the following line skips cpplint (only works in a git repo)</span>
+<span id="cb16-20"><a href="#cb16-20"></a>  # comment the line when this package is in a git repo and when</span>
+<span id="cb16-21"><a href="#cb16-21"></a>  # a copyright and license is added to all source files</span>
+<span id="cb16-22"><a href="#cb16-22"></a>  set(ament_cmake_cpplint_FOUND TRUE)</span>
+<span id="cb16-23"><a href="#cb16-23"></a>  ament_lint_auto_find_test_dependencies()</span>
+<span id="cb16-24"><a href="#cb16-24"></a>endif()</span>
+<span id="cb16-25"><a href="#cb16-25"></a></span>
+<span id="cb16-26"><a href="#cb16-26"></a>ament_package()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>default 내용에서 <strong>변경해야 하는 사항들</strong>은 아래와 같습니다.</p>
+<ol type="1">
+<li><strong>필요한 패키지들</strong>을 찾습니다.
+<ul>
+<li><code>find_package(ament_cmake REQUIRED)</code></li>
+<li><code>find_package(ament_cmake_python REQUIRED)</code></li>
+<li><code>find_package(rclcpp REQUIRED)</code></li>
+<li><code>find_package(rclpy REQUIRED)</code></li>
+</ul></li>
+<li>C++ 소스 코드들이 있는 <strong>폴더</strong>를 포함시켜줍니다.
+<ul>
+<li><code>include_directories(include)</code>
+<ul>
+<li><code>cpp_node.cpp</code> 파일에서 <code>#include "cpp_pkg/cpp_header.hpp"</code>을 가능하게 해줍니다. <code>include</code>라는 폴더내에 <code>my_cpp_py_pkg/cpp_header.hpp</code>가 있기 때문입니다.</li>
+</ul></li>
+</ul></li>
+<li>C++ <strong>실행</strong> 코드들을 명시해줍니다. (Compile)</li>
+</ol>
+<ul>
+<li><code>add_executable(cpp_exe src/cpp_node.cpp)</code></li>
+<li><code>ament_target_dependencies(cpp_exe rclcpp)</code></li>
+</ul>
+<ol start="4" type="1">
+<li><p>C++ 실행 파일들을 <strong>설치</strong>해주는 부분을 추가합니다.</p>
+<ul>
+<li><code>install(TARGETS   cpp_exe   DESTINATION lib/${PROJECT_NAME}/cpp_pkg )</code></li>
+</ul></li>
+<li><p>Python 소스 코드들이 있는 <strong>폴더</strong>를 포함시켜줍니다.</p>
+<ul>
+<li><code>ament_python_install_package(py_pkg)</code></li>
+<li>C++에서 <code>include_directories(include)</code>로 헤더파일을 추가하는 것과 동일한 과정입니다.</li>
+</ul></li>
+<li><p>Python은 Compile하지 않아도 되므로 <strong>실행</strong> 코드들을 만들어주는 부분은 스킵합니다.</p></li>
+<li><p>Python 실행 파일들을 <strong>설치</strong>해주는 부분을 추가합니다.</p>
+<ul>
+<li><code>install(PROGRAMS   scripts/py_node.py   DESTINATION lib/${PROJECT_NAME} )</code></li>
+</ul></li>
+</ol>
+<p>최종 수정 <code>CMakeLists.txt</code> 파일은 아래와 같습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>CMakeLists.txt</strong></pre>
+</div>
+<div class="sourceCode" id="cb17" data-filename="CMakeLists.txt"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1"></a>cmake_minimum_required(VERSION 3.8)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>project(my_cpp_py_pkg)</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a>if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")</span>
+<span id="cb17-5"><a href="#cb17-5"></a>  add_compile_options(-Wall -Wextra -Wpedantic)</span>
+<span id="cb17-6"><a href="#cb17-6"></a>endif()</span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a># find dependencies</span>
+<span id="cb17-9"><a href="#cb17-9"></a>find_package(ament_cmake REQUIRED)</span>
+<span id="cb17-10"><a href="#cb17-10"></a>find_package(ament_cmake_python REQUIRED)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>find_package(rclcpp REQUIRED)</span>
+<span id="cb17-12"><a href="#cb17-12"></a>find_package(rclpy REQUIRED)</span>
+<span id="cb17-13"><a href="#cb17-13"></a></span>
+<span id="cb17-14"><a href="#cb17-14"></a># Include cpp "include" dir</span>
+<span id="cb17-15"><a href="#cb17-15"></a>include_directories(include)</span>
+<span id="cb17-16"><a href="#cb17-16"></a></span>
+<span id="cb17-17"><a href="#cb17-17"></a># Create cpp executables</span>
+<span id="cb17-18"><a href="#cb17-18"></a>add_executable(cpp_exe src/cpp_node.cpp)</span>
+<span id="cb17-19"><a href="#cb17-19"></a>ament_target_dependencies(cpp_exe rclcpp)</span>
+<span id="cb17-20"><a href="#cb17-20"></a></span>
+<span id="cb17-21"><a href="#cb17-21"></a># Install cpp executables</span>
+<span id="cb17-22"><a href="#cb17-22"></a>install(TARGETS</span>
+<span id="cb17-23"><a href="#cb17-23"></a>  cpp_exe</span>
+<span id="cb17-24"><a href="#cb17-24"></a>  DESTINATION lib/${PROJECT_NAME} # cpp_pkg</span>
+<span id="cb17-25"><a href="#cb17-25"></a>)</span>
+<span id="cb17-26"><a href="#cb17-26"></a></span>
+<span id="cb17-27"><a href="#cb17-27"></a># Install python modules</span>
+<span id="cb17-28"><a href="#cb17-28"></a>ament_python_install_package(${PROJECT_NAME}) #py_pkg</span>
+<span id="cb17-29"><a href="#cb17-29"></a></span>
+<span id="cb17-30"><a href="#cb17-30"></a># Python codes do not need "compile" (Skip executables)</span>
+<span id="cb17-31"><a href="#cb17-31"></a></span>
+<span id="cb17-32"><a href="#cb17-32"></a># Install python executables</span>
+<span id="cb17-33"><a href="#cb17-33"></a>install(PROGRAMS</span>
+<span id="cb17-34"><a href="#cb17-34"></a>  scripts/py_node.py</span>
+<span id="cb17-35"><a href="#cb17-35"></a>  DESTINATION lib/${PROJECT_NAME} # py_pkg</span>
+<span id="cb17-36"><a href="#cb17-36"></a>)</span>
+<span id="cb17-37"><a href="#cb17-37"></a></span>
+<span id="cb17-38"><a href="#cb17-38"></a>ament_package()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ros2-패키지-compile" class="level1">
+<h1>6. ROS2 패키지 Compile</h1>
+<p>지금까지 만든 C++와 Python이 혼합되어 있는 ROS2 패키지를 아래의 명령어로 Compile 합니다.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>colcon build -<span class="at">-symlink-install</span> -<span class="at">-packages-select</span> my_cpp_py_pkg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>--symlink-install</code>: 빌드 결과물 대신 소스 파일과 빌드 디렉토리 간에 심볼릭 링크를 생성해, 소스 코드 변경 사항이 즉시 반영되도록 하며 디스크 공간도 절약할 수 있게 합니다. 개발 중 빠른 반복 작업에 유용합니다.</li>
+<li><code>--packages-select my_cpp_py_pkg</code>: <code>my_cpp_py_pkg</code> 패키지만 build 합니다.</li>
+</ul>
+<p>Compile을 확인하기 위해 <code>install/my_cpp_py_pkg/lib</code> 경로로 들어가서 <code>ls</code>로 폴더들을 확인하면 <code>my_cpp_py_pkg</code>폴더 하나로 패키지가 컴파일 된 것을 확인할 수 있습니다. (<code>install</code>은 <code>src</code>와 같은 레벨에 있습니다. ROS2 패키지를 빌드한 후에 생깁니다.)</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>install/my_cpp_py_pkg/lib$ ls</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>my_cpp_py_pkg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>my_cpp_py_pkg</code>안에 각각 들어가서 살펴보면, <code>cpp_pkg</code>안에는 <code>cpp_exe</code>가 <code>py_pkg</code>안에는 <code>py_node.py</code>가 있는 것을 알 수 있습니다.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>install/my_cpp_py_pkg/lib/my_cpp_py_pkg$ ls</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cpp_exe  py_node.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>여기까지 확인이 되었다면, 이제 만든 패키지의 실행을 확인하기 위해 새로운 터미널 창을 열고 아래 명령어들을 입력하여 패키지를 실행해봅니다.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>$ source <span class="at">/opt/ros/humble/setup</span>.sh</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>$ cd {ros2_ws_path}</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>$ source install<span class="at">/setup</span>.sh</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>$ ros2 run my_cpp_py_pkg cpp_exe</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>$ ros2 run my_cpp_py_pkg py_node.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ros2 run my_cpp_py_pkg cpp_exe</code>은 C++ 노드를 실행시키는 명령어로 출력물은 아래와 같이 나옵니다.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>[INFO] [1736227382.723372316] [my_cpp_node_name]: TEST Cpp node</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ros2 run my_cpp_py_pkg py_node.py</code>은 Python 노드를 실행시키는 명령어로 출력물은 아래와 같이 나옵니다.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>[INFO] [1736227804.238546563] [my_py_node]: TEST Python node</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+<p>지금까지 기본 튜토리얼에서는 찾기 어려운 C++와 Python 모두를 이용하여 ROS2 패키지를 만드는 방법에 대해 알아보았습니다. ROS2 패키지들을 Python으로 만들기는 쉽지만 때론 프로그램의 퍼포먼스를 위해서 C++로 변환해야할 때가 있습니다. 그럴때 빠른 개발이 가능한 Python과 가벼운 실행이 가능한 C++을 혼합하여 ROS2 패키지를 만들 수 있다면 각각의 장점을 모아 좋은 프로그래밍을 할 수 있을 것 입니다. 좋은 Original Reference를 기반으로 정리한 ROS2 포스팅이니 많은 분들께 도움이 되길 바라며 마치겠습니다.</p>
+</section>
+<section id="reference" class="level1">
+<h1>Reference</h1>
+<ul>
+<li><a href="https://roboticsbackend.com/ros2-package-for-both-python-and-cpp-nodes/">POST: Create a ROS2 package for Both Python and Cpp Nodes</a></li>
+<li><a href="https://youtu.be/RoRq4XpDEtQ?si=ZMbYdbecAY3VBKQ0">YOUTUBE: ROS2 - Create a Package for Both C++ and Python Nodes</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

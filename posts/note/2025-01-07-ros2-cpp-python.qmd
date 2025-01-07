@@ -1,0 +1,431 @@
+---
+title: "📝ROS2 C++과 Python 혼합 패키지"
+description: ROS2의 패키지를 C++과 Python 혼합하여 만들기 
+date: "2025-01-07"
+categories: [ros2, 2025]
+toc: true
+execute:
+  freeze: auto 
+---
+
+ROS2 공식 문서에서는 C++와 Python Node를 별개로 만드는 튜토리얼과 설명만 있기 때문에 C++와 Python 모두 사용하여 노드를 만들고 하나의 ROS2 패키지로 만들기 위한 방법에 대해 알아보겠습니다.
+각 단계마다 변경되는 사항에 대해서는 🟢로 표시되어 있으니 단계를 넘어갈때마다 확인해보시기 바랍니다.
+
+# 1. ROS2 Cpp package 만들기
+
+ROS2 패키지를 만들 `src` 폴더에서 스탠다드 C++ package를 만들어 줍니다. ([official docs](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html#create-a-package)와 동일)
+
+```{.cmd code-line-numbers=false}
+$ cd ~/ros2_ws/src/
+$ ros2 pkg create my_cpp_py_pkg --build-type ament_cmake
+```
+- `ros2 pkg create`: 패키지 생성 명령어
+- `my_cpp_py_pkg`: 패키지 이름 
+- `--build-type ament_cmake`: 스탠다드 C++ package 형식으로 패키지틀 생성
+
+그러면 아래와 같이 폴더와 파일 구조들이 생성됩니다.
+
+```{.txt code-line-numbers=false}
+my_cpp_py_pkg/
+├── CMakeLists.txt
+├── include
+│   └── my_cpp_py_pkg
+├── package.xml
+└── src
+```
+
+# 2. C++ node + header 추가하기
+
+`my_cpp_py_pkg/src/` 폴더에 `.cpp` 소스 코드들을 추가합니다. (`cpp_node.cpp`)
+`my_cpp_py_pkg/include/cpp_pkg` 폴더에 `.hpp` 소스 코드들을 추가합니다. (`cpp_header.hpp`)
+
+
+```{.cmd code-line-numbers=false}
+$ cd my_cpp_py_pkg/
+$ touch src/cpp_node.cpp
+$ touch include/my_cpp_py_pkg/cpp_header.hpp
+```
+
+`cpp_header.hpp`코드에는 [가장 간단한 c++ code](https://roboticsbackend.com/write-minimal-ros2-cpp-node/)를 추가합니다.
+아래 코드는 단순하게 logger로 "TEST Cpp node"라는 문장을 출력합니다.
+
+```{.cpp filename="cpp_header.hpp" }
+#include "rclcpp/rclcpp.hpp"
+
+class MyCppNode : public rclcpp::Node
+{
+    public:
+        MyCppNode() : Node("my_cpp_node_name") {
+            RCLCPP_INFO(this->get_logger(), "TEST Cpp node");
+        }
+    
+    private:
+};
+```
+
+`cpp_node.cpp`코드에는 아래와 같이 코드를 작성합니다. `my_cpp_py_pkg/cpp_header.hpp` 헤더가 추가되었고, 헤더에 있는 `MyCppNode` 노드가 코드에 있는 것을 확인할 수 있습니다. 
+
+```{.cpp filename="cpp_node.cpp" }
+#include "rclcpp/rclcpp.hpp"
+#include "my_cpp_py_pkg/cpp_header.hpp"
+
+int main(int argc, char **argv)
+{
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<MyCppNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
+```
+
+여기까지 완료했을때, 폴더와 파일 구조는 아래와 같습니다.
+
+```{.txt code-line-numbers=false}
+my_cpp_py_pkg/
+├── CMakeLists.txt
+├── include
+│   └── my_cpp_py_pkg 
+│       └── cpp_header.hpp 🟢
+├── package.xml
+└── src
+    └── cpp_node.cpp 🟢
+```
+
+
+# 3. Python 노드와 모듈 추가하기
+
+Python package 폴더의 이름은 `my_cpp_py_pkg`로 만들어 줍니다. 
+이때 "my_cpp_py_pkg"이라는 네이밍이 헷갈릴 수 있지만 하나의 ROS2 패키지로 인식하게끔 하기위해 이름을 맞춰주는 과정이므로 꼭 "my_cpp_py_pkg"이름으로 폴더를 만들어야 합니다.
+
+```{.cmd code-line-numbers=false}
+$ mkdir my_cpp_py_pkg
+$ touch my_cpp_py_pkg/__init__.py
+$ cd my_cpp_py_pkg
+$ touch module_to_import.py
+```
+
+여기까지 진행했을때 파일과 폴더 구조는 아래와 같습니다.
+
+```{.txt code-line-numbers=false}
+my_cpp_py_pkg/
+├── CMakeLists.txt
+├── include
+│   └── my_cpp_py_pkg 
+│       └── cpp_header.hpp 
+├── my_cpp_py_pkg 🟢
+│   ├── __init__.py 🟢
+│   └── module_to_import.py 🟢
+├── package.xml
+└── src
+    └── cpp_node.cpp 
+```
+
+`module_to_import.py` 파일에는 아래와 같은 Python 코드를 작성합니다.
+
+```{.py filename="module_to_import.py" }
+#!/usr/bin/env python3
+
+import rclpy
+from rclpy.node import Node
+
+class MyPyNode(Node):
+    def __init__(self):
+        super().__init__("my_py_node")
+        self.get_logger().info("TEST Python node")
+```
+
+최상위 `my_cpp_py_pkg`에 `scripts` 폴더를 추가합니다. `scripts` 폴더에는 python ros2 node 소스코드들이 작성됩니다. 
+이때 반드시 `py_node.py`가 실행 가능할 수 있도록 `chmod +x`명령어를 통해 파일 모드를 변경합니다.
+
+```{.cmd code-line-numbers=false}
+$ mkdir scripts/
+$ cd scripts/
+$ touch py_node.py
+$ chmod +x py_node.py
+```
+
+그러면 아래와 같은 구조가 됩니다.
+
+```{.txt code-line-numbers=false}
+my_cpp_py_pkg/
+├── CMakeLists.txt
+├── include
+│   └── my_cpp_py_pkg 
+│       └── cpp_header.hpp 
+├── my_cpp_py_pkg
+│   ├── __init__.py 
+│   └── module_to_import.py
+├── package.xml
+├── scripts 🟢
+│   └── py_node.py 🟢
+└── src
+    └── cpp_node.cpp 
+```
+
+`py_node.py`에는 아래와 같은 코드를 작성합니다.
+
+```{.py filename="py_node.py" }
+#!/usr/bin/env python3
+
+import rclpy
+from my_cpp_py_pkg.module_to_import import MyPyNode
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MyPyNode()
+    rclpy.spin(node)
+    rclpy.shutdown()
+    
+if __name__ == "__main__":
+    main()
+```
+
+
+## Recap ROS2 Package Architecture
+
+```{.txt code-line-numbers=false}
+my_cpp_py_pkg/
+🟡 패키지 정보, 구성, 및 컴파일
+├── CMakeLists.txt
+├── package.xml
+🟡 Python 관련 Stuff
+├── my_cpp_py_pkg
+│   ├── __init__.py
+│   └── module_to_import.py
+├── scripts
+│   └── py_node.py
+🟡 Cpp 관련 Stuff
+├── include
+│   └── my_cpp_py_pkg
+│       └── cpp_header.hpp
+└── src
+    └── cpp_node.cpp
+```
+
+# 4. `package.xml` 정리하기
+
+[1단계](https://curieuxjy.github.io/posts/note/2025-01-07-ros2-cpp-python.html#ros2-cpp-package-만들기)에서 자동으로 `package.xml`을 만들었고 해당 내용은 아래와 같았습니다.
+
+```{.xml filename="package.xml" }
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>my_cpp_py_pkg</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="your_email_address>avery</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+
+여기에 Python build와 관련된 사항들을 추가합니다. 
+- `<buildtool_depend>ament_cmake_python</buildtool_depend>`
+
+또한 필요한 패키지들을 추가합니다.
+- `<depend>rclcpp</depend>`
+- `<depend>rclpy</depend>`
+
+최종 수정 `package.xml` 파일은 아래와 같습니다.
+
+```{.xml filename="package.xml" }
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>my_cpp_py_pkg</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="curieuxjy@gmail.com">avery</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend> 
+  <buildtool_depend>ament_cmake_python</buildtool_depend> 🟢
+
+  <depend>rclcpp</depend> 🟢
+  <depend>rclpy</depend> 🟢
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+
+# 5. `CMakeLists.txt` 정리하기
+
+[1단계](https://curieuxjy.github.io/posts/note/2025-01-07-ros2-cpp-python.html#ros2-cpp-package-만들기)에서 자동으로 `CMakeLists.txt`을 만들었고 해당 내용은 아래와 같았습니다.
+
+```{.txt filename="CMakeLists.txt" }
+cmake_minimum_required(VERSION 3.8)
+project(my_cpp_py_pkg)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+# uncomment the following section in order to fill in
+# further dependencies manually.
+# find_package(<dependency> REQUIRED)
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  # the following line skips the linter which checks for copyrights
+  # comment the line when a copyright and license is added to all source files
+  set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips cpplint (only works in a git repo)
+  # comment the line when this package is in a git repo and when
+  # a copyright and license is added to all source files
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+ament_package()
+```
+
+default 내용에서 **변경해야 하는 사항들**은 아래와 같습니다.
+
+1. **필요한 패키지들**을 찾습니다.
+   - `find_package(ament_cmake REQUIRED)`
+   - `find_package(ament_cmake_python REQUIRED)`
+   - `find_package(rclcpp REQUIRED)`
+   - `find_package(rclpy REQUIRED)`
+
+2. C++ 소스 코드들이 있는 **폴더**를 포함시켜줍니다.
+   - `include_directories(include)`
+     - `cpp_node.cpp` 파일에서 `#include "cpp_pkg/cpp_header.hpp"`을 가능하게 해줍니다. `include`라는 폴더내에 `my_cpp_py_pkg/cpp_header.hpp`가 있기 때문입니다.
+
+3. C++ **실행** 코드들을 명시해줍니다. (Compile)
+  - `add_executable(cpp_exe src/cpp_node.cpp)`
+  - `ament_target_dependencies(cpp_exe rclcpp)`
+
+4. C++ 실행 파일들을 **설치**해주는 부분을 추가합니다. 
+   - `install(TARGETS
+  cpp_exe
+  DESTINATION lib/${PROJECT_NAME}/cpp_pkg
+)`
+
+5. Python 소스 코드들이 있는 **폴더**를 포함시켜줍니다.
+   - `ament_python_install_package(py_pkg)`
+   - C++에서 `include_directories(include)`로 헤더파일을 추가하는 것과 동일한 과정입니다.
+
+6. Python은 Compile하지 않아도 되므로 **실행** 코드들을 만들어주는 부분은 스킵합니다.
+
+7. Python 실행 파일들을 **설치**해주는 부분을 추가합니다. 
+   - `install(PROGRAMS
+  scripts/py_node.py
+  DESTINATION lib/${PROJECT_NAME}
+)`
+
+최종 수정 `CMakeLists.txt` 파일은 아래와 같습니다.
+
+```{.txt filename="CMakeLists.txt" }
+cmake_minimum_required(VERSION 3.8)
+project(my_cpp_py_pkg)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
+
+# Include cpp "include" dir
+include_directories(include)
+
+# Create cpp executables
+add_executable(cpp_exe src/cpp_node.cpp)
+ament_target_dependencies(cpp_exe rclcpp)
+
+# Install cpp executables
+install(TARGETS
+  cpp_exe
+  DESTINATION lib/${PROJECT_NAME} # cpp_pkg
+)
+
+# Install python modules
+ament_python_install_package(${PROJECT_NAME}) #py_pkg
+
+# Python codes do not need "compile" (Skip executables)
+
+# Install python executables
+install(PROGRAMS
+  scripts/py_node.py
+  DESTINATION lib/${PROJECT_NAME} # py_pkg
+)
+
+ament_package()
+```
+
+# 6. ROS2 패키지 Compile
+
+지금까지 만든 C++와 Python이 혼합되어 있는 ROS2 패키지를 아래의 명령어로 Compile 합니다. 
+
+```{.cmd code-line-numbers=false}
+colcon build --symlink-install --packages-select my_cpp_py_pkg
+```
+
+- `--symlink-install`: 빌드 결과물 대신 소스 파일과 빌드 디렉토리 간에 심볼릭 링크를 생성해, 소스 코드 변경 사항이 즉시 반영되도록 하며 디스크 공간도 절약할 수 있게 합니다. 개발 중 빠른 반복 작업에 유용합니다.
+- `--packages-select my_cpp_py_pkg`: `my_cpp_py_pkg` 패키지만 build 합니다.
+
+Compile을 확인하기 위해 `install/my_cpp_py_pkg/lib` 경로로 들어가서 `ls`로 폴더들을 확인하면 `my_cpp_py_pkg`폴더 하나로 패키지가 컴파일 된 것을 확인할 수 있습니다.
+(`install`은 `src`와 같은 레벨에 있습니다. ROS2 패키지를 빌드한 후에 생깁니다.)
+
+```{.cmd code-line-numbers=false}
+install/my_cpp_py_pkg/lib$ ls
+my_cpp_py_pkg
+```
+
+`my_cpp_py_pkg`안에 각각 들어가서 살펴보면, `cpp_pkg`안에는 `cpp_exe`가 `py_pkg`안에는 `py_node.py`가 있는 것을 알 수 있습니다.
+
+```{.cmd code-line-numbers=false}
+install/my_cpp_py_pkg/lib/my_cpp_py_pkg$ ls
+cpp_exe  py_node.py
+```
+
+여기까지 확인이 되었다면, 이제 만든 패키지의 실행을 확인하기 위해 새로운 터미널 창을 열고 아래 명령어들을 입력하여 패키지를 실행해봅니다.
+
+```{.cmd code-line-numbers=false}
+$ source /opt/ros/humble/setup.sh
+$ cd {ros2_ws_path}
+$ source install/setup.sh
+$ ros2 run my_cpp_py_pkg cpp_exe
+$ ros2 run my_cpp_py_pkg py_node.py
+```
+
+`ros2 run my_cpp_py_pkg cpp_exe`은 C++ 노드를 실행시키는 명령어로 출력물은 아래와 같이 나옵니다.
+```{.cmd code-line-numbers=false}
+[INFO] [1736227382.723372316] [my_cpp_node_name]: TEST Cpp node
+```
+
+`ros2 run my_cpp_py_pkg py_node.py`은 Python 노드를 실행시키는 명령어로 출력물은 아래와 같이 나옵니다.
+
+```{.cmd code-line-numbers=false}
+[INFO] [1736227804.238546563] [my_py_node]: TEST Python node
+```
+
+---
+
+지금까지 기본 튜토리얼에서는 찾기 어려운 C++와 Python 모두를 이용하여 ROS2 패키지를 만드는 방법에 대해 알아보았습니다. ROS2 패키지들을 Python으로 만들기는 쉽지만 때론 프로그램의 퍼포먼스를 위해서 C++로 변환해야할 때가 있습니다. 
+그럴때 빠른 개발이 가능한 Python과 가벼운 실행이 가능한 C++을 혼합하여 ROS2 패키지를 만들 수 있다면 각각의 장점을 모아 좋은 프로그래밍을 할 수 있을 것 입니다. 
+좋은 Original Reference를 기반으로 정리한 ROS2 포스팅이니 많은 분들께 도움이 되길 바라며 마치겠습니다. 
+
+# Reference
+
+- [POST: Create a ROS2 package for Both Python and Cpp Nodes](https://roboticsbackend.com/ros2-package-for-both-python-and-cpp-nodes/)
+- [YOUTUBE: ROS2 - Create a Package for Both C++ and Python Nodes](https://youtu.be/RoRq4XpDEtQ?si=ZMbYdbecAY3VBKQ0)
