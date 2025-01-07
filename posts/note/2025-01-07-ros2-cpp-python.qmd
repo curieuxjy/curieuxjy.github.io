@@ -1,5 +1,5 @@
 ---
-title: "📝ROS2 C++과 Python 혼합 패키지"
+title: "📝Python과 C++ 노드를 모두 포함하는 ROS2 패키지 생성"
 description: ROS2의 패키지를 C++과 Python 혼합하여 만들기 
 date: "2025-01-07"
 categories: [ros2, 2025]
