@@ -1,0 +1,32 @@
+---
+title: "👩‍💻타원 Fitting"
+toc: true
+date: "2025-01-08"
+description: 타원 Fitting에 대해 scratch부터 opencv까지 살펴보기
+categories: [ellipse, opencv, code]
+execute:
+  freeze: auto 
+image: ../../images/2025-01-08-fitting-ellipse/ellipse.svg
+---
+
+그동안 Opencv 패키지에서 ellipse fitting을 해주는 함수 `fitEllipse`만 가져다가 썼다면, 어떤 원리로 타원이 피팅되고 경우에 따라 옵션들을 바꿔야 한다면 어떤 선택지들이 있는지 알아보겠습니다.
+먼저 간단한 타원을 표현하는 수학적인 표현식부터 간단한 scratch code로 타원을 fitting해보고, opencv에서는 어떤 함수들을 제공하고 있는지 확인해보겠습니다.
+
+<center>
+<img src="../../images/2025-01-08-fitting-ellipse/ellipse.svg" width="80%" />
+<figcaption>[image source](https://vovkos.github.io/doxyrest-showcase/opencv/sphinx_rtd_theme/group_imgproc_draw.html#doxid-d6-d6e-group-imgproc-draw-1ga28b2267d35786f5f890ca167236cbc69
+)</figcaption>
+</center>
+
+
+
+# More
+
+
+### Reference 
+
+- [fitellipse.cpp](https://vovkos.github.io/doxyrest-showcase/opencv/sphinx_rtd_theme/example_fitellipse.cpp.html)
+- [Creating Bounding rotated boxes and ellipses for contours](https://docs.opencv.org/4.x/de/d62/tutorial_bounding_rotated_ellipses.html)
+- [Python Implementation of Ellipse Fitting](https://medium.com/@hirok4/python-implementation-of-ellipse-fitting-e8801dbb16a8)
+- [OpenCV 타원 추정 Ellipse Fitting](https://k-imagineer.tistory.com/7)
+- [OpenCV's fitEllipse() sometimes returns completely wrong ellipses](https://stackoverflow.com/questions/17159964/opencvs-fitellipse-sometimes-returns-completely-wrong-ellipses)
