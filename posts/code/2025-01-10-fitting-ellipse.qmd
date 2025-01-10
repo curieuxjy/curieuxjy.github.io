@@ -1,7 +1,7 @@
 ---
 title: "👩‍💻타원 Fitting"
 toc: true
-date: "2025-01-08"
+date: "2025-01-10"
 description: 타원 Fitting에 대해 scratch부터 opencv까지 살펴보기
 categories: [ellipse, opencv, code]
 execute:

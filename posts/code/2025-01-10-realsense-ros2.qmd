@@ -1,0 +1,286 @@
+---
+title: "👩‍💻ROS2 RealSense C++ Node"
+toc: true
+date: "2025-01-10"
+description: C++로 ROS2 RealSense 카메라 노드 만들기 
+categories: [ros2, realsense, code]
+execute:
+  freeze: auto 
+#image: ../../images/2025-01-08-fitting-ellipse/ellipse.svg
+---
+
+
+# Integrating Intel RealSense Cameras with ROS 2 (C++)
+
+In this post, we’ll walk through how to create two ROS 2 nodes in C++ to stream video from an Intel RealSense camera and display it with OpenCV. We’ll also address common build issues, including linking `librealsense2`.
+
+## Overview
+
+1. **Publisher Node**  
+   - Opens a RealSense camera using `librealsense2`.
+   - Streams color frames at 640×480 resolution, 30 FPS.
+   - Publishes the frames to a ROS 2 topic (`image_raw`).
+
+2. **Subscriber Node**  
+   - Subscribes to the `image_raw` topic.
+   - Converts the incoming frames to an OpenCV `Mat` using `cv_bridge`.
+   - Displays the frames in an OpenCV window.
+
+## Prerequisites
+
+- **ROS 2** (Galactic, Humble, Iron, etc. — just ensure your environment is set up).
+- **Intel RealSense SDK (librealsense2)** installed system-wide.
+  - On Ubuntu, for instance:
+    ```bash
+    sudo apt-get install librealsense2-dev
+    ```
+- **OpenCV** (e.g., `sudo apt-get install libopencv-dev` on Ubuntu).
+- **cv_bridge** (from `vision_opencv`) which is typically installed via ROS 2 packages:
+  ```bash
+  sudo apt-get install ros-${ROS_DISTRO}-vision-opencv
+  ```
+  (Replace `${ROS_DISTRO}` with your actual ROS distribution name, like `galactic` or `humble`.)
+
+## Creating the ROS 2 Package
+
+We’ll create a new ROS 2 package called `my_realsense_example`:
+
+```bash
+cd ~/ros2_ws/src
+ros2 pkg create my_realsense_example \
+  --build-type ament_cmake \
+  --dependencies rclcpp sensor_msgs cv_bridge
+```
+
+Then, place the following files in the `my_realsense_example/src/` directory:
+- `realsense_publisher.cpp`
+- `image_subscriber.cpp`
+
+## Publisher Node: `realsense_publisher.cpp`
+
+```cpp
+#include <memory>
+#include <chrono>
+#include <librealsense2/rs.hpp>           // Intel RealSense SDK
+#include "rclcpp/rclcpp.hpp"
+#include "sensor_msgs/msg/image.hpp"     // ROS 2 Image message
+#include "cv_bridge/cv_bridge.h"         // cv_bridge for ROS <-> OpenCV
+#include "opencv2/opencv.hpp"            // OpenCV
+
+class RealSensePublisher : public rclcpp::Node
+{
+public:
+  RealSensePublisher()
+  : Node("realsense_publisher")
+  {
+    pipeline_ = std::make_shared<rs2::pipeline>();
+
+    // Configure and start the pipeline to stream color images
+    rs2::config cfg;
+    cfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
+    pipeline_->start(cfg);
+
+    publisher_ = this->create_publisher<sensor_msgs::msg::Image>("image_raw", 10);
+
+    timer_ = this->create_wall_timer(
+      std::chrono::milliseconds(100),  // ~10 Hz
+      std::bind(&RealSensePublisher::publishFrame, this)
+    );
+
+    RCLCPP_INFO(this->get_logger(), "RealSense Publisher Node started.");
+  }
+
+private:
+  void publishFrame()
+  {
+    // Wait for the next set of frames
+    rs2::frameset frameset = pipeline_->wait_for_frames();
+    rs2::video_frame color_frame = frameset.get_color_frame();
+    if (!color_frame)
+    {
+      RCLCPP_WARN(this->get_logger(), "No color frame received.");
+      return;
+    }
+
+    // Convert RealSense frame to OpenCV Mat
+    cv::Mat color_image(
+      cv::Size(color_frame.get_width(), color_frame.get_height()),
+      CV_8UC3,
+      (void*)color_frame.get_data(),
+      cv::Mat::AUTO_STEP
+    );
+
+    // Convert to ROS Image message via cv_bridge
+    auto image_msg = cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", color_image).toImageMsg();
+    image_msg->header.stamp = this->get_clock()->now();
+    image_msg->header.frame_id = "realsense_color_frame";
+
+    publisher_->publish(*image_msg);
+  }
+
+  std::shared_ptr<rs2::pipeline> pipeline_;
+  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr publisher_;
+  rclcpp::TimerBase::SharedPtr timer_;
+};
+
+int main(int argc, char *argv[])
+{
+  rclcpp::init(argc, argv);
+  rclcpp::spin(std::make_shared<RealSensePublisher>());
+  rclcpp::shutdown();
+  return 0;
+}
+```
+
+## Subscriber Node: `image_subscriber.cpp`
+
+```cpp
+#include <memory>
+#include "rclcpp/rclcpp.hpp"
+#include "sensor_msgs/msg/image.hpp"
+#include "cv_bridge/cv_bridge.h"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
+
+class ImageSubscriber : public rclcpp::Node
+{
+public:
+  ImageSubscriber()
+  : Node("image_subscriber")
+  {
+    subscription_ = this->create_subscription<sensor_msgs::msg::Image>(
+      "image_raw",
+      10,
+      std::bind(&ImageSubscriber::imageCallback, this, std::placeholders::_1)
+    );
+
+    // Create an OpenCV window once
+    cv::namedWindow("RealSense Camera", cv::WINDOW_AUTOSIZE);
+
+    RCLCPP_INFO(this->get_logger(), "Image Subscriber Node started.");
+  }
+
+private:
+  void imageCallback(const sensor_msgs::msg::Image::SharedPtr msg)
+  {
+    cv::Mat frame;
+    try
+    {
+      frame = cv_bridge::toCvCopy(msg, "bgr8")->image;
+    }
+    catch (cv_bridge::Exception &e)
+    {
+      RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
+      return;
+    }
+
+    if (!frame.empty())
+    {
+      cv::imshow("RealSense Camera", frame);
+      cv::waitKey(1);
+    }
+  }
+
+  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr subscription_;
+};
+
+int main(int argc, char *argv[])
+{
+  rclcpp::init(argc, argv);
+  auto node = std::make_shared<ImageSubscriber>();
+
+  rclcpp::Rate rate(30);
+  while (rclcpp::ok())
+  {
+    rclcpp::spin_some(node);
+    rate.sleep();
+  }
+
+  rclcpp::shutdown();
+  return 0;
+}
+```
+
+## CMakeLists.txt Configuration
+
+Your `CMakeLists.txt` (in the root of `my_realsense_example`) should enable building both nodes and **link `librealsense2`**. Below is a working example:
+
+```cmake
+cmake_minimum_required(VERSION 3.8)
+project(my_realsense_example)
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV REQUIRED)
+find_package(realsense2 REQUIRED)  # Important!
+
+include_directories(
+  include
+  ${OpenCV_INCLUDE_DIRS}
+)
+
+# Publisher executable
+add_executable(realsense_publisher src/realsense_publisher.cpp)
+ament_target_dependencies(realsense_publisher
+  rclcpp
+  sensor_msgs
+  cv_bridge
+)
+target_link_libraries(realsense_publisher
+  ${OpenCV_LIBS}
+  realsense2
+)
+
+# Subscriber executable
+add_executable(image_subscriber src/image_subscriber.cpp)
+ament_target_dependencies(image_subscriber
+  rclcpp
+  sensor_msgs
+  cv_bridge
+)
+target_link_libraries(image_subscriber
+  ${OpenCV_LIBS}
+  realsense2
+)
+
+install(TARGETS
+  realsense_publisher
+  image_subscriber
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()
+```
+
+### Common Build Issues
+
+- **Undefined reference to `rs2_…`**: This means you haven’t linked the `realsense2` library. Check for `find_package(realsense2 REQUIRED)` and `target_link_libraries(... realsense2)`.
+- **Cannot find `image_subscriber.cpp`**: Ensure the file name and path in `CMakeLists.txt` match exactly what’s in your `src/` folder.
+- **cv_bridge or OpenCV not found**: Check your dependencies in `package.xml` and ensure you’ve installed `cv_bridge` and OpenCV on your system.
+
+## Building and Running
+
+From your workspace (e.g., `~/ros2_ws`):
+
+```bash
+colcon build --packages-select my_realsense_example
+source install/setup.bash
+```
+
+- **Terminal 1**:  
+  ```bash
+  ros2 run my_realsense_example realsense_publisher
+  ```
+- **Terminal 2**:  
+  ```bash
+  ros2 run my_realsense_example image_subscriber
+  ```
+
+A window labeled **“RealSense Camera”** should appear, displaying your camera feed.
+
+## Conclusion
+
+You now have a minimal ROS 2 system that publishes color frames from a RealSense camera and displays them in an OpenCV window. This can be further extended to handle depth frames, point clouds, or any other RealSense-supported streams.
+

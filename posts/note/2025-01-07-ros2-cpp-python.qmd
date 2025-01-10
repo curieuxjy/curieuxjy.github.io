@@ -214,7 +214,7 @@ my_cpp_py_pkg/
   <name>my_cpp_py_pkg</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="your_email_address>avery</maintainer>
+  <maintainer email="your_email_address">your_name</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -244,7 +244,7 @@ my_cpp_py_pkg/
   <name>my_cpp_py_pkg</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="curieuxjy@gmail.com">avery</maintainer>
+  <maintainer email="your_email_address">your_name</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend> 
