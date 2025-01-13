@@ -1,0 +1,42 @@
+---
+title: "📝ROS2 Build Issue"
+description: ROS2 Issue Tracker
+date: "2025-01-13"
+categories: [ros2, build, 2025]
+toc: true
+execute:
+  freeze: auto 
+---
+
+# Issue
+
+Error Message
+
+```commandline
+CMake Error at CMakeLists.txt:5 (find_package):
+  By not providing "Findament_cmake.cmake" in CMAKE_MODULE_PATH this project
+  has asked CMake to find a package configuration file provided by
+  "ament_cmake", but CMake did not find one.
+
+  Could not find a package configuration file provided by "ament_cmake" with
+  any of the following names:
+
+    ament_cmakeConfig.cmake
+    ament_cmake-config.cmake
+
+  Add the installation prefix of "ament_cmake" to CMAKE_PREFIX_PATH or set
+  "ament_cmake_DIR" to a directory containing one of the above files.  If
+  "ament_cmake" provides a separate development package or SDK, be sure it
+  has been installed.
+```
+
+# Solution
+
+This error typically appears when CMake cannot locate ament_cmake. In ROS 2, ament_cmake is a core build system package that you must have installed (and sourced) before building any ament-based packages.
+
+Ensure the ament_cmake package is actually installed. On Ubuntu, for Humble, you’d expect something like:
+
+If you have a minimal or custom ROS 2 installation, you might need to install additional packages to get ament_cmake.
+```bash
+sudo apt-get install ros-humble-ament-cmake
+```
