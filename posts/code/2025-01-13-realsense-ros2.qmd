@@ -1,20 +1,28 @@
 ---
 title: "👩‍💻ROS2 RealSense C++ Node"
 toc: true
-date: "2025-01-10"
+date: "2025-01-13"
 description: C++로 ROS2 RealSense 카메라 노드 만들기 
 categories: [ros2, realsense, code]
 execute:
   freeze: auto 
-#image: ../../images/2025-01-08-fitting-ellipse/ellipse.svg
+image: ../../images/2025-01-13-realsense-ros2/realsense_april.png
 ---
 
 
-# Integrating Intel RealSense Cameras with ROS 2 (C++)
+이 게시물에서는 인텔 RealSense 카메라에서 비디오를 스트리밍하고 OpenCV로 표시하기 위해 C++에서 두 개의 ROS 2 노드를 생성하는 방법에 대해 설명하겠습니다. 
+또한 `librealsense2`를 연결하는 등 일반적인 빌드 문제도 다룰 예정입니다.
 
-In this post, we’ll walk through how to create two ROS 2 nodes in C++ to stream video from an Intel RealSense camera and display it with OpenCV. We’ll also address common build issues, including linking `librealsense2`.
+
+<center>
+<img src="../../images/2025-01-13-realsense-ros2/realsense_april.png" width="67%" />
+    <figcaption>최종 결과물</figcaption>
+</center>
+
 
 ## Overview
+
+가장 단순한 C++ Node를 만들어 Realsense Camera D457에서 이미지를 받고 OpenCV로 간단한 ploting을 해볼 것 입니다. 이때 Camera에서 이미지를 
 
 1. **Publisher Node**  
    - Opens a RealSense camera using `librealsense2`.
@@ -26,7 +34,9 @@ In this post, we’ll walk through how to create two ROS 2 nodes in C++ to strea
    - Converts the incoming frames to an OpenCV `Mat` using `cv_bridge`.
    - Displays the frames in an OpenCV window.
 
-## Prerequisites
+::: {.callout-note collapse="true" icon="false"}
+
+### 전제 조건
 
 - **ROS 2** (Galactic, Humble, Iron, etc. — just ensure your environment is set up).
 - **Intel RealSense SDK (librealsense2)** installed system-wide.
@@ -40,6 +50,8 @@ In this post, we’ll walk through how to create two ROS 2 nodes in C++ to strea
   sudo apt-get install ros-${ROS_DISTRO}-vision-opencv
   ```
   (Replace `${ROS_DISTRO}` with your actual ROS distribution name, like `galactic` or `humble`.)
+
+:::
 
 ## Creating the ROS 2 Package
 

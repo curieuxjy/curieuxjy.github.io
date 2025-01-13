@@ -11,7 +11,7 @@ execute:
 ROS2 공식 문서에서는 C++와 Python Node를 별개로 만드는 튜토리얼과 설명만 있기 때문에 C++와 Python 모두 사용하여 노드를 만들고 하나의 ROS2 패키지로 만들기 위한 방법에 대해 알아보겠습니다.
 각 단계마다 변경되는 사항에 대해서는 🟢로 표시되어 있으니 단계를 넘어갈때마다 확인해보시기 바랍니다.
 
-# 1. ROS2 Cpp package 만들기
+# 1. ROS2 C++ package 만들기
 
 ROS2 패키지를 만들 `src` 폴더에서 스탠다드 C++ package를 만들어 줍니다. ([official docs](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html#create-a-package)와 동일)
 
@@ -34,7 +34,7 @@ my_cpp_py_pkg/
 └── src
 ```
 
-# 2. C++ node + header 추가하기
+# 2. C++ node와 header 추가하기
 
 `my_cpp_py_pkg/src/` 폴더에 `.cpp` 소스 코드들을 추가합니다. (`cpp_node.cpp`)
 `my_cpp_py_pkg/include/cpp_pkg` 폴더에 `.hpp` 소스 코드들을 추가합니다. (`cpp_header.hpp`)

@@ -169,8 +169,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ros2-cpp-package-만들기" id="toc-ros2-cpp-package-만들기" class="nav-link active" data-scroll-target="#ros2-cpp-package-만들기">1. ROS2 Cpp package 만들기</a></li>
-  <li><a href="#c-node-header-추가하기" id="toc-c-node-header-추가하기" class="nav-link" data-scroll-target="#c-node-header-추가하기">2. C++ node + header 추가하기</a></li>
+  <li><a href="#ros2-c-package-만들기" id="toc-ros2-c-package-만들기" class="nav-link active" data-scroll-target="#ros2-c-package-만들기">1. ROS2 C++ package 만들기</a></li>
+  <li><a href="#c-node와-header-추가하기" id="toc-c-node와-header-추가하기" class="nav-link" data-scroll-target="#c-node와-header-추가하기">2. C++ node와 header 추가하기</a></li>
   <li><a href="#python-노드와-모듈-추가하기" id="toc-python-노드와-모듈-추가하기" class="nav-link" data-scroll-target="#python-노드와-모듈-추가하기">3. Python 노드와 모듈 추가하기</a>
   <ul class="collapse">
   <li><a href="#recap-ros2-package-architecture" id="toc-recap-ros2-package-architecture" class="nav-link" data-scroll-target="#recap-ros2-package-architecture">Recap ROS2 Package Architecture</a></li>
@@ -220,8 +220,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 
 <p>ROS2 공식 문서에서는 C++와 Python Node를 별개로 만드는 튜토리얼과 설명만 있기 때문에 C++와 Python 모두 사용하여 노드를 만들고 하나의 ROS2 패키지로 만들기 위한 방법에 대해 알아보겠습니다. 각 단계마다 변경되는 사항에 대해서는 🟢로 표시되어 있으니 단계를 넘어갈때마다 확인해보시기 바랍니다.</p>
-<section id="ros2-cpp-package-만들기" class="level1">
-<h1>1. ROS2 Cpp package 만들기</h1>
+<section id="ros2-c-package-만들기" class="level1">
+<h1>1. ROS2 C++ package 만들기</h1>
 <p>ROS2 패키지를 만들 <code>src</code> 폴더에서 스탠다드 C++ package를 만들어 줍니다. (<a href="https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html#create-a-package">official docs</a>와 동일)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>$ cd ~<span class="at">/ros2_ws/src</span>/</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>$ ros2 pkg create my_cpp_py_pkg -<span class="at">-build-type</span> ament_cmake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -238,8 +238,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>├── package.xml</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>└── src</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="c-node-header-추가하기" class="level1">
-<h1>2. C++ node + header 추가하기</h1>
+<section id="c-node와-header-추가하기" class="level1">
+<h1>2. C++ node와 header 추가하기</h1>
 <p><code>my_cpp_py_pkg/src/</code> 폴더에 <code>.cpp</code> 소스 코드들을 추가합니다. (<code>cpp_node.cpp</code>) <code>my_cpp_py_pkg/include/cpp_pkg</code> 폴더에 <code>.hpp</code> 소스 코드들을 추가합니다. (<code>cpp_header.hpp</code>)</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$ cd my_cpp_py_pkg/</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>$ touch src<span class="at">/cpp_node</span>.cpp</span>
