@@ -7,7 +7,6 @@ categories: [mamba, code]
 execute:
   freeze: auto 
 image: https://mamba.readthedocs.io/en/latest/_static/logo.png
-draft: true
 ---
 
 
