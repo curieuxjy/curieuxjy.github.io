@@ -1,0 +1,34 @@
+---
+title: "👩‍💻Mamba Package Manager"
+toc: true
+date: "2025-01-20"
+description: Conda를 떠나 Mamba 톺아보기
+categories: [mamba, code]
+execute:
+  freeze: auto 
+image: https://mamba.readthedocs.io/en/latest/_static/logo.png
+draft: true
+---
+
+
+# Introduction
+
+What is Mamba? 
+
+<center>
+<img src="https://mamba.readthedocs.io/en/latest/_static/logo.png" width="60%" />
+</center>
+
+# Key Feature
+
+Speed… The main motivation for starting Mamba was to solve the performance issues of conda, both in terms of speed and memory usage.
+
+Conda's poor performance is particularly striking in the case of large software repositories (such as conda-forge) where the entire repository index is parsed using the standard Python JSON parser. Tens of thousands of Python objects are created (as many as there are objects in the JSON index file) and processed before being input in the SAT solver.
+On the other hand, Mamba makes use of openSUSE's libsolv dependency resolver, bypassing most of that processing to resolve dependencies.
+
+# Examples
+
+### Reference 
+
+- https://github.com/mamba-org/mamba
+- https://mamba.readthedocs.io/en/latest/
