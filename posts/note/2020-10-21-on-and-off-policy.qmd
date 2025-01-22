@@ -1,9 +1,8 @@
 ---
-draft: true
-title: "📝On and Off policy"
-description: 다시 정리
-date: "2025-01-17"
-categories: [rl, 2025]
+title: "📝On policy VS. Off policy"
+description: 강화학습 알고리즘에서 On-Policy와 Off-Policy의 차이
+date: "2020-10-21"
+categories: [rl, 2020]
 toc: true
 execute:
   freeze: auto 

@@ -80,7 +80,7 @@
   {
     "listing": "/note.html",
     "items": [
-      "/posts/note/2024-12-23-linux-cheetsheet.html",
+      "/posts/note/2025-01-22-linux-cheetsheet.html",
       "/posts/note/2025-01-13-ros2-build-issue.html",
       "/posts/note/2025-01-07-ros2-cpp-python.html",
       "/posts/note/2025-01-05-Goodbye-2024.html",
@@ -106,7 +106,8 @@
       "/posts/note/2022-05-06-geultto-7th-start.html",
       "/posts/note/2021-01-31-ML-tu-berlin.html",
       "/posts/note/2021-01-03-Goodbye-2020.html",
-      "/posts/note/2021-01-03-Hello-2021.html"
+      "/posts/note/2021-01-03-Hello-2021.html",
+      "/posts/note/2020-10-21-on-and-off-policy.html"
     ]
   }
 ]

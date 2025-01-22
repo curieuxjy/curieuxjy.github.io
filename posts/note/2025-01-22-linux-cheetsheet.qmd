@@ -17,38 +17,38 @@ format:
 > - 여러 버전의 프로그램(예: python, cuda)을 설치했을 때 어떤 버전이 활성화되어 있는지 관리
 
 - **심볼릭 링크 삭제**  
-  ```bash
+  ```{.sh code-line-numbers=false}
   rm <symbolic_link>
   ```
   *예시:*  
-  ```bash
+  ```{.sh code-line-numbers=false}
   rm /usr/local/bin/python
   ```
 
 - **심볼릭 링크 생성**  
-  ```bash
+  ```{.sh code-line-numbers=false}
   ln -s <target> <symbolic_link>
   ```
   *예시:*  
-  ```bash
+  ```{.sh code-line-numbers=false}
   ln -s /opt/python3.9/bin/python /usr/local/bin/python
   ```
 
 - **심볼릭 링크 변경 (덮어쓰기)**  
   기존 링크를 새 타겟으로 변경할 때 사용합니다.
-  ```bash
+  ```{.sh code-line-numbers=false}
   ln -Tfs <new_target> <symbolic_link>
   ```
   *예시:*  
-  ```bash
+  ```{.sh code-line-numbers=false}
   ln -Tfs /opt/python3.10/bin/python /usr/local/bin/python
   ```
 - **심볼릭 링크 확인**
-  ```bash
+  ```{.sh code-line-numbers=false}
   ls -l <symbolic_link>
   ```
   *예시:*
-  ```bash
+  ```{.sh code-line-numbers=false}
   ls -l /usr/local/bin/python
   lrwxrwxrwx 1 root root 24 2025-01-22 12:34 /usr/local/bin/python -> /opt/python3.9/bin/python
   ```
@@ -57,7 +57,7 @@ format:
 
 > conda env lib 연결시
 
-```commandline
+```{.sh code-line-numbers=false}
 $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/usr/work/mylib
 
 vi ~/.bashrc (파일명 앞의 .은 숨김파일을 의미)
@@ -78,10 +78,11 @@ sudo kill -9 [ID_NUMBER]
 - `docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].`
 - nvidia-container-toolkit 설치 
 
-```commandline
+```{.sh code-line-numbers=false}
 $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+   
 $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 
 $ sudo systemctl restart docker
@@ -95,7 +96,8 @@ $ sudo systemctl restart docker
 
 
 # terminal zsh/bash
-```commandline
+
+```{.sh code-line-numbers=false}
 chsh -s bin/bash
 chsh -s bin/zsh
 
@@ -106,31 +108,34 @@ chsh -s bin/zsh
 
 # 용량 확인
 
-```
+```{.sh code-line-numbers=false}
 df -h
 ```
 
 - 해당 경로에 있는 모든 파일과 폴더들을 용량 단위로 표기
 - 폴더가 1 순위, 파일이 2 순위로 나열
 - 경로에 있는 모든 폴더들과 각 폴더내에 있는 파일들을 모두 표기
-```
+
+```{.sh code-line-numbers=false}
 du -ch [path] | sort -h
 ```
 
 - 해당 경로의 폴더 기준 트리 구조의 깊이 1만큼의 수준까지 탐색
 - 용량이 큰 폴더가 아래로, 가장 용량이 큰 10개만 보임
-```
+
+```{.sh code-line-numbers=false}
 du -ch [path] --max-depth=1 | sort -h | tail -10
 ```
 
 - 현재 경로의 파일 용량
-```
-ls -lh
-```
+
+  ```{.sh code-line-numbers=false}
+  ls -lh
+  ```
 
 # 파일 찾기
 
-```
+```{.sh code-line-numbers=false}
 find [옵션] [경로] [표현식]
 
 # 현재 위치에서 log가 들어가는 파일 모두 찾기
@@ -138,7 +143,6 @@ find . -name "*log*"
 
 # 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제
 find . -name "*.txt" -delete
-
 ```
 
 - options
