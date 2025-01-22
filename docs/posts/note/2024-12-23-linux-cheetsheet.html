@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-01-06">
+<meta name="dcterms.date" content="2025-01-22">
 <meta name="description" content="자주 사용하는 Commands">
 
 <title>📝Linx Cheet Sheet – Curieux.JY</title>
@@ -169,7 +169,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#library-경로-설정" id="toc-library-경로-설정" class="nav-link active" data-scroll-target="#library-경로-설정">library 경로 설정</a></li>
+  <li><a href="#symbolic-link-설정-및-관리" id="toc-symbolic-link-설정-및-관리" class="nav-link active" data-scroll-target="#symbolic-link-설정-및-관리">symbolic link 설정 및 관리</a></li>
+  <li><a href="#library-경로-설정" id="toc-library-경로-설정" class="nav-link" data-scroll-target="#library-경로-설정">library 경로 설정</a></li>
   <li><a href="#gpu-memory-해제" id="toc-gpu-memory-해제" class="nav-link" data-scroll-target="#gpu-memory-해제">GPU Memory 해제</a></li>
   <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
   <li><a href="#terminal-zshbash" id="toc-terminal-zshbash" class="nav-link" data-scroll-target="#terminal-zshbash">terminal zsh/bash</a></li>
@@ -211,7 +212,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 6, 2025</p>
+      <p class="date">January 22, 2025</p>
     </div>
   </div>
   
@@ -223,23 +224,53 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
+<section id="symbolic-link-설정-및-관리" class="level1">
+<h1>symbolic link 설정 및 관리</h1>
+<blockquote class="blockquote">
+<ul>
+<li>심볼릭 링크는 파일 시스템 내에서 다른 파일이나 디렉토리의 경로를 가리키는 “바로 가기”와 같은 역할을 하므로, 실제 파일이 아닌 링크 파일임을 유의</li>
+<li>여러 버전의 라이브러리나 프로그램 관리 시, 심볼릭 링크가 어떤 타겟을 가리키고 있는지 확인하는 것이 중요</li>
+<li>여러 버전의 프로그램(예: python, cuda)을 설치했을 때 어떤 버전이 활성화되어 있는지 관리</li>
+</ul>
+</blockquote>
+<ul>
+<li><p><strong>심볼릭 링크 삭제</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">rm</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>예시:</em></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">rm</span> /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>심볼릭 링크 생성</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="op">&lt;</span>target<span class="op">&gt;</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>예시:</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ln</span> <span class="at">-s</span> /opt/python3.9/bin/python /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>심볼릭 링크 변경 (덮어쓰기)</strong><br>
+기존 링크를 새 타겟으로 변경할 때 사용합니다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ln</span> <span class="at">-Tfs</span> <span class="op">&lt;</span>new_target<span class="op">&gt;</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>예시:</em></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ln</span> <span class="at">-Tfs</span> /opt/python3.10/bin/python /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>심볼릭 링크 확인</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>예시:</em></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ls</span> <span class="at">-l</span> /usr/local/bin/python</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">lrwxrwxrwx</span> 1 root root 24 2025-01-22 12:34 /usr/local/bin/python <span class="at">-</span><span class="op">&gt;</span> /opt/python3.9/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
 <section id="library-경로-설정" class="level1">
 <h1>library 경로 설정</h1>
 <blockquote class="blockquote">
 <p>conda env lib 연결시</p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/usr/work/mylib</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>vi ~/.bashrc (파일명 앞의 .은 숨김파일을 의미)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>export LD_LIBRARY_PATH=/home/user/work/mylib:${LD_LIBRARY_PATH}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/usr/work/mylib</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>vi ~/.bashrc (파일명 앞의 .은 숨김파일을 의미)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>export LD_LIBRARY_PATH=/home/user/work/mylib:${LD_LIBRARY_PATH}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="gpu-memory-해제" class="level1">
 <h1>GPU Memory 해제</h1>
 <blockquote class="blockquote">
 <p>프로세스가 죽지 않을때 강제 종료</p>
 </blockquote>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기</span>
-<span id="cb2-2"><a href="#cb2-2"></a>sudo kill -9 [ID_NUMBER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기</span>
+<span id="cb10-2"><a href="#cb10-2"></a>sudo kill -9 [ID_NUMBER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="docker" class="level1">
 <h1>Docker</h1>
@@ -247,12 +278,12 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><code>docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].</code></li>
 <li>nvidia-container-toolkit 설치</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \</span>
-<span id="cb3-2"><a href="#cb3-2"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \</span>
-<span id="cb3-3"><a href="#cb3-3"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list</span>
-<span id="cb3-4"><a href="#cb3-4"></a>$ sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span>
-<span id="cb3-5"><a href="#cb3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6"></a>$ sudo systemctl restart docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \</span>
+<span id="cb11-2"><a href="#cb11-2"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \</span>
+<span id="cb11-3"><a href="#cb11-3"></a>   &amp;&amp; curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list</span>
+<span id="cb11-4"><a href="#cb11-4"></a>$ sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a>$ sudo systemctl restart docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>GPU 설정
 <ul>
@@ -266,12 +297,12 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </section>
 <section id="terminal-zshbash" class="level1">
 <h1>terminal zsh/bash</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>chsh -s bin/bash</span>
-<span id="cb4-2"><a href="#cb4-2"></a>chsh -s bin/zsh</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>(@terminal)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>/bin/bash</span>
-<span id="cb4-6"><a href="#cb4-6"></a>/bin/zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>chsh -s bin/bash</span>
+<span id="cb12-2"><a href="#cb12-2"></a>chsh -s bin/zsh</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a>(@terminal)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>/bin/bash</span>
+<span id="cb12-6"><a href="#cb12-6"></a>/bin/zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="용량-확인" class="level1">
 <h1>용량 확인</h1>

@@ -1,7 +1,7 @@
 ---
 title: "📝Linx Cheet Sheet"
 toc: true
-date: "2025-01-06"
+date: "2025-01-22"
 description: 자주 사용하는 Commands
 categories: [linux, docker, cheetsheet, 2025]
 format:
@@ -9,6 +9,49 @@ format:
     code-fold: true
     code-summary: "Show the code"
 ---
+
+# symbolic link 설정 및 관리
+
+> - 심볼릭 링크는 파일 시스템 내에서 다른 파일이나 디렉토리의 경로를 가리키는 "바로 가기"와 같은 역할을 하므로, 실제 파일이 아닌 링크 파일임을 유의
+> - 여러 버전의 라이브러리나 프로그램 관리 시, 심볼릭 링크가 어떤 타겟을 가리키고 있는지 확인하는 것이 중요
+> - 여러 버전의 프로그램(예: python, cuda)을 설치했을 때 어떤 버전이 활성화되어 있는지 관리
+
+- **심볼릭 링크 삭제**  
+  ```bash
+  rm <symbolic_link>
+  ```
+  *예시:*  
+  ```bash
+  rm /usr/local/bin/python
+  ```
+
+- **심볼릭 링크 생성**  
+  ```bash
+  ln -s <target> <symbolic_link>
+  ```
+  *예시:*  
+  ```bash
+  ln -s /opt/python3.9/bin/python /usr/local/bin/python
+  ```
+
+- **심볼릭 링크 변경 (덮어쓰기)**  
+  기존 링크를 새 타겟으로 변경할 때 사용합니다.
+  ```bash
+  ln -Tfs <new_target> <symbolic_link>
+  ```
+  *예시:*  
+  ```bash
+  ln -Tfs /opt/python3.10/bin/python /usr/local/bin/python
+  ```
+- **심볼릭 링크 확인**
+  ```bash
+  ls -l <symbolic_link>
+  ```
+  *예시:*
+  ```bash
+  ls -l /usr/local/bin/python
+  lrwxrwxrwx 1 root root 24 2025-01-22 12:34 /usr/local/bin/python -> /opt/python3.9/bin/python
+  ```
 
 # library 경로 설정
 
