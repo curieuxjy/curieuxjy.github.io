@@ -2,7 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/code/2025-01-20-mamba.html",
       "/posts/storage/2025-01-19-linear-mpc.html",
       "/posts/code/2025-01-13-realsense-ros2.html",
       "/posts/code/2025-01-10-fitting-ellipse.html",
@@ -35,7 +34,6 @@
   {
     "listing": "/post.html",
     "items": [
-      "/posts/code/2025-01-20-mamba.html",
       "/posts/storage/2025-01-19-linear-mpc.html",
       "/posts/code/2025-01-13-realsense-ros2.html",
       "/posts/code/2025-01-10-fitting-ellipse.html",
