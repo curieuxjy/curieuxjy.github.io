@@ -169,7 +169,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#진행-개요" id="toc-진행-개요" class="nav-link active" data-scroll-target="#진행-개요">진행 개요</a></li>
   <li><a href="#creating-the-ros-2-package" id="toc-creating-the-ros-2-package" class="nav-link" data-scroll-target="#creating-the-ros-2-package">Creating the ROS 2 Package</a></li>
   <li><a href="#publisher-node-realsense_publisher.cpp" id="toc-publisher-node-realsense_publisher.cpp" class="nav-link" data-scroll-target="#publisher-node-realsense_publisher.cpp">Publisher Node: <code>realsense_publisher.cpp</code></a></li>
   <li><a href="#subscriber-node-image_subscriber.cpp" id="toc-subscriber-node-image_subscriber.cpp" class="nav-link" data-scroll-target="#subscriber-node-image_subscriber.cpp">Subscriber Node: <code>image_subscriber.cpp</code></a></li>
@@ -220,28 +220,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
-<p>이 게시물에서는 인텔 RealSense 카메라에서 비디오를 스트리밍하고 OpenCV로 표시하기 위해 C++에서 두 개의 ROS 2 노드를 생성하는 방법에 대해 설명하겠습니다.</p>
-<p>또한 <code>librealsense2</code>를 연결하는 등 일반적인 빌드 문제도 다룰 예정입니다.</p>
+<p>이번 포스팅에서는 인텔 RealSense 카메라에서 비디오를 스트리밍하고 OpenCV로 표시하기 위해 C++로 두 개의 ROS 2 노드를 생성하는 방법에 대해 설명하겠습니다. 또한 <code>librealsense2</code>를 연결하는 등 일반적인 빌드 문제도 다룰 예정입니다.</p>
 <center>
 <img src="../../images/2025-02-02-realsense-ros2/ros2_realsense.png" width="67%">
 </center>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>가장 단순한 C++ Node를 만들어 Realsense Camera D457에서 이미지를 받고 OpenCV로 간단한 ploting을 해볼 것 입니다. 이때 Camera에서 이미지를</p>
-<ol type="1">
-<li><strong>Publisher Node</strong>
-<ul>
-<li>Opens a RealSense camera using <code>librealsense2</code>.</li>
-<li>Streams color frames at 640×480 resolution, 30 FPS.</li>
-<li>Publishes the frames to a ROS 2 topic (<code>image_raw</code>).</li>
-</ul></li>
-<li><strong>Subscriber Node</strong>
-<ul>
-<li>Subscribes to the <code>image_raw</code> topic.</li>
-<li>Converts the incoming frames to an OpenCV <code>Mat</code> using <code>cv_bridge</code>.</li>
-<li>Displays the frames in an OpenCV window.</li>
-</ul></li>
-</ol>
+<p>이 간단한 ROS2 프로젝트를 시작하기 앞서, 아래의 전제 조건들을 확인해서 먼저 환경을 셋팅해주시기 바랍니다.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -269,6 +252,23 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
+<section id="진행-개요" class="level2">
+<h2 class="anchored" data-anchor-id="진행-개요">진행 개요</h2>
+<p>가장 단순한 C++ Node를 만들어 Realsense Camera D457에서 이미지를 받고 OpenCV로 간단한 ploting을 해볼 것 입니다. 이때 Camera에서 이미지를</p>
+<ol type="1">
+<li><strong>Publisher Node</strong>
+<ul>
+<li>Opens a RealSense camera using <code>librealsense2</code>.</li>
+<li>Streams color frames at 640×480 resolution, 30 FPS.</li>
+<li>Publishes the frames to a ROS 2 topic (<code>image_raw</code>).</li>
+</ul></li>
+<li><strong>Subscriber Node</strong>
+<ul>
+<li>Subscribes to the <code>image_raw</code> topic.</li>
+<li>Converts the incoming frames to an OpenCV <code>Mat</code> using <code>cv_bridge</code>.</li>
+<li>Displays the frames in an OpenCV window.</li>
+</ul></li>
+</ol>
 </section>
 <section id="creating-the-ros-2-package" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-ros-2-package">Creating the ROS 2 Package</h2>

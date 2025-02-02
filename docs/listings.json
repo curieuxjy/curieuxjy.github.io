@@ -2,7 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/storage/2025-02-03-linear-mpc.html",
       "/posts/code/2025-02-02-realsense-ros2.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
       "/posts/paper/2024-11-10-ipo.html",
@@ -33,7 +32,6 @@
   {
     "listing": "/post.html",
     "items": [
-      "/posts/storage/2025-02-03-linear-mpc.html",
       "/posts/code/2025-02-02-realsense-ros2.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
       "/posts/paper/2024-11-10-ipo.html",
