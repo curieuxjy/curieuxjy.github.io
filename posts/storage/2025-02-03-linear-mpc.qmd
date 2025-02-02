@@ -1,13 +1,19 @@
 ---
 title: "🧩Linear MPC"
 description: from pympc
-date: "2025-01-19"
+date: "2025-02-03"
 categories: [mpc, paper]
+image: ../../images/2025-02-02-linear-mpc/mpc00.png
 toc: true
 ---
 
 
 # Linear Model Predictive Controller
+
+<center>
+<img src="../../images/2025-02-02-linear-mpc/mpc00.png"  width="67%" />
+    <figcaption>MPC</figcaption>
+</center>
 
 
 ## 1. Dynamic Constraints

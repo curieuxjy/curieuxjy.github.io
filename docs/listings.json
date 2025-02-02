@@ -2,9 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/storage/2025-01-19-linear-mpc.html",
-      "/posts/code/2025-01-13-realsense-ros2.html",
-      "/posts/code/2025-01-10-fitting-ellipse.html",
+      "/posts/storage/2025-02-03-linear-mpc.html",
+      "/posts/code/2025-02-02-realsense-ros2.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
       "/posts/paper/2024-11-10-ipo.html",
       "/posts/paper/2024-03-17-vcgs.html",
@@ -34,9 +33,8 @@
   {
     "listing": "/post.html",
     "items": [
-      "/posts/storage/2025-01-19-linear-mpc.html",
-      "/posts/code/2025-01-13-realsense-ros2.html",
-      "/posts/code/2025-01-10-fitting-ellipse.html",
+      "/posts/storage/2025-02-03-linear-mpc.html",
+      "/posts/code/2025-02-02-realsense-ros2.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
       "/posts/paper/2024-11-10-ipo.html",
       "/posts/paper/2024-03-17-vcgs.html",
