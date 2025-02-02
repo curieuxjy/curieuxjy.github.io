@@ -169,13 +169,13 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#진행-개요" id="toc-진행-개요" class="nav-link active" data-scroll-target="#진행-개요">진행 개요</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#creating-the-ros-2-package" id="toc-creating-the-ros-2-package" class="nav-link" data-scroll-target="#creating-the-ros-2-package">Creating the ROS 2 Package</a></li>
   <li><a href="#publisher-node-realsense_publisher.cpp" id="toc-publisher-node-realsense_publisher.cpp" class="nav-link" data-scroll-target="#publisher-node-realsense_publisher.cpp">Publisher Node: <code>realsense_publisher.cpp</code></a></li>
   <li><a href="#subscriber-node-image_subscriber.cpp" id="toc-subscriber-node-image_subscriber.cpp" class="nav-link" data-scroll-target="#subscriber-node-image_subscriber.cpp">Subscriber Node: <code>image_subscriber.cpp</code></a></li>
   <li><a href="#cmakelists.txt-configuration" id="toc-cmakelists.txt-configuration" class="nav-link" data-scroll-target="#cmakelists.txt-configuration">CMakeLists.txt Configuration</a>
   <ul class="collapse">
-  <li><a href="#common-build-issues" id="toc-common-build-issues" class="nav-link" data-scroll-target="#common-build-issues">Common Build Issues</a></li>
+  <li><a href="#발생할-수-있는-build-에러-이슈들" id="toc-발생할-수-있는-build-에러-이슈들" class="nav-link" data-scroll-target="#발생할-수-있는-build-에러-이슈들">발생할 수 있는 Build 에러 이슈들</a></li>
   </ul></li>
   <li><a href="#building-and-running" id="toc-building-and-running" class="nav-link" data-scroll-target="#building-and-running">Building and Running</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -220,278 +220,720 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
-<p>이번 포스팅에서는 인텔 RealSense 카메라에서 비디오를 스트리밍하고 OpenCV로 표시하기 위해 C++로 두 개의 ROS 2 노드를 생성하는 방법에 대해 설명하겠습니다. 또한 <code>librealsense2</code>를 연결하는 등 일반적인 빌드 문제도 다룰 예정입니다.</p>
+<p>이번 포스팅에서는 인텔 RealSense 카메라에서 촬영하고 있는 비디오를 실시간 스트리밍하고, 영상에서 인식한 April Tag를 가지고 OpenCV로 간단한 표시를 하여 보여주는 ROS2 기능을 C++ 노드들로 만들어보는 코드 실습을 진행해보겠습니다. <a href="https://april.eecs.umich.edu/software/apriltag">AprilTag</a>는 로봇 비전, 증강 현실, 마커 기반 위치 추정 등에 활용되는 태그입니다. 본 내용에서는 RealSense 카메라를 사용하기 위해 필요한 패키지인 <code>librealsense2</code>를 연결하는 등 일반적인 빌드 문제들에 대해서도 다룰 예정입니다.</p>
 <center>
-<img src="../../images/2025-02-02-realsense-ros2/ros2_realsense.png" width="67%">
+<img src="../../images/2025-02-02-realsense-ros2/ros2_realsense.png" width="55%">
 </center>
-<p>이 간단한 ROS2 프로젝트를 시작하기 앞서, 아래의 전제 조건들을 확인해서 먼저 환경을 셋팅해주시기 바랍니다.</p>
+<p>이 간단한 ROS2 프로젝트를 시작하기 앞서, 아래의 사전 준비 사항들을 확인해서 먼저 환경을 셋팅해주시기 바랍니다.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-전제 조건
+사전 준비 사항
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><strong>ROS 2</strong> (Galactic, Humble, Iron, etc. — just ensure your environment is set up).</p></li>
-<li><p><strong>Intel RealSense SDK (librealsense2)</strong> installed system-wide.</p>
+<li><p><strong>ROS 2</strong> (Galactic, Humble, Iron, etc. — 각자 Ubuntu 환경에 맞는 ROS2 version을 준비해주세요)</p></li>
+<li><p><strong>Intel RealSense SDK (<code>librealsense2</code>)</strong></p>
 <ul>
-<li><p>On Ubuntu, for instance:</p>
+<li><p>Ubuntu에서는 아래의 명령어로 설치할 수 있습니다:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sudo</span> apt-get install librealsense2-dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
-<li><p><strong>OpenCV</strong> (e.g., <code>sudo apt-get install libopencv-dev</code> on Ubuntu).</p></li>
-<li><p><strong>cv_bridge</strong> (from <code>vision_opencv</code>) which is typically installed via ROS 2 packages:</p>
+<li><p><strong>OpenCV</strong> (e.g., <code>sudo apt-get install libopencv-dev</code>)</p></li>
+<li><p><strong>cv_bridge</strong> (from <code>vision_opencv</code>) - 일반적으로 ROS 2 패키지를 통해 설치됩니다:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">sudo</span> apt-get install ros-<span class="va">${ROS_DISTRO}</span>-vision-opencv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>(Replace <code>${ROS_DISTRO}</code> with your actual ROS distribution name, like <code>galactic</code> or <code>humble</code>.)</p></li>
+<p>( <code>${ROS_DISTRO}</code> 부분을 각자 ROS2 버젼에 맞는 이름으로 대체해주세요. e.g.) <code>galactic</code> or <code>humble</code>)</p></li>
 </ul>
 </div>
 </div>
 </div>
-<section id="진행-개요" class="level2">
-<h2 class="anchored" data-anchor-id="진행-개요">진행 개요</h2>
-<p>가장 단순한 C++ Node를 만들어 Realsense Camera D457에서 이미지를 받고 OpenCV로 간단한 ploting을 해볼 것 입니다. 이때 Camera에서 이미지를</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>앞서 설명한 것처럼, 가장 단순한 ROS2 패키지 구조를 가지고 진행할 예정입니다. 2개의 C++ Node들, 즉 Publisher와 Subcriber를 만들어 Realsense Camera D457에서 이미지를 보내주면(Publisher) 받은 이미지를 토대로 Tag ID를 인식하여 OpenCV로 간단한 ploting을 한 창(Subsciber)을 띄워볼 예정입니다. 각 노드들의 역할을 정리해보면 아래와 같습니다.</p>
 <ol type="1">
-<li><strong>Publisher Node</strong>
+<li><strong>Publisher Node</strong>: RealSense 카메라에서 이미지를 수집하여 ROS 2 토픽으로 퍼블리싱하는 노드
 <ul>
-<li>Opens a RealSense camera using <code>librealsense2</code>.</li>
-<li>Streams color frames at 640×480 resolution, 30 FPS.</li>
-<li>Publishes the frames to a ROS 2 topic (<code>image_raw</code>).</li>
+<li><code>librealsense2</code> 패키지를 이용하여 RealSense camera를 연결</li>
+<li>640×480 해상도, 30 FPS 칼라 이미지 프레임을 스트리밍</li>
+<li>ROS 2 토픽으로 (<code>image_raw</code>) 이미지 프레임 Publish</li>
 </ul></li>
-<li><strong>Subscriber Node</strong>
+<li><strong>Subscriber Node</strong>: RealSense 카메라에서 영상을 받아 OpenCV로 처리하고, AprilTag 라이브러리를 활용하여 태그를 감지하는 기능을 수행하는 노드
 <ul>
-<li>Subscribes to the <code>image_raw</code> topic.</li>
-<li>Converts the incoming frames to an OpenCV <code>Mat</code> using <code>cv_bridge</code>.</li>
-<li>Displays the frames in an OpenCV window.</li>
+<li><code>image_raw</code> 토픽을 Subscribe</li>
+<li><code>cv_bridge</code>를 이용하여 OpenCV <code>Mat</code>으로 이미지를 변환</li>
+<li>OpenCV window에 간단한 표시를한 이미지 띄우기</li>
 </ul></li>
 </ol>
+<center>
+<img src="../../images/2025-02-02-realsense-ros2/nodes.png" width="48%">
+</center>
 </section>
 <section id="creating-the-ros-2-package" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-ros-2-package">Creating the ROS 2 Package</h2>
-<p>We’ll create a new ROS 2 package called <code>my_realsense_example</code>:</p>
+<p><code>my_realsense_example</code> 라는 새로운 ROS 2 package를 만들어 시작해보겠습니다. ROS2의 workspace에 있는 <code>src/</code>폴더에서 C++ 패키지를 생성해줍니다.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">cd</span> ~/ros2_ws/src</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="ex">ros2</span> pkg create my_realsense_example <span class="dt">\</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="at">--build-type</span> ament_cmake <span class="dt">\</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">--dependencies</span> rclcpp sensor_msgs cv_bridge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then, place the following files in the <code>my_realsense_example/src/</code> directory: - <code>realsense_publisher.cpp</code> - <code>image_subscriber.cpp</code></p>
+<p>그다음, <code>my_realsense_example/src/</code> 에 각 노드에 대한 C++ 스크립트 파일을 작성합니다. - <code>realsense_publisher.cpp</code> - <code>image_subscriber.cpp</code></p>
 </section>
 <section id="publisher-node-realsense_publisher.cpp" class="level2">
 <h2 class="anchored" data-anchor-id="publisher-node-realsense_publisher.cpp">Publisher Node: <code>realsense_publisher.cpp</code></h2>
+<p>우선, 카메라 센서에서 이미지를 받아 송출하는 <strong>Publisher 노드 코드</strong>를 살펴보겠습니다. 먼저, 아래와 같이 필요한 헤더와 패키지들을 포함합니다.</p>
+<ul>
+<li><code>librealsense2/rs.hpp</code>: RealSense 카메라를 제어<br>
+</li>
+<li><code>rclcpp/rclcpp.hpp</code>: ROS 2 노드를 생성 및 관리<br>
+</li>
+<li><code>sensor_msgs/msg/image.hpp</code>: ROS 2의 이미지 메시지를 처리<br>
+</li>
+<li><code>cv_bridge/cv_bridge.h</code>: ROS 메시지와 OpenCV 이미지 간 변환<br>
+</li>
+<li><code>opencv2/opencv.hpp</code>: OpenCV 기능 활용</li>
+</ul>
+<p>이러한 요소들을 포함하여, RealSense 카메라에서 영상을 받아 ROS 2 메시지로 변환하고 퍼블리싱하는 노드를 구현할 수 있습니다.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">#include </span><span class="im">&lt;memory&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="pp">#include </span><span class="im">&lt;chrono&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="pp">#include </span><span class="im">&lt;librealsense2/rs.hpp&gt;</span><span class="pp">           </span><span class="co">// Intel RealSense SDK</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="pp">#include </span><span class="im">"sensor_msgs/msg/image.hpp"</span><span class="pp">     </span><span class="co">// ROS 2 Image message</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="pp">#include </span><span class="im">"cv_bridge/cv_bridge.h"</span><span class="pp">         </span><span class="co">// cv_bridge for ROS &lt;-&gt; OpenCV</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="pp">#include </span><span class="im">"opencv2/opencv.hpp"</span><span class="pp">            </span><span class="co">// OpenCV</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="kw">class</span> RealSensePublisher <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="op">{</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>  RealSensePublisher<span class="op">()</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a>  <span class="op">:</span> Node<span class="op">(</span><span class="st">"realsense_publisher"</span><span class="op">)</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  <span class="op">{</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>    <span class="va">pipeline_</span> <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>rs2<span class="op">::</span>pipeline<span class="op">&gt;();</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a></span>
-<span id="cb4-17"><a href="#cb4-17"></a>    <span class="co">// Configure and start the pipeline to stream color images</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a>    rs2<span class="op">::</span>config cfg<span class="op">;</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a>    cfg<span class="op">.</span>enable_stream<span class="op">(</span>RS2_STREAM_COLOR<span class="op">,</span> <span class="dv">640</span><span class="op">,</span> <span class="dv">480</span><span class="op">,</span> RS2_FORMAT_BGR8<span class="op">,</span> <span class="dv">30</span><span class="op">);</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a>    <span class="va">pipeline_</span><span class="op">-&gt;</span>start<span class="op">(</span>cfg<span class="op">);</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a></span>
-<span id="cb4-22"><a href="#cb4-22"></a>    <span class="va">publisher_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_publisher<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;(</span><span class="st">"image_raw"</span><span class="op">,</span> <span class="dv">10</span><span class="op">);</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a></span>
-<span id="cb4-24"><a href="#cb4-24"></a>    <span class="va">timer_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_wall_timer<span class="op">(</span></span>
-<span id="cb4-25"><a href="#cb4-25"></a>      <span class="bu">std::</span>chrono::milliseconds<span class="op">(</span><span class="dv">100</span><span class="op">),</span>  <span class="co">// ~10 Hz</span></span>
-<span id="cb4-26"><a href="#cb4-26"></a>      <span class="bu">std::</span>bind<span class="op">(&amp;</span>RealSensePublisher<span class="op">::</span>publishFrame<span class="op">,</span> <span class="kw">this</span><span class="op">)</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a>    <span class="op">);</span></span>
-<span id="cb4-28"><a href="#cb4-28"></a></span>
-<span id="cb4-29"><a href="#cb4-29"></a>    RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"RealSense Publisher Node started."</span><span class="op">);</span></span>
-<span id="cb4-30"><a href="#cb4-30"></a>  <span class="op">}</span></span>
-<span id="cb4-31"><a href="#cb4-31"></a></span>
-<span id="cb4-32"><a href="#cb4-32"></a><span class="kw">private</span><span class="op">:</span></span>
-<span id="cb4-33"><a href="#cb4-33"></a>  <span class="dt">void</span> publishFrame<span class="op">()</span></span>
-<span id="cb4-34"><a href="#cb4-34"></a>  <span class="op">{</span></span>
-<span id="cb4-35"><a href="#cb4-35"></a>    <span class="co">// Wait for the next set of frames</span></span>
-<span id="cb4-36"><a href="#cb4-36"></a>    rs2<span class="op">::</span>frameset frameset <span class="op">=</span> <span class="va">pipeline_</span><span class="op">-&gt;</span>wait_for_frames<span class="op">();</span></span>
-<span id="cb4-37"><a href="#cb4-37"></a>    rs2<span class="op">::</span>video_frame color_frame <span class="op">=</span> frameset<span class="op">.</span>get_color_frame<span class="op">();</span></span>
-<span id="cb4-38"><a href="#cb4-38"></a>    <span class="cf">if</span> <span class="op">(!</span>color_frame<span class="op">)</span></span>
-<span id="cb4-39"><a href="#cb4-39"></a>    <span class="op">{</span></span>
-<span id="cb4-40"><a href="#cb4-40"></a>      RCLCPP_WARN<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"No color frame received."</span><span class="op">);</span></span>
-<span id="cb4-41"><a href="#cb4-41"></a>      <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb4-42"><a href="#cb4-42"></a>    <span class="op">}</span></span>
-<span id="cb4-43"><a href="#cb4-43"></a></span>
-<span id="cb4-44"><a href="#cb4-44"></a>    <span class="co">// Convert RealSense frame to OpenCV Mat</span></span>
-<span id="cb4-45"><a href="#cb4-45"></a>    cv<span class="op">::</span>Mat color_image<span class="op">(</span></span>
-<span id="cb4-46"><a href="#cb4-46"></a>      cv<span class="op">::</span>Size<span class="op">(</span>color_frame<span class="op">.</span>get_width<span class="op">(),</span> color_frame<span class="op">.</span>get_height<span class="op">()),</span></span>
-<span id="cb4-47"><a href="#cb4-47"></a>      CV_8UC3<span class="op">,</span></span>
-<span id="cb4-48"><a href="#cb4-48"></a>      <span class="op">(</span><span class="dt">void</span><span class="op">*)</span>color_frame<span class="op">.</span>get_data<span class="op">(),</span></span>
-<span id="cb4-49"><a href="#cb4-49"></a>      cv<span class="op">::</span>Mat<span class="op">::</span>AUTO_STEP</span>
-<span id="cb4-50"><a href="#cb4-50"></a>    <span class="op">);</span></span>
-<span id="cb4-51"><a href="#cb4-51"></a></span>
-<span id="cb4-52"><a href="#cb4-52"></a>    <span class="co">// Convert to ROS Image message via cv_bridge</span></span>
-<span id="cb4-53"><a href="#cb4-53"></a>    <span class="kw">auto</span> image_msg <span class="op">=</span> cv_bridge<span class="op">::</span>CvImage<span class="op">(</span>std_msgs<span class="op">::</span>msg<span class="op">::</span>Header<span class="op">(),</span> <span class="st">"bgr8"</span><span class="op">,</span> color_image<span class="op">).</span>toImageMsg<span class="op">();</span></span>
-<span id="cb4-54"><a href="#cb4-54"></a>    image_msg<span class="op">-&gt;</span>header<span class="op">.</span>stamp <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>get_clock<span class="op">()-&gt;</span>now<span class="op">();</span></span>
-<span id="cb4-55"><a href="#cb4-55"></a>    image_msg<span class="op">-&gt;</span>header<span class="op">.</span>frame_id <span class="op">=</span> <span class="st">"realsense_color_frame"</span><span class="op">;</span></span>
-<span id="cb4-56"><a href="#cb4-56"></a></span>
-<span id="cb4-57"><a href="#cb4-57"></a>    <span class="va">publisher_</span><span class="op">-&gt;</span>publish<span class="op">(*</span>image_msg<span class="op">);</span></span>
-<span id="cb4-58"><a href="#cb4-58"></a>  <span class="op">}</span></span>
-<span id="cb4-59"><a href="#cb4-59"></a></span>
-<span id="cb4-60"><a href="#cb4-60"></a>  <span class="bu">std::</span>shared_ptr<span class="op">&lt;</span>rs2<span class="op">::</span>pipeline<span class="op">&gt;</span> <span class="va">pipeline_</span><span class="op">;</span></span>
-<span id="cb4-61"><a href="#cb4-61"></a>  rclcpp<span class="op">::</span>Publisher<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;::</span>SharedPtr <span class="va">publisher_</span><span class="op">;</span></span>
-<span id="cb4-62"><a href="#cb4-62"></a>  rclcpp<span class="op">::</span>TimerBase<span class="op">::</span>SharedPtr <span class="va">timer_</span><span class="op">;</span></span>
-<span id="cb4-63"><a href="#cb4-63"></a><span class="op">};</span></span>
-<span id="cb4-64"><a href="#cb4-64"></a></span>
-<span id="cb4-65"><a href="#cb4-65"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span></span>
-<span id="cb4-66"><a href="#cb4-66"></a><span class="op">{</span></span>
-<span id="cb4-67"><a href="#cb4-67"></a>  rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span></span>
-<span id="cb4-68"><a href="#cb4-68"></a>  rclcpp<span class="op">::</span>spin<span class="op">(</span><span class="bu">std::</span>make_shared<span class="op">&lt;</span>RealSensePublisher<span class="op">&gt;());</span></span>
-<span id="cb4-69"><a href="#cb4-69"></a>  rclcpp<span class="op">::</span>shutdown<span class="op">();</span></span>
-<span id="cb4-70"><a href="#cb4-70"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb4-71"><a href="#cb4-71"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="pp">#include </span><span class="im">"opencv2/opencv.hpp"</span><span class="pp">            </span><span class="co">// OpenCV</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>본격적으로 <code>RealSensePubliser</code>Class를 살펴보면, <strong>RealSense 카메라에서 수집한 영상을 OpenCV 형식으로 변환한 후, 이를 ROS 2의 이미지 메시지로 변환하여 주기적으로 퍼블리싱하는 과정</strong>이 진행됩니다. 이 클래스 노드를 통해 송출된 이미지를 다른 ROS 2 노드가 Subscribe하고 활용할 수 있습니다.</p>
+<p>크게 2 부분으로 나누어서 볼 수 있습니다.</p>
+<ol type="1">
+<li><strong>노드 초기화 (<code>RealSensePublisher</code>)</strong>
+<ul>
+<li><code>rclcpp::Node</code>를 상속받아 <code>"realsense_publisher"</code>라는 이름의 ROS 2 노드를 생성합</li>
+<li><code>rs2::pipeline</code>을 설정하여 RealSense 카메라에서 데이터를 스트리밍할 준비</li>
+<li><code>rs2::config</code>를 사용해 컬러 영상 스트리밍을 <strong>640x480 해상도, BGR8 포맷, 30 FPS</strong>로 설정</li>
+<li><code>create_publisher&lt;sensor_msgs::msg::Image&gt;("image_raw", 10);</code>를 통해 <code>"image_raw"</code> 토픽으로 영상을 퍼블리싱할 퍼블리셔를 생성</li>
+<li><code>create_wall_timer</code>를 사용하여 <strong>100ms(약 10Hz) 간격으로 프레임을 가져와 퍼블리싱하는 타이머</strong>를 설정</li>
+</ul></li>
+<li><strong>프레임 캡처 및 퍼블리싱 (<code>publishFrame</code>)</strong>
+<ul>
+<li><code>pipeline_-&gt;wait_for_frames();</code>를 사용해 RealSense 카메라에서 새로운 프레임을 가져옴</li>
+<li><code>frameset.get_color_frame();</code>을 통해 컬러 프레임을 추출하고, 존재하지 않으면 경고 메시지를 출력</li>
+<li><code>cv::Mat</code>을 사용하여 RealSense의 컬러 프레임 데이터를 OpenCV 형식으로 변환</li>
+<li><code>cv_bridge::CvImage</code>를 활용해 OpenCV 이미지를 ROS 2의 <code>sensor_msgs::msg::Image</code> 형식으로 변환한 후 타임스탬프와 프레임 ID를 추가</li>
+<li><code>publisher_-&gt;publish(*image_msg);</code>를 통해 변환된 이미지를 <code>"image_raw"</code> 토픽으로 퍼블리싱</li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">class</span> RealSensePublisher <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  RealSensePublisher<span class="op">()</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="op">:</span> Node<span class="op">(</span><span class="st">"realsense_publisher"</span><span class="op">)</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="va">pipeline_</span> <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>rs2<span class="op">::</span>pipeline<span class="op">&gt;();</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="co">// Configure and start the pipeline to stream color images</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>    rs2<span class="op">::</span>config cfg<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>    cfg<span class="op">.</span>enable_stream<span class="op">(</span>RS2_STREAM_COLOR<span class="op">,</span> <span class="dv">640</span><span class="op">,</span> <span class="dv">480</span><span class="op">,</span> RS2_FORMAT_BGR8<span class="op">,</span> <span class="dv">30</span><span class="op">);</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="va">pipeline_</span><span class="op">-&gt;</span>start<span class="op">(</span>cfg<span class="op">);</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a>    <span class="va">publisher_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_publisher<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;(</span><span class="st">"image_raw"</span><span class="op">,</span> <span class="dv">10</span><span class="op">);</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a>    <span class="va">timer_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_wall_timer<span class="op">(</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>      <span class="bu">std::</span>chrono::milliseconds<span class="op">(</span><span class="dv">100</span><span class="op">),</span>  <span class="co">// ~10 Hz</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>      <span class="bu">std::</span>bind<span class="op">(&amp;</span>RealSensePublisher<span class="op">::</span>publishFrame<span class="op">,</span> <span class="kw">this</span><span class="op">)</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>    <span class="op">);</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a></span>
+<span id="cb5-21"><a href="#cb5-21"></a>    RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"RealSense Publisher Node started."</span><span class="op">);</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a>  <span class="op">}</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a>  <span class="dt">void</span> publishFrame<span class="op">()</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a>  <span class="op">{</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a>    <span class="co">// Wait for the next set of frames</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a>    rs2<span class="op">::</span>frameset frameset <span class="op">=</span> <span class="va">pipeline_</span><span class="op">-&gt;</span>wait_for_frames<span class="op">();</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a>    rs2<span class="op">::</span>video_frame color_frame <span class="op">=</span> frameset<span class="op">.</span>get_color_frame<span class="op">();</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a>    <span class="cf">if</span> <span class="op">(!</span>color_frame<span class="op">)</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a>    <span class="op">{</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a>      RCLCPP_WARN<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"No color frame received."</span><span class="op">);</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a>    <span class="op">}</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a></span>
+<span id="cb5-36"><a href="#cb5-36"></a>    <span class="co">// Convert RealSense frame to OpenCV Mat</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a>    cv<span class="op">::</span>Mat color_image<span class="op">(</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a>      cv<span class="op">::</span>Size<span class="op">(</span>color_frame<span class="op">.</span>get_width<span class="op">(),</span> color_frame<span class="op">.</span>get_height<span class="op">()),</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a>      CV_8UC3<span class="op">,</span></span>
+<span id="cb5-40"><a href="#cb5-40"></a>      <span class="op">(</span><span class="dt">void</span><span class="op">*)</span>color_frame<span class="op">.</span>get_data<span class="op">(),</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a>      cv<span class="op">::</span>Mat<span class="op">::</span>AUTO_STEP</span>
+<span id="cb5-42"><a href="#cb5-42"></a>    <span class="op">);</span></span>
+<span id="cb5-43"><a href="#cb5-43"></a></span>
+<span id="cb5-44"><a href="#cb5-44"></a>    <span class="co">// Convert to ROS Image message via cv_bridge</span></span>
+<span id="cb5-45"><a href="#cb5-45"></a>    <span class="kw">auto</span> image_msg <span class="op">=</span> cv_bridge<span class="op">::</span>CvImage<span class="op">(</span>std_msgs<span class="op">::</span>msg<span class="op">::</span>Header<span class="op">(),</span> <span class="st">"bgr8"</span><span class="op">,</span> color_image<span class="op">).</span>toImageMsg<span class="op">();</span></span>
+<span id="cb5-46"><a href="#cb5-46"></a>    image_msg<span class="op">-&gt;</span>header<span class="op">.</span>stamp <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>get_clock<span class="op">()-&gt;</span>now<span class="op">();</span></span>
+<span id="cb5-47"><a href="#cb5-47"></a>    image_msg<span class="op">-&gt;</span>header<span class="op">.</span>frame_id <span class="op">=</span> <span class="st">"realsense_color_frame"</span><span class="op">;</span></span>
+<span id="cb5-48"><a href="#cb5-48"></a></span>
+<span id="cb5-49"><a href="#cb5-49"></a>    <span class="va">publisher_</span><span class="op">-&gt;</span>publish<span class="op">(*</span>image_msg<span class="op">);</span></span>
+<span id="cb5-50"><a href="#cb5-50"></a>  <span class="op">}</span></span>
+<span id="cb5-51"><a href="#cb5-51"></a></span>
+<span id="cb5-52"><a href="#cb5-52"></a>  <span class="bu">std::</span>shared_ptr<span class="op">&lt;</span>rs2<span class="op">::</span>pipeline<span class="op">&gt;</span> <span class="va">pipeline_</span><span class="op">;</span></span>
+<span id="cb5-53"><a href="#cb5-53"></a>  rclcpp<span class="op">::</span>Publisher<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;::</span>SharedPtr <span class="va">publisher_</span><span class="op">;</span></span>
+<span id="cb5-54"><a href="#cb5-54"></a>  rclcpp<span class="op">::</span>TimerBase<span class="op">::</span>SharedPtr <span class="va">timer_</span><span class="op">;</span></span>
+<span id="cb5-55"><a href="#cb5-55"></a><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>마지막으로 main에서는 ROS 2 노드 실행의 진입점으로, <code>RealSensePublisher</code> 노드를 생성하고 실행하는 역할을 합니다. 이를 통해 RealSense 카메라에서 받은 영상을 <strong>ROS 2의 <code>"image_raw"</code> 토픽으로 지속적으로 퍼블리싱하는 노드</strong>가 실행됩니다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span> <span class="co">// ROS 2 노드 실행을 위한 초기화</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  rclcpp<span class="op">::</span>spin<span class="op">(</span><span class="bu">std::</span>make_shared<span class="op">&lt;</span>RealSensePublisher<span class="op">&gt;());</span> <span class="co">// `RealSensePublisher` 노드를 생성하고 실행</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="co">/* </span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">  `spin()` 함수는 노드가 지속적으로 실행되도록 유지하며, </span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">  콜백 함수(`publishFrame()`)를 주기적으로 호출하여 RealSense 카메라에서 영상을 가져오고 퍼블리싱합니다. </span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">  */</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  rclcpp<span class="op">::</span>shutdown<span class="op">();</span> <span class="co">// 프로그램 종료 시 ROS 2를 안전하게 종료</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>각 부분을 살펴본 Publisher 노드를 통합하면 아래와 같이 <code>realsense_publisher.cpp</code>가 완성됩니다.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>realsense_publisher.cpp</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1"></a><span class="pp">#include </span><span class="im">&lt;memory&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="pp">#include </span><span class="im">&lt;chrono&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="pp">#include </span><span class="im">&lt;librealsense2/rs.hpp&gt;</span><span class="pp">           </span><span class="co">// Intel RealSense SDK</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="pp">#include </span><span class="im">"sensor_msgs/msg/image.hpp"</span><span class="pp">     </span><span class="co">// ROS 2 Image message</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="pp">#include </span><span class="im">"cv_bridge/cv_bridge.h"</span><span class="pp">         </span><span class="co">// cv_bridge for ROS &lt;-&gt; OpenCV</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="pp">#include </span><span class="im">"opencv2/opencv.hpp"</span><span class="pp">            </span><span class="co">// OpenCV</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="kw">class</span> RealSensePublisher <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="op">{</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  RealSensePublisher<span class="op">()</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="op">:</span> Node<span class="op">(</span><span class="st">"realsense_publisher"</span><span class="op">)</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="op">{</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="va">pipeline_</span> <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>rs2<span class="op">::</span>pipeline<span class="op">&gt;();</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a></span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="co">// Configure and start the pipeline to stream color images</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>    rs2<span class="op">::</span>config cfg<span class="op">;</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>    cfg<span class="op">.</span>enable_stream<span class="op">(</span>RS2_STREAM_COLOR<span class="op">,</span> <span class="dv">640</span><span class="op">,</span> <span class="dv">480</span><span class="op">,</span> RS2_FORMAT_BGR8<span class="op">,</span> <span class="dv">30</span><span class="op">);</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>    <span class="va">pipeline_</span><span class="op">-&gt;</span>start<span class="op">(</span>cfg<span class="op">);</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a>    <span class="va">publisher_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_publisher<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;(</span><span class="st">"image_raw"</span><span class="op">,</span> <span class="dv">10</span><span class="op">);</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a></span>
+<span id="cb7-24"><a href="#cb7-24"></a>    <span class="va">timer_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_wall_timer<span class="op">(</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a>      <span class="bu">std::</span>chrono::milliseconds<span class="op">(</span><span class="dv">100</span><span class="op">),</span>  <span class="co">// ~10 Hz</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a>      <span class="bu">std::</span>bind<span class="op">(&amp;</span>RealSensePublisher<span class="op">::</span>publishFrame<span class="op">,</span> <span class="kw">this</span><span class="op">)</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a>    <span class="op">);</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a></span>
+<span id="cb7-29"><a href="#cb7-29"></a>    RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"RealSense Publisher Node started."</span><span class="op">);</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a>  <span class="op">}</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a>  <span class="dt">void</span> publishFrame<span class="op">()</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a>  <span class="op">{</span></span>
+<span id="cb7-35"><a href="#cb7-35"></a>    <span class="co">// Wait for the next set of frames</span></span>
+<span id="cb7-36"><a href="#cb7-36"></a>    rs2<span class="op">::</span>frameset frameset <span class="op">=</span> <span class="va">pipeline_</span><span class="op">-&gt;</span>wait_for_frames<span class="op">();</span></span>
+<span id="cb7-37"><a href="#cb7-37"></a>    rs2<span class="op">::</span>video_frame color_frame <span class="op">=</span> frameset<span class="op">.</span>get_color_frame<span class="op">();</span></span>
+<span id="cb7-38"><a href="#cb7-38"></a>    <span class="cf">if</span> <span class="op">(!</span>color_frame<span class="op">)</span></span>
+<span id="cb7-39"><a href="#cb7-39"></a>    <span class="op">{</span></span>
+<span id="cb7-40"><a href="#cb7-40"></a>      RCLCPP_WARN<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"No color frame received."</span><span class="op">);</span></span>
+<span id="cb7-41"><a href="#cb7-41"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a>    <span class="op">}</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a></span>
+<span id="cb7-44"><a href="#cb7-44"></a>    <span class="co">// Convert RealSense frame to OpenCV Mat</span></span>
+<span id="cb7-45"><a href="#cb7-45"></a>    cv<span class="op">::</span>Mat color_image<span class="op">(</span></span>
+<span id="cb7-46"><a href="#cb7-46"></a>      cv<span class="op">::</span>Size<span class="op">(</span>color_frame<span class="op">.</span>get_width<span class="op">(),</span> color_frame<span class="op">.</span>get_height<span class="op">()),</span></span>
+<span id="cb7-47"><a href="#cb7-47"></a>      CV_8UC3<span class="op">,</span></span>
+<span id="cb7-48"><a href="#cb7-48"></a>      <span class="op">(</span><span class="dt">void</span><span class="op">*)</span>color_frame<span class="op">.</span>get_data<span class="op">(),</span></span>
+<span id="cb7-49"><a href="#cb7-49"></a>      cv<span class="op">::</span>Mat<span class="op">::</span>AUTO_STEP</span>
+<span id="cb7-50"><a href="#cb7-50"></a>    <span class="op">);</span></span>
+<span id="cb7-51"><a href="#cb7-51"></a></span>
+<span id="cb7-52"><a href="#cb7-52"></a>    <span class="co">// Convert to ROS Image message via cv_bridge</span></span>
+<span id="cb7-53"><a href="#cb7-53"></a>    <span class="kw">auto</span> image_msg <span class="op">=</span> cv_bridge<span class="op">::</span>CvImage<span class="op">(</span>std_msgs<span class="op">::</span>msg<span class="op">::</span>Header<span class="op">(),</span> <span class="st">"bgr8"</span><span class="op">,</span> color_image<span class="op">).</span>toImageMsg<span class="op">();</span></span>
+<span id="cb7-54"><a href="#cb7-54"></a>    image_msg<span class="op">-&gt;</span>header<span class="op">.</span>stamp <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>get_clock<span class="op">()-&gt;</span>now<span class="op">();</span></span>
+<span id="cb7-55"><a href="#cb7-55"></a>    image_msg<span class="op">-&gt;</span>header<span class="op">.</span>frame_id <span class="op">=</span> <span class="st">"realsense_color_frame"</span><span class="op">;</span></span>
+<span id="cb7-56"><a href="#cb7-56"></a></span>
+<span id="cb7-57"><a href="#cb7-57"></a>    <span class="va">publisher_</span><span class="op">-&gt;</span>publish<span class="op">(*</span>image_msg<span class="op">);</span></span>
+<span id="cb7-58"><a href="#cb7-58"></a>  <span class="op">}</span></span>
+<span id="cb7-59"><a href="#cb7-59"></a></span>
+<span id="cb7-60"><a href="#cb7-60"></a>  <span class="bu">std::</span>shared_ptr<span class="op">&lt;</span>rs2<span class="op">::</span>pipeline<span class="op">&gt;</span> <span class="va">pipeline_</span><span class="op">;</span></span>
+<span id="cb7-61"><a href="#cb7-61"></a>  rclcpp<span class="op">::</span>Publisher<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;::</span>SharedPtr <span class="va">publisher_</span><span class="op">;</span></span>
+<span id="cb7-62"><a href="#cb7-62"></a>  rclcpp<span class="op">::</span>TimerBase<span class="op">::</span>SharedPtr <span class="va">timer_</span><span class="op">;</span></span>
+<span id="cb7-63"><a href="#cb7-63"></a><span class="op">};</span></span>
+<span id="cb7-64"><a href="#cb7-64"></a></span>
+<span id="cb7-65"><a href="#cb7-65"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span></span>
+<span id="cb7-66"><a href="#cb7-66"></a><span class="op">{</span></span>
+<span id="cb7-67"><a href="#cb7-67"></a>  rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span></span>
+<span id="cb7-68"><a href="#cb7-68"></a>  rclcpp<span class="op">::</span>spin<span class="op">(</span><span class="bu">std::</span>make_shared<span class="op">&lt;</span>RealSensePublisher<span class="op">&gt;());</span></span>
+<span id="cb7-69"><a href="#cb7-69"></a>  rclcpp<span class="op">::</span>shutdown<span class="op">();</span></span>
+<span id="cb7-70"><a href="#cb7-70"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-71"><a href="#cb7-71"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="subscriber-node-image_subscriber.cpp" class="level2">
 <h2 class="anchored" data-anchor-id="subscriber-node-image_subscriber.cpp">Subscriber Node: <code>image_subscriber.cpp</code></h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#include </span><span class="im">&lt;memory&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="pp">#include </span><span class="im">"sensor_msgs/msg/image.hpp"</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="pp">#include </span><span class="im">"cv_bridge/cv_bridge.h"</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="pp">#include </span><span class="im">"opencv2/highgui.hpp"</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="pp">#include </span><span class="im">"opencv2/imgproc.hpp"</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="kw">class</span> ImageSubscriber <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="op">{</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>  ImageSubscriber<span class="op">()</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="op">:</span> Node<span class="op">(</span><span class="st">"image_subscriber"</span><span class="op">)</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>  <span class="op">{</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a>    <span class="va">subscription_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_subscription<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;(</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a>      <span class="st">"image_raw"</span><span class="op">,</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a>      <span class="dv">10</span><span class="op">,</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a>      <span class="bu">std::</span>bind<span class="op">(&amp;</span>ImageSubscriber<span class="op">::</span>imageCallback<span class="op">,</span> <span class="kw">this</span><span class="op">,</span> <span class="bu">std::</span>placeholders::_1<span class="op">)</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a>    <span class="op">);</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a></span>
-<span id="cb5-20"><a href="#cb5-20"></a>    <span class="co">// Create an OpenCV window once</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a>    cv<span class="op">::</span>namedWindow<span class="op">(</span><span class="st">"RealSense Camera"</span><span class="op">,</span> cv<span class="op">::</span>WINDOW_AUTOSIZE<span class="op">);</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a></span>
-<span id="cb5-23"><a href="#cb5-23"></a>    RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"Image Subscriber Node started."</span><span class="op">);</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a>  <span class="op">}</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="kw">private</span><span class="op">:</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>  <span class="dt">void</span> imageCallback<span class="op">(</span><span class="at">const</span> sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">::</span>SharedPtr msg<span class="op">)</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a>  <span class="op">{</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a>    cv<span class="op">::</span>Mat frame<span class="op">;</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a>    <span class="cf">try</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a>    <span class="op">{</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a>      frame <span class="op">=</span> cv_bridge<span class="op">::</span>toCvCopy<span class="op">(</span>msg<span class="op">,</span> <span class="st">"bgr8"</span><span class="op">)-&gt;</span>image<span class="op">;</span></span>
-<span id="cb5-33"><a href="#cb5-33"></a>    <span class="op">}</span></span>
-<span id="cb5-34"><a href="#cb5-34"></a>    <span class="cf">catch</span> <span class="op">(</span>cv_bridge<span class="op">::</span>Exception <span class="op">&amp;</span>e<span class="op">)</span></span>
-<span id="cb5-35"><a href="#cb5-35"></a>    <span class="op">{</span></span>
-<span id="cb5-36"><a href="#cb5-36"></a>      RCLCPP_ERROR<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"cv_bridge exception: </span><span class="sc">%s</span><span class="st">"</span><span class="op">,</span> e<span class="op">.</span>what<span class="op">());</span></span>
-<span id="cb5-37"><a href="#cb5-37"></a>      <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb5-38"><a href="#cb5-38"></a>    <span class="op">}</span></span>
-<span id="cb5-39"><a href="#cb5-39"></a></span>
-<span id="cb5-40"><a href="#cb5-40"></a>    <span class="cf">if</span> <span class="op">(!</span>frame<span class="op">.</span>empty<span class="op">())</span></span>
-<span id="cb5-41"><a href="#cb5-41"></a>    <span class="op">{</span></span>
-<span id="cb5-42"><a href="#cb5-42"></a>      cv<span class="op">::</span>imshow<span class="op">(</span><span class="st">"RealSense Camera"</span><span class="op">,</span> frame<span class="op">);</span></span>
-<span id="cb5-43"><a href="#cb5-43"></a>      cv<span class="op">::</span>waitKey<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb5-44"><a href="#cb5-44"></a>    <span class="op">}</span></span>
-<span id="cb5-45"><a href="#cb5-45"></a>  <span class="op">}</span></span>
-<span id="cb5-46"><a href="#cb5-46"></a></span>
-<span id="cb5-47"><a href="#cb5-47"></a>  rclcpp<span class="op">::</span>Subscription<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;::</span>SharedPtr <span class="va">subscription_</span><span class="op">;</span></span>
-<span id="cb5-48"><a href="#cb5-48"></a><span class="op">};</span></span>
-<span id="cb5-49"><a href="#cb5-49"></a></span>
-<span id="cb5-50"><a href="#cb5-50"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span></span>
-<span id="cb5-51"><a href="#cb5-51"></a><span class="op">{</span></span>
-<span id="cb5-52"><a href="#cb5-52"></a>  rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span></span>
-<span id="cb5-53"><a href="#cb5-53"></a>  <span class="kw">auto</span> node <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>ImageSubscriber<span class="op">&gt;();</span></span>
-<span id="cb5-54"><a href="#cb5-54"></a></span>
-<span id="cb5-55"><a href="#cb5-55"></a>  rclcpp<span class="op">::</span>Rate rate<span class="op">(</span><span class="dv">30</span><span class="op">);</span></span>
-<span id="cb5-56"><a href="#cb5-56"></a>  <span class="cf">while</span> <span class="op">(</span>rclcpp<span class="op">::</span>ok<span class="op">())</span></span>
-<span id="cb5-57"><a href="#cb5-57"></a>  <span class="op">{</span></span>
-<span id="cb5-58"><a href="#cb5-58"></a>    rclcpp<span class="op">::</span>spin_some<span class="op">(</span>node<span class="op">);</span></span>
-<span id="cb5-59"><a href="#cb5-59"></a>    rate<span class="op">.</span>sleep<span class="op">();</span></span>
-<span id="cb5-60"><a href="#cb5-60"></a>  <span class="op">}</span></span>
-<span id="cb5-61"><a href="#cb5-61"></a></span>
-<span id="cb5-62"><a href="#cb5-62"></a>  rclcpp<span class="op">::</span>shutdown<span class="op">();</span></span>
-<span id="cb5-63"><a href="#cb5-63"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb5-64"><a href="#cb5-64"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>다음으로 위에서 Publisher 노드가 보내준 이미지 데이터를 받는 Subscriber 노드에 대해 살펴보겠습니다.</p>
+<p>우선 아래와 같이 필요한 헤더 파일들을 포함합니다.</p>
+<ol type="1">
+<li><strong>C++ 표준 라이브러리 포함 (<code>&lt;memory&gt;</code>, <code>&lt;string&gt;</code>, <code>&lt;iostream&gt;</code>)</strong>
+<ul>
+<li>스마트 포인터(<code>std::shared_ptr</code>), 문자열(<code>std::string</code>), 표준 입출력(<code>std::cout</code>)을 사용하기 위한 헤더 파일</li>
+</ul></li>
+<li><strong>ROS 2 관련 헤더 포함</strong>
+<ul>
+<li><code>rclcpp/rclcpp.hpp</code>: ROS 2 노드 및 퍼블리셔/구독자 기능을 사용하기 위한 기본 라이브러리</li>
+<li><code>sensor_msgs/msg/image.hpp</code>: ROS 2에서 <strong>이미지 메시지(<code>sensor_msgs::msg::Image</code>)</strong> 를 다루기 위한 메시지 타입<br>
+</li>
+<li><code>cv_bridge/cv_bridge.h</code>: <strong>ROS 이미지 메시지를 OpenCV의 <code>cv::Mat</code>으로 변환</strong>하거나, 반대로 OpenCV 이미지를 ROS 메시지로 변환하기 위해 사용</li>
+</ul></li>
+<li><strong>OpenCV 관련 헤더 포함</strong>
+<ul>
+<li><code>opencv2/highgui.hpp</code>: OpenCV의 GUI 기능 (<code>cv::imshow()</code>, <code>cv::waitKey()</code>)을 사용하여 이미지를 표시할 때 필요</li>
+<li><code>opencv2/imgproc.hpp</code>: 이미지 처리 기능(예: 필터링, 변형, 색 변환 등)을 수행하기 위한 라이브러리</li>
+</ul></li>
+<li><strong>AprilTag 감지를 위한 라이브러리 포함</strong>
+<ul>
+<li><code>extern "C" {}</code> 블록을 사용하여 <strong>C 스타일로 작성된 AprilTag 라이브러리를 C++ 코드에서 사용할 수 있도록 합니다.</strong><br>
+</li>
+<li><code>#include &lt;apriltag.h&gt;</code>: AprilTag 감지 시스템의 핵심 헤더</li>
+<li><code>#include &lt;tag25h9.h&gt;</code>: <strong>AprilTag 25h9 태그 세트</strong>를 사용하기 위한 헤더 파일(25x9 해상도를 가진 태그 세트)</li>
+<li><code>#include &lt;tag36h11.h&gt;</code>는 주석 처리되어 있으며, 필요 시 <strong>AprilTag 36h11 세트(더 정밀한 태그)를 사용할 수 있도록 변경 가능</strong></li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1"></a><span class="pp">#include </span><span class="im">&lt;memory&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">// ROS 2</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="pp">#include </span><span class="im">"sensor_msgs/msg/image.hpp"</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="pp">#include </span><span class="im">"cv_bridge/cv_bridge.h"</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">// OpenCV</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="pp">#include </span><span class="im">"opencv2/highgui.hpp"</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="pp">#include </span><span class="im">"opencv2/imgproc.hpp"</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">// AprilTag library headers</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="at">extern</span> <span class="st">"C"</span> <span class="op">{</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="pp">#include </span><span class="im">&lt;apriltag.h&gt;</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">// #include &lt;tag36h11.h&gt;</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="pp">#include </span><span class="im">&lt;tag25h9.h&gt;</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>다음으로 <code>ImageSubscriber</code> Class를 보겠습니다. RealSense 카메라에서 수신한 영상을 처리하고, AprilTag을 검출하여 화면에 표시하는 ROS 2 노드를 구현합니다. OpenCV를 사용하여 영상을 변환하고, AprilTag 라이브러리를 이용해 태그를 감지 및 시각화하여 검출된 태그의 ID, 꼭짓점, 중심을 화면에 시각적으로 표시하는 과정이 구현되어 있습니다. 크게 세 부분으로 나누어서 보면,</p>
+<p><strong>1. 노드 초기화 (<code>ImageSubscriber</code>)</strong></p>
+<ul>
+<li><code>"image_raw"</code> 토픽을 구독(<code>subscription_</code>)하여 카메라 영상을 수신</li>
+<li>OpenCV 창 <code>"RealSense Camera + AprilTag"</code>를 생성하여 화면에 영상을 표시할 준비</li>
+<li><strong>AprilTag 검출기 초기화</strong>:
+<ul>
+<li><code>tag_family_ = tag25h9_create();</code> → AprilTag 25h9 태그 세트를 사용하도록 설정</li>
+<li><code>tag_detector_ = apriltag_detector_create();</code> → AprilTag 검출기를 생성</li>
+<li><code>apriltag_detector_add_family(tag_detector_, tag_family_);</code> → 특정 태그 패밀리를 검출기에 추가</li>
+<li>검출기의 매개변수(예: <code>quad_decimate</code>, <code>quad_sigma</code>)를 조정하여 성능 최적화 가능</li>
+</ul></li>
+</ul>
+<p><strong>2. 이미지 수신 및 AprilTag 검출 (<code>imageCallback</code>)</strong>: ROS 2의 <code>"image_raw"</code> 토픽에서 새로운 이미지가 수신될 때 호출</p>
+<ol type="1">
+<li><strong>ROS 2 이미지 메시지 → OpenCV <code>cv::Mat</code> 변환</strong>
+<ul>
+<li><code>cv_bridge::toCvCopy(msg, "bgr8")-&gt;image;</code>를 사용하여 ROS 2의 <code>sensor_msgs::msg::Image</code>를 OpenCV 형식(<code>cv::Mat</code>)으로 변환합니다</li>
+<li>변환 중 오류 발생 시 예외를 처리</li>
+</ul></li>
+<li><strong>그레이스케일 변환</strong> (AprilTag 검출은 흑백 영상이 필요)
+<ul>
+<li><code>cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);</code></li>
+</ul></li>
+<li><strong>OpenCV <code>cv::Mat</code> → AprilTag 전용 이미지 형식 (<code>image_u8_t</code>) 변환</strong>
+<ul>
+<li>AprilTag 라이브러리는 <code>image_u8_t</code> 구조체를 사용하므로 변환이 필요</li>
+<li><code>gray.data</code>를 <code>buf</code>로 전달하여 메모리 복사를 최소화</li>
+</ul></li>
+<li><strong>AprilTag 검출 실행</strong>
+<ul>
+<li><code>apriltag_detector_detect(tag_detector_, &amp;apriltag_image);</code>을 호출하여 AprilTag을 감지</li>
+<li>검출된 태그는 <code>zarray_t* detections</code>에 저장</li>
+</ul></li>
+<li><strong>검출된 AprilTag에 대한 시각적 표시</strong>
+<ul>
+<li>각 태그의 <strong>네 개의 꼭짓점 좌표(<code>p[]</code>)</strong> 를 가져와 초록색(<code>cv::Scalar(0, 255, 0)</code>)으로 사각형을 그림</li>
+<li>태그의 <strong>중앙 좌표(<code>c[]</code>)</strong> 에 빨간색 원을 표시(<code>cv::circle()</code>)</li>
+<li>태그의 <strong>ID를 노란색(<code>cv::Scalar(0, 255, 255)</code>) 텍스트로 화면에 출력</strong></li>
+</ul></li>
+<li><strong>메모리 정리</strong>
+<ul>
+<li><code>apriltag_detections_destroy(detections);</code>를 호출하여 검출된 태그 리스트를 정리하여 <strong>메모리 누수를 방지</strong></li>
+</ul></li>
+<li><strong>결과 이미지 표시</strong>
+<ul>
+<li><code>cv::imshow("RealSense Camera + AprilTag", frame);</code>을 통해 검출 결과를 화면에 표시</li>
+<li><code>cv::waitKey(1);</code>를 호출하여 OpenCV 창이 반응하도록 유지</li>
+</ul></li>
+</ol>
+<p><strong>3. 노드 종료 시 AprilTag 리소스 정리 (<code>~ImageSubscriber()</code>)</strong></p>
+<ul>
+<li><code>apriltag_detector_remove_family(tag_detector_, tag_family_);</code> → 검출기에서 패밀리를 제거</li>
+<li><code>apriltag_detector_destroy(tag_detector_);</code> → 검출기 삭제</li>
+<li><code>tag25h9_destroy(tag_family_);</code> → 태그 패밀리 메모리 해제</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">class</span> ImageSubscriber <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  ImageSubscriber<span class="op">()</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="op">:</span> Node<span class="op">(</span><span class="st">"image_subscriber"</span><span class="op">)</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="op">{</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="va">subscription_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_subscription<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;(</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>      <span class="st">"image_raw"</span><span class="op">,</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>      <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>      <span class="bu">std::</span>bind<span class="op">(&amp;</span>ImageSubscriber<span class="op">::</span>imageCallback<span class="op">,</span> <span class="kw">this</span><span class="op">,</span> <span class="bu">std::</span>placeholders::_1<span class="op">)</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>    <span class="op">);</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a>    <span class="co">// Create an OpenCV window once</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>    cv<span class="op">::</span>namedWindow<span class="op">(</span><span class="st">"RealSense Camera"</span><span class="op">,</span> cv<span class="op">::</span>WINDOW_AUTOSIZE<span class="op">);</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a>    RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"Image Subscriber Node started."</span><span class="op">);</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>  <span class="op">}</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a>  <span class="dt">void</span> imageCallback<span class="op">(</span><span class="at">const</span> sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">::</span>SharedPtr msg<span class="op">)</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a>  <span class="op">{</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a>    cv<span class="op">::</span>Mat frame<span class="op">;</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a>    <span class="cf">try</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a>    <span class="op">{</span></span>
+<span id="cb9-25"><a href="#cb9-25"></a>      frame <span class="op">=</span> cv_bridge<span class="op">::</span>toCvCopy<span class="op">(</span>msg<span class="op">,</span> <span class="st">"bgr8"</span><span class="op">)-&gt;</span>image<span class="op">;</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a>    <span class="op">}</span></span>
+<span id="cb9-27"><a href="#cb9-27"></a>    <span class="cf">catch</span> <span class="op">(</span>cv_bridge<span class="op">::</span>Exception <span class="op">&amp;</span>e<span class="op">)</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a>    <span class="op">{</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a>      RCLCPP_ERROR<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"cv_bridge exception: </span><span class="sc">%s</span><span class="st">"</span><span class="op">,</span> e<span class="op">.</span>what<span class="op">());</span></span>
+<span id="cb9-30"><a href="#cb9-30"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb9-31"><a href="#cb9-31"></a>    <span class="op">}</span></span>
+<span id="cb9-32"><a href="#cb9-32"></a></span>
+<span id="cb9-33"><a href="#cb9-33"></a>    <span class="cf">if</span> <span class="op">(!</span>frame<span class="op">.</span>empty<span class="op">())</span></span>
+<span id="cb9-34"><a href="#cb9-34"></a>    <span class="op">{</span></span>
+<span id="cb9-35"><a href="#cb9-35"></a>      cv<span class="op">::</span>imshow<span class="op">(</span><span class="st">"RealSense Camera"</span><span class="op">,</span> frame<span class="op">);</span></span>
+<span id="cb9-36"><a href="#cb9-36"></a>      cv<span class="op">::</span>waitKey<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb9-37"><a href="#cb9-37"></a>    <span class="op">}</span></span>
+<span id="cb9-38"><a href="#cb9-38"></a>  <span class="op">}</span></span>
+<span id="cb9-39"><a href="#cb9-39"></a></span>
+<span id="cb9-40"><a href="#cb9-40"></a>  rclcpp<span class="op">::</span>Subscription<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;::</span>SharedPtr <span class="va">subscription_</span><span class="op">;</span></span>
+<span id="cb9-41"><a href="#cb9-41"></a><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>마지막으로 main을 살펴보면 ROS 2 이미지 구독 노드(<code>ImageSubscriber</code>)를 실행하는 메인 함수로, ROS 2 이벤트 루프를 관리하며 이미지 구독 노드를 실행하면서 30Hz의 주기로 ROS 이벤트를 처리합니다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="op">{</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span> <span class="co">// ROS 2 노드를 실행할 준비</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="kw">auto</span> node <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>ImageSubscriber<span class="op">&gt;();</span> <span class="co">// 노드 생성: `ImageSubscriber` 노드를 생성하여 RealSense 카메라에서 퍼블리싱되는 `"image_raw"` 토픽을 구독할 준비</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  rclcpp<span class="op">::</span>Rate rate<span class="op">(</span><span class="dv">30</span><span class="op">);</span> <span class="co">// 초당 30회(30Hz) 실행</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="cf">while</span> <span class="op">(</span>rclcpp<span class="op">::</span>ok<span class="op">())</span> <span class="co">// 주기적 실행 루프</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="op">{</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>    rclcpp<span class="op">::</span>spin_some<span class="op">(</span>node<span class="op">);</span> <span class="co">// 노드가 메시지를 수신하고, 콜백 함수(`imageCallback`)를 실행할 수 있도록 합니다. </span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>    rate<span class="op">.</span>sleep<span class="op">();</span> <span class="co">// 루프가 30Hz의 일정한 주기로 실행되도록 대기</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="op">}</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a></span>
+<span id="cb10-13"><a href="#cb10-13"></a>  rclcpp<span class="op">::</span>shutdown<span class="op">();</span> <span class="co">// 프로그램 종료 시 ROS 2를 안전하게 종료</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>각 부분을 살펴본 Subsciber 노드를 통합하면 아래와 같이 <code>image_subscriber.cpp</code>가 완성됩니다.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>image_subscriber.cpp</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1"></a><span class="pp">#include </span><span class="im">&lt;memory&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">// ROS 2</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="pp">#include </span><span class="im">"rclcpp/rclcpp.hpp"</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="pp">#include </span><span class="im">"sensor_msgs/msg/image.hpp"</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="pp">#include </span><span class="im">"cv_bridge/cv_bridge.h"</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">// OpenCV</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="pp">#include </span><span class="im">"opencv2/highgui.hpp"</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="pp">#include </span><span class="im">"opencv2/imgproc.hpp"</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="co">// AprilTag library headers</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="at">extern</span> <span class="st">"C"</span> <span class="op">{</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="pp">#include </span><span class="im">&lt;apriltag.h&gt;</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="co">// #include &lt;tag36h11.h&gt;</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="pp">#include </span><span class="im">&lt;tag25h9.h&gt;</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="op">}</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="kw">class</span> ImageSubscriber <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node</span>
+<span id="cb11-22"><a href="#cb11-22"></a><span class="op">{</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a>  ImageSubscriber<span class="op">()</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a>  <span class="op">:</span> Node<span class="op">(</span><span class="st">"image_subscriber"</span><span class="op">)</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a>  <span class="op">{</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a>    <span class="va">subscription_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_subscription<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;(</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a>      <span class="st">"image_raw"</span><span class="op">,</span></span>
+<span id="cb11-29"><a href="#cb11-29"></a>      <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb11-30"><a href="#cb11-30"></a>      <span class="bu">std::</span>bind<span class="op">(&amp;</span>ImageSubscriber<span class="op">::</span>imageCallback<span class="op">,</span> <span class="kw">this</span><span class="op">,</span> <span class="bu">std::</span>placeholders::_1<span class="op">)</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a>    <span class="op">);</span></span>
+<span id="cb11-32"><a href="#cb11-32"></a></span>
+<span id="cb11-33"><a href="#cb11-33"></a>    <span class="co">// Create an OpenCV window once</span></span>
+<span id="cb11-34"><a href="#cb11-34"></a>    cv<span class="op">::</span>namedWindow<span class="op">(</span><span class="st">"RealSense Camera + AprilTag"</span><span class="op">,</span> cv<span class="op">::</span>WINDOW_AUTOSIZE<span class="op">);</span></span>
+<span id="cb11-35"><a href="#cb11-35"></a></span>
+<span id="cb11-36"><a href="#cb11-36"></a>    RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"Image Subscriber Node started."</span><span class="op">);</span></span>
+<span id="cb11-37"><a href="#cb11-37"></a></span>
+<span id="cb11-38"><a href="#cb11-38"></a>    <span class="co">// Initialize the AprilTag detector</span></span>
+<span id="cb11-39"><a href="#cb11-39"></a>    <span class="co">// tag_family_ = tag36h11_create();  // Create specific tag family (36h11)</span></span>
+<span id="cb11-40"><a href="#cb11-40"></a>    <span class="va">tag_family_</span> <span class="op">=</span> tag25h9_create<span class="op">();</span> <span class="co">// Create specific tag family (36h11)</span></span>
+<span id="cb11-41"><a href="#cb11-41"></a>    <span class="va">tag_detector_</span> <span class="op">=</span> apriltag_detector_create<span class="op">();</span></span>
+<span id="cb11-42"><a href="#cb11-42"></a>    apriltag_detector_add_family<span class="op">(</span><span class="va">tag_detector_</span><span class="op">,</span> <span class="va">tag_family_</span><span class="op">);</span></span>
+<span id="cb11-43"><a href="#cb11-43"></a></span>
+<span id="cb11-44"><a href="#cb11-44"></a>    <span class="co">// Optionally adjust detection parameters</span></span>
+<span id="cb11-45"><a href="#cb11-45"></a>    <span class="co">// e.g., tag_detector_-&gt;quad_decimate = 1.0; // For performance</span></span>
+<span id="cb11-46"><a href="#cb11-46"></a>    <span class="co">//       tag_detector_-&gt;quad_sigma = 0.0;</span></span>
+<span id="cb11-47"><a href="#cb11-47"></a>    <span class="co">// etc.</span></span>
+<span id="cb11-48"><a href="#cb11-48"></a>  <span class="op">}</span></span>
+<span id="cb11-49"><a href="#cb11-49"></a></span>
+<span id="cb11-50"><a href="#cb11-50"></a>  <span class="op">~</span>ImageSubscriber<span class="op">()</span></span>
+<span id="cb11-51"><a href="#cb11-51"></a>  <span class="op">{</span></span>
+<span id="cb11-52"><a href="#cb11-52"></a>    <span class="co">// Cleanup AprilTag resources</span></span>
+<span id="cb11-53"><a href="#cb11-53"></a>    apriltag_detector_remove_family<span class="op">(</span><span class="va">tag_detector_</span><span class="op">,</span> <span class="va">tag_family_</span><span class="op">);</span></span>
+<span id="cb11-54"><a href="#cb11-54"></a>    apriltag_detector_destroy<span class="op">(</span><span class="va">tag_detector_</span><span class="op">);</span></span>
+<span id="cb11-55"><a href="#cb11-55"></a>    <span class="co">// tag36h11_destroy(tag_family_);</span></span>
+<span id="cb11-56"><a href="#cb11-56"></a>    tag25h9_destroy<span class="op">(</span><span class="va">tag_family_</span><span class="op">);</span></span>
+<span id="cb11-57"><a href="#cb11-57"></a>  <span class="op">}</span></span>
+<span id="cb11-58"><a href="#cb11-58"></a></span>
+<span id="cb11-59"><a href="#cb11-59"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb11-60"><a href="#cb11-60"></a>  <span class="dt">void</span> imageCallback<span class="op">(</span><span class="at">const</span> sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">::</span>SharedPtr msg<span class="op">)</span></span>
+<span id="cb11-61"><a href="#cb11-61"></a>  <span class="op">{</span></span>
+<span id="cb11-62"><a href="#cb11-62"></a>    <span class="co">// 1. Convert ROS Image to OpenCV Mat</span></span>
+<span id="cb11-63"><a href="#cb11-63"></a>    cv<span class="op">::</span>Mat frame<span class="op">;</span></span>
+<span id="cb11-64"><a href="#cb11-64"></a>    <span class="cf">try</span></span>
+<span id="cb11-65"><a href="#cb11-65"></a>    <span class="op">{</span></span>
+<span id="cb11-66"><a href="#cb11-66"></a>      frame <span class="op">=</span> cv_bridge<span class="op">::</span>toCvCopy<span class="op">(</span>msg<span class="op">,</span> <span class="st">"bgr8"</span><span class="op">)-&gt;</span>image<span class="op">;</span></span>
+<span id="cb11-67"><a href="#cb11-67"></a>    <span class="op">}</span></span>
+<span id="cb11-68"><a href="#cb11-68"></a>    <span class="cf">catch</span> <span class="op">(</span>cv_bridge<span class="op">::</span>Exception <span class="op">&amp;</span>e<span class="op">)</span></span>
+<span id="cb11-69"><a href="#cb11-69"></a>    <span class="op">{</span></span>
+<span id="cb11-70"><a href="#cb11-70"></a>      RCLCPP_ERROR<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">"cv_bridge exception: </span><span class="sc">%s</span><span class="st">"</span><span class="op">,</span> e<span class="op">.</span>what<span class="op">());</span></span>
+<span id="cb11-71"><a href="#cb11-71"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb11-72"><a href="#cb11-72"></a>    <span class="op">}</span></span>
+<span id="cb11-73"><a href="#cb11-73"></a></span>
+<span id="cb11-74"><a href="#cb11-74"></a>    <span class="co">// 2. Convert color to grayscale (AprilTag needs grayscale)</span></span>
+<span id="cb11-75"><a href="#cb11-75"></a>    cv<span class="op">::</span>Mat gray<span class="op">;</span></span>
+<span id="cb11-76"><a href="#cb11-76"></a>    cv<span class="op">::</span>cvtColor<span class="op">(</span>frame<span class="op">,</span> gray<span class="op">,</span> cv<span class="op">::</span>COLOR_BGR2GRAY<span class="op">);</span></span>
+<span id="cb11-77"><a href="#cb11-77"></a></span>
+<span id="cb11-78"><a href="#cb11-78"></a>    <span class="co">// 3. Convert OpenCV Mat to the format required by AprilTag library</span></span>
+<span id="cb11-79"><a href="#cb11-79"></a>    <span class="co">//    (AprilTag library uses its own image type: image_u8_t)</span></span>
+<span id="cb11-80"><a href="#cb11-80"></a>    <span class="dt">image_u8_t</span> apriltag_image <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb11-81"><a href="#cb11-81"></a>      <span class="op">.</span>width  <span class="op">=</span> gray<span class="op">.</span>cols<span class="op">,</span></span>
+<span id="cb11-82"><a href="#cb11-82"></a>      <span class="op">.</span>height <span class="op">=</span> gray<span class="op">.</span>rows<span class="op">,</span></span>
+<span id="cb11-83"><a href="#cb11-83"></a>      <span class="op">.</span>stride <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>gray<span class="op">.</span>step<span class="op">),</span></span>
+<span id="cb11-84"><a href="#cb11-84"></a>      <span class="op">.</span>buf    <span class="op">=</span> gray<span class="op">.</span>data</span>
+<span id="cb11-85"><a href="#cb11-85"></a>    <span class="op">};</span></span>
+<span id="cb11-86"><a href="#cb11-86"></a></span>
+<span id="cb11-87"><a href="#cb11-87"></a>    <span class="co">// 4. Detect tags</span></span>
+<span id="cb11-88"><a href="#cb11-88"></a>    <span class="dt">zarray_t</span><span class="op">*</span> detections <span class="op">=</span> apriltag_detector_detect<span class="op">(</span><span class="va">tag_detector_</span><span class="op">,</span> <span class="op">&amp;</span>apriltag_image<span class="op">);</span></span>
+<span id="cb11-89"><a href="#cb11-89"></a></span>
+<span id="cb11-90"><a href="#cb11-90"></a>    <span class="co">// 5. For each detection, draw a bounding box on the image</span></span>
+<span id="cb11-91"><a href="#cb11-91"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> zarray_size<span class="op">(</span>detections<span class="op">);</span> i<span class="op">++)</span></span>
+<span id="cb11-92"><a href="#cb11-92"></a>    <span class="op">{</span></span>
+<span id="cb11-93"><a href="#cb11-93"></a>      <span class="dt">apriltag_detection_t</span> <span class="op">*</span>det<span class="op">;</span></span>
+<span id="cb11-94"><a href="#cb11-94"></a>      zarray_get<span class="op">(</span>detections<span class="op">,</span> i<span class="op">,</span> <span class="op">&amp;</span>det<span class="op">);</span></span>
+<span id="cb11-95"><a href="#cb11-95"></a></span>
+<span id="cb11-96"><a href="#cb11-96"></a>      <span class="co">// Access the four corners of the AprilTag</span></span>
+<span id="cb11-97"><a href="#cb11-97"></a>      <span class="co">// p[] is in image coordinates (x=horizontal, y=vertical)</span></span>
+<span id="cb11-98"><a href="#cb11-98"></a>      cv<span class="op">::</span>Point corners<span class="op">[</span><span class="dv">4</span><span class="op">];</span></span>
+<span id="cb11-99"><a href="#cb11-99"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> <span class="dv">4</span><span class="op">;</span> c<span class="op">++)</span></span>
+<span id="cb11-100"><a href="#cb11-100"></a>      <span class="op">{</span></span>
+<span id="cb11-101"><a href="#cb11-101"></a>        corners<span class="op">[</span>c<span class="op">]</span> <span class="op">=</span> cv<span class="op">::</span>Point<span class="op">(</span>det<span class="op">-&gt;</span>p<span class="op">[</span>c<span class="op">][</span><span class="dv">0</span><span class="op">],</span> det<span class="op">-&gt;</span>p<span class="op">[</span>c<span class="op">][</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb11-102"><a href="#cb11-102"></a>      <span class="op">}</span></span>
+<span id="cb11-103"><a href="#cb11-103"></a></span>
+<span id="cb11-104"><a href="#cb11-104"></a>      <span class="co">// Draw lines between corners</span></span>
+<span id="cb11-105"><a href="#cb11-105"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> <span class="dv">4</span><span class="op">;</span> c<span class="op">++)</span></span>
+<span id="cb11-106"><a href="#cb11-106"></a>      <span class="op">{</span></span>
+<span id="cb11-107"><a href="#cb11-107"></a>        cv<span class="op">::</span>line<span class="op">(</span>frame<span class="op">,</span> corners<span class="op">[</span>c<span class="op">],</span> corners<span class="op">[(</span>c<span class="op">+</span><span class="dv">1</span><span class="op">)%</span><span class="dv">4</span><span class="op">],</span> cv<span class="op">::</span>Scalar<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0</span><span class="op">),</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb11-108"><a href="#cb11-108"></a>      <span class="op">}</span></span>
+<span id="cb11-109"><a href="#cb11-109"></a></span>
+<span id="cb11-110"><a href="#cb11-110"></a>      <span class="co">// Draw the tag center</span></span>
+<span id="cb11-111"><a href="#cb11-111"></a>      cv<span class="op">::</span>circle<span class="op">(</span>frame<span class="op">,</span></span>
+<span id="cb11-112"><a href="#cb11-112"></a>                 cv<span class="op">::</span>Point<span class="op">(</span>det<span class="op">-&gt;</span>c<span class="op">[</span><span class="dv">0</span><span class="op">],</span> det<span class="op">-&gt;</span>c<span class="op">[</span><span class="dv">1</span><span class="op">]),</span></span>
+<span id="cb11-113"><a href="#cb11-113"></a>                 <span class="dv">5</span><span class="op">,</span> cv<span class="op">::</span>Scalar<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">255</span><span class="op">),</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb11-114"><a href="#cb11-114"></a></span>
+<span id="cb11-115"><a href="#cb11-115"></a>      <span class="co">// Put tag ID text near the center</span></span>
+<span id="cb11-116"><a href="#cb11-116"></a>      <span class="bu">std::</span>string text <span class="op">=</span> <span class="st">"ID: "</span> <span class="op">+</span> <span class="bu">std::</span>to_string<span class="op">(</span>det<span class="op">-&gt;</span>id<span class="op">);</span></span>
+<span id="cb11-117"><a href="#cb11-117"></a>      cv<span class="op">::</span>putText<span class="op">(</span>frame<span class="op">,</span> text<span class="op">,</span></span>
+<span id="cb11-118"><a href="#cb11-118"></a>                  cv<span class="op">::</span>Point<span class="op">(</span>det<span class="op">-&gt;</span>c<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">+</span> <span class="dv">10</span><span class="op">,</span> det<span class="op">-&gt;</span>c<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">+</span> <span class="dv">10</span><span class="op">),</span></span>
+<span id="cb11-119"><a href="#cb11-119"></a>                  cv<span class="op">::</span>FONT_HERSHEY_SIMPLEX<span class="op">,</span></span>
+<span id="cb11-120"><a href="#cb11-120"></a>                  <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb11-121"><a href="#cb11-121"></a>                  cv<span class="op">::</span>Scalar<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">),</span></span>
+<span id="cb11-122"><a href="#cb11-122"></a>                  <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb11-123"><a href="#cb11-123"></a>    <span class="op">}</span></span>
+<span id="cb11-124"><a href="#cb11-124"></a></span>
+<span id="cb11-125"><a href="#cb11-125"></a>    <span class="co">// Always remember to destroy detection array to avoid memory leaks</span></span>
+<span id="cb11-126"><a href="#cb11-126"></a>    apriltag_detections_destroy<span class="op">(</span>detections<span class="op">);</span></span>
+<span id="cb11-127"><a href="#cb11-127"></a></span>
+<span id="cb11-128"><a href="#cb11-128"></a>    <span class="co">// 6. Show the image</span></span>
+<span id="cb11-129"><a href="#cb11-129"></a>    cv<span class="op">::</span>imshow<span class="op">(</span><span class="st">"RealSense Camera + AprilTag"</span><span class="op">,</span> frame<span class="op">);</span></span>
+<span id="cb11-130"><a href="#cb11-130"></a>    cv<span class="op">::</span>waitKey<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb11-131"><a href="#cb11-131"></a>  <span class="op">}</span></span>
+<span id="cb11-132"><a href="#cb11-132"></a></span>
+<span id="cb11-133"><a href="#cb11-133"></a>  rclcpp<span class="op">::</span>Subscription<span class="op">&lt;</span>sensor_msgs<span class="op">::</span>msg<span class="op">::</span>Image<span class="op">&gt;::</span>SharedPtr <span class="va">subscription_</span><span class="op">;</span></span>
+<span id="cb11-134"><a href="#cb11-134"></a></span>
+<span id="cb11-135"><a href="#cb11-135"></a>  <span class="co">// AprilTag fields</span></span>
+<span id="cb11-136"><a href="#cb11-136"></a>  <span class="dt">apriltag_family_t</span> <span class="op">*</span><span class="va">tag_family_</span><span class="op">;</span></span>
+<span id="cb11-137"><a href="#cb11-137"></a>  <span class="dt">apriltag_detector_t</span> <span class="op">*</span><span class="va">tag_detector_</span><span class="op">;</span></span>
+<span id="cb11-138"><a href="#cb11-138"></a><span class="op">};</span></span>
+<span id="cb11-139"><a href="#cb11-139"></a></span>
+<span id="cb11-140"><a href="#cb11-140"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span></span>
+<span id="cb11-141"><a href="#cb11-141"></a><span class="op">{</span></span>
+<span id="cb11-142"><a href="#cb11-142"></a>  rclcpp<span class="op">::</span>init<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span></span>
+<span id="cb11-143"><a href="#cb11-143"></a></span>
+<span id="cb11-144"><a href="#cb11-144"></a>  <span class="kw">auto</span> node <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span>ImageSubscriber<span class="op">&gt;();</span></span>
+<span id="cb11-145"><a href="#cb11-145"></a></span>
+<span id="cb11-146"><a href="#cb11-146"></a>  <span class="co">// Spin in a loop so that callbacks can be processed</span></span>
+<span id="cb11-147"><a href="#cb11-147"></a>  rclcpp<span class="op">::</span>Rate rate<span class="op">(</span><span class="dv">30</span><span class="op">);</span></span>
+<span id="cb11-148"><a href="#cb11-148"></a>  <span class="cf">while</span> <span class="op">(</span>rclcpp<span class="op">::</span>ok<span class="op">())</span></span>
+<span id="cb11-149"><a href="#cb11-149"></a>  <span class="op">{</span></span>
+<span id="cb11-150"><a href="#cb11-150"></a>    rclcpp<span class="op">::</span>spin_some<span class="op">(</span>node<span class="op">);</span></span>
+<span id="cb11-151"><a href="#cb11-151"></a>    rate<span class="op">.</span>sleep<span class="op">();</span></span>
+<span id="cb11-152"><a href="#cb11-152"></a>  <span class="op">}</span></span>
+<span id="cb11-153"><a href="#cb11-153"></a></span>
+<span id="cb11-154"><a href="#cb11-154"></a>  rclcpp<span class="op">::</span>shutdown<span class="op">();</span></span>
+<span id="cb11-155"><a href="#cb11-155"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-156"><a href="#cb11-156"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="cmakelists.txt-configuration" class="level2">
 <h2 class="anchored" data-anchor-id="cmakelists.txt-configuration">CMakeLists.txt Configuration</h2>
-<p>Your <code>CMakeLists.txt</code> (in the root of <code>my_realsense_example</code>) should enable building both nodes and <strong>link <code>librealsense2</code></strong>. Below is a working example:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource cmake number-lines code-with-copy"><code class="sourceCode cmake"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.8</span>)</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">project</span>(my_realsense_example)</span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">find_package</span>(ament_cmake <span class="ot">REQUIRED</span>)</span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">find_package</span>(rclcpp <span class="ot">REQUIRED</span>)</span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="kw">find_package</span>(sensor_msgs <span class="ot">REQUIRED</span>)</span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">find_package</span>(cv_bridge <span class="ot">REQUIRED</span>)</span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="kw">find_package</span>(OpenCV <span class="ot">REQUIRED</span>)</span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="kw">find_package</span>(realsense2 <span class="ot">REQUIRED</span>)  <span class="co"># Important!</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="kw">include_directories</span>(</span>
-<span id="cb6-12"><a href="#cb6-12"></a>  include</span>
-<span id="cb6-13"><a href="#cb6-13"></a>  <span class="dv">${OpenCV_INCLUDE_DIRS}</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>)</span>
-<span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co"># Publisher executable</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="kw">add_executable</span>(<span class="bn">realsense_publisher</span> src/realsense_publisher.cpp)</span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="fu">ament_target_dependencies</span>(realsense_publisher</span>
-<span id="cb6-19"><a href="#cb6-19"></a>  rclcpp</span>
-<span id="cb6-20"><a href="#cb6-20"></a>  sensor_msgs</span>
-<span id="cb6-21"><a href="#cb6-21"></a>  cv_bridge</span>
-<span id="cb6-22"><a href="#cb6-22"></a>)</span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="kw">target_link_libraries</span>(<span class="bn">realsense_publisher</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a>  <span class="dv">${OpenCV_LIBS}</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a>  realsense2</span>
-<span id="cb6-26"><a href="#cb6-26"></a>)</span>
-<span id="cb6-27"><a href="#cb6-27"></a></span>
-<span id="cb6-28"><a href="#cb6-28"></a><span class="co"># Subscriber executable</span></span>
-<span id="cb6-29"><a href="#cb6-29"></a><span class="kw">add_executable</span>(<span class="bn">image_subscriber</span> src/image_subscriber.cpp)</span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="fu">ament_target_dependencies</span>(image_subscriber</span>
-<span id="cb6-31"><a href="#cb6-31"></a>  rclcpp</span>
-<span id="cb6-32"><a href="#cb6-32"></a>  sensor_msgs</span>
-<span id="cb6-33"><a href="#cb6-33"></a>  cv_bridge</span>
-<span id="cb6-34"><a href="#cb6-34"></a>)</span>
-<span id="cb6-35"><a href="#cb6-35"></a><span class="kw">target_link_libraries</span>(<span class="bn">image_subscriber</span></span>
-<span id="cb6-36"><a href="#cb6-36"></a>  <span class="dv">${OpenCV_LIBS}</span></span>
-<span id="cb6-37"><a href="#cb6-37"></a>  realsense2</span>
-<span id="cb6-38"><a href="#cb6-38"></a>)</span>
-<span id="cb6-39"><a href="#cb6-39"></a></span>
-<span id="cb6-40"><a href="#cb6-40"></a><span class="kw">install</span>(<span class="ot">TARGETS</span></span>
-<span id="cb6-41"><a href="#cb6-41"></a>  <span class="bn">realsense_publisher</span></span>
-<span id="cb6-42"><a href="#cb6-42"></a>  <span class="bn">image_subscriber</span></span>
-<span id="cb6-43"><a href="#cb6-43"></a>  <span class="ot">DESTINATION</span> lib/<span class="dv">${PROJECT_NAME}</span></span>
-<span id="cb6-44"><a href="#cb6-44"></a>)</span>
-<span id="cb6-45"><a href="#cb6-45"></a></span>
-<span id="cb6-46"><a href="#cb6-46"></a><span class="fu">ament_package</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="common-build-issues" class="level3">
-<h3 class="anchored" data-anchor-id="common-build-issues">Common Build Issues</h3>
+<p>그 다음으로 ROS2 패키지 빌드에 대한 내용을 담고 있는 <code>CMakeLists.txt</code> 파일을 작성해보겠습니다. <code>CMakeLists.txt</code> ( <code>my_realsense_example</code> 루트에 위치)에서 RealSense 카메라에서 이미지를 퍼블리싱하고, AprilTag을 검출하는 ROS 2 노드들을 빌드 및 설치하는 설정을 정의합니다. default로 생성되어있던 내용을 아래 내용으로 업데이트 합니다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource cmake number-lines code-with-copy"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.8</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">project</span>(realsense_apriltag_pubsub)</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="kw">find_package</span>(ament_cmake <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="kw">find_package</span>(rclcpp <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="kw">find_package</span>(sensor_msgs <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="kw">find_package</span>(cv_bridge <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">find_package</span>(OpenCV <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="kw">find_package</span>(realsense2 <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="kw">find_package</span>(apriltag <span class="ot">REQUIRED</span>)  <span class="co"># &lt;-- Add this!</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="kw">include_directories</span>(</span>
+<span id="cb12-13"><a href="#cb12-13"></a>  include</span>
+<span id="cb12-14"><a href="#cb12-14"></a>  <span class="dv">${OpenCV_INCLUDE_DIRS}</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a>)</span>
+<span id="cb12-16"><a href="#cb12-16"></a></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="co"># Publisher</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="kw">add_executable</span>(<span class="bn">realsense_publisher</span> src/realsense_publisher.cpp)</span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="fu">ament_target_dependencies</span>(realsense_publisher</span>
+<span id="cb12-20"><a href="#cb12-20"></a>  rclcpp</span>
+<span id="cb12-21"><a href="#cb12-21"></a>  sensor_msgs</span>
+<span id="cb12-22"><a href="#cb12-22"></a>  cv_bridge</span>
+<span id="cb12-23"><a href="#cb12-23"></a>)</span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="kw">target_link_libraries</span>(<span class="bn">realsense_publisher</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a>  <span class="dv">${OpenCV_LIBS}</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a>  realsense2</span>
+<span id="cb12-27"><a href="#cb12-27"></a>)</span>
+<span id="cb12-28"><a href="#cb12-28"></a></span>
+<span id="cb12-29"><a href="#cb12-29"></a><span class="co"># Subscriber with AprilTag</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a><span class="kw">add_executable</span>(<span class="bn">image_subscriber</span> src/image_subscriber.cpp)</span>
+<span id="cb12-31"><a href="#cb12-31"></a><span class="fu">ament_target_dependencies</span>(image_subscriber</span>
+<span id="cb12-32"><a href="#cb12-32"></a>  rclcpp</span>
+<span id="cb12-33"><a href="#cb12-33"></a>  sensor_msgs</span>
+<span id="cb12-34"><a href="#cb12-34"></a>  cv_bridge</span>
+<span id="cb12-35"><a href="#cb12-35"></a>)</span>
+<span id="cb12-36"><a href="#cb12-36"></a><span class="kw">target_link_libraries</span>(<span class="bn">image_subscriber</span></span>
+<span id="cb12-37"><a href="#cb12-37"></a>  <span class="dv">${OpenCV_LIBS}</span></span>
+<span id="cb12-38"><a href="#cb12-38"></a>  realsense2</span>
+<span id="cb12-39"><a href="#cb12-39"></a>  apriltag          <span class="co"># &lt;-- Link AprilTag</span></span>
+<span id="cb12-40"><a href="#cb12-40"></a>)</span>
+<span id="cb12-41"><a href="#cb12-41"></a></span>
+<span id="cb12-42"><a href="#cb12-42"></a><span class="kw">install</span>(<span class="ot">TARGETS</span></span>
+<span id="cb12-43"><a href="#cb12-43"></a>  <span class="bn">realsense_publisher</span></span>
+<span id="cb12-44"><a href="#cb12-44"></a>  <span class="bn">image_subscriber</span></span>
+<span id="cb12-45"><a href="#cb12-45"></a>  <span class="ot">DESTINATION</span> lib/<span class="dv">${PROJECT_NAME}</span></span>
+<span id="cb12-46"><a href="#cb12-46"></a>)</span>
+<span id="cb12-47"><a href="#cb12-47"></a></span>
+<span id="cb12-48"><a href="#cb12-48"></a><span class="co"># Install the launch directory</span></span>
+<span id="cb12-49"><a href="#cb12-49"></a><span class="kw">install</span>(<span class="ot">DIRECTORY</span> launch/</span>
+<span id="cb12-50"><a href="#cb12-50"></a>  <span class="ot">DESTINATION</span> share/<span class="dv">${PROJECT_NAME}</span>/launch</span>
+<span id="cb12-51"><a href="#cb12-51"></a>)</span>
+<span id="cb12-52"><a href="#cb12-52"></a></span>
+<span id="cb12-53"><a href="#cb12-53"></a><span class="fu">ament_package</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이 <code>CMakeLists.txt</code>는 <strong>RealSense 카메라에서 이미지를 퍼블리싱하는 노드와, 해당 영상을 구독하여 AprilTag을 검출하는 노드를 빌드</strong>할 수 있도록 설정합니다. 특히, <code>apriltag</code> 라이브러리를 추가하여 <strong>AprilTag 검출 기능이 포함된 구독자(<code>image_subscriber</code>) 노드를 지원하는 것이 특징</strong>입니다.</p>
+<p><strong>1. 필수 패키지 찾기 (<code>find_package</code>)</strong></p>
 <ul>
-<li><strong>Undefined reference to <code>rs2_…</code></strong>: This means you haven’t linked the <code>realsense2</code> library. Check for <code>find_package(realsense2 REQUIRED)</code> and <code>target_link_libraries(... realsense2)</code>.</li>
-<li><strong>Cannot find <code>image_subscriber.cpp</code></strong>: Ensure the file name and path in <code>CMakeLists.txt</code> match exactly what’s in your <code>src/</code> folder.</li>
-<li><strong>cv_bridge or OpenCV not found</strong>: Check your dependencies in <code>package.xml</code> and ensure you’ve installed <code>cv_bridge</code> and OpenCV on your system.</li>
+<li><code>ament_cmake</code>, <code>rclcpp</code>, <code>sensor_msgs</code>, <code>cv_bridge</code>, <code>OpenCV</code>, <code>realsense2</code> 등의 패키지를 포함하여 <strong>ROS 2, OpenCV, RealSense SDK를 사용할 수 있도록 설정</strong></li>
+<li><strong>AprilTag 추가 (<code>find_package(apriltag REQUIRED)</code>)</strong>
+<ul>
+<li>AprilTag 검출을 위해 <code>apriltag</code> 라이브러리를 필수적으로 포함</li>
+</ul></li>
+</ul>
+<p><strong>2. 헤더 포함 경로 설정 (<code>include_directories</code>)</strong></p>
+<ul>
+<li><code>include/</code> 폴더와 OpenCV의 헤더 파일이 포함된 디렉토리를 추가</li>
+</ul>
+<p><strong>3. 퍼블리셔 실행 파일 생성 (<code>realsense_publisher</code>)</strong></p>
+<ul>
+<li><code>src/realsense_publisher.cpp</code> 파일을 <strong>빌드하여 실행 가능한 퍼블리셔 노드 생성</strong></li>
+<li><code>ament_target_dependencies(realsense_publisher ...)</code>를 통해 ROS 2 라이브러리(<code>rclcpp</code>, <code>sensor_msgs</code>, <code>cv_bridge</code>)와의 의존성을 설정</li>
+<li><code>target_link_libraries(realsense_publisher ${OpenCV_LIBS} realsense2)</code>을 사용해 OpenCV 및 RealSense SDK를 링크</li>
+</ul>
+<p><strong>4. 구독자(AprilTag 포함) 실행 파일 생성 (<code>image_subscriber</code>)</strong></p>
+<ul>
+<li><code>src/image_subscriber.cpp</code> 파일을 빌드하여 실행 가능한 구독자 노드 생성</li>
+<li><code>ament_target_dependencies(image_subscriber ...)</code>를 통해 ROS 2 라이브러리 의존성 추가</li>
+<li><code>target_link_libraries(image_subscriber ${OpenCV_LIBS} realsense2 apriltag)</code>을 통해 OpenCV, RealSense SDK, AprilTag 라이브러리를 링크하여 <strong>AprilTag 검출 기능을 활성화</strong></li>
+</ul>
+<p><strong>5. 실행 파일 설치 (<code>install(TARGETS ...)</code>)</strong></p>
+<ul>
+<li>빌드된 실행 파일(<code>realsense_publisher</code>, <code>image_subscriber</code>)을 ROS 2 패키지의 실행 가능 경로에 배포</li>
+</ul>
+<p><strong>6. Launch 파일 설치 (<code>install(DIRECTORY launch/ ...)</code>)</strong></p>
+<ul>
+<li><code>launch/</code> 디렉토리를 ROS 2 패키지의 <code>share/</code> 디렉토리에 복사하여 실행 시 사용할 수 있도록 설정</li>
+<li>이를 통해 <code>ros2 launch realsense_apriltag_pubsub some_launch_file.py</code> 형태로 실행 가능</li>
+</ul>
+<p><strong>7. 패키지 선언 (<code>ament_package()</code>)</strong></p>
+<ul>
+<li><code>ament_package()</code>를 호출하여 <strong>ROS 2 빌드 시스템(<code>ament_cmake</code>)과 호환되도록 패키지를 설정</strong></li>
+</ul>
+<section id="발생할-수-있는-build-에러-이슈들" class="level3">
+<h3 class="anchored" data-anchor-id="발생할-수-있는-build-에러-이슈들">발생할 수 있는 Build 에러 이슈들</h3>
+<ul>
+<li><strong>Undefined reference to <code>rs2_…</code></strong>: <code>realsense2</code> library를 링크하지 않았을 때 발생하는 에러입니다. <code>find_package(realsense2 REQUIRED)</code>와 <code>target_link_libraries(... realsense2)</code>가 <code>CMakeLists.txt</code>에 포함되어 있는지 확인하세요.</li>
+<li><strong>Cannot find <code>image_subscriber.cpp</code></strong>: <code>CMakeLists.txt</code>에서 지정한 파일 이름과 경로가 <code>src/</code> 폴더 내의 실제 파일과 정확히 일치하는지 확인하세요.</li>
+<li><strong>cv_bridge or OpenCV not found</strong>: <code>package.xml</code>에 작성되어 있는 디펜던시들을 확인하고, 프로그래밍하는 환경 시스템에 <code>cv_bridge</code> 와 OpenCV가 설치되어 있는지 확인하세요.</li>
 </ul>
 </section>
 </section>
 <section id="building-and-running" class="level2">
 <h2 class="anchored" data-anchor-id="building-and-running">Building and Running</h2>
-<p>From your workspace (e.g., <code>~/ros2_ws</code>):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> my_realsense_example</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="bu">source</span> install/setup.bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이제 패키지를 빌드할 모든 준비는 끝났습니다. 이제 소스 코드들을 작성한 workspace 경로(e.g., <code>~/ros2_ws</code>)로 이동하여 빌드해줍니다.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> my_realsense_example</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="bu">source</span> install/setup.bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>잘 빌드가 되었다면 터미널을 2개 띄워서 각각 publisher 와 subscriber 노드를 실행시켜 줍니다.</p>
 <ul>
 <li><p><strong>Terminal 1</strong>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">ros2</span> run my_realsense_example realsense_publisher</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">ros2</span> run my_realsense_example realsense_publisher</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><strong>Terminal 2</strong>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">ros2</span> run my_realsense_example image_subscriber</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">ros2</span> run my_realsense_example image_subscriber</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
-<p>A window labeled <strong>“RealSense Camera”</strong> should appear, displaying your camera feed.</p>
+<p>그러면 <strong>“RealSense Camera + AprilTag”</strong> 창이 나오면서 인식된 AprilTag ID와 박스가 표시된 창이 아래와 같이 나올 것 입니다!</p>
 <center>
-<img src="../../images/2025-01-13-realsense-ros2/realsense_april.png" width="67%">
+<img src="../../images/2025-01-13-realsense-ros2/realsense_april.png" width="48%">
 <figcaption>
 최종 결과물
 </figcaption>
@@ -499,7 +941,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>You now have a minimal ROS 2 system that publishes color frames from a RealSense camera and displays them in an OpenCV window. This can be further extended to handle depth frames, point clouds, or any other RealSense-supported streams.</p>
+<p>이제 RealSense 카메라에서 컬러 프레임을 퍼블리싱하고, 이를 OpenCV 창에 표시하는 최소한의 ROS 2 시스템을 구축하였습니다. 단순히 영상을 수신하는 것뿐만 아니라, AprilTag 인식을 활용하여 간단한 이미지 후처리도 수행해 보았습니다. 이를 확장하면 로보틱스에서 필요한 <strong>위치 추정과 같은 고급 기능</strong>도 구현할 수 있으며, 깊이 프레임, 포인트 클라우드 등 <strong>RealSense에서 지원하는 다양한 스트림을 활용할 수도 있습니다</strong>. 이번 실습을 통해 <strong>ROS 2에서 C++ 기반 패키지를 빌드하고 활용하는 과정에 대한 이해를 돕고</strong>, 더 복잡한 기능을 구현하는 프로젝트로 나아가는 데 도움이 되기를 바랍니다.</p>
 
 
 </section>
