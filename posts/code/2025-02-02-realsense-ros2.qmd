@@ -9,8 +9,7 @@ execute:
 image: ../../images/2025-02-02-realsense-ros2/ros2_realsense.png
 ---
 
-이번 포스팅에서는 인텔 RealSense 카메라에서 촬영하고 있는 비디오를 실시간 스트리밍하고, 영상에서 인식한 April Tag를 가지고 OpenCV로 간단한 표시를 하여 보여주는 ROS2 기능을 C++ 노드들로 만들어보는 코드 실습을 진행해보겠습니다. [AprilTag](https://april.eecs.umich.edu/software/apriltag)는 로봇 비전, 증강 현실, 마커 기반 위치 추정 등에 활용되는 태그입니다. 본 내용에서는 RealSense 카메라를 사용하기 위해 필요한 패키지인 `librealsense2`를 연결하는 등 일반적인 빌드 문제들에 대해서도 다룰 예정입니다.
-
+이번 포스팅에서는 **Intel RealSense 카메라로 촬영한 비디오를 실시간 스트리밍하고**, 영상에서 감지한 **AprilTag을 OpenCV를 활용해 시각적으로 표시하는 ROS 2 기능을 C++ 노드로 구현하는 실습**을 진행하겠습니다. [AprilTag](https://april.eecs.umich.edu/software/apriltag)는 **로봇 비전, 증강 현실, 마커 기반 위치 추정** 등에 활용되는 태그 시스템입니다. 또한, 본 포스팅에서는 **RealSense 카메라를 ROS 2에서 사용하기 위해 `librealsense2`를 설정하는 과정과 일반적으로 발생할 수 있는 빌드 문제 해결 방법**도 함께 다룰 예정입니다.
 
 <center>
 <img src="../../images/2025-02-02-realsense-ros2/ros2_realsense.png" width="55%" />
@@ -705,13 +704,13 @@ ament_package()
 
 - `ament_package()`를 호출하여 **ROS 2 빌드 시스템(`ament_cmake`)과 호환되도록 패키지를 설정**
 
-### 발생할 수 있는 Build 에러 이슈들
+### ⚠️발생할 수 있는 Build 에러 이슈들
 
 - **Undefined reference to `rs2_…`**: `realsense2` library를 링크하지 않았을 때 발생하는 에러입니다. `find_package(realsense2 REQUIRED)`와 `target_link_libraries(... realsense2)`가 `CMakeLists.txt`에 포함되어 있는지 확인하세요. 
 - **Cannot find `image_subscriber.cpp`**: `CMakeLists.txt`에서 지정한 파일 이름과 경로가 `src/` 폴더 내의 실제 파일과 정확히 일치하는지 확인하세요.
 - **cv_bridge or OpenCV not found**: `package.xml`에 작성되어 있는 디펜던시들을 확인하고, 프로그래밍하는 환경 시스템에 `cv_bridge` 와 OpenCV가 설치되어 있는지 확인하세요.
 
-## Building and Running
+## Build & 실행
 
 이제 패키지를 빌드할 모든 준비는 끝났습니다. 이제 소스 코드들을 작성한 workspace 경로(e.g., `~/ros2_ws`)로 이동하여 빌드해줍니다.
 

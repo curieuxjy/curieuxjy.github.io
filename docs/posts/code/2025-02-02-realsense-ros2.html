@@ -175,9 +175,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#subscriber-node-image_subscriber.cpp" id="toc-subscriber-node-image_subscriber.cpp" class="nav-link" data-scroll-target="#subscriber-node-image_subscriber.cpp">Subscriber Node: <code>image_subscriber.cpp</code></a></li>
   <li><a href="#cmakelists.txt-configuration" id="toc-cmakelists.txt-configuration" class="nav-link" data-scroll-target="#cmakelists.txt-configuration">CMakeLists.txt Configuration</a>
   <ul class="collapse">
-  <li><a href="#발생할-수-있는-build-에러-이슈들" id="toc-발생할-수-있는-build-에러-이슈들" class="nav-link" data-scroll-target="#발생할-수-있는-build-에러-이슈들">발생할 수 있는 Build 에러 이슈들</a></li>
+  <li><a href="#발생할-수-있는-build-에러-이슈들" id="toc-발생할-수-있는-build-에러-이슈들" class="nav-link" data-scroll-target="#발생할-수-있는-build-에러-이슈들">⚠️발생할 수 있는 Build 에러 이슈들</a></li>
   </ul></li>
-  <li><a href="#building-and-running" id="toc-building-and-running" class="nav-link" data-scroll-target="#building-and-running">Building and Running</a></li>
+  <li><a href="#build-실행" id="toc-build-실행" class="nav-link" data-scroll-target="#build-실행">Build &amp; 실행</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -220,7 +220,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
-<p>이번 포스팅에서는 인텔 RealSense 카메라에서 촬영하고 있는 비디오를 실시간 스트리밍하고, 영상에서 인식한 April Tag를 가지고 OpenCV로 간단한 표시를 하여 보여주는 ROS2 기능을 C++ 노드들로 만들어보는 코드 실습을 진행해보겠습니다. <a href="https://april.eecs.umich.edu/software/apriltag">AprilTag</a>는 로봇 비전, 증강 현실, 마커 기반 위치 추정 등에 활용되는 태그입니다. 본 내용에서는 RealSense 카메라를 사용하기 위해 필요한 패키지인 <code>librealsense2</code>를 연결하는 등 일반적인 빌드 문제들에 대해서도 다룰 예정입니다.</p>
+<p>이번 포스팅에서는 <strong>Intel RealSense 카메라로 촬영한 비디오를 실시간 스트리밍하고</strong>, 영상에서 감지한 <strong>AprilTag을 OpenCV를 활용해 시각적으로 표시하는 ROS 2 기능을 C++ 노드로 구현하는 실습</strong>을 진행하겠습니다. <a href="https://april.eecs.umich.edu/software/apriltag">AprilTag</a>는 <strong>로봇 비전, 증강 현실, 마커 기반 위치 추정</strong> 등에 활용되는 태그 시스템입니다. 또한, 본 포스팅에서는 <strong>RealSense 카메라를 ROS 2에서 사용하기 위해 <code>librealsense2</code>를 설정하는 과정과 일반적으로 발생할 수 있는 빌드 문제 해결 방법</strong>도 함께 다룰 예정입니다.</p>
 <center>
 <img src="../../images/2025-02-02-realsense-ros2/ros2_realsense.png" width="55%">
 </center>
@@ -911,7 +911,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><code>ament_package()</code>를 호출하여 <strong>ROS 2 빌드 시스템(<code>ament_cmake</code>)과 호환되도록 패키지를 설정</strong></li>
 </ul>
 <section id="발생할-수-있는-build-에러-이슈들" class="level3">
-<h3 class="anchored" data-anchor-id="발생할-수-있는-build-에러-이슈들">발생할 수 있는 Build 에러 이슈들</h3>
+<h3 class="anchored" data-anchor-id="발생할-수-있는-build-에러-이슈들">⚠️발생할 수 있는 Build 에러 이슈들</h3>
 <ul>
 <li><strong>Undefined reference to <code>rs2_…</code></strong>: <code>realsense2</code> library를 링크하지 않았을 때 발생하는 에러입니다. <code>find_package(realsense2 REQUIRED)</code>와 <code>target_link_libraries(... realsense2)</code>가 <code>CMakeLists.txt</code>에 포함되어 있는지 확인하세요.</li>
 <li><strong>Cannot find <code>image_subscriber.cpp</code></strong>: <code>CMakeLists.txt</code>에서 지정한 파일 이름과 경로가 <code>src/</code> 폴더 내의 실제 파일과 정확히 일치하는지 확인하세요.</li>
@@ -919,8 +919,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </ul>
 </section>
 </section>
-<section id="building-and-running" class="level2">
-<h2 class="anchored" data-anchor-id="building-and-running">Building and Running</h2>
+<section id="build-실행" class="level2">
+<h2 class="anchored" data-anchor-id="build-실행">Build &amp; 실행</h2>
 <p>이제 패키지를 빌드할 모든 준비는 끝났습니다. 이제 소스 코드들을 작성한 workspace 경로(e.g., <code>~/ros2_ws</code>)로 이동하여 빌드해줍니다.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> my_realsense_example</span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="bu">source</span> install/setup.bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
