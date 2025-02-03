@@ -169,7 +169,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#conda-freezing" id="toc-conda-freezing" class="nav-link active" data-scroll-target="#conda-freezing">conda freezing</a></li>
+  <li><a href="#conda-lib-error" id="toc-conda-lib-error" class="nav-link active" data-scroll-target="#conda-lib-error">conda lib error</a></li>
+  <li><a href="#conda-freezing" id="toc-conda-freezing" class="nav-link" data-scroll-target="#conda-freezing">conda freezing</a></li>
   <li><a href="#symbolic-link-설정-및-관리" id="toc-symbolic-link-설정-및-관리" class="nav-link" data-scroll-target="#symbolic-link-설정-및-관리">symbolic link 설정 및 관리</a></li>
   <li><a href="#library-경로-설정" id="toc-library-경로-설정" class="nav-link" data-scroll-target="#library-경로-설정">library 경로 설정</a></li>
   <li><a href="#gpu-memory-해제" id="toc-gpu-memory-해제" class="nav-link" data-scroll-target="#gpu-memory-해제">GPU Memory 해제</a></li>
@@ -225,6 +226,13 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
+<section id="conda-lib-error" class="level1">
+<h1>conda lib error</h1>
+<pre><code>ImportError: libpython2.x.so.1.0: cannot open shared object file: No such file or directory</code></pre>
+<ul>
+<li>Solution: <code>export LD_LIBRARY_PATH=/home/avery/anaconda3/envs/[가상환경이름]/lib</code></li>
+</ul>
+</section>
 <section id="conda-freezing" class="level1">
 <h1>conda freezing</h1>
 <pre><code>conda env export &gt; environment.yaml
@@ -244,22 +252,22 @@ pip install -r requirements.txt</code></pre>
 </blockquote>
 <ul>
 <li><p><strong>심볼릭 링크 삭제</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>예시:</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><strong>심볼릭 링크 생성</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="op">&lt;</span>target<span class="op">&gt;</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="op">&lt;</span>target<span class="op">&gt;</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>예시:</em></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /opt/python3.9/bin/python /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /opt/python3.9/bin/python /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><strong>심볼릭 링크 변경 (덮어쓰기)</strong> 기존 링크를 새 타겟으로 변경할 때 사용합니다.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-Tfs</span> <span class="op">&lt;</span>new_target<span class="op">&gt;</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-Tfs</span> <span class="op">&lt;</span>new_target<span class="op">&gt;</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>예시:</em></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-Tfs</span> /opt/python3.10/bin/python /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-Tfs</span> /opt/python3.10/bin/python /usr/local/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><strong>심볼릭 링크 확인</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="op">&lt;</span>symbolic_link<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>예시:</em></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> /usr/local/bin/python</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 1 root root 24 2025-01-22 12:34 /usr/local/bin/python <span class="at">-</span><span class="op">&gt;</span> /opt/python3.9/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> /usr/local/bin/python</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 1 root root 24 2025-01-22 12:34 /usr/local/bin/python <span class="at">-</span><span class="op">&gt;</span> /opt/python3.9/bin/python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="library-경로-설정" class="level1">
@@ -267,18 +275,18 @@ pip install -r requirements.txt</code></pre>
 <blockquote class="blockquote">
 <p>conda env lib 연결시</p>
 </blockquote>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> export LD_LIBRARY_PATH=<span class="va">$LD_LIBRARY_PATH</span>:/home/usr/work/mylib</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vi</span> ~/.bashrc <span class="er">(</span><span class="ex">파일명</span> 앞의 .은 숨김파일을 의미<span class="kw">)</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LD_LIBRARY_PATH</span><span class="op">=</span>/home/user/work/mylib:<span class="va">${LD_LIBRARY_PATH}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> export LD_LIBRARY_PATH=<span class="va">$LD_LIBRARY_PATH</span>:/home/usr/work/mylib</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vi</span> ~/.bashrc <span class="er">(</span><span class="ex">파일명</span> 앞의 .은 숨김파일을 의미<span class="kw">)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LD_LIBRARY_PATH</span><span class="op">=</span>/home/user/work/mylib:<span class="va">${LD_LIBRARY_PATH}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="gpu-memory-해제" class="level1">
 <h1>GPU Memory 해제</h1>
 <blockquote class="blockquote">
 <p>프로세스가 죽지 않을때 강제 종료</p>
 </blockquote>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기</span>
-<span id="cb11-2"><a href="#cb11-2"></a>sudo kill -9 [ID_NUMBER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource commandline number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기</span>
+<span id="cb12-2"><a href="#cb12-2"></a>sudo kill -9 [ID_NUMBER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="docker" class="level1">
 <h1>Docker</h1>
@@ -286,13 +294,13 @@ pip install -r requirements.txt</code></pre>
 <li><code>docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].</code></li>
 <li>nvidia-container-toolkit 설치</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> distribution=<span class="va">$(</span><span class="bu">.</span> /etc/os-release<span class="kw">;</span><span class="bu">echo</span> <span class="va">$ID$VERSION_ID)</span> <span class="dt">\</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">&amp;&amp;</span> <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-L</span> https://nvidia.github.io/nvidia-docker/gpgkey <span class="kw">|</span> <span class="fu">sudo</span> apt-key add <span class="at">-</span> <span class="dt">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">&amp;&amp;</span> <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-L</span> https://nvidia.github.io/nvidia-docker/<span class="va">$distribution</span>/nvidia-docker.list <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/nvidia-docker.list</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt-get install <span class="at">-y</span> nvidia-container-toolkit</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl restart docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> distribution=<span class="va">$(</span><span class="bu">.</span> /etc/os-release<span class="kw">;</span><span class="bu">echo</span> <span class="va">$ID$VERSION_ID)</span> <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">&amp;&amp;</span> <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-L</span> https://nvidia.github.io/nvidia-docker/gpgkey <span class="kw">|</span> <span class="fu">sudo</span> apt-key add <span class="at">-</span> <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">&amp;&amp;</span> <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-L</span> https://nvidia.github.io/nvidia-docker/<span class="va">$distribution</span>/nvidia-docker.list <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/nvidia-docker.list</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt-get install <span class="at">-y</span> nvidia-container-toolkit</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl restart docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>GPU 설정
 <ul>
@@ -306,41 +314,41 @@ pip install -r requirements.txt</code></pre>
 </section>
 <section id="terminal-zshbash" class="level1">
 <h1>terminal zsh/bash</h1>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> bin/bash</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> bin/zsh</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">@terminal</span><span class="kw">)</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/bin/bash</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ex">/bin/zsh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> bin/bash</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> bin/zsh</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">@terminal</span><span class="kw">)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/bin/bash</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">/bin/zsh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="용량-확인" class="level1">
 <h1>용량 확인</h1>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>해당 경로에 있는 모든 파일과 폴더들을 용량 단위로 표기</li>
 <li>폴더가 1 순위, 파일이 2 순위로 나열</li>
 <li>경로에 있는 모든 폴더들과 각 폴더내에 있는 파일들을 모두 표기</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-ch</span> <span class="pp">[</span><span class="ss">path</span><span class="pp">]</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-ch</span> <span class="pp">[</span><span class="ss">path</span><span class="pp">]</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>해당 경로의 폴더 기준 트리 구조의 깊이 1만큼의 수준까지 탐색</li>
 <li>용량이 큰 폴더가 아래로, 가장 용량이 큰 10개만 보임</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-ch</span> <span class="pp">[</span><span class="ss">path</span><span class="pp">]</span> <span class="at">--max-depth</span><span class="op">=</span>1 <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-ch</span> <span class="pp">[</span><span class="ss">path</span><span class="pp">]</span> <span class="at">--max-depth</span><span class="op">=</span>1 <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><p>현재 경로의 파일 용량</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="파일-찾기" class="level1">
 <h1>파일 찾기</h1>
-<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> <span class="pp">[</span><span class="ss">옵션</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">경로</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">표현식</span><span class="pp">]</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 현재 위치에서 log가 들어가는 파일 모두 찾기</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*log*"</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.txt"</span> <span class="at">-delete</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> <span class="pp">[</span><span class="ss">옵션</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">경로</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">표현식</span><span class="pp">]</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 현재 위치에서 log가 들어가는 파일 모두 찾기</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*log*"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.txt"</span> <span class="at">-delete</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>options
 <ul>

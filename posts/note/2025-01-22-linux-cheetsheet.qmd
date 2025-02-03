@@ -10,6 +10,14 @@ format:
     code-summary: "Show the code"
 ---
 
+# conda lib error
+
+```
+ImportError: libpython2.x.so.1.0: cannot open shared object file: No such file or directory
+```
+- Solution: `export LD_LIBRARY_PATH=/home/avery/anaconda3/envs/[가상환경이름]/lib`
+
+
 # conda freezing
 
 ```
