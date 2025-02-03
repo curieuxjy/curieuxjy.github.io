@@ -10,36 +10,47 @@ format:
     code-summary: "Show the code"
 ---
 
+# conda freezing
+
+```
+conda env export > environment.yaml
+conda env create --file environment.yaml
+
+pip list --format=freeze > ./requirements.txt
+pip install -r requirements.txt
+```
+
+
 # symbolic link 설정 및 관리
 
 > - 심볼릭 링크는 파일 시스템 내에서 다른 파일이나 디렉토리의 경로를 가리키는 "바로 가기"와 같은 역할을 하므로, 실제 파일이 아닌 링크 파일임을 유의
 > - 여러 버전의 라이브러리나 프로그램 관리 시, 심볼릭 링크가 어떤 타겟을 가리키고 있는지 확인하는 것이 중요
 > - 여러 버전의 프로그램(예: python, cuda)을 설치했을 때 어떤 버전이 활성화되어 있는지 관리
 
-- **심볼릭 링크 삭제**  
+- **심볼릭 링크 삭제**
   ```{.sh code-line-numbers=false}
   rm <symbolic_link>
   ```
-  *예시:*  
+  *예시:*
   ```{.sh code-line-numbers=false}
   rm /usr/local/bin/python
   ```
 
-- **심볼릭 링크 생성**  
+- **심볼릭 링크 생성**
   ```{.sh code-line-numbers=false}
   ln -s <target> <symbolic_link>
   ```
-  *예시:*  
+  *예시:*
   ```{.sh code-line-numbers=false}
   ln -s /opt/python3.9/bin/python /usr/local/bin/python
   ```
 
-- **심볼릭 링크 변경 (덮어쓰기)**  
+- **심볼릭 링크 변경 (덮어쓰기)**
   기존 링크를 새 타겟으로 변경할 때 사용합니다.
   ```{.sh code-line-numbers=false}
   ln -Tfs <new_target> <symbolic_link>
   ```
-  *예시:*  
+  *예시:*
   ```{.sh code-line-numbers=false}
   ln -Tfs /opt/python3.10/bin/python /usr/local/bin/python
   ```
@@ -73,21 +84,21 @@ ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 
 sudo kill -9 [ID_NUMBER]
 ```
 
-# Docker 
+# Docker
 
 - `docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].`
-- nvidia-container-toolkit 설치 
+- nvidia-container-toolkit 설치
 
 ```{.sh code-line-numbers=false}
 $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-   
+
 $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 
 $ sudo systemctl restart docker
 ```
-    
+
 - GPU 설정
   - `docker run -it --gpus '"device=0,1,2,3"'`
 
@@ -167,19 +178,19 @@ find . -name "*.txt" -delete
 - 중복 생성
   - `mount --bind original-dir dupulicate-dir`
 - 지우기
-  - `sudo umount duplicate-dir`  
-  
+  - `sudo umount duplicate-dir`
+
 # 원격과 로컬 사이 파일 복사
 
 > `scp` 사용. `scp [options] [source] [target]`
 
-- 로컬에서 원격으로 
+- 로컬에서 원격으로
   - `scp [source_path] [User]@[IP]:[target_path]`
   - `scp /media/avery/source/test.txt avery@xxx.xx.x.xxx:mnt/`
 - 원격에서 로컬로
   - `scp [User]@[IP]:[source_path] [target_path]`
   - `scp avery@xxx.xx.x.xxx:mnt/test.txt /home/avery/Documents`
-- 원격(A User)에서 원격(B User)으로 
+- 원격(A User)에서 원격(B User)으로
   - `scp [User]@[IP]:[source_path] [User]@[IP]:[target_path]`
   - `scp ai@xxx.xx.x.xxx:mnt/test.txt avery@xxx.xx.x.xxx:/home/avery/Documents`
 - 복수의 파일 전송
@@ -207,7 +218,7 @@ conda clean -a
 - `.cache` 위치 변경
 
 ```
-# .bashrc를 vim으로 열어서 아래 변수를 추가하기 
+# .bashrc를 vim으로 열어서 아래 변수를 추가하기
 export XDG_CACHE_HOME="/{disk_location}/{user_name}/.cache"
 
 # 해당 경로 생성하기
@@ -218,7 +229,7 @@ mkdir -p /{disk_location}/{user_name}/.cache
 
 - `:%d`: 전체 내용 삭제 (press Esc to ensure you’re in Normal mode first)
 - `i` 입력 후, `Ctrl + Shift + v`: 새로운 내용 붙여넣기
-- `:wq`: 저장 
+- `:wq`: 저장
 - Normal mode shortcuts:
   - `gg` (go to the first line of the file)
   - `dG` (delete from current line to the end of the file)
