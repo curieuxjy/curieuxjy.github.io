@@ -31,6 +31,10 @@ AppImage icon 생성
   Categories=Utility;
   ```
 
+# conda 자동 활성화 해제
+
+`conda config --set auto_activate_base false`
+
 # conda lib error
 
 ```
