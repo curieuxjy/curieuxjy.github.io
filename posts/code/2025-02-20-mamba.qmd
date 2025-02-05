@@ -28,10 +28,23 @@ On the other hand, Mamba makes use of openSUSE's libsolv dependency resolver, by
 
 # Examples
 
+# Build Issue
+
+- error
+```shell
+Error while loading conda entry point: conda-libmamba-solver (libarchive.so.19: cannot open shared object file: No such file or directory)
+```
+
+- solution
+```shell
+$ conda install --solver=classic conda-forge::conda-libmamba-solver conda-forge::libmamba conda-forge::libmambapy conda-forge::libarchive
+```
+
 ### Reference
 
 - https://github.com/mamba-org/mamba
 - https://mamba.readthedocs.io/en/latest/
+- https://stackoverflow.com/questions/77617946/solve-conda-libmamba-solver-libarchive-so-19-error-after-updating-conda-to-23
 
 ---
 
