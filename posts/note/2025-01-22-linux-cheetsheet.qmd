@@ -1,7 +1,7 @@
 ---
 title: "📝Linx Cheet Sheet"
 toc: true
-date: "2025-01-22"
+date: "2025-02-05"
 description: 자주 사용하는 Commands
 categories: [linux, docker, cheetsheet, 2025]
 format:
@@ -9,6 +9,27 @@ format:
     code-fold: true
     code-summary: "Show the code"
 ---
+
+# AppImage icon
+
+AppImage icon 생성
+
+- .AppImage 파일 및 icon 이미지(.png) 경로: `/opt` 
+- desktop 바로가기 설정 경로: `/usr/share/applications`
+1. appimage 파일과 icon image를 `/opt`로 이동
+   - e.g. `/opt/[app_name].AppImage` & `/opt/[app_name].png`
+2. 바로가기 설정 파일 `[app_name.desktop]`을 `/usr/share/applications`에 만들어줌
+  ```shell
+  [Desktop Entry]
+  Name=[app_name]
+  Comment=[AppImage entry]
+  Exec=/opt/[app_name].AppImage
+  Icon=/opt/[app_name].png
+  Type=Application
+  Terminal=false
+  Encoding=UTF-8
+  Categories=Utility;
+  ```
 
 # conda lib error
 
