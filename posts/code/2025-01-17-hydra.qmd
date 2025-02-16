@@ -29,7 +29,3 @@ ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 한다. �
 - https://lucaseo.github.io/posts/2021-11-07-hydra-for-machine-learning/
 
 - https://only-wanna.tistory.com/entry/Hydra-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%A0%95%EB%A6%AC
-
-- https://www.sscardapane.it/tutorials/hydra-tutorial/
-
-- https://github.com/sscardapane/hydra-tutorial
