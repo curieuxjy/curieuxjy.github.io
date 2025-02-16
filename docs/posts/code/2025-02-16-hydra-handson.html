@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-02-16">
-<meta name="description" content="여러 실험 파라미터들을 관리해주는 Hydra">
 
-<title>Curieux.JY - 👩‍💻Hydra로 실험관리 하기</title>
+<title>Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,7 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -114,9 +112,6 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -167,66 +162,11 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#hydra-소개" id="toc-hydra-소개" class="nav-link active" data-scroll-target="#hydra-소개">Hydra 소개</a></li>
-  <li><a href="#structured-config-예제" id="toc-structured-config-예제" class="nav-link" data-scroll-target="#structured-config-예제">Structured Config 예제</a>
-  <ul class="collapse">
-  <li><a href="#config-초기화" id="toc-config-초기화" class="nav-link" data-scroll-target="#config-초기화">Config 초기화</a>
-  <ul class="collapse">
-  <li><a href="#방법1-initialize" id="toc-방법1-initialize" class="nav-link" data-scroll-target="#방법1-initialize">방법1 <code>initialize()</code></a></li>
-  <li><a href="#방법2-initialize_config_module" id="toc-방법2-initialize_config_module" class="nav-link" data-scroll-target="#방법2-initialize_config_module">방법2 <code>initialize_config_module()</code></a></li>
-  <li><a href="#방법3-initialize_config_dir" id="toc-방법3-initialize_config_dir" class="nav-link" data-scroll-target="#방법3-initialize_config_dir">방법3 <code>initialize_config_dir()</code></a></li>
-  </ul></li>
-  <li><a href="#override" id="toc-override" class="nav-link" data-scroll-target="#override">Override</a></li>
-  <li><a href="#resolver" id="toc-resolver" class="nav-link" data-scroll-target="#resolver">Resolver</a>
-  <ul class="collapse">
-  <li><a href="#resolver-등록-및-기능" id="toc-resolver-등록-및-기능" class="nav-link" data-scroll-target="#resolver-등록-및-기능"><strong>Resolver 등록 및 기능</strong></a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">👩‍💻Hydra로 실험관리 하기</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">hydra</div>
-    <div class="quarto-category">code</div>
-  </div>
-  </div>
-
-<div>
-  <div class="description">
-    여러 실험 파라미터들을 관리해주는 Hydra
-  </div>
-</div>
+<main class="content column-page" id="quarto-document-content">
 
 
-<div class="quarto-title-meta column-page-left">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 16, 2025</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 <p>ML/DL 실험에서는 다양한 실험 파라미터들을 관리해야 합니다. 이를 위해 여러가지 방법이 있지만, 이번 포스팅에서는 FacebookResearch에서 만든 <a href="https://hydra.cc/">Hydra</a>를 사용해보자 합니다.</p>
@@ -287,7 +227,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <span id="cb1-3"><a href="#cb1-3"></a><span class="op">!</span>pip install hydra<span class="op">-</span>core <span class="op">--</span>upgrade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>필요한 모듈들을 import하고 Google Colaboratory에서 예제코드들을 저장하는 경로 <code>ROOT_DIR</code>을 지정해줍니다.</p>
-<div id="cell-7" class="cell" data-execution_count="2">
+<div id="cell-7" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Import the necessary modules from Hydra and OmegaConf.</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="im">from</span> hydra <span class="im">import</span> compose, initialize, initialize_config_dir, initialize_config_module</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="im">from</span> omegaconf <span class="im">import</span> OmegaConf</span>
@@ -295,77 +235,46 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <span id="cb2-5"><a href="#cb2-5"></a></span>
 <span id="cb2-6"><a href="#cb2-6"></a>ROOT_DIR <span class="op">=</span> <span class="st">"/content/"</span> <span class="co"># relative to this file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-8" class="cell" data-outputid="98d7e709-6b73-4548-a380-046f2f655085" data-execution_count="3">
+<div id="cell-8" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">%</span>pwd</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="op">!</span>mkdir <span class="op">-</span>p {ROOT_DIR}configs</span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="op">%</span>cd {ROOT_DIR}configs</span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="op">!</span>touch main.yaml</span>
 <span id="cb3-5"><a href="#cb3-5"></a><span class="op">%</span>ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/content/configs
-main.yaml</code></pre>
 </div>
-</div>
-<div id="cell-9" class="cell" data-outputid="20674c31-983f-4fc2-bc79-1ef075b85e76" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="bu">print</span>(<span class="st">"Checking that main.yaml is in:"</span>, os.listdir(ROOT_DIR <span class="op">+</span> <span class="st">"configs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Checking that main.yaml is in: ['main.yaml']</code></pre>
-</div>
+<div id="cell-9" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">print</span>(<span class="st">"Checking that main.yaml is in:"</span>, os.listdir(ROOT_DIR <span class="op">+</span> <span class="st">"configs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>아래 명령어로 main.yaml의 내용을 확인해보겠습니다. 아직 어떠한 내용도 없는 빈 파일임을 확인할 수 있습니다.</p>
-<div id="cell-11" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>main.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-11" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>main.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>가상의 강화힉습 프로젝트를 위한 Config를 작성한다고 생각하며 아래의 내용처럼 <code>main.yaml</code> 파일을 작성합니다.</p>
-<div id="cell-13" class="cell" data-outputid="0e6a1b12-0e7e-4a26-8470-8cf7b0f4f838" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">%%</span>writefile main.yaml</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># This is the main configuration file for the RL project.</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># It combines settings for the environment, agent, and training.</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a></span>
-<span id="cb8-5"><a href="#cb8-5"></a>env:</span>
-<span id="cb8-6"><a href="#cb8-6"></a>  name: <span class="st">"CartPole-v1"</span>    <span class="co"># Environment name (e.g., Gym environment)</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>  seed: <span class="dv">42</span>               <span class="co"># Random seed for reproducibility</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>  max_steps: <span class="dv">200</span>         <span class="co"># Maximum steps per episode</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a></span>
-<span id="cb8-10"><a href="#cb8-10"></a>agent:</span>
-<span id="cb8-11"><a href="#cb8-11"></a>  <span class="bu">type</span>: <span class="st">"DQN"</span>            <span class="co"># Agent type (e.g., DQN)</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>  hidden_layers: [<span class="dv">64</span>, <span class="dv">64</span>] <span class="co"># Network architecture: two hidden layers with 64 units each</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a>  activation: <span class="st">"relu"</span>     <span class="co"># Activation function</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a>  learning_rate: <span class="fl">0.001</span>   <span class="co"># Learning rate for the optimizer</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a>  gamma: <span class="fl">0.99</span>            <span class="co"># Discount factor</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a></span>
-<span id="cb8-17"><a href="#cb8-17"></a>training:</span>
-<span id="cb8-18"><a href="#cb8-18"></a>  episodes: <span class="dv">1000</span>         <span class="co"># Number of training episodes</span></span>
-<span id="cb8-19"><a href="#cb8-19"></a>  batch_size: <span class="dv">32</span>         <span class="co"># Batch size for learning</span></span>
-<span id="cb8-20"><a href="#cb8-20"></a>  replay_buffer_size: <span class="dv">10000</span>  <span class="co"># Size of the replay buffer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Overwriting main.yaml</code></pre>
-</div>
+<div id="cell-13" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="op">%%</span>writefile main.yaml</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># This is the main configuration file for the RL project.</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># It combines settings for the environment, agent, and training.</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>env:</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  name: <span class="st">"CartPole-v1"</span>    <span class="co"># Environment name (e.g., Gym environment)</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  seed: <span class="dv">42</span>               <span class="co"># Random seed for reproducibility</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  max_steps: <span class="dv">200</span>         <span class="co"># Maximum steps per episode</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>agent:</span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="bu">type</span>: <span class="st">"DQN"</span>            <span class="co"># Agent type (e.g., DQN)</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  hidden_layers: [<span class="dv">64</span>, <span class="dv">64</span>] <span class="co"># Network architecture: two hidden layers with 64 units each</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  activation: <span class="st">"relu"</span>     <span class="co"># Activation function</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  learning_rate: <span class="fl">0.001</span>   <span class="co"># Learning rate for the optimizer</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  gamma: <span class="fl">0.99</span>            <span class="co"># Discount factor</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a>training:</span>
+<span id="cb6-18"><a href="#cb6-18"></a>  episodes: <span class="dv">1000</span>         <span class="co"># Number of training episodes</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>  batch_size: <span class="dv">32</span>         <span class="co"># Batch size for learning</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>  replay_buffer_size: <span class="dv">10000</span>  <span class="co"># Size of the replay buffer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>작성한 후, main.yaml 내용을 다시 확인하면 위에서 작성한 내용을 확인할 수 있습니다.</p>
-<div id="cell-15" class="cell" data-outputid="9a0299ba-0081-47ef-965d-eb197d76fa21" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>main.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># This is the main configuration file for the RL project.
-# It combines settings for the environment, agent, and training.
-
-env:
-  name: "CartPole-v1"    # Environment name (e.g., Gym environment)
-  seed: 42               # Random seed for reproducibility
-  max_steps: 200         # Maximum steps per episode
-
-agent:
-  type: "DQN"            # Agent type (e.g., DQN)
-  hidden_layers: [64, 64] # Network architecture: two hidden layers with 64 units each
-  activation: "relu"     # Activation function
-  learning_rate: 0.001   # Learning rate for the optimizer
-  gamma: 0.99            # Discount factor
-
-training:
-  episodes: 1000         # Number of training episodes
-  batch_size: 32         # Batch size for learning
-  replay_buffer_size: 10000  # Size of the replay buffer</code></pre>
-</div>
+<div id="cell-15" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>main.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="config-초기화" class="level2">
 <h2 class="anchored" data-anchor-id="config-초기화">Config 초기화</h2>
@@ -387,241 +296,95 @@ training:
 <h3 class="anchored" data-anchor-id="방법1-initialize">방법1 <code>initialize()</code></h3>
 <p>Hydra를 초기화하고 <code>config_path</code>를 설정 검색 경로에 추가합니다.<br>
 <code>config_path</code>는 호출하는 코드의 parent 디렉터리를 기준으로 한 상대 경로이며, 이 경우에는 현재 노트북이 위치한 디렉터리를 기준으로 설정됩니다.</p>
-<div id="cell-18" class="cell" data-outputid="519ee3d1-9934-4e6d-ab95-3192bd6ea9b0" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">%</span>cd <span class="op">/</span>content<span class="op">/</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="cf">with</span> initialize(version_base<span class="op">=</span><span class="va">None</span>, config_path<span class="op">=</span><span class="st">"configs"</span>):</span>
-<span id="cb12-4"><a href="#cb12-4"></a>    <span class="co"># Compose the configuration by selecting the main configuration.</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>    cfg_1 <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co"># full configuration을 YAML 형식으로 출력하여 쉽게 검사할 수 있습니다.</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="bu">print</span>(OmegaConf.to_yaml(cfg_1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/content
-env:
-  name: CartPole-v1
-  seed: 42
-  max_steps: 200
-agent:
-  type: DQN
-  hidden_layers:
-  - 64
-  - 64
-  activation: relu
-  learning_rate: 0.001
-  gamma: 0.99
-training:
-  episodes: 1000
-  batch_size: 32
-  replay_buffer_size: 10000
-</code></pre>
-</div>
+<div id="cell-18" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">%</span>cd <span class="op">/</span>content<span class="op">/</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="cf">with</span> initialize(version_base<span class="op">=</span><span class="va">None</span>, config_path<span class="op">=</span><span class="st">"configs"</span>):</span>
+<span id="cb8-4"><a href="#cb8-4"></a>    <span class="co"># Compose the configuration by selecting the main configuration.</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    cfg_1 <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># full configuration을 YAML 형식으로 출력하여 쉽게 검사할 수 있습니다.</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="bu">print</span>(OmegaConf.to_yaml(cfg_1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="방법2-initialize_config_module" class="level3">
 <h3 class="anchored" data-anchor-id="방법2-initialize_config_module">방법2 <code>initialize_config_module()</code></h3>
 <p>Hydra를 초기화하고 <code>config_module</code>을 설정 검색 경로에 추가합니다.<br>
 <code>config_module</code>은 반드시 import 가능한 형태여야 하며, 최상위 디렉터리에 <code>__init__.py</code> 파일이 존재해야 합니다. 이번 예제에서는 <code>module</code>이라는 폴더를 만들어서 import 가능한 디렉토리로 만들어 줍니다. 그리고 첫번째 만들었던 <code>main.yaml</code>파일을 복사하여 <code>module/main_2.yaml</code> 파일로 만들어 줍니다.</p>
-<div id="cell-20" class="cell" data-outputid="32450af1-f678-4d27-ae88-197e706ddb3a" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="op">%</span>cd <span class="op">/</span>content<span class="op">/</span>configs</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="op">%</span>mkdir <span class="op">-</span>p <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>module</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="op">!</span>touch <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>module<span class="op">/</span><span class="fu">__init__</span>.py</span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="op">%</span>cd <span class="op">/</span>content</span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="op">!</span>cp .<span class="op">/</span>configs<span class="op">/</span>main.yaml configs<span class="op">/</span>module<span class="op">/</span>main_2.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/content/configs
-/content</code></pre>
-</div>
+<div id="cell-20" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="op">%</span>cd <span class="op">/</span>content<span class="op">/</span>configs</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="op">%</span>mkdir <span class="op">-</span>p <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>module</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="op">!</span>touch <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>module<span class="op">/</span><span class="fu">__init__</span>.py</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="op">%</span>cd <span class="op">/</span>content</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="op">!</span>cp .<span class="op">/</span>configs<span class="op">/</span>main.yaml configs<span class="op">/</span>module<span class="op">/</span>main_2.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>잘 복사가 되었는지 확인해보겠습니다.</p>
-<div id="cell-22" class="cell" data-outputid="cd50d3e8-7e92-4c98-ab2f-b21b0091dd7b" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>module<span class="op">/</span>main_2.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># This is the main configuration file for the RL project.
-# It combines settings for the environment, agent, and training.
-
-env:
-  name: "CartPole-v1"    # Environment name (e.g., Gym environment)
-  seed: 42               # Random seed for reproducibility
-  max_steps: 200         # Maximum steps per episode
-
-agent:
-  type: "DQN"            # Agent type (e.g., DQN)
-  hidden_layers: [64, 64] # Network architecture: two hidden layers with 64 units each
-  activation: "relu"     # Activation function
-  learning_rate: 0.001   # Learning rate for the optimizer
-  gamma: 0.99            # Discount factor
-
-training:
-  episodes: 1000         # Number of training episodes
-  batch_size: 32         # Batch size for learning
-  replay_buffer_size: 10000  # Size of the replay buffer</code></pre>
-</div>
+<div id="cell-22" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>module<span class="op">/</span>main_2.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>이번에는 2번째 방법인 <code>initialize_config_module()</code>함수를 이용하여 복사했던 <code>main_2.yaml</code> 파일을 이용하여 compose 해보겠습니다.</p>
-<div id="cell-24" class="cell" data-outputid="c39760d9-8e55-4ec8-dffe-789740c49332" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="op">%</span>cd <span class="op">/</span>content</span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="cf">with</span> initialize_config_module(version_base<span class="op">=</span><span class="va">None</span>, config_module<span class="op">=</span><span class="st">"configs.module"</span>):</span>
-<span id="cb18-3"><a href="#cb18-3"></a>    cfg_2 <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main_2"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>    <span class="bu">print</span>(cfg_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/content
-{'env': {'name': 'CartPole-v1', 'seed': 42, 'max_steps': 200}, 'agent': {'type': 'DQN', 'hidden_layers': [64, 64], 'activation': 'relu', 'learning_rate': 0.001, 'gamma': 0.99}, 'training': {'episodes': 1000, 'batch_size': 32, 'replay_buffer_size': 10000}}</code></pre>
-</div>
+<div id="cell-24" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">%</span>cd <span class="op">/</span>content</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="cf">with</span> initialize_config_module(version_base<span class="op">=</span><span class="va">None</span>, config_module<span class="op">=</span><span class="st">"configs.module"</span>):</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    cfg_2 <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main_2"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="bu">print</span>(cfg_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>아래와 같이 config의 키들을 확인해볼 수도 있습니다.</p>
-<div id="cell-26" class="cell" data-outputid="7fb875f2-a4ae-4950-9c2e-e49d2a44aca2" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="bu">list</span>(cfg_2.keys())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>['env', 'agent', 'training']</code></pre>
-</div>
+<div id="cell-26" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="bu">list</span>(cfg_2.keys())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="방법3-initialize_config_dir" class="level3">
 <h3 class="anchored" data-anchor-id="방법3-initialize_config_dir">방법3 <code>initialize_config_dir()</code></h3>
 <p>Hydra를 초기화하고 <code>config_path</code>를 설정 검색 경로에 추가합니다. <code>config_path</code>는 파일 시스템 상의 <strong>절대 경로</strong>여야 합니다. 미리 만들어 놓았던 <code>main.yaml</code> 파일을 이용하여 config를 구성해보겠습니다.</p>
-<div id="cell-28" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>CONFIG_DIR <span class="op">=</span> <span class="st">"/content/configs"</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="cf">with</span> initialize_config_dir(version_base<span class="op">=</span><span class="va">None</span>, config_dir<span class="op">=</span>CONFIG_DIR):</span>
-<span id="cb22-4"><a href="#cb22-4"></a>    cfg_3 <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-28" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>CONFIG_DIR <span class="op">=</span> <span class="st">"/content/configs"</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="cf">with</span> initialize_config_dir(version_base<span class="op">=</span><span class="va">None</span>, config_dir<span class="op">=</span>CONFIG_DIR):</span>
+<span id="cb13-4"><a href="#cb13-4"></a>    cfg_3 <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-29" class="cell" data-outputid="3485777e-d87c-4432-848f-68bf6b951272" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a><span class="bu">print</span>(cfg_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>{'env': {'name': 'CartPole-v1', 'seed': 42, 'max_steps': 200}, 'agent': {'type': 'DQN', 'hidden_layers': [64, 64], 'activation': 'relu', 'learning_rate': 0.001, 'gamma': 0.99}, 'training': {'episodes': 1000, 'batch_size': 32, 'replay_buffer_size': 10000}}</code></pre>
-</div>
+<div id="cell-29" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="bu">print</span>(cfg_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>여기까지 Hydra의 세 가지 방법을 사용하여 설정(Config)을 초기화하는 방법을 살펴보았습니다. 이제 이렇게 생성된 설정이 어떻게 구성되어 있는지 확인해보겠습니다. 대표적인 설정 예제로 <code>cfg_1</code>을 살펴보겠습니다.</p>
 <p>객체의 타입을 확인해보면, 이는 Omegaconf에서 제공하는 <code>DictConfig</code> 객체임을 알 수 있습니다. <code>DictConfig</code>는 딕셔너리 형태의 설정을 계층적으로 관리할 수 있도록 해주는 데이터 구조로, YAML 설정 파일을 로드하거나 동적으로 구성 값을 변경할 때 유용하게 활용됩니다.</p>
-<div id="cell-32" class="cell" data-outputid="da858b4d-7515-498a-997d-289ecdd446c2" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a><span class="bu">type</span>(cfg_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<div style="max-width:800px; border: 1px solid var(--colab-border-color);"><style>
-      pre.function-repr-contents {
-        overflow-x: auto;
-        padding: 8px 12px;
-        max-height: 500px;
-      }
-
-      pre.function-repr-contents.function-repr-contents-collapsed {
-        cursor: pointer;
-        max-height: 100px;
-      }
-    </style>
-    <pre style="white-space: initial; background:
-         var(--colab-secondary-surface-color); padding: 8px 12px;
-         border-bottom: 1px solid var(--colab-border-color);"><b>omegaconf.dictconfig.DictConfig</b><br>def __init__(content: Union[Dict[DictKeyType, Any], 'DictConfig', Any], key: Any=None, parent: Optional[Box]=None, ref_type: Union[Any, Type[Any]]=Any, key_type: Union[Any, Type[Any]]=Any, element_type: Union[Any, Type[Any]]=Any, is_optional: bool=True, flags: Optional[Dict[str, bool]]=None) -&gt; None</pre><pre class="function-repr-contents function-repr-contents-collapsed" style=""><a class="filepath" style="display:none" href="#">/usr/local/lib/python3.11/dist-packages/omegaconf/dictconfig.py</a>Container tagging interface</pre>
-      <script>
-      if (google.colab.kernel.accessAllowed && google.colab.files && google.colab.files.view) {
-        for (const element of document.querySelectorAll('.filepath')) {
-          element.style.display = 'block'
-          element.onclick = (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            google.colab.files.view(element.textContent, 57);
-          };
-        }
-      }
-      for (const element of document.querySelectorAll('.function-repr-contents')) {
-        element.onclick = (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          element.classList.toggle('function-repr-contents-collapsed');
-        };
-      }
-      </script>
-      </div>
-</div>
+<div id="cell-32" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="bu">type</span>(cfg_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Config 객체의 키들은 다음과 같이 확인할 수 있습니다.</p>
-<div id="cell-34" class="cell" data-outputid="9e8a9d25-7e81-423e-ff9d-ebbf1d4b0591" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a><span class="bu">list</span>(cfg_1.keys())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>['env', 'agent', 'training']</code></pre>
-</div>
+<div id="cell-34" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="bu">list</span>(cfg_1.keys())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>DictConfig</code>의 키는 <code>config_name.key_name</code> 또는 <code>config_name["key_name"]</code> 형태로 접근할 수 있습니다. 이를 통해 일반적인 딕셔너리처럼 키를 참조하거나 점 표기법(dot notation)을 사용하여 계층적인 설정 값을 쉽게 조회할 수 있습니다.</p>
-<div id="cell-36" class="cell" data-outputid="fa2e4dbe-1115-4d73-f376-05948485fb11" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a><span class="bu">print</span>(cfg_1.env <span class="op">==</span> cfg_1[<span class="st">"env"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
+<div id="cell-36" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="bu">print</span>(cfg_1.env <span class="op">==</span> cfg_1[<span class="st">"env"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>하위 키들도 동일한 방식으로 접근할 수 있으며, <code>config_name.key_name.sub_key_name</code> 또는 <code>config_name["key_name"]["sub_key_name"]</code> 형태로 호출할 수 있습니다. 이를 활용하면 계층적으로 구성된 설정에서 원하는 값을 직관적으로 조회할 수 있습니다.</p>
-<div id="cell-38" class="cell" data-outputid="819664db-49b5-4853-ca66-b1024c3872f6" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a><span class="bu">print</span>(cfg_1.env.name <span class="op">==</span> cfg_1[<span class="st">"env"</span>][<span class="st">"name"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
+<div id="cell-38" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="bu">print</span>(cfg_1.env.name <span class="op">==</span> cfg_1[<span class="st">"env"</span>][<span class="st">"name"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="override" class="level2">
 <h2 class="anchored" data-anchor-id="override">Override</h2>
 <p>이번에는 초기화로 만든 config를 override하는 예제를 살펴보겠습니다. 강화학습에서 여러개의 environment를 병렬로 학습하기 위해 <code>env</code> 하위에 <code>num_envs</code> config를 1000개로 추가하는 override를 진행해보겠습니다.</p>
-<div id="cell-40" class="cell" data-outputid="cff7d748-405b-4c2f-945d-e5e86d47911a" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a><span class="op">%</span>cd <span class="op">/</span>content<span class="op">/</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="cf">with</span> initialize(version_base<span class="op">=</span><span class="va">None</span>, config_path<span class="op">=</span><span class="st">"configs"</span>):</span>
-<span id="cb32-4"><a href="#cb32-4"></a>    <span class="co"># 기존 설정을 유지하면서 새로운 설정을 추가</span></span>
-<span id="cb32-5"><a href="#cb32-5"></a>    cfg <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main"</span>, overrides<span class="op">=</span>[<span class="st">"+env.num_envs=1000"</span>])</span>
-<span id="cb32-6"><a href="#cb32-6"></a></span>
-<span id="cb32-7"><a href="#cb32-7"></a><span class="co"># 기존 설정과 오버라이드된 설정이 함께 출력됨</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a><span class="bu">print</span>(OmegaConf.to_yaml(cfg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/content
-env:
-  name: CartPole-v1
-  seed: 42
-  max_steps: 200
-  num_envs: 1000
-agent:
-  type: DQN
-  hidden_layers:
-  - 64
-  - 64
-  activation: relu
-  learning_rate: 0.001
-  gamma: 0.99
-training:
-  episodes: 1000
-  batch_size: 32
-  replay_buffer_size: 10000
-</code></pre>
-</div>
+<div id="cell-40" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="op">%</span>cd <span class="op">/</span>content<span class="op">/</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="cf">with</span> initialize(version_base<span class="op">=</span><span class="va">None</span>, config_path<span class="op">=</span><span class="st">"configs"</span>):</span>
+<span id="cb19-4"><a href="#cb19-4"></a>    <span class="co"># 기존 설정을 유지하면서 새로운 설정을 추가</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>    cfg <span class="op">=</span> compose(config_name<span class="op">=</span><span class="st">"main"</span>, overrides<span class="op">=</span>[<span class="st">"+env.num_envs=1000"</span>])</span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="co"># 기존 설정과 오버라이드된 설정이 함께 출력됨</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="bu">print</span>(OmegaConf.to_yaml(cfg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>override는 기존의 <code>main.yaml</code> 파일의 내용을 변경하지 않고 항목을 추가할 수 있습니다. 다시한번 <code>main.yaml</code> 내용을 확인해보면 <code>num_envs</code>가 없음을 알 수 있습니다.</p>
-<div id="cell-42" class="cell" data-outputid="775d2e41-896c-4cb9-e4f5-4d4fff01fa67" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>main.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># This is the main configuration file for the RL project.
-# It combines settings for the environment, agent, and training.
-
-env:
-  name: "CartPole-v1"    # Environment name (e.g., Gym environment)
-  seed: 42               # Random seed for reproducibility
-  max_steps: 200         # Maximum steps per episode
-
-agent:
-  type: "DQN"            # Agent type (e.g., DQN)
-  hidden_layers: [64, 64] # Network architecture: two hidden layers with 64 units each
-  activation: "relu"     # Activation function
-  learning_rate: 0.001   # Learning rate for the optimizer
-  gamma: 0.99            # Discount factor
-
-training:
-  episodes: 1000         # Number of training episodes
-  batch_size: 32         # Batch size for learning
-  replay_buffer_size: 10000  # Size of the replay buffer</code></pre>
-</div>
+<div id="cell-42" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="op">!</span>cat <span class="op">/</span>content<span class="op">/</span>configs<span class="op">/</span>main.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>하지만 override된 cfg의 키에는 <code>env.num_envs</code>가 있습니다.</p>
-<div id="cell-44" class="cell" data-outputid="129a3b8f-7211-4ec9-c6e6-80a3a58198ef" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>cfg.env.num_envs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>1000</code></pre>
-</div>
+<div id="cell-44" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>cfg.env.num_envs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="resolver" class="level2">
@@ -640,57 +403,50 @@ training:
 </ul>
 <p>이러한 resolver를 활용하면 설정 파일 내에서 <strong>조건부 로직, 문자열 비교, 기본값 처리</strong> 등을 동적으로 적용할 수 있습니다.</p>
 <p>예제로 아래와 같이 Resolver를 등록해보겠습니다.</p>
-<div id="cell-47" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Hydra 설정에서 사용할 Resolver들을 등록합니다.</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>OmegaConf.register_new_resolver(<span class="st">"eq"</span>, <span class="kw">lambda</span> x, y: x.lower() <span class="op">==</span> y.lower())</span>
-<span id="cb38-3"><a href="#cb38-3"></a>OmegaConf.register_new_resolver(<span class="st">"contains"</span>, <span class="kw">lambda</span> x, y: x.lower() <span class="kw">in</span> y.lower())</span>
-<span id="cb38-4"><a href="#cb38-4"></a>OmegaConf.register_new_resolver(<span class="st">"if"</span>, <span class="kw">lambda</span> pred, a, b: a <span class="cf">if</span> pred <span class="cf">else</span> b)</span>
-<span id="cb38-5"><a href="#cb38-5"></a>OmegaConf.register_new_resolver(<span class="st">"resolve_default"</span>, <span class="kw">lambda</span> default, arg: default <span class="cf">if</span> arg <span class="op">==</span> <span class="st">""</span> <span class="cf">else</span> arg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-47" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Hydra 설정에서 사용할 Resolver들을 등록합니다.</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>OmegaConf.register_new_resolver(<span class="st">"eq"</span>, <span class="kw">lambda</span> x, y: x.lower() <span class="op">==</span> y.lower())</span>
+<span id="cb22-3"><a href="#cb22-3"></a>OmegaConf.register_new_resolver(<span class="st">"contains"</span>, <span class="kw">lambda</span> x, y: x.lower() <span class="kw">in</span> y.lower())</span>
+<span id="cb22-4"><a href="#cb22-4"></a>OmegaConf.register_new_resolver(<span class="st">"if"</span>, <span class="kw">lambda</span> pred, a, b: a <span class="cf">if</span> pred <span class="cf">else</span> b)</span>
+<span id="cb22-5"><a href="#cb22-5"></a>OmegaConf.register_new_resolver(<span class="st">"resolve_default"</span>, <span class="kw">lambda</span> default, arg: default <span class="cf">if</span> arg <span class="op">==</span> <span class="st">""</span> <span class="cf">else</span> arg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>이번 예제에서 사용할 Config는 위의 예제 Config에서 Resolver를 확인하기 위해 아래 내용을 더 추가하여 구성해보겠습니다.</p>
-<div id="cell-49" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>yaml_config <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="st">env:</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="st">  name: "CartPole-v1"</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="st">  seed: 42</span></span>
-<span id="cb39-5"><a href="#cb39-5"></a></span>
-<span id="cb39-6"><a href="#cb39-6"></a><span class="st">agent:</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a><span class="st">  type: "DQN"</span></span>
-<span id="cb39-8"><a href="#cb39-8"></a><span class="st">  hidden_layers: [64, 64]</span></span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="st">  activation: "relu"</span></span>
-<span id="cb39-10"><a href="#cb39-10"></a><span class="st">  learning_rate: 0.001 # experiment의 default_lr 기준값으로 설정</span></span>
-<span id="cb39-11"><a href="#cb39-11"></a><span class="st">  gamma: 0.99</span></span>
-<span id="cb39-12"><a href="#cb39-12"></a></span>
-<span id="cb39-13"><a href="#cb39-13"></a><span class="st">training:</span></span>
-<span id="cb39-14"><a href="#cb39-14"></a><span class="st">  episodes: 1000</span></span>
-<span id="cb39-15"><a href="#cb39-15"></a><span class="st">  batch_size: ${if:$</span><span class="sc">{experiment.is_test}</span><span class="st">, 128, 32} # 테스트 모드일 경우 128, 아니면 32</span></span>
-<span id="cb39-16"><a href="#cb39-16"></a><span class="st">  replay_buffer_size: 10000</span></span>
-<span id="cb39-17"><a href="#cb39-17"></a></span>
-<span id="cb39-18"><a href="#cb39-18"></a><span class="st"># Resolver를 활용한 동적 설정</span></span>
-<span id="cb39-19"><a href="#cb39-19"></a><span class="st">experiment:</span></span>
-<span id="cb39-20"><a href="#cb39-20"></a><span class="st">  mode: "test"</span></span>
-<span id="cb39-21"><a href="#cb39-21"></a><span class="st">  is_test: ${eq:$</span><span class="sc">{experiment.mode}</span><span class="st">, "test"}</span></span>
-<span id="cb39-22"><a href="#cb39-22"></a><span class="st">  default_lr: ${resolve_default:0.001, $</span><span class="sc">{agent.learning_rate}</span><span class="st">}</span></span>
-<span id="cb39-23"><a href="#cb39-23"></a><span class="st">  is_debug: ${contains:$</span><span class="sc">{experiment.mode}</span><span class="st">, "debug"}  # "debug" 포함 여부 확인</span></span>
-<span id="cb39-24"><a href="#cb39-24"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-49" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>yaml_config <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="st">env:</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="st">  name: "CartPole-v1"</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="st">  seed: 42</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="st">agent:</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="st">  type: "DQN"</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a><span class="st">  hidden_layers: [64, 64]</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a><span class="st">  activation: "relu"</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a><span class="st">  learning_rate: 0.001 # experiment의 default_lr 기준값으로 설정</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a><span class="st">  gamma: 0.99</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a></span>
+<span id="cb23-13"><a href="#cb23-13"></a><span class="st">training:</span></span>
+<span id="cb23-14"><a href="#cb23-14"></a><span class="st">  episodes: 1000</span></span>
+<span id="cb23-15"><a href="#cb23-15"></a><span class="st">  batch_size: ${if:$</span><span class="sc">{experiment.is_test}</span><span class="st">, 128, 32} # 테스트 모드일 경우 128, 아니면 32</span></span>
+<span id="cb23-16"><a href="#cb23-16"></a><span class="st">  replay_buffer_size: 10000</span></span>
+<span id="cb23-17"><a href="#cb23-17"></a></span>
+<span id="cb23-18"><a href="#cb23-18"></a><span class="st"># Resolver를 활용한 동적 설정</span></span>
+<span id="cb23-19"><a href="#cb23-19"></a><span class="st">experiment:</span></span>
+<span id="cb23-20"><a href="#cb23-20"></a><span class="st">  mode: "test"</span></span>
+<span id="cb23-21"><a href="#cb23-21"></a><span class="st">  is_test: ${eq:$</span><span class="sc">{experiment.mode}</span><span class="st">, "test"}</span></span>
+<span id="cb23-22"><a href="#cb23-22"></a><span class="st">  default_lr: ${resolve_default:0.001, $</span><span class="sc">{agent.learning_rate}</span><span class="st">}</span></span>
+<span id="cb23-23"><a href="#cb23-23"></a><span class="st">  is_debug: ${contains:$</span><span class="sc">{experiment.mode}</span><span class="st">, "debug"}  # "debug" 포함 여부 확인</span></span>
+<span id="cb23-24"><a href="#cb23-24"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>config를 로드하고 Resolver가 적용된 값을 출력합니다.</p>
-<div id="cell-51" class="cell" data-outputid="4259a2a3-21ea-4f9b-90ec-d22546b813cb" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>cfg <span class="op">=</span> OmegaConf.create(yaml_config)</span>
-<span id="cb40-2"><a href="#cb40-2"></a></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="co"># Resolver가 적용된 값 출력</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a><span class="bu">print</span>(<span class="st">"실험 모드:"</span>, cfg.experiment.mode)</span>
-<span id="cb40-5"><a href="#cb40-5"></a><span class="bu">print</span>(<span class="st">"is_test:"</span>, cfg.experiment.is_test)</span>
-<span id="cb40-6"><a href="#cb40-6"></a><span class="bu">print</span>(<span class="st">"배치 크기:"</span>, cfg.training.batch_size)</span>
-<span id="cb40-7"><a href="#cb40-7"></a><span class="bu">print</span>(<span class="st">"default_lr:"</span>, cfg.experiment.default_lr)</span>
-<span id="cb40-8"><a href="#cb40-8"></a><span class="bu">print</span>(<span class="st">"디버그 모드 여부):"</span>, cfg.experiment.is_debug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>실험 모드: test
-is_test: True
-배치 크기: 128
-default_lr: 0.001
-디버그 모드 여부): False</code></pre>
-</div>
+<div id="cell-51" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>cfg <span class="op">=</span> OmegaConf.create(yaml_config)</span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="co"># Resolver가 적용된 값 출력</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="bu">print</span>(<span class="st">"실험 모드:"</span>, cfg.experiment.mode)</span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="bu">print</span>(<span class="st">"is_test:"</span>, cfg.experiment.is_test)</span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="bu">print</span>(<span class="st">"배치 크기:"</span>, cfg.training.batch_size)</span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="bu">print</span>(<span class="st">"default_lr:"</span>, cfg.experiment.default_lr)</span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="bu">print</span>(<span class="st">"디버그 모드 여부):"</span>, cfg.experiment.is_debug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>예제 출력을 하나씩 살펴보겠습니다.</p>
 <ol type="1">
@@ -698,9 +454,9 @@ default_lr: 0.001
 <ul>
 <li><code>eq(x, y)</code> Resolver는 두 값을 비교하여 같으면 <code>True</code>, 다르면 <code>False</code>를 반환합니다. <code>${experiment.mode}</code> 값이 <code>"test"</code>인지 확인하는 역할을 합니다.</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">experiment</span><span class="kw">:</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="at">    </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"test"</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a><span class="at">    </span><span class="fu">is_test</span><span class="kw">:</span><span class="at"> ${eq:${experiment.mode}, "test"}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">experiment</span><span class="kw">:</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="at">    </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"test"</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="at">    </span><span class="fu">is_test</span><span class="kw">:</span><span class="at"> ${eq:${experiment.mode}, "test"}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><p>위 설정에서 <code>experiment.mode</code> 값이 <code>"test"</code>로 설정되어 있기 때문에, <code>${eq:${experiment.mode}, "test"}</code>는 <code>"test"</code>와 <code>"test"</code>를 비교하는 형태가 됩니다. <code>eq</code> 함수는 대소문자를 구분하지 않고 두 문자열이 같은지 확인하는 역할을 하므로, <code>"test"</code>는 <code>"test"</code>와 일치하여 <code>True</code>를 반환합니다. 따라서 <code>experiment.is_test</code>의 값은 <code>True</code>로 설정됩니다.</p></li>
 <li><p>반면, 만약 <code>experiment.mode</code> 값이 <code>"train"</code>이었다면, <code>${eq:${experiment.mode}, "test"}</code>는 <code>"train"</code>과 <code>"test"</code>를 비교하게 됩니다. 이 두 값은 서로 다르므로 <code>eq</code> 함수는 <code>False</code>를 반환하게 되고, 결과적으로 <code>experiment.is_test</code> 값은 <code>False</code>로 설정됩니다. 이를 통해 설정 값에 따라 특정 변수를 자동으로 조정할 수 있으며, 이를 활용하면 실험 모드에 따라 설정을 다르게 적용할 수 있습니다.</p></li>
@@ -709,8 +465,8 @@ default_lr: 0.001
 <ul>
 <li><code>if(condition, true_value, false_value)</code> Resolver는 <code>condition</code>이 <code>True</code>일 때 <code>true_value</code>를, <code>False</code>일 때 <code>false_value</code>를 반환합니다. <code>experiment.is_test</code> 값이 <code>True</code>인지 확인하여, 이에 따라 다른 값을 할당합니다.</li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">training</span><span class="kw">:</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="at">    </span><span class="fu">batch_size</span><span class="kw">:</span><span class="at"> ${if:${experiment.is_test}, 128, 32}</span><span class="co"> # 테스트 모드일 경우 128, 아니면 32</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">training</span><span class="kw">:</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="at">    </span><span class="fu">batch_size</span><span class="kw">:</span><span class="at"> ${if:${experiment.is_test}, 128, 32}</span><span class="co"> # 테스트 모드일 경우 128, 아니면 32</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><p><code>${if:${experiment.is_test}, 128, 32}</code> 구문을 살펴보면, <code>if</code> 함수는 첫 번째 인자로 주어진 조건이 <code>True</code>일 경우 두 번째 인자인 <code>128</code>을 반환하고, <code>False</code>일 경우 세 번째 인자인 <code>32</code>를 반환하는 역할을 합니다. 현재 <code>experiment.is_test</code>가 <code>True</code>이므로 <code>if(True, 128, 32)</code>는 <code>128</code>을 반환하고, 결과적으로 <code>training.batch_size</code> 값이 <code>128</code>이 됩니다.</p></li>
 <li><p>반면, 만약 <code>experiment.mode</code>가 <code>"train"</code> 등 다른 값으로 설정되어 있다면, <code>eq("train", "test")</code>의 결과는 <code>False</code>가 되어 <code>experiment.is_test</code>가 <code>False</code>로 설정됩니다. 이 경우, <code>if(False, 128, 32)</code>는 <code>False</code>에 해당하는 세 번째 값인 <code>32</code>를 반환하게 되며, <code>training.batch_size</code> 값이 <code>32</code>로 설정됩니다.</p></li>
@@ -721,17 +477,17 @@ default_lr: 0.001
 <li><code>resolve_default(default, arg)</code> Resolver는 <code>arg</code> 값이 <strong>비어 있거나 설정되지 않았을 경우</strong> <code>default</code> 값을 반환합니다.</li>
 <li><code>agent.learning_rate</code> 값이 존재하면 그대로 사용하고, 없다면 기본값 <code>0.001</code>을 사용합니다.</li>
 </ul>
-<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">agent</span><span class="kw">:</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="at">    </span><span class="fu">learning_rate</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.001</span><span class="co"> # experiment의 default_lr 기준값으로 설정</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="fu">experiment</span><span class="kw">:</span></span>
-<span id="cb44-4"><a href="#cb44-4"></a><span class="at">    </span><span class="fu">default_lr</span><span class="kw">:</span><span class="at"> ${resolve_default:0.001, ${agent.learning_rate}}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">agent</span><span class="kw">:</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="at">    </span><span class="fu">learning_rate</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.001</span><span class="co"> # experiment의 default_lr 기준값으로 설정</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">experiment</span><span class="kw">:</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="at">    </span><span class="fu">default_lr</span><span class="kw">:</span><span class="at"> ${resolve_default:0.001, ${agent.learning_rate}}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>이 방식은 설정 파일에서 특정 값이 누락되었을 때 기본값을 자동으로 적용하는 데 매우 유용합니다. 예를 들어, <code>learning_rate</code> 값을 실험마다 다르게 설정할 수 있도록 설정 파일에서 값을 명시적으로 지정할 수도 있지만, 실수로 빠뜨렸을 경우에도 <code>resolve_default</code>를 사용하면 안전하게 기본값을 사용할 수 있습니다. 이를 통해 설정을 더욱 견고하게 만들고, 코드의 예외 처리를 간결하게 할 수 있습니다.</li>
 </ul></li>
 <li><p><code>${contains:${experiment.mode}, "debug"}</code> → <code>experiment.mode</code>에 “debug”라는 글자가 포함되어 있는지 여부 확인</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">experiment</span><span class="kw">:</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"test"</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="fu">is_debug</span><span class="kw">:</span><span class="at"> ${contains:${experiment.mode}, "debug"}</span><span class="co">  # "debug" 포함 여부 확인</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">experiment</span><span class="kw">:</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"test"</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">is_debug</span><span class="kw">:</span><span class="at"> ${contains:${experiment.mode}, "debug"}</span><span class="co">  # "debug" 포함 여부 확인</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><code>experiment.mode</code> 값이 <code>"test"</code>라면 <code>"debug"</code>가 포함되지 않았으므로 <code>contains("test", "debug")</code>는 <code>False</code>를 반환합니다.</li>
 <li>만약 <code>experiment.mode</code> 값이 <code>"test_debug"</code>라면 <code>"debug"</code>라는 문자열이 포함되어 있으므로 <code>contains("test_debug", "debug")</code>는 <code>True</code>를 반환합니다.</li>
@@ -739,28 +495,10 @@ default_lr: 0.001
 </ul></li>
 </ol>
 <p>이러한 Resolver 기능을 활용하면 <strong>설정 파일을 더욱 동적으로 관리</strong>할 수 있습니다!</p>
-</section>
-</section>
-</section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
-<p>사실 이번 포스팅에서 Hydra에 대해 정리하게 된 계기는 참고하고 있는 많은 오픈소스 프로젝트들이 Hydra를 가지고 프로젝트를 관리하고 있기 때문에 코드를 이해하기 위해 포스팅을 작성하게 되었습니다. 많은 실험 변수들이 있는 ML/AI 프로젝트들에서 Config 관리는 필수적이며 Hydra라는 툴을 이용하여 편하게 Config들을 조정할 수 있음을 알 수 있었습니다. 대표적으로 Hydra를 가지고 실험 Config를 조정하는 몇가지 오픈 소스들을 소개하며 이번 포스팅을 마치겠습니다.</p>
-<ul>
-<li><a href="https://github.com/isaac-sim/IsaacGymEnvs">IsaacGymEnvs</a></li>
-<li><a href="https://github.com/facebookresearch/neuralfeels">neuralfeels</a></li>
-<li><a href="https://github.com/facebookresearch/sam2">sam2</a></li>
-</ul>
-</section>
-<section id="reference" class="level1">
-<h1>Reference</h1>
-<ul>
-<li><a href="https://github.com/facebookresearch/hydra">https://github.com/facebookresearch/hydra</a></li>
-<li><a href="https://omegaconf.readthedocs.io/">https://omegaconf.readthedocs.io/</a></li>
-<li><a href="https://hydra.cc/docs/tutorials/structured_config/intro/">https://hydra.cc/docs/tutorials/structured_config/intro/</a></li>
-<li><a href="https://www.sscardapane.it/tutorials/hydra-tutorial/">https://www.sscardapane.it/tutorials/hydra-tutorial/</a></li>
-</ul>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
