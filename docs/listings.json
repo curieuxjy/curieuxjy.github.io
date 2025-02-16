@@ -35,7 +35,6 @@
   {
     "listing": "/post.html",
     "items": [
-      "/posts/code/2025-02-16-hydra-handson.html",
       "/posts/code/2025-02-16-hydra.html",
       "/posts/code/2025-02-02-realsense-ros2.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
@@ -67,7 +66,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/code/2025-02-16-hydra-handson.html",
       "/posts/code/2025-02-16-hydra.html",
       "/posts/code/2025-02-02-realsense-ros2.html",
       "/posts/paper/2024-12-22-rotating-without-seeing.html",
