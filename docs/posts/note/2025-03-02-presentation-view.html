@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.55">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-03-02">
+<meta name="description" content="글또 2025 데이터/AI 엔지니어 반상회 발표 후기">
+
+<title>📘제목 미정 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#동기" id="toc-동기" class="nav-link active" data-scroll-target="#동기">동기</a></li>
+  <li><a href="#준비" id="toc-준비" class="nav-link" data-scroll-target="#준비">준비</a></li>
+  <li><a href="#반상회와-발표" id="toc-반상회와-발표" class="nav-link" data-scroll-target="#반상회와-발표">반상회와 발표</a></li>
+  <li><a href="#후기" id="toc-후기" class="nav-link" data-scroll-target="#후기">후기</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📘제목 미정</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">diary</div>
+    <div class="quarto-category">2025</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    글또 2025 데이터/AI 엔지니어 반상회 발표 후기
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 2, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>2025 데이터/AI 글또 반상회에서 <code>미완성 로보틱스 AI 엔지니어 이야기: Not Cool, Not Chic, Not Chill</code>이라는 제목으로 발표하게 된 일련의 이야기를 이번 포스팅에 남겨보려고 합니다.</p>
+<section id="동기" class="level1">
+<h1>동기</h1>
+<p>올해를 시작하면서, 으레 모두가 새해의 목표를 정하듯이, 저도 2025년에 도전해볼 무언가를 찾고 있었습니다. 나름 인생의 모토가 <code>Stop Wishing, Start Doing</code>인데 최근에는 도전하는 일들이 없다고 생각이 들었습니다. 그래서 아주 가끔씩 생기는 근거 없는 자신감과 용기를 얻어 <code>머릿속으로만 내가 바라는 걸 생각하지 말고 질러보자</code>라는 생각과 함께 도전 목록들을 생각하고 있었습니다. 마침 글또에서 반상회 발표자 모집을 하고 있었고, 이 기회가 나에게는 좋은 레벨업 스테이지가 될 수 있겠다는 생각이 들어서 바로 지원했습니다. (아직까지는) 글또가 10기가 마지막이라는 아쉬움도 있었고, 이제는 학교에서 벗어나 딱히 어디에서 앞으로 나와 발표할 기회가 없었기에 좋은 기회라는 생각이 들었습니다. 오랜만에 발표 실력도 일깨울겸 나의 이야기도 정리해볼겸 겸사겸사 저에게 주어진 몇 안되는 기회중에 하나라는 생각에 들뜬 마음으로 지원했던 것 같습니다.</p>
+<p>조금 더 솔직하게 발표 지원 동기를 이야기하자면, 저는 학교를 졸업하고 사회에서 일을 시작하면서 정체성에 대한 혼란을 많이 겪었습니다. 연구자라고 하기엔 애매하고, 엔지니어라고 부르기에도 어딘가 모호한. 로보틱스를 한다고 하기엔 부족하고, AI를 한다고 하기에도 어중간한. 회사에서도 저의 역할을 명확하게 정의하기 어려웠고, 모든 사회초년생이 그렇듯 제 실력과 역할에 대한 의구심까지 겹치면서 혼란스러운 시기를 보냈습니다. (솔직히 말하면, 지금도 그 혼란이 완전히 사라졌다고는 자신 있게 말하기 어렵습니다.) 그때 스스로가 정리되지 않아 답답할 때, 어떻게 해결해왔더라? 과거를 돌아보니, 다른 사람들에게 제 이야기를 꺼낼 때 오히려 말하면서 스스로 답을 찾아갔던 순간들이 떠올랐습니다. 그래서 반상회 발표도 마찬가지였습니다. <code>저를 잘 알지 못하고, 쉽게 판단하지 않을 사람들 앞에서 솔직하게 제 이야기를 풀어놓는다면, 답을 찾을 기회가 되지 않을까</code> 싶었습니다. 솔직히 고백하자면, 반상회 발표는 다른 사람들에게 도움을 주기 위한 목적보다는, 오히려 저 스스로를 끄집어내기 위한 하나의 도구였습니다.</p>
+</section>
+<section id="준비" class="level1">
+<h1>준비</h1>
+<p>야심찬 동기와 발 빠른 지원 태도와는 달리, 막상 준비를 시작하면서부터 많이 삐걱거리기 시작했습니다. 애초에 발표의 목적은 <code>내 이야기를 꺼내서 스스로 정체성을 확립해보자</code>는 것이었는데, 초안을 작성하고 구성을 고민하다 보니 한 가지 의문이 들었습니다. <code>사람들이 과연 내 이야기를 듣고 싶어할까?</code> 이 생각이 들자마자, 이야기를 꺼내는 것 자체가 망설여지기 시작했습니다. 이야기의 시작점을 어디로 잡아야 할지, 어디까지 이야기해야 할지, 이러다가 괜히 삼천포로 빠지는 건 아닌지, 스토리의 흐름이 이게 맞는 건지… 머릿속에서 콘텐츠들이 둥둥 떠다니며 정리가 되지 않았습니다. 마치 질서 없는 물 위에서 표류하는 기분이었습니다.</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/2.jpg" width="100%">
+</center>
+<p>1달 조금 넘게 남았고, 어차피 내 이야기를 하는 발표이니 별다른 자료조사가 필요 없을 거라 생각했습니다. 그래서 시간 문제는 없을 거라 판단했지만, 불행히도 머릿속에서만 방황하는 데 3주 이상을 써버렸습니다. 발표 리허설을 준비하기 직전까지도 발표의 골자를 계속 수정하며 고민했고, 정작 중요한 내용보다도 발표 제목이나 중간에 넣을 밈(meme) 같은 부수적인 요소에 신경 쓰느라 시간을 허비하기도 했습니다. 그 결과, 준비 시간을 제대로 활용하지 못한 채 시간을 흘려보내고 말았습니다.</p>
+<p>그러는 사이 어느덧 반상회 준비위 분들 앞에서 온라인 리허설을 할 시간이 다가왔고, 그제야 <code>이제 정말 정신 차려야 한다</code>는 생각이 들었습니다. 동시에, <code>아직 이렇게 준비도 안 됐는데, 대체 왜 발표 지원을 했을까…</code> 하는 후회도 밀려왔습니다. 결국 마음에 들지 않는 발표 자료를 꾸역꾸역 완성해 가며, 그때의 조급함과 혼란스러움을 온몸으로 느꼈던 기억이 납니다. 지금까지 수도 없이 발표를 해왔는데 이렇게까지 자신감이 없었던 적이 처음이었습니다.</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/images-20250302225844532.jpeg" width="20%">
+</center>
+<p>그럼에도 불구하고, 항상 위기를 기회로 만들어주는 글또 분들의 도움 덕분이었을까요. 저는 정말 복이 많은 사람인 것 같습니다. 늘 주변에 대단하고 따뜻한 분들이 계셨고, 이번에도 그 손길 덕분에 무너져가던 마음을 다잡을 수 있었습니다. 발표가 정리되지 않았고, 시간 체크도 한 번도 해보지 않은 상태였으니 리허설이 잘 나올 리 없었습니다. 그런데도 다들 진지하게 제 발표를 들어주시고, 어떤 부분을 개선하면 좋을지 함께 고민해 주셨습니다. 심지어 체크할 수 있는 지표까지 제안해 주시며 혼란스러웠던 제 멘탈을 붙잡아 주셨죠.</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/1.jpg" width="100%">
+</center>
+<p>사실 발표를 준비하면서 가장 망설였던 부분이 <code>과연 내 이야기를 듣고 싶어할까?</code>라는 의문이었습니다. 생각해보니 지금까지 발표들은 논문 설명이나 이론 설면, 연구 발표 등 정보 전달성이 큰 발표들이라 자료조사와 이해해서 자료를 준비하는게 힘들었지 내용을 구상하는게 힘들지 않았었습니다. 하지만 이번에는 내 이야기를 한다는 측면에서 애초에 발표의 컨텐츠 자체가 망설여지고 갈피가 잡혀지지 않으니 그 고민에 너무 오래 머물러 있었는데, (비록 격려 차원에서 배려의 말씀일 수도 있었겠지만) <code>이야기를 더 풀어줬으면 좋겠다</code>, <code>충분히 흥미롭다</code>는 피드백을 들으며, 마치 멈춰 있던 머릿속에 다시 재생 버튼이 눌리는 기분이었습니다. 게다가 중간중간 따뜻한 격려도 해주셔서, 자신감을 잃어가던 저에게 정말 큰 힘이 되었습니다.</p>
+<p>리허설을 마치고 나니 발표의 갈피가 조금씩 잡히기 시작했습니다. 제목도 수정하고, 발표의 방향도 다시 고민해보면서 <code>내 이야기를 편하게 풀어가되, 로보틱스 AI 엔지니어라는 아이덴티티를 내가 만들어가고 싶은 것이니, 이 부분을 좀 더 집중해서 소개해보자</code>는 생각이 들었습니다. 그래서 발표 구성을 다시 정리했습니다. 내 개인적인 이야기는 후반부에 배치하되, 조금 더 사람 냄새가 나는 이야기들을 첨가하기로 했습니다. 그리고 발표 초반에는 로보틱스 AI 엔지니어라는 개념이 생소한 사람들에게 도움이 될 만한, 초심자를 위한 정보성 내용을 담기로 했습니다. 이렇게 발표의 큰 틀을 정리하고 나니, 그때부터는 발표 자료를 다듬는 시간이 더 이상 괴롭지 않았습니다. 오히려 열정을 불태우며 즐겁게 준비할 수 있었던, 정말 시간이 지나가는 지도 모르게 재밌는 시간이었습니다.</p>
+<p>(덧. 사실 회사에서 우연히 한 동료분께서 저에게 로보틱스 개념에 대한 질문을 던지셨는데, 그 질문에 대한 답을 정리하면서 발표 자료를 다듬는 데 큰 도움이 되었습니다. 실명을 거론할 순 없지만, 항상 우연하게도 도움을 주시는 분들이 주변에 있다는 게 감사할 따름입니다. 그 마음을 담아 이곳에 간략히 남겨봅니다.)</p>
+</section>
+<section id="반상회와-발표" class="level1">
+<h1>반상회와 발표</h1>
+<p>드디어 데이터/AI 엔지니어 반상회 당일이 되었습니다. 퇴근을 하며 설렘 반, 두려움 반의 마음으로 행사장으로 향했습니다. 혹시 미리 준비할 게 있을까 싶어 일찍 도착했고, 긴장을 풀 겸 스스로에게 응원의 의미로 블루보틀에서 비싼 따뜻한 라떼를 한 잔 시켰습니다. 머릿속으로 발표 내용을 되새기며 마음을 다잡은 채, 천천히 발표장으로 들어섰습니다. 그때, 글또 반상회 준비위 분들이 마련해주신 타로 초콜릿을 받았는데, 그 안에 <code>시킨 대로 한다면</code>이라는 메시지가 적혀 있었습니다. 그걸 보는 순간, “그래… 준비한 대로만 하면 된다.” 그렇게 되뇌며 마음을 다잡았던 것 같습니다.</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/7.jpg" width="100%">
+</center>
+<p>발표 시간은 생각보다 떨지 않고, 오히려 편하게 이야기할 수 있었습니다. 그리고 후에 알게된 사실이지만 시간도 딱 맞춰서 발표해서 정말 다행이다라고 생각했습니다. 아마도 청중이 글또 분들이었기 때문에 자연스럽게 편안함을 느꼈던 것 같습니다. 준비하는 동안 함께해주셨던 분들, 글또에서 만나뵈었던 분들, 익숙한 얼굴들이 발표장 곳곳에서 보여서 더욱 안심이 되었던 것 같습니다. 혹시 이 포스팅을 보시면서 제 발표자료가 궁금하신 분들은 <a href="https://www.canva.com/design/DAGdT6pmVGo/Dmo5AlWPao-LQtw25tSD4g/view?utm_content=DAGdT6pmVGo&amp;utm_campaign=designshare&amp;utm_medium=link2&amp;utm_source=uniquelinks&amp;utlId=he17e0127ff">여기</a>에서 발표 자료들을 확인하실 수 있습니다. :)</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/3.jpg" width="100%">
+</center>
+<p>그렇게 발표를 마치고 나서는, 반상회의 다양한 이벤트들을 마음껏 즐길 수 있었습니다. 그룹 커피챗을 비롯한 여러 프로그램들이 정말 재미있었고, 저뿐만 아니라 멋진 사이드 프로젝트를 공유해주신 장회정님의 발표도 (제 발표가 끝났다는 안도감 덕분에 더욱 편하게) 흥미롭게 들을 수 있었습니다. 또한 8조 그룹에서 만난 모든 분들과 웃으며 편하게 이야기를 나누며, 정말 즐거운 시간을 보낼 수 있었습니다. 그렇게 글또 10기 데이터/AI 반상회는 저에게 또 하나의 잊지 못할 하루로 남게 되었습니다.</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/4.jpg" width="100%">
+</center>
+</section>
+<section id="후기" class="level1">
+<h1>후기</h1>
+<p>본격적인 후기를 시작하기 전에, 반상회 후 설문지에 남겨주신 글또 분들의 따뜻한 발표 후기를 먼저 공유하려 합니다. 이 감사한 글들을 올려두고, 앞으로도 두고두고 꺼내 보며 힘을 얻으려 합니다.(참고로, 중간에 제가 저 스스로에게 쓴 코멘트가 이스터에그처럼 숨어 있으니, 한번 찾아보시는 것도…! 😉) 실제로 발표에서 이야기했던 것처럼, 로보틱스에서 활용하는 AI에 대해 잘 모르셨던 분들이 흥미와 관심을 가지게 되었다는 점에서 무척 뿌듯했습니다. 그리고 사실, 이번 발표의 또 다른 목표였던 <strong>제 스스로의 정체성을 좀 더 다지는 것</strong>도 이루었다는 생각이 들어 더욱 의미 있는 시간이었습니다.</p>
+<center>
+<img src="../../images/2025-03-02-presentation-view/5.jpg" width="100%"> <img src="../../images/2025-03-02-presentation-view/6.jpg" width="100%">
+</center>
+<p>글또를 7기부터 <a href="https://curieuxjy.github.io/posts/note/2022-05-06-geultto-7th-start.html">시작</a>하면서 지금까지 글또라는 커뮤니티에서 활동하며 저는 개인적으로 가장 많은 특혜를 받은 사람이라고 생각합니다. 글또 지속 기간으로 따져도 가장 오래한 것도 아니고, 가장 글을 많이 썼는가?의 기준으로 보아도 한번도 빠뜨리지 않고 작성한 사람도 아니지만, 저 스스로 글을 쓰며 성장해온 자신이 가장 자랑스럽기 때문에 가장 많은 특혜를 받았다고 생각합니다. 어쩌면 <code>가장 많은</code> 이라는 수식어의 비교 대상은 글또의 다른 분들이 아닌 글또가 아닌 다른 기회 등으로 성장한 무엇보다 가장 나를 다져준 도구가 글또라는 반증이라서, 비교 대상은 내가 나를 끌어올린 성장의 도구들 중 글또가 가장이라고 볼 수 있을 것 같아요.</p>
+<p>이렇게 또 하나의 도전을 실행했고, 다행히도 좋은 경험으로 남아 앞으로도 큰 자양분이 될 것 같아 뿌듯합니다. 혹시라도 나중에 글또 반상회가 다시 열리고, 발표를 망설이는 글또 분들이 계신다면, 이 글을 보고 용기를 얻으셨으면 좋겠습니다. “이렇게 준비가 안 되어 있던 사람도 충분히 성장할 기회로 삼아 발표를 지원했고, 결국 잘 마무리할 수 있었구나.” 그렇게 보면서, 저처럼 한 걸음 내딛는 계기가 되기를 바랍니다. 그리고 정말 마지막으로, 수고한 나에게 박수를👏👏👏</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

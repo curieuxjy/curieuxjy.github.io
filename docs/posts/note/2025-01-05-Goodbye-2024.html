@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2025-01-05">
 <meta name="description" content="체감상 3배 압축된 시간을 보냈던 2024 회고">
 
-<title>Curieux.JY - 📘Goodbye 2024</title>
+<title>📘Goodbye 2024 – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -96,7 +96,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -120,7 +120,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -221,7 +221,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="월-3" class="level2">
 <h2 class="anchored" data-anchor-id="월-3">4월</h2>
 <p>4월은 회사에서 워크샵을 다녀왔었고 생각보다 대학교 MT같은 분위기에 재밌게 즐길 수 있었던 것 같습니다. 사실 첫 회사가 대학원 같은 성격이었어서 마치 대학원을 다시 입학한 느낌이긴 했습니다. 그래도 회사이기에 내가 어떻게 기여할 수 있고 어떻게 평가받을 것인지 계속 긴장했던 것 같습니다.</p>
-<p>또한 4월애 20년 이상 알고지낸 친한 언니의 결혼식이 있었는데 정말 감회가 새로웠습니다. 4-5살때부터 알고지내온 언니의 결혼식을 마주하고 나니 저도 벌써 그런 나이가 되었구나 새삼 깨달았고, 지금까지 학교생활만 해온 나에게 이후 삶에 대한 진지한 고민도 하게된 날이었습니다. 졸업하고 직장까지 가지게 되었으니 마치 결혼이 다음 숙제인 것 같은 느낌.. 그리고 나는 그런 인생의 동반자를 만날 수 있을까.. 이런 저런 고민들이 머리속에 떠올랐던 것 같습니다. 각설하고, 언니의 결혼식에서는 진심으로 축하와 행복을 기도했습니다.</p>
+<p>또한 4월에 20년 이상 알고지낸 친한 언니의 결혼식이 있었는데 정말 감회가 새로웠습니다. 4-5살때부터 알고지내온 언니의 결혼식을 마주하고 나니 저도 벌써 그런 나이가 되었구나 새삼 깨달았고, 지금까지 학교생활만 해온 나에게 이후 삶에 대한 진지한 고민도 하게된 날이었습니다. 졸업하고 직장까지 가지게 되었으니 마치 결혼이 다음 숙제인 것 같은 느낌.. 그리고 나는 그런 인생의 동반자를 만날 수 있을까.. 이런 저런 고민들이 머리속에 떠올랐던 것 같습니다. 각설하고, 언니의 결혼식에서는 진심으로 축하와 행복을 기도했습니다.</p>
 </section>
 <section id="월-4" class="level2">
 <h2 class="anchored" data-anchor-id="월-4">5월</h2>
@@ -464,18 +464,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -507,7 +496,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -515,7 +526,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
