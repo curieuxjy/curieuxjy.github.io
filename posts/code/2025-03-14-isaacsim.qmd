@@ -10,7 +10,7 @@ execute:
 image: https://mamba.readthedocs.io/en/latest/_static/logo.png
 ---
 
-이전에 정리한 Orbit은 작별 인사를 하고, 새로운 IsaacSim과 IsaacLab을 맞이해봅시다.
+이전에 정리한 [Orbit]()은 작별 인사를 하고, 새로운 IsaacSim과 IsaacLab을 맞이해봅시다.
 
 # Reference
 - https://isaac-sim.github.io/IsaacLab/main/source/setup/ecosystem.html
