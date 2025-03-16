@@ -1,16 +1,13 @@
 ---
-title: "👩‍💻IsaacSim Installation"
+title: "👩‍💻IsaacSim과 IsaacLab 알아보기"
 toc: true
-date: "2025-03-16"
-description: IsaacSim 4.5.0
-categories: [isaacsim, code]
+date: "2025-03-14"
+description: IsaacSim 4.5.0 & IsaacLab
+categories: [isaacsim, isaaclab, code]
 execute:
   freeze: auto
 image: https://isaac-sim.github.io/IsaacLab/main/_images/isaaclab.jpg
 ---
-
-
-
 
 
 이번 포스팅에서는 대표적인 로봇 시뮬레이터 중 하나인 IsaacSim에 대해서 알아보고 이를 Local에 설치하는 과정을 진행해보겠습니다. 
