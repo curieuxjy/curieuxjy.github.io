@@ -10,11 +10,11 @@ image: https://isaac-sim.github.io/IsaacLab/main/_images/isaaclab.jpg
 ---
 
 
-이번 포스팅에서는 대표적인 로봇 시뮬레이터 중 하나인 IsaacSim에 대해서 알아보고 이를 Local에 설치하는 과정을 진행해보겠습니다. 
+이번 포스팅에서는 대표적인 로봇 시뮬레이터 중 하나인 IsaacSim(IsaacLab)에 대해서 알아보고, 이를 Local에 설치하는 과정을 진행해보겠습니다. 
 
 <center>
 <img src="https://isaac-sim.github.io/IsaacLab/main/_images/isaaclab.jpg" width="67%" />
-    <figcaption>H1 Humanoid example using Isaac Lab</figcaption>
+    <figcaption>H1 Humanoid example using Isaac Lab(Built on Isaac Sim)</figcaption>
 </center>
 
 # 어떤 로봇 시뮬레이터를 선택해야 할까?
