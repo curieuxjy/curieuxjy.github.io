@@ -1,6 +1,7 @@
 ---
 title: "👩‍💻IsaacSim과 IsaacLab 알아보기"
 toc: true
+number-sections: true
 date: "2025-03-14"
 description: IsaacSim 4.5.0 & IsaacLab
 categories: [isaacsim, isaaclab, code]
@@ -19,7 +20,7 @@ image: https://isaac-sim.github.io/IsaacLab/main/_images/isaaclab.jpg
 
 # 어떤 로봇 시뮬레이터를 선택해야 할까?
 
-로봇 시뮬레이션을 위한 소프트웨어는 매우 다양하며, 각 시뮬레이터는 특정한 목적과 활용 사례에 맞춰 발전해 왔습니다. 가장 오랫동안 사용되어 온 [Gazebo](https://gazebosim.org/home)를 비롯해, 특정 로봇 task 개발에 적합한 [PyBullet](https://pybullet.org/wordpress/), [MuJoCo](https://mujoco.org/), 그리고 Google에서 개발한 초고속 GPU 기반 시뮬레이터 [Brax](https://github.com/google/brax) 등 다양한 시뮬레이터들이 있습니다. 더 많은 로봇 시뮬레이터에 대한 정보를 알고 싶으시다면 [Simulately Wiki](https://simulately.wiki/)를 한번 살펴보시는 것도 좋습니다.
+로봇 시뮬레이션을 위한 소프트웨어는 매우 다양하며, 각 시뮬레이터는 특정한 목적과 활용 사례에 맞춰 발전해 왔습니다. 가장 오랫동안 사용되어 온 [Gazebo](https://gazebosim.org/home)를 비롯해, 특정 로봇 task 개발에 적합한 [PyBullet](https://pybullet.org/wordpress/), [MuJoCo](https://mujoco.org/), 그리고 Google에서 개발한 초고속 GPU 기반 시뮬레이터 [Brax](https://github.com/google/brax) 등 다양한 시뮬레이터들이 있습니다. 더 많은 로봇 시뮬레이터에 대한 정보를 알고 싶으시다면 [Simulately Wiki](https://simulately.wiki/docs/category/general-simulators/)를 한번 살펴보시는 것도 좋습니다.
 
 그렇다면 어떤 시뮬레이터를 선택해야 할까요? 아래 표에서 볼 수 있듯이, **사용하는 물리 엔진**, **ROS2와의 연동 가능 여부**, **AI/ML 프레임워크와의 통합 용이성** 등에 따라 선택 기준이 달라집니다. 예를 들어, Gazebo는 ROS(로봇 운영 체제)와의 연동이 강력한 반면, MuJoCo나 PyBullet은 강화 학습 및 AI 기반 로봇 학습에 더 적합한 환경을 제공합니다. 로봇 연구와 개발을 위해서는 **목표하는 작업(Task)에 적합한 시뮬레이터를 선택하는 것이 핵심**입니다. 
 
@@ -45,7 +46,6 @@ Isaac Sim을 처음 접하시는 분들 중에는 연구 논문에서 더 자주
 
 <center>
 <img src="../../images/2025-03-14-isaacsim/2.jpg" width="100%" />
-    <figcaption>Isaac Sim VS. IsaacGym</figcaption>
 </center>
 
 **1. Isaac Gym: 강화 학습을 위한 고성능 GPU 시뮬레이터**
@@ -144,7 +144,7 @@ Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 �
 학습을 위한 다양한 환경을 자동으로 생성할 수 있도록 프로시저럴(Procedural) 방식의 지형 생성 기능을 지원합니다.
 이는 로봇이 다양한 지형을 학습하는 데 유용하며, 일반화 성능 향상에 기여합니다.
 
-**🔹 인간 시연 데이터 수집 기능**
+**🔹 사람 시연 데이터 수집 기능**
 
 시연을 통한 학습(LfD: Learning from Demonstration)을 위한 데이터 수집 기능을 포함하여, 사람 시연 데이터 기반의 강화 학습 및 행동 복제(Behavior Cloning)가 가능합니다. 이는 단순한 RL을 넘어, 보다 효율적인 학습 방법론을 연구하는 데 유용합니다.
 
@@ -164,6 +164,11 @@ Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 �
 
 **📌 설치 전 요구 사항**  
 
+<center>
+<img src="../../images/2025-03-14-isaacsim/4.jpg" width="100%" />
+    <figcaption>설치 요구 사항들</figcaption>
+</center>
+
 **💻 최소 요구 사양**  
 
 - **운영체제**: Ubuntu 20.04 이상  
@@ -172,9 +177,6 @@ Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 �
 - **VRAM**: 최소 8GB (12GB 이상 권장)  
 - **RAM**: 최소 16GB (32GB 이상 권장)  
 - **디스크 공간**: 최소 100GB 이상의 여유 공간  
-
-👉 **Isaac Sim은 고성능 GPU를 요구하며, 내장 그래픽 카드로는 실행이 어렵습니다.**  
-👉 **최신 NVIDIA 드라이버가 설치되어 있어야 합니다.**  
 
 ---
 
@@ -226,8 +228,7 @@ cd ~/isaacsim
 ./isaac-sim.sh
 ```
 
-👉 **최초 실행 시 셰이더 캐시 로딩(Warmup)이 필요할 수 있습니다.**  
-👉 이 경우, 아래 명령어를 실행하여 셰이더 캐시를 미리 로드합니다.  
+👉 **최초 실행 시 셰이더 캐시 로딩(Warmup)이 필요할 수 있습니다.** 이 경우, 아래 명령어를 실행하여 셰이더 캐시를 미리 로드합니다.
 ```bash
 ./isaac-sim.sh --warmup
 ```
@@ -375,5 +376,7 @@ Isaac Sim을 활용하면 **고품질 그래픽, 물리 엔진 최적화, ROS/�
 # Reference
 
 - [Simulately Wiki](https://simulately.wiki/docs/category/general-simulators/)
+- [A Systematic Comparison of Simulation Software for Robotic Arm Manipulation using ROS2](https://arxiv.org/abs/2204.06433)
 - [IsaacSim Ecosystem](https://isaac-sim.github.io/IsaacLab/main/source/setup/ecosystem.html)
 - [IsaacSim Installation](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/pip_installation.html)
+- [IsaacLab Local Installation](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html)
