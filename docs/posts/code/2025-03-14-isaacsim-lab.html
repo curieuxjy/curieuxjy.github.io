@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2025-03-14">
 <meta name="description" content="IsaacSim 4.5.0 &amp; IsaacLab">
 
-<title>👩‍💻IsaacSim과 IsaacLab 알아보기 – Curieux.JY</title>
+<title>Curieux.JY - 👩‍💻IsaacSim과 IsaacLab 알아보기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -72,11 +72,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -130,7 +130,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -154,7 +154,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -176,13 +176,27 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#isaac-lab" id="toc-isaac-lab" class="nav-link" data-scroll-target="#isaac-lab"><span class="header-section-number">3</span> Isaac Lab</a>
   <ul class="collapse">
-  <li><a href="#isaac-lab의-핵심-특징" id="toc-isaac-lab의-핵심-특징" class="nav-link" data-scroll-target="#isaac-lab의-핵심-특징"><span class="header-section-number">3.0.1</span> <strong>Isaac Lab의 핵심 특징</strong></a></li>
-  <li><a href="#isaac-lab에서-새롭게-추가된-기능" id="toc-isaac-lab에서-새롭게-추가된-기능" class="nav-link" data-scroll-target="#isaac-lab에서-새롭게-추가된-기능"><span class="header-section-number">3.0.2</span> <strong>Isaac Lab에서 새롭게 추가된 기능</strong></a></li>
+  <li><a href="#isaac-lab의-핵심-특징" id="toc-isaac-lab의-핵심-특징" class="nav-link" data-scroll-target="#isaac-lab의-핵심-특징"><span class="header-section-number">3.1</span> Isaac Lab의 핵심 특징</a></li>
+  <li><a href="#isaac-lab에서-새롭게-추가된-기능" id="toc-isaac-lab에서-새롭게-추가된-기능" class="nav-link" data-scroll-target="#isaac-lab에서-새롭게-추가된-기능"><span class="header-section-number">3.2</span> Isaac Lab에서 새롭게 추가된 기능</a></li>
   </ul></li>
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="header-section-number">4</span> <strong>Installation</strong></a>
   <ul class="collapse">
-  <li><a href="#isaac-sim-설치" id="toc-isaac-sim-설치" class="nav-link" data-scroll-target="#isaac-sim-설치"><span class="header-section-number">4.1</span> <strong>Isaac Sim 설치</strong></a></li>
-  <li><a href="#isaac-lab-설치" id="toc-isaac-lab-설치" class="nav-link" data-scroll-target="#isaac-lab-설치"><span class="header-section-number">4.2</span> <strong>Isaac Lab 설치</strong></a></li>
+  <li><a href="#isaac-sim-설치" id="toc-isaac-sim-설치" class="nav-link" data-scroll-target="#isaac-sim-설치"><span class="header-section-number">4.1</span> <strong>Isaac Sim 설치</strong></a>
+  <ul class="collapse">
+  <li><a href="#시스템-사양-확인-isaac-sim-compatibility-checker" id="toc-시스템-사양-확인-isaac-sim-compatibility-checker" class="nav-link" data-scroll-target="#시스템-사양-확인-isaac-sim-compatibility-checker"><span class="header-section-number">4.1.1</span> 시스템 사양 확인: Isaac Sim Compatibility Checker</a></li>
+  <li><a href="#isaac-sim-설치-standalone-방식" id="toc-isaac-sim-설치-standalone-방식" class="nav-link" data-scroll-target="#isaac-sim-설치-standalone-방식"><span class="header-section-number">4.1.2</span> Isaac Sim 설치 (Standalone 방식)</a></li>
+  <li><a href="#isaac-sim-실행하기" id="toc-isaac-sim-실행하기" class="nav-link" data-scroll-target="#isaac-sim-실행하기"><span class="header-section-number">4.1.3</span> Isaac Sim 실행하기</a></li>
+  </ul></li>
+  <li><a href="#isaac-lab-설치" id="toc-isaac-lab-설치" class="nav-link" data-scroll-target="#isaac-lab-설치"><span class="header-section-number">4.2</span> Isaac Lab 설치</a>
+  <ul class="collapse">
+  <li><a href="#설치-전-요구-사항-확인" id="toc-설치-전-요구-사항-확인" class="nav-link" data-scroll-target="#설치-전-요구-사항-확인"><span class="header-section-number">4.2.1</span> 설치 전 요구 사항 확인</a></li>
+  <li><a href="#conda-가상환경-설정" id="toc-conda-가상환경-설정" class="nav-link" data-scroll-target="#conda-가상환경-설정"><span class="header-section-number">4.2.2</span> Conda 가상환경 설정</a></li>
+  <li><a href="#pytorch-설치-cuda-버전에-맞게-선택" id="toc-pytorch-설치-cuda-버전에-맞게-선택" class="nav-link" data-scroll-target="#pytorch-설치-cuda-버전에-맞게-선택"><span class="header-section-number">4.2.3</span> PyTorch 설치 (CUDA 버전에 맞게 선택)</a></li>
+  <li><a href="#isaac-sim-pip-설치" id="toc-isaac-sim-pip-설치" class="nav-link" data-scroll-target="#isaac-sim-pip-설치"><span class="header-section-number">4.2.4</span> Isaac Sim pip 설치</a></li>
+  <li><a href="#isaac-lab-클론-소스-코드-다운로드" id="toc-isaac-lab-클론-소스-코드-다운로드" class="nav-link" data-scroll-target="#isaac-lab-클론-소스-코드-다운로드"><span class="header-section-number">4.2.5</span> Isaac Lab 클론 (소스 코드 다운로드)</a></li>
+  <li><a href="#의존성-패키지-설치" id="toc-의존성-패키지-설치" class="nav-link" data-scroll-target="#의존성-패키지-설치"><span class="header-section-number">4.2.6</span> 의존성 패키지 설치</a></li>
+  <li><a href="#isaac-lab-실행-확인" id="toc-isaac-lab-실행-확인" class="nav-link" data-scroll-target="#isaac-lab-실행-확인"><span class="header-section-number">4.2.7</span> Isaac Lab 실행 확인</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">6</span> Reference</a></li>
@@ -271,7 +285,7 @@ H1 Humanoid example using Isaac Lab(Built on Isaac Sim)
 <p>또한, <strong>도메인 랜덤화(Domain Randomization)와 합성 데이터 생성 기능</strong>을 활용하여, <strong>Sim2Real</strong> 연구에도 매우 유용합니다. 이러한 기능들은 실제 로봇이 직면할 다양한 환경 변화에 대해 강건한 학습이 가능하도록 도와줍니다.</p>
 <p>Isaac Sim의 또 다른 강점은 <strong>클라우드 기반 실행이 가능하다는 점</strong>입니다. NVIDIA의 <strong>Isaac Automator</strong>를 사용하면, 물리적으로 높은 사양의 GPU를 갖춘 장비가 없더라도, 클라우드에서 Isaac Sim을 실행하여 대규모 시뮬레이션을 수행할 수 있습니다.</p>
 <p><strong>Isaac Gym과 Isaac Sim, 어떤 것을 선택해야 할까?</strong></p>
-<table class="caption-top table">
+<table class="table">
 <thead>
 <tr class="header">
 <th>비교 항목</th>
@@ -347,16 +361,18 @@ H1 Humanoid example using Isaac Lab(Built on Isaac Sim)
 Isaac Sim Ecosystem
 </figcaption>
 </center>
-<section id="isaac-lab의-핵심-특징" class="level3" data-number="3.0.1">
-<h3 data-number="3.0.1" class="anchored" data-anchor-id="isaac-lab의-핵심-특징"><span class="header-section-number">3.0.1</span> <strong>Isaac Lab의 핵심 특징</strong></h3>
+<section id="isaac-lab의-핵심-특징" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="isaac-lab의-핵심-특징"><span class="header-section-number">3.1</span> Isaac Lab의 핵심 특징</h2>
 <p>Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 등 다양한 로봇 연구 워크플로우를 단순화하는 것을 목표로 합니다. 이를 위해 모듈형(modular) 구조를 갖추고 있으며, 연구자가 손쉽게 환경을 변경하거나 새로운 태스크를 추가할 수 있도록 확장성을 고려하여 설계되었습니다.</p>
 <p>✔️ Isaac Lab이 기존 프레임워크와 다른 점</p>
-<p>✅ 사전 구축된 환경 &amp; 태스크 제공 → 바로 사용할 수 있는 샘플 환경 포함</p>
-<p>✅ 맞춤형 커스텀 환경 개발 지원 → 사용자가 직접 환경을 설계하고 실험 가능</p>
-<p>✅ 강화 학습 &amp; 모션 플래닝 최적화 → 다양한 학습 방법 적용 가능</p>
+<ul>
+<li>사전 구축된 환경 &amp; 태스크 제공 → 바로 사용할 수 있는 샘플 환경 포함</li>
+<li>맞춤형 커스텀 환경 개발 지원 → 사용자가 직접 환경을 설계하고 실험 가능</li>
+<li>강화 학습 &amp; 모션 플래닝 최적화 → 다양한 학습 방법 적용 가능</li>
+</ul>
 </section>
-<section id="isaac-lab에서-새롭게-추가된-기능" class="level3" data-number="3.0.2">
-<h3 data-number="3.0.2" class="anchored" data-anchor-id="isaac-lab에서-새롭게-추가된-기능"><span class="header-section-number">3.0.2</span> <strong>Isaac Lab에서 새롭게 추가된 기능</strong></h3>
+<section id="isaac-lab에서-새롭게-추가된-기능" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="isaac-lab에서-새롭게-추가된-기능"><span class="header-section-number">3.2</span> Isaac Lab에서 새롭게 추가된 기능</h2>
 <p>뿐만 아니라, Isaac Sim의 모든 기능을 계승하면서도, 로봇 학습 연구를 위한 새로운 기능들이 추가되었습니다.</p>
 <p><strong>🔹 구동기(Actuator) 동역학 시뮬레이션</strong></p>
 <p>기존 IsaacGymEnvs에서는 단순한 힘 기반 제어가 주로 사용되었지만, Isaac Lab에서는 모터와 액추에이터의 동역학을 보다 정교하게 반영할 수 있습니다. 이는 실제 로봇의 제어 방식과 더욱 유사한 시뮬레이션을 가능하게 합니다.</p>
@@ -375,7 +391,8 @@ Isaac Sim Ecosystem
 <h2 data-number="4.1" class="anchored" data-anchor-id="isaac-sim-설치"><span class="header-section-number">4.1</span> <strong>Isaac Sim 설치</strong></h2>
 <p><a href="https://developer.nvidia.com/isaac/sim">Isaac Sim</a>은 <code>4.5.0</code> 버전으로 업데이트되면서 설치 과정이 더욱 간편해졌습니다.<br>
 하지만, <strong>시뮬레이터를 실행하기 위해서는 고성능 그래픽 카드 및 특정 요구 사항을 충족해야 합니다.</strong></p>
-<p><strong>📌 설치 전 요구 사항</strong></p>
+<section id="시스템-사양-확인-isaac-sim-compatibility-checker" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="시스템-사양-확인-isaac-sim-compatibility-checker"><span class="header-section-number">4.1.1</span> 시스템 사양 확인: Isaac Sim Compatibility Checker</h3>
 <center>
 <img src="../../images/2025-03-14-isaacsim/4.jpg" width="100%">
 <figcaption>
@@ -396,14 +413,13 @@ Isaac Sim Ecosystem
 </li>
 <li><strong>디스크 공간</strong>: 최소 100GB 이상의 여유 공간</li>
 </ul>
-<hr>
-<p><strong>📌 시스템 사양 확인: Isaac Sim Compatibility Checker</strong></p>
 <p>Isaac Sim을 실행할 수 있는지 자동으로 점검할 수 있도록 <strong>Isaac Sim Compatibility Checker</strong> 도구를 제공합니다. 이 도구를 먼저 실행하여 시스템이 적합한지 확인한 후, 설치를 진행하는 것을 추천합니다.</p>
-<p>✅ <strong>설치 및 실행 방법</strong><br>
-1. <a href="https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html#isaac-sim-compatibility-checker">Isaac Sim Compatibility Checker 다운로드</a> 2. 압축을 풀어 원하는 폴더에 저장 및 아래 명령어로 실행</p>
-<pre><code>```bash
-./omni.isaac.sim.compatibility_check.sh
-```</code></pre>
+<p>✅ <strong>설치 및 실행 방법</strong></p>
+<ol type="1">
+<li><a href="https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html#isaac-sim-compatibility-checker">Isaac Sim Compatibility Checker 다운로드</a></li>
+<li>압축을 풀어 원하는 폴더에 저장 및 아래 명령어로 실행</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./omni.isaac.sim.compatibility_check.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>검사 결과 확인 (색상 코드 안내)
 <ul>
@@ -417,72 +433,80 @@ Isaac Sim Ecosystem
 </ul></li>
 </ol>
 <hr>
-<p><strong>📌 Isaac Sim 설치 (Standalone 방식)</strong></p>
+</section>
+<section id="isaac-sim-설치-standalone-방식" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="isaac-sim-설치-standalone-방식"><span class="header-section-number">4.1.2</span> Isaac Sim 설치 (Standalone 방식)</h3>
 <p>Isaac Sim은 <strong>Omniverse Launcher 없이 독립 실행형(Standalone) 패키지로 다운로드하여 설치</strong>해야 합니다.</p>
 <p>✅ <strong>설치 방법</strong><br>
 1. <a href="https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/download.html#">Isaac Sim 다운로드 페이지</a>에서 최신 릴리스 다운로드<br>
 2. 아래 명령어를 실행하여 설치</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">mkdir</span> ~/isaacsim</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="bu">cd</span> ~/Downloads</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">unzip</span> <span class="st">"isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip"</span> <span class="at">-d</span> ~/isaacsim</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="bu">cd</span> ~/isaacsim</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="ex">./post_install.sh</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="ex">./isaac-sim.selector.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/isaacsim</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> <span class="st">"isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip"</span> <span class="at">-d</span> ~/isaacsim</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/isaacsim</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./post_install.sh</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./isaac-sim.selector.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>설치 후, <strong>Isaac Sim App Selector</strong>가 실행되며 실행 모드를 선택 가능</li>
 </ol>
 <hr>
-<p><strong>📌 Isaac Sim 실행하기</strong></p>
+</section>
+<section id="isaac-sim-실행하기" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="isaac-sim-실행하기"><span class="header-section-number">4.1.3</span> Isaac Sim 실행하기</h3>
 <p>설치 후 실행하려면, 아래 명령어를 사용합니다.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">./isaac-sim.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./isaac-sim.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>👉 <strong>최초 실행 시 셰이더 캐시 로딩(Warmup)이 필요할 수 있습니다.</strong> 이 경우, 아래 명령어를 실행하여 셰이더 캐시를 미리 로드합니다.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">./isaac-sim.sh</span> <span class="at">--warmup</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./isaac-sim.sh</span> <span class="at">--warmup</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="isaac-lab-설치" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="isaac-lab-설치"><span class="header-section-number">4.2</span> <strong>Isaac Lab 설치</strong></h2>
+<h2 data-number="4.2" class="anchored" data-anchor-id="isaac-lab-설치"><span class="header-section-number">4.2</span> Isaac Lab 설치</h2>
 <p>Isaac Lab은 <strong>Isaac Sim이 설치된 환경에서 동작</strong>하므로, 먼저 Isaac Sim을 설치한 후 진행해야 합니다. Isaac Sim을 <strong>pip 환경에서 사용하기 위해 추가적인 설치 과정이 필요</strong>합니다.</p>
-<p><strong>📌 설치 전 요구 사항 확인</strong></p>
+<section id="설치-전-요구-사항-확인" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="설치-전-요구-사항-확인"><span class="header-section-number">4.2.1</span> 설치 전 요구 사항 확인</h3>
 <p>✅ <strong>GLIBC 버전 확인 (Ubuntu 20.04에서는 추가 조치 필요)</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ldd</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ldd</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>👉 <strong>GLIBC 2.34 이상이 필요합니다. Ubuntu 20.04 기본 버전(2.31)과 호환되지 않을 수 있으므로 확인이 필요합니다.</strong></p>
-<hr>
-<p><strong>📌 Conda 가상환경 설정</strong></p>
+</section>
+<section id="conda-가상환경-설정" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="conda-가상환경-설정"><span class="header-section-number">4.2.2</span> Conda 가상환경 설정</h3>
 <p>Isaac Sim을 활용하기 위해 <strong>Python 3.10 환경을 갖춘 가상 환경을 생성</strong>합니다.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">conda</span> create <span class="at">-n</span> env_isaaclab python=3.10</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">conda</span> activate env_isaaclab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-<p><strong>📌 PyTorch 설치 (CUDA 버전에 맞게 선택)</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> env_isaaclab python=3.10</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate env_isaaclab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pytorch-설치-cuda-버전에-맞게-선택" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="pytorch-설치-cuda-버전에-맞게-선택"><span class="header-section-number">4.2.3</span> PyTorch 설치 (CUDA 버전에 맞게 선택)</h3>
 <p>CUDA 버전에 맞는 PyTorch를 설치해야 합니다.</p>
 <p>✅ <strong>CUDA 11을 사용하는 경우:</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">pip</span> install torch==2.5.1 <span class="at">--index-url</span> https://download.pytorch.org/whl/cu118</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install torch==2.5.1 <span class="at">--index-url</span> https://download.pytorch.org/whl/cu118</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>✅ <strong>CUDA 12를 사용하는 경우:</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> <span class="at">--pre</span> torch <span class="at">--index-url</span> https://download.pytorch.org/whl/nightly/cu128</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-<p><strong>📌 Isaac Sim pip 설치</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> <span class="at">--pre</span> torch <span class="at">--index-url</span> https://download.pytorch.org/whl/nightly/cu128</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="isaac-sim-pip-설치" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="isaac-sim-pip-설치"><span class="header-section-number">4.2.4</span> Isaac Sim pip 설치</h3>
 <p>pip를 이용해 <strong>Isaac Sim을 가상 환경에서 설치</strong>합니다.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> pip</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">pip</span> install <span class="st">'isaacsim[all,extscache]==4.5.0'</span> <span class="at">--extra-index-url</span> https://pypi.nvidia.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> pip</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">'isaacsim[all,extscache]==4.5.0'</span> <span class="at">--extra-index-url</span> https://pypi.nvidia.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>✅ <strong>설치 확인</strong></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">isaacsim</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>✅ <strong>특정 환경 파일 실행</strong></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">isaacsim</span> isaacsim.exp.full.kit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">isaacsim</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>⚠️ <strong>첫 실행 시 NVIDIA EULA 동의가 필요합니다.</strong></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">Do</span> you accept the EULA<span class="pp">?</span> <span class="er">(</span><span class="ex">Yes/No</span><span class="kw">)</span><span class="bu">:</span> Yes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">Do</span> you accept the EULA<span class="pp">?</span> <span class="er">(</span><span class="ex">Yes/No</span><span class="kw">)</span><span class="bu">:</span> Yes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>👉 <strong>첫 실행 시 모든 확장(extension) 파일이 다운로드되므로 10분 이상 소요될 수 있습니다.</strong></p>
-<hr>
-<p><strong>📌 Isaac Lab 클론 (소스 코드 다운로드)</strong></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">git</span> clone https://github.com/isaac-sim/IsaacLab.git</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="bu">cd</span> IsaacLab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-<p><strong>📌 의존성 패키지 설치</strong></p>
+</section>
+<section id="isaac-lab-클론-소스-코드-다운로드" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="isaac-lab-클론-소스-코드-다운로드"><span class="header-section-number">4.2.5</span> Isaac Lab 클론 (소스 코드 다운로드)</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/isaac-sim/IsaacLab.git</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> IsaacLab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="의존성-패키지-설치" class="level3" data-number="4.2.6">
+<h3 data-number="4.2.6" class="anchored" data-anchor-id="의존성-패키지-설치"><span class="header-section-number">4.2.6</span> 의존성 패키지 설치</h3>
 <p>Isaac Lab 실행을 위해 필요한 패키지를 설치합니다.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">sudo</span> apt install cmake build-essential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install cmake build-essential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>그 후, Isaac Lab의 의존성을 설치합니다.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">--install</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">--install</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>👉 <strong>모든 강화 학습 프레임워크를 함께 설치합니다.</strong><br>
 👉 특정 프레임워크만 설치하고 싶다면 아래와 같이 실행합니다.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">--install</span> rl_games  <span class="co"># 특정 프레임워크 (예: rl_games)만 설치</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">--install</span> rl_games  <span class="co"># 특정 프레임워크 (예: rl_games)만 설치</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>✅ <strong>설치 가능한 프레임워크 목록</strong></p>
 <ul>
 <li><code>rl_games</code></li>
@@ -492,20 +516,16 @@ Isaac Sim Ecosystem
 <li><code>robomimic</code></li>
 <li><code>none</code> (학습 프레임워크 제외)</li>
 </ul>
-<hr>
-<p><strong>📌 Isaac Lab 실행 확인</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Option 1: isaaclab.sh 실행</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/tutorials/00_sim/create_empty.py</span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># Option 2: Python으로 직접 실행</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="ex">python</span> scripts/tutorials/00_sim/create_empty.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="isaac-lab-실행-확인" class="level3" data-number="4.2.7">
+<h3 data-number="4.2.7" class="anchored" data-anchor-id="isaac-lab-실행-확인"><span class="header-section-number">4.2.7</span> Isaac Lab 실행 확인</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Option 1: isaaclab.sh 실행</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/tutorials/00_sim/create_empty.py</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Option 2: Python으로 직접 실행</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/tutorials/00_sim/create_empty.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>✅ <strong>정상적으로 실행되면, Isaac Lab이 올바르게 설치된 것입니다! 🎉</strong></p>
-<hr>
-<p><strong>설치 후 실행 및 검증</strong></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">isaacsim</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>👉 <strong>GUI가 실행되면서 Isaac Sim을 사용할 수 있습니다.</strong></p>
-<p>✅ <strong>강화 학습 예제 실행</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/tutorials/01_rl/train_policy.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 </section>
 <section id="conclusion" class="level1" data-number="5">
@@ -707,7 +727,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -739,29 +770,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -769,7 +778,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

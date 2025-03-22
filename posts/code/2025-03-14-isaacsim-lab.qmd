@@ -116,21 +116,20 @@ Isaac Lab은 이러한 한계를 극복하고, 연구자들이 직접 원하는 
 <img src="../../images/2025-03-14-isaacsim/3.jpg" width="100%" />
     <figcaption>Isaac Sim Ecosystem</figcaption>
 </center>
-### **Isaac Lab의 핵심 특징**
+
+## Isaac Lab의 핵심 특징
 
 Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 등 다양한 로봇 연구 워크플로우를 단순화하는 것을 목표로 합니다. 이를 위해 모듈형(modular) 구조를 갖추고 있으며, 연구자가 손쉽게 환경을 변경하거나 새로운 태스크를 추가할 수 있도록 확장성을 고려하여 설계되었습니다.
 
 ✔️ Isaac Lab이 기존 프레임워크와 다른 점
 
-✅ 사전 구축된 환경 & 태스크 제공 → 바로 사용할 수 있는 샘플 환경 포함
-
-✅ 맞춤형 커스텀 환경 개발 지원 → 사용자가 직접 환경을 설계하고 실험 가능
-
-✅ 강화 학습 & 모션 플래닝 최적화 → 다양한 학습 방법 적용 가능
+- 사전 구축된 환경 & 태스크 제공 → 바로 사용할 수 있는 샘플 환경 포함
+- 맞춤형 커스텀 환경 개발 지원 → 사용자가 직접 환경을 설계하고 실험 가능
+- 강화 학습 & 모션 플래닝 최적화 → 다양한 학습 방법 적용 가능
 
 
 
-### **Isaac Lab에서 새롭게 추가된 기능**
+## Isaac Lab에서 새롭게 추가된 기능
 
 뿐만 아니라, Isaac Sim의 모든 기능을 계승하면서도, 로봇 학습 연구를 위한 새로운 기능들이 추가되었습니다.
 
@@ -162,7 +161,7 @@ Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 �
 하지만, **시뮬레이터를 실행하기 위해서는 고성능 그래픽 카드 및 특정 요구 사항을 충족해야 합니다.** 
 
 
-**📌 설치 전 요구 사항**  
+### 시스템 사양 확인: Isaac Sim Compatibility Checker
 
 <center>
 <img src="../../images/2025-03-14-isaacsim/4.jpg" width="100%" />
@@ -178,20 +177,16 @@ Isaac Lab은 강화 학습(RL), 시연을 통한 학습(LfD), 모션 플래닝 �
 - **RAM**: 최소 16GB (32GB 이상 권장)  
 - **디스크 공간**: 최소 100GB 이상의 여유 공간  
 
----
-
-**📌 시스템 사양 확인: Isaac Sim Compatibility Checker**  
 
 Isaac Sim을 실행할 수 있는지 자동으로 점검할 수 있도록 **Isaac Sim Compatibility Checker** 도구를 제공합니다. 이 도구를 먼저 실행하여 시스템이 적합한지 확인한 후, 설치를 진행하는 것을 추천합니다.
 
 ✅ **설치 및 실행 방법**  
+
 1. [Isaac Sim Compatibility Checker 다운로드](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html#isaac-sim-compatibility-checker)
-2. 압축을 풀어 원하는 폴더에 저장 및 아래 명령어로 실행  
-
-    ```bash
-    ./omni.isaac.sim.compatibility_check.sh
-    ```
-
+2. 압축을 풀어 원하는 폴더에 저장 및 아래 명령어로 실행
+ ```bash {code-line-numbers=false}
+ ./omni.isaac.sim.compatibility_check.sh
+ ```
 3. 검사 결과 확인 (색상 코드 안내)  
    - **🟢 Green (최적)**: 모든 요구 사항 충족  
    - **🟢 Light-green (양호)**: 실행 가능하지만 성능 최적화 가능  
@@ -200,7 +195,7 @@ Isaac Sim을 실행할 수 있는지 자동으로 점검할 수 있도록 **Isaa
 
 ---
 
-**📌 Isaac Sim 설치 (Standalone 방식)**  
+### Isaac Sim 설치 (Standalone 방식)
 
 Isaac Sim은 **Omniverse Launcher 없이 독립 실행형(Standalone) 패키지로 다운로드하여 설치**해야 합니다.  
 
@@ -208,7 +203,7 @@ Isaac Sim은 **Omniverse Launcher 없이 독립 실행형(Standalone) 패키지�
 1. [Isaac Sim 다운로드 페이지](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/download.html#)에서 최신 릴리스 다운로드  
 2. 아래 명령어를 실행하여 설치  
 
-```bash
+```bash {code-line-numbers=false}
 mkdir ~/isaacsim
 cd ~/Downloads
 unzip "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" -d ~/isaacsim
@@ -221,75 +216,67 @@ cd ~/isaacsim
 
 ---
 
-**📌 Isaac Sim 실행하기**  
+### Isaac Sim 실행하기
 
 설치 후 실행하려면, 아래 명령어를 사용합니다.  
-```bash
+```bash {code-line-numbers=false}
 ./isaac-sim.sh
 ```
 
 👉 **최초 실행 시 셰이더 캐시 로딩(Warmup)이 필요할 수 있습니다.** 이 경우, 아래 명령어를 실행하여 셰이더 캐시를 미리 로드합니다.
-```bash
+```bash {code-line-numbers=false}
 ./isaac-sim.sh --warmup
 ```
 
----
-
-## **Isaac Lab 설치**  
+## Isaac Lab 설치
 
 Isaac Lab은 **Isaac Sim이 설치된 환경에서 동작**하므로, 먼저 Isaac Sim을 설치한 후 진행해야 합니다. Isaac Sim을 **pip 환경에서 사용하기 위해 추가적인 설치 과정이 필요**합니다.  
 
-**📌 설치 전 요구 사항 확인**  
+### 설치 전 요구 사항 확인
 
 ✅ **GLIBC 버전 확인 (Ubuntu 20.04에서는 추가 조치 필요)**  
-```bash
+```bash {code-line-numbers=false}
 ldd --version
 ```
 👉 **GLIBC 2.34 이상이 필요합니다. Ubuntu 20.04 기본 버전(2.31)과 호환되지 않을 수 있으므로 확인이 필요합니다.**  
 
----
 
-**📌 Conda 가상환경 설정**  
+### Conda 가상환경 설정
 
 Isaac Sim을 활용하기 위해 **Python 3.10 환경을 갖춘 가상 환경을 생성**합니다.  
 
-```bash
+```bash {code-line-numbers=false}
 conda create -n env_isaaclab python=3.10
 conda activate env_isaaclab
 ```
 
----
 
-**📌 PyTorch 설치 (CUDA 버전에 맞게 선택)**  
+### PyTorch 설치 (CUDA 버전에 맞게 선택)
 
 CUDA 버전에 맞는 PyTorch를 설치해야 합니다.  
 
 ✅ **CUDA 11을 사용하는 경우:**  
-```bash
+```bash {code-line-numbers=false}
 pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 ```
 ✅ **CUDA 12를 사용하는 경우:**  
-```bash
+```bash {code-line-numbers=false}
 pip install --upgrade --pre torch --index-url https://download.pytorch.org/whl/nightly/cu128
 ```
 
----
 
-**📌 Isaac Sim pip 설치**  
+### Isaac Sim pip 설치
 
 pip를 이용해 **Isaac Sim을 가상 환경에서 설치**합니다.  
-```bash
+```bash {code-line-numbers=false}
 pip install --upgrade pip
 pip install 'isaacsim[all,extscache]==4.5.0' --extra-index-url https://pypi.nvidia.com
 ```
 
 ✅ **설치 확인**  
-```bash
+
+```bash {code-line-numbers=false}
 isaacsim
-```
-✅ **특정 환경 파일 실행**  
-```bash
-isaacsim isaacsim.exp.full.kit
 ```
 
 ⚠️ **첫 실행 시 NVIDIA EULA 동의가 필요합니다.**  
@@ -298,32 +285,29 @@ Do you accept the EULA? (Yes/No): Yes
 ```
 👉 **첫 실행 시 모든 확장(extension) 파일이 다운로드되므로 10분 이상 소요될 수 있습니다.**  
 
----
 
-**📌 Isaac Lab 클론 (소스 코드 다운로드)**  
+### Isaac Lab 클론 (소스 코드 다운로드)
 
-```bash
+```bash {code-line-numbers=false}
 git clone https://github.com/isaac-sim/IsaacLab.git
 cd IsaacLab
 ```
 
----
-
-**📌 의존성 패키지 설치**  
+### 의존성 패키지 설치
 
 Isaac Lab 실행을 위해 필요한 패키지를 설치합니다.  
-```bash
+```bash {code-line-numbers=false}
 sudo apt install cmake build-essential
 ```
 
 그 후, Isaac Lab의 의존성을 설치합니다.  
-```bash
+```bash {code-line-numbers=false}
 ./isaaclab.sh --install
 ```
 
 👉 **모든 강화 학습 프레임워크를 함께 설치합니다.**  
 👉 특정 프레임워크만 설치하고 싶다면 아래와 같이 실행합니다.  
-```bash
+```bash {code-line-numbers=false}
 ./isaaclab.sh --install rl_games  # 특정 프레임워크 (예: rl_games)만 설치
 ```
 
@@ -336,11 +320,10 @@ sudo apt install cmake build-essential
 - `robomimic`
 - `none` (학습 프레임워크 제외)
 
----
 
-**📌 Isaac Lab 실행 확인**  
+### Isaac Lab 실행 확인
 
-```bash
+```bash {code-line-numbers=false}
 # Option 1: isaaclab.sh 실행
 ./isaaclab.sh -p scripts/tutorials/00_sim/create_empty.py
 
@@ -350,19 +333,6 @@ python scripts/tutorials/00_sim/create_empty.py
 
 ✅ **정상적으로 실행되면, Isaac Lab이 올바르게 설치된 것입니다! 🎉**  
 
----
-
-**설치 후 실행 및 검증**  
-
-```bash
-isaacsim
-```
-👉 **GUI가 실행되면서 Isaac Sim을 사용할 수 있습니다.**  
-
-✅ **강화 학습 예제 실행**  
-```bash
-./isaaclab.sh -p scripts/tutorials/01_rl/train_policy.py
-```
 
 # Conclusion
 
