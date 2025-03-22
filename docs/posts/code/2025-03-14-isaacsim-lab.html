@@ -187,7 +187,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
   <li><a href="#isaac-sim-설치-standalone-방식" id="toc-isaac-sim-설치-standalone-방식" class="nav-link" data-scroll-target="#isaac-sim-설치-standalone-방식"><span class="header-section-number">4.1.2</span> Isaac Sim 설치 (Standalone 방식)</a></li>
   <li><a href="#isaac-sim-실행하기" id="toc-isaac-sim-실행하기" class="nav-link" data-scroll-target="#isaac-sim-실행하기"><span class="header-section-number">4.1.3</span> Isaac Sim 실행하기</a></li>
   </ul></li>
-  <li><a href="#isaac-lab-설치" id="toc-isaac-lab-설치" class="nav-link" data-scroll-target="#isaac-lab-설치"><span class="header-section-number">4.2</span> Isaac Lab 설치</a>
+  <li><a href="#isaac-lab-설치" id="toc-isaac-lab-설치" class="nav-link" data-scroll-target="#isaac-lab-설치"><span class="header-section-number">4.2</span> <strong>Isaac Lab 설치</strong></a>
   <ul class="collapse">
   <li><a href="#설치-전-요구-사항-확인" id="toc-설치-전-요구-사항-확인" class="nav-link" data-scroll-target="#설치-전-요구-사항-확인"><span class="header-section-number">4.2.1</span> 설치 전 요구 사항 확인</a></li>
   <li><a href="#conda-가상환경-설정" id="toc-conda-가상환경-설정" class="nav-link" data-scroll-target="#conda-가상환경-설정"><span class="header-section-number">4.2.2</span> Conda 가상환경 설정</a></li>
@@ -460,7 +460,7 @@ Isaac Sim Ecosystem
 </section>
 </section>
 <section id="isaac-lab-설치" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="isaac-lab-설치"><span class="header-section-number">4.2</span> Isaac Lab 설치</h2>
+<h2 data-number="4.2" class="anchored" data-anchor-id="isaac-lab-설치"><span class="header-section-number">4.2</span> <strong>Isaac Lab 설치</strong></h2>
 <p>Isaac Lab은 <strong>Isaac Sim이 설치된 환경에서 동작</strong>하므로, 먼저 Isaac Sim을 설치한 후 진행해야 합니다. Isaac Sim을 <strong>pip 환경에서 사용하기 위해 추가적인 설치 과정이 필요</strong>합니다.</p>
 <section id="설치-전-요구-사항-확인" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="설치-전-요구-사항-확인"><span class="header-section-number">4.2.1</span> 설치 전 요구 사항 확인</h3>
@@ -480,7 +480,7 @@ Isaac Sim Ecosystem
 <p>✅ <strong>CUDA 11을 사용하는 경우:</strong></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install torch==2.5.1 <span class="at">--index-url</span> https://download.pytorch.org/whl/cu118</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>✅ <strong>CUDA 12를 사용하는 경우:</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> <span class="at">--pre</span> torch <span class="at">--index-url</span> https://download.pytorch.org/whl/nightly/cu128</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install torch==2.5.1 <span class="at">--index-url</span> https://download.pytorch.org/whl/cu121</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="isaac-sim-pip-설치" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="isaac-sim-pip-설치"><span class="header-section-number">4.2.4</span> Isaac Sim pip 설치</h3>

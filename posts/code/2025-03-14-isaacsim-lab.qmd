@@ -228,7 +228,7 @@ cd ~/isaacsim
 ./isaac-sim.sh --warmup
 ```
 
-## Isaac Lab 설치
+## **Isaac Lab 설치**
 
 Isaac Lab은 **Isaac Sim이 설치된 환경에서 동작**하므로, 먼저 Isaac Sim을 설치한 후 진행해야 합니다. Isaac Sim을 **pip 환경에서 사용하기 위해 추가적인 설치 과정이 필요**합니다.  
 
@@ -256,12 +256,15 @@ conda activate env_isaaclab
 CUDA 버전에 맞는 PyTorch를 설치해야 합니다.  
 
 ✅ **CUDA 11을 사용하는 경우:**  
+
 ```bash {code-line-numbers=false}
 pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 ```
+
 ✅ **CUDA 12를 사용하는 경우:**  
+
 ```bash {code-line-numbers=false}
-pip install --upgrade --pre torch --index-url https://download.pytorch.org/whl/nightly/cu128
+pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 ```
 
 
