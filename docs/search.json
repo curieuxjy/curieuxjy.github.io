@@ -1061,7 +1061,7 @@
     "href": "posts/code/2024-01-21-quarto-advanced.html#수학-수식",
     "title": "👩‍💻Quarto Blog + α",
     "section": "수학 수식",
-    "text": "수학 수식\n논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 수식 삽입을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다. 사실 Markdown 문법과 다르지 않습니다. Quarto Docs Equations에서 볼 수 있듯이 $로 수식을 warpping하면 수식이 잘 랜더링 되는 것을 볼 수 있습니다.\nhtml에서 수식을 다양한 형식으로 rendering할 수 있도록 옵션도 제공하고 있습니다. Format Options 테이블에 있는 html-math-method옵션을 활용해서 plain, webtex, gladtex, mathml, mathjax, katex 등과 같은 옵션을 사용할 수 있습니다. 예를들면 아래와 같이 _quarto.yml 설정 파일에 html-math-method: katex 한 줄 추가하면 수식 랜더링 스타일을 바꿀 수 있습니다.\nformat:\n  html:\n    html-math-method: katex"
+    "text": "수학 수식\n논문 리뷰와 같은 글들을 작성할 때 가끔식 수학 기호나 수식들을 작성해야 할 때가 있습니다. 그래서 블로그에서 수식이 잘 작성이 되는가도 블로그 플랫폼을 결정하는 중요한 기준이 되기도 합니다. Quarto의 처음 소개에서도 말씀드렸던 것처럼 수학, 과학적 언어와 글들에 친화적인 플랫폼이기 때문에 Quarto는 수식 삽입을 TeX 문법으로 작성하면 예쁘게 랜더링 되도록 만들어진 블로그 플랫폼입니다. 사실 Markdown 문법과 다르지 않습니다. Quarto Docs Equations에서 볼 수 있듯이 $로 수식을 warpping하면 수식이 잘 랜더링 되는 것을 볼 수 있습니다.\nhtml에서 수식을 다양한 형식으로 rendering할 수 있도록 옵션도 제공하고 있습니다. Format Options 테이블에 있는 html-math-method옵션을 활용해서 plain, webtex, gladtex, mathml, mathjax, katex 등과 같은 옵션을 사용할 수 있습니다. 예를들면 아래와 같이 _quarto.yml 설정 파일에 html-math-method: katex 한 줄 추가하면 수식 랜더링 스타일을 바꿀 수 있습니다.\nformat: \n  html:\n    html-math-method: katex"
   },
   {
     "objectID": "posts/code/2024-01-21-quarto-advanced.html#글자색-설정",

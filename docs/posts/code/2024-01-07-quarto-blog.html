@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -317,14 +351,14 @@ Default Blog
 <p>이전 단계에서는 localhost로 페이지를 랜더링해서 확인한 것이기 때문에 publish가 되지 않았습니다. quarto에서 프로젝트를 rendering하기 위해서는 publish를 하는 명령어를 실행해야 합니다.</p>
 <p><em>하지만 그전에!</em></p>
 <p>page들을 publish할 directory를 <code>/docs</code>로 따로 설정을 해주었기 때문에 해당 폴더에 랜더링된 html 파일들을 만들 수 있도록 아래와 같이 <code>._quarto.yml</code> 설정파일을 아래와 같이 작성해줍니다.</p>
-<pre><code>project:
-  type: website
-  output-dir: docs</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="an">project:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  type: website</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  output-dir: docs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <center>
 <img src="../../images/2024-01-07-quarto-blog/18.png" width="80%">
 </center>
 <p>위와 같이 render이 잘 완료되었다는 메세지가 확인이 되면 아래의 명령어를 실행하여 publish 합니다.</p>
-<pre><code>quarto render</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>마지막으로 Github에 Push를 하게 되면 이제 website를 확인할 수 있습니다!(build되는데 약 2-3분 걸릴 수 있습니다.)</p>
 <p>이번에는 Quarto Engine을 이용해서 간단하게 Blog Website를 올리는 부분을 진행했습니다. 좀 더 본격적으로 조정할 수 있는 옵션들에 대해서는 다음 포스팅에서 살펴볼 예정입니다.</p>
 <hr>

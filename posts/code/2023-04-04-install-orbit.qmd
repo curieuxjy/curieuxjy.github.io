@@ -97,7 +97,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
 2. **Python Environment Setting**: Isaac Sim은 내부(built-in) Python 3.7이 있고 이 default Python 환경을 사용하는 것이 좋습니다. [IsaacSim Default Python Environment](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_python.html#default-python-environment)을 사용하기 위해서는 아래의 예시 command와 같이 Isaac Sim의 Root folder(Isaac Sim 설치시 별도의 경로 설정이 없이 설치했을 경우 `${HOME}/.local/share/ov/pkg/isaac_sim-*`, `*`은 해당 Isaac Sim의 버젼)에 있는 Python 실행파일인 `python.sh`를 가지고 실행해야 합니다.
 
-    ```
+    ```bash {code-line-numbers=false}
     # ${HOME}/.local/share/ov/pkg/isaac_sim-2022.2.1
     ./python.sh path/to/script.py
     ```
@@ -106,7 +106,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
     
     하지만 이와 같이 매번 Isaac Sim의 내부 python 실행파일 경로를 입력하여 python 스크립트를 돌리는 것은 매우 번거로우므로 [시스템 환경 변수 설정](https://isaac-orbit.github.io/orbit/source/setup/installation.html#configuring-the-environment-variables)를 통해 간단히 내부 python을 불러올 수 있습니다. Linux Ubuntu에서는 시스템 환경 변수를 설정하는 파일은 `~/.bashrc` 나 `~/.zshrc`를 사용합니다. 아래와 같이 리눅스 GUI 환경에서 지원하는 텍스트 에디터인 gedit을 이용하여 시스템 환경 변수를 설정해보겠습니다. Terminal 창을 열어서 command를 입력합니다.
     
-    ```cmd
+    ```cmd {code-line-numbers=false}
     gedit ~/.bashrc
     ```
 
@@ -121,7 +121,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
     파일을 편집했다고 바로 추가된 환경 변수가 바로 적용되는 것이 아니라 아래의 command까지 터미널에서 실행시키고 나서 적용이 됩니다.
 
-    ```cmd
+    ```cmd {code-line-numbers=false}
     source ~/.bashrc
     ```
 
@@ -129,7 +129,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
     - 시뮬레이터 실행 파일(`isaac-sim.sh`) 확인
     
-        ```
+        ```bash {code-line-numbers=false}
         # note: you can pass the argument `--help` to see all arguments possible.
         $ISAACSIM_PATH/isaac-sim.sh --help
         ```
@@ -138,7 +138,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
     - 시뮬레이터 내부 파이썬 실행 파일(`python.sh`) 확인
 
-        ```
+        ```bash {code-line-numbers=false}
         # checks that python path is set correctly
         $ISAACSIM_PYTHON_EXE -c "print('Isaac Sim configuration is now complete.')"
         ```
@@ -147,7 +147,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
       
     - 시뮬레이터 standalone 예제(`add_cubes.py`)로 실행 확인
     
-        ```
+        ```bash {code-line-numbers=false}
         # checks that Isaac Sim can be launched from python
         $ISAACSIM_PYTHON_EXE $ISAACSIM_PATH/standalone_examples/api/omni.isaac.core/add_cubes.py
         ```
@@ -160,7 +160,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
 1. Orbit repository를 `git clone` 해오기
 
-    ```cmd
+    ```cmd {code-line-numbers=false}
     # Option 1: With SSH
     git clone git@github.com:NVIDIA-Omniverse/orbit.git
     # Option 2: With HTTPS
@@ -170,7 +170,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
 2. Symbolic link  생성하기: [심볼릭 링크](https://server-talk.tistory.com/140)란 원본 파일을 가리키도록 하는 윈도우에서의 `바로가기` 아이콘과 같은 의미로 이해하시면 됩니다. 위에서 `git clone`한 repo의 위치로 들어가서 다음과 같은 명령어를 통해 심볼릭 링크를 만들어 줍니다.
 
-   ```cmd
+   ```cmd {code-line-numbers=false}
    # enter the cloned repository
    cd Orbit
    # create a symbolic link
@@ -181,13 +181,13 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
 3. Orbit 실행파일 명령어 등록하기: orbit을 실행하기 위해서는 매번 git clone 한 repository에 있는 `orbit.sh` 파일을 써주어야 합니다. 만약 `orbit.sh`이 있는 위치에서 실행시킨다면 `./orbit.sh` 로 간단하겠지만 다른 위치의 파일을 Orbit에서 실행시키고 싶을 때 단축키가 있다면 훨씬 간편하게 실행할 수 있어 편리할 것 입니다. Orbit을 편리하게 실행시킬 수 있는 명령어로는 `orbit`으로 정해서 즉,  `./orbit.sh` 와 `orbit` 이 같도록 하는 작업을 진행해보겠습니다. 앞서 리눅스의 시스템 환경변수를 설정하는 방법에서 `.bashrc` 파일을 이용하여 명령어 별칭을 등록하는 방법을 이용합니다.
 
-    ```
+    ```bash {code-line-numbers=false}
     echo -e "alias orbit=$(pwd)/orbit.sh" >> ${HOME}/.bashrc
     ```
 
     별칭 등록을 적용하기 위해 `source ~/.bashrc`도 잊지 않고 실행해주세요.(명령어가 제대로 등록됐는지 확인해보려면 `gedit ~/.bashrc`를 통해 파일에서 맨 아랫줄에 `alias orbit=$(Orbit 레포지토리 위치)/orbit.sh`이 써있는지 확인해보면 됩니다.) 터미널에서 아래의 명령어를 입력했을때 다음과 같은 창이 나온다면 명령어 별칭 등록이 잘 된 것 입니다.
 
-    ```
+    ```bash {code-line-numbers=false}
     orbit --help
     ```
 
@@ -197,7 +197,7 @@ Isaac Sim의 설치과정은 Documentation에 step by step으로 잘 나와있�
 
 Orbit에서는 `orbit -p`라는 명령어를 통해 Isaac Sim의 파이썬 실행파일을 자동으로 가져와서 사용합니다. (혹은 위에서 명령어 별칭을 등록안했다면 Orbit repo 위치에서 `./orbit.sh -p`라고 입력해도 됩니다.) 하지만 가상환경을 사용하고 싶다면 [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)를 이용하면 됩니다.
 
-```
+```bash {code-line-numbers=false}
 orbit -c (또는 --conda)
 ```
 
@@ -209,19 +209,19 @@ orbit -c (또는 --conda)
 
 - `apt`를 이용해서 우분투에서 디펜던시를 설치합니다.
 
-    ```
+    ```bash {code-line-numbers=false}
     sudo apt install cmake build-essential
     ```
 
 - Orbit repo에 있는 `source/extensions` 폴더의 확장프로그램들을 설치합니다. 이때 `--editable` flag로 편집 가능한 모드로 설치하게 되어 개발자가 확장 기능을 수정하게 되면 변경사항이 즉시 적용됩니다.
 
-    ```
+    ```bash {code-line-numbers=false}
     orbit --install # or orbit -i
     ```
 
 - ([rsl-rl](https://github.com/leggedrobotics/rsl_rl) 같은)Learning framework 등의 여러 디펜던시 프로그램들을 설치합니다.
 
-    ```
+    ```bash {code-line-numbers=false}
     orbit --extra # or orbit -e
     ```
 
@@ -229,7 +229,7 @@ orbit -c (또는 --conda)
 
 마지막까지 설치과정을 잘 마치셨다면 아래의 명령어를 입력 했을 때 사족보행 로봇들이 나오면서 Orbit이 잘 실행되는 것을 확인하실 수 있습니다!👏👏👏(처음 실행시 시간이 조금 걸릴 수 있으니 기다려주세요.) 
 
-```
+```bash {code-line-numbers=false}
 orbit -p source/standalone/demo/play_quadrupeds.py
 ```
 

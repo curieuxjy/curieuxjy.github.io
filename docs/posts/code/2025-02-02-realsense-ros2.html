@@ -276,10 +276,10 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="creating-the-ros-2-package" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-ros-2-package">Creating the ROS 2 Package</h2>
 <p><code>my_realsense_example</code> 라는 새로운 ROS 2 package를 만들어 시작해보겠습니다. ROS2의 workspace에 있는 <code>src/</code>폴더에서 C++ 패키지를 생성해줍니다.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">cd</span> ~/ros2_ws/src</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">ros2</span> pkg create my_realsense_example <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="at">--build-type</span> ament_cmake <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">--dependencies</span> rclcpp sensor_msgs cv_bridge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ros2_ws/src</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> pkg create my_realsense_example <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--build-type</span> ament_cmake <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--dependencies</span> rclcpp sensor_msgs cv_bridge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>그다음, <code>my_realsense_example/src/</code> 에 각 노드에 대한 C++ 스크립트 파일을 작성합니다. - <code>realsense_publisher.cpp</code> - <code>image_subscriber.cpp</code></p>
 </section>
 <section id="publisher-node-realsense_publisher.cpp" class="level2">
@@ -922,14 +922,14 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="build-실행" class="level2">
 <h2 class="anchored" data-anchor-id="build-실행">Build &amp; 실행</h2>
 <p>이제 패키지를 빌드할 모든 준비는 끝났습니다. 이제 소스 코드들을 작성한 workspace 경로(e.g., <code>~/ros2_ws</code>)로 이동하여 빌드해줍니다.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> my_realsense_example</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="bu">source</span> install/setup.bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> my_realsense_example</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> install/setup.bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>잘 빌드가 되었다면 터미널을 2개 띄워서 각각 publisher 와 subscriber 노드를 실행시켜 줍니다.</p>
 <ul>
 <li><p><strong>Terminal 1</strong>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">ros2</span> run my_realsense_example realsense_publisher</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> run my_realsense_example realsense_publisher</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><strong>Terminal 2</strong>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">ros2</span> run my_realsense_example image_subscriber</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> run my_realsense_example image_subscriber</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 <p>그러면 <strong>“RealSense Camera + AprilTag”</strong> 창이 나오면서 인식된 AprilTag ID와 박스가 표시된 창이 아래와 같이 나올 것 입니다!</p>
 <center>

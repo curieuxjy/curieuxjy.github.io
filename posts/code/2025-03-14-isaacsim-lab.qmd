@@ -280,7 +280,8 @@ isaacsim
 ```
 
 ⚠️ **첫 실행 시 NVIDIA EULA 동의가 필요합니다.**  
-```bash
+
+```bash {code-line-numbers=false}
 Do you accept the EULA? (Yes/No): Yes
 ```
 👉 **첫 실행 시 모든 확장(extension) 파일이 다운로드되므로 10분 이상 소요될 수 있습니다.**  

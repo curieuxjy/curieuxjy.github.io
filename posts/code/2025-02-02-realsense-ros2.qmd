@@ -67,7 +67,7 @@ image: ../../images/2025-02-02-realsense-ros2/ros2_realsense.png
 
 `my_realsense_example` 라는 새로운 ROS 2 package를 만들어 시작해보겠습니다. ROS2의 workspace에 있는 `src/`폴더에서 C++ 패키지를 생성해줍니다.
 
-```bash
+```bash {code-line-numbers=false}
 cd ~/ros2_ws/src
 ros2 pkg create my_realsense_example \
   --build-type ament_cmake \
@@ -714,7 +714,7 @@ ament_package()
 
 이제 패키지를 빌드할 모든 준비는 끝났습니다. 이제 소스 코드들을 작성한 workspace 경로(e.g., `~/ros2_ws`)로 이동하여 빌드해줍니다.
 
-```bash
+```bash {code-line-numbers=false}
 colcon build --packages-select my_realsense_example
 source install/setup.bash
 ```
@@ -722,11 +722,11 @@ source install/setup.bash
 잘 빌드가 되었다면 터미널을 2개 띄워서 각각 publisher 와 subscriber 노드를 실행시켜 줍니다.
 
 - **Terminal 1**:  
-  ```bash
+  ```bash {code-line-numbers=false}
   ros2 run my_realsense_example realsense_publisher
   ```
 - **Terminal 2**:  
-  ```bash
+  ```bash {code-line-numbers=false}
   ros2 run my_realsense_example image_subscriber
   ```
 

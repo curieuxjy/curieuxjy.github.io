@@ -183,7 +183,7 @@ quarto preview
 
 page들을 publish할 directory를 `/docs`로 따로 설정을 해주었기 때문에 해당 폴더에 랜더링된 html 파일들을 만들 수 있도록 아래와 같이 `._quarto.yml` 설정파일을 아래와 같이 작성해줍니다.
 
-```
+```markdown {code-line-numbers=false}
 project:
   type: website
   output-dir: docs
@@ -197,7 +197,7 @@ project:
 위와 같이 render이 잘 완료되었다는 메세지가 확인이 되면 아래의 명령어를 실행하여 publish 합니다.
 
 
-```
+```bash {code-line-numbers=false}
 quarto render
 ```
 
