@@ -1,7 +1,8 @@
 ---
+draft: true
 title: "📝Conda library 경로설정"
 toc: true
-date: "2025-04-09"
+date: "2025-04-13"
 description: 매번 이 문제로 돌아오니까 확실히 정리하자
 categories: [linux, conda, cheetsheet, 2025]
 format:

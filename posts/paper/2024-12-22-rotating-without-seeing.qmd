@@ -267,5 +267,5 @@ $\|F\|$을 시뮬레이션된 접촉력 측정값으로 사용한 다음, 이 �
 
 # Reference
 
-- [Original Paper]()
+- [Original Paper](https://arxiv.org/abs/2303.10880)
 - [Project Homepage](https://touchdexterity.github.io/)

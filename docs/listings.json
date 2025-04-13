@@ -37,6 +37,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-04-13-dexterity-gen.html",
       "/posts/code/2025-03-14-isaacsim-lab.html",
       "/posts/code/2025-02-16-hydra.html",
       "/posts/code/2025-02-02-realsense-ros2.html",
@@ -69,6 +70,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-04-13-dexterity-gen.html",
       "/posts/code/2025-03-14-isaacsim-lab.html",
       "/posts/code/2025-02-16-hydra.html",
       "/posts/code/2025-02-02-realsense-ros2.html",

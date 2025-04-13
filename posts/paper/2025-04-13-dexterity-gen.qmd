@@ -1,0 +1,23 @@
+---
+title: "📃Dexterity-Gen 리뷰"
+description: Foundation Controller for Unprecedented Dexterity
+date: "2025-04-13"
+categories: [paper, rl, hand]
+toc: true
+number-sections: true
+image: ../../images/2025-04-13-dexterity-gen/idea.png
+---
+
+<center>
+<img src="../../images/2025-04-13-dexterity-gen/1.png" width="100%" />
+</center>
+
+이번 포스팅에서 리뷰할 논문은 
+
+# Introduction
+
+
+# Reference
+
+- [Original Paper](https://arxiv.org/abs/2502.04307)
+- [Project Homepage](https://zhaohengyin.github.io/dexteritygen/)
