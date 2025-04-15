@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.7.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,17 +33,19 @@ ul.task-list li input[type="checkbox"] {
 <link href="./profile.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-listing/list.min.js"></script>
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6561bbde787c299e21493071c8edc6ff.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-1e438c382a17f6d88d3993662a872df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-a37c72dd2dbac68997fcdc15a3622e78.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3b816ca20366eb18ef81feb56d8bf81d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84849963b3550dada6ad14ca0722a3fc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1da3f21b942a7af985a78b7d88029ecb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84849963b3550dada6ad14ca0722a3fc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -156,7 +158,166 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+    document.querySelector('link.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -204,9 +365,10 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(29)</span></div><div class="category" data-category="YXV0b3JlZ3Jlc3NpdmU=">autoregressive <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YmFja2ZsaXA=">backflip <span class="quarto-category-count">(2)</span></div><div class="category" data-category="YmxvZw==">blog <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y2hvcmQ=">chord <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y2x1c3RlcmluZw==">clustering <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y21kcA==">cmdp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(13)</span></div><div class="category" data-category="Y29uZmln">config <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29udGV4dA==">context <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2Fl">gae <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2Fu">gan <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2VuZXJhdGl2ZQ==">generative <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Z25u">gnn <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Z3B1">gpu <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z3Jhc3A=">grasp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aGFuZA==">hand <span class="quarto-category-count">(2)</span></div><div class="category" data-category="aHlkcmE=">hydra <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW52ZXJ0ZWQ=">inverted <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aXNhYWNsYWI=">isaaclab <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aXNhYWNzaW0=">isaacsim <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bGludXg=">linux <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFuaXB1bGF0aW9u">manipulation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bXBj">mpc <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bXVqb2Nv">mujoco <span class="quarto-category-count">(1)</span></div><div class="category" data-category="b3JiaXQ=">orbit <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cGFwZXI=">paper <span class="quarto-category-count">(14)</span></div><div class="category" data-category="cG9pbnRjbG91ZA==">pointcloud <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cXVhZHJ1cGVk">quadruped <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cXVhcnRv">quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cmVhbHNlbnNl">realsense <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cmVjb3Zlcnk=">recovery <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cmVkcQ==">redq <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cmw=">rl <span class="quarto-category-count">(11)</span></div><div class="category" data-category="cm9zMg==">ros2 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3RvcmFnZQ==">storage <span class="quarto-category-count">(2)</span></div><div class="category" data-category="c3R1ZHk=">study <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3lzdGVtIGlkZW50aWZpY2F0aW9u">system identification <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGFjdGlsZQ==">tactile <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVuc29y">tensor <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dG9yY2g=">torch <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dHJwbw==">trpo <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmFl">vae <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dmlzdWFsaXphdGlvbg==">visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="eWFtbA==">yaml <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(30)</span></div><div class="category" data-category="YXV0b3JlZ3Jlc3NpdmU=">autoregressive <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YmFja2ZsaXA=">backflip <span class="quarto-category-count">(2)</span></div><div class="category" data-category="YmxvZw==">blog <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y2hvcmQ=">chord <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y2x1c3RlcmluZw==">clustering <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y21kcA==">cmdp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(13)</span></div><div class="category" data-category="Y29uZmln">config <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29udGV4dA==">context <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2Fl">gae <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2Fu">gan <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2VuZXJhdGl2ZQ==">generative <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Z25u">gnn <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Z3B1">gpu <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z3Jhc3A=">grasp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aGFuZA==">hand <span class="quarto-category-count">(2)</span></div><div class="category" data-category="aHlkcmE=">hydra <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW52ZXJ0ZWQ=">inverted <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aXNhYWNsYWI=">isaaclab <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aXNhYWNzaW0=">isaacsim <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bGludXg=">linux <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFuaXB1bGF0aW9u">manipulation <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bXBj">mpc <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bXVqb2Nv">mujoco <span class="quarto-category-count">(1)</span></div><div class="category" data-category="b3JiaXQ=">orbit <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cGFwZXI=">paper <span class="quarto-category-count">(15)</span></div><div class="category" data-category="cG9pbnRjbG91ZA==">pointcloud <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cXVhZHJ1cGVk">quadruped <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cXVhcnRv">quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cmVhbHNlbnNl">realsense <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cmVjb3Zlcnk=">recovery <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cmVkcQ==">redq <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cmw=">rl <span class="quarto-category-count">(11)</span></div><div class="category" data-category="cm9zMg==">ros2 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3RvcmFnZQ==">storage <span class="quarto-category-count">(2)</span></div><div class="category" data-category="c3R1ZHk=">study <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3lzdGVtJTIwaWRlbnRpZmljYXRpb24=">system identification <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGFjdGlsZQ==">tactile <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVuc29y">tensor <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dG9yY2g=">torch <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dHJwbw==">trpo <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmFl">vae <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dmlzdWFsaXphdGlvbg==">visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmlzdW90YWN0aWxl">visuotactile <span class="quarto-category-count">(1)</span></div><div class="category" data-category="eWFtbA==">yaml <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
+
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -239,35 +401,39 @@ window.Quarto = {
 <div class="quarto-listing quarto-listing-container-table" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-         <option value="listing-title-sort" data-direction="asc">
-          Title
-        </option>
-     </select>
+    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+      <option value="" disabled="" selected="" hidden="">Order By</option>
+      <option value="index" data-direction="asc">Default</option>
+      <option value="listing-date-sort" data-direction="asc">
+        Date - Oldest
+      </option>
+      <option value="listing-date-sort" data-direction="desc">
+        Date - Newest
+      </option>
+      <option value="listing-title-sort" data-direction="asc">
+        Title
+      </option>
+    </select>
   </div>
 </div>
 <table class="quarto-listing-table table table-striped table-hover">
 <thead>
 <tr>
+
 <th>
 <a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
 </th>
+
 <th>
 <a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
 </th>
+
 </tr>
 </thead>
 <tbody class="list">
-<tr data-index="0" data-categories="cGFwZXIsbWFuaXB1bGF0aW9u" data-listing-date-sort="1745074800000" data-listing-file-modified-sort="1744694767617" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3875" data-listing-title-sort="📃PhysTwin 리뷰" data-listing-filename-sort="2025-04-20-phystwin.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="0" data-categories="cGFwZXIlMkNtYW5pcHVsYXRpb24=" data-listing-date-sort="1745074800000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3875" data-listing-title-sort="📃PhysTwin 리뷰" data-listing-filename-sort="2025-04-20-phystwin.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Apr 20, 2025</span>
@@ -275,8 +441,21 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2025-04-20-phystwin.html" class="title listing-title">📃PhysTwin 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="1" data-categories="cGFwZXIscmwsaGFuZA==" data-listing-date-sort="1744470000000" data-listing-file-modified-sort="1744692663821" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3120" data-listing-title-sort="📃Dexterity-Gen 리뷰" data-listing-filename-sort="2025-04-13-dexterity-gen.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="1" data-categories="cGFwZXIlMkNtYW5pcHVsYXRpb24lMkN2aXN1b3RhY3RpbGU=" data-listing-date-sort="1744642800000" data-listing-file-modified-sort="1744707581948" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3900" data-listing-title-sort="📃Robot Synesthesia 리뷰" data-listing-filename-sort="2025-04-15-robosyn.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-date">Apr 15, 2025</span>
+</td>
+<td>
+<a href="./posts/paper/2025-04-15-robosyn.html" class="title listing-title">📃Robot Synesthesia 리뷰</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-categories="cGFwZXIlMkNybCUyQ2hhbmQ=" data-listing-date-sort="1744470000000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3120" data-listing-title-sort="📃Dexterity-Gen 리뷰" data-listing-filename-sort="2025-04-13-dexterity-gen.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Apr 13, 2025</span>
@@ -284,8 +463,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2025-04-13-dexterity-gen.html" class="title listing-title">📃Dexterity-Gen 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="2" data-categories="aXNhYWNzaW0saXNhYWNsYWIsY29kZQ==" data-listing-date-sort="1741878000000" data-listing-file-modified-sort="1744588477252" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1870" data-listing-title-sort="👩‍💻IsaacSim과 IsaacLab 알아보기" data-listing-filename-sort="2025-03-14-isaacsim-lab.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="3" data-categories="aXNhYWNzaW0lMkNpc2FhY2xhYiUyQ2NvZGU=" data-listing-date-sort="1741878000000" data-listing-file-modified-sort="1744702474715" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1870" data-listing-title-sort="👩‍💻IsaacSim과 IsaacLab 알아보기" data-listing-filename-sort="2025-03-14-isaacsim-lab.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Mar 14, 2025</span>
@@ -293,8 +474,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2025-03-14-isaacsim-lab.html" class="title listing-title">👩‍💻IsaacSim과 IsaacLab 알아보기</a>
 </td>
+
 </tr>
-<tr data-index="3" data-categories="aHlkcmEsY29kZQ==" data-listing-date-sort="1739631600000" data-listing-file-modified-sort="1741940838446" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1672" data-listing-title-sort="👩‍💻Hydra로 실험관리 하기" data-listing-filename-sort="2025-02-16-hydra.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="4" data-categories="aHlkcmElMkNjb2Rl" data-listing-date-sort="1739631600000" data-listing-file-modified-sort="1744702474711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1672" data-listing-title-sort="👩‍💻Hydra로 실험관리 하기" data-listing-filename-sort="2025-02-16-hydra.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Feb 16, 2025</span>
@@ -302,8 +485,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2025-02-16-hydra.html" class="title listing-title">👩‍💻Hydra로 실험관리 하기</a>
 </td>
+
 </tr>
-<tr data-index="4" data-categories="cm9zMixyZWFsc2Vuc2UsY29kZQ==" data-listing-date-sort="1738422000000" data-listing-file-modified-sort="1744588477252" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3543" data-listing-title-sort="👩‍💻ROS2 RealSense C++ Node" data-listing-filename-sort="2025-02-02-realsense-ros2.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="5" data-categories="cm9zMiUyQ3JlYWxzZW5zZSUyQ2NvZGU=" data-listing-date-sort="1738422000000" data-listing-file-modified-sort="1744702474711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3543" data-listing-title-sort="👩‍💻ROS2 RealSense C++ Node" data-listing-filename-sort="2025-02-02-realsense-ros2.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Feb 2, 2025</span>
@@ -311,8 +496,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2025-02-02-realsense-ros2.html" class="title listing-title">👩‍💻ROS2 RealSense C++ Node</a>
 </td>
+
 </tr>
-<tr data-index="5" data-categories="cGFwZXIsdGFjdGlsZSxybCxoYW5k" data-listing-date-sort="1734793200000" data-listing-file-modified-sort="1744588477252" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1789" data-listing-title-sort="📃Rotating without Seeing 리뷰" data-listing-filename-sort="2024-12-22-rotating-without-seeing.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="6" data-categories="cGFwZXIlMkN0YWN0aWxlJTJDcmwlMkNoYW5k" data-listing-date-sort="1734793200000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1789" data-listing-title-sort="📃Rotating without Seeing 리뷰" data-listing-filename-sort="2024-12-22-rotating-without-seeing.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Dec 22, 2024</span>
@@ -320,8 +507,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2024-12-22-rotating-without-seeing.html" class="title listing-title">📃Rotating without Seeing 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="6" data-categories="cGFwZXIscmwsY21kcA==" data-listing-date-sort="1731164400000" data-listing-file-modified-sort="1733971741819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4375" data-listing-title-sort="📃IPO 리뷰" data-listing-filename-sort="2024-11-10-ipo.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="7" data-categories="cGFwZXIlMkNybCUyQ2NtZHA=" data-listing-date-sort="1731164400000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4375" data-listing-title-sort="📃IPO 리뷰" data-listing-filename-sort="2024-11-10-ipo.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Nov 10, 2024</span>
@@ -329,8 +518,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2024-11-10-ipo.html" class="title listing-title">📃IPO 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="7" data-categories="Z3Jhc3AscG9pbnRjbG91ZCx2YWUscGFwZXI=" data-listing-date-sort="1710601200000" data-listing-file-modified-sort="1733971741819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="875" data-listing-title-sort="📃VCGS 리뷰" data-listing-filename-sort="2024-03-17-vcgs.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="8" data-categories="Z3Jhc3AlMkNwb2ludGNsb3VkJTJDdmFlJTJDcGFwZXI=" data-listing-date-sort="1710601200000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="875" data-listing-title-sort="📃VCGS 리뷰" data-listing-filename-sort="2024-03-17-vcgs.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Mar 17, 2024</span>
@@ -338,8 +529,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2024-03-17-vcgs.html" class="title listing-title">📃VCGS 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="8" data-categories="YmxvZyxxdWFydG8sY29kZQ==" data-listing-date-sort="1705762800000" data-listing-file-modified-sort="1744588477251" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1342" data-listing-title-sort="👩‍💻Quarto Blog + α" data-listing-filename-sort="2024-01-21-quarto-advanced.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="9" data-categories="YmxvZyUyQ3F1YXJ0byUyQ2NvZGU=" data-listing-date-sort="1705762800000" data-listing-file-modified-sort="1744702474711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1342" data-listing-title-sort="👩‍💻Quarto Blog + α" data-listing-filename-sort="2024-01-21-quarto-advanced.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jan 21, 2024</span>
@@ -347,8 +540,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2024-01-21-quarto-advanced.html" class="title listing-title">👩‍💻Quarto Blog + α</a>
 </td>
+
 </tr>
-<tr data-index="9" data-categories="YmxvZyxxdWFydG8sY29kZQ==" data-listing-date-sort="1704553200000" data-listing-file-modified-sort="1744588477251" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1326" data-listing-title-sort="👩‍💻Quarto Blog 기본 셋팅" data-listing-filename-sort="2024-01-07-quarto-blog.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="10" data-categories="YmxvZyUyQ3F1YXJ0byUyQ2NvZGU=" data-listing-date-sort="1704553200000" data-listing-file-modified-sort="1744702474711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1326" data-listing-title-sort="👩‍💻Quarto Blog 기본 셋팅" data-listing-filename-sort="2024-01-07-quarto-blog.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jan 7, 2024</span>
@@ -356,8 +551,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2024-01-07-quarto-blog.html" class="title listing-title">👩‍💻Quarto Blog 기본 셋팅</a>
 </td>
+
 </tr>
-<tr data-index="10" data-categories="Y29udGV4dCxybCxwYXBlcg==" data-listing-date-sort="1688223600000" data-listing-file-modified-sort="1733971741819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1508" data-listing-title-sort="📃DreamWaQ 리뷰" data-listing-filename-sort="2023-07-02-dreamwaq.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="11" data-categories="Y29udGV4dCUyQ3JsJTJDcGFwZXI=" data-listing-date-sort="1688223600000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1508" data-listing-title-sort="📃DreamWaQ 리뷰" data-listing-filename-sort="2023-07-02-dreamwaq.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jul 2, 2023</span>
@@ -365,8 +562,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2023-07-02-dreamwaq.html" class="title listing-title">📃DreamWaQ 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="11" data-categories="Y2hvcmQsdmlzdWFsaXphdGlvbixjb2Rl" data-listing-date-sort="1687014000000" data-listing-file-modified-sort="1730721137563" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2870" data-listing-title-sort="👩‍💻Chord Graph" data-listing-filename-sort="2023-06-18-chord.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="12" data-categories="Y2hvcmQlMkN2aXN1YWxpemF0aW9uJTJDY29kZQ==" data-listing-date-sort="1687014000000" data-listing-file-modified-sort="1744702474711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2870" data-listing-title-sort="👩‍💻Chord Graph" data-listing-filename-sort="2023-06-18-chord.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jun 18, 2023</span>
@@ -374,8 +573,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2023-06-18-chord.html" class="title listing-title">👩‍💻Chord Graph</a>
 </td>
+
 </tr>
-<tr data-index="12" data-categories="cmwsY2x1c3RlcmluZyxxdWFkcnVwZWQscmVjb3ZlcnksYmFja2ZsaXAscGFwZXI=" data-listing-date-sort="1683385200000" data-listing-file-modified-sort="1733971741819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2430" data-listing-title-sort="📃K-Accessibility 리뷰" data-listing-filename-sort="2023-05-07-accessibility.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="13" data-categories="cmwlMkNjbHVzdGVyaW5nJTJDcXVhZHJ1cGVkJTJDcmVjb3ZlcnklMkNiYWNrZmxpcCUyQ3BhcGVy" data-listing-date-sort="1683385200000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2430" data-listing-title-sort="📃K-Accessibility 리뷰" data-listing-filename-sort="2023-05-07-accessibility.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">May 7, 2023</span>
@@ -383,8 +584,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2023-05-07-accessibility.html" class="title listing-title">📃K-Accessibility 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="13" data-categories="b3JiaXQsaXNhYWNzaW0sY29kZQ==" data-listing-date-sort="1682175600000" data-listing-file-modified-sort="1733971741817" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1514" data-listing-title-sort="👩‍💻Orbit Existing Scripts" data-listing-filename-sort="2023-04-23-orbit-existing-scripts.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="14" data-categories="b3JiaXQlMkNpc2FhY3NpbSUyQ2NvZGU=" data-listing-date-sort="1682175600000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1514" data-listing-title-sort="👩‍💻Orbit Existing Scripts" data-listing-filename-sort="2023-04-23-orbit-existing-scripts.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Apr 23, 2023</span>
@@ -392,8 +595,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2023-04-23-orbit-existing-scripts.html" class="title listing-title">👩‍💻Orbit Existing Scripts</a>
 </td>
+
 </tr>
-<tr data-index="14" data-categories="b3JiaXQsaXNhYWNzaW0sY29kZQ==" data-listing-date-sort="1680534000000" data-listing-file-modified-sort="1744588477251" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1912" data-listing-title-sort="👩‍💻Orbit 설치하기" data-listing-filename-sort="2023-04-04-install-orbit.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="15" data-categories="b3JiaXQlMkNpc2FhY3NpbSUyQ2NvZGU=" data-listing-date-sort="1680534000000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1912" data-listing-title-sort="👩‍💻Orbit 설치하기" data-listing-filename-sort="2023-04-04-install-orbit.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Apr 4, 2023</span>
@@ -401,8 +606,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2023-04-04-install-orbit.html" class="title listing-title">👩‍💻Orbit 설치하기</a>
 </td>
+
 </tr>
-<tr data-index="15" data-categories="cmwsZ2FuLHF1YWRydXBlZCxiYWNrZmxpcCxwYXBlcg==" data-listing-date-sort="1678546800000" data-listing-file-modified-sort="1733971741819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3382" data-listing-title-sort="📃WASABI 리뷰" data-listing-filename-sort="2023-03-12-wasabi.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="16" data-categories="cmwlMkNnYW4lMkNxdWFkcnVwZWQlMkNiYWNrZmxpcCUyQ3BhcGVy" data-listing-date-sort="1678546800000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3382" data-listing-title-sort="📃WASABI 리뷰" data-listing-filename-sort="2023-03-12-wasabi.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Mar 12, 2023</span>
@@ -410,8 +617,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2023-03-12-wasabi.html" class="title listing-title">📃WASABI 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="16" data-categories="Y29uZmlnLHlhbWwsY29kZQ==" data-listing-date-sort="1671980400000" data-listing-file-modified-sort="1733971741817" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="100" data-listing-title-sort="👩‍💻class ⟷ dict ⟷ yaml" data-listing-filename-sort="2022-12-26-class-dict-yaml.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="17" data-categories="Y29uZmlnJTJDeWFtbCUyQ2NvZGU=" data-listing-date-sort="1671980400000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="100" data-listing-title-sort="👩‍💻class ⟷ dict ⟷ yaml" data-listing-filename-sort="2022-12-26-class-dict-yaml.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Dec 26, 2022</span>
@@ -419,8 +628,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2022-12-26-class-dict-yaml.html" class="title listing-title">👩‍💻class ⟷ dict ⟷ yaml</a>
 </td>
+
 </tr>
-<tr data-index="17" data-categories="dG9yY2gsdGVuc29yLGludmVydGVkLGNvZGU=" data-listing-date-sort="1671548400000" data-listing-file-modified-sort="1730721137496" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="198" data-listing-title-sort="👩‍💻torch.Tensor vs torch.tensor" data-listing-filename-sort="2022-12-21-torch-tensor-inverted.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="18" data-categories="dG9yY2glMkN0ZW5zb3IlMkNpbnZlcnRlZCUyQ2NvZGU=" data-listing-date-sort="1671548400000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="198" data-listing-title-sort="👩‍💻torch.Tensor vs torch.tensor" data-listing-filename-sort="2022-12-21-torch-tensor-inverted.ipynb" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Dec 21, 2022</span>
@@ -428,8 +639,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2022-12-21-torch-tensor-inverted.html" class="title listing-title">👩‍💻torch.Tensor vs torch.tensor</a>
 </td>
+
 </tr>
-<tr data-index="18" data-categories="bGludXgsZ3B1LGNvZGU=" data-listing-date-sort="1670943600000" data-listing-file-modified-sort="1730721137496" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="193" data-listing-title-sort="👩‍💻Linux GPU 상태 확인하기" data-listing-filename-sort="2022-12-14-gpu-status.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="19" data-categories="bGludXglMkNncHUlMkNjb2Rl" data-listing-date-sort="1670943600000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="193" data-listing-title-sort="👩‍💻Linux GPU 상태 확인하기" data-listing-filename-sort="2022-12-14-gpu-status.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Dec 14, 2022</span>
@@ -437,8 +650,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2022-12-14-gpu-status.html" class="title listing-title">👩‍💻Linux GPU 상태 확인하기</a>
 </td>
+
 </tr>
-<tr data-index="19" data-categories="cmwsdHJwbyxnYWUscmVjb3ZlcnkscXVhZHJ1cGVkLHBhcGVy" data-listing-date-sort="1665846000000" data-listing-file-modified-sort="1733971741818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1959" data-listing-title-sort="📃Robust Recovery Controller 리뷰" data-listing-filename-sort="2022-10-16-recovery.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="20" data-categories="cmwlMkN0cnBvJTJDZ2FlJTJDcmVjb3ZlcnklMkNxdWFkcnVwZWQlMkNwYXBlcg==" data-listing-date-sort="1665846000000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1959" data-listing-title-sort="📃Robust Recovery Controller 리뷰" data-listing-filename-sort="2022-10-16-recovery.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Oct 16, 2022</span>
@@ -446,8 +661,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2022-10-16-recovery.html" class="title listing-title">📃Robust Recovery Controller 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="20" data-categories="Z2VuZXJhdGl2ZSx2YWUscGFwZXI=" data-listing-date-sort="1664636400000" data-listing-file-modified-sort="1733971741818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2208" data-listing-title-sort="📃VAE 리뷰" data-listing-filename-sort="2022-10-02-vae.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="21" data-categories="Z2VuZXJhdGl2ZSUyQ3ZhZSUyQ3BhcGVy" data-listing-date-sort="1664636400000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2208" data-listing-title-sort="📃VAE 리뷰" data-listing-filename-sort="2022-10-02-vae.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Oct 2, 2022</span>
@@ -455,8 +672,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2022-10-02-vae.html" class="title listing-title">📃VAE 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="21" data-categories="YXV0b3JlZ3Jlc3NpdmUsZ2VuZXJhdGl2ZSxwYXBlcg==" data-listing-date-sort="1663340400000" data-listing-file-modified-sort="1733971741818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2441" data-listing-title-sort="📃WaveNet 리뷰" data-listing-filename-sort="2022-09-17-wavenet.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="22" data-categories="YXV0b3JlZ3Jlc3NpdmUlMkNnZW5lcmF0aXZlJTJDcGFwZXI=" data-listing-date-sort="1663340400000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2441" data-listing-title-sort="📃WaveNet 리뷰" data-listing-filename-sort="2022-09-17-wavenet.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Sep 17, 2022</span>
@@ -464,8 +683,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2022-09-17-wavenet.html" class="title listing-title">📃WaveNet 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="22" data-categories="Z25uLHN5c3RlbSBpZGVudGlmaWNhdGlvbixtcGMscmwscGFwZXI=" data-listing-date-sort="1659798000000" data-listing-file-modified-sort="1733971741818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2062" data-listing-title-sort="📃GN-Block 리뷰" data-listing-filename-sort="2022-08-07-gn-block.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="23" data-categories="Z25uJTJDc3lzdGVtJTIwaWRlbnRpZmljYXRpb24lMkNtcGMlMkNybCUyQ3BhcGVy" data-listing-date-sort="1659798000000" data-listing-file-modified-sort="1744702474715" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2062" data-listing-title-sort="📃GN-Block 리뷰" data-listing-filename-sort="2022-08-07-gn-block.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Aug 7, 2022</span>
@@ -473,8 +694,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2022-08-07-gn-block.html" class="title listing-title">📃GN-Block 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="23" data-categories="cXVhZHJ1cGVkLHJsLHJlZHEscGFwZXI=" data-listing-date-sort="1656169200000" data-listing-file-modified-sort="1733971741818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2534" data-listing-title-sort="📃Legged Robots that Keep on Learning 리뷰" data-listing-filename-sort="2022-06-26-keep-learning.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="24" data-categories="cXVhZHJ1cGVkJTJDcmwlMkNyZWRxJTJDcGFwZXI=" data-listing-date-sort="1656169200000" data-listing-file-modified-sort="1744702474715" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2534" data-listing-title-sort="📃Legged Robots that Keep on Learning 리뷰" data-listing-filename-sort="2022-06-26-keep-learning.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jun 26, 2022</span>
@@ -482,8 +705,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2022-06-26-keep-learning.html" class="title listing-title">📃Legged Robots that Keep on Learning 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="24" data-categories="Z25uLHJsLHBhcGVy" data-listing-date-sort="1654786800000" data-listing-file-modified-sort="1733971741818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3298" data-listing-title-sort="📃NerveNet 리뷰" data-listing-filename-sort="2022-06-10-NerveNet.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="25" data-categories="Z25uJTJDcmwlMkNwYXBlcg==" data-listing-date-sort="1654786800000" data-listing-file-modified-sort="1744702474715" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3298" data-listing-title-sort="📃NerveNet 리뷰" data-listing-filename-sort="2022-06-10-NerveNet.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jun 10, 2022</span>
@@ -491,8 +716,10 @@ window.Quarto = {
 <td>
 <a href="./posts/paper/2022-06-10-NerveNet.html" class="title listing-title">📃NerveNet 리뷰</a>
 </td>
+
 </tr>
-<tr data-index="25" data-categories="Z25uLHN0b3JhZ2U=" data-listing-date-sort="1609513200000" data-listing-file-modified-sort="1730721137568" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="356" data-listing-title-sort="🧩GNN Materials" data-listing-filename-sort="2021-01-02-GNN-materials.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="26" data-categories="Z25uJTJDc3RvcmFnZQ==" data-listing-date-sort="1609513200000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="356" data-listing-title-sort="🧩GNN Materials" data-listing-filename-sort="2021-01-02-GNN-materials.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jan 2, 2021</span>
@@ -500,8 +727,10 @@ window.Quarto = {
 <td>
 <a href="./posts/storage/2021-01-02-GNN-materials.html" class="title listing-title">🧩GNN Materials</a>
 </td>
+
 </tr>
-<tr data-index="26" data-categories="cHl0aG9uLGNvZGU=" data-listing-date-sort="1595170800000" data-listing-file-modified-sort="1733971741817" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="284" data-listing-title-sort="👩‍💻Import custom module" data-listing-filename-sort="2020-07-20-import-custom-module.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="27" data-categories="cHl0aG9uJTJDY29kZQ==" data-listing-date-sort="1595170800000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="284" data-listing-title-sort="👩‍💻Import custom module" data-listing-filename-sort="2020-07-20-import-custom-module.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jul 20, 2020</span>
@@ -509,8 +738,10 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2020-07-20-import-custom-module.html" class="title listing-title">👩‍💻Import custom module</a>
 </td>
+
 </tr>
-<tr data-index="27" data-categories="cmwsc3R1ZHksc3RvcmFnZQ==" data-listing-date-sort="1594911600000" data-listing-file-modified-sort="1736129102244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="313" data-listing-title-sort="🧩My Reinforcement Learning Roadmap" data-listing-filename-sort="2020-07-17-rl-study-roadmap.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="28" data-categories="cmwlMkNzdHVkeSUyQ3N0b3JhZ2U=" data-listing-date-sort="1594911600000" data-listing-file-modified-sort="1744702474719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="313" data-listing-title-sort="🧩My Reinforcement Learning Roadmap" data-listing-filename-sort="2020-07-17-rl-study-roadmap.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jul 17, 2020</span>
@@ -518,8 +749,10 @@ window.Quarto = {
 <td>
 <a href="./posts/storage/2020-07-17-rl-study-roadmap.html" class="title listing-title">🧩My Reinforcement Learning Roadmap</a>
 </td>
+
 </tr>
-<tr data-index="28" data-categories="bXVqb2NvLGNvZGU=" data-listing-date-sort="1594566000000" data-listing-file-modified-sort="1730721137496" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="184" data-listing-title-sort="👩‍💻Install Mujoco in Windows10" data-listing-filename-sort="2020-07-13-install-mujoco-win10.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+
+<tr data-index="29" data-categories="bXVqb2NvJTJDY29kZQ==" data-listing-date-sort="1594566000000" data-listing-file-modified-sort="1744702474623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="184" data-listing-title-sort="👩‍💻Install Mujoco in Windows10" data-listing-filename-sort="2020-07-13-install-mujoco-win10.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-date">Jul 13, 2020</span>
@@ -527,391 +760,263 @@ window.Quarto = {
 <td>
 <a href="./posts/code/2020-07-13-install-mujoco-win10.html" class="title listing-title">👩‍💻Install Mujoco in Windows10</a>
 </td>
+
 </tr>
+
 </tbody>
 </table>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
+<div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
       });
     }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
         }
-        return container.innerHTML
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -919,185 +1024,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
