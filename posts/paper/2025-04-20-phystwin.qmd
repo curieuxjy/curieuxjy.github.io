@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "📃PhysTwin 리뷰"
 description: Physics-Informed Reconstruction and Simulation of Deformable Objects from Videos
 date: "2025-04-20"

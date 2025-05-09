@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "📃Reskin-Anyskin 리뷰"
 description: 교체가능한 촉각센서
 date: "2025-05-05"

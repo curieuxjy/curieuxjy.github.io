@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "📃Robot Synesthesia 리뷰"
 description: In-Hand Manipulation with Visuotactile Sensing
 date: "2025-04-15"
