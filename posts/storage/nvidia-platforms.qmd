@@ -1,0 +1,441 @@
+---
+draft: true
+title: "📘NVIDIA 로보틱스 생태계 완전 정복"
+description: Omniverse, Isaac Sim, COSMOS, GR00T
+date: ""
+categories: [rl, storage]
+toc: true
+---
+
+
+엔비디아(NVIDIA)는 로보틱스, 시뮬레이션, AI의 발전을 위해 Omniverse 플랫폼 위에 여러 핵심 프로젝트를 구축해왔습니다. 이 글에서는 그 중에서도 핵심적인 4가지 프로젝트인 **Omniverse**, **Isaac Sim**, **COSMOS**, **GR00T**에 대해 알아보고, 각 프로젝트의 기술 스택, 연동 관계, 개발 환경 구성법까지 모두 정리합니다.
+
+
+## 🧭 전체 구성 개요
+
+```text
+[ Omniverse ]
+     |
+     ├── [ Isaac Sim ] ← 로봇/센서 시뮬레이션
+     │         ↑
+     │         └─ (훈련 환경 제공)
+     │
+     ├── [ COSMOS ]
+     │       └─ Isaac Sim 수천 개 실행
+     │       └─ GR00T 훈련
+     │
+     └── [ GR00T ]
+             └─ 로봇 행동 생성 / 학습
+```
+
+---
+
+## 1. Omniverse
+
+### 📌 개요
+
+* USD 기반의 3D 시뮬레이션 및 협업 플랫폼
+* 고품질 RTX 렌더링 및 물리 시뮬레이션 지원
+
+### 🔧 주요 기술 스택
+
+* **USD (Universal Scene Description)**
+* **PhysX 5**
+* **RTX Renderer, DLSS**
+* **Python API, C++ Extensions**
+* **Nucleus 서버 (파일 협업)**
+* **OmniGraph, Qt, Omni.UI**
+
+### 🔗 저장소
+
+* [NVIDIA-Omniverse GitHub](https://github.com/NVIDIA-Omniverse)
+
+---
+
+## 2. Isaac Sim
+
+### 📌 개요
+
+* Omniverse 기반의 로보틱스 시뮬레이터
+* 센서, 로봇 제어, 물리 시뮬레이션까지 포괄
+
+### 🔧 주요 기술 스택
+
+* **Omniverse 기반 (USD, PhysX, RTX)**
+* **Python API, ROS 2 통합**
+* **강화학습 지원 (Isaac Gym / RLlib)**
+* **도메인 랜덤화 및 시뮬레이션-to-실세계 전이**
+
+### 🔗 저장소
+
+* [isaac-sim GitHub](https://github.com/isaac-sim)
+* [Isaac Lab](https://github.com/isaac-sim/IsaacLab)
+
+### ⚙️ 설치 가이드
+
+* [Isaac Sim 공식 페이지](https://developer.nvidia.com/isaac-sim)
+* Ubuntu 20.04/22.04 + NVIDIA RTX GPU + 최소 32GB RAM 권장
+
+---
+
+## 3. COSMOS
+
+### 📌 개요
+
+* 대규모 시뮬레이션을 통한 RL 및 최적화 수행 프레임워크
+* Isaac Sim 인스턴스를 병렬로 실행해 학습
+
+### 🔧 주요 기술 스택
+
+* **Isaac Sim 병렬 실행**
+* **Ray / Ray Tune / PyTorch RL**
+* **NCCL / Docker / Kubernetes 연동**
+
+### 🔗 저장소
+
+* [NVIDIA/Cosmos](https://github.com/NVIDIA/Cosmos)
+* [Cosmos-Tokenizer](https://github.com/NVIDIA/Cosmos-Tokenizer)
+
+---
+
+## 4. GR00T
+
+### 📌 개요
+
+* 범용 로봇 제어 AI 모델 (GPT for robotics)
+* 자연어 → 행동 매핑 수행
+
+### 🔧 주요 기술 스택
+
+* **PyTorch 기반 Transformer**
+* **Behavior Cloning / RL / Diffusion Policy**
+* **Isaac Sim + COSMOS로 생성된 시뮬레이션 데이터 활용**
+* **Hugging Face 모델 제공**
+
+### 🔗 저장소
+
+* [Isaac-GR00T GitHub](https://github.com/NVIDIA/Isaac-GR00T)
+* [GR00T-N1-2B on Hugging Face](https://huggingface.co/nvidia/GR00T-N1-2B)
+
+---
+
+## 🔄 의존 및 포함 관계 정리
+
+| 요소        | 포함 관계 및 의존성 설명                                      |
+| --------- | --------------------------------------------------- |
+| Omniverse | 모든 프로젝트의 기반 플랫폼 (USD, RTX, PhysX)                   |
+| Isaac Sim | Omniverse 기반으로 구축됨. GR00T의 데이터 생성과 COSMOS에서의 실행에 필수 |
+| COSMOS    | Isaac Sim을 대규모로 실행해 GR00T 훈련 수행                     |
+| GR00T     | Isaac Sim + COSMOS로부터 학습 데이터를 받고 모델 학습 수행           |
+
+---
+
+## ✅ 마무리
+
+엔비디아는 Omniverse를 중심으로 Isaac Sim, COSMOS, GR00T를 연결하여 로보틱스와 AI를 통합한 생태계를 구축했습니다. 이 구조는 시뮬레이션에서 학습까지, 그리고 현실 적용까지를 한 흐름으로 통합해주는 점에서 매우 강력하며, 로봇공학의 미래를 가속화하고 있습니다.
+
+각 도구는 개별로도 활용 가능하지만, 함께 사용할 때 시너지가 가장 크며, 연구자, 개발자, 기업 모두에게 유용한 도구가 될 수 있습니다.
+
+
+
+엔비디아(NVIDIA)의 로보틱스 및 시뮬레이션 생태계는 여러 프로젝트로 구성되어 있으며, 각 프로젝트는 서로 긴밀히 연동되도록 설계되어 있습니다. 아래는 각 프로젝트에 대한 설명과 그들 간의 관계를 정리한 내용입니다.
+
+---
+
+## 🌐 1. **Omniverse**
+
+**설명:**
+
+* **NVIDIA Omniverse**는 **USD(Universal Scene Description)** 기반의 협업 3D 시뮬레이션 및 렌더링 플랫폼입니다.
+* 다양한 도구와 엔진(예: Maya, Blender, Unreal Engine 등)과 연결되어 실시간 공동작업, 디지털 트윈, 시뮬레이션 등을 가능하게 합니다.
+* Omniverse는 시뮬레이션, 로보틱스, 자율주행, 산업 디지털 트윈, 생성형 AI 등 다양한 분야의 기반 인프라로 작동합니다.
+
+**기능 요약:**
+
+* 실시간 협업/렌더링
+* RTX 기반 고품질 시각화
+* 시뮬레이션 가능
+* USD 기반 장면 구성 및 인터페이스
+
+---
+
+## 🤖 2. **Isaac Sim**
+
+**설명:**
+
+* **Isaac Sim**은 **Omniverse 기반**의 **로봇 시뮬레이터**입니다.
+* 로봇 제어, 센서 시뮬레이션, 환경 시뮬레이션 등을 지원하며, 로보틱스 연구/개발에 특화되어 있습니다.
+* **ROS 2**, **Python API**, **RL 툴킷** 등을 통합하여 로봇 시스템 개발을 실험할 수 있도록 돕습니다.
+
+**주요 기능:**
+
+* ROS 2 통합
+* 고정밀 물리 시뮬레이션 (PhysX)
+* Lidar, 카메라 등 센서 시뮬레이션
+* 강화학습, 도메인 랜덤화, synthetic data 생성
+
+**관계:**
+Isaac Sim은 **Omniverse의 애플리케이션 중 하나**입니다. 즉, Omniverse 위에서 작동하는 도메인 특화 시뮬레이터입니다.
+
+---
+
+## 🧠 3. **GR00T (Generalist Robot 00T)**
+
+**설명:**
+
+* **GR00T**는 2024년 GTC에서 발표된 **범용 로봇 제어 프레임워크 및 AI 모델**입니다.
+* LLM, RL, Behavior Cloning 등의 기술을 활용해 로봇이 **다양한 작업을 자연어로 이해하고 수행**하도록 학습합니다.
+* GR00T는 **Isaac Lab**에서 수집한 시뮬레이션 데이터를 학습하고, 다양한 로봇 플랫폼에 적용 가능합니다.
+
+**주요 개념:**
+
+* Foundation model for robotics
+* 단일 정책으로 다중 태스크 수행
+* 자연어 → 행동 매핑
+
+**관계:**
+
+* **Isaac Sim**을 통해 GR00T의 데이터셋을 생성
+* **Omniverse** 위에서 작동하는 시뮬레이션 환경 사용
+* **GR00T는 Isaac Sim의 AI 학습/추론 대상**이며, 결과를 실제 로봇에도 이식 가능
+
+---
+
+## 🌍 4. **Project COSMOS (Core Omniverse Simulation for Multi-agent Optimization at Scale)**
+
+**설명:**
+
+* **COSMOS**는 대규모 시뮬레이션 기반의 **강화학습 및 최적화 프레임워크**입니다.
+* 수천 개의 시뮬레이션 환경에서 동시에 학습을 수행하며, 학습 자동화/스케일링/분산을 지원합니다.
+* 주로 **GR00T 같은 범용 로봇 정책**을 학습시키는 데 사용됩니다.
+
+**특징:**
+
+* Isaac Sim 기반 다중 시뮬레이션 실행
+* GPU 분산 학습 최적화
+* 대규모 데이터 수집 및 정책 훈련
+
+**관계:**
+
+* COSMOS는 **Isaac Sim 인스턴스를 수천 개 실행**하여 강화학습을 수행
+* **GR00T의 훈련 플랫폼**
+* Omniverse의 배경 기술(USD, RTX 등)을 활용하여 대규모 시뮬레이션 운용
+
+---
+
+## 🔗 각 프로젝트 간 관계 정리
+
+| 프로젝트          | 역할                       | 연결 관계                               |
+| ------------- | ------------------------ | ----------------------------------- |
+| **Omniverse** | 시뮬레이션 및 협업 플랫폼 (기반 인프라)  | Isaac Sim과 COSMOS의 기반 시스템           |
+| **Isaac Sim** | 로보틱스 시뮬레이터 (Omniverse 앱) | GR00T 학습 환경 제공, COSMOS에서 활용         |
+| **GR00T**     | 범용 로봇 제어 AI 모델           | Isaac Sim으로 학습, COSMOS로 훈련          |
+| **COSMOS**    | 대규모 RL 학습 프레임워크          | Isaac Sim + Omniverse 기반, GR00T 훈련용 |
+
+---
+
+## 🧩 요약 다이어그램 (텍스트 버전)
+
+```
+[ Omniverse ]
+     |
+     ├── [ Isaac Sim ] ← 로봇/센서 시뮬레이션
+     │         ↑
+     │         └─ (훈련 환경 제공)
+     │
+     ├── [ COSMOS ]
+     │       └─ Isaac Sim 수천 개 실행
+     │       └─ GR00T 훈련
+     │
+     └── [ GR00T ]
+             └─ 로봇 행동 생성 / 학습
+```
+
+---
+
+필요하다면 각 프로젝트의 사용 예시나 기술 스택(예: USD, PhysX, PyTorch RL 등)도 추가로 정리해드릴 수 있어요.
+
+엔비디아의 Omniverse, Isaac Sim, COSMOS, GR00T는 각기 다른 목적에 맞게 구성된 프로젝트이지만, 공통적으로 고성능 시뮬레이션과 AI 학습을 위해 최신 기술 스택을 적극적으로 활용합니다. 아래에 각 프로젝트별 주요 기술 스택을 정리해 드립니다:
+
+---
+
+## 🌐 1. **Omniverse – 실시간 3D 시뮬레이션 플랫폼**
+
+| 구성 요소            | 기술 스택                                                                |
+| ---------------- | -------------------------------------------------------------------- |
+| **3D 데이터 교환**    | **USD (Universal Scene Description)** - Pixar에서 개발, Omniverse의 기반 포맷 |
+| **렌더링 엔진**       | **RTX Renderer**, **Path Tracing**, **DLSS**                         |
+| **물리 엔진**        | **PhysX 5** (NVIDIA 물리 시뮬레이션 라이브러리)                                  |
+| **확장성 및 커스터마이징** | **Python API**, **OmniKit SDK**, **C++ Extension**, **OmniGraph**    |
+| **네트워크 협업**      | Nucleus Server, Live Sync                                            |
+| **UI**           | Qt, USDView, Omni UI (Omni.UI)                                       |
+| **기타**           | MDL (Material Definition Language), RTX Audio, Audio2Face 등          |
+
+---
+
+## 🤖 2. **Isaac Sim – 로보틱스 시뮬레이터**
+
+| 구성 요소        | 기술 스택                                                 |
+| ------------ | ----------------------------------------------------- |
+| **기반 플랫폼**   | Omniverse (OmniKit, USD, RTX, PhysX 포함)               |
+| **로봇 제어**    | **Python API**, **C++ Extension 가능**                  |
+| **통합 시스템**   | **ROS 2**, **ROS 1 (Bridge 가능)**                      |
+| **물리 시뮬레이션** | **PhysX 5**, GPU 가속 기반                                |
+| **센서 시뮬레이션** | RGBD 카메라, Lidar, IMU, Semantic Sensor 등               |
+| **강화학습 지원**  | **Isaac Gym 기반 인터페이스** or RLlib, Stable Baselines3 연동 |
+| **도메인 랜덤화**  | 자동화된 파라미터 샘플링 및 변형 지원                                 |
+| **운영 환경**    | Linux (Ubuntu 20.04+), GPU 필수 (RTX)                   |
+
+---
+
+## ⚙️ 3. **COSMOS – 대규모 분산 시뮬레이션 학습 프레임워크**
+
+| 구성 요소           | 기술 스택                                                         |
+| --------------- | ------------------------------------------------------------- |
+| **시뮬레이터 실행**    | **수천 개 Isaac Sim 인스턴스 병렬 실행 (Headless Mode)**                 |
+| **강화학습**        | **RL Libraries**: RLHF, PPO, SAC, TD3, DDPG 등 (주로 PyTorch 기반) |
+| **분산 학습 스케줄링**  | **Ray / Ray Tune**, **NCCL**, Horovod (일부 가능성)                |
+| **데이터 수집 및 로깅** | Omniverse Replicator, TensorBoard, Weights & Biases           |
+| **컴퓨팅 리소스**     | 멀티-GPU / 멀티-노드 지원, GPU 클러스터 (DGX, GH200 등과 연동 가능)             |
+| **컨테이너 실행**     | Docker, Kubernetes (클러스터 환경일 경우)                              |
+| **연동 대상**       | GR00T 또는 사용자 정의 정책                                            |
+
+---
+
+## 🧠 4. **GR00T – 범용 로봇 AI 정책 모델**
+
+| 구성 요소        | 기술 스택                                                  |
+| ------------ | ------------------------------------------------------ |
+| **기반 모델**    | **LLM (GPT-like)** + **BC / RL / IL / Diffusion** 모델   |
+| **학습 방식**    | Multi-modal 학습 (언어, 행동, 센서) + Simulation-to-Real       |
+| **프레임워크**    | **PyTorch**, 일부 JAX 실험                                 |
+| **시뮬레이션 환경** | **Isaac Sim + COSMOS** 기반 대규모 시뮬레이션 데이터                |
+| **정책 구조**    | Transformer, Diffusion Policy, Behavior Cloning 등      |
+| **데이터셋**     | **Isaac Orbit**, **Isaac Lab**, **RLBench**, 자체 수집 데이터 |
+| **추론 연동**    | 자연어 → 행동 생성, 로봇 코드로 직접 연결 (ROS 2 또는 직접 API)            |
+| **실제 적용**    | Allegro, Digit, UR5e, Franka 등 실제 로봇에 이식 가능            |
+
+---
+
+## 🔗 요약 표
+
+| 프로젝트          | 주요 기술 스택 요약                                                         |
+| ------------- | ------------------------------------------------------------------- |
+| **Omniverse** | USD, RTX, PhysX, Python API, Nucleus, Qt                            |
+| **Isaac Sim** | Omniverse 기반, ROS 2, Python API, 센서/로봇 시뮬, RL                       |
+| **COSMOS**    | 분산 시뮬레이션, Ray/RLlib, Isaac Sim 병렬, PyTorch                          |
+| **GR00T**     | PyTorch, Transformer, Behavior Cloning, Diffusion, Isaac Sim 기반 데이터 |
+
+---
+
+필요하시면 각 프로젝트를 위한 **개발 환경 구성 가이드(Docker, GPU, CUDA, ROS 등)** 도 제공해드릴 수 있어요.
+
+
+[![Isaac Sim - Robotics Simulation and Synthetic Data | NVIDIA Developer](https://tse2.mm.bing.net/th?id=OIP.aBdBfuHeoPLvE4JNM5le_gHaEK\&pid=Api)](https://developer.nvidia.com/isaac/sim?ncid=ref-dev-694675)
+
+NVIDIA의 주요 로보틱스 및 시뮬레이션 프로젝트인 **Omniverse**, **Isaac Sim**, **COSMOS**, **GR00T**에 대한 대표 GitHub 저장소와 개발 환경 구성 가이드를 아래에 정리해 드립니다.
+
+---
+
+## 🔗 대표 GitHub 저장소
+
+### 1. **Omniverse**
+
+* **공식 저장소**: [NVIDIA-Omniverse](https://github.com/NVIDIA-Omniverse)
+* **Blueprint 예제**: [Omniverse Blueprints](https://github.com/NVIDIA-Omniverse-blueprints)([GitHub][1], [GitHub][2])
+
+### 2. **Isaac Sim**
+
+* **공식 저장소**: [isaac-sim](https://github.com/isaac-sim)
+* **Isaac Lab (로봇 학습 프레임워크)**: [IsaacLab](https://github.com/isaac-sim/IsaacLab)([isaac-sim.github.io][3], [GitHub][4])
+
+### 3. **COSMOS**
+
+* **이전 저장소**: [NVIDIA/Cosmos](https://github.com/NVIDIA/Cosmos)
+* **이전 저장소**: [NVIDIA/Cosmos-Tokenizer](https://github.com/NVIDIA/Cosmos-Tokenizer)([GitHub][5])
+
+### 4. **GR00T**
+
+* **공식 저장소**: [NVIDIA/Isaac-GR00T](https://github.com/NVIDIA/Isaac-GR00T)
+* **모델 다운로드 (Hugging Face)**: [GR00T-N1-2B](https://huggingface.co/nvidia/GR00T-N1-2B)([GitHub][6], [Hugging Face][7])
+
+---
+
+## 🛠️ 개발 환경 구성 가이드
+
+### 1. **Omniverse**
+
+* **설치 방법**:
+
+  * [Omniverse 다운로드 페이지](https://developer.nvidia.com/omniverse/download)에서 설치 프로그램을 다운로드합니다.
+  * 설치 후, Omniverse Launcher를 통해 다양한 애플리케이션(예: Create, Code, Isaac Sim 등)을 설치할 수 있습니다.([GitHub][2])
+
+* **개발 환경 설정**:
+
+  * [Omniverse Workflows 문서](https://docs.omniverse.nvidia.com/workflows/latest/extensions/environment_configuration.html)를 참고하여 개발 환경을 구성합니다.([Omniverse Documentation][8])
+
+### 2. **Isaac Sim & Isaac Lab**
+
+* **설치 방법**:
+
+  * [Isaac Sim 다운로드 페이지](https://developer.nvidia.com/isaac-sim)에서 설치 파일을 받거나, pip를 통해 설치할 수 있습니다.
+  * Isaac Lab은 [IsaacLab GitHub 저장소](https://github.com/isaac-sim/IsaacLab)를 클론하여 설치합니다.([NVIDIA Developer][9], [GitHub][4])
+
+* **시스템 요구 사항**:
+
+  * Ubuntu 20.04 또는 22.04, Windows 10/11
+  * NVIDIA RTX GPU (최소 16GB VRAM 권장)
+  * 최소 32GB RAM([isaac-sim.github.io][3])
+
+* **설치 가이드**:
+
+  * [Isaac Lab 설치 문서](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html)를 참고하여 설치를 진행합니다.([isaac-sim.github.io][3])
+
+### 3. **COSMOS**
+
+* **설치 방법**:
+
+  * 이전 저장소인 [NVIDIA/Cosmos](https://github.com/NVIDIA/Cosmos)에서 Dockerfile과 설치 스크립트를 참고하여 설치할 수 있습니다.
+  * 현재는 새로운 저장소로 이전되었으므로, 최신 정보는 [nvidia-cosmos](https://github.com/nvidia-cosmos) 조직의 저장소를 확인하시기 바랍니다.([GitHub][10])
+
+* **시스템 요구 사항**:
+
+  * 멀티-GPU 환경 (예: NVIDIA A100, H100 등)
+  * Docker 및 Kubernetes 환경
+
+### 4. **GR00T**
+
+* **설치 방법**:
+
+  * [Isaac-GR00T GitHub 저장소](https://github.com/NVIDIA/Isaac-GR00T)를 클론하여 설치합니다.
+  * 사전 학습된 모델은 [Hugging Face](https://huggingface.co/nvidia/GR00T-N1-2B)에서 다운로드할 수 있습니다.([GitHub][6], [Hugging Face][7])
+
+* **시스템 요구 사항**:
+
+  * Python 3.8 이상
+  * PyTorch 2.x
+  * CUDA 11 이상을 지원하는 NVIDIA GPU
+
+* **설치 가이드**:
+
+  * 저장소의 `README.md` 파일에 상세한 설치 및 사용 방법이 안내되어 있습니다.
+
+---
+
+각 프로젝트의 설치 및 개발 환경 구성은 시스템 사양과 목적에 따라 달라질 수 있습니다. 위의 가이드를 참고하여 필요한 환경을 구축하시기 바랍니다. 추가적인 도움이 필요하시면 언제든지 문의해주세요.
+
+[1]: https://github.com/NVIDIA-Omniverse-blueprints/synthetic-manipulation-motion-generation?utm_source=chatgpt.com "NVIDIA-Omniverse-blueprints/synthetic-manipulation-motion ..."
+[2]: https://github.com/NVIDIA-Omniverse-blueprints?utm_source=chatgpt.com "NVIDIA Omniverse Blueprints - GitHub"
+[3]: https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html?utm_source=chatgpt.com "Local Installation — Isaac Lab Documentation"
+[4]: https://github.com/isaac-sim/IsaacLab?utm_source=chatgpt.com "isaac-sim/IsaacLab: Unified framework for robot learning ... - GitHub"
+[5]: https://github.com/NVIDIA/Cosmos-Tokenizer/pulls?utm_source=chatgpt.com "Pull requests · NVIDIA/Cosmos-Tokenizer - GitHub"
+[6]: https://github.com/NVIDIA/Isaac-GR00T?utm_source=chatgpt.com "NVIDIA Isaac GR00T N1 is the world's first open foundation ... - GitHub"
+[7]: https://huggingface.co/nvidia/GR00T-N1-2B?utm_source=chatgpt.com "nvidia/GR00T-N1-2B - Hugging Face"
+[8]: https://docs.omniverse.nvidia.com/workflows/latest/extensions/environment_configuration.html?utm_source=chatgpt.com "Set Up Your Development Environment — Omniverse Workflows"
+[9]: https://developer.nvidia.com/isaac-sim?utm_source=chatgpt.com "NVIDIA Isaac Sim | NVIDIA Developer"
+[10]: https://github.com/NVIDIA/Cosmos?utm_source=chatgpt.com "NVIDIA/Cosmos: New repo collection for NVIDIA Cosmos ... - GitHub"
+
+
+# Reference
+
+- https://chatgpt.com/share/68352a2c-d758-800b-b98b-a3c840e7f838
