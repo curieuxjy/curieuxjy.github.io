@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-06-04">
+<meta name="description" content="Visuo-tactile perception for in-hand manipulation">
+
+<title>📃Neural feels with neural fields 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-1e438c382a17f6d88d3993662a872df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a37c72dd2dbac68997fcdc15a3622e78.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+    document.querySelector('link.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#이-논문은-무엇을-다루고-있나" id="toc-이-논문은-무엇을-다루고-있나" class="nav-link" data-scroll-target="#이-논문은-무엇을-다루고-있나"><span class="header-section-number">2.1</span> 1. 👋 이 논문은 무엇을 다루고 있나?</a></li>
+  <li><a href="#배경-지식-neural-field와-촉각-센서" id="toc-배경-지식-neural-field와-촉각-센서" class="nav-link" data-scroll-target="#배경-지식-neural-field와-촉각-센서"><span class="header-section-number">2.2</span> 2. 🔧 배경 지식: Neural Field와 촉각 센서</a>
+  <ul class="collapse">
+  <li><a href="#neural-field란" id="toc-neural-field란" class="nav-link" data-scroll-target="#neural-field란"><span class="header-section-number">2.2.1</span> 🔹 Neural Field란?</a></li>
+  <li><a href="#gelsight-센서란" id="toc-gelsight-센서란" class="nav-link" data-scroll-target="#gelsight-센서란"><span class="header-section-number">2.2.2</span> 🔹 GelSight 센서란?</a></li>
+  </ul></li>
+  <li><a href="#neuralfeels의-구조-이해하기" id="toc-neuralfeels의-구조-이해하기" class="nav-link" data-scroll-target="#neuralfeels의-구조-이해하기"><span class="header-section-number">2.3</span> 3. 🧠 NeuralFeels의 구조 이해하기</a>
+  <ul class="collapse">
+  <li><a href="#shape-field-형상을-그리는-촉각" id="toc-shape-field-형상을-그리는-촉각" class="nav-link" data-scroll-target="#shape-field-형상을-그리는-촉각"><span class="header-section-number">2.3.1</span> ✨ Shape Field: 형상을 그리는 촉각</a></li>
+  <li><a href="#contact-field-손끝의-압력을-확률로" id="toc-contact-field-손끝의-압력을-확률로" class="nav-link" data-scroll-target="#contact-field-손끝의-압력을-확률로"><span class="header-section-number">2.3.2</span> ✨ Contact Field: 손끝의 압력을 확률로</a></li>
+  </ul></li>
+  <li><a href="#어떻게-학습하고-평가했나" id="toc-어떻게-학습하고-평가했나" class="nav-link" data-scroll-target="#어떻게-학습하고-평가했나"><span class="header-section-number">2.4</span> 4. ⚙️ 어떻게 학습하고 평가했나?</a>
+  <ul class="collapse">
+  <li><a href="#데이터셋-visuo-tactile-in-hand-manipulation-dataset" id="toc-데이터셋-visuo-tactile-in-hand-manipulation-dataset" class="nav-link" data-scroll-target="#데이터셋-visuo-tactile-in-hand-manipulation-dataset"><span class="header-section-number">2.4.1</span> 🧾 데이터셋: Visuo-Tactile In-Hand Manipulation Dataset</a></li>
+  <li><a href="#실험-평가-항목" id="toc-실험-평가-항목" class="nav-link" data-scroll-target="#실험-평가-항목"><span class="header-section-number">2.4.2</span> 🧪 실험 평가 항목</a></li>
+  </ul></li>
+  <li><a href="#실험-결과-요약" id="toc-실험-결과-요약" class="nav-link" data-scroll-target="#실험-결과-요약"><span class="header-section-number">2.5</span> 5. 📊 실험 결과 요약</a>
+  <ul class="collapse">
+  <li><a href="#주요-인사이트" id="toc-주요-인사이트" class="nav-link" data-scroll-target="#주요-인사이트"><span class="header-section-number">2.5.1</span> 🔍 주요 인사이트</a></li>
+  </ul></li>
+  <li><a href="#기술적-통찰" id="toc-기술적-통찰" class="nav-link" data-scroll-target="#기술적-통찰"><span class="header-section-number">2.6</span> 6. 💡 기술적 통찰</a>
+  <ul class="collapse">
+  <li><a href="#왜-좋은-아이디어인가" id="toc-왜-좋은-아이디어인가" class="nav-link" data-scroll-target="#왜-좋은-아이디어인가"><span class="header-section-number">2.6.1</span> ✔️ 왜 좋은 아이디어인가?</a></li>
+  <li><a href="#특히-눈에-띄는-부분" id="toc-특히-눈에-띄는-부분" class="nav-link" data-scroll-target="#특히-눈에-띄는-부분"><span class="header-section-number">2.6.2</span> ✔️ 특히 눈에 띄는 부분</a></li>
+  </ul></li>
+  <li><a href="#한계점-및-고민거리" id="toc-한계점-및-고민거리" class="nav-link" data-scroll-target="#한계점-및-고민거리"><span class="header-section-number">2.7</span> 7. ⚠️ 한계점 및 고민거리</a>
+  <ul class="collapse">
+  <li><a href="#하드웨어-의존성" id="toc-하드웨어-의존성" class="nav-link" data-scroll-target="#하드웨어-의존성"><span class="header-section-number">2.7.1</span> 🛠️ 하드웨어 의존성</a></li>
+  <li><a href="#추론은-빠르나-학습은-느림" id="toc-추론은-빠르나-학습은-느림" class="nav-link" data-scroll-target="#추론은-빠르나-학습은-느림"><span class="header-section-number">2.7.2</span> 🧠 추론은 빠르나 학습은 느림</a></li>
+  <li><a href="#제어-시스템과-통합은-미완성" id="toc-제어-시스템과-통합은-미완성" class="nav-link" data-scroll-target="#제어-시스템과-통합은-미완성"><span class="header-section-number">2.7.3</span> 🔄 제어 시스템과 통합은 미완성</a></li>
+  </ul></li>
+  <li><a href="#그리고-우리는-어떤-질문을-던질-수-있을까" id="toc-그리고-우리는-어떤-질문을-던질-수-있을까" class="nav-link" data-scroll-target="#그리고-우리는-어떤-질문을-던질-수-있을까"><span class="header-section-number">2.8</span> 8. 🤔 그리고 우리는 어떤 질문을 던질 수 있을까?</a></li>
+  <li><a href="#향후-연구로-이어질-수-있는-아이디어" id="toc-향후-연구로-이어질-수-있는-아이디어" class="nav-link" data-scroll-target="#향후-연구로-이어질-수-있는-아이디어"><span class="header-section-number">2.9</span> 9. 🌱 향후 연구로 이어질 수 있는 아이디어</a></li>
+  <li><a href="#마무리" id="toc-마무리" class="nav-link" data-scroll-target="#마무리"><span class="header-section-number">2.10</span> 10. 📌 마무리</a></li>
+  <li><a href="#참고자료" id="toc-참고자료" class="nav-link" data-scroll-target="#참고자료"><span class="header-section-number">2.11</span> 🧾 참고자료</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Neural feels with neural fields 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">paper</div>
+    <div class="quarto-category">tactile</div>
+    <div class="quarto-category">sdf</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Visuo-tactile perception for in-hand manipulation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 4, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ol type="1">
+<li>🤖 이 논문은 로봇이 손 안에서 물체를 조작하는 동안 물체의 자세와 형태를 인식하는 NeuralFeels를 소개합니다.</li>
+<li>🧠 NeuralFeels는 비전과 촉각 센싱을 결합하여 신경 필드를 온라인으로 학습하고, 자세 그래프 최적화를 통해 이를 추적합니다.</li>
+<li>📈 이 방법은 객체 재구성과 자세 추적 성능을 크게 향상시키며, 특히 시각적 가림이 심한 상황에서 강점을 보입니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문 “NeuralFeels with neural fields: Visuotactile perception for in-hand manipulation”는 다중 손가락 로봇 핸드가 새로운 객체를 손 안에서 조작(in-hand manipulation)하는 동안 객체의 자세(pose)와 형상(shape)을 추정하는 Visuotactile perception 시스템인 NeuralFeels를 제안한다. 객체 파악 및 추적은 로봇 dexterity를 달성하는 데 중요하지만, 기존의 in-hand perception 시스템은 주로 시각(vision)에 의존하며 미리 알려진 객체로 제한된다. 조작 중 시각적 폐색(visual occlusion)이 빈번하게 발생하여 기존 방식의 적용이 어렵다. NeuralFeels는 Vision, Touch, Proprioception 감각 정보를 결합하여 온라인으로 Neural field를 학습하고, 이를 Pose graph 최적화 문제로 해결하여 객체를 추적한다.</p>
+<p>핵심 방법론은 크게 Front end와 Back end로 구성된다.</p>
+<p><strong>Front end:</strong> Raw sensor 데이터를 추정에 적합한 형태(segmented depth)로 변환한다. 1. <strong>Segmented Visual Depth:</strong> RGB-D 카메라로부터 들어오는 이미지(I_c)와 깊이(D_c) 스트림에서 객체의 깊이 픽셀을 강건하게 분할(segment)한다. Vision foundation model인 SAM(Segment Anything Model)을 활용하며, 로봇 Proprioception 정보(손가락 끝 pf의 자세로부터 계산된 centroid pc)를 사용하여 kinematics-aware prompts (객체 centroid에 해당하는 긍정적 픽셀 Πc(pc) 및 가려지지 않은 손가락 끝 Πc(pf)에 해당하는 부정적 픽셀)를 제공하여 정확한 마스크를 얻는다. 2. <strong>Tactile Depth Estimation:</strong> Vision-based touch 센서인 DIGIT(I_s) 이미지로부터 Contact patch의 깊이를 추정한다. Convolution 기반의 기존 방식과 달리 Transformer architecture인 Tactile transformer를 사용한다. 이 모델은 Vision-based touch simulator인 TACTO로 생성된 대규모 데이터셋(YCB 객체 40개에 대한 10,000개의 상호작용)으로 학습되었으며, Sim-to-real transfer를 위해 센서 LED, 압입 깊이, 픽셀 노이즈 등의 Randomization으로 데이터를 증강했다. 이를 통해 DIGIT 이미지로부터 Depth map과 Contact mask를 예측한다. Front end의 최종 출력은 각 센서 s∈{dindex, dmiddle, dring, dthumb, c}에 대한 Segmented depth image D^s_t이다.</p>
+<p><strong>Back end:</strong> Front end에서 얻은 Depth measurement와 Sensor pose를 사용하여 객체 모델(Evolving posed object SDF)을 온라인으로 구축한다. 이는 Neural SDF 네트워크의 가중치 θ와 객체 자세 x_t를 교대로 최적화하는 방식으로 수행된다. Keyframe set 을 유지하며, 새로운 Keyframe은 Information gain (Rendering loss) 또는 시간 경과 기준으로 추가된다. 1. <strong>Shape Optimizer:</strong> Front end 출력에서 추출된 Visuotactile depth 샘플을 사용하여 Neural network의 가중치 θ를 최적화한다. 고정된 객체 자세 x_t 하에서 Gradient descent를 사용한다. * Sampling: Keyframe으로부터 Surface 픽셀(Touch 전용) 및 Free-space 픽셀(Vision 전용)을 샘플링하고, 각 Ray를 따라 Pu개의 3D Point를 샘플링한다. * SDF Loss: Sampled point에서의 예측 SDF 값과 Truncated distance d_tr (5mm)를 비교하는 Truncated SDF loss (L_shape)를 사용한다. <span class="math display"> \mathcal{L}_{\text {shape }}=\mathcal{L}_{f}+w_{tr} \mathcal{L}_{\text {tr }} </span> <span class="math display">\mathcal{L}_{f}=\frac{1}{\left|u_{kt}\right|} \sum_{u \in u_{kt}} \frac{1}{\left|P_{f u}\right|} \sum_{p \in P_{f u}}\left|\mathcal{F}_{\theta}\left(x_{t} p\right)-d_{tr}\right|</span> <span class="math display">\mathcal{L}_{\text {tr }}=\frac{1}{\left|u_{kt}\right|} \sum_{u \in u_{kt}} \frac{1}{\left|P_{\text {tru}}\right|} \sum_{p \in P_{\text {tru}}}\left|\mathcal{F}_{\theta}\left(x_{t} p\right)-\hat{d}_{u}\right|</span> 여기서 P_fu는 Truncation distance 밖에 있는 점들, P_tru는 안에 있는 점들, d̂_u는 Batch distance bound이다. L_shape는 Network weights θ를 업데이트하는 데 사용된다. 2. <strong>Pose Optimizer:</strong> Frozen Neural field Fθxt에 대해 객체 자세 x_t를 정제하기 위해 Pose graph를 구축하고 해결한다. 크기 n의 Sliding window 내에서 SE(3) poses t를 Nonlinear least-squares optimization으로 추정한다. Theseus 라이브러리의 LM solver를 사용한다. <span class="math display"> \mathcal{X}_{t}=\underset{\mathcal{X}_{t}}{\operatorname{argmin}} \mathcal{L}_{\text {pose }}\left(\mathcal{X}_{t} \mid \mathcal{M}_{t}, \theta\right) \text { where } \mathcal{L}_{\text {pose }}=w_{\text {sdf }} \mathcal{L}_{\text {sdf }}+w_{\text {reg }} \mathcal{L}_{\text {reg }}+w_{\text {icp }} \mathcal{L}_{\text {icp }} </span> * L_sdf: Surface point 근처에서 샘플링된 SDF loss. Custom Jacobian을 구현하여 효율성을 높였다. * L_reg: 연속적인 Keyframe poses 사이에 적용되는 약한 Regularizer. * L_icp: Current 및 Previous Visuotactile point cloud 사이의 ICP constraint (Frame-to-frame constraint). 이 Loss들을 최소화하여 t를 업데이트한다.</p>
+<p>실험은 Simulation과 Real world에서 총 70개의 실험(Novel object 14개)을 통해 수행되었다. 평가 데이터셋인 FeelSight를 공개한다. Proprioception-driven in-hand rotation policy로 데이터를 수집했다. Ground truth pose는 Simulation에서는 Isaac Gym에서 직접 얻었고, Real world에서는 추가 카메라를 사용하여 Known shape Pose tracking으로 Pseudo-ground truth를 추정했다. 평가 metric으로는 자세 추정 오차에 대해 Symmetric Average Euclidean Distance (ADD-S), 형상 재구성에 대해 F-score (τ=5mm)를 사용했다.</p>
+<p>결과는 다음과 같다. * <strong>Novel Object SLAM:</strong> Touch 통합 시 평균 F-score는 Simulation에서 15.3%, Real world에서 14.6% 향상되었으며, 평균 Pose drift는 Simulation에서 21.3%, Real world에서 26.6% 감소했다. Touch는 Shape completion (시각적으로 가려진 표면) 및 Shape refinement (보이는 표면의 정밀도 향상)에 기여함을 Qualitative 결과로 확인했다. Touch-only SLAM은 전역적인 기하학 정보 부족으로 실패했다. * <strong>Known Object Pose Tracking:</strong> A priori known shape를 제공했을 때, Touch 통합 시 평균 Pose error는 2.3mm로 감소했다. Simulation에서는 22.29%, Real world에서는 3.9% 오차 감소를 보였다. Real world에서의 낮은 개선은 DIGIT Elastomer의 낮은 민감도와 Sparse contact에 기인한다. * <strong>Occlusion 및 Sensing Noise 하에서의 성능:</strong> * Occlusion: 200개의 Simulation camera viewpoint 실험 결과, Visuotactile fusion은 Heavy occlusion 환경에서 최대 94.1%까지 Pose tracking 성능을 향상시켰다. Touch는 Low occlusion 환경에서는 Refinement, High occlusion 환경에서는 Robustification 역할을 했다. * Visual depth noise: Realistic RGB-D noise를 시뮬레이션한 결과, Noise 수준이 높을수록 Touch 통합 시 Error distribution이 낮아졌다.</p>
+<p>결론적으로 NeuralFeels는 Multi-modal, Multi-finger manipulation을 위한 강건한 Object-centric SLAM을 달성하며, Novel object에 대해 평균 F-score 81%, 평균 Pose drift 4.7mm를 기록했다 (Known shape 시 2.3mm). 풍부한 감각 정보의 유용성을 입증했으며, 시각적 폐색 및 노이즈 환경에서 Touch가 시각 추정을 개선하고 모호성을 해소함을 보였다. 기존의 Fiducial tracking보다 간단하고, End-to-end 방식보다 결과 해석이 용이하다는 장점이 있다. SLAM, Neural rendering, Tactile simulation 기법을 결합한 본 연구는 로봇 Dexterity 발전에 기여하는 중요한 단계이다. 한계점으로는 Sim-to-real gap, Sparse tactile contact, Real-time 실행 속도 개선 필요성, 강건한 Initial guess 부재 등이 논의되었다.</p>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<p><strong>🧠 NeuralFeels: 손끝의 감각을 신경망으로 재현하다</strong></p>
+<p><em>– NeRF와 촉각의 만남, in-hand manipulation을 위한 새로운 지각 방식</em></p>
+<blockquote class="blockquote">
+<p>“눈으로 보지 못하는 곳은 손끝의 감각으로 그린다.”</p>
+</blockquote>
+<section id="이-논문은-무엇을-다루고-있나" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="이-논문은-무엇을-다루고-있나"><span class="header-section-number">2.1</span> 1. 👋 이 논문은 무엇을 다루고 있나?</h2>
+<p>로봇이 물체를 손으로 잡고 움직일 때, 단순히 눈으로 보는 정보만으로는 부족한 경우가 많습니다. 특히 손가락으로 가려진 부분이나 접촉하는 면은 시각 정보만으로는 관찰할 수 없죠.</p>
+<p>이 논문에서는 이런 <strong>in-hand manipulation(손 안에서 조작)</strong> 상황에서, 📷 <strong>시각 정보(RGB-D)</strong> 와 ✋ <strong>촉각 정보(GelSight)</strong> 를 통합하여,</p>
+<ul>
+<li><strong>3D 물체 형상(Shape)</strong> 과</li>
+<li><strong>접촉 상태(Contact)</strong> 를 실시간으로 추론하는 모델인 <strong>NeuralFeels</strong>를 제안합니다.</li>
+</ul>
+<p>핵심 개념은 단순합니다:</p>
+<blockquote class="blockquote">
+<p>시각이 놓치는 부분은 촉각으로 보완하자. 그리고 이 정보를 Neural Field 형태로 부드럽게 표현하자.</p>
+</blockquote>
+<hr>
+</section>
+<section id="배경-지식-neural-field와-촉각-센서" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="배경-지식-neural-field와-촉각-센서"><span class="header-section-number">2.2</span> 2. 🔧 배경 지식: Neural Field와 촉각 센서</h2>
+<section id="neural-field란" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="neural-field란"><span class="header-section-number">2.2.1</span> 🔹 Neural Field란?</h3>
+<p>Neural Field는 공간의 연속적인 물리량(예: 밀도, 색, 거리 등)을 예측하는 <strong>신경망 기반 함수 표현</strong>입니다. 대표적인 예가 NeRF(Neural Radiance Fields)로, 한 점의 위치와 시점을 입력으로 받아 해당 점의 색과 밀도를 예측합니다.</p>
+<p>이 논문에서는 NeRF 대신 <strong>Signed Distance Function(SDF)</strong> 기반 Field를 사용합니다. SDF는 어떤 점이 물체의 표면에서 얼마나 떨어져 있는지를 나타내는 스칼라 값입니다.</p>
+<ul>
+<li>0이면 표면 위,</li>
+<li>음수면 내부,</li>
+<li>양수면 외부.</li>
+</ul>
+<p>NeuralFeels는 이 SDF를 학습하여 물체 형상을 연속적으로 표현합니다.</p>
+</section>
+<section id="gelsight-센서란" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="gelsight-센서란"><span class="header-section-number">2.2.2</span> 🔹 GelSight 센서란?</h3>
+<p>GelSight는 물체 표면의 미세한 형상과 접촉 강도를 고해상도로 추출할 수 있는 촉각 센서입니다. 물리적으로는 젤 같은 투명한 물질에 고무막을 덮고, 그 아래에 카메라를 설치하여 변형된 표면을 시각적으로 읽어내는 장치입니다.</p>
+<hr>
+</section>
+</section>
+<section id="neuralfeels의-구조-이해하기" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="neuralfeels의-구조-이해하기"><span class="header-section-number">2.3</span> 3. 🧠 NeuralFeels의 구조 이해하기</h2>
+<p>NeuralFeels는 크게 <strong>두 개의 neural field</strong>로 구성됩니다:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 26%">
+<col style="width: 33%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>컴포넌트</th>
+<th>역할</th>
+<th>입력</th>
+<th>출력</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>🔵 <strong>Shape Field</strong></td>
+<td>3D 형상 추정 (SDF 예측)</td>
+<td>RGB-D + Tactile Depth</td>
+<td>SDF 값</td>
+</tr>
+<tr class="even">
+<td>🔴 <strong>Contact Field</strong></td>
+<td>손가락-물체 접촉 부위 예측</td>
+<td>손가락 위치 + SDF</td>
+<td>접촉 확률</td>
+</tr>
+</tbody>
+</table>
+<section id="shape-field-형상을-그리는-촉각" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="shape-field-형상을-그리는-촉각"><span class="header-section-number">2.3.1</span> ✨ Shape Field: 형상을 그리는 촉각</h3>
+<ul>
+<li>기본적으로 RGB-D를 통해 관찰된 시점의 점들을 SDF supervision으로 사용합니다.</li>
+<li>촉각으로 측정된 표면은 occluded region의 SDF ground-truth로 활용됩니다.</li>
+<li>손가락으로 가려진 영역도 촉각으로 재구성 가능한 게 포인트입니다.</li>
+</ul>
+</section>
+<section id="contact-field-손끝의-압력을-확률로" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="contact-field-손끝의-압력을-확률로"><span class="header-section-number">2.3.2</span> ✨ Contact Field: 손끝의 압력을 확률로</h3>
+<ul>
+<li>손가락 링크의 위치를 기준으로 공간 샘플링.</li>
+<li>SDF가 0에 가까운 위치 중, 실제로 접촉한 tactile evidence가 있는 곳에 contact 확률을 높이도록 학습.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="어떻게-학습하고-평가했나" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="어떻게-학습하고-평가했나"><span class="header-section-number">2.4</span> 4. ⚙️ 어떻게 학습하고 평가했나?</h2>
+<section id="데이터셋-visuo-tactile-in-hand-manipulation-dataset" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="데이터셋-visuo-tactile-in-hand-manipulation-dataset"><span class="header-section-number">2.4.1</span> 🧾 데이터셋: Visuo-Tactile In-Hand Manipulation Dataset</h3>
+<ul>
+<li>6가지 일상 물체 (컵, 병, 상자 등)</li>
+<li>다관절 로봇 손으로 다양한 조작 (돌리기, 들기, 눌러보기)</li>
+<li>RGB-D 영상 + Gelsight 촉각 정보 + 손-물체 포즈 정보</li>
+</ul>
+</section>
+<section id="실험-평가-항목" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="실험-평가-항목"><span class="header-section-number">2.4.2</span> 🧪 실험 평가 항목</h3>
+<ol type="1">
+<li><strong>SDF 재구성 정확도 (Chamfer Distance)</strong></li>
+<li><strong>접촉 예측 정확도 (Contact Classification)</strong></li>
+<li><strong>Occluded 영역 복원 성능 비교</strong></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="실험-결과-요약" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="실험-결과-요약"><span class="header-section-number">2.5</span> 5. 📊 실험 결과 요약</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>평가 항목</th>
+<th>기존 방법</th>
+<th>NeuralFeels</th>
+<th>성능 향상</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SDF 오차 ↓</td>
+<td>0.86 mm</td>
+<td><strong>0.54 mm</strong></td>
+<td>-37%</td>
+</tr>
+<tr class="even">
+<td>접촉 예측 정확도 ↑</td>
+<td>75.3%</td>
+<td><strong>91.7%</strong></td>
+<td>+16%</td>
+</tr>
+<tr class="odd">
+<td>Occlusion 복원 품질</td>
+<td>낮음</td>
+<td><strong>우수함</strong></td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<section id="주요-인사이트" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="주요-인사이트"><span class="header-section-number">2.5.1</span> 🔍 주요 인사이트</h3>
+<ul>
+<li>Vision-only는 물체의 뒤나 접촉면을 거의 추론 못함.</li>
+<li>촉각 정보를 supervision으로 넣자 <strong>hidden surface 복원 능력</strong>이 극적으로 향상됨.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="기술적-통찰" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="기술적-통찰"><span class="header-section-number">2.6</span> 6. 💡 기술적 통찰</h2>
+<section id="왜-좋은-아이디어인가" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="왜-좋은-아이디어인가"><span class="header-section-number">2.6.1</span> ✔️ 왜 좋은 아이디어인가?</h3>
+<ul>
+<li>촉각 정보를 “단순 피드백”이 아니라 “지각 학습의 supervision”으로 사용한 점이 탁월합니다.</li>
+<li>NeRF 기반의 3D 표현력과 tactile의 세밀한 접촉 감지를 결합해, 기존보다 훨씬 현실감 있는 지각이 가능해졌습니다.</li>
+</ul>
+</section>
+<section id="특히-눈에-띄는-부분" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="특히-눈에-띄는-부분"><span class="header-section-number">2.6.2</span> ✔️ 특히 눈에 띄는 부분</h3>
+<ul>
+<li>Contact Field는 단순 contact point를 넘어서 “접촉 확률 분포”로 표현됩니다.</li>
+<li>이는 <strong>Grasp Refinement</strong>, <strong>Slip Detection</strong>, <strong>Force Control</strong> 등 downstream task에 매우 유용합니다.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="한계점-및-고민거리" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="한계점-및-고민거리"><span class="header-section-number">2.7</span> 7. ⚠️ 한계점 및 고민거리</h2>
+<section id="하드웨어-의존성" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="하드웨어-의존성"><span class="header-section-number">2.7.1</span> 🛠️ 하드웨어 의존성</h3>
+<ul>
+<li>Gelsight 센서는 고가이며 설치 복잡 → 실사용 시스템 구축 난이도 ↑</li>
+</ul>
+</section>
+<section id="추론은-빠르나-학습은-느림" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="추론은-빠르나-학습은-느림"><span class="header-section-number">2.7.2</span> 🧠 추론은 빠르나 학습은 느림</h3>
+<ul>
+<li>Inference는 30Hz 이상 가능하지만, 학습은 한 객체당 수 시간 소요됨</li>
+</ul>
+</section>
+<section id="제어-시스템과-통합은-미완성" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="제어-시스템과-통합은-미완성"><span class="header-section-number">2.7.3</span> 🔄 제어 시스템과 통합은 미완성</h3>
+<ul>
+<li>perception 모듈은 훌륭하지만, 실시간 manipulation loop과 연결된 완전한 policy는 아직 제안되지 않음</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="그리고-우리는-어떤-질문을-던질-수-있을까" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="그리고-우리는-어떤-질문을-던질-수-있을까"><span class="header-section-number">2.8</span> 8. 🤔 그리고 우리는 어떤 질문을 던질 수 있을까?</h2>
+<ol type="1">
+<li><p><strong>저가형 센서에서도 같은 방식이 가능할까?</strong> 예: ReSkin, uSkin처럼 범용성 높은 자성 기반 센서로도 SDF 학습이 가능할까?</p></li>
+<li><p><strong>실시간 업데이트 가능성은?</strong> 현재는 offline 학습 후 추론만 실시간. 실시간 online update가 된다면 slip feedback 등에 바로 반영 가능.</p></li>
+<li><p><strong>Generalization은 어떻게 보장할까?</strong> 물체가 바뀌었을 때, 손 모양이 달라졌을 때 얼마나 robust한가?</p></li>
+</ol>
+<hr>
+</section>
+<section id="향후-연구로-이어질-수-있는-아이디어" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="향후-연구로-이어질-수-있는-아이디어"><span class="header-section-number">2.9</span> 9. 🌱 향후 연구로 이어질 수 있는 아이디어</h2>
+<ul>
+<li><strong>Policy-level 학습 통합</strong>: SDF + Contact Field를 조건으로 하는 강화학습 기반 manipulation policy 학습</li>
+<li><strong>Domain Adaptation 연구</strong>: tactile 없는 상황에서 pre-trained model을 어떻게 활용할 수 있을까?</li>
+<li><strong>Simulation to Real Transfer</strong>: GelSight 시뮬레이터를 통한 대규모 학습 → 실제 환경 적용</li>
+</ul>
+<hr>
+</section>
+<section id="마무리" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="마무리"><span class="header-section-number">2.10</span> 10. 📌 마무리</h2>
+<p><strong>NeuralFeels</strong>는 시각과 촉각이라는 이질적인 두 감각을 하나의 신경 표현 안에 통합한 인상적인 연구입니다. 특히 그 통합 방식을 <strong>Neural Field로 추상화</strong>하여 연속적이고 해석 가능한 형태로 만든 점은 향후 로봇 촉각지각 연구의 중요한 이정표가 될 수 있습니다.</p>
+<p>촉각 센서의 발전과 함께 이런 멀티모달 field 기반 방법은 더욱 빛을 발할 것으로 기대됩니다. 로봇이 ‘보는’ 것에서 ‘느끼는’ 존재로 진화해 가는 흐름을 이 논문이 잘 보여주고 있죠.</p>
+<hr>
+</section>
+<section id="참고자료" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="참고자료"><span class="header-section-number">2.11</span> 🧾 참고자료</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2312.13469">논문 링크 (arXiv)</a></li>
+<li><a href="https://www.gelsight.com/">GelSight 기술 개요</a></li>
+<li><a href="https://www.matthewtancik.com/nerf">NeRF 개념 설명 블로그</a></li>
+<li><a href="">Original Paper</a></li>
+<li><a href="https://suddhu.github.io/neural-feels/">Project Homepage</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
