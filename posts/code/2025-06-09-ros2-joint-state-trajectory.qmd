@@ -9,42 +9,38 @@ execute:
   freeze: auto
 ---
 
-ROS에서 `sensor_msgs/JointState`와 `trajectory_msgs/JointTrajectory`는 목적과 사용 시점이 뚜렷하게 다릅니다. 
+ROS에서 [`sensor_msgs/JointState`](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/JointState.html)와 [`trajectory_msgs/JointTrajectory`](https://docs.ros.org/en/noetic/api/trajectory_msgs/html/msg/JointTrajectory.html)는 목적과 사용 시점이 뚜렷하게 다릅니다. 
 
-- https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/JointState.html
-- https://docs.ros.org/en/noetic/api/trajectory_msgs/html/msg/JointTrajectory.html
+📌 비교 요약
 
-## 📌 비교 요약
-
-| 메시지 유형                                                  | 목적                               | 필드                                                                                                                                           | 사용 시점                                                                                                 |
-| ------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **JointState** (`sensor_msgs/JointState`)               | 현재 조인트의 상태(위치, 속도, 토크 등)를 **보고** | header, joint 이름, position\[], velocity\[], effort\[] ([robotics.stackexchange.com][1], [forums.developer.nvidia.com][2], [docs.ros.org][3]) | - 센서나 시뮬레이터, 하드웨어에서 피드백 제공<br>- `robot_state_publisher`나 Rviz 같은 상태 시각화<br>- 제어 루프에서 현재 상태 수신         |
-| **JointTrajectory** (`trajectory_msgs/JointTrajectory`) | 조인트의 목표 궤적(waypoint 집합)을 **명령**  | header, joint\_names\[], points\[] (각 point는 positions, velocities, accelerations, efforts, time\_from\_start 포함)                            | - MoveIt!, ROS 컨트롤러(Action 서버)를 통한 로봇 동작 계획 실행<br>- 시퀀셜한 조인트 목표 전달<br>- `FollowJointTrajectory` 액션 호출 |
+| 메시지 유형                                                  | 목적                               | 필드                                                                                                                | 사용 시점                                                                                                 |
+|---------------------------------------------------------|----------------------------------|-------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **JointState** (`sensor_msgs/JointState`)               | 현재 조인트의 상태(위치, 속도, 토크 등)를 **보고** | header, joint 이름, position\[], velocity\[], effort\[]                                                             | - 센서나 시뮬레이터, 하드웨어에서 피드백 제공<br>- `robot_state_publisher`나 Rviz 같은 상태 시각화<br>- 제어 루프에서 현재 상태 수신         |
+| **JointTrajectory** (`trajectory_msgs/JointTrajectory`) | 조인트의 목표 궤적(waypoint 집합)을 **명령**  | header, joint\_names\[], points\[] (각 point는 positions, velocities, accelerations, efforts, time\_from\_start 포함) | - MoveIt!, ROS 컨트롤러(Action 서버)를 통한 로봇 동작 계획 실행<br>- 시퀀셜한 조인트 목표 전달<br>- `FollowJointTrajectory` 액션 호출 |
 
 
-## 🔄 사용 예시와 흐름
+# 🔄 사용 예시와 흐름
 
-### 1. 상태 피드백용 – `JointState`
+## 1. 상태 피드백용 – `JointState`
 
 * 하드웨어나 Gazebo 플러그인이 조인트 센서 데이터를 실시간으로 발행
 * 퍼블리셔 예: `joint_states` 토픽
 * 소비처: `robot_state_publisher/JointStatePublisher`, TF 시스템, Rviz, 모니터링 툴 등 
 
-### 2. 궤적 명령용 – `JointTrajectory`
+## 2. 궤적 명령용 – `JointTrajectory`
 
 * MoveIt! 또는 다른 경로 생성기가 계획된 조인트 궤적을 생성
 * 메시지 구성 예: `joint_names` = \[“joint1”, “joint2”], `points`는 여러 스텝으로 구성
 * 컨트롤러에 전달: `FollowJointTrajectory` 액션 서버 호출 
 
-### 3. 제어 사이클 내 캡처
+## 3. 제어 사이클 내 캡처
 
 * 궤적 실행 중 컨트롤러는 `JointTrajectory` 명령을 받아들이고,
 * 실제 하드웨어는 현재 상태를 다시 `JointState`로 발행하여
 * 피드백 루프 및 모니터링 가능 (e.g. FollowJointTrajectoryFeedback)
 
----
 
-## ❗ 자주 묻는 실수
+❗ 자주 묻는 실수
 
 * `JointState`를 **명령용**으로 사용하는 것은 **바람직하지 않습니다**. 내부 상태 보고용 메시지입니다
 * **반대로**, `JointTrajectory`는 단순 상태 보고용으로는 적합하지 않으며, 시간 기반 waypoint 전달용입니다.
@@ -52,14 +48,13 @@ ROS에서 `sensor_msgs/JointState`와 `trajectory_msgs/JointTrajectory`는 목�
 * `JointTrajectory`는 **단 한 번**의 메시지로 **전 궤적**을 함께 전달합니다&#x20;
 
 
-
-## ✅ 언제 어떤 메시지를 써야 할까?
+# ✅ 언제 어떤 메시지를 써야 할까?
 
 * **조인트의 현 상태를 알고 싶다?:** `sensor_msgs/JointState` (pub/sub)
 * **로봇에게 특정 궤적을 따라 움직이라고 지시하고 싶다?:** `trajectory_msgs/JointTrajectory` (보통 `FollowJointTrajectory` 액션과 함께 사용)
 
 
-## 🎯 정리
+🎯 정리
 
 * **JointState** = “지금 로봇 조인트는 어디 있는가?”
 * **JointTrajectory** = “조인트를 이 시간 계획(sequence)에 따라 움직여라”
@@ -67,11 +62,10 @@ ROS에서 `sensor_msgs/JointState`와 `trajectory_msgs/JointTrajectory`는 목�
 
 ---
 
-아래에 `JointState`와 `JointTrajectory` 메시지를 사용하는 **Python/C++ 코드 예제**와 함께, 각각의 사용 목적과 실행 흐름을 설명드릴게요.
+`JointState`와 `JointTrajectory` 메시지를 사용하는 **Python/C++ 코드 예제**와 함께, 각각의 사용 목적과 실행 흐름을 설명드릴게요.
 
 
-
-## `sensor_msgs/JointState` 예제
+# `sensor_msgs/JointState` 예제
 
 – 현재 조인트 상태 발행
 
@@ -138,10 +132,10 @@ def main():
 ```
 
 이 예제는 주기적으로 `joint_states` 토픽에 현재 조인트 각도, 속도, 토크를 발행하는 역할을 수행합니다. 
-이는 `robot_state_publisher`, Rviz, 또는 다른 소비자 노드에서 로봇 상태를 모니터링하거나 시각화할 때 사용됩니다 ([choreonoid.org][1], [robotics.stackexchange.com][2], [stackoverflow.com][3]).
+이는 `robot_state_publisher`, Rviz, 또는 다른 소비자 노드에서 로봇 상태를 모니터링하거나 시각화할 때 사용됩니다.
 
 
-## `trajectory_msgs/JointTrajectory` 예제
+# `trajectory_msgs/JointTrajectory` 예제
 
 – 궤적 목표 명령 
 
@@ -204,18 +198,14 @@ def main():
 ```
 
 이 예시는 `FollowJointTrajectory` 스타일의 컨트롤러에 조인트 궤적을 한번에 전달하는 코드입니다. 
-각 포인트는 시간 기준으로 조인트 목표 위치를 담고 있어, 컨트롤러가 이를 따라가는 방식입니다. `joint_names` 길이는 포인트 하나에 포함된 position 배열의 길이와 같아야 합니다 ([robotics.stackexchange.com][4], [choreonoid.org][5], [stackoverflow.com][3]).
+각 포인트는 시간 기준으로 조인트 목표 위치를 담고 있어, 컨트롤러가 이를 따라가는 방식입니다. `joint_names` 길이는 포인트 하나에 포함된 position 배열의 길이와 같아야 합니다.
 
-
-
-- 🎥 추천 영상 – `JointTrajectory` 실제 사용 사례
-
-[Joint trajectory controller in ROS with Python and RRRbot](https://www.youtube.com/watch?v=BmLdjLNJHoY)
+- 🎥 추천 영상 `JointTrajectory` 실제 사용 사례: [Joint trajectory controller in ROS with Python and RRRbot](https://www.youtube.com/watch?v=BmLdjLNJHoY)
 
 위 영상은 실제 로봇 팔에 `JointTrajectory` 메시지를 명령하여 동작시키는 과정을 잘 보여줍니다. 시작부터 실행 흐름과 컨트롤러와의 통신을 확인하기에 좋습니다.
 
 
-## 📌 흐름 요약
+# 📌 흐름 요약
 
 1. 현재 상태가 필요할 때 → `sensor_msgs/JointState`로 상태 발행
 2. 로봇을 움직이고 싶을 때 → `trajectory_msgs/JointTrajectory`로 궤적 계획 전달

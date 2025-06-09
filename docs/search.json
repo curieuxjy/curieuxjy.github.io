@@ -564,63 +564,28 @@
     "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html",
     "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
     "section": "",
-    "text": "ROS에서 sensor_msgs/JointState와 trajectory_msgs/JointTrajectory는 목적과 사용 시점이 뚜렷하게 다릅니다."
+    "text": "ROS에서 sensor_msgs/JointState와 trajectory_msgs/JointTrajectory는 목적과 사용 시점이 뚜렷하게 다릅니다.\n📌 비교 요약"
   },
   {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#비교-요약",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#비교-요약",
+    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#상태-피드백용-jointstate",
+    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#상태-피드백용-jointstate",
     "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.1 📌 비교 요약",
-    "text": "0.1 📌 비교 요약\n\n\n\n\n\n\n\n\n\n메시지 유형\n목적\n필드\n사용 시점\n\n\n\n\nJointState (sensor_msgs/JointState)\n현재 조인트의 상태(위치, 속도, 토크 등)를 보고\nheader, joint 이름, position[], velocity[], effort[] ([robotics.stackexchange.com][1], [forums.developer.nvidia.com][2], [docs.ros.org][3])\n- 센서나 시뮬레이터, 하드웨어에서 피드백 제공- robot_state_publisher나 Rviz 같은 상태 시각화- 제어 루프에서 현재 상태 수신\n\n\nJointTrajectory (trajectory_msgs/JointTrajectory)\n조인트의 목표 궤적(waypoint 집합)을 명령\nheader, joint_names[], points[] (각 point는 positions, velocities, accelerations, efforts, time_from_start 포함)\n- MoveIt!, ROS 컨트롤러(Action 서버)를 통한 로봇 동작 계획 실행- 시퀀셜한 조인트 목표 전달- FollowJointTrajectory 액션 호출"
+    "section": "1.1 1. 상태 피드백용 – JointState",
+    "text": "1.1 1. 상태 피드백용 – JointState\n\n하드웨어나 Gazebo 플러그인이 조인트 센서 데이터를 실시간으로 발행\n퍼블리셔 예: joint_states 토픽\n소비처: robot_state_publisher/JointStatePublisher, TF 시스템, Rviz, 모니터링 툴 등"
   },
   {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#사용-예시와-흐름",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#사용-예시와-흐름",
+    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#궤적-명령용-jointtrajectory",
+    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#궤적-명령용-jointtrajectory",
     "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.2 🔄 사용 예시와 흐름",
-    "text": "0.2 🔄 사용 예시와 흐름\n\n0.2.1 1. 상태 피드백용 – JointState\n\n하드웨어나 Gazebo 플러그인이 조인트 센서 데이터를 실시간으로 발행\n퍼블리셔 예: joint_states 토픽\n소비처: robot_state_publisher/JointStatePublisher, TF 시스템, Rviz, 모니터링 툴 등\n\n\n\n0.2.2 2. 궤적 명령용 – JointTrajectory\n\nMoveIt! 또는 다른 경로 생성기가 계획된 조인트 궤적을 생성\n메시지 구성 예: joint_names = [“joint1”, “joint2”], points는 여러 스텝으로 구성\n컨트롤러에 전달: FollowJointTrajectory 액션 서버 호출\n\n\n\n0.2.3 3. 제어 사이클 내 캡처\n\n궤적 실행 중 컨트롤러는 JointTrajectory 명령을 받아들이고,\n실제 하드웨어는 현재 상태를 다시 JointState로 발행하여\n피드백 루프 및 모니터링 가능 (e.g. FollowJointTrajectoryFeedback)"
+    "section": "1.2 2. 궤적 명령용 – JointTrajectory",
+    "text": "1.2 2. 궤적 명령용 – JointTrajectory\n\nMoveIt! 또는 다른 경로 생성기가 계획된 조인트 궤적을 생성\n메시지 구성 예: joint_names = [“joint1”, “joint2”], points는 여러 스텝으로 구성\n컨트롤러에 전달: FollowJointTrajectory 액션 서버 호출"
   },
   {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#자주-묻는-실수",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#자주-묻는-실수",
+    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#제어-사이클-내-캡처",
+    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#제어-사이클-내-캡처",
     "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.3 ❗ 자주 묻는 실수",
-    "text": "0.3 ❗ 자주 묻는 실수\n\nJointState를 명령용으로 사용하는 것은 바람직하지 않습니다. 내부 상태 보고용 메시지입니다\n반대로, JointTrajectory는 단순 상태 보고용으로는 적합하지 않으며, 시간 기반 waypoint 전달용입니다.\nJointState는 시간 시리즈 데이터를 여러 번 발행할 수 있고,\nJointTrajectory는 단 한 번의 메시지로 전 궤적을 함께 전달합니다"
-  },
-  {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#언제-어떤-메시지를-써야-할까",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#언제-어떤-메시지를-써야-할까",
-    "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.4 ✅ 언제 어떤 메시지를 써야 할까?",
-    "text": "0.4 ✅ 언제 어떤 메시지를 써야 할까?\n\n조인트의 현 상태를 알고 싶다?: sensor_msgs/JointState (pub/sub)\n로봇에게 특정 궤적을 따라 움직이라고 지시하고 싶다?: trajectory_msgs/JointTrajectory (보통 FollowJointTrajectory 액션과 함께 사용)"
-  },
-  {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#정리",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#정리",
-    "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.5 🎯 정리",
-    "text": "0.5 🎯 정리\n\nJointState = “지금 로봇 조인트는 어디 있는가?”\nJointTrajectory = “조인트를 이 시간 계획(sequence)에 따라 움직여라”\n\n\n아래에 JointState와 JointTrajectory 메시지를 사용하는 Python/C++ 코드 예제와 함께, 각각의 사용 목적과 실행 흐름을 설명드릴게요."
-  },
-  {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#sensor_msgsjointstate-예제",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#sensor_msgsjointstate-예제",
-    "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.6 sensor_msgs/JointState 예제",
-    "text": "0.6 sensor_msgs/JointState 예제\n– 현재 조인트 상태 발행\n\n✔️ Python 예제 (ROS Noetic)\n\n#!/usr/bin/env python\nimport rospy\n:contentReference[oaicite:1]{index=1}\n\ndef main():\n    :contentReference[oaicite:2]{index=2}\n    :contentReference[oaicite:3]{index=3}\n    :contentReference[oaicite:4]{index=4}\n\n    js = JointState()\n    js.name = ['joint1','joint2']\n    js.position = [0.0, 0.0]\n    js.velocity = [0.0, 0.0]\n    js.effort = [0.0, 0.0]\n\n    angle = 0.0\n    while not rospy.is_shutdown():\n        angle += 0.01\n        js.header.stamp = rospy.Time.now()\n        js.position[0] = angle\n        js.position[1] = -angle\n        pub.publish(js)\n        rate.sleep()\n\n:contentReference[oaicite:5]{index=5}\n    main()\n\n✔️ C++ 예제\n\n#include &lt;ros/ros.h&gt;\n#include &lt;sensor_msgs/JointState.h&gt;\n\n:contentReference[oaicite:6]{index=6}\n    :contentReference[oaicite:7]{index=7}\n    :contentReference[oaicite:8]{index=8}\n    :contentReference[oaicite:9]{index=9}\n    :contentReference[oaicite:10]{index=10}\n\n    sensor_msgs::JointState js;\n    js.name = {\"joint1\",\"joint2\"};\n    js.position = {0.0, 0.0};\n    js.velocity = {0.0, 0.0};\n    js.effort = {0.0, 0.0};\n\n    double angle = 0.0;\n    while (ros::ok()){\n        angle += 0.01;\n        js.header.stamp = ros::Time::now();\n        js.position[0] = angle;\n        js.position[1] = -angle;\n        pub.publish(js);\n        rate.sleep();\n    }\n    return 0;\n}\n이 예제는 주기적으로 joint_states 토픽에 현재 조인트 각도, 속도, 토크를 발행하는 역할을 수행합니다. 이는 robot_state_publisher, Rviz, 또는 다른 소비자 노드에서 로봇 상태를 모니터링하거나 시각화할 때 사용됩니다 ([choreonoid.org][1], [robotics.stackexchange.com][2], [stackoverflow.com][3])."
-  },
-  {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#trajectory_msgsjointtrajectory-예제",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#trajectory_msgsjointtrajectory-예제",
-    "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.7 trajectory_msgs/JointTrajectory 예제",
-    "text": "0.7 trajectory_msgs/JointTrajectory 예제\n– 궤적 목표 명령\n\n✔️ Python 예제 (ROS Noetic)\n\n#!/usr/bin/env python\nimport rospy\n:contentReference[oaicite:12]{index=12}\n\ndef main():\n    :contentReference[oaicite:13]{index=13}\n    :contentReference[oaicite:14]{index=14}\n    :contentReference[oaicite:15]{index=15}\n\n    traj = JointTrajectory()\n    traj.joint_names = ['joint1','joint2']\n    traj.header.stamp = rospy.Time.now()\n\n    pt1 = JointTrajectoryPoint()\n    pt1.positions = [0.5, -0.5]\n    pt1.time_from_start = rospy.Duration(2.0)\n    pt2 = JointTrajectoryPoint()\n    pt2.positions = [1.0, -1.0]\n    pt2.time_from_start = rospy.Duration(4.0)\n\n    traj.points = [pt1, pt2]\n    pub.publish(traj)\n    rospy.loginfo(\"Trajectory sent!\")\n\n✔️ C++ 예제\n\n#include &lt;ros/ros.h&gt;\n#include &lt;trajectory_msgs/JointTrajectory.h&gt;\n#include &lt;trajectory_msgs/JointTrajectoryPoint.h&gt;\n\n:contentReference[oaicite:16]{index=16}\n    :contentReference[oaicite:17]{index=17}\n    :contentReference[oaicite:18]{index=18}\n    :contentReference[oaicite:19]{index=19}\n    :contentReference[oaicite:20]{index=20}\n\n    trajectory_msgs::JointTrajectory traj;\n    traj.joint_names = {\"joint1\",\"joint2\"};\n    traj.header.stamp = ros::Time::now();\n\n    trajectory_msgs::JointTrajectoryPoint pt1, pt2;\n    pt1.positions = {0.5, -0.5};\n    pt1.time_from_start = ros::Duration(2.0);\n    pt2.positions = {1.0, -1.0};\n    pt2.time_from_start = ros::Duration(4.0);\n\n    traj.points = {pt1, pt2};\n    pub.publish(traj);\n    ROS_INFO(\"Published trajectory\");\n    return 0;\n}\n이 예시는 FollowJointTrajectory 스타일의 컨트롤러에 조인트 궤적을 한번에 전달하는 코드입니다. 각 포인트는 시간 기준으로 조인트 목표 위치를 담고 있어, 컨트롤러가 이를 따라가는 방식입니다. joint_names 길이는 포인트 하나에 포함된 position 배열의 길이와 같아야 합니다 ([robotics.stackexchange.com][4], [choreonoid.org][5], [stackoverflow.com][3]).\n\n🎥 추천 영상 – JointTrajectory 실제 사용 사례\n\nJoint trajectory controller in ROS with Python and RRRbot\n위 영상은 실제 로봇 팔에 JointTrajectory 메시지를 명령하여 동작시키는 과정을 잘 보여줍니다. 시작부터 실행 흐름과 컨트롤러와의 통신을 확인하기에 좋습니다."
-  },
-  {
-    "objectID": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#흐름-요약",
-    "href": "posts/code/2025-06-09-ros2-joint-state-trajectory.html#흐름-요약",
-    "title": "👩‍💻ROS2 JointState vs. JointTrajectory",
-    "section": "0.8 📌 흐름 요약",
-    "text": "0.8 📌 흐름 요약\n\n현재 상태가 필요할 때 → sensor_msgs/JointState로 상태 발행\n로봇을 움직이고 싶을 때 → trajectory_msgs/JointTrajectory로 궤적 계획 전달\n컨트롤러는 궤적을 읽고 액추에이터로 변환하며, 실행 중 JointState로 피드백 제공\n\n이 구성은 로봇 제어계에서 피드백 루프와 명령 루프를 분리하여 안정성을 보장합니다."
+    "section": "1.3 3. 제어 사이클 내 캡처",
+    "text": "1.3 3. 제어 사이클 내 캡처\n\n궤적 실행 중 컨트롤러는 JointTrajectory 명령을 받아들이고,\n실제 하드웨어는 현재 상태를 다시 JointState로 발행하여\n피드백 루프 및 모니터링 가능 (e.g. FollowJointTrajectoryFeedback)\n\n❗ 자주 묻는 실수\n\nJointState를 명령용으로 사용하는 것은 바람직하지 않습니다. 내부 상태 보고용 메시지입니다\n반대로, JointTrajectory는 단순 상태 보고용으로는 적합하지 않으며, 시간 기반 waypoint 전달용입니다.\nJointState는 시간 시리즈 데이터를 여러 번 발행할 수 있고,\nJointTrajectory는 단 한 번의 메시지로 전 궤적을 함께 전달합니다"
   },
   {
     "objectID": "posts/code/2024-01-07-quarto-blog.html",
