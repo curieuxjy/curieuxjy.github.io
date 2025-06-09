@@ -1,0 +1,124 @@
+---
+title: "👩‍💻ROS2 joint_state_publiser 디폴트 동작 제어하기"
+toc: true
+number-sections: true
+date: "2025-06-09"
+description: ROS2 메세지 JointState와 JointTrajectory 비교
+categories: [ros2, joint, code]
+execute:
+  freeze: auto
+---
+
+ROS2 애플리케이션에서 URDF 기반 로봇 모델 시각화 시, joint_state_publisher 노드는 기본적으로 정의된 모든 관절의 위치를 0으로 퍼블리시합니다. 
+하지만 실제 센서나 외부 노드에서 들어오는 관절 상태만 사용하고 싶을 때도 있는데, 단순 토픽 리매핑(remapping)만으로는 이 기본 동작을 해제할 수 없습니다.
+
+이번 포스팅에서는:
+
+- publish_default_positions=False + source_list 파라미터를 활용한 방법
+
+- 단순 remapping 사용 시 발생하는 문제점
+
+- publish_default_positions 파라미터를 지원하지 않는 경우 대안
+
+등을 살펴보며, 가장 깔끔하게 외부 JointState 메시지만 반영하는 설정법을 자세히 알아봅니다.
+
+두 가지 방식의 차이를 정리하면 다음과 같습니다:
+
+# `publish_default_positions=False` + `source_list` 사용
+
+```python
+Node(
+  package='joint_state_publisher',
+  executable='joint_state_publisher',
+  parameters=[
+    {'use_sim_time': False},
+    {'publish_default_positions': False},
+    {'source_list': ['cmd_joint_states']},
+  ],
+)
+```
+
+* **`publish_default_positions: False`**
+  기본적으로 URDF에 정의된 모든 관절을 0 위치로 찍어주는 “디폴트 퍼블리시” 기능을 꺼줍니다.
+* **`source_list: ['cmd_joint_states']`**
+  이 노드가 `/cmd_joint_states` 에서만 들어오는 `JointState` 메시지를 구독해서, 그대로 `/sim_joint_states` 로 내보내게 지정합니다.
+* **결과**: 오직 여러분이 생성한 `/cmd_joint_states` 관절 각도만 `/sim_joint_states` 로 전달됩니다. 불필요한 0값이 섞이지 않습니다.
+
+
+# 단순 Remapping 사용
+
+```python
+Node(
+  package='joint_state_publisher',
+  executable='joint_state_publisher',
+  parameters=[{'use_sim_time': False}],
+  remappings=[
+    ('sim_joint_states', '/cmd_joint_states'),
+  ],
+)
+```
+
+* **`publish_default_positions` 설정 없음**
+  디폴트 0값 퍼블리시는 꺼지지 않습니다.
+* **Remapping**
+  내부적으로 구독(`/sim_joint_states`)과 퍼블리시(`/sim_joint_states`)하던 토픽을 모두 `/cmd_joint_states` 로 바꿔버립니다.
+* **결과**:
+
+  1. 여러분의 Python 노드가 보내는 실제 Allegro 각도
+  2. joint_state_publisher 가 섞어넣는 URDF 전체 관절의 0 위치
+    
+  * 이 둘이 같은 토픽에 뒤섞여 버려, 원치 않는 0값이 함께 퍼집니다.
+
+# 결론
+
+* **최선의 방법**은 `source_list` 파라미터를 지원하는 ROS 2 배포판에서 **방식 1**을 사용하는 것 입니다.
+* `source_list` 지원이 불가능하다면, remapping 만으로는 기본 0값 퍼블리시를 끌 수 없어 충돌이 발생하니, 가능한 한 joint_state_publisher 설정 파라미터로 “디폴트 퍼블리시 끄기”를 함께 지정하세요.
+
+---
+
+`joint_state_publisher` 노드는 기본적으로 URDF에 정의된 모든 관절에 대해 **디폴트 위치(0rad)** 를 주기적으로 퍼블리시합니다. 
+이 동작을 끄려면 단순히 토픽을 리매핑(remapping)하는 것만으로는 불가능하며, `publish_default_positions` 파라미터를 `False` 로 설정해야 합니다.
+
+## remapping만으로는 디폴트 퍼블리시를 끌 수 없는 이유
+
+* **`publish_default_positions` 기본값이 `True`**
+
+  * `joint_state_publisher` 문서에 따르면, 파라미터 `publish_default_positions` 의 기본값은 `True` 이고, 이 경우 “외부에서 들어오는 메시지가 없으면 URDF에 정의된 모든 관절 위치를 디폴트(0값)로 퍼블리시” 합니다.
+* **리매핑(remapping)만으로는 이 내부 동작을 변경 불가**
+
+  * 토픽 remapping(`('sim_joint_states', '/cmd_joint_states')` 등)을 적용해도, 노드는 여전히 내부적으로 “디폴트 위치 퍼블리시”를 수행합니다.
+  * 실제 사례로, Robotics Stack Exchange 답변에서도 “`publish_default_positions` 를 `False` 로 설정하지 않으면 JSP는 (source\_list 유무와 상관없이) 항상 모든 관절의 값을 퍼블리시한다” 고 명시하고 있습니다.
+
+---
+
+## 해결책: `publish_default_positions` 옵션 사용
+
+* **파라미터 설정**
+
+  ```yaml
+  publish_default_positions: False
+  source_list: ['cmd_joint_states']
+  ```
+
+  - 이렇게 하면 `/cmd_joint_states` 로부터만 JointState 메시지를 받아 `/sim_joint_states` 로 내보내며, 디폴트(0값) 퍼블리시는 완전히 끌 수 있습니다.
+
+* **ROS 2 런치 예시**
+
+  ```python
+  Node(
+    package='joint_state_publisher',
+    executable='joint_state_publisher',
+    name='joint_state_publisher',
+    output='screen',
+    parameters=[
+      {'use_sim_time': False},
+      {'publish_default_positions': False},
+      {'source_list': ['cmd_joint_states']},
+    ],
+  ),
+  ```
+
+이렇게 `publish_default_positions` 를 `False` 로 명시적으로 꺼야만, remapping만으로는 제어할 수 없는 기본 퍼블리시 동작을 비활성화할 수 있습니다.
+
+[1]: https://docs.ros.org/en/rolling/p/joint_state_publisher/?utm_source=chatgpt.com "joint_state_publisher 2.4.0 documentation - the official ROS docs"
+[2]: https://robotics.stackexchange.com/questions/93267/joint-state-publisher-produces-empty-messages "ros - Joint State Publisher produces empty messages - Robotics Stack Exchange"
