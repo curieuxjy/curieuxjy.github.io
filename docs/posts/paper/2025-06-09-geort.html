@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-06-09">
+<meta name="description" content="Geometric Retargeting - A Principled, Ultrafast Neural Hand Retargeting Algorithm">
+
+<title>📃GeoRT 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#소개-인간-손-동작을-로봇-손으로-직관적으로-전달하려는-노력" id="toc-소개-인간-손-동작을-로봇-손으로-직관적으로-전달하려는-노력" class="nav-link" data-scroll-target="#소개-인간-손-동작을-로봇-손으로-직관적으로-전달하려는-노력"><span class="header-section-number">2.1</span> 소개: 인간 손 동작을 로봇 손으로 직관적으로 전달하려는 노력</a></li>
+  <li><a href="#주요-기여" id="toc-주요-기여" class="nav-link" data-scroll-target="#주요-기여"><span class="header-section-number">2.2</span> 주요 기여</a></li>
+  <li><a href="#geometric-retargeting-알고리즘-기하학적-목표와-학습-구조" id="toc-geometric-retargeting-알고리즘-기하학적-목표와-학습-구조" class="nav-link" data-scroll-target="#geometric-retargeting-알고리즘-기하학적-목표와-학습-구조"><span class="header-section-number">2.3</span> Geometric Retargeting 알고리즘: 기하학적 목표와 학습 구조</a>
+  <ul class="collapse">
+  <li><a href="#리타게팅을-위한-기하학적-설계-원칙" id="toc-리타게팅을-위한-기하학적-설계-원칙" class="nav-link" data-scroll-target="#리타게팅을-위한-기하학적-설계-원칙"><span class="header-section-number">2.3.1</span> 리타게팅을 위한 기하학적 설계 원칙</a></li>
+  <li><a href="#신경망-구조와-학습-방법" id="toc-신경망-구조와-학습-방법" class="nav-link" data-scroll-target="#신경망-구조와-학습-방법"><span class="header-section-number">2.3.2</span> 신경망 구조와 학습 방법</a></li>
+  </ul></li>
+  <li><a href="#기존-연구와의-비교-휴리스틱-매핑-vs.-원리-기반-학습" id="toc-기존-연구와의-비교-휴리스틱-매핑-vs.-원리-기반-학습" class="nav-link" data-scroll-target="#기존-연구와의-비교-휴리스틱-매핑-vs.-원리-기반-학습"><span class="header-section-number">2.4</span> 기존 연구와의 비교: 휴리스틱 매핑 vs.&nbsp;원리 기반 학습</a></li>
+  <li><a href="#실험-및-결과-분석" id="toc-실험-및-결과-분석" class="nav-link" data-scroll-target="#실험-및-결과-분석"><span class="header-section-number">2.5</span> 실험 및 결과 분석</a>
+  <ul class="collapse">
+  <li><a href="#시뮬레이션-평가-부드러운-제어와-공간-활용도" id="toc-시뮬레이션-평가-부드러운-제어와-공간-활용도" class="nav-link" data-scroll-target="#시뮬레이션-평가-부드러운-제어와-공간-활용도"><span class="header-section-number">2.5.1</span> 시뮬레이션 평가: 부드러운 제어와 공간 활용도</a></li>
+  <li><a href="#실제-로봇-실험-물체-잡기-성능-비교" id="toc-실제-로봇-실험-물체-잡기-성능-비교" class="nav-link" data-scroll-target="#실제-로봇-실험-물체-잡기-성능-비교"><span class="header-section-number">2.5.2</span> 실제 로봇 실험: 물체 잡기 성능 비교</a></li>
+  </ul></li>
+  <li><a href="#연구-의의-한계-및-향후-전망" id="toc-연구-의의-한계-및-향후-전망" class="nav-link" data-scroll-target="#연구-의의-한계-및-향후-전망"><span class="header-section-number">2.6</span> 연구 의의, 한계 및 향후 전망</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃GeoRT 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">paper</div>
+    <div class="quarto-category">teleoperation</div>
+    <div class="quarto-category">retargeting</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Geometric Retargeting - A Principled, Ultrafast Neural Hand Retargeting Algorithm
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 9, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://zhaohengyin.github.io/geort/#">Project Homepage</a></li>
+<li><a href="https://arxiv.org/abs/2503.07541">Paper</a></li>
+</ul>
+<ol type="1">
+<li>⚡ GeoRT는 로봇 원격 조작을 위한 초고속(1KHz) 신경망 손 리타겟팅 알고리즘으로, 최고 수준의 정확도를 달성합니다.</li>
+<li>📐 이 알고리즘은 동작 보존, C-space 커버리지, 평탄도 등 새로운 기하학적 목적 함수를 활용하여 비지도 학습 방식으로 훈련되며, 하이퍼파라미터가 적습니다.</li>
+<li>🚀 결과적으로 GeoRT는 더 나은 손 활용도, 부드러운 제어, 그리고 기존 방법 대비 뛰어난 실제 환경에서의 원격 조작 성능을 보여줍니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문은 Teleoperation 위한 빠르고 체계적인(principled) 신경망 기반 핸드 retargeting 알고리즘인 Geometric Retargeting (GeoRT)을 소개합니다. 기존 retargeting 방법들은 휴먼 핸드와 로봇 핸드 간의 task vector를 맞추는 복잡하고 많은 hyperparameters를 사용하는 손실 함수에 의존했으며, 이는 인간과 로봇 핸드의 C-space(Configuration space) 형태의 비선형적 차이를 제대로 반영하지 못했습니다. GeoRT는 이러한 한계를 극복하기 위해 새로운 기하학적 목적 함수를 제안하며, 이는 unsupervised 방식으로 학습되어 수동적인 핸드 쌍 annotation이 필요 없습니다. GeoRT는 1KHz의 속도로 휴먼 핑거 keypoint를 로봇 핸드 keypoint로 변환하여 최첨단 속도와 정확도를 달성하며, hyperparameters의 수도 현저히 적습니다.</p>
+<p>GeoRT의 핵심 방법론은 다음과 같은 다섯 가지 기하학적 기준(criterion)을 손실 함수로 정량화하여 신경망 모델 <span class="math inline">f</span> (휴먼 fingertip 위치 <span class="math inline">x^H</span>를 로봇 핸드 관절 위치 <span class="math inline">q</span>로 매핑)를 학습하는 것입니다.</p>
+<ol type="1">
+<li><p><strong>Criterion I: Motion Preservation</strong> 휴먼 핑거의 움직임 방향을 로봇 핑거가 따라가도록 합니다. 휴먼 i번째 핑거의 위치 <span class="math inline">x_i^H</span>와 작은 움직임 방향 <span class="math inline">d</span>에 대해, 로봇 i번째 핑거의 움직임 방향 <span class="math inline">FK_i \circ f_i(x_i^H + d) - FK_i \circ f_i(x_i^H)</span>가 <span class="math inline">d</span>와 평행하도록 합니다. 여기서 <span class="math inline">FK_i</span>는 i번째 핑거에 대한 Forward Kinematics 함수입니다. 이는 코사인 유사도를 최대화하는 손실 함수로 표현됩니다. <span class="math inline">\mathcal{L}_{\text{dir}} = - \sum_i E_{d, x_i^H} \left\langle \frac{d}{\|d\|}, \frac{FK_i \circ f_i(x_i^H + d) - FK_i \circ f_i(x_i^H)}{\|FK_i \circ f_i(x_i^H + d) - FK_i \circ f_i(x_i^H)\|} \right\rangle</span> 학습 과정에서 <span class="math inline">FK_i</span>는 미리 학습된 신경망 또는 해석적 함수를 사용합니다.</p></li>
+<li><p><strong>Criterion II: C-space Coverage</strong> 로봇 핸드의 C-space가 최대한 활용되도록 합니다. 휴먼 핑거 keypoint C-space <span class="math inline">KC_i^H</span>에서 로봇 핑거 keypoint C-space <span class="math inline">KC_i^R</span>로의 매핑 <span class="math inline">FK_i \circ f_i</span>가 전사(surjection)에 가깝도록 합니다. 이는 <span class="math inline">KC_i^R</span> 중에서 매핑되지 않은 부분의 부피를 최소화하는 것과 같습니다. 실제 구현에서는 미분 가능하고 계산 효율적인 Chamfer loss를 대용으로 사용합니다. 학습 시 각 minibatch에서 <span class="math inline">KC_i^H</span>와 <span class="math inline">KC_i^R</span>에서 샘플링된 point cloud <span class="math inline">P_i^H, P_i^R</span>을 이용하여 손실을 계산합니다. <span class="math inline">\mathcal{L}_{\text{cover}} = \sum_i E_{P_i^H \sim KC_i^H, P_i^R \sim KC_i^R} \text{Chamfer}(P_i^R, FK_i \circ f_i(P_i^H))</span></p></li>
+<li><p><strong>Criterion III: High Flatness</strong> 제어 감도가 C-space 전반에 걸쳐 일정하도록 하여 상호작용의 예측 가능성과 직관성을 높입니다. 이는 매핑 함수의 ’평평함(flatness)’을 최대화하는 것으로, 고차원 공간에서는 두 번 미분값이 0에 가깝도록 하는 것에 해당합니다. 논문에서는 유한 차분법을 사용하여 두 번 미분값을 근사하고 이를 최소화하는 손실 함수를 사용합니다. <span class="math inline">\mathcal{L}_{\text{flat}} = E_{x, d} \|FK \circ f(x + d) + FK \circ f(x - d) - 2FK \circ f(x)\|^2</span></p></li>
+<li><p><strong>Criterion IV: Pinch Correspondence</strong> 휴먼 핸드가 특정 핑거(예: 엄지와 검지)로 pinch grasp를 할 때, 로봇 핸드도 해당 핑거로 동일한 pinch grasp를 하도록 합니다. 휴먼 제스처 <span class="math inline">x^H</span>에서 i번째와 j번째 핑거 간의 거리 <span class="math inline">\|x_i^H - x_j^H\|</span>가 임계값 <span class="math inline">d</span>보다 작으면, 로봇 핸드에서의 해당 핑거 위치 <span class="math inline">FK_i \circ f_i(x_i^H)</span>와 <span class="math inline">FK_j \circ f_j(x_j^H)</span>가 가깝도록 합니다. <span class="math inline">\mathcal{L}_{\text{pinch}} = E_{x^H} \sum_{(i, j): i \ne j} \mathbb{1}(\|x_i^H - x_j^H\| &lt; d) \|FK_i \circ f_i(x_i^H) - FK_j \circ f_j(x_j^H)\|^2</span> 이 손실을 위해서는 사용자가 일부 pinch grasp 예시를 제공해야 하지만, 이는 짧은 시간의 모션 캡처로 쉽게 수집할 수 있습니다.</p></li>
+<li><p><strong>Criterion V: Collision-Free Retargeting</strong> 충돌 없는 휴먼 핸드 제스처는 충돌 없는 로봇 핸드 제스처로 매핑되어야 합니다. 이를 위해 먼저 로봇 핸드의 joint configuration <span class="math inline">q</span>가 자가 충돌(self-collision)을 일으킬 확률을 판단하는 collision classifier <span class="math inline">C</span>를 미리 학습합니다. 이 classifier는 simulation 데이터로 학습됩니다. 그 후, retargeting 모델 <span class="math inline">f</span>에 대해 충돌 확률을 최소화하는 손실 함수를 사용합니다. <span class="math inline">\mathcal{L}_{\text{col}} = -E_{x^H} \log(1 - C(f(x^H)))</span> 학습 시 <span class="math inline">C</span>는 고정됩니다.</p></li>
+</ol>
+<p>GeoRT 모델은 각 핑거에 대한 독립적인 Multi-Layer Perceptron (MLP) 집합으로 구현됩니다. Allegro Hand의 경우 네 개의 핑거 모델 <span class="math inline">f_1, f_2, f_3, f_4</span>을 사용하며, 전체 매핑은 <span class="math inline">f(x_1^H, \dots, x_4^H) = [f_1(x_1^H), \dots, f_4(x_4^H)]</span> 형태입니다. Joint position 범위는 <span class="math inline">[-1, 1]</span>로 rescale되고 Tanh 출력을 사용합니다. 최종 학습 목적 함수는 위에서 설명한 모든 손실 함수의 가중치 합입니다. <span class="math inline">\mathcal{L} = \mathcal{L}_{\text{dir}} + \lambda_1 \mathcal{L}_{\text{cover}} + \lambda_2 \mathcal{L}_{\text{flat}} + \lambda_3 \mathcal{L}_{\text{pinch}} + \lambda_4 \mathcal{L}_{\text{col}}</span> 이 목적 함수는 기존 방법보다 훨씬 적은 4개의 hyperparameters <span class="math inline">\lambda_1, \lambda_2, \lambda_3, \lambda_4</span>만을 가집니다. 학습 과정은 사전에 학습된 FK 모델과 collision classifier를 사용하여 진행되며, 로봇 핸드의 keypoint C-space point cloud는 simulation에서, 휴먼 핸드의 keypoint C-space point cloud는 간단한 모션 캡처(약 5분 소요)를 통해 수집됩니다. 학습은 NVIDIA 3060 GPU 기준 3-5분으로 매우 빠릅니다.</p>
+<p>실험 결과, simulation에서 GeoRT는 기존 baseline 방법들 대비 훨씬 우수한 Motion Preservation (0.94 vs 0.73)과 C-space coverage (90% vs 38%)를 달성했습니다 (Table II 참조). 실제 로봇 (Allegro Hand on Franka Panda arm)을 사용한 teleoperation 기반 grasping task에서도 GeoRT는 기존 방법보다 더 높은 one-trial success rate (87.5% vs 55% 및 42.5%)와 더 짧은 completion time (3.2s vs 9.0s 및 19.3s)을 기록하며 더 빠르고 효과적인 grasping 성능을 보여주었습니다 (Table III 참조). 이는 GeoRT가 fingertip C-space를 더 잘 활용하고 더 부드럽고 직관적인 retargeting을 제공하기 때문입니다.</p>
+<p>요약하자면, 본 논문은 teleoperation을 위한 신경망 핸드 retargeting을 위한 체계적인 기하학적 목적 함수를 제안하고, 이를 기반으로 기존 방법보다 빠르고, 적은 hyperparameters를 사용하며, unsupervised 학습이 가능한 GeoRT 시스템을 개발했습니다. GeoRT는 뛰어난 retargeting 품질과 teleoperation 성능을 보여주었으며, DexterityGen과 같은 후속 시스템에 활용될 수 있습니다.</p>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>Geometric Retargeting: 원리 기반의 초고속 신경망 손 리타게팅 알고리즘 리뷰</p>
+</blockquote>
+<section id="소개-인간-손-동작을-로봇-손으로-직관적으로-전달하려는-노력" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="소개-인간-손-동작을-로봇-손으로-직관적으로-전달하려는-노력"><span class="header-section-number">2.1</span> 소개: 인간 손 동작을 로봇 손으로 직관적으로 전달하려는 노력</h2>
+<p>로봇 <strong>원격 조작(teleoperation)</strong> 기술은 사람의 섬세한 손동작을 로봇 손으로 전달함으로써, 복잡한 조작 데이터를 수집하거나 위험한 작업을 대행하는 데 필수적인 요소입니다. 특히 <strong>손 기구학 리타게팅(kinematic retargeting)</strong>은 사람의 손 제스처를 로봇 손의 자세로 변환하는 핵심 과정으로, 사용자가 로봇을 자연스럽게 제어하도록 해줍니다. 그러나 사람 손과 로봇 손의 형태 및 관절 구조 차이로 인해 <strong>효과적인 리타게팅 함수를 정의</strong>하기가 매우 어렵습니다. 손가락 길이, 관절 가동범위 등이 다르기 때문에, <strong>어떤 기준으로 사람 손동작을 로봇 손동작에 대응시킬지</strong> 명확한 해답이 없습니다. 실제로 수많은 매핑 방법이 가능하지만 그중 <strong>어느 것이 인간의 의도를 가장 잘 반영하면서도 로봇의 자연스러운 움직임을 유지하는지</strong> 합의된 해법은 없는 상태입니다.</p>
+<p>기존 접근법들은 주로 <strong>휴리스틱한 과제 벡터(task vector) 설정</strong>에 의존해 왔습니다. 예컨대 사람 손의 특정 키포인트(keypoint)를 로봇 손의 특정 지점에 1대1로 맞추고, 각 축마다 스케일이나 오프셋을 조정하는 <strong>선형 매핑</strong> 공식을 사용하는 식입니다. 하지만 이런 방식은 조정해야 할 <strong>하이퍼파라미터가 매우 많고</strong>, 개인별로 값이 달라 일일이 보정(calibration)해야 하는 번거로움이 있습니다. 또한 단순 선형 매핑으로는 사람 손과 로봇 손 공간의 <strong>비선형적 차이</strong>를 포착하기 어렵습니다. 실제 논문에서도 인간 손가락 끝의 동작 범위와 로봇 손가락 끝의 동작 범위를 비교해보면, 인간 손의 구성 공간이 곡률을 띠며 좁은 반면 로봇 손은 보다 <strong>넓고 규칙적</strong>인 형태를 보여 선형 관계로 겹치지 않는다고 지적합니다. 이러한 차이 때문에 기존 선형 매핑은 대응 관계를 정확히 재현하지 못하고, 결과적으로 로봇 손의 일부 동작 공간만 제한적으로 활용되는 문제가 있습니다. 요약하면, <strong>사람의 의도를 잃지 않으면서 로봇의 가용 범위를 최대화할 수 있는 보다 원리적인(retargeting) 기준과 기법</strong>이 요구되어 왔습니다.</p>
+<p>이번에 소개하는 <strong>“Geometric Retargeting” (GeoRT)</strong> 알고리즘은 이러한 배경에서 제안된 최신 연구로, <strong>초당 1000Hz</strong> 수준의 초고속 동작 변환과 원리에 기반한 명확한 목표 설정을 통해 이 문제를 해결하고자 합니다. 이 리뷰에서는 해당 논문의 주요 기여와 내용을 기술적으로 분석합니다. 먼저 논문의 핵심 기여를 정리한 뒤, GeoRT 알고리즘의 <strong>구조와 수학적 원리</strong>를 상세히 설명하고, 기존 작업들과의 비교를 통해 <strong>혁신성</strong>을 평가하겠습니다. 또한 <strong>실험 결과</strong>를 살펴보고 이 연구의 <strong>의의, 한계 및 향후 연구 방향</strong>에 대해 논의합니다.</p>
+</section>
+<section id="주요-기여" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="주요-기여"><span class="header-section-number">2.2</span> 주요 기여</h2>
+<p>논문에서 저자들은 GeoRT를 통해 다음과 같은 두 가지 핵심 기여를 이루었다고 요약합니다:</p>
+<ol type="1">
+<li><p><strong>원칙적인 손 리타게팅 목표 함수 제시:</strong> 사람 손동작을 로봇 손으로 변환하는 데 필요한 <strong>근본 기준(criteria)</strong>들을 기하학적으로 정의하여, 이를 학습형 모델의 <strong>손실 함수</strong>로 활용할 수 있게 하였습니다. 이로써 인간-로봇 손동작 사이의 대응을 수치적으로 명확히 규정하고, 기존의 복잡한 휴리스틱 대신 <strong>체계적인 목표</strong> 하에 모델을 학습시킬 수 있습니다.</p></li>
+<li><p><strong>초고속 신경망 리타게팅 시스템 구현:</strong> 상기한 기하학적 목표들을 기반으로 <strong>경량의 신경망 모델</strong>을 설계 및 훈련하여, <strong>1kHz(초당 1000회)</strong> 수준의 <strong>실시간 성능</strong>과 최첨단 수준의 정확도를 달성했습니다. 제안된 시스템은 필요한 하이퍼파라미터 수를 크게 줄였으며, 실제 원격 조작 실험에서 <strong>기존 방식 대비 향상된 작업 성공률과 속도</strong>를 보여주었습니다. 또한 이 접근법은 테스트 시 별도의 복잡한 최적화 절차가 필요 없으므로, <strong>확장성과 실시간 운용성</strong> 면에서 뛰어납니다.</p></li>
+</ol>
+</section>
+<section id="geometric-retargeting-알고리즘-기하학적-목표와-학습-구조" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="geometric-retargeting-알고리즘-기하학적-목표와-학습-구조"><span class="header-section-number">2.3</span> Geometric Retargeting 알고리즘: 기하학적 목표와 학습 구조</h2>
+<section id="리타게팅을-위한-기하학적-설계-원칙" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="리타게팅을-위한-기하학적-설계-원칙"><span class="header-section-number">2.3.1</span> 리타게팅을 위한 기하학적 설계 원칙</h3>
+<p>GeoRT 알고리즘의 핵심은 <strong>“기하학적 목표 함수”</strong>들을 정의하여 사람이 직관적으로 기대하는 동작 대응 특성을 수식으로 표현하고, 이를 신경망 학습의 지도신호로 삼는 것입니다. 저자들은 이상적인 손동작 매핑이 갖추어야 할 다섯 가지 기준을 제시하는데, 이를 각 손가락별로 적용되는 <strong>다섯 가지 손실 함수</strong>로 구현했습니다. 다섯 가지 <strong>기준(criteria)</strong>과 그 직관적인 의미는 다음과 같습니다:</p>
+<ol type="1">
+<li><p><strong>운동 보존 (Motion Preservation):</strong> 사람 손가락 끝이 <strong>어떤 방향으로 움직일 때</strong>, 로봇 손가락 끝도 <strong>동일한 방향으로 움직여야 한다</strong>는 원칙입니다. 사용자가 손가락을 어느 방향으로 움직이면 로봇 손가락도 그 <strong>움직임 방향을 따라갈 것</strong>이라고 기대하기 때문에, 매핑 함수는 <strong>국소적인 운동 방향을 보존</strong>해야 합니다. 이를 위해 사람 손가락의 현재 자세에서 작은 변화 <span class="math inline">\delta</span>를 주었을 때 로봇 손 끝의 변화 방향이 <span class="math inline">\delta</span>와 <strong>평행하도록 유도하는 손실</strong> 함수를 정의합니다. 이 기준을 통해 <strong>미세 조작 시의 직관성</strong>을 보장합니다.</p></li>
+<li><p><strong>구성 공간 커버리지 (C-space Coverage):</strong> 사람 손가락을 <strong>최소 위치부터 최대 가동 범위까지 움직였을 때</strong>, 로봇 손가락도 <strong>전 범위에 걸쳐 대응</strong>하도록 한다는 원칙입니다. 즉 사람의 입력 동작 범위 전체가 로봇 출력 공간의 <strong>모든 유효 범위</strong>에 매핑되어, 로봇 손의 가용 움직임 능력을 <strong>남김없이 활용</strong>하도록 합니다. 이상적으로 매핑 함수 <span class="math inline">f</span>가 인간 손 공간 <span class="math inline">S^h</span>에서 로봇 손 공간 <span class="math inline">S^r</span>로의 <strong>전단사 함수(특히 전사, surjection)</strong>가 되길 요구하지만, 이를 직접 달성하기 어렵기 때문에 저자들은 <strong>챔퍼(Chamfer) 손실</strong>을 사용한 근사 방법을 제안했습니다. 즉, 매 미니배치마다 인간 손 공간에서 샘플링한 점들과 로봇 손 공간에서 샘플링한 점들을 비교하여 <strong>양 집합 간 거리를 최소화</strong>하는 챔퍼 손실 <span class="math inline">L_{\text{cov}}</span>를 계산함으로써, 로봇 공간에 인간 동작의 사상이 <strong>고르게 퍼지도록</strong> 유도합니다. 이로써 로봇 손가락 끝 <strong>구성 공간의 미커버 영역(uncovered space)</strong>을 줄이게 되며, 사람 동작이 로봇 손의 <strong>전체 범위를 빠짐없이 활용</strong>하도록 합니다.</p></li>
+<li><p><strong>높은 평탄성 (High Flatness):</strong> 매핑 함수의 <strong>민감도가 입력 전역에서 일정해야 한다</strong>는 원칙입니다. 사람 손의 동일한 움직임 변화가 어느 범위에서든 로봇 손의 <strong>유사한 크기의 변화</strong>로 이어지도록, <strong>균일한 응답</strong> 특성을 추구합니다. 예를 들어 어떤 구간에서는 입력을 조금만 바꿔도 로봇 손이 크게 움직이고, 다른 구간에서는 같은 입력 변화에 로봇이 미세하게 반응한다면 사용자는 <strong>어느 구간에서는 로봇이 둔감하고, 다른 구간에서는 과민하다</strong>고 느끼게 될 것입니다. 이를 방지하기 위해 GeoRT는 <strong>매핑 함수의 곡률(curvature)을 낮추는</strong>, 쉽게 말해 <strong>2차 미분이 0에 가깝도록</strong> 만드는 손실 함수를 도입했습니다. 구현상으로는 각 손가락 자세를 약간씩 변화시킨 두 가지 입력에 대해 <strong>유한 차분</strong>으로 로봇 출력 변화를 비교하고, <strong>출력의 이차 변위가 0에 수렴</strong>하도록 하는 방식으로 평탄성 손실 <span class="math inline">L_{\text{flat}}</span>를 계산합니다. 이 <strong>지역적 선형성</strong> 제약을 통해 매핑이 전 구간에서 <strong>예측 가능하고 균일한 비율</strong>로 작동하게 됩니다.</p></li>
+<li><p><strong>핀치 대응 (Pinch Correspondence):</strong> 사람 손가락들 사이에 <strong>집는 동작(pinch grasp)</strong>이 발생할 때 로봇 손에서도 <strong>동일한 핀치 동작</strong>이 일어나야 한다는 기준입니다. 예를 들어 사람의 <strong>엄지-검지</strong>가 집게처럼 모여 물체를 집는다면, 로봇 손도 같은 손가락 쌍으로 집게 동작을 취해야 합니다. 이는 사용자가 로봇을 자기 손처럼 느끼게 하는 <strong>에이전시(agency)</strong> 감각에 매우 중요하지만, 앞선 기준들만으로는 엄밀히 보장되지 않을 수 있습니다. 따라서 GeoRT는 <strong>엄지와 다른 손가락 간 거리</strong>를 모니터링하여, 사람이 일정 임계값 이하로 손가락을 모으면(예: 1cm 이하) 로봇에서도 해당 손가락 간 거리가 가까워지도록 강제하는 <strong>핀치 손실</strong> <span class="math inline">L_{\text{pinch}}</span>를 추가했습니다. 이 제약으로 사람-로봇 손 간 <strong>집기 동작의 일치도</strong>를 높일 수 있습니다. 핀치 사례의 식별을 위해 사람에게 몇 가지 집기 동작을 미리 해보도록 하여 데이터를 모았으며, 약 <strong>5분 이내의 짧은 움직임 기록만으로도 충분</strong>했다고 합니다.</p></li>
+<li><p><strong>비충돌성 (Collision-Free Retargeting):</strong> 사람이 손을 움직이는 동안 <strong>손가락들끼리 부딪치지 않는다면</strong>, 로봇 손 역시 <strong>자체 충돌(self-collision)이 없어야 한다</strong>는 기준입니다. 로봇 손가락끼리 엉키거나 충돌하면 작업에 지장을 줄 뿐 아니라 손상 위험도 있으므로, GeoRT는 최종적으로 <strong>충돌 억제 손실</strong> <span class="math inline">L_{\text{col}}</span>을 포함시켰습니다. 구현상 물리 시뮬레이션을 통해 다양한 로봇 손 관절 구성과 그 충돌 여부를 미리 데이터로 모은 뒤, <strong>신경망 충돌 판별기</strong>를 훈련하여 <strong>어떤 관절 상태가 충돌을 일으킬 확률</strong>인 <span class="math inline">C(q)</span>를 예측하게 합니다. 학습 중에는 이 <strong>사전학습된 충돌 판별기</strong>를 통해 현재 로봇 자세 <span class="math inline">q</span>의 <strong>충돌 확률에 비례하는 손실</strong>을 추가로 부여하여, 모델이 충돌 위험이 높은 출력을 피하도록 유도합니다. 다만 흥미롭게도, 저자들은 다른 손실들만으로도 어떤 로봇 손(Allegro 등)에서는 <strong>자체 충돌이 거의 발생하지 않는 결과</strong>가 나오기도 했다고 언급합니다. 그럼에도 완전성을 위해 충돌 회피 항목을 최종 포함했다고 합니다.</p></li>
+</ol>
+<p>以上의 다섯 가지 목표는 <strong>서로 독립적이며 리타게팅 문제를 정의하는 최소한의 제약</strong>이라고 저자들은 강조합니다. 실제로 일부 기준(I, II, III)을 만족한다고 해서 다른 기준(예: 운동 보존)이 자동 충족되지는 않으므로 각각의 항목이 필요합니다. 이처럼 <strong>간단하지만 원리에 충실한 다섯 가지 목표</strong>를 세움으로써, 더 이상 사람이 임의로 정한 복잡한 규칙 없이도 손 리타게팅의 <strong>품질을 수치적으로 명세화</strong>할 수 있게 되었습니다.</p>
+</section>
+<section id="신경망-구조와-학습-방법" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="신경망-구조와-학습-방법"><span class="header-section-number">2.3.2</span> 신경망 구조와 학습 방법</h3>
+<p>위 기준들을 실제 모델에 구현하기 위해, GeoRT는 입력으로 <strong>사람 손가락들의 위치(keypoint 좌표)</strong>를 받아 출력으로 <strong>로봇 손의 관절 각도</strong>를 내놓는 <strong>신경망 함수</strong>를 학습합니다. 보다 구체적으로, <strong>각 손가락마다 개별적인 소형 신경망</strong> <span class="math inline">f_i</span>를 두어 손가락별 매핑을 수행하는 구조를 채택했습니다. 예를 들어 Allegro 로봇 손은 엄지 포함 4손가락으로 이루어져 있는데, 각 손가락마다 독립적인 <strong>다층 퍼셉트론(MLP)</strong> 네트워크를 할당하여 <strong>사람 손가락 끝 좌표</strong>를 해당 <strong>로봇 손가락의 관절 구동 위치</strong>로 변환하도록 합니다. 각 <span class="math inline">f_i</span>의 출력층에는 Tanh 활성화 함수를 사용하고, 로봇 관절 범위에 맞춰 <strong>출력값을 -1~1로 정규화</strong>하여 표현합니다. 손가락별로 네트워크를 분리함으로써 학습이 단순해지고 병렬 처리가 가능해 <strong>속도 면에서 유리</strong>하며, 핀치 동작이나 충돌과 같은 상호작용은 앞서 정의한 제약 손실을 통해 조정합니다 (예: 핀치 손실은 엄지와 검지 네트워크 출력 간 거리를 연결). 이렇게 하면 <strong>모델 구조가 가벼워</strong>져, 추론시 연산량이 매우 적으므로 결과적으로 <strong>초당 1000회 이상의 갱신 주기</strong>를 쉽게 달성할 수 있었습니다.</p>
+<p>모델 학습은 <strong>완전 비지도학습(unsupervised)</strong>으로 이루어집니다. 즉, 사람이 직접 짝지은 입력-출력 데이터셋 없이, 앞서 정의한 다섯 가지 <strong>기하학적 손실 항목들의 합</strong>만을 최적화 기준으로 삼아 신경망의 가중치를 학습합니다. GeoRT의 전체 손실 함수 <span class="math inline">L_{\text{total}}</span>은 아래와 같은 형태로 구성됩니다:</p>
+<ul>
+<li><strong><span class="math inline">L_{\text{total}} = \lambda_1 L_{\text{motion}} + \lambda_2 L_{\text{cov}} + \lambda_3 L_{\text{flat}} + \lambda_4 L_{\text{pinch}} + \lambda_5 L_{\text{col}}</span></strong></li>
+</ul>
+<p>여기서 <span class="math inline">\lambda_1 \sim \lambda_5</span>는 각 손실의 가중치로, 논문에서는 경험적으로 <strong>4개의 하이퍼파라미터만 조정</strong>하면 충분하다고 설명합니다 (5개 중 일부는 단위 스케일에 따라 고정). 이는 이전 방식들이 사람 손가락마다 일일이 설정해야 했던 수많은 스케일, 오프셋 등의 조율 변수에 비하면 <strong>현저히 단순한 설정</strong>입니다. 저자들이 권장한 가중치 조합은 적당한 범위 내에서 결과에 큰 영향 없이 안정적으로 동작하였고, 이는 본 접근법의 <strong>매우 높은 실용성</strong>을 보여줍니다.</p>
+<p>학습 데이터 준비도 비교적 간단합니다. 로봇 손 공간 쪽은 시뮬레이터에서 로봇 손의 관절들을 <strong>무작위로 움직이며</strong> 얻은 <strong>손가락 끝 위치들의 포인트 클라우드</strong>로 샘플링하고, 인간 손 공간 쪽은 <strong>사용자에게 자유롭게 손가락을 움직이도록</strong> (쭉 펴고 구부리기, 다양한 집기 동작 등) 5분간 요청하여 <strong>모션 캡처</strong>로 얻은 손가락 위치 데이터들을 사용합니다. 즉 수 분간 손을 이리저리 놀리며 <strong>손가락들의 전체 가용 범위를 탐색</strong>한 움직임 기록이 곧 학습에 필요한 인간 손 포인트 클라우드가 됩니다. 이렇게 수집된 <strong>인간/로봇 손 공간 표본들</strong>을 이용해 앞서 설명한 챔퍼 손실 등을 계산하고, 작은 무작위 자세 변화로 운동 보존 및 평탄성 손실을 계산하며, 일부 핀치 예로 핀치 손실을 적용하는 식으로 <strong>각 미니배치마다 손실을 산출</strong>합니다. 이때 로봇 손가락 끝 좌표를 계산하려면 출력 관절값에 대해 <strong>순방향 기구학(forward kinematics)</strong>을 수행해야 하는데, 이를 위해 로봇 손의 해석적 모델을 사용하거나 미리 학습된 <strong>미분가능한 신경망 forward 모델</strong>을 활용하였습니다. 또한 충돌 여부 판별을 위해 앞서 훈련된 충돌 판별기를 사용하지요. 이러한 부가 모델들(순방향 모델, 충돌 판별기 등)은 <strong>오직 학습 단계에서만 사용</strong>되고 추론시에는 필요 없으며, 손실의 <strong>그래디언트는 이들을 거쳐 신경망 <span class="math inline">f_i</span>들까지 역전파</strong>됩니다. 최종적으로 경사하강법으로 신경망 파라미터를 갱신하면, 각 손실 항목들을 균형 있게 <strong>최소화하는 매핑 함수로 수렴</strong>하게 됩니다.</p>
+<p>흥미로운 점은, 이러한 학습이 <strong>아주 빠르게</strong> 완료된다는 것입니다. 저자는 지포스 RTX 3060 단일 GPU에서 <strong>3~5분 이내로 최적 학습이 끝났다</strong>고 보고합니다. 이는 비교적 간단한 MLP 구조와 소량의 데이터(수분간의 손동작)로 충분히 모델이 학습됨을 보여주며, 상황에 따라 <strong>새 사용자나 새 로봇 손에 대해 신속히 재학습</strong>하여 적용할 수 있음을 시사합니다. 결과적으로 학습이 완료된 GeoRT 모델은 사람 손의 키포인트 입력을 받아 즉각적으로 로봇 손의 목표 관절각을 출력하며, <strong>별도의 복잡한 계산이나 최적화를 실시간 단계에서 수행하지 않으므로</strong> 지연 없이 초고속 응답이 가능합니다.</p>
+</section>
+</section>
+<section id="기존-연구와의-비교-휴리스틱-매핑-vs.-원리-기반-학습" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="기존-연구와의-비교-휴리스틱-매핑-vs.-원리-기반-학습"><span class="header-section-number">2.4</span> 기존 연구와의 비교: 휴리스틱 매핑 vs.&nbsp;원리 기반 학습</h2>
+<p>사람 손에서 로봇 손으로의 동작 매핑은 오랫동안 다양한 방식으로 연구되어 왔습니다. 전통적인 접근법 중 하나는 <strong>조인트 공간 매핑(joint-space mapping)</strong>으로, 사람 손가락 관절 각도를 센서 장갑 등으로 읽어와 <strong>미리 정해둔 대응 관계</strong>에 따라 로봇 손 관절 각도로 직접 매핑하는 것입니다. 이러한 방법은 특정 경우(예: 로봇 손 구조가 인간 손과 거의 유사한 경우) 직관적이지만, 일반적으로는 사람 vs 로봇의 <strong>기구학 구조 차이</strong> 때문에 정밀한 제어가 어렵습니다. 관절 축 개수나 배치가 다르면 1:1 対응이 성립하지 않는 부분이 생겨 <strong>오차와 불안정성</strong>이 커지기 때문입니다.</p>
+<p>좀 더 보편적으로 쓰이는 방법은 <strong>직교 좌표계 매핑(cartesian mapping)</strong>으로, 사람 손의 손가락 끝 위치 같은 <strong>작업공간 좌표(task vector)</strong>를 로봇 손가락 끝이 따라가도록 하는 방식입니다. 예를 들어 사람 검지 끝 좌표를 로봇 검지 끝 좌표에 맞추고, 이 목표 위치에 해당하는 로봇 관절각은 <strong>역기구학(IK)</strong>으로 풀이하는 식입니다. 최근 많은 원격 조작 연구들이 이 <strong>키포인트 기반 매핑</strong>을 활용하여 어느 정도 성과를 내왔습니다. 그러나 이런 접근 역시 <strong>어떤 키포인트를 어떻게 매칭할지</strong> 정하는 일이 까다롭습니다. 단순히 <strong>선형 비례식 (Equation 1)</strong>으로 각 좌표축을 맞추는 방법이 흔하지만, 앞서 논의했듯이 이 경우 개별 축마다 <strong>원점 오프셋과 스케일 계수</strong> 등 수많은 파라미터를 보정해야 하고, 그럼에도 사람-로봇 손 공간의 비선형 차이를 커버하지 못해 <strong>부자연스러운 포즈</strong>가 유발될 수 있습니다. 실제 <strong>DexPilot</strong>이나 <strong>AnyTeleop</strong>과 같은 비전 기반 원격조작 시스템에서는 이러한 과제 벡터 매핑을 사용하였는데, 매 실험 전 긴 <strong>보정 과정</strong>이 필요하고도 세밀한 동작 재현에 한계를 보였습니다. 반면 GeoRT는 사람이 임의로 고안한 매핑 함수를 따르지 않고, <strong>기계적으로 도출된 목표들</strong>을 통해 매핑 함수를 <strong>자동 학습</strong>합니다. 즉, 휴리스틱한 <strong>“이 손가락은 여기에 맞춘다”</strong>와 같은 규칙을 설계하지 않고도, <strong>로컬 운동학 특성+글로벌 공간 매칭</strong>이라는 큰 틀에서 모델이 스스로 최적 매핑을 찾아내도록 한 것입니다. 그 결과 추가적인 튜닝 없이도 인간과 로봇 손의 <strong>자연스러운 対응 관계</strong>가 부상(emerge)한다는 점을 논문은 강조합니다.</p>
+<p>또 하나의 비교 축은 <strong>실시간 성능과 확장성</strong>입니다. 기존 많은 방법은 사람이 손을 움직일 때마다 <strong>실시간으로 역기구학 계산이나 최적화</strong>를 수행하여 로봇 관절각을 결정하므로, 응답 속도가 제한되고 연산 부하가 컸습니다. 일부 최신 연구는 학습 기반으로 매핑을 모색했지만 대개 사람-로봇 데이터 쌍이 필요하거나, 정책(Search) 최적화를 매 시간스텝에 수행하는 등 실용화에 장벽이 있었습니다. GeoRT의 경우 <strong>학습 단계</strong>에서 모든 계산을 끝마치고, <strong>운영 단계에서는 신경망 순전파(forward)만 수행</strong>하므로 현격히 가볍습니다. 논문에서 비교한 <strong>DexPilot</strong>이나 <strong>AnyTeleop</strong> 시스템은 리타게팅 속도가 약 <strong>60–100Hz</strong> 수준인 반면 GeoRT는 <strong>1000Hz</strong>로 <strong>10배 이상 빠르며</strong>, <strong>Robotic Telekinesis</strong>와 같이 오프라인 학습을 거친 방법과 동등한 최고 속도를 유지합니다. 또한 GeoRT는 <strong>하드웨어 제약에 대한 의존성</strong>이 낮습니다. 센서 장갑, 비전 모션캡처, Leap Motion 등 <strong>어떤 손 추적 수단</strong>으로 사람 손 키포인트를 얻어도 동일하게 적용 가능하며, 로봇 손도 <strong>인간형 오형</strong>이라는 가정만 성립하면 모델 구조나 파라미터 수 변경 없이 적용할 수 있습니다. (물론 사람 손가락 수보다 로봇 손가락 수가 현저히 적거나 하면 핀치 対응 등을 새로 정의해야 하므로, GeoRT는 현재로서는 <strong>인간형 로봇 손에 초점을 맞춘 해법</strong>입니다.)</p>
+<p>마지막으로, GeoRT에서 제시한 <strong>기하학적 목표들</strong>은 특정 구현에 국한되지 않고 <strong>다른 맥락에도 활용 가능</strong>하다는 장점을 갖습니다. 예를 들어 본 논문에서는 물체를 직접 다루는 <strong>과업지향적(hand-object) 리타게팅</strong>은 다루지 않았지만, 저자들은 제안한 <strong>규제항(regularization)들을 기존 방법에 추가하여</strong> 손-물체 동시 매핑의 품질도 향상시킬 수 있을 것으로 언급합니다. 이는 GeoRT의 철학이 <strong>보편적인 형태의 손동작 対응 문제</strong>로 확장될 수 있음을 시사합니다. 실제 최근 연구 중에는 <strong>형상 대응(shape correspondence)</strong> 문제로 손 리타게팅을 바라보는 시도들도 있는데, GeoRT의 원리는 이러한 접근(예: 두 손의 표면을 사상하여 변형 에너지를 최소화하는 방법 등)과도 일맥상통하는 부분이 있습니다. 요컨대 GeoRT는 기존 방식들의 <strong>경험적 한계</strong>를 인식하고, 이를 <strong>체계적인 수학적 원칙</strong>으로 극복함으로써 한 단계 진일보한 손 리타게팅 해법이라 평가할 수 있습니다.</p>
+</section>
+<section id="실험-및-결과-분석" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="실험-및-결과-분석"><span class="header-section-number">2.5</span> 실험 및 결과 분석</h2>
+<section id="시뮬레이션-평가-부드러운-제어와-공간-활용도" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="시뮬레이션-평가-부드러운-제어와-공간-활용도"><span class="header-section-number">2.5.1</span> 시뮬레이션 평가: 부드러운 제어와 공간 활용도</h3>
+<p>저자들은 먼저 가상 시뮬레이터에서 제안한 GeoRT의 <strong>리타게팅 품질</strong>을 정량 평가하였습니다. 이를 위해 두 가지 지표를 정의했는데, 하나는 <strong>운동 보존율</strong>이고 다른 하나는 <strong>공간 커버리지율</strong>입니다. <strong>운동 보존율</strong>은 앞서 기준 I에 대응하는 지표로, 무작위로 다양한 손 자세와 그 주변의 작은 방향 변화를 샘플링하여 <strong>로봇 손끝 움직임이 사람 손끝 움직임과 얼마나 방향 정렬이 잘 되는지</strong>를 나타냅니다. 값은 0~1 사이이며 1에 가까울수록 모든 국소 움직임 방향이 완전히 일치함을 의미합니다. <strong>공간 커버리지율</strong>은 기준 II에 대응하는 지표로, 충분히 많은 인간 손가락 포즈 표본들을 로봇 손가락 포즈로 변환했을 때 <strong>로봇 손 구성 공간 중 얼마나 넓은 영역을 덮었는지</strong>를 백분율로 나타낸 것입니다. 0%이면 인간 동작이 로봇 공간의 극히 일부만 사용함을, 100%이면 로봇 손의 전체 가동 범위를 빠짐없이 커버했음을 의미합니다.</p>
+<p>GeoRT와 기존 방식들을 이 두 지표로 비교한 결과, GeoRT는 <strong>운동 보존율 약 0.94</strong>로 기존 선형 매핑 기반 방법(약 0.73)보다 훨씬 높았으며, <strong>로봇 공간 커버리지도 약 90%</strong>로 기존 방식(약 38%)보다 크게 향상되었습니다. 즉 <strong>훨씬滑らか(부드럽고 일관된) 제어 감각과 거의 전역에 걸친 로봇 공간 활용</strong>이 달성된 것입니다. 이러한 결과는 GeoRT가 명시적으로 최적화한 목표들과 정확히 부합하는 것이어서 놀랍지는 않지만, <strong>제안된 기하학적 손실 설정이 제대로 효과를 발휘</strong>함을 입증합니다. 결국 GeoRT를 쓰면 사용자는 로봇 손의 <strong>최대 가용 범위</strong>를 활용하면서도 <strong>미세한 손동작까지 로봇에서 자연스럽게 재현</strong>할 수 있음을 시뮬레이션을 통해 확인한 것입니다.</p>
+<p>또한 흥미로운 질적 실험으로, 저자들은 <strong>특정 매핑 휴리스틱 없이도</strong> GeoRT가 얼마나 그럴듯한 사람-로봇 対응을 학습하는지 관찰했습니다. 예를 들어 인간 손의 약지-검지 사이 핀치 동작 등은 기존 선형 매핑에서는 잘 구현되지 않았지만, GeoRT 모델은 이러한 세부적인 対응 관계도 <strong>목표 손실들만으로 스스로 발견</strong>해냈습니다. <strong>그림 7</strong>의 사례들을 보면, GeoRT는 작업 벡터 간 일치 항을 전혀 쓰지 않고도 인간과 로봇 손가락 사이에 <strong>자연스러운 対응이 형성</strong>되는 것을 볼 수 있습니다. 이는 제안한 접근법이 <strong>사람의 손동작 의도를 충실히 살려</strong>낸다는 점을 보여주는 인상적인 결과입니다.</p>
+</section>
+<section id="실제-로봇-실험-물체-잡기-성능-비교" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="실제-로봇-실험-물체-잡기-성능-비교"><span class="header-section-number">2.5.2</span> 실제 로봇 실험: 물체 잡기 성능 비교</h3>
+<p>GeoRT의 성능은 실제 로봇 시스템 상에서도 검증되었습니다. 저자들은 <strong>Franka Panda 로봇 팔</strong> 끝에 <strong>Allegro 로봇 손</strong>을 장착하고, 사람은 한 손에 <strong>Manus VR 장갑</strong>(손가락 위치 트래킹)과 손목에 <strong>Vive 트래커</strong>(팔 동작 트래킹)를 착용하여 원격 조작을 수행하는 실험을 진행했습니다. 사람의 손가락 움직임은 Manus 장갑으로 읽어 GeoRT 모델의 입력으로 들어가고, 출력된 Allegro 손 관절 위치 명령은 <strong>PD 제어</strong>를 통해 로봇 손을 구동했습니다. 한편 사람 팔의 움직임은 Vive 트래커로 받아 로봇 팔의 손끝 위치를 따라가도록 제어함으로써, <strong>사용자의 손 위치와 로봇 손 위치</strong>도 동기화시켰습니다. 이렇게 구성된 <strong>원격 조작 시스템</strong>으로 여러 가지 집기(grasping) 실험을 실시하여, GeoRT 방식과 기존 방식의 <strong>작업 성공률과 소요 시간</strong>을 비교했습니다.</p>
+<p>비교 대상으로는 앞서 언급된 <strong>선형 매핑 기반 방법</strong>을 두 가지 버전으로 사용했는데, 하나는 매 프레임 실시간으로 보정이 이뤄지는 <strong>온라인 버전</strong>이고 다른 하나는 고정된 보정값을 쓰는 <strong>오프라인 버전</strong>입니다. 평가 지표로는 <strong>한 번 시도로 물체 잡기에 성공하는 비율(One-trial success)</strong>과 <strong>성공적인 그립을 이루기까지 걸린 평균 시간</strong>을 측정했습니다. 그 결과 GeoRT를 사용한 경우 <strong>한 번에 잡기 성공할 확률이 87.5%</strong>로, 오프라인 선형 매핑(55.0%)이나 온라인 보정 매핑(42.5%)보다 훨씬 높았습니다. 특히 온라인 방식은 잦은 보정에도 불구하고 성공률이 오히려 떨어졌는데, 이는 <strong>프레임 간 가변적인 매핑</strong>으로 사용자가 적응하기 어려웠기 때문으로 보입니다. 반면 GeoRT는 <strong>항상 일관된 대응</strong>을 유지하므로 사용자가 빠르게 숙달되어 높은 성공률을 보인 것입니다. 또한 <strong>평균 작업 완료 시간</strong>도 GeoRT가 <strong>3.2초</strong>로, 기존 오프라인(9.0초)이나 온라인 방식(19.3초)에 비해 월등히 짧았습니다. 이는 GeoRT를 쓸 경우 사용자가 <strong>여러 번 잡으려고 시도하거나 미세 조정에 시간을 보낼 필요 없이</strong>, <strong>한번에 신속하게 물체를 집어 옮길 수 있다</strong>는 의미입니다. 사람의 감각으로도 GeoRT 방식은 손끝 움직임이 매끄럽고 직관적이라 <strong>작은 물체를 집거나 섬세한 조작을 할 때도 어려움이 적었다</strong>고 합니다. 반대로 기존 선형 매핑 기반으로는 손가락 미세 제어가 어색해 <strong>작은 물체를 집기 상당히 힘들었다</strong>고 관찰되었습니다.</p>
+<p> <em>알레그로 로봇 손과 프랑카 팔로 구성된 실험 시스템을 이용해 다양한 섬세한 조작 작업을 원격 수행하는 장면. (위 왼쪽) 평면 위 물체를 집어드는 동작, (위 오른쪽) 드라이버로 나사를 조이는 동작, (아래 왼쪽) 작은 블록을 정밀하게 쌓는 동작, (아래 오른쪽) 주사기 형태의 도구를 잡고 제어하는 모습. 제안된 GeoRT 기반 원격 조작을 통해 사용자는 이와 같은 다양한 정밀 작업을 안정적으로 수행할 수 있었다.</em></p>
+<p>추가로, 저자들은 GeoRT 시스템으로 <strong>주어진 작업들을 얼마나 빠르게 연속 수행</strong>할 수 있는지도 데모를 보였습니다. 예컨대 여러 가지 물건 12개가 흩어진 테이블에서 이를 한 손으로 집어 모두 통에 담는 과제를 약 <strong>100초만에 완료</strong>하였는데, 이때 느린 로봇 <strong>팔</strong> 움직임이 병목이었을 뿐 손 자체의 동작은 대부분 <strong>한 번 시도로 성공</strong>했다고 합니다. 이는 GeoRT 기반 제어의 효율성을 방증하는 예로 볼 수 있습니다. 종합하면, 실제 로봇 실험에서 GeoRT는 <strong>기존 대비 월등히 높은 작업 성공률과 빠른 조작</strong>을 구현했으며, 특히 <strong>정밀한 그립 동작</strong>에서 사용자에게 <strong>향상된 제어감과 자신감</strong>을 제공함을 확인했습니다.</p>
+</section>
+</section>
+<section id="연구-의의-한계-및-향후-전망" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="연구-의의-한계-및-향후-전망"><span class="header-section-number">2.6</span> 연구 의의, 한계 및 향후 전망</h2>
+<p><strong>Geometric Retargeting (GeoRT)</strong> 알고리즘은 사람 손동작을 로봇 손으로 전달하는 오랜 문제에 대해 <strong>명확한 원리와 실용적인 해법</strong>을 제시했다는 점에서 크게 주목받고 있습니다. 우선 이 연구의 의의를 짚어보면 다음과 같습니다:</p>
+<ul>
+<li><p><strong>원리 기반의 정형화:</strong> 사람-로봇 손 매핑 문제를 다섯 가지 <strong>기하학적 기준으로 정량화</strong>함으로써, 감에 의존하던 휴리스틱 설계 대신 <strong>과학적이고 재현 가능한 방법론</strong>을 마련했습니다. 이는 향후 유사한 문제(예: 인간의 팔 동작을 로봇 팔에 매핑, 인간 걸음새를 로봇에 매핑 등)에도 응용될 수 있는 틀을 제공한 것입니다.</p></li>
+<li><p><strong>실시간 성능과 범용성:</strong> 간결한 MLP 구조와 사전 학습된 보조 모듈들을 활용하여 <strong>1kHz급 실시간 동작 변환</strong>을 달성했고, 추가 최적화나 복잡한 연산 없이도 다양한 시나리오에 적용 가능한 <strong>경량 프레임워크</strong>를 구축했습니다. 이는 원격 조작 시스템을 대규모로 확장하거나, 로봇 제어의 <strong>내부 피드백 루프</strong>에 통합하는 등 응용 범위를 크게 넓혀줍니다. 실제 저자들은 GeoRT를 자사의 <strong>DexterityGen</strong>이라는 <strong>파운데이션 제어기</strong>와 결합하여, 사용자의 거친 원격 조작을 뒷단에서 미세 조정해주는 <strong>액션 보정 시스템</strong>을 구현하기도 했습니다. 초고속 매핑 덕분에 이러한 상위 제어와의 실시간 연동이 가능해진 사례입니다.</p></li>
+<li><p><strong>휴먼-로봇 협업 경험 향상:</strong> 실험 결과에서 보았듯 GeoRT는 사용자로 하여금 <strong>자신의 손처럼 로봇 손을 직관적으로 조종</strong>할 수 있게 해줍니다. 이는 곧 원격 로봇 조작의 <strong>학습 부담을 줄이고</strong> 생산성을 높이는 효과로 이어집니다. 예컨대 비숙련자도 짧은 시간내에 섬세한 로봇 작업을 수행할 수 있고, 피로도도 낮아질 것으로 기대됩니다. 장기적으로 이런 기술이 발전하면 <strong>원격 의료 수술, 원격 제조</strong> 등에서 인간과 로봇의 상호작용 효율이 크게 향상될 것입니다.</p></li>
+</ul>
+<p>한편, GeoRT에도 <strong>한계와 도전 과제</strong>가 존재합니다. 첫째, <strong>인간형 로봇 손에 최적화</strong>되어 있다는 점입니다. 논문에서도 전제 조건(A1, A2)으로 로봇 손이 인간 손과 <strong>구조적으로 유사하고 손가락 対应관계가 명확</strong>함을 가정하고 있습니다. 따라서 사람보다 손가락 수가 적거나 많은 로봇, 혹은 구조가 크게 다른 로봇(hand이 아닌 집게 형태 등)에는 그대로 적용하기 어렵습니다. 이러한 경우 対应관계를 정의하는 추가 연구나 다른 형태의 목표 함수가 필요할 수 있습니다. 둘째, GeoRT는 <strong>물체와 상호작용하지 않는 맨손</strong>의 매핑에 한정됩니다. 물체를 쥔 상태에서의 손가락 움직임이나, 도구 사용 등의 시나리오에서는 단순 손가락 끝 위치만으로 이상적인 매핑을 정의하기 어려울 수 있습니다. 향후에는 <strong>물체의 상태나 힘/촉각 정보</strong>까지 포함한 <strong>과업 지향적 리타게팅</strong>으로의 확장이 필요합니다. 다행히 제안된 기하학적 목표들은 이러한 세팅에서도 <strong>규제 항으로 응용</strong>될 수 있을 것으로 보입니다. 셋째, 현재 모델은 <strong>손가락별 독립적</strong>으로 구성되어 엄지-검지 핀치 외의 복잡한 <strong>다손가락 협응 동작</strong>에 대한 명시적 제약은 부족합니다. 예를 들어 세 손가락으로 동시에 물체를 파지하는 동작 등에서는 보다 <strong>전체 손의 통합적인 매핑 전략</strong>이 필요할 수 있습니다. 이를 위해 추후에는 <strong>손 전체를 입력으로 받아 전체 관절을 출력하는 통합 모델</strong>이나, 손가락 간 <strong>종속성까지 학습</strong>하는 구조로의 발전 가능성도 있습니다.</p>
+<p>또 다른 흥미로운 확장 방향은, GeoRT를 <strong>오프라인 모션 사본 생성</strong>이나 <strong>모방 학습</strong> 분야에 활용하는 것입니다. 예컨대 사람의 시연 동작(비디오 혹은 Mocap 데이터)을 로봇으로 재현하는 데에도 동일한 원리의 매핑이 쓰일 수 있습니다. 실제 <strong>Robotic Telekinesis</strong> 연구는 유튜브 영상의 인간 손동작을 로봇이 모방하도록 학습했는데, GeoRT의 손실 함수를 적용하면 이러한 <strong>크로스 도메인 모방 학습</strong>의 성능도 개선시킬 여지가 있을 것입니다. 마지막으로, GeoRT의 <strong>초고속 성질</strong>은 단순히 원격 조작뿐 아니라 <strong>휴머노이드 로봇의 실시간 모방 제스처</strong>, <strong>VR 아바타 손 움직임 자연화</strong> 등 다양한 실시간 인터랙티브 시스템에 기여할 수 있습니다.</p>
+<p>요약하면, <em>Geometric Retargeting</em> 알고리즘은 기존의 인간-로봇 손동작 매핑 문제에 <strong>이론과 구현 양면에서 혁신적인 솔루션</strong>을 제시했습니다. 사람의 감각적인 기대치를 수학적으로 풀어내고 이를 빠른 학습 모델로 실현함으로써, 원격 로봇 조작의 <strong>정확성, 속도, 직관성</strong>을 모두 끌어올렸습니다. 앞으로 남은 과제들은 이 접근을 보다 다양한 로봇 형태와 시나리오로 <strong>확장</strong>하고, 인간과 로봇 간 <strong>물리적 상호작용</strong>까지 포괄하는 방향으로 나아가는 것입니다. 이러한 후속 연구들이 이루어진다면, 한층 자연스러운 인간-로봇 협업 시대를 앞당길 수 있을 것으로 기대됩니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
