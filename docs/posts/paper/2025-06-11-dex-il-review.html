@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-06-11">
+<meta name="description" content="Dexterous Manipulation through Imitation Learning / A Survey">
+
+<title>📃Dex Imitation Learning 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dexterous-manipulation-through-imitation-learning" id="toc-dexterous-manipulation-through-imitation-learning" class="nav-link active" data-scroll-target="#dexterous-manipulation-through-imitation-learning"><span class="header-section-number">1</span> Dexterous Manipulation through Imitation Learning</a>
+  <ul class="collapse">
+  <li><a href="#behavioral-cloning-bc" id="toc-behavioral-cloning-bc" class="nav-link" data-scroll-target="#behavioral-cloning-bc"><span class="header-section-number">1.1</span> Behavioral Cloning (BC)</a></li>
+  <li><a href="#inverse-reinforcement-learning-irl" id="toc-inverse-reinforcement-learning-irl" class="nav-link" data-scroll-target="#inverse-reinforcement-learning-irl"><span class="header-section-number">1.2</span> Inverse Reinforcement Learning (IRL)</a></li>
+  <li><a href="#generative-adversarial-imitation-learning-gail" id="toc-generative-adversarial-imitation-learning-gail" class="nav-link" data-scroll-target="#generative-adversarial-imitation-learning-gail"><span class="header-section-number">1.3</span> Generative Adversarial Imitation Learning (GAIL)</a></li>
+  <li><a href="#hierarchical-imitation-learning-hil" id="toc-hierarchical-imitation-learning-hil" class="nav-link" data-scroll-target="#hierarchical-imitation-learning-hil"><span class="header-section-number">1.4</span> Hierarchical Imitation Learning (HIL)</a></li>
+  <li><a href="#continual-imitation-learning-cil" id="toc-continual-imitation-learning-cil" class="nav-link" data-scroll-target="#continual-imitation-learning-cil"><span class="header-section-number">1.5</span> Continual Imitation Learning (CIL)</a></li>
+  </ul></li>
+  <li><a href="#end-effectors-for-dexterous-manipulation" id="toc-end-effectors-for-dexterous-manipulation" class="nav-link" data-scroll-target="#end-effectors-for-dexterous-manipulation"><span class="header-section-number">2</span> End Effectors for Dexterous Manipulation</a></li>
+  <li><a href="#teleoperation-systems-and-data-collection" id="toc-teleoperation-systems-and-data-collection" class="nav-link" data-scroll-target="#teleoperation-systems-and-data-collection"><span class="header-section-number">3</span> Teleoperation Systems and Data Collection</a></li>
+  <li><a href="#challenges-and-future-directions" id="toc-challenges-and-future-directions" class="nav-link" data-scroll-target="#challenges-and-future-directions"><span class="header-section-number">4</span> Challenges and Future Directions</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Dex Imitation Learning 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">paper</div>
+    <div class="quarto-category">imitation</div>
+    <div class="quarto-category">dexterous</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Dexterous Manipulation through Imitation Learning / A Survey
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong><a href="https://arxiv.org/pdf/2504.03515">Paper Link</a></strong></p>
+<blockquote class="blockquote">
+<p>리뷰 논문은 꼭 한번 읽어보는 것을 추천합니다.</p>
+</blockquote>
+<ol type="1">
+<li>✨ 고차원적 복잡성과 역학으로 인해 전통적인 방법과 강화 학습은 로봇의 능숙한 조작(dexterous manipulation)에 어려움을 겪습니다.</li>
+<li>🤖 모방 학습(Imitation Learning, IL)은 전문가 시연을 통해 로봇이 복잡한 조작 기술을 직접 학습할 수 있도록 하는 유망한 대안입니다.</li>
+<li>📘 본 조사는 모방 학습 기반 능숙한 조작의 최신 기술, 도전 과제 및 미래 연구 방향에 대한 포괄적인 개요를 제공합니다.</li>
+</ol>
+<hr>
+<section id="dexterous-manipulation-through-imitation-learning" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Dexterous Manipulation through Imitation Learning</h1>
+<p>본 논문은 Imitation Learning (IL) 기반의 Dexterous Manipulation(DM)에 대한 포괄적인 서베이 논문입니다. DM은 로봇 손 또는 다지(multi-fingered) End-effector가 정밀하게 조율된 손가락 움직임과 적응적인 힘 조절을 통해 객체를 능숙하게 제어, 재배향, 조작하는 능력을 의미하며, 인간 손의 dexterity와 유사한 복잡한 상호작용을 가능하게 합니다. 로봇 공학 및 기계 학습의 발전과 함께 복잡하고 비정형적인 환경에서 작동하는 시스템에 대한 수요가 증가하고 있습니다.</p>
+<p>기존의 모델 기반(model-based) 접근 방식은 DM의 높은 차원성(high dimensionality)과 복잡한 접촉 동역학(contact dynamics)으로 인해 작업 및 객체 변화에 대한 일반화(generalize)에 어려움을 겪습니다. Reinforcement Learning (RL)과 같은 모델 프리(model-free) 방식은 가능성을 보여주지만, 안정성과 효과성을 위해 광범위한 훈련, 대규모 상호작용 데이터, 신중하게 설계된 보상(reward)이 필요합니다. IL은 전문가 데모(expert demonstrations)로부터 DM 기술을 직접 습득하게 하여, 명시적인 모델링이나 대규모 시행착오 없이 미세한 조율(fine-grained coordination) 및 접촉 동역학을 포착할 수 있는 대안을 제공합니다.</p>
+<p>본 서베이는 IL에 기반한 DM 방법을 개괄하고, 최근의 발전 사항을 자세히 설명하며, 이 분야의 주요 도전 과제를 다룹니다. 또한, IL 기반 DM을 향상시키기 위한 잠재적인 연구 방향을 탐색합니다.</p>
+<p>IL 기반 DM 접근 방식은 크게 5 가지 범주로 분류됩니다:</p>
+<ol type="1">
+<li>Behavioral Cloning (BC),</li>
+<li>Inverse Reinforcement Learning (IRL),</li>
+<li>Generative Adversarial Imitation Learning (GAIL), 그리고 확장 프레임워크로서</li>
+<li>Hierarchical Imitation Learning (HIL) 및</li>
+<li>Continual Imitation Learning (CIL)입니다.</li>
+</ol>
+<section id="behavioral-cloning-bc" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="behavioral-cloning-bc"><span class="header-section-number">1.1</span> Behavioral Cloning (BC)</h2>
+<p>BC는 전문가 데모의 state-action 쌍으로부터 직접 학습하여 전문가 행동을 복제하는 지도 학습(supervised learning) 패러다임입니다. 보상 신호나 탐색(exploration) 없이 상태에서 행동으로의 직접 매핑을 특징으로 합니다. 목표 함수는 데모된 액션의 negative log-likelihood를 최소화하는 것입니다:</p>
+<p><span class="math inline">L(\pi) = -E_{(s,a)\sim p_D}[\log \pi(a | s)]</span></p>
+<p>여기서 <span class="math inline">D = \{\tau_1, \dots, \tau_n\}</span>는 <span class="math inline">n</span>개의 데모 집합이며, 각 데모 <span class="math inline">\tau_i</span>는 길이 <span class="math inline">N_i</span>의 state-action 쌍 시퀀스 <span class="math inline">\{(s_1, a_1), \dots, (s_{N_i}, a_{N_i})\}</span>입니다. BC는 푸싱(pushing) 및 grasping과 같은 비교적 간단한 작업에서 효과적인 성능을 보였습니다. 그러나 훈련 중 보지 못한 상태에 직면할 때 전문가 행동에서 벗어나는 액션을 생성할 수 있는 distribution shift 및 sequential decision-making 과정에서 오류가 누적되는 compounding error 문제에 취약합니다. 이를 완화하기 위해 계층적 프레임워크 [29]를 사용하거나, 단계별 액션 대신 전체 액션 시퀀스를 예측하여 유효 결정 시간 범위(effective decision horizon)를 줄이는 접근 방식 [53]이 제안되었습니다. 인간 데모에 흔한 multi-modal 데이터를 모델링하기 위해 에너지 기반 모델링 [26], 가우시안 혼합 모델 [58], 생성 모델 [59] 등이 탐구되었으며, 최근 Diffusion models [32, 60, 61, 62]이 BC 방법의 강건성 및 일반화 향상에 큰 잠재력을 보여주고 있습니다. BC 기반 방법은 일반화 및 multi-modal 액션 분포 모델링에 어려움을 겪지만, Diffusion models는 직접 액션 시퀀스를 생성하거나 고수준 전략을 안내하는 방식으로 유연성을 향상시키고 있습니다.</p>
+</section>
+<section id="inverse-reinforcement-learning-irl" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="inverse-reinforcement-learning-irl"><span class="header-section-number">1.2</span> Inverse Reinforcement Learning (IRL)</h2>
+<p>IRL은 사전 정의된 보상 함수를 최대화하기 위해 정책을 학습하는 기존 RL 프레임워크를 역전시킵니다. 대신, 전문가 데모 집합 <span class="math inline">D</span>를 가장 잘 설명하는 기저의 보상 함수 <span class="math inline">R(s, a)</span>를 추론하는 것을 목표로 합니다. 데모는 최적 또는 거의 최적의 정책을 따르는 전문가에 의해 생성되었다고 가정합니다.</p>
+<p>IRL 문제는 일반적으로 유한 Markov Decision Process <span class="math inline">M = \langle S, A, T, R, \gamma \rangle</span> 내에서 공식화되며, 여기서 <span class="math inline">S</span>와 <span class="math inline">A</span>는 상태 및 액션 공간, <span class="math inline">T(s'|s, a)</span>는 상태 전이 확률, <span class="math inline">R(s, a)</span>는 보상 함수, <span class="math inline">\gamma \in [0, 1]</span>는 할인율입니다. 보상 함수는 종종 특징 함수 <span class="math inline">\phi(s, a)</span>의 선형 조합 <span class="math inline">R(s_t, a_t) = w^\top\phi(s_t, a_t)</span>으로 표현됩니다. 정책 <span class="math inline">\pi</span> 하에서의 기대 특징 카운트는 <span class="math inline">\mu_\phi(\pi) = \sum_{t=0}^\infty \gamma^t \psi_\pi(s_t)\phi(s_t, a_t)</span>로 정의됩니다. IRL은 보상 함수를 수동으로 정의하기 어려운 DM 시나리오에서 특히 유리합니다.</p>
+<p>최근 연구들은 reward normalization, task-specific feature masking [63], adaptive sampling [64], 사용자 피드백 통합 [65], 비정형 데모로부터 보상 함수 학습 [67], Proximal Policy Optimization [45]과의 통합 [68], 시각 기반 인간-로봇 협업 [69] 등을 통해 IRL 프레임워크를 발전시켰습니다. IRL은 전문가 데모로부터 기저 보상 함수를 추론함으로써 복잡한 행동을 일반화하고 다양한 환경에 적응할 수 있도록 하지만, 고차원 액션 공간이나 희소한 피드백 신호에서 정확한 보상 함수 추정 및 대량의 데모 데이터 요구와 같은 한계에 직면합니다.</p>
+</section>
+<section id="generative-adversarial-imitation-learning-gail" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="generative-adversarial-imitation-learning-gail"><span class="header-section-number">1.3</span> Generative Adversarial Imitation Learning (GAIL)</h2>
+<p>GAIL은 GAN [102] 프레임워크를 IL 영역으로 확장합니다. 모방 프로세스를 생성자와 판별자 사이의 2인 적대적 게임으로 공식화합니다. 생성자는 전문가 데모와 유사한 행동을 생성하려는 정책 <span class="math inline">\pi</span>에 해당하며, 판별자 <span class="math inline">D(s, a)</span>는 state-action 쌍 <span class="math inline">(s, a)</span>가 전문가 데이터 <span class="math inline">M</span>에서 왔는지 또는 <span class="math inline">\pi</span>에 의해 생성되었는지 평가합니다. GAIL은 전문가와 생성자의 state-action 분포 사이의 Jensen-Shannon divergence를 최소화합니다.</p>
+<p>판별자는 다음 목표를 최대화하도록 훈련됩니다:</p>
+<p><span class="math inline">\arg \min_D -E_{d_M(s,a)}[\log D(s, a)] - E_{d_\pi(s,a)}[\log(1 - D(s, a))]</span></p>
+<p>생성자의 정책 <span class="math inline">\pi</span>는 판별자에서 파생된 보상 <span class="math inline">r_t = -\log(1 - D(s_t, a_t))</span>을 사용하여 RL로 최적화됩니다. 이 적대적 훈련 과정을 통해 GAIL은 명시적으로 보상 함수를 복구하지 않고도 전문가 데모로부터 복잡한 행동을 효과적으로 학습합니다.</p>
+<p>GAIL은 DM에서 널리 채택되었지만, 데모 데이터의 품질 및 가용성, 그리고 훈련 불안정성(mode collapse, gradient vanishing) 문제에 크게 의존합니다. Hindsight Experience Replay [77], semi-supervised correction [76], Sim-to-real transfer [78] 등이 데이터 문제를 해결하려 시도했으며, Variational Autoencoders [79], Wasserstein GAN [80], self-organizing generative model [82] 등을 사용하여 훈련 안정성을 개선하고 Mode collapse를 완화하려는 노력이 있었습니다. GAIL은 적대적 훈련의 근본적인 한계를 상속받아 훈련 불안정성 및 고차원 액션 공간으로의 확장 어려움에 직면합니다.</p>
+</section>
+<section id="hierarchical-imitation-learning-hil" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="hierarchical-imitation-learning-hil"><span class="header-section-number">1.4</span> Hierarchical Imitation Learning (HIL)</h2>
+<p>HIL은 복잡한 작업을 계층적 구조로 분해하여 해결하도록 설계된 IL 프레임워크입니다. 일반적으로 2단계 계층 구조를 채택하며, 상위 수준 정책은 현재 상태 및 작업 요구 사항에 따라 하위 작업 또는 원시(primitives) 시퀀스를 생성하고, 하위 수준 정책은 하위 작업을 실행하여 전체 목표를 달성합니다. 이 계층적 분해는 의사 결정 및 제어를 분리하여 장기적인 복잡한 작업을 보다 효과적으로 처리할 수 있도록 합니다.</p>
+<p>상위 정책 <span class="math inline">\pi_h</span>는 미리 정의된 원시 집합 <span class="math inline">\{p_1, \dots, p_K\}</span>에서 원시 <span class="math inline">p_i</span>를 선택합니다: <span class="math inline">\pi_h(s_t) = p_i</span>. 해당 하위 정책 <span class="math inline">\pi_{p_i}</span>는 선택된 원시를 실행할 액션을 생성합니다: <span class="math inline">a_t = \pi_{p_i}(s_t)</span>. 전체 목표는 누적 손실 함수를 최소화하는 것입니다:</p>
+<p><span class="math inline">L(\pi) = \sum_{t=1}^T E_{(s_t,a_t)\sim\pi}[\ell(s_t, a_t)]</span></p>
+<p>HIL의 주요 장점은 작업을 계층적 구조로 분해하여 직접적인 액션 공간 탐색의 복잡성을 줄이는 것입니다.</p>
+<p>CompILE [88], HDR-IL [89], ARCH [90], XSkill [91], LOTUS [92] 등의 연구들이 작업 분해, 기술 일반화, 장기적인 작업 처리에 기여했습니다. 최근 연구들은 Play data [93, 94]를 활용하여 두 수준의 정책을 효율적으로 훈련하는 방법을 탐구했습니다. HIL은 작업 분해 및 기술 일반화에서 상당한 이점을 보여주지만, Cross-modal 기술 일반화에서의 적응성 및 동적 환경에서의 모델 강건성 및 연속성 확보에 어려움을 겪고 있습니다.</p>
+</section>
+<section id="continual-imitation-learning-cil" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="continual-imitation-learning-cil"><span class="header-section-number">1.5</span> Continual Imitation Learning (CIL)</h2>
+<p>CIL은 지속 학습(continual learning)과 IL을 통합하여 에이전트가 동적으로 변화하는 환경에서 전문가 행동을 모방함으로써 기술을 지속적으로 습득하고 적응할 수 있도록 합니다. 에이전트는 초기 단계에서 전문가 데모로부터 기본 기술을 학습하고, 이후 단계에서 점진적으로 지식을 축적하고 새로운 작업이나 환경에 적응하며 이전에 습득한 기술을 잊어버릴 위험을 완화합니다.</p>
+<p>CIL에서 정책 <span class="math inline">\pi</span>는 이전에 접한 모든 작업에 대한 누적 모방 손실을 최소화하여 최적화됩니다:</p>
+<p><span class="math inline">L(\pi) = -\sum_{i=1}^t \lambda^{(i)} E_{(s^{(i)},a^{(i)})\sim \rho^{(i)}_{exp}}[\log \pi(a^{(i)} | s^{(i)})]</span></p>
+<p>여기서 <span class="math inline">\lambda^{(i)}</span>는 <span class="math inline">t</span>개의 각 작업에 할당된 가중치이고 <span class="math inline">\rho^{(i)}_{exp}</span>는 작업 <span class="math inline">i</span>에 대한 전문가 state-action 쌍의 분포입니다.</p>
+<p>초기 연구 [95]는 이전에 습득한 기술을 손상시키지 않고 작업 간 전환을 가능하게 했지만, 상당한 저장 및 계산 리소스가 필요했습니다. Task-specific adapter 구조 [96], 비지도 기술 발견 [92], 행동 증류를 통한 통합 정책 학습 [97], Deep Generative Replay (DGR) [98], 자기 지도 학습 [99] 등 다양한 접근 방식이 제안되었습니다. CIL은 효과적인 멀티태스킹 학습, DGR 기술 적용, 자기 지도 기술 추상화에 중점을 두지만, 생성된 데이터의 품질 및 일관성, 리소스 소비, 현실 세계 응용을 위한 일반화 능력 부족과 같은 실질적인 배포 과제가 남아 있습니다.</p>
+</section>
+</section>
+<section id="end-effectors-for-dexterous-manipulation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> End Effectors for Dexterous Manipulation</h1>
+<p>DM을 위한 End-effector는 크게 두 가지 그리퍼(two-fingered grippers), 다지 인간형 손(multi-fingered anthropomorphic hands), 세 가지 로봇 클로(three-fingered robotic claws)로 나뉩니다. 두 가지 그리퍼는 신뢰성, 단순성, 제어 용이성으로 널리 사용되지만 (예: Franka robot [104], ALOHA [53], Mobile ALOHA [112]), 손 안에서의 객체 재구성 능력이 제한적이고 인간 손과의 형태학적 차이로 인해 인간 데모로부터 학습하는 데 방해가 됩니다 [115]. 다지 인간형 손은 인간과 유사한 형태를 가지며 인간이 사용하도록 설계된 객체와의 상호작용에 더 적합합니다 [116].</p>
+<p><strong>구동 메커니즘에 따라</strong></p>
+<ul>
+<li>Tendon-driven (예: Shadow Dexterous Hand [130]),</li>
+<li>Linkage-driven (예: INSPIRE-ROBOTS RH56 [122]),</li>
+<li>Direct-driven (예: Allegro Hand [125]),</li>
+<li>Hybrid-transmission (예: DLR/HIT Hand II [179]) 방식으로 분류됩니다.</li>
+</ul>
+<p>Tendon-driven은 높은 DoF와 Dexterity를 제공하지만 마찰, 마모 등의 문제가 있고, Linkage-driven은 정밀하고 강건하지만 DoF가 적은 경향이 있습니다. Direct-driven은 제어 정밀도가 높지만 질량, 관성 증가의 단점이 있으며, Hybrid 방식은 여러 방식의 장점을 결합합니다. 이러한 손들은 높은 Dexterity를 제공하지만 복잡성, 비용, 고장 취약성 등의 과제가 있습니다. 세 가지 로봇 클로 (예: DEX-EE [204], BarrettHand [208])는 두 가지 그리퍼와 다지 인간형 손 사이의 절충안으로, 일반적인 grasping 유형과 제한적인 in-hand manipulation을 지원합니다.</p>
+</section>
+<section id="teleoperation-systems-and-data-collection" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Teleoperation Systems and Data Collection</h1>
+<p>Teleoperation 시스템은 인간-로봇 협업을 위한 인터페이스를 제공하며, 로봇 행동이 인간 수준의 지능을 따르도록 합니다. 이는 인간의 광범위한 지식과 경험을 활용하여 복잡한 장면에서 다양한 작업을 판단하고 피드백에 신속하게 대응할 수 있기 때문에 매우 직관적입니다. Teleoperation 중 로봇 상태와 해당 액션 데이터를 수집하여 end-to-end IL을 위한 데이터셋을 구축할 수 있습니다. Teleoperation 시스템은 로컬 사이트(인간 조작자, I/O 장치)와 원격 사이트(로봇, 센서)로 구성됩니다. DM을 위한 I/O 장치로는 카메라 [17], mocap gloves [16], VR/AR controllers [14], exoskeletons 및 bilateral systems [53] 등이 사용됩니다.</p>
+<ul>
+<li><p>Vision-based systems는 컴퓨터 비전으로 손 포즈를 추정하지만, 가림(occlusion), 조명 등의 문제에 취약합니다. TeachNet [222], Dexpilot [18], Robotic Telekinesis [17], AnyTeleop [19], ACE [221] 등이 개발되었습니다. 인간 손과 로봇 손의 형태학적 불일치를 해결하기 위한 연구 [20]도 있습니다.</p></li>
+<li><p>Mocap Gloves는 센서를 통해 인간 손 움직임을 직접 정밀하게 추적합니다 [16]. 비싸지만 데이터 수집 효율을 높입니다.</p></li>
+<li><p>VR/AR Controllers는 몰입형 환경을 제공하며 저비용 솔루션으로 탐구됩니다 [14, 234]. 시뮬레이션 [245], 혼합 현실 [234], haptic feedback 통합 [235] 등이 시도되었습니다.</p></li>
+<li><p>Exoskeleton 및 Bilateral Systems는 joint space 제어에 중점을 두어 inverse kinematics (IK) 계산 문제를 회피합니다 [239, 240, 241]. 리더-팔로워 구조로 힘 피드백을 제공합니다 [53, 242, 243].</p></li>
+<li><p>Retargeting [19, 221]은 다양한 로봇 플랫폼에서 데모 데이터를 공유할 수 있게 합니다. 주요 데이터셋으로는 MIME [250], RH20T [251], BridgeData [252, 253], DROID [254] 등이 있으며, 대규모의 다양한 작업 및 환경 데모 데이터를 제공합니다. 데이터 증강 [255, 256] 및 데모 생성 시스템 [257, 258, 259]은 데이터 수집 비용을 줄이고 데이터 다양성을 높이는 데 기여합니다. ARCTIC [260], DexGraspNet [261], OAKINK2 [262] 등은 특히 bimanual manipulation 및 손-객체 상호작용에 초점을 맞춘 데이터셋입니다.</p></li>
+</ul>
+</section>
+<section id="challenges-and-future-directions" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Challenges and Future Directions</h1>
+<p>IL 기반 DM은 데이터 수집 및 생성, 벤치마킹 및 재현성, 새로운 환경으로의 일반화, 실시간 제어, 안전성, 강건성 및 사회적 준수 측면에서 여러 도전 과제에 직면해 있습니다.</p>
+<ul>
+<li><strong>Data Collection and Generation:</strong> 이종 데이터 융합(heterogeneous data fusion), 데이터 양, 품질, 다양성 확보의 어려움, 고차원 데이터 희소성, 데이터 수집 비용이 문제입니다. 미래 연구 방향으로는 Multi-modal alignment 기술, Cross-embodiment 학습 프레임워크, 합성 데이터 증강, Domain randomization, 생성 모델, Crowdsourced teleoperation, Self-supervised learning, 데이터 수집 프로토콜 표준화, Sim-to-real fidelity 향상, Differentiable physics engines, Adaptive parameter tuning, Self-supervised real-to-sim refinement 등이 있습니다.</li>
+<li><strong>Benchmarking and Reproducibility:</strong> 현실 세계 하드웨어 실험의 의존성 및 시뮬레이션 환경의 가변성으로 인해 벤치마킹 및 결과 재현이 어렵습니다. 표준화된 벤치마킹 프레임워크 및 오픈 소스 데이터셋 구축, 시뮬레이션 물리 파라미터 및 환경 표현의 일관성 확보, 다양한 로봇 형태에 걸친 Multi-modal 데이터 기록, 표준 평가 프로토콜 마련이 필요합니다.</li>
+<li><strong>Generalization to Novel Setups:</strong> 작업 및 환경 가변성, 전통적 IL의 적응 학습 한계, Sim-to-real transfer 문제, Cross-embodiment 적응성 부족이 문제입니다. 적응적 및 지속 학습 프레임워크 (Meta-learning, RL fine-tuning), 불확실성 인지 모델, 물리 시뮬레이션의 현실성 향상, Hybrid learning 접근 방식, Morphology-agnostic policy learning, 그래프 기반 및 잠재 공간 표현 활용, Modular policy architectures, Few-shot adaptation 등이 미래 연구 방향입니다.</li>
+<li><strong>Real-Time Control:</strong> 고차원 액션 공간 및 복잡한 동역학으로 인한 계산 복잡성이 문제입니다. Model-based (MPC)와 Model-free (RL) 방법의 효율적인 활용, Hybrid control strategies, Accelerated learning 기술, 고성능 컴퓨팅 하드웨어 (GPUs, TPUs), Edge computing, Custom ASICs, Neuromorphic computing 등 하드웨어 아키텍처 개선이 필요합니다.</li>
+<li><strong>Safety, Robustness, and Social Compliance:</strong> 오류 탐지 및 복구, 안전 조치(충돌 회피, 힘 조절), 사회적 규범 준수가 중요합니다. 대규모 실패 데이터셋 및 표준화된 벤치마킹, Self-supervised multi-modal anomaly detection, 강건한 정책 훈련/벤치마킹, 충돌 완화를 위한 Compliant actuators 및 Soft robotic designs, 인간 중심 환경에 통합되기 위한 사회적 준수 학습, Interactive learning paradigm, Multi-modal human-robot interaction datasets, 사회적 준수 벤치마크 표준화 등이 미래 연구 방향으로 제시됩니다.</li>
+</ul>
+</section>
+<section id="conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<p>IL은 로봇이 인간과 유사한 기술과 정밀도로 DM 작업을 수행할 수 있도록 하는 데 상당한 가능성을 보여주었습니다. 그러나 데이터 수집, 일반화, 실시간 제어, 안전성, Sim-to-real transfer와 관련된 문제가 실질적인 배포를 가로막고 있습니다. 이 분야의 발전을 위해서는 최적화된 IL 알고리즘 개발, 인간-로봇 협업 강화, 첨단 센서 시스템 통합에 초점을 맞춘 미래 연구가 필수적입니다. DM의 미래는 산업 자동화부터 헬스케어 및 서비스 로봇에 이르기까지 큰 잠재력을 가지고 있으며, IL 및 로봇 조작의 경계를 계속 확장함으로써 더 유능하고 적응 가능하며 지능적인 로봇 시스템의 길을 열 수 있을 것입니다.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
