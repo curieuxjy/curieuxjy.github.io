@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-06-13">
+<meta name="description" content="Dexterous Contact-Rich Manipulation via the Contact Trust Region">
+
+<title>📃Contact Trust Region 리뷰(feat.Dextreme) – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#ctr-최적화-프레임워크" id="toc-ctr-최적화-프레임워크" class="nav-link" data-scroll-target="#ctr-최적화-프레임워크">CTR 최적화 프레임워크</a>
+  <ul class="collapse">
+  <li><a href="#미분-가능한-접촉-동역학-모델" id="toc-미분-가능한-접촉-동역학-모델" class="nav-link" data-scroll-target="#미분-가능한-접촉-동역학-모델">1. 미분 가능한 접촉 동역학 모델</a></li>
+  <li><a href="#상태-및-접촉력의-선형화" id="toc-상태-및-접촉력의-선형화" class="nav-link" data-scroll-target="#상태-및-접촉력의-선형화">2. 상태 및 접촉력의 선형화</a></li>
+  <li><a href="#접촉-가능성-제약contact-feasibility-constraints" id="toc-접촉-가능성-제약contact-feasibility-constraints" class="nav-link" data-scroll-target="#접촉-가능성-제약contact-feasibility-constraints">3. 접촉 가능성 제약(Contact Feasibility Constraints)</a></li>
+  <li><a href="#접촉-신뢰-영역의-수학적-정의" id="toc-접촉-신뢰-영역의-수학적-정의" class="nav-link" data-scroll-target="#접촉-신뢰-영역의-수학적-정의">4. 접촉 신뢰 영역의 수학적 정의</a></li>
+  <li><a href="#변형-a-ctr-r-ctr" id="toc-변형-a-ctr-r-ctr" class="nav-link" data-scroll-target="#변형-a-ctr-r-ctr">5. 변형: A-CTR, R-CTR</a></li>
+  </ul></li>
+  <li><a href="#ctr-기반-모델-예측-제어mpc-통합" id="toc-ctr-기반-모델-예측-제어mpc-통합" class="nav-link" data-scroll-target="#ctr-기반-모델-예측-제어mpc-통합">CTR 기반 모델 예측 제어(MPC) 통합</a>
+  <ul class="collapse">
+  <li><a href="#접촉-암시적contact-implicit-mpc" id="toc-접촉-암시적contact-implicit-mpc" class="nav-link" data-scroll-target="#접촉-암시적contact-implicit-mpc">1. 접촉 암시적(contact-implicit) MPC</a></li>
+  <li><a href="#반복-최적화-및-피드백" id="toc-반복-최적화-및-피드백" class="nav-link" data-scroll-target="#반복-최적화-및-피드백">2. 반복 최적화 및 피드백</a></li>
+  <li><a href="#모드-전이-없이-접촉-처리" id="toc-모드-전이-없이-접촉-처리" class="nav-link" data-scroll-target="#모드-전이-없이-접촉-처리">3. 모드 전이 없이 접촉 처리</a></li>
+  <li><a href="#계산-효율성" id="toc-계산-효율성" class="nav-link" data-scroll-target="#계산-효율성">4. 계산 효율성</a></li>
+  <li><a href="#예시-작업-및-결과" id="toc-예시-작업-및-결과" class="nav-link" data-scroll-target="#예시-작업-및-결과">5. 예시 작업 및 결과</a></li>
+  <li><a href="#전역-계획과의-통합" id="toc-전역-계획과의-통합" class="nav-link" data-scroll-target="#전역-계획과의-통합">6. 전역 계획과의 통합</a></li>
+  </ul></li>
+  <li><a href="#dextreme-강화학습-기반-큐브-회전-제어" id="toc-dextreme-강화학습-기반-큐브-회전-제어" class="nav-link" data-scroll-target="#dextreme-강화학습-기반-큐브-회전-제어">DeXtreme: 강화학습 기반 큐브 회전 제어</a>
+  <ul class="collapse">
+  <li><a href="#시뮬레이션-기반-학습" id="toc-시뮬레이션-기반-학습" class="nav-link" data-scroll-target="#시뮬레이션-기반-학습">1. 시뮬레이션 기반 학습</a></li>
+  <li><a href="#정책-구조" id="toc-정책-구조" class="nav-link" data-scroll-target="#정책-구조">2. 정책 구조</a></li>
+  <li><a href="#도메인-랜덤화domain-randomization" id="toc-도메인-랜덤화domain-randomization" class="nav-link" data-scroll-target="#도메인-랜덤화domain-randomization">3. 도메인 랜덤화(Domain Randomization)</a></li>
+  <li><a href="#학습-비용-및-계산-자원" id="toc-학습-비용-및-계산-자원" class="nav-link" data-scroll-target="#학습-비용-및-계산-자원">4. 학습 비용 및 계산 자원</a></li>
+  <li><a href="#실행-및-실제-로봇-적용" id="toc-실행-및-실제-로봇-적용" class="nav-link" data-scroll-target="#실행-및-실제-로봇-적용">5. 실행 및 실제 로봇 적용</a></li>
+  <li><a href="#일반화-및-강건성" id="toc-일반화-및-강건성" class="nav-link" data-scroll-target="#일반화-및-강건성">6. 일반화 및 강건성</a></li>
+  <li><a href="#정책의-한계" id="toc-정책의-한계" class="nav-link" data-scroll-target="#정책의-한계">7. 정책의 한계</a></li>
+  </ul></li>
+  <li><a href="#ctr-vs-dextreme-두-접근-방식의-비교-분석" id="toc-ctr-vs-dextreme-두-접근-방식의-비교-분석" class="nav-link" data-scroll-target="#ctr-vs-dextreme-두-접근-방식의-비교-분석">CTR vs DeXtreme: 두 접근 방식의 비교 분석</a>
+  <ul class="collapse">
+  <li><a href="#접촉-처리-방식" id="toc-접촉-처리-방식" class="nav-link" data-scroll-target="#접촉-처리-방식">1. 접촉 처리 방식</a></li>
+  <li><a href="#샘플-효율성과-계산-자원" id="toc-샘플-효율성과-계산-자원" class="nav-link" data-scroll-target="#샘플-효율성과-계산-자원">2. 샘플 효율성과 계산 자원</a></li>
+  <li><a href="#일반화와-적응성" id="toc-일반화와-적응성" class="nav-link" data-scroll-target="#일반화와-적응성">3. 일반화와 적응성</a></li>
+  <li><a href="#정책-구조와-해석-가능성" id="toc-정책-구조와-해석-가능성" class="nav-link" data-scroll-target="#정책-구조와-해석-가능성">4. 정책 구조와 해석 가능성</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약">요약</a></li>
+  </ul></li>
+  <li><a href="#결론-및-향후-연구-방향" id="toc-결론-및-향후-연구-방향" class="nav-link" data-scroll-target="#결론-및-향후-연구-방향">결론 및 향후 연구 방향</a>
+  <ul class="collapse">
+  <li><a href="#하이브리드-전략의-가능성" id="toc-하이브리드-전략의-가능성" class="nav-link" data-scroll-target="#하이브리드-전략의-가능성">1. 하이브리드 전략의 가능성</a></li>
+  <li><a href="#실시간성-향상" id="toc-실시간성-향상" class="nav-link" data-scroll-target="#실시간성-향상">2. 실시간성 향상</a></li>
+  <li><a href="#보다-복잡한-조작-작업-확장" id="toc-보다-복잡한-조작-작업-확장" class="nav-link" data-scroll-target="#보다-복잡한-조작-작업-확장">3. 보다 복잡한 조작 작업 확장</a></li>
+  </ul></li>
+  <li><a href="#마무리" id="toc-마무리" class="nav-link" data-scroll-target="#마무리">마무리</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Contact Trust Region 리뷰(feat.Dextreme)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">mpc</div>
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">dexterous</div>
+    <div class="quarto-category">contact</div>
+    <div class="quarto-category">trust-region</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Dexterous Contact-Rich Manipulation via the Contact Trust Region
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 13, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>CTR vs DeXtreme: 능숙한 접촉 조작을 향한 두 갈래 길 모델 기반 접촉 계획(MPC-CTR)과 강화학습 기반 조작(DeXtreme)의 수학적 원리와 구조를 깊이 분석하고, 두 방법론을 다양한 관점에서 비교</p>
+</blockquote>
+<ul>
+<li><a href="https://arxiv.org/pdf/2505.02291">Paper Link</a></li>
+<li><a href="https://ctr.theaiinstitute.com/">Project Homepage</a></li>
+</ul>
+<ol type="1">
+<li>이 논문은 전통적인 타원형 신뢰 영역의 한계를 극복하기 위해 편측 접촉 역학을 고려하는 Contact Trust Region (CTR)을 제안합니다.</li>
+<li>🤖 CTR을 기반으로, 저자들은 효율적인 로컬 Model Predictive Control (MPC) 알고리즘을 개발하고, 이를 초기 추정 휴리스틱 및 빈번한 재계획과 결합하여 복잡한 접촉 조작 작업에 대한 안정화를 가능하게 합니다.</li>
+<li>🗺️ 제안된 CTR 기반 로컬 MPC는 로드맵 프레임워크에 통합되어 전역 계획을 수행하며, 기존 방식보다 훨씬 적은 계산 시간으로 양팔 로봇 및 Allegro hand와 같은 복잡한 시스템에서 능숙한 조작을 시연합니다.</li>
+</ol>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>본 논문 “Dexterous Contact-Rich Manipulation via the Contact Trust Region”은 로봇의 능숙하고 접촉이 많은 조작(dexterous contact-rich manipulation)을 위한 효율적인 지역적 동역학 모델과 그 신뢰 영역(trust region)을 정의하는 문제를 다룬다. 기존의 많은 접근 방식은 동역학의 Taylor 근사와 타원형 trust region에 의존하지만, 본 논문은 이러한 방식이 접촉의 비대칭성(unilateral nature)과 근본적으로 일관되지 않다고 주장한다.</p>
+<p>이러한 문제점을 해결하기 위해, 본 논문은 접촉의 비대칭성을 포착하면서도 계산 효율성을 유지하는 Contact Trust Region(CTR)을 제안한다. CTR을 기반으로, 먼저 지역적인 접촉이 많은 계획을 합성할 수 있는 Model-Predictive Control(MPC) 알고리즘을 개발한다. 그 후, 이 기능을 확장하여 지역 MPC 계획들을 연결함으로써 전역적으로 계획하고 효율적이며 능숙한 접촉이 많은 조작을 가능하게 한다.</p>
+<p>본 논문의 주요 기여는 세 가지이다. 첫째, 접촉 역학을 효율적으로 근사하는 Contact Trust Region(CTR)이다. 둘째, 지역적인 접촉이 많은 조작에 특화된 매우 효율적인 기울기 기반 MPC 컨트롤러이다. 셋째, 지역 궤적들을 연결하는 전역 플래너이다.</p>
+<p><strong>핵심 방법론: Contact Trust Region (CTR)</strong></p>
+<p>본 논문은 접촉 동역학을 Convex Quasidynamic Differentiable Contact(CQDC) 모델로 표현한다. 이는 접촉 시뮬레이션을 다음 형태의 Second-Order Cone Program(SOCP)으로 정식화한다: <span class="math display">
+\begin{aligned} \min_{q_+} &amp; \quad \frac{1}{2} q_+^\top P(q)q_+ + b(q, u)^\top q_+, \\ \text{subject to} &amp; \quad J_i(q)q_+ + c_i(q) \in K_i, \quad \forall i \in I_c. \end{aligned}
+</span> 여기서 <span class="math inline">q</span>는 시스템 설정(configuration), <span class="math inline">u</span>는 로봇의 제어 입력(actuated configuration command), <span class="math inline">P</span>, <span class="math inline">b</span>, <span class="math inline">J_i</span>, <span class="math inline">c_i</span>는 <span class="math inline">q, u</span>에 의존하는 행렬/벡터, <span class="math inline">I_c</span>는 접촉 쌍 인덱스 집합, <span class="math inline">K_i</span>는 가능한 속도(velocity)의 feasible cone이다. 이 SOCP의 KKT 조건은 준동적(quasi-dynamic) 운동 방정식, 비관통(non-penetration), 마찰 원뿔(friction cone), 상보성(complementarity) 제약을 만족한다.</p>
+<p>이 모델의 직접적인 미분은 접촉 모드 전환으로 인해 기울기가 불연속적이다. 이를 완화하기 위해 본 논문은 로그 배리어(log-barrier) 스무딩을 적용한 완화된 동역학 <span class="math inline">f_\kappa(q,u)</span>를 사용한다. 이 완화된 동역학은 스무딩 파라미터 <span class="math inline">\kappa</span>에 의존하며, 접촉이 없는 객체 사이에도 힘을 발생시킨다. 스무딩된 동역학의 기울기는 민감도 분석(sensitivity analysis)을 통해 얻을 수 있다.</p>
+<p>본 논문은 smoothed dynamics의 Taylor 근사를 사용하여 다음 상태 <span class="math inline">\hat{q}_+</span>와 접촉력 <span class="math inline">\hat{\lambda}_{+,i}</span>에 대한 선형 모델을 구축한다: <span class="math display">
+\begin{aligned} \hat{q}_+ &amp;= A_\kappa \delta q + B_\kappa \delta u + f_\kappa(\bar{q}, \bar{u}), \\ \hat{\lambda}_{+,i} &amp;= C_{\kappa,i} \delta q + D_{\kappa,i} \delta u + \lambda_{\kappa,i}(\bar{q}, \bar{u}). \end{aligned}
+</span> 여기서 <span class="math inline">(\bar{q}, \bar{u})</span>는 현재 nominal point이고 <span class="math inline">(\delta q, \delta u)</span>는 perturbation이다.</p>
+<p>Ellipsoidal Trust Region (ETR)은 <span class="math inline">(\delta q, \delta u)</span>에 대해 <span class="math inline">\delta z^\top \Sigma \delta z \leq 1</span> 형태의 제약을 가한다. 그러나 이는 접촉의 비대칭성을 포착하지 못한다.</p>
+<p>Contact Trust Region (CTR)은 ETR 제약에 더하여, 위 선형 모델로 예측된 다음 상태 <span class="math inline">\hat{q}_+</span>와 접촉력 <span class="math inline">\hat{\lambda}_{+,i}</span>가 <em>원래 비완화된 SOCP 동역학의</em> primal 및 dual feasibility constraint를 만족해야 한다는 제약을 추가한다: <span class="math display">
+\begin{aligned} J_i \hat{q}_+ + c_i &amp;\in K_i, \\ \hat{\lambda}_{+,i} &amp;\in K_i^*. \end{aligned}
+</span> 이러한 제약은 선형화된 변수에 대해 부과되므로, CTR은 여전히 볼록 집합(convex set)이다 (구체적으로, 여러 개의 second-order cone constraints의 교집합). Example 1과 2를 통해, primal feasibility 제약(<span class="math inline">J_i \hat{q}_+ + c_i \in K_i</span>)이 때때로 실제 도달 가능한 영역보다 trust region을 지나치게 보수적으로 제한함을 보여준다.</p>
+<p>따라서 본 논문은 primal feasibility 제약을 완화한 Relaxed Contact Trust Region (R-CTR)을 제안한다. R-CTR은 ETR 제약과 dual feasibility 제약(<span class="math inline">\hat{\lambda}_{+,i} \in K_i^*</span>)만을 포함한다. Example 3은 R-CTR을 사용한 Motion Set(선형화된 primal solution map에 의한 RA-CTR의 이미지)이 객체 움직임의 지역적 도달 가능성을 더 잘 포착함을 보여준다. 또한, RA-CTR과 그에 따른 Wrench Set, Motion Set 개념은 고전적인 접촉 역학 개념과 연결될 수 있음을 이론적으로 보인다 (Lemma 2).</p>
+<p><strong>지역 계획 및 제어 (Local Planning and Control)</strong></p>
+<p>제안된 R-CTR은 지역 궤적 최적화(trajectory optimization) 및 MPC에 활용된다. Algorithm 1은 R-CTR 제약을 포함하는 SOCP subproblem을 반복적으로 해결하여 nominal trajectory를 개선하는 방식이다. 이 방법은 smoothed dynamics의 선형 근사를 사용하지만, R-CTR을 통해 지역적으로 유효한 영역 내에서 계획이 이루어지도록 한다. 특히, 접촉이 없는 초기 상태에서 시작할 경우, 로봇이 객체에 접촉하도록 유도하는 초기 추측 휴리스틱을 적용하여 계획의 효율성을 높인다. Example 4와 5는 이 방법이 접촉 모드 전환을 탐색하고 계획에 유리한 방향으로 나아가는 과정을 보여준다.</p>
+<p>Algorithm 2는 Algorithm 1을 MPC 프레임워크에 적용한 것이다. 현재 상태에서 미래 상태까지의 궤적을 계획하고, 계획된 첫 번째 제어 입력을 실제 시스템에 적용한 후, 다음 상태를 관찰하여 다시 계획을 수행한다 (re-planning).</p>
+<p><strong>실험 결과 (Experiments)</strong></p>
+<p>본 논문은 IiwaBimanual (planar, 29 collision geometries) 및 AllegroHand (3D in-hand, 39 collision geometries) 두 가지 접촉이 많은 로봇 시스템에서 제안된 방법론을 포괄적으로 평가한다.</p>
+<ol type="1">
+<li><strong>CQDC 동역학에서의 지역 MPC 성능 (Section 5):</strong>
+<ul>
+<li>R-CTR, CTR, ETR을 사용하는 MPC의 목표 도달 성능(최종 객체 위치/회전 오류) 비교.</li>
+<li>생성된 목표는 지역적으로 도달 가능하나 MPC에 도전적인 목표들이다 (Figure 9).</li>
+<li>결과(Figure 9, Table 2): R-CTR이 두 시스템 모두에서 평균 오류 및 분산 측면에서 가장 좋은 성능을 보였다. 특히 IiwaBimanual에서 CTR 및 ETR보다 유의미하게 우수했다. AllegroHand에서는 차이가 비교적 작았는데, 이는 시스템 특성상 bilateral contact regime이 더 자주 활성화될 수 있기 때문으로 추측된다.</li>
+<li>Trust region radius(r)와 MPC rollout horizon(H)에 대한 실험(Figure 10): 적절한 r과 H에서 성능이 최적화되며, 너무 작은 r은 도달 가능성을 제한하고 너무 큰 r은 선형 근사의 부정확성으로 인해 성능 저하를 야기한다.</li>
+</ul></li>
+<li><strong>2차 동역학 하에서의 안정화 성능 (Section 6):</strong>
+<ul>
+<li>CQDC 동역학 모델과 실제 물리(Drake 시뮬레이션 및 하드웨어) 간의 차이(특히 hydroplaning)를 고려한 안정화 성능 평가.</li>
+<li>Algorithm 3을 제안: MPC 계획을 여러 물리 스텝에 걸쳐 실행하고, 재계획 시 현재 로봇 상태에 대해 초기 추측 휴리스틱을 다시 적용하여 접촉 유지를 강화 (MPCProj).</li>
+<li>Open-loop, No Heuristics, Closed-loop 세 가지 알고리즘 변형 평가.</li>
+<li>결과(Figure 11, Table 4):
+<ul>
+<li>Closed-loop MPC는 Open-loop보다 훨씬 우수한 성능을 보이며, 접촉 동역학 모델의 부정확성에도 불구하고 피드백이 중요함을 시사한다.</li>
+<li>초기 추측 휴리스틱 적용(Closed-loop vs.&nbsp;No Heuristics): 평균 오류 감소 효과는 작지만, 접촉 손실로 인한 큰 오류 발생 빈도를 유의미하게 줄였다 (Figure 11 histogram). 휴리스틱 적용은 로봇 경로 길이를 단축시키는 효과도 있었다 (Figure 12).</li>
+<li>IiwaBimanual과 AllegroHand 비교: AllegroHand 태스크(in-hand manipulation)의 본질적인 어려움(미끄러짐)으로 인해 IiwaBimanual보다 평균 오류가 컸다.</li>
+<li>하드웨어 실험: 시뮬레이션 결과와 유사한 성능을 보였다 (Table 4).</li>
+</ul></li>
+</ul></li>
+</ol>
+<p><strong>전역 계획 (Global Planning)</strong></p>
+<p>지역 MPC는 비탐욕적 움직임이 필요한 전역 목표 달성에 한계가 있다. 이를 해결하기 위해 본 논문은 지역 MPC의 장점을 활용하는 로드맵(Roadmap) 기반 전역 계획 방법을 제안한다.</p>
+<ol type="1">
+<li><strong>목표 상태 기반 접촉 설정 생성 (Section 7):</strong>
+<ul>
+<li>주어진 객체 상태(<span class="math inline">q_o</span>)와 목표(<span class="math inline">q_{og}</span>)에 대해, 지역 MPC가 효율적으로 목표에 도달하도록 유리한 로봇 설정(<span class="math inline">q_a</span>)을 찾는 문제 정의.</li>
+<li>최적화 문제의 비용 함수는 지역 MPC의 유한 시간 가치 함수(<span class="math inline">V</span>)와 강건성(robustness) regularizer(<span class="math inline">r</span>)를 조합한다. <span class="math inline">r</span>은 RA-CTR 기반 wrench set의 최대 내접구 반경으로 정의되며, 이 설정에서 로봇이 객체에 얼마나 큰 외란을 견딜 수 있는지를 나타낸다. 비용 함수는 <span class="math inline">C(q_a; q_o, q_{og}) = V(q_a; q_o, q_{og}) - \alpha r(q_a; q_o)^2</span> 형태이다.</li>
+<li>이 문제는 비볼록하며 기울기 계산이 어렵기 때문에 샘플링 기반 최적화 휴리스틱으로 해결한다. AllegroHand와 같은 고차원 로봇의 경우, reduced-order model (4개의 sphere)을 사용하고 그 해를 역기구학(IK)으로 로봇 설정에 매핑하는 휴리스틱을 도입한다.</li>
+<li>결과(Figure 18, Table 6): AllegroHand에서 직관적이고 목표 달성에 효과적인 초기 로봇 설정들을 찾았으며, MPC 롤아웃 결과 10mm 이내의 위치 오류와 30mrad 이내의 회전 오류를 달성했다.</li>
+</ul></li>
+<li><strong>로드맵 기반 전역 계획 (Section 8):</strong>
+<ul>
+<li>오프라인 단계(Algorithm 4): 작업 공간을 충분히 커버하는 안정적인 객체 설정들에 해당하는 접촉 설정들을 로드맵의 정점(vertices)으로 생성한다. 각 정점 쌍에 대해 지역 MPC(객체 목표 도달)와 충돌 회피 계획(로봇 재배치)을 순차적으로 적용하여 전이가 성공하면 에지(edge)를 추가한다 (Figure 19). AllegroHand의 경우 객체의 대칭성을 활용하여 로드맵 구축을 효율화했으며, 표준 노트북 CPU만으로 10분 이내에 로드맵 구축이 가능하다. 하드웨어에서 150회 연속 에지 전이에 성공하며 로드맵의 강건성을 확인했다.</li>
+<li>온라인 단계: 임의의 시작 설정에서 임의의 목표 객체 설정까지의 계획은, 시작/목표를 로드맵의 가장 가까운 정점에 연결한 후 그래프 상에서 최단 경로를 탐색하는 방식으로 수행된다 (Figure 20).</li>
+</ul></li>
+</ol>
+<p><strong>결론 (Conclusion)</strong></p>
+<p>본 논문은 Contact Trust Region(CTR) 개념을 통해 접촉의 비대칭성을 고려한 지역적 동역학 근사를 제공하고, 이를 활용하여 효율적인 MPC 기반 지역 계획 및 제어 방법을 개발한다. 또한, 접촉 설정 생성 및 로드맵 기법을 통해 전역적인 접촉이 많은 조작 계획 능력을 구현했다. 제안된 방법은 시뮬레이션 및 실제 하드웨어 실험을 통해 그 성능과 계산 효율성을 입증했다. 특히 심층 강화 학습(deep RL) 기반 접근 방식에 비해 현저히 낮은 계산 시간으로 목표 달성이 가능함을 보여준다.</p>
+<p>하지만 여전히 해결해야 할 과제들이 남아있다. 특정 계획 실패의 원인, IiwaBimanual과 AllegroHand 간 feasibility constraint의 역할 차이에 대한 깊은 이해, 그리고 CQDC의 hydroplaning과 같은 모델-현실 물리 간의 차이를 극복하고 접촉을 강건하게 유지하는 문제 등은 향후 연구가 필요하다. 그럼에도 불구하고 본 논문에서 제시된 CTR, MPC, 접촉 설정 생성, 로드맵 기법은 접촉이 많은 로봇 조작 문제를 해결하기 위한 새로운 강력한 도구들을 제공한다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<section id="ctr-최적화-프레임워크" class="level2">
+<h2 class="anchored" data-anchor-id="ctr-최적화-프레임워크">CTR 최적화 프레임워크</h2>
+<p><strong>개요:</strong> 접촉 신뢰 영역(Contact Trust Region, CTR)은 기존의 타원형 신뢰영역(Ellipsoidal Trust Region, ETR)을 확장하여, <strong>접촉 동역학의 물리 제약 조건을 명시적으로 포함</strong>하는 새로운 신뢰영역 모델입니다. 핵심 아이디어는 선형화 오차를 제어하는 작은 타원형 영역뿐 아니라, <strong>접촉 가능성 제약 조건(일방향 접촉력, 마찰 원뿔 제약 등)</strong>도 함께 적용하여, 탐색 가능한 지역을 현실적인 물리 범위 내로 제한하는 것입니다.</p>
+<section id="미분-가능한-접촉-동역학-모델" class="level3">
+<h3 class="anchored" data-anchor-id="미분-가능한-접촉-동역학-모델">1. 미분 가능한 접촉 동역학 모델</h3>
+<p>CTR은 <strong>미분 가능한 접촉 시뮬레이터</strong>를 활용합니다. 특히, 이전 연구인 <em>Convex Quasi-Dynamic Contact (CQDC)</em> 모델을 기반으로, 접촉 동역학을 <strong>볼록 최적화 문제(SOCP 등)</strong>로 표현합니다. 이 모델을 풀면 다음 상태뿐 아니라 접촉력까지 계산되며, <strong>상태와 제어 입력에 대한 감도(Jacobian)</strong>도 함께 얻을 수 있습니다. 이는 접촉력을 쌍대변수(dual variable)로 간주한 <strong>KKT 조건 민감도 해석</strong>을 통해 가능해집니다.</p>
+</section>
+<section id="상태-및-접촉력의-선형화" class="level3">
+<h3 class="anchored" data-anchor-id="상태-및-접촉력의-선형화">2. 상태 및 접촉력의 선형화</h3>
+<p>미분 가능한 모델을 기반으로, 다음 상태 $<em>+$와 접촉력 $</em>+$는 다음과 같이 선형 근사됩니다:</p>
+<ul>
+<li><strong>상태 업데이트:</strong> <span class="math inline">\hat{q}_+ = A_\kappa \, \delta q + B_\kappa \, \delta u + f_\kappa(\bar{q}, \bar{u})</span></li>
+<li><strong>접촉력 응답:</strong> <span class="math inline">\hat{\lambda}_{+,i} = C_{\kappa,i} \, \delta q + D_{\kappa,i} \, \delta u + \lambda_{\kappa,i}(\bar{q}, \bar{u})</span></li>
+</ul>
+<p>이는 표준적인 상태 선형화와 달리, <strong>접촉력 변화</strong>까지 함께 근사하므로, 접촉의 1차 응답을 정밀하게 반영할 수 있습니다.</p>
+</section>
+<section id="접촉-가능성-제약contact-feasibility-constraints" class="level3">
+<h3 class="anchored" data-anchor-id="접촉-가능성-제약contact-feasibility-constraints">3. 접촉 가능성 제약(Contact Feasibility Constraints)</h3>
+<p>CTR은 위 선형화 모델에 대해, 다음과 같은 <strong>물리 기반 제약</strong>을 적용합니다:</p>
+<ul>
+<li><p><strong>비침투 조건 (Primal feasibility):</strong> <span class="math inline">\hat{J}_i \, \hat{q}_+ + \hat{c}_i \in K_i</span> → 접촉면에서의 상대 운동이 interpenetration을 유발하지 않도록 제한</p></li>
+<li><p><strong>마찰 원뿔 조건 (Dual feasibility):</strong> <span class="math inline">\hat{\lambda}_{+,i} \in K_i^*</span> → 마찰 계수 및 일방향 접촉력 조건(정상 마찰력은 0 이상) 보장</p></li>
+</ul>
+<p>이러한 조건은 <strong>2차원 원뿔 제약(SOCP)</strong> 형태로 정식화되며, 신뢰 영역 내의 모든 후보해가 <strong>접촉 가능성 물리 법칙을 만족하도록 보장</strong>합니다.</p>
+</section>
+<section id="접촉-신뢰-영역의-수학적-정의" class="level3">
+<h3 class="anchored" data-anchor-id="접촉-신뢰-영역의-수학적-정의">4. 접촉 신뢰 영역의 수학적 정의</h3>
+<p>CTR은 다음의 조건을 만족하는 $(q, u)$의 집합으로 정의됩니다:</p>
+<ol type="1">
+<li><strong>타원형 제약:</strong> <span class="math inline">\delta z^T \Sigma \delta z \leq 1 \quad (\delta z = [\delta q; \delta u])</span></li>
+<li><strong>선형화된 상태 및 접촉력 식 만족</strong></li>
+<li><strong>비침투 제약:</strong> $_+$가 접촉면을 침투하지 않음</li>
+<li><strong>마찰 원뿔 제약:</strong> $_{+,i}$가 원뿔 내부에 위치함</li>
+</ol>
+<p>CTR은 이러한 제약들의 교집합이며, 이는 <strong>볼록 집합(convex set)</strong>입니다. 따라서 이후의 최적화 단계도 <strong>볼록 최적화 문제(SOCP)</strong>로 유지됩니다.</p>
+</section>
+<section id="변형-a-ctr-r-ctr" class="level3">
+<h3 class="anchored" data-anchor-id="변형-a-ctr-r-ctr">5. 변형: A-CTR, R-CTR</h3>
+<ul>
+<li><strong>A-CTR (Action-only CTR):</strong> 상태는 고정하고 입력 $u$만을 탐색하는 경우. 계산량이 줄어 빠른 추론 가능</li>
+<li><strong>R-CTR (Relaxed CTR):</strong> 비침투 조건을 제거하고 마찰 제약만 적용하여 <strong>보수성 완화 및 탐색 반경 확대</strong></li>
+</ul>
+<p>실험 결과 R-CTR이 오히려 더 높은 성능을 보이는 경우가 있었으며, 이는 최적화가 <strong>덜 제한적인 방향</strong>으로도 유효한 접촉 조작을 계획할 수 있기 때문입니다.</p>
+<hr>
+</section>
+</section>
+<section id="ctr-기반-모델-예측-제어mpc-통합" class="level2">
+<h2 class="anchored" data-anchor-id="ctr-기반-모델-예측-제어mpc-통합">CTR 기반 모델 예측 제어(MPC) 통합</h2>
+<p>CTR은 그 자체로는 하나의 제약 조건 집합이지만, 이를 실질적인 조작 제어기로 사용하려면 <strong>MPC(모델 예측 제어)</strong> 프레임워크 내에 통합해야 합니다. 본 섹션에서는 CTR이 어떻게 MPC에 통합되고, 접촉-풍부한 조작을 실시간으로 실행 가능한 최적화 문제로 변환하는지를 설명합니다.</p>
+<section id="접촉-암시적contact-implicit-mpc" class="level3">
+<h3 class="anchored" data-anchor-id="접촉-암시적contact-implicit-mpc">1. 접촉 암시적(contact-implicit) MPC</h3>
+<p>CTR 논문에서는 <strong>접촉-암시적(contact-implicit)</strong> MPC 문제를 구성합니다. 즉, 접촉 모드 전이를 미리 명시하지 않고, <strong>접촉 여부 및 접촉력의 발생을 최적화 과정에서 자동으로 결정</strong>합니다.</p>
+<ul>
+<li>각 시점에서 CQDC 기반 선형화를 통해 상태 및 접촉력에 대한 선형 모델을 생성</li>
+<li>CTR 제약(접촉 가능성, 마찰 등)을 적용한 SOCP 문제를 구성</li>
+<li>일정 시간 지평(horizon) 내에서 최적화한 후, 첫 번째 제어 입력만 적용하고 다시 반복 (Receding Horizon Planning)</li>
+</ul>
+<p>CTR의 구조 덕분에 이 MPC 문제는 <strong>전 구간에서 볼록 최적화(SOCP)</strong>로 유지됩니다.</p>
+</section>
+<section id="반복-최적화-및-피드백" class="level3">
+<h3 class="anchored" data-anchor-id="반복-최적화-및-피드백">2. 반복 최적화 및 피드백</h3>
+<p>CTR-MPC는 일반적인 MPC와 마찬가지로 매 타임스텝마다 <strong>새로운 상태를 관측하고, 선형화를 새로 수행한 후 최적화</strong>합니다. 이러한 반복 피드백 구조는 다음과 같은 이점을 제공합니다:</p>
+<ul>
+<li>모델링 오류나 외란에 대한 <strong>강건성 확보</strong></li>
+<li>접촉 변화나 미세한 환경 조건 변화에 대한 실시간 적응</li>
+</ul>
+</section>
+<section id="모드-전이-없이-접촉-처리" class="level3">
+<h3 class="anchored" data-anchor-id="모드-전이-없이-접촉-처리">3. 모드 전이 없이 접촉 처리</h3>
+<p>CTR-MPC는 <strong>접촉 모드 전이(mode scheduling)</strong>를 명시적으로 기술할 필요가 없습니다. 다음의 수식 조건을 통해 <strong>접촉의 생성과 소멸을 자연스럽게 포함</strong>합니다:</p>
+<ul>
+<li>$<em>{+,i} K_i^*$ 조건은 $</em>{+,i} = 0$ (접촉 없음)도 허용</li>
+<li>$<em>i </em>+ + _i K_i$는 물체와 손가락이 떨어져 있을 때도 비침투 조건을 만족하도록 허용</li>
+</ul>
+<p>이러한 설계는 <strong>접촉 모드를 명시적으로 분기시키는 기존 방법들보다 훨씬 유연하고 계산 효율적</strong>입니다.</p>
+</section>
+<section id="계산-효율성" class="level3">
+<h3 class="anchored" data-anchor-id="계산-효율성">4. 계산 효율성</h3>
+<p>CTR-MPC의 각 최적화는 <strong>볼록 문제(SOCP)</strong>로 구성되며, 논문에서는 다음과 같은 실험 결과를 보고합니다:</p>
+<ul>
+<li>Allegro 핸드로 큐브를 조작하는 작업에서, <strong>온라인 최적화는 수 초 이내에 실행 가능</strong></li>
+<li>전체 조작을 위한 <strong>조작 동작 그래프(로드맵)를 구축하는 데 10분 미만 소요</strong></li>
+</ul>
+<p>이는 일반적인 강화학습 기반 접근보다 훨씬 <strong>낮은 계산 자원</strong>으로 유사한 성능을 달성할 수 있음을 의미합니다.</p>
+</section>
+<section id="예시-작업-및-결과" class="level3">
+<h3 class="anchored" data-anchor-id="예시-작업-및-결과">5. 예시 작업 및 결과</h3>
+<p>CTR-MPC는 두 가지 실제 예시에서 검증되었습니다:</p>
+<ul>
+<li><p><strong>양팔 조작 (Bimanual Manipulation):</strong> 두 개의 KUKA iiwa 팔로 큰 원통형 물체를 이동시키는 작업. 복잡한 접촉 협응이 필요하지만, CTR-MPC는 시뮬레이션과 실제 로봇 모두에서 성공적으로 수행.</p></li>
+<li><p><strong>손 안 큐브 회전 (In-Hand Manipulation):</strong> Allegro 핸드로 큐브를 다양한 방향으로 회전시키는 작업. <strong>Relaxed CTR (R-CTR)</strong>을 사용한 경우가 가장 높은 성능을 보였으며, <strong>로드맵 기반 전략</strong>으로 장거리 목표 회전도 달성 가능했음.</p></li>
+</ul>
+</section>
+<section id="전역-계획과의-통합" class="level3">
+<h3 class="anchored" data-anchor-id="전역-계획과의-통합">6. 전역 계획과의 통합</h3>
+<p>CTR-MPC는 본질적으로 로컬 최적화 기반이므로, 전체 상태 공간에서의 경로 계획은 어려울 수 있습니다. 이를 보완하기 위해 논문에서는 <strong>전역 로드맵 기반 계획(global roadmap planning)</strong>을 제안합니다:</p>
+<ul>
+<li>큐브의 다양한 <strong>안정된 포즈를 노드로 구성</strong></li>
+<li>CTR-MPC를 이용해 이들 노드 간 <strong>단거리 조작 궤적(edge)</strong>를 생성</li>
+<li>전체 그래프를 탐색하여 <strong>멀리 떨어진 목표도 순차적 조작으로 도달 가능</strong></li>
+</ul>
+<p>이 방식은 전통적인 샘플링 기반 계획과 유사하지만, <strong>MPC 기반 동작 원시(primitive)</strong>를 사용하여 접촉-풍부한 경로 생성을 가능케 합니다.</p>
+<hr>
+</section>
+</section>
+<section id="dextreme-강화학습-기반-큐브-회전-제어" class="level2">
+<h2 class="anchored" data-anchor-id="dextreme-강화학습-기반-큐브-회전-제어">DeXtreme: 강화학습 기반 큐브 회전 제어</h2>
+<p><strong>DeXtreme</strong>(NVIDIA Research, 2022)은 심층 강화학습 기반으로 학습된 정책(policy)을 통해, <strong>저비용 로봇 핸드</strong>에서도 정밀한 큐브 회전을 수행한 시스템입니다. 이 접근법은 CTR이 다룬 Allegro 핸드의 조작 문제와 동일한 문제 설정에서, 전혀 다른 방식으로 해결책을 제시합니다.</p>
+<section id="시뮬레이션-기반-학습" class="level3">
+<h3 class="anchored" data-anchor-id="시뮬레이션-기반-학습">1. 시뮬레이션 기반 학습</h3>
+<ul>
+<li><strong>Isaac Gym</strong>이라는 GPU 가속 물리 시뮬레이터를 사용해 정책을 학습</li>
+<li>무려 <strong>10만 개 이상의 병렬 환경</strong>을 GPU에서 동시 실행</li>
+<li>이로 인해 로봇은 <strong>초인적인 속도로 시행착오 학습</strong> 가능</li>
+</ul>
+</section>
+<section id="정책-구조" class="level3">
+<h3 class="anchored" data-anchor-id="정책-구조">2. 정책 구조</h3>
+<ul>
+<li>정책은 심층 신경망으로 구성되며, 입력은 로봇 상태 및 물체 자세 정보</li>
+<li><strong>비전 기반 정책</strong>도 학습됨: RGB 카메라 3대를 사용해 물체 자세 추정 후 입력으로 활용</li>
+<li>별도의 <strong>포즈 추정 신경망</strong>을 함께 학습시켜, 시각 정보에서 3D 물체 자세를 복원</li>
+</ul>
+</section>
+<section id="도메인-랜덤화domain-randomization" class="level3">
+<h3 class="anchored" data-anchor-id="도메인-랜덤화domain-randomization">3. 도메인 랜덤화(Domain Randomization)</h3>
+<ul>
+<li><p>시뮬레이션-현실 간 격차(Sim2Real gap)를 극복하기 위해 <strong>물리 속성 및 시각 조건을 광범위하게 랜덤화</strong></p>
+<ul>
+<li>질량, 마찰계수, 표면 텍스처, 조명 조건, 카메라 위치 등</li>
+</ul></li>
+<li><p>이로 인해 정책은 <strong>넓은 조건 분포에 대해 강건한 행동 전략</strong>을 학습함</p></li>
+</ul>
+</section>
+<section id="학습-비용-및-계산-자원" class="level3">
+<h3 class="anchored" data-anchor-id="학습-비용-및-계산-자원">4. 학습 비용 및 계산 자원</h3>
+<ul>
+<li>약 <strong>32시간 동안 고성능 GPU 서버에서 학습</strong></li>
+<li>이 동안 정책은 약 <strong>42년치에 해당하는 시뮬레이션 경험을 축적</strong></li>
+<li>이는 강화학습의 대표적인 단점인 <strong>샘플 비효율성</strong>을 보여주는 지표</li>
+</ul>
+</section>
+<section id="실행-및-실제-로봇-적용" class="level3">
+<h3 class="anchored" data-anchor-id="실행-및-실제-로봇-적용">5. 실행 및 실제 로봇 적용</h3>
+<ul>
+<li>학습 완료 후, 정책은 <strong>고속 실시간 제어 가능</strong> (신경망 전방 연산만 수행)</li>
+<li>Allegro 핸드에서 목표 방향으로 큐브를 안정적으로 회전시킴</li>
+<li>OpenAI의 Shadow Hand와 달리, <strong>관절 수가 적고 비용도 낮은</strong> Allegro 핸드에서 성공한 점이 인상적임</li>
+</ul>
+</section>
+<section id="일반화-및-강건성" class="level3">
+<h3 class="anchored" data-anchor-id="일반화-및-강건성">6. 일반화 및 강건성</h3>
+<ul>
+<li><p>도메인 랜덤화를 통해, <strong>하드웨어 손상에도 견디는 강건성</strong> 확보</p>
+<ul>
+<li>예: 엄지 관절이 느슨한 상태에서도 정책이 보상하며 동작 성공</li>
+</ul></li>
+<li><p>시각 네트워크는 <strong>가림(occlusion)</strong> 및 <strong>모션 블러</strong>에도 견딜 수 있도록 학습됨</p></li>
+</ul>
+</section>
+<section id="정책의-한계" class="level3">
+<h3 class="anchored" data-anchor-id="정책의-한계">7. 정책의 한계</h3>
+<p>DeXtreme은 놀라운 성능을 보여줬지만, CTR 접근과 달리 <strong>접촉 물리 법칙을 명시적으로 반영하지는 않음</strong>:</p>
+<ul>
+<li>마찰 원뿔, 비침투 조건 등은 <strong>학습을 통해 암묵적으로 습득</strong></li>
+<li>행동은 시뮬레이터의 물리 엔진과 보상 함수 설계를 통해 유도됨</li>
+<li>따라서 정책은 <strong>왜 해당 동작을 수행하는지 해석하기 어렵고</strong>, <strong>제약 조건 위반 여부도 명시적으로 판단하기 어려움</strong></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="ctr-vs-dextreme-두-접근-방식의-비교-분석" class="level2">
+<h2 class="anchored" data-anchor-id="ctr-vs-dextreme-두-접근-방식의-비교-분석">CTR vs DeXtreme: 두 접근 방식의 비교 분석</h2>
+<p>CTR-MPC와 DeXtreme은 모두 <strong>손 안의 큐브 회전과 같은 고난도 접촉 조작</strong>을 목표로 하지만, <strong>모델 기반 최적화</strong>와 <strong>데이터 기반 학습</strong>이라는 정반대의 철학을 가지고 접근합니다. 아래는 두 방법론을 주요 관점에서 비교한 내용입니다.</p>
+<section id="접촉-처리-방식" class="level3">
+<h3 class="anchored" data-anchor-id="접촉-처리-방식">1. 접촉 처리 방식</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 40%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>CTR-MPC</th>
+<th>DeXtreme (RL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>접촉 모델링</strong></td>
+<td>마찰 원뿔, 비침투 조건 등을 <strong>명시적 수식으로 모델링</strong>하고 최적화에 통합</td>
+<td>시뮬레이션과 보상을 통해 <strong>암묵적으로 접촉 전략을 학습</strong></td>
+</tr>
+<tr class="even">
+<td><strong>접촉력 추론</strong></td>
+<td>접촉력은 최적화 변수로 직접 계산되며, 계획 과정에서 사용됨</td>
+<td>신경망 내부에서 암묵적으로 형성됨 (관측 불가)</td>
+</tr>
+<tr class="odd">
+<td><strong>물리 위반 가능성</strong></td>
+<td>수식 제약으로 인해 <strong>물리 법칙 위반 불가능</strong></td>
+<td>학습된 정책이 <strong>물리 제약을 위반할 수 있음</strong> (ex. interpenetration)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="샘플-효율성과-계산-자원" class="level3">
+<h3 class="anchored" data-anchor-id="샘플-효율성과-계산-자원">2. 샘플 효율성과 계산 자원</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 31%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>CTR-MPC</th>
+<th>DeXtreme (RL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>사전 학습 필요성</strong></td>
+<td>없음 – 매 실행마다 최적화</td>
+<td>필요 – 수십억 스텝의 시뮬레이션 필요</td>
+</tr>
+<tr class="even">
+<td><strong>실행 시 계산 비용</strong></td>
+<td>중간 – SOCP 최적화 수행</td>
+<td>매우 낮음 – 신경망 전방 연산만 수행</td>
+</tr>
+<tr class="odd">
+<td><strong>샘플 효율성</strong></td>
+<td>매우 높음 – 모델 기반 추론</td>
+<td>낮음 – 방대한 시행착오 필요</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="일반화와-적응성" class="level3">
+<h3 class="anchored" data-anchor-id="일반화와-적응성">3. 일반화와 적응성</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 34%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>CTR-MPC</th>
+<th>DeXtreme (RL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>환경 변화 대응</strong></td>
+<td>모델만 수정하면 즉시 대응 가능</td>
+<td>사전 학습된 분포 외에는 <strong>재학습 필요</strong></td>
+</tr>
+<tr class="even">
+<td><strong>목표 변화 적응</strong></td>
+<td>즉시 가능 (목표 상태만 바꾸면 됨)</td>
+<td>가능하나, 정해진 목표 형식 내에서만 일반화됨</td>
+</tr>
+<tr class="odd">
+<td><strong>외란 대응성</strong></td>
+<td>고 – 재계획 기반</td>
+<td>중 – 일부 외란에는 강건하나 계획 능력은 없음</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="정책-구조와-해석-가능성" class="level3">
+<h3 class="anchored" data-anchor-id="정책-구조와-해석-가능성">4. 정책 구조와 해석 가능성</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 39%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>CTR-MPC</th>
+<th>DeXtreme (RL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>정책 형태</strong></td>
+<td>최적화 기반 – 현재 상태에서 계획을 계산</td>
+<td>신경망 기반 – 관측 → 행동 매핑</td>
+</tr>
+<tr class="even">
+<td><strong>해석 가능성</strong></td>
+<td>높음 – 접촉력, 제약 조건 등 확인 가능</td>
+<td>낮음 – 블랙박스 정책</td>
+</tr>
+<tr class="odd">
+<td><strong>제약 조건 추가 용이성</strong></td>
+<td>용이 – 수식 삽입만으로 반영 가능</td>
+<td>어려움 – 네트워크 재학습 필요</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="요약" class="level3">
+<h3 class="anchored" data-anchor-id="요약">요약</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>CTR-MPC</th>
+<th>DeXtreme (RL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>접촉 처리</strong></td>
+<td>명시적, 해석 가능</td>
+<td>암묵적, 해석 불가</td>
+</tr>
+<tr class="even">
+<td><strong>학습 필요성</strong></td>
+<td>없음</td>
+<td>큼 (수십억 스텝)</td>
+</tr>
+<tr class="odd">
+<td><strong>실행 속도</strong></td>
+<td>느리지만 정확</td>
+<td>매우 빠름</td>
+</tr>
+<tr class="even">
+<td><strong>일반화</strong></td>
+<td>모델 기반 적응</td>
+<td>제한된 목표 내 일반화</td>
+</tr>
+<tr class="odd">
+<td><strong>확장성 및 유지보수</strong></td>
+<td>제약 추가/변경 쉬움</td>
+<td>재학습 필요</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="결론-및-향후-연구-방향" class="level2">
+<h2 class="anchored" data-anchor-id="결론-및-향후-연구-방향">결론 및 향후 연구 방향</h2>
+<p>CTR과 DeXtreme은 각각 <strong>정확하고 물리적으로 해석 가능한 모델 기반 계획</strong>과 <strong>빠르고 강건한 데이터 기반 제어</strong>라는 상반된 강점을 보여줍니다. 이러한 성격의 차이는 오히려 <strong>상호보완적인 통합 가능성</strong>을 시사합니다.</p>
+<section id="하이브리드-전략의-가능성" class="level3">
+<h3 class="anchored" data-anchor-id="하이브리드-전략의-가능성">1. 하이브리드 전략의 가능성</h3>
+<p>앞으로의 연구는 다음과 같은 하이브리드 모델을 탐색할 수 있습니다:</p>
+<ul>
+<li><p><strong>CTR으로 생성된 궤적을 imitation learning의 teacher로 활용</strong></p>
+<ul>
+<li>RL의 초기 정책을 빠르게 수렴시킬 수 있음</li>
+</ul></li>
+<li><p><strong>DeXtreme 정책을 warm-start로 사용하여 CTR 최적화를 가속</strong></p>
+<ul>
+<li>최적화 초기화를 RL 정책 기반으로 설정해 연산량 감소</li>
+</ul></li>
+<li><p><strong>접촉 모델의 일부를 학습된 근사 모델로 대체</strong></p>
+<ul>
+<li>예: 마찰계수 추정, 감쇠 계수 추정 등 실제 환경 파라미터 보정</li>
+</ul></li>
+</ul>
+<p>이처럼 양측의 장점을 조합하는 방식은, <strong>물리 기반 정확성과 학습 기반 유연성</strong>을 동시에 확보할 수 있는 유망한 방향입니다.</p>
+</section>
+<section id="실시간성-향상" class="level3">
+<h3 class="anchored" data-anchor-id="실시간성-향상">2. 실시간성 향상</h3>
+<p>CTR-MPC의 경우, 최적화의 실시간성은 여전히 제한적입니다. 이를 해결하기 위해 다음과 같은 접근이 제안될 수 있습니다:</p>
+<ul>
+<li><strong>CTR 기반 정책을 사전 학습해 신경망으로 근사 (Policy Distillation)</strong></li>
+<li><strong>CTR 해를 데이터셋으로 수집 후, offline RL이나 trajectory matching으로 정책 학습</strong></li>
+</ul>
+<p>이러한 방식은 <strong>제약 조건을 만족하는 정책을 빠르게 실행</strong>할 수 있게 해줄 뿐 아니라, <strong>정책의 해석 가능성</strong>도 부분적으로 유지할 수 있습니다.</p>
+</section>
+<section id="보다-복잡한-조작-작업-확장" class="level3">
+<h3 class="anchored" data-anchor-id="보다-복잡한-조작-작업-확장">3. 보다 복잡한 조작 작업 확장</h3>
+<p>향후 연구는 다음과 같은 더 복잡한 작업으로의 확장을 목표로 할 수 있습니다:</p>
+<ul>
+<li><strong>비정형 물체 조작</strong> (불규칙한 형상, 연성 물체 등)</li>
+<li><strong>시각 기반 입력 통합</strong> (CTR과 카메라 인식 결합)</li>
+<li><strong>사람과의 협업 조작</strong> (공동 운반, 안전 제약 등 포함)</li>
+</ul>
+<p>특히 CTR 기반 접근은 <strong>제약 조건 기반의 신뢰성과 안전성</strong>을 활용해, 사람과 함께하는 환경에서도 활용 가능성을 보여줍니다.</p>
+<hr>
+</section>
+</section>
+<section id="마무리" class="level2">
+<h2 class="anchored" data-anchor-id="마무리">마무리</h2>
+<p>“Dexterous Contact-Rich Manipulation via the Contact Trust Region” 논문은 고난도 조작에서 접촉 제약을 어떻게 명시적으로 다루고, 이를 모델 기반 제어 프레임워크에 통합할 수 있는지를 수학적으로 우아하게 풀어낸 작업입니다. 그에 비해 DeXtreme은 대규모 계산 자원을 활용한 전통적인 심층강화학습 방식이지만, 실제 적용성에 있어 매우 강력한 접근임을 보여줍니다.</p>
+<p>이 두 흐름은 서로 경쟁적이라기보다, <strong>다음 세대의 조작 시스템에서 병렬적으로 사용될 수 있는 기술 스펙트럼의 양극단</strong>으로 이해될 수 있습니다.</p>
+<p>앞으로의 연구는, 이들 방법론을 상황에 따라 선택하거나 조합함으로써, <strong>보다 유연하고 안전하며 일반화 가능한 로봇 조작 시스템</strong>을 구축하는 데 기여할 수 있을 것입니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
