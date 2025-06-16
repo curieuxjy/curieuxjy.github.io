@@ -1,7 +1,7 @@
 ---
 title: "📝Linx Cheet Sheet"
 toc: true
-date: "2025-02-05"
+date: "2025-06-16"
 description: 자주 사용하는 Commands
 categories: [linux, docker, cheetsheet, 2025]
 format:
@@ -10,12 +10,67 @@ format:
     code-summary: "Show the code"
 ---
 
+# git command로 commit
+
+```bash
+# If the branch already exists:
+git checkout [branch-name]
+
+# Otherwise, create it and switch:
+git checkout -b [branch-name]
+
+```
+
+```bash
+git add .
+git commit -m "commit message"
+```
+
+```bash
+git push
+
+git push -u origin [branch-name]
+```
+
+# 다중 GPU에서 사용할 특정 GPU 설정
+
+- `export CUDA_VISIBLE_DEVICES=<idx>[,<idx>...]` 로 사용할 GPU만 노출
+
+- 다중 GPU 환경에서 “어떤 GPU를 쓸지” 지정하는 가장 간단한 방법은 환경 변수 `CUDA_VISIBLE_DEVICES` 를 설정. 이 변수에 지정한 인덱스(들)만이 애플리케이션에서 “GPU 0,1,2…” 로 인식되기 때문에, 실제 머신에 여러 개 장착된 GPU 중에서 원하는 것만 골라 쓸 수 있음
+
+터미널에서 아래 명령으로 현재 시스템에 붙어 있는 GPU 목록과 각 ID를 확인:
+
+```bash
+nvidia-smi # 여기서 좌측의 `GPU` 컬럼이 실제 시스템 인덱스
+```
+
+* **단일 GPU 사용**
+
+  ```bash
+  export CUDA_VISIBLE_DEVICES=1
+  python train.py
+  ```
+
+  이렇게 하면 실제 시스템의 `GPU#1` 이 “내부적으로 0번 GPU” 로 보이게 됩니다.
+
+* **여러 GPU 사용**
+
+  ```bash
+  export CUDA_VISIBLE_DEVICES=0,2
+  python train.py
+  ```
+
+  이렇게 설정하면 시스템 GPU 0번과 2번만 보이게 되고, 내부적으로는 `[ “가상 GPU0” ← 시스템0, “가상 GPU1” ← 시스템2 ]` 로 취급됩니다.
+
+> **Tip**: 쉼표 없이 `CUDA_VISIBLE_DEVICES=0` 또는 `1`, 공백 없이 `0,2,3` 처럼 지정해야 합니다.
+
+
 # 소스코드 찾기 `grep`
 
 > 파일 내에서 또는 입력값으로부터 특정 패턴을 검색
 
 - option
-  - `-v` : 일치되는 내용이 **없는** **라인**을 표시 
+  - `-v` : 일치되는 내용이 **없는** **라인**을 표시
   - `-c` : 일치되는 내용이 있는 **행의 개수**를 표시
   - `-l` : 일치되는 내용이 있는 **파일 이름**만 표시
   - `-h` : 일치되는 내용을 찾은 파일의 이름을 **표시하지 않음**
@@ -36,7 +91,7 @@ format:
 
 AppImage icon 생성
 
-- .AppImage 파일 및 icon 이미지(.png) 경로: `/opt` 
+- .AppImage 파일 및 icon 이미지(.png) 경로: `/opt`
 - desktop 바로가기 설정 경로: `/usr/share/applications`
 1. appimage 파일과 icon image를 `/opt`로 이동
    - e.g. `/opt/[app_name].AppImage` & `/opt/[app_name].png`
