@@ -1,0 +1,46 @@
+---
+title: "📝ROS1/2 Errors"
+toc: true
+date: "2025-06-23"
+description: 개발하면서 나왔던 Error 처리
+categories: [ros1, ros2, errors, 2025]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+
+# gazebo
+
+- error
+
+  ```{.sh code-line-numbers=false}
+  gzclient: /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename boost::detail::sp_member_access<T>::type boost::shared_ptr<T>::operator->() const [with T = gazebo::rendering::Camera; typename boost::detail::sp_member_access<T>::type = gazebo::rendering::Camera*]: Assertion `px != 0' failed.
+  [ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd 'gzclient --gui-client-plugin=libgazebo_ros_eol_gui.so'].
+  ```
+
+- solution
+
+  ```{.sh code-line-numbers=false}
+  $ source /usr/share/gazebo/setup.sh
+  ```
+
+* Gazebo 환경변수(`source /usr/share/gazebo/setup.sh`)가 제대로 설정되지 않아 `GAZEBO_PLUGIN_PATH`·`GAZEBO_MODEL_PATH` 등에서 플러그인·모델 로드에 실패해 `shared_ptr`이 null이 되는 경우가 많음 ([1], [2])
+* 또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인 ([3], [4])
+
+
+또 같은 에러가 발생하면 gazebo 필요 모델이나 플러그인 로드되는지 확인
+
+```bash
+echo $GAZEBO_PLUGIN_PATH
+echo $GAZEBO_MODEL_PATH
+```
+
+
+[1]: https://answers.ros.org/question/358847?utm_source=chatgpt.com "Cannot launch gzclient on a launch file - results in shared_ptr ..."
+[2]: https://robotics.stackexchange.com/questions/101698/i-got-this-error-while-im-launching-my-robot?utm_source=chatgpt.com "gazebo - i got this error while im launching my robot"
+[3]: https://answers.gazebosim.org/question/5115/?utm_source=chatgpt.com "On startup of gazebo I get intermittent error"
+[4]: https://stackoverflow.com/questions/3541179/shared-ptr-assertion-px-0-failed?utm_source=chatgpt.com "shared ptr - shared_ptr Assertion px != 0 failed - Stack Overflow"
+
+
