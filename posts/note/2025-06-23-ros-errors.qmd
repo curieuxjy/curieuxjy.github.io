@@ -44,3 +44,5 @@ echo $GAZEBO_MODEL_PATH
 [4]: https://stackoverflow.com/questions/3541179/shared-ptr-assertion-px-0-failed?utm_source=chatgpt.com "shared ptr - shared_ptr Assertion px != 0 failed - Stack Overflow"
 
 
+
+
