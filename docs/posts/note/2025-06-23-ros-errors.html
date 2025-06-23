@@ -335,7 +335,16 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#gazebo" id="toc-gazebo" class="nav-link active" data-scroll-target="#gazebo">gazebo</a></li>
+  <li><a href="#gazebo" id="toc-gazebo" class="nav-link active" data-scroll-target="#gazebo">gazebo</a>
+  <ul class="collapse">
+  <li><a href="#error" id="toc-error" class="nav-link" data-scroll-target="#error">error</a></li>
+  <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution">solution</a></li>
+  </ul></li>
+  <li><a href="#moveit-servo-설치" id="toc-moveit-servo-설치" class="nav-link" data-scroll-target="#moveit-servo-설치">moveit servo 설치</a>
+  <ul class="collapse">
+  <li><a href="#error-1" id="toc-error-1" class="nav-link" data-scroll-target="#error-1">error</a></li>
+  <li><a href="#solution-1" id="toc-solution-1" class="nav-link" data-scroll-target="#solution-1">solution</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -381,20 +390,101 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <section id="gazebo" class="level1">
 <h1>gazebo</h1>
-<ul>
-<li><p>error</p>
+<section id="error" class="level2">
+<h2 class="anchored" data-anchor-id="error">error</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gzclient:</span> /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename boost::detail::sp_member_access<span class="op">&lt;</span>T<span class="op">&gt;</span>::type boost::shared_ptr<span class="op">&lt;</span>T<span class="op">&gt;</span>::operator-<span class="op">&gt;()</span> const [with T = gazebo::rendering::Camera<span class="kw">;</span> <span class="ex">typename</span> boost::detail::sp_member_access<span class="op">&lt;</span>T<span class="op">&gt;</span>::type = gazebo::rendering::Camera<span class="pp">*</span>]: Assertion <span class="kw">`</span><span class="ex">px</span> != 0<span class="st">' failed.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">[ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd '</span>gzclient <span class="at">--gui-client-plugin</span><span class="op">=</span>libgazebo_ros_eol_gui.so<span class="st">'].</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>solution</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> source /usr/share/gazebo/setup.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Gazebo 환경변수(<code>source /usr/share/gazebo/setup.sh</code>)가 제대로 설정되지 않아 <code>GAZEBO_PLUGIN_PATH</code>·<code>GAZEBO_MODEL_PATH</code> 등에서 플러그인·모델 로드에 실패해 <code>shared_ptr</code>이 null이 되는 경우가 많음 (<a href="https://answers.ros.org/question/358847?utm_source=chatgpt.com" title="Cannot launch gzclient on a launch file - results in shared_ptr ...">1</a>, <a href="https://robotics.stackexchange.com/questions/101698/i-got-this-error-while-im-launching-my-robot?utm_source=chatgpt.com" title="gazebo - i got this error while im launching my robot">2</a>)</p></li>
-<li><p>또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인 (<a href="https://answers.gazebosim.org/question/5115/?utm_source=chatgpt.com" title="On startup of gazebo I get intermittent error">3</a>, <a href="https://stackoverflow.com/questions/3541179/shared-ptr-assertion-px-0-failed?utm_source=chatgpt.com" title="shared ptr - shared_ptr Assertion px != 0 failed - Stack Overflow">4</a>)</p></li>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">[ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd '</span>gzclient <span class="at">--gui-client-plugin</span><span class="op">=</span>libgazebo_ros_eol_gui.so<span class="st">'].</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="solution" class="level2">
+<h2 class="anchored" data-anchor-id="solution">solution</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> source /usr/share/gazebo/setup.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Gazebo 환경변수(<code>source /usr/share/gazebo/setup.sh</code>)가 제대로 설정되지 않아 <code>GAZEBO_PLUGIN_PATH</code>·<code>GAZEBO_MODEL_PATH</code> 등에서 플러그인·모델 로드에 실패해 <code>shared_ptr</code>이 null이 되는 경우가 많음</li>
+<li>또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인</li>
 </ul>
 <p>또 같은 에러가 발생하면 gazebo 필요 모델이나 플러그인 로드되는지 확인</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">echo</span> <span class="va">$GAZEBO_PLUGIN_PATH</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="bu">echo</span> <span class="va">$GAZEBO_MODEL_PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$GAZEBO_PLUGIN_PATH</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$GAZEBO_MODEL_PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="moveit-servo-설치" class="level1">
+<h1>moveit servo 설치</h1>
+<section id="error-1" class="level2">
+<h2 class="anchored" data-anchor-id="error-1">error</h2>
+<p>패키지 빌드시 마주친 에러 로그</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Could</span> not find a package configuration file provided by <span class="st">"moveit_servo"</span> with</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">any</span> of the following names:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">moveit_servoConfig.cmake</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">moveit_servo-config.cmake</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Add</span> the installation prefix of <span class="st">"moveit_servo"</span> to CMAKE_PREFIX_PATH or set</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"moveit_servo_DIR"</span> to a directory containing one of the above files.  If</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"moveit_servo"</span> provides a separate development package or SDK, be sure it</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">has</span> been installed.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ROS 2 패키지를 APT로 올바르게 가져오지 못해 <code>moveit_servo</code> 설치 시 404 오류가 발생하고, 동시에 GPG 키 만료로 인해 <code>apt update</code> 단계부터 경고가 뜨는 상황:</p>
+<ul>
+<li><strong>GPG 키 만료</strong>로 인해 ROS 2 저장소가 신뢰되지 않아 패키지 색인이 최신으로 갱신되지 않습니다.</li>
+<li><strong>오래된 색인</strong>을 기반으로 설치를 시도하므로 서버에 없는 <code>.deb</code> 파일을 내려받으려 해 404가 납니다.</li>
+<li>해결을 위해서는 ① 새로운 GPG 키를 가져와, ② APT 소스에 <code>signed-by</code> 옵션을 넣어 제대로 설정한 뒤, ③ 캐시를 정리하고 갱신, ④ 다시 패키지를 설치하는 순으로 진행해야 합니다.</li>
+</ul>
+</section>
+<section id="solution-1" class="level2">
+<h2 class="anchored" data-anchor-id="solution-1">solution</h2>
+<ul>
+<li><p>ROS 2 GPG 키 갱신</p>
+<ol type="1">
+<li><p><strong>ROS 2용 새 키 다운로드</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install curl gnupg2 lsb-release        <span class="co"># 키링 관리용 도구 설치</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> curl <span class="at">-sSL</span> https://raw.githubusercontent.com/ros/rosdistro/master/ros.key <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-o</span> /usr/share/keyrings/ros-archive-keyring.gpg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>만료된 키를 대체하며, 이후 APT가 신뢰할 저장소 키로 사용</li>
+</ul></li>
+<li><p><strong>기존 ROS 2 리스트 제거</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm /etc/apt/sources.list.d/ros2<span class="pp">*</span>.list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>예전 설정이 남아 있으면 <code>signed-by</code> 옵션이 적용되지 않음</li>
+</ul></li>
+</ol></li>
+<li><p>APT 소스 설정</p>
+<ul>
+<li>Official 문서 권장 방식에 따라 저장소를 설정:</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install software-properties-common</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> add-apt-repository universe</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"deb [arch=</span><span class="va">$(</span><span class="ex">dpkg</span> <span class="at">--print-architecture</span><span class="va">)</span><span class="st"> </span><span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">        signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] </span><span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">   http://packages.ros.org/ros2/ubuntu </span><span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">   </span><span class="va">$(</span><span class="bu">.</span> /etc/os-release <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="va">$UBUNTU_CODENAME)</span><span class="st"> main"</span> <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/ros2.list <span class="op">&gt;</span> /dev/null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>signed-by</code> 옵션으로 키링 파일을 지정해 보안 경고를 방지</li>
+</ul></li>
+<li><p>캐시 정리 및 최신 색인 가져오기</p>
+<ul>
+<li><p>만약 키 설정 이후에도 색인이 갱신되지 않는다면, APT 리스트 캐시를 지운 뒤 다시 시도:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>이렇게 하면 저장소에서 최신 패키지 목록을 내려받음</p></li>
+</ul></li>
+<li><p><code>moveit_servo</code> 설치</p>
+<ul>
+<li><p>이제 설치가 가능:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ros-humble-moveit-servo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>패키지명은 <code>ros-humble-moveit-servo</code>이고, 설치 후 <code>/opt/ros/humble/share/moveit_servo</code>에 관련 파일이 생김</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

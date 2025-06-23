@@ -13,26 +13,26 @@ format:
 
 # gazebo
 
-- error
+## error
 
   ```{.sh code-line-numbers=false}
   gzclient: /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename boost::detail::sp_member_access<T>::type boost::shared_ptr<T>::operator->() const [with T = gazebo::rendering::Camera; typename boost::detail::sp_member_access<T>::type = gazebo::rendering::Camera*]: Assertion `px != 0' failed.
   [ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd 'gzclient --gui-client-plugin=libgazebo_ros_eol_gui.so'].
   ```
 
-- solution
+## solution
 
   ```{.sh code-line-numbers=false}
   $ source /usr/share/gazebo/setup.sh
   ```
 
-* Gazebo 환경변수(`source /usr/share/gazebo/setup.sh`)가 제대로 설정되지 않아 `GAZEBO_PLUGIN_PATH`·`GAZEBO_MODEL_PATH` 등에서 플러그인·모델 로드에 실패해 `shared_ptr`이 null이 되는 경우가 많음 ([1], [2])
-* 또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인 ([3], [4])
+* Gazebo 환경변수(`source /usr/share/gazebo/setup.sh`)가 제대로 설정되지 않아 `GAZEBO_PLUGIN_PATH`·`GAZEBO_MODEL_PATH` 등에서 플러그인·모델 로드에 실패해 `shared_ptr`이 null이 되는 경우가 많음
+* 또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인
 
 
 또 같은 에러가 발생하면 gazebo 필요 모델이나 플러그인 로드되는지 확인
 
-```bash
+```{.sh code-line-numbers=false}
 echo $GAZEBO_PLUGIN_PATH
 echo $GAZEBO_MODEL_PATH
 ```
@@ -43,6 +43,110 @@ echo $GAZEBO_MODEL_PATH
 [3]: https://answers.gazebosim.org/question/5115/?utm_source=chatgpt.com "On startup of gazebo I get intermittent error"
 [4]: https://stackoverflow.com/questions/3541179/shared-ptr-assertion-px-0-failed?utm_source=chatgpt.com "shared ptr - shared_ptr Assertion px != 0 failed - Stack Overflow"
 
+---
+
+# moveit servo 설치
+
+## error
+
+패키지 빌드시 마주친 에러 로그
+
+```{.sh code-line-numbers=false}
+Could not find a package configuration file provided by "moveit_servo" with
+  any of the following names:
+
+    moveit_servoConfig.cmake
+    moveit_servo-config.cmake
+
+  Add the installation prefix of "moveit_servo" to CMAKE_PREFIX_PATH or set
+  "moveit_servo_DIR" to a directory containing one of the above files.  If
+  "moveit_servo" provides a separate development package or SDK, be sure it
+  has been installed.
+```
 
 
+ROS 2 패키지를 APT로 올바르게 가져오지 못해 `moveit_servo` 설치 시 404 오류가 발생하고, 동시에 GPG 키 만료로 인해 `apt update` 단계부터 경고가 뜨는 상황:
+
+* **GPG 키 만료**로 인해 ROS 2 저장소가 신뢰되지 않아 패키지 색인이 최신으로 갱신되지 않습니다.
+* **오래된 색인**을 기반으로 설치를 시도하므로 서버에 없는 `.deb` 파일을 내려받으려 해 404가 납니다.
+* 해결을 위해서는 ① 새로운 GPG 키를 가져와, ② APT 소스에 `signed-by` 옵션을 넣어 제대로 설정한 뒤, ③ 캐시를 정리하고 갱신, ④ 다시 패키지를 설치하는 순으로 진행해야 합니다.
+
+
+## solution
+
+- ROS 2 GPG 키 갱신
+
+  1. **ROS 2용 새 키 다운로드**
+
+     ```{.sh code-line-numbers=false}
+     sudo apt install curl gnupg2 lsb-release        # 키링 관리용 도구 설치
+     sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+       -o /usr/share/keyrings/ros-archive-keyring.gpg
+     ```
+
+     * 만료된 키를 대체하며, 이후 APT가 신뢰할 저장소 키로 사용
+
+  2. **기존 ROS 2 리스트 제거**
+
+     ```{.sh code-line-numbers=false}
+     sudo rm /etc/apt/sources.list.d/ros2*.list
+     ```
+
+     * 예전 설정이 남아 있으면 `signed-by` 옵션이 적용되지 않음
+
+- APT 소스 설정
+
+  - Official 문서 권장 방식에 따라 저장소를 설정:
+
+  ```{.sh code-line-numbers=false}
+  sudo apt update
+  sudo apt install software-properties-common
+  sudo add-apt-repository universe
+
+  echo \
+    "deb [arch=$(dpkg --print-architecture) \
+          signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
+     http://packages.ros.org/ros2/ubuntu \
+     $(. /etc/os-release && echo $UBUNTU_CODENAME) main" \
+    | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+  ```
+
+  * `signed-by` 옵션으로 키링 파일을 지정해 보안 경고를 방지
+
+
+- 캐시 정리 및 최신 색인 가져오기
+
+  - 만약 키 설정 이후에도 색인이 갱신되지 않는다면, APT 리스트 캐시를 지운 뒤 다시 시도:
+
+    ```{.sh code-line-numbers=false}
+    sudo rm -rf /var/lib/apt/lists/*
+    sudo apt update
+    ```
+
+  * 이렇게 하면 저장소에서 최신 패키지 목록을 내려받음
+
+- `moveit_servo` 설치
+
+  - 이제 설치가 가능:
+
+    ```{.sh code-line-numbers=false}
+    sudo apt install ros-humble-moveit-servo
+    ```
+
+    * 패키지명은 `ros-humble-moveit-servo`이고, 설치 후 `/opt/ros/humble/share/moveit_servo`에 관련 파일이 생김
+
+
+[1]: https://github.com/ros2/ros2/issues/1696?utm_source=chatgpt.com "Can't install docker. Key is expired · Issue #1696 · ros2/ros2 - GitHub"
+[2]: https://www.reddit.com/r/ROS/comments/1l1e6mf/ros_install_gpg_key_error/?utm_source=chatgpt.com "Ros install GPG key error : r/ROS - Reddit"
+[3]: https://robotics.stackexchange.com/questions/104189/failed-to-fetch-http-packages-ros-org-ros2-404-not-found?utm_source=chatgpt.com "ros humble - Failed to fetch http://packages.ros.org/ros2 (404 not ..."
+[4]: https://discourse.ros.org/t/ros-gpg-key-expiration-incident/20669?utm_source=chatgpt.com "ROS GPG Key Expiration Incident - Open Robotics - ROS Discourse"
+[5]: https://answers.ros.org/question/415885?utm_source=chatgpt.com "GPG error: http://packages.ros.org/ros2/ubuntu jammy InRelease ..."
+[6]: https://answers.ros.org/question/410123?utm_source=chatgpt.com "Ubuntu 22.04 ros2 humble installing error GPG, libc-bin"
+[7]: https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html?utm_source=chatgpt.com "Ubuntu (deb packages) — ROS 2 Documentation"
+[8]: https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html?utm_source=chatgpt.com "Ubuntu (Debian) — ROS 2 Documentation: Foxy documentation"
+[9]: https://index.ros.org/p/moveit_servo/?utm_source=chatgpt.com "ROS Package: moveit_servo"
+[10]: https://moveit.picknik.ai/humble/doc/examples/realtime_servo/realtime_servo_tutorial.html?utm_source=chatgpt.com "Realtime Arm Servoing - MoveIt Documentation - PickNik Robotics"
+[11]: https://github.com/ros-planning/moveit_tutorials/blob/master/doc/realtime_servo/realtime_servo_tutorial.rst?utm_source=chatgpt.com "moveit_tutorials/doc/realtime_servo/realtime_servo_tutorial.rst at ..."
+
+---
 

@@ -1537,7 +1537,35 @@
     "href": "posts/note/2025-06-23-ros-errors.html",
     "title": "📝ROS1/2 Errors",
     "section": "",
-    "text": "gazebo\n\nerror\ngzclient: /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename boost::detail::sp_member_access&lt;T&gt;::type boost::shared_ptr&lt;T&gt;::operator-&gt;() const [with T = gazebo::rendering::Camera; typename boost::detail::sp_member_access&lt;T&gt;::type = gazebo::rendering::Camera*]: Assertion `px != 0' failed.\n[ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd 'gzclient --gui-client-plugin=libgazebo_ros_eol_gui.so'].\nsolution\n$ source /usr/share/gazebo/setup.sh\nGazebo 환경변수(source /usr/share/gazebo/setup.sh)가 제대로 설정되지 않아 GAZEBO_PLUGIN_PATH·GAZEBO_MODEL_PATH 등에서 플러그인·모델 로드에 실패해 shared_ptr이 null이 되는 경우가 많음 (1, 2)\n또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인 (3, 4)\n\n또 같은 에러가 발생하면 gazebo 필요 모델이나 플러그인 로드되는지 확인\necho $GAZEBO_PLUGIN_PATH\necho $GAZEBO_MODEL_PATH"
+    "text": "gzclient: /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename boost::detail::sp_member_access&lt;T&gt;::type boost::shared_ptr&lt;T&gt;::operator-&gt;() const [with T = gazebo::rendering::Camera; typename boost::detail::sp_member_access&lt;T&gt;::type = gazebo::rendering::Camera*]: Assertion `px != 0' failed.\n[ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd 'gzclient --gui-client-plugin=libgazebo_ros_eol_gui.so'].\n\n\n\n$ source /usr/share/gazebo/setup.sh\n\nGazebo 환경변수(source /usr/share/gazebo/setup.sh)가 제대로 설정되지 않아 GAZEBO_PLUGIN_PATH·GAZEBO_MODEL_PATH 등에서 플러그인·모델 로드에 실패해 shared_ptr이 null이 되는 경우가 많음\n또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인\n\n또 같은 에러가 발생하면 gazebo 필요 모델이나 플러그인 로드되는지 확인\necho $GAZEBO_PLUGIN_PATH\necho $GAZEBO_MODEL_PATH"
+  },
+  {
+    "objectID": "posts/note/2025-06-23-ros-errors.html#error",
+    "href": "posts/note/2025-06-23-ros-errors.html#error",
+    "title": "📝ROS1/2 Errors",
+    "section": "",
+    "text": "gzclient: /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename boost::detail::sp_member_access&lt;T&gt;::type boost::shared_ptr&lt;T&gt;::operator-&gt;() const [with T = gazebo::rendering::Camera; typename boost::detail::sp_member_access&lt;T&gt;::type = gazebo::rendering::Camera*]: Assertion `px != 0' failed.\n[ERROR] [gzclient-2]: process has died [pid 2979, exit code -6, cmd 'gzclient --gui-client-plugin=libgazebo_ros_eol_gui.so']."
+  },
+  {
+    "objectID": "posts/note/2025-06-23-ros-errors.html#solution",
+    "href": "posts/note/2025-06-23-ros-errors.html#solution",
+    "title": "📝ROS1/2 Errors",
+    "section": "",
+    "text": "$ source /usr/share/gazebo/setup.sh\n\nGazebo 환경변수(source /usr/share/gazebo/setup.sh)가 제대로 설정되지 않아 GAZEBO_PLUGIN_PATH·GAZEBO_MODEL_PATH 등에서 플러그인·모델 로드에 실패해 shared_ptr이 null이 되는 경우가 많음\n또한 그래픽 드라이버/OpenGL 컨텍스트 문제로 객체 초기화가 실패하거나, ROS–Gazebo 버전 불일치로 플러그인이 정상 로드되지 않아 내부 객체가 null로 반환되는 경우가 주요 원인\n\n또 같은 에러가 발생하면 gazebo 필요 모델이나 플러그인 로드되는지 확인\necho $GAZEBO_PLUGIN_PATH\necho $GAZEBO_MODEL_PATH"
+  },
+  {
+    "objectID": "posts/note/2025-06-23-ros-errors.html#error-1",
+    "href": "posts/note/2025-06-23-ros-errors.html#error-1",
+    "title": "📝ROS1/2 Errors",
+    "section": "error",
+    "text": "error\n패키지 빌드시 마주친 에러 로그\nCould not find a package configuration file provided by \"moveit_servo\" with\n  any of the following names:\n\n    moveit_servoConfig.cmake\n    moveit_servo-config.cmake\n\n  Add the installation prefix of \"moveit_servo\" to CMAKE_PREFIX_PATH or set\n  \"moveit_servo_DIR\" to a directory containing one of the above files.  If\n  \"moveit_servo\" provides a separate development package or SDK, be sure it\n  has been installed.\nROS 2 패키지를 APT로 올바르게 가져오지 못해 moveit_servo 설치 시 404 오류가 발생하고, 동시에 GPG 키 만료로 인해 apt update 단계부터 경고가 뜨는 상황:\n\nGPG 키 만료로 인해 ROS 2 저장소가 신뢰되지 않아 패키지 색인이 최신으로 갱신되지 않습니다.\n오래된 색인을 기반으로 설치를 시도하므로 서버에 없는 .deb 파일을 내려받으려 해 404가 납니다.\n해결을 위해서는 ① 새로운 GPG 키를 가져와, ② APT 소스에 signed-by 옵션을 넣어 제대로 설정한 뒤, ③ 캐시를 정리하고 갱신, ④ 다시 패키지를 설치하는 순으로 진행해야 합니다."
+  },
+  {
+    "objectID": "posts/note/2025-06-23-ros-errors.html#solution-1",
+    "href": "posts/note/2025-06-23-ros-errors.html#solution-1",
+    "title": "📝ROS1/2 Errors",
+    "section": "solution",
+    "text": "solution\n\nROS 2 GPG 키 갱신\n\nROS 2용 새 키 다운로드\nsudo apt install curl gnupg2 lsb-release        # 키링 관리용 도구 설치\nsudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \\\n  -o /usr/share/keyrings/ros-archive-keyring.gpg\n\n만료된 키를 대체하며, 이후 APT가 신뢰할 저장소 키로 사용\n\n기존 ROS 2 리스트 제거\nsudo rm /etc/apt/sources.list.d/ros2*.list\n\n예전 설정이 남아 있으면 signed-by 옵션이 적용되지 않음\n\n\nAPT 소스 설정\n\nOfficial 문서 권장 방식에 따라 저장소를 설정:\n\nsudo apt update\nsudo apt install software-properties-common\nsudo add-apt-repository universe\n\necho \\\n  \"deb [arch=$(dpkg --print-architecture) \\\n        signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \\\n   http://packages.ros.org/ros2/ubuntu \\\n   $(. /etc/os-release && echo $UBUNTU_CODENAME) main\" \\\n  | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null\n\nsigned-by 옵션으로 키링 파일을 지정해 보안 경고를 방지\n\n캐시 정리 및 최신 색인 가져오기\n\n만약 키 설정 이후에도 색인이 갱신되지 않는다면, APT 리스트 캐시를 지운 뒤 다시 시도:\nsudo rm -rf /var/lib/apt/lists/*\nsudo apt update\n이렇게 하면 저장소에서 최신 패키지 목록을 내려받음\n\nmoveit_servo 설치\n\n이제 설치가 가능:\nsudo apt install ros-humble-moveit-servo\n\n패키지명은 ros-humble-moveit-servo이고, 설치 후 /opt/ros/humble/share/moveit_servo에 관련 파일이 생김"
   },
   {
     "objectID": "posts/note/2023-03-31-daily-english-007.html",
