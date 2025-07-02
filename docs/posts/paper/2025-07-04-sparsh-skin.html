@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-07-04">
+<meta name="description" content="Self-supervised perception for tactile skin covered dexterous hands">
+
+<title>📃Sparsh-Skin 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a>
+  <ul class="collapse">
+  <li><a href="#핵심-방법론" id="toc-핵심-방법론" class="nav-link" data-scroll-target="#핵심-방법론">핵심 방법론</a></li>
+  <li><a href="#평가-결과" id="toc-평가-결과" class="nav-link" data-scroll-target="#평가-결과">평가 결과</a></li>
+  </ul></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#배경-및-연구-동기" id="toc-배경-및-연구-동기" class="nav-link" data-scroll-target="#배경-및-연구-동기">배경 및 연구 동기</a></li>
+  <li><a href="#주요-기여-및-접근-방법" id="toc-주요-기여-및-접근-방법" class="nav-link" data-scroll-target="#주요-기여-및-접근-방법">주요 기여 및 접근 방법</a></li>
+  <li><a href="#모델-및-자기-지도-학습-방법론" id="toc-모델-및-자기-지도-학습-방법론" class="nav-link" data-scroll-target="#모델-및-자기-지도-학습-방법론">💡 모델 및 자기 지도 학습 방법론</a></li>
+  <li><a href="#실험-설정-및-결과" id="toc-실험-설정-및-결과" class="nav-link" data-scroll-target="#실험-설정-및-결과">실험 설정 및 결과</a></li>
+  <li><a href="#한계-및-향후-과제" id="toc-한계-및-향후-과제" class="nav-link" data-scroll-target="#한계-및-향후-과제">한계 및 향후 과제</a></li>
+  <li><a href="#sparsh-시각-기반-촉각-표현-학습-연구와의-연관성" id="toc-sparsh-시각-기반-촉각-표현-학습-연구와의-연관성" class="nav-link" data-scroll-target="#sparsh-시각-기반-촉각-표현-학습-연구와의-연관성">💥 Sparsh (시각 기반 촉각 표현 학습) 연구와의 연관성</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Sparsh-Skin 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">sparsh-skin</div>
+    <div class="quarto-category">ssl</div>
+    <div class="quarto-category">touch</div>
+    <div class="quarto-category">tactile</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Self-supervised perception for tactile skin covered dexterous hands
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 4, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/pdf/2505.11420">Paper Link</a></li>
+<li><a href="https://akashsharma02.github.io/sparsh-skin-ssl/">Project Link</a></li>
+</ul>
+<p><img src="../../images/2025-07-04-sparsh-skin/teaser.png" class="img-fluid"></p>
+<ol type="1">
+<li>자성 스킨 센서가 장착된 로봇 손을 위한 자기 지도 학습 기반의 고성능 촉각 표현 모델인 Sparsh-skin을 제안합니다.</li>
+<li>Sparsh-skin은 라벨링이 되어 있지 않은 다양한 종류의 로봇 손-객체 상호작용 데이터를 사용하여 자기 증류(self-distillation) 방식으로 사전 학습되어 일반화된 촉각 특성을 학습합니다.</li>
+<li>힘 추정, 조이스틱 상태 추정, 자세 추정, 플러그 삽입 등의 다운스트림 작업에서, Sparsh-skin 표현은 기존 연구 및 End-to-end 학습 방식 대비 성능과 샘플 효율성을 크게 향상시킴을 입증했습니다.</li>
+</ol>
+<blockquote class="blockquote">
+<p>비슷한 저자들 리스트로 이전에 작성한 논문인 <a href="https://arxiv.org/pdf/2410.24090">Sparsh: Self-supervised touch representations for vision-based tactile sensing</a> 논문과 혼동하지 않도록 주의합니다. 해당 논문에 대한 포스팅은 <a href="https://curieuxjy.github.io/posts/paper/2025-06-02-sparsh.html">📃Sparsh 리뷰</a>에 있습니다.</p>
+</blockquote>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>본 논문은 자기식 피부 센서로 덮인 민첩한 로봇 손을 위한 자기 지도 방식의 인지(Self-supervised perception) 접근법인 Sparsh-skin을 제안합니다. 자기식 촉각 피부 센서는 손가락 끝에 국한되고 대역폭에 제약이 있는 비전 기반 촉각 센서와 달리, <strong>빠른 응답 속도와 유연한 폼 팩터로 손 전체를 커버할 수 있다는 장점</strong>이 있습니다. 손 전체의 촉각 인지는 로봇의 민첩성에 매우 중요하지만, <strong>범용 모델의 부재와 자기 플럭스(magnetic flux) 신호의 해석 및 캘리브레이션의 어려움</strong>으로 인해 이러한 센서의 활용이 제한적이었습니다.</p>
+<p><strong>Sparsh-skin</strong>은 로봇 손의 운동학적 정보와 촉각 센싱 이력을 입력받아, 모든 downstream task에 사용될 수 있는 <strong>잠재적 촉각 임베딩(latent tactile embedding)을 출력하는 인코더</strong>입니다. 이 인코더는 Allegro 손에 <strong>Xela uSkin 센서</strong>를 장착하여 수집된 약 4시간 분량의 다양한 비레이블 손-물체 상호 작용 데이터를 활용하여 <strong>Self-distillation 방식을 통해 자기 지도 학습(SSL)으로 사전 학습</strong>됩니다. 본 연구는 다양한 벤치마크 실험(힘 추정, 조이스틱 상태 추정, 자세 추정, 플러그 삽입 정책 학습 등)을 통해 사전 학습된 Sparsh-skin 표현이 다운스트림 작업을 학습하는 데 있어 샘플 효율적(sample efficient)일 뿐만 아니라, 기존 연구 대비 41% 이상, 종단 간 학습(end-to-end learning) 대비 56% 이상 작업 성능을 향상시킴을 보입니다.</p>
+<section id="핵심-방법론" class="level2">
+<h2 class="anchored" data-anchor-id="핵심-방법론">핵심 방법론</h2>
+<p>Sparsh-skin은 Transformer 아키텍처를 기반으로 하는 학생(student) 네트워크 <span class="math inline">E_\theta</span>와 교사(teacher) 네트워크 <span class="math inline">E_{\hat{\theta}}</span>로 구성된 자기 증류 프레임워크를 사용합니다. 입력은 100ms 길이의 촉각 측정값 (<span class="math inline">\mathbf{x}_{1:10} \in \mathbb{R}^{10 \times 368 \times 3}</span>)과 센서 위치 정보 (<span class="math inline">\mathbf{p}_{1:10} \in \mathbb{R}^{10 \times 368 \times 3}</span>)의 이력입니다. 각 센서(총 368개)의 데이터는 선형 투영 <span class="math inline">f_{\text{linear}}</span>을 통해 표현 차원 <span class="math inline">d</span>로 토큰화됩니다: <span class="math display">\mathbf{z}_i = f_{\text{linear}}(\mathbf{x}_{1:10} | \mathbf{p}_{1:10}) \in \mathbb{R}^{368 \times d}</span> 또한, 손바닥, 손가락 마디, 손가락 끝 등 Xela 센서 패드의 유형에 따라 학습 가능한 토큰(learnable token)이 각 센서에 추가됩니다. 위치 임베딩(positional embedding) 대신 3D 센서 위치 정보를 활용합니다.</p>
+<p><strong>데이터 손상(data corruption) 기법</strong>으로는 이미지 도메인의 크롭/리사이즈가 자기 플럭스 신호의 의미론적 변화를 유발할 수 있으므로, 토큰화 이후에 블록 마스킹(block masking)을 적용합니다. 이는 인접한 센서 아일랜드(sensor island)를 포함한 연속적인 센서 블록을 입력에서 제거하는 크로스-택셀(cross-taxel) 방식입니다. 학생 네트워크는 손상된 입력 <span class="math inline">\bar{\mathbf{z}}_i</span>를 받고, 교사 네트워크는 덜 손상된 입력 <span class="math inline">\mathbf{z}^*_i</span>를 받습니다 (학생은 무작위로 10%~40%의 데이터를 유지한 k개 마스크를, 교사는 40%~100%의 데이터를 유지한 1-2개 마스크를 받습니다).</p>
+<p>예측 작업(prediction task)은 마스크드 오토 재구성(masked auto-reconstruction)보다 센서 노이즈에 강건한 <strong>분류(classification) 방식을 사용</strong>합니다. 변환된 센서 토큰은 분류 헤드 <span class="math inline">f_{\text{class}}</span>를 통해 프로토타입 로짓(prototype logit)으로 변환됩니다:</p>
+<ul>
+<li>학생은 <span class="math inline">\bar{\mathbf{p}}_i = f_{\text{class}}(E_\theta(\bar{\mathbf{z}}_i))</span>,</li>
+<li>교사는 <span class="math inline">\mathbf{p}^*_i = f_{\text{class}}(E_{\hat{\theta}}(\mathbf{z}^*_i))</span>.</li>
+</ul>
+<p>학생 및 교사 로짓 예측 간의 패치 레벨 교차 엔트로피(patch level cross entropy) 목표를 사용하여 센서 표현에서 국소-전역(local-to-global) 대응 학습을 강화합니다. 교사 네트워크의 가중치 <span class="math inline">\hat{\theta}</span>는 역전파(back-propagation)가 아닌 학생 네트워크 가중치 <span class="math inline">\theta</span>의 지수 이동 평균(EMA)으로만 업데이트됩니다: <span class="math display">\hat{\theta} \triangleq \text{EMA}(\theta)</span></p>
+</section>
+<section id="평가-결과" class="level2">
+<h2 class="anchored" data-anchor-id="평가-결과">평가 결과</h2>
+<p>사전 학습 진행 상황 모니터링을 위해 온라인 프로브(online probe)를 사용합니다. 재구성(reconstruction) 및 물체 식별 능력(분류 정확도)을 평가하며, Sparsh-skin은 MAE 기반 모델보다 우수한 재구성 및 물체 분류 성능(약 95% 정확도)을 보였습니다.</p>
+<p>평가 프로토콜에서 다운스트림 작업은 <strong>즉각적 예측 작업</strong>과 <strong>시간적 추론 작업</strong>으로 나뉩니다.</p>
+<ul>
+<li>즉각적 작업(힘 추정)에는 어텐티브 풀링(attentive pooling)과 작은 2층 MLP가 사용됩니다.</li>
+<li>시간적 작업(조이스틱, 자세 추정)에는 어텐티브 풀링 후 1층 Transformer 블록이 사용됩니다.</li>
+</ul>
+<p>모델 비교에는 BYOL* (본 논문에서 재현한 BYOL 변형), End-to-end, Sparsh-skin (frozen), Sparsh-skin (finetuned), Sparsh-skin (MAE)이 포함됩니다. 성능은 RMSE (힘, 조이스틱, 자세), 자세 정확도 (자세), 성공률 (플러그 삽입)로 측정되며, 샘플 효율성을 평가하기 위해 레이블된 데이터의 비율을 변화시켰습니다.</p>
+<blockquote class="blockquote">
+<p>주요 실험 결과는 다음과 같습니다:</p>
+</blockquote>
+<ul>
+<li><strong>힘 추정:</strong> End-to-end 모델은 특히 저데이터 환경에서 성능이 매우 떨어지지만, Sparsh-skin (frozen) 및 Sparsh-skin (finetuned)은 적은 데이터로도 일관된 성능을 유지했습니다. Sparsh-skin (MAE)는 자기 플럭스 신호의 노이즈 특성으로 인해 성능이 좋지 않았습니다.</li>
+<li><strong>조이스틱 상태 추정:</strong> Sparsh-skin은 전체 데이터를 사용했을 때 기존 HiSS* 모델과 유사한 성능을 보였으며, 3.3%의 데이터만 사용했을 때도 높은 샘플 효율성을 보이며 경쟁력 있는 성능을 달성했습니다.</li>
+<li><strong>자세 추정:</strong> 사전 학습된 Sparsh-skin 표현을 사용한 모든 모델이 End-to-end 모델보다 낮은 RMSE와 높은 자세 정확도를 보였습니다. Sparsh-skin (finetuned)은 End-to-end 대비 이동에서 약 10%, 회전에서 약 20% 향상된 성능을 보였습니다. 손 전체 센싱(palm sensing)이 자세 추정에 중요함이 확인되었습니다.</li>
+<li><strong>정책 학습 (플러그 삽입):</strong> 비전과 Sparsh-skin 촉각 표현을 함께 사용한 정책은 비전 단독 정책 (20% SR) 및 종단 간 시각-촉각 정책 (40% SR) 대비 우수한 성능 (Sparsh-skin (frozen) 75% SR)을 보였습니다. 촉각 정보가 삽입 성공률에 크게 기여함을 확인했습니다.</li>
+</ul>
+<p>본 연구는 자기식 피부 센서를 위한 고성능 촉각 표현 모델인 Sparsh-skin을 제안합니다. 광범위한 비레이블 데이터에 대한 자기 지도 학습을 통해 획득된 Sparsh-skin 표현은 다양한 촉각 중심 작업에서 우수한 성능과 샘플 효율성을 입증했습니다. 이는 손 전체 촉각 표현을 위한 파운데이션 모델(foundation model)로 나아가는 한 단계로 간주됩니다.</p>
+<p>논문의 한계점으로는, 데이터 손상 전략이 주로 공간적이며 시간적 상관 관계 학습을 명시적으로 다루지 않는 점, 현재 자세 추정 작업은 고정된 손과 2D 자세에 제한적이라는 점, 그리고 시각-촉각 정책의 일반화 가능성에 대한 추가 연구가 필요하다는 점 등이 제시되었습니다.</p>
+<hr>
+</section>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>Self-supervised perception for tactile skin covered dexterous hands – 논문 리뷰</p>
+</blockquote>
+<section id="배경-및-연구-동기" class="level2">
+<h2 class="anchored" data-anchor-id="배경-및-연구-동기">배경 및 연구 동기</h2>
+<p>로봇 손의 <strong>촉각 감각</strong>은 물체를 조작하고 조작기(dexterous manipulator)의 성능을 높이는 데 필수적인 역할을 합니다. 특히 손가락 끝에 국한된 기존 <strong>시각 기반 촉각 센서</strong>(예: GelSight 계열, DIGIT 등)는 고해상도 정보를 제공하지만, 손 전체를 감싸는 형태로 적용되기 어렵고 대역폭 제약으로 <strong>빠른 응답</strong>에도 한계가 있습니다. 이에 비해 <strong>자기 기반 촉각 피부 센서</strong>(magnetic tactile skin)는 얇고 유연하게 손가락 마디와 손바닥 전체에 부착할 수 있으며, 빠른 응답 속도를 갖춘다는 장점이 있습니다. 그러나 이러한 자기 촉각 센서들은 <strong>센서 출력(자계 플럭스)</strong>을 해석하고 <strong>보정(calibration)</strong>하는 데 어려움이 있고, 각기 다른 지자기 환경에서의 기준점 드리프트 등 문제로 <strong>표준화된 일반 모델</strong>이 부재하여 널리 활용되지 못했습니다. 다시 말해, 기존에는 특정 작업이나 센서에 특화된 <strong>규칙 기반</strong> 또는 <strong>개별 학습 모델</strong>에 의존하는 경우가 많았고, 손 전체를 포괄하는 <strong>일관된 촉각 표현 방식</strong>이 부족했습니다.</p>
+<p>이러한 맥락에서, Akash Sharma 등 연구진은 <strong>“Self-supervised perception for tactile skin covered dexterous hands”</strong> 논문에서 <strong>손가락, 마디, 손바닥을 모두 덮는 다수의 촉각 피부 센서로부터 얻는 신호를 효율적으로 통합</strong>하여 표현하는 방법을 제안했습니다. 핵심 아이디어는 <strong>자기 지도 학습(self-supervised learning)</strong>을 활용해 대량의 <strong>비라벨(unlabeled) 상호작용 데이터</strong>로부터 <strong>일반적인 촉각 표현</strong>을 학습하는 것입니다. 이를 통해 로봇 손 전체의 촉각 정보를 하나의 <strong>잠재 벡터 표현(latent embedding)</strong>으로 압축하여, 이후 어떤 다운스트림 작업(task)에도 활용할 수 있도록 합니다. 이러한 접근은 딥러닝 기반 <strong>시각 인식</strong> 분야에서 <strong>자기 지도 표현 학습</strong>이 큰 성공을 거둔 것을 촉각 영역에 적용한 것으로, 복잡한 라벨링 없이도 모델이 촉각의 풍부한 특징들을 학습하도록 유도합니다.</p>
+<p>결과적으로, 이 연구의 동기는 <strong>손 전체에 분포된 촉각 센서로부터 얻는 방대한 정보를 효율적으로 해석</strong>하고 <strong>범용적으로 활용</strong>하기 위한 표현 학습 방법을 개발하는 데 있습니다. 특히 기존 연구인 <strong>“Sparsh: Self-supervised touch representations for vision-based tactile sensing”</strong>에서 손끝 카메라 기반 촉각 센싱에 대한 자기 지도 학습 기법이 제시되었는데, 본 논문은 그 철학을 이어받아 <strong>촉각 피부 센서</strong>라는 새로운 하드웨어 플랫폼에 적용하고 확장한 연구라고 할 수 있습니다. 아래에서는 본 논문의 주요 기여와 방법론, 실험 결과를 상세히 살펴본 후, 앞선 Sparsh 연구와의 기술적 연관성과 차이점을 비교해보겠습니다.</p>
+</section>
+<section id="주요-기여-및-접근-방법" class="level2">
+<h2 class="anchored" data-anchor-id="주요-기여-및-접근-방법">주요 기여 및 접근 방법</h2>
+<p><strong>Sparsh-skin</strong>이라 명명된 본 논문의 접근법은, 알레그로(Allegro) 로봇 손에 장착된 <strong>Xela uSkin 자기 촉각 센서</strong>들로부터 <strong>손 전체의 촉각 상태를 표현하는 사전학습 인코더(pre-trained encoder)</strong>를 제시한 것입니다. 구체적으로, <strong>손가락 끝, 마디, 손바닥 등 여러 부위</strong>에 분포된 다수의 uSkin 센서들로부터 얻는 신호를 한데 모아 <strong>풀-핸드(full-hand) 촉각 임베딩</strong>을 생성합니다. 이때 한 시점의 센서 값뿐 아니라 <strong>최근의 짧은 이력</strong>까지 입력으로 사용하여, <strong>시간적 맥락</strong>(예: 미끄러짐 발생 추이 등)을 반영한 표현을 학습합니다. 입력에는 각 센서의 <strong>3차원 위치 정보</strong>까지 포함하여, 모델이 접촉 신호의 공간적 분포를 이해할 수 있도록 하였습니다. 이렇게 학습된 Sparsh-skin 인코더는 다양한 다운스트림 작업에서 <strong>특정 작업에 특화된 추가 학습 없이</strong>도 바로 사용되거나, 최소한의 미세조정(fine-tuning)만으로 우수한 성능을 낼 수 있는 <strong>범용 표현</strong>을 제공합니다.</p>
+<p>이 논문의 <strong>주요 기여</strong>를 정리하면 다음과 같습니다:</p>
+<ul>
+<li><p><strong>손 전체를 덮는 자기 촉각 피부 센서를 위한 최초의 범용 표현 학습 모델 제시:</strong> 손바닥까지 포함한 <strong>다지점 촉각</strong>을 통합적으로 다루기 위해, 자체 개발한 Sparsh-skin 인코더 구조를 통해 <strong>풀-핸드 촉각 임베딩</strong>을 구현했습니다. 이는 기존에 손끝 위주의 촉각센서 연구를 손 전체로 확장한 것으로, 로봇 손의 <strong>섬세한 조작(dexterity)</strong> 능력을 향상시킬 수 있는 기반을 마련합니다.</p></li>
+<li><p><strong>대규모 비라벨 데이터셋 수집 및 자기 지도 학습 적용:</strong> 연구진은 VR 원격조작을 통해 <strong>14가지 일상 물체</strong>(장난감, 도구 등)를 대상으로 <strong>쥐기, 밀기, 비비기, 회전, 누르기, 문지르기, 관절 운동</strong> 등 다양한 <strong>원자적 조작 행동</strong>을 수행하여 약 <strong>4시간 분량의 촉각 데이터</strong>를 수집했습니다. 이러한 <strong>다양한 접촉 경험</strong>을 활용해 라벨이 없는 상태에서 <strong>자기 지도 학습(self-supervised learning)</strong>으로 인코더를 사전학습시켰습니다. 특히 <strong>자기-증류(self-distillation)</strong> 기법을 도입하여, <strong>교사-학생 네트워크</strong> 간 훈련으로 모델이 <strong>손상된 입력 데이터로부터도</strong> 일관된 표현을 추출하도록 유도했습니다.</p></li>
+<li><p><strong>여러 벤치마크 과제를 통해 범용성 및 성능 입증:</strong> 사전학습된 Sparsh-skin 표현의 효용을 검증하기 위해, <strong>상태 추정(state estimation)</strong>부터 <strong>정책 학습(policy learning)</strong>에 이르는 <strong>여러 다운스트림 과제</strong>에 적용해 보았습니다. 그 결과, <strong>기존 방법 대비 41% 이상의 성능 향상</strong>, <strong>엔드투엔드 학습 대비 56% 이상의 향상</strong>을 달성하였고, <strong>데이터 효율(sample efficiency)</strong>도 크게 높아져 적은 양의 학습데이터로도 높은 성능을 발휘함을 보였습니다. 이는 Sparsh-skin 임베딩이 다양한 작업에 걸쳐 <strong>일반적이고 풍부한 촉각 특성</strong>을 함유하고 있음을 의미합니다.</p></li>
+</ul>
+<p>이러한 기여를 통해, 본 연구는 <strong>범용 로봇 촉각 지각</strong>을 향한 중요한 진전을 이루었습니다. 손 전체에 분포된 센서들의 <strong>고차원 신호를 저차원 벡터로 함축</strong>함으로써, 복잡한 촉각 정보를 효율적으로 처리하고, 로봇의 학습 및 제어에 활용할 수 있게 하였습니다.</p>
+</section>
+<section id="모델-및-자기-지도-학습-방법론" class="level2">
+<h2 class="anchored" data-anchor-id="모델-및-자기-지도-학습-방법론">💡 모델 및 자기 지도 학습 방법론</h2>
+<p>본 논문에서 제안하는 Sparsh-skin 인코더의 학습 방법은 <strong>자기 지도 학습(SSL)</strong>의 일종인 <strong>자기-증류(self-distillation)</strong>를 활용하는 것이 핵심입니다. 이를 구현하기 위해 <strong>교사(teacher) 네트워크</strong>와 <strong>학생(student) 네트워크</strong>의 구조를 사용하며, 두 네트워크는 <strong>동일한 인코더 아키텍처</strong>를 공유하지만 가중치 업데이트 방식에 차이를 둡니다. 교사 네트워크는 학생 네트워크의 과거 가중치를 이용하거나 <strong>지수 이동 평균(EMA)</strong>으로 업데이트되어 <strong>보다 안정된 출력</strong>을 제공하고, 학생 네트워크는 실제 학습을 통해 가중치가 갱신됩니다.</p>
+<p>훈련 시간마다 <strong>동일한 촉각 데이터</strong>에 대해 교사와 학생에 <strong>서로 다른 입력</strong>을 제공하는데, <strong>교사</strong>에게는 <strong>완전한 원본 데이터</strong> <span class="math inline">x</span>를 입력하고, <strong>학생</strong>에게는 여기에 <strong>잡음 또는 결손을 가한 변형 데이터</strong> <span class="math inline">\tilde{x}</span>를 입력합니다. 구체적으로, 학생 입력 <span class="math inline">\tilde{x}</span>는 <strong>일부 촉각 신호를 마스킹(masking)</strong>하거나 노이즈를 추가하는 등의 <strong>오염된(corrupted) 데이터</strong>로 만들어, 학생 인코더가 <strong>불완전한 정보로부터도 의미 있는 표현을 추출</strong>하도록 도전합니다. 한편 교사 인코더는 <strong>온전한 데이터</strong>로부터 <strong>기준이 될 표현 <span class="math inline">E_{\hat{\theta}}(x)</span></strong>을 생성해 놓습니다. 학습 목표는 <strong>학생 인코더의 출력 표현 <span class="math inline">E_{\theta}(\tilde{x})</span></strong>가 교사의 출력 <span class="math inline">E_{\hat{\theta}}(x)</span>와 <strong>가까워지도록</strong> 하는 것입니다. 이를 위해 두 출력 임베딩 간 거리를 측정하는 <strong>손실 함수</strong>(예: 코사인 거리 혹은 L2 노름)를 최소화하며 학생 네트워크를 학습시킵니다. 이렇게 하면 학생 네트워크는 <strong>부분적인 정보만으로도 전체 정보를 예측</strong>하도록 훈련되고, 결과적으로 <strong>강인하고 풍부한 표현</strong>을 얻게 됩니다.</p>
+<p> <em>그림 1: Sparsh-skin 자기 지도 학습 개요. <strong>알레그로 로봇 손</strong>에 자기 촉각 피부 센서를 부착하여 전체 손가락과 손바닥에서 촉각 신호를 수집한다 (왼쪽). <strong>교사 네트워크</strong>는 완전한 센서 입력 <span class="math inline">x</span>를 받아 <strong>잠재 표현</strong> <span class="math inline">E_{\hat{\theta}}(x)</span>을 생성하고, <strong>학생 네트워크</strong>는 일부 센서 신호가 제거되거나 노이즈가 추가된 <strong>오염된 입력</strong> <span class="math inline">\tilde{x}</span>에 대해 표현 <span class="math inline">E_{\theta}(\tilde{x})</span>을 출력한다 (오른쪽). 학생 네트워크는 자신의 출력을 교사 출력에 가깝게 예측하도록 학습됨으로써, 불완전한 입력에서도 의미 있는 <strong>전체 촉각 상태 표현</strong>을 얻도록 훈련된다. 아래 작은 예시 그림들은 이렇게 학습된 Sparsh-skin 표현을 활용하여 수행할 수 있는 다양한 <strong>다운스트림 과제</strong>들을 보여준다. (이미지 제공: 논문 저자)</em></p>
+<p>Sparsh-skin 인코더의 <strong>입력</strong>은 로봇 손의 <strong>각 촉각 센서로부터 최근 짧은 시간 동안 수집된 신호 시퀀스</strong>입니다. 예를 들어 약 <span class="math inline">0.1</span>초 이내의 <strong>짧은 시간 창(window)</strong> 동안 센서들이 출력한 <strong>정규화된 3축 힘 신호</strong>들을 모아 하나의 입력으로 구성합니다. 이는 순간적인 값보다 <strong>약간의 시간적 변화</strong>까지 고려함으로써, 정적 압력 분포뿐 아니라 <strong>마찰력 변화, 미끄러짐 등 동적 특징</strong>도 포착하기 위함입니다. 이전의 Sparsh 연구에서도 <strong>수십 밀리초 길이의 짧은 프레임 시퀀스(예: 80ms)</strong>를 토큰화하여 사용하면 <strong>일반화와 표현력 향상에 중요</strong>하다는 결과가 있었는데, Sparsh-skin 역시 이러한 <strong>Temporal Tokenization</strong> 개념을 자기 촉각 신호에 적용한 것입니다. 또한 Sparsh-skin의 입력에는 각 센서의 <strong>공간적 위치 정보</strong>(손 구조 내 3D 좌표)를 포함시켜, 인코더가 입력 신호의 <strong>공간적 맥락</strong>까지 고려하도록 했습니다. 예를 들어 같은 크기의 힘이라도 손바닥 중앙에서 감지된 것과 손가락 끝에서 감지된 것은 로봇이 취해야 할 대응이 다를 수 있으므로, 모델이 <strong>센서의 위치</strong>를 알 수 있게 한 것입니다.</p>
+<p><strong>인코더 모델 구조</strong> 자체에 대해서는 논문에서 구체적인 구현 디테일을 제공하고 있는데, 기본적으로 위에서 설명한 <strong>교사/학생 프레임워크</strong>를 따르는 <strong>신경망 인코더</strong>입니다. 각 센서로부터 오는 시간 이력 신호는 개별적으로 임베딩된 후 손 전체 수준에서 <strong>통합</strong>됩니다. 이를 구현하는 한 가지 방식으로 추측되는 것은, 예를 들어 각 센서 정보를 하나의 토큰으로 보고 <strong>트랜스포머(Transformer) 인코더</strong> 구조를 사용하여 상호작용을 학습시키는 것입니다. 실제로 모델은 <strong>센서-레벨의 표현(sensor-level representation)</strong>을 학습한다고 언급하고 있으며, 이는 각 센서 신호를 저차원 특징으로 임베딩한 뒤, 이러한 임베딩들을 통합하여 손 전체의 표현을 만든다는 의미로 해석됩니다. 트랜스포머나 그래프 신경망(GNN) 같은 아키텍처를 활용하면 자연스럽게 각 센서의 위치나 인접한 센서 간 관계를 학습할 수 있을 것으로 보입니다. 다만 논문은 구체적인 아키텍처보다는 <strong>학습 전략(self-distillation)</strong>에 중점을 두어 서술하고 있으므로, 여기서는 핵심 아이디어 수준에서 이해하면 충분합니다.</p>
+<p>정리하면, Sparsh-skin의 방법론은 <strong>(1)</strong> 손 전체에서 얻은 <strong>짧은 시간 구간의 다중 촉각 신호</strong>와 <strong>센서 위치 정보</strong>를 인코더의 입력으로 사용하고, <strong>(2)</strong> 자기-증류 방식의 <strong>무라벨 사전학습</strong>을 통해 학생 네트워크가 <strong>부분 관찰</strong>에서도 <strong>전체 촉각 상태를 함축</strong>하는 표현을 내도록 훈련하며, <strong>(3)</strong> 이렇게 학습된 인코더를 고정 또는 미세조정하여 다양한 후속 작업에 활용하는 것입니다.</p>
+</section>
+<section id="실험-설정-및-결과" class="level2">
+<h2 class="anchored" data-anchor-id="실험-설정-및-결과">실험 설정 및 결과</h2>
+<p>연구진은 제안한 Sparsh-skin 인코더의 효과를 평가하기 위해 <strong>다양한 벤치마크 실험</strong>을 수행했습니다. 크게 나누어 보면 <strong>(a) 물리적 양상 추정 (예: 힘, 물체 위치 등)</strong>과 <strong>(b) 조작 정책 학습</strong> 두 범주로 실험을 구성했습니다. 사용된 로봇 플랫폼은 <strong>Shadow Allegro Hand</strong>로, 여기에 16개의 Xela uSkin 센서 패치를 장착하여 손가락 4개 전체와 손바닥 일부를 커버하였습니다. 각 센서 패치는 <strong>3축 힘</strong>을 감지하므로, 손 전체에서 3×16=48차원의 촉각 데이터가 시각적으로는 일종의 <strong>힘 분포 지도</strong>처럼 출력됩니다. 앞서 언급한 대로 연구진은 VR 기기를 이용해 <strong>원격 조작으로 데이터 수집</strong>을 진행했는데, <strong>총 4시간 분량</strong>의 촉각 데이터 동안 14개의 서로 다른 <strong>일상 물체 및 장난감</strong>을 가지고 <strong>여러 가지 접촉 동작</strong>을 수행하였습니다. 예를 들어, 부드러운 공을 <strong>쥐었다 놓기</strong>, 블록을 손바닥에서 <strong>미끄러뜨리기</strong>, 병뚜껑을 <strong>비틀어 열기</strong>, 키보드를 <strong>누르기</strong> 등의 원초적 동작들이 포함되었습니다. 이러한 데이터는 완전히 라벨 없는 상태로 수집되었으며, Sparsh-skin 인코더의 사전학습에 사용되었습니다. 사전학습 후, 연구진은 아래와 같은 <strong>다운스트림 과제들</strong>에서 Sparsh-skin의 표현을 활용하여 성능을 측정하였습니다:</p>
+<ul>
+<li><p><strong>힘(접촉 신호) 재구성 및 추정:</strong> 첫 번째로, <strong>촉각 신호 자체를 복원</strong>하는 과제를 통해 인코더가 실제 힘 정보를 얼마나 보존하는지 확인했습니다. Sparsh-skin 인코더로부터 나온 잠재 벡터를 다시 <strong>원래 각 센서들의 신호로 복원</strong>하도록 <strong>오토인코더 데코더</strong>를 훈련하여, <strong>복원된 촉각 지도</strong>를 시각화했습니다. 그 결과, 녹색 원으로 표시된 <strong>센서별 누르는 힘의 크기</strong>(원 크기에 비례)와 빨간 화살표로 표시된 <strong>전단(마찰) 방향</strong>(원래 센서 위치에서 어긋난 정도와 방향으로 표현)이 실제 접촉과 잘 부합함을 보였습니다. 이는 Sparsh-skin의 잠재 표현이 <strong>센서별 접촉력 (정규분력 + 전단력)</strong> 정보를 효과적으로 압축하고 있음을 시사합니다. 나아가, 별도의 <strong>절대 힘 보정 모델</strong>을 약간의 지도학습으로 학습하면, Sparsh-skin 표현으로부터 <strong>실제 뉴턴 단위의 힘 추정</strong>도 가능함을 보여주었습니다. 이러한 힘 추정 능력은 추후 로봇이 접촉력을 조절하거나, 미끄러짐을 예방하기 위해 힘 변화를 감지하는 등에 활용될 수 있습니다.</p></li>
+<li><p><strong>손에 쥔 물체의 </strong>자세(pose) 추정<strong>:</strong> 두 번째로, 로봇 손이 잡고 있는 <strong>물체의 상대적인 자세</strong>를 촉각 정보만으로 추정하는 과제를 실험했습니다. 예컨대 손바닥 위에 놓인 원기둥 물체의 <strong>회전 각도</strong>나 <strong>위치 이동</strong>을 Sparsh-skin 표현으로부터 예측하는 것입니다. 이를 위해 연구진은 <strong>회귀-분류 혼합 방식(regression-by-classification)</strong>의 얕은 모델을 사용하여, Sparsh-skin 표현을 입력 받아 물체의 <span class="math inline">SE(3)</span> 자세를 추론했습니다 (Sparsh 논문의 경우 2D 평면 상의 SE(2) 변환을 추정하는 실험이 있었고, 본 연구에서도 유사한 접근을 3차원으로 확장했을 것으로 보입니다). 그 결과 Sparsh-skin으로 학습한 표현이 <strong>물체의 회전 및 이동 정보를 상당 부분 내포</strong>하고 있음을 확인할 수 있었습니다. 이는 촉각만으로도 물체의 상대적인 위치 변화를 감지할 수 있음을 보여주며, 시각 정보 없이도 <strong>손아귀 내의 물체 추적</strong>이 가능할 잠재력을 시사합니다.</p></li>
+<li><p><strong>플러그 삽입(정밀 조작) 정책 학습:</strong> 세 번째로, Sparsh-skin 표현이 실제 <strong>다지 손 조작 과제</strong>에서 <strong>정책(policy)</strong> 학습을 얼마나 도와주는지 평가했습니다. 실험으로 선택된 과제는 <strong>플러그 삽입</strong>으로, 로봇 손이 미리 쥐고 있는 플러그를 앞에 놓인 멀티탭 콘센트의 첫 번째 소켓에 <strong>정확히 꽂는 작업</strong>입니다. 이 과제는 손가락들로 플러그를 단단히 쥔 채, 손목과 손가락의 적절한 조합 움직임으로 플러그 핀을 소켓 홀에 맞춰 넣어야 하므로, <strong>난이도가 높은 정밀 조작</strong>에 속합니다. 연구진은 이 작업에 대해 <strong>인간 원격조작 데모</strong> 여러 회를 수집한 후, 이를 이용해 <strong>확산 정책(Diffusion Policy)</strong> 알고리즘으로 <strong>모델 예측 제어 정책</strong>을 학습시켰습니다. 학습된 정책은 <strong>멀티 모달 입력</strong>을 사용하는데, <strong>3대의 외부 카메라 영상과 손목 카메라 영상</strong>이 시각 입력으로 주어지고 여기에 <strong>Sparsh-skin 촉각 표현</strong>이 결합된 형태였습니다. 비교군으로는 <strong>촉각 정보를 사용하지 않고 오직 비전(vision) 입력만</strong> 사용하는 경우와, <strong>촉각을 사용하되 end-to-end로 학습하는 경우</strong> 등을 설정했습니다. 평가 결과, Sparsh-skin 사전학습 표현을 사용한 경우가 <strong>가장 높은 성공률</strong>을 보였으며, 동일한 촉각 정보를 end-to-end로 학습한 정책이나 촉각을 배제한 정책에 비해 <strong>안정적이고 데이터 효율적으로</strong> 학습됨을 확인했습니다. 예를 들어, 마지막 단계에서 Sparsh-skin 표현을 쓴 정책은 <strong>시각 입력만으로 학습한 정책보다 성공률이 유의미하게 높고</strong>(촉각 미활용 대비), <strong>end-to-end 대비 학습 안정성 및 성공률 모두 향상</strong>되었음을 보고하였습니다. 이는 촉각 표현이 <strong>시각으로 부족한 미세 정렬 정보</strong>를 보완하고, 학습 공간을 줄여주어 <strong>정책 학습을 용이</strong>하게 만들었기 때문으로 해석됩니다.</p></li>
+</ul>
+<p>以上 세 가지 대표 실험을 통해, Sparsh-skin으로 사전학습된 촉각 임베딩이 <strong>여러 형태의 다운스트림 작업에서 유용</strong>함을 입증했습니다. <strong>정량적인 성능</strong>을 요약하면, Sparsh-skin을 사용한 경우 <strong>기존의 최선의 방법 대비 평균 41% 이상 성능 향상</strong>이 있었고, <strong>특정 작업에서는 최대 56% 향상</strong>이 관찰되었습니다. 예컨대 물체 자세 추정 정확도가 크게 높아졌으며, 플러그 삽입 성공률도 촉각 미사용 대비 상당히 향상되었습니다. 또한 <strong>학습 곡선</strong>을 비교하면, 사전학습된 표현을 사용한 경우 적은 양의 데이터로도 목표 성능에 도달함을 보여 <strong>표본 효율성(sample efficiency)</strong> 역시 개선되었음을 알 수 있습니다. 이는 Sparsh-skin 임베딩이 <strong>다양한 촉각 상황에 대해 일반화된 특징 표현</strong>을 제공하기 때문에 가능한 결과로, 각각의 과제마다 초반부터 유용한 특성을 추출하여 학습을 빠르게 진행할 수 있었던 것으로 볼 수 있습니다.</p>
+</section>
+<section id="한계-및-향후-과제" class="level2">
+<h2 class="anchored" data-anchor-id="한계-및-향후-과제">한계 및 향후 과제</h2>
+<p>본 연구는 <strong>손 전체 촉각 센서</strong>를 활용한 자기 지도 표현 학습의 가능성을 보여주었지만, 여전히 남아있는 <strong>한계점</strong>과 향후 발전시킬 방향이 존재합니다:</p>
+<ul>
+<li><p><strong>절대적 힘/물리량에 대한 정밀 보정:</strong> Sparsh-skin 표현은 다양한 접촉 패턴의 <strong>상대적 차이</strong>는 잘 학습하지만, 실제 뉴턴 단위의 <strong>절대 힘 추정</strong>이나 <strong>절대적인 마찰 계수 추정</strong> 등에는 추가 보정이 필요할 수 있습니다. 자기 센서 출력은 환경 자계나 개별 센서 편차 등으로 <strong>drift</strong>가 있을 수 있어, 완전히 <strong>보정 없는</strong> 상태로는 절대값 예측에 한계가 있습니다. 향후에는 사전학습된 표현에 <strong>소량의 라벨된 데이터</strong>(예: 힘 센서 계측값)로 <strong>미세 보정</strong>을 가하여, 절대 물리량까지 정밀하게 추정하는 방향으로 발전시킬 수 있습니다.</p></li>
+<li><p><strong>다양한 센서 및 모달리티와의 통합:</strong> 본 연구는 Xela사의 uSkin이라는 <strong>특정 자기 촉각 센서 하드웨어</strong>에 초점을 맞추고 있습니다. 다른 종류의 촉각 센서(예: 광학식 젤 촉각센서, 압전 센서 등)나 <strong>온도/진동과 같은 다른 접촉 감각</strong>까지 통합한 표현으로 확장하는 것도 과제입니다. 사실 Sparsh 계열의 다른 연구로 <strong>Sparsh-X</strong>라는 <strong>다중모달(multisensory) 촉각 표현</strong>을 개발한 예가 있는데, 여기서는 <strong>이미지, 힘, 진동, 음향</strong> 등의 신호를 함께 학습시켜 성능을 높였습니다. 향후 Sparsh-skin도 <strong>비전 카메라 정보나 소리 센서</strong> 등을 결합한 멀티모달 학습으로 발전시킨다면, 더욱 풍부한 촉각 지각 능력을 얻을 수 있을 것입니다.</p></li>
+<li><p><strong>일반화 및 전이 학습:</strong> Sparsh-skin 인코더는 한 가지 로봇 손과 센서 세팅에 대해 학습되었습니다. 이를 <strong>다른 로봇 손</strong>(예: 형태가 다른 로봇 그리퍼)이나 <strong>다른 센서 배열</strong>에도 적용하려면 추가 연구가 필요합니다. 손 구조나 센서 분포가 바뀌면 <strong>센서 위치 임베딩</strong> 등 입력 표현을 조정해야 하며, 경우에 따라 <strong>전이 학습(transfer learning)</strong>이 필요할 수 있습니다. 미래에는 <strong>여러 형태의 손과 센서 데이터를 통합</strong>하여 학습하거나, 학습된 모델을 새로운 하드웨어에 <strong>도메인 적응</strong>시키는 연구도 이루어질 것으로 기대됩니다.</p></li>
+<li><p><strong>실시간 제어와의 접목:</strong> 현재 Sparsh-skin 표현은 주로 <strong>오프라인 데이터</strong>를 활용한 학습 및 평가로 그쳐 있습니다. 향후에는 이 표현을 <strong>로봇의 실시간 제어 루프</strong>에 넣어, <strong>피드백 제어</strong>나 <strong>모델 예측 제어(MPC)</strong>에서 바로 활용하는 방안도 고려될 수 있습니다. 예를 들어 손가락 미끄러짐 감지 후 즉각 그립 조정을 한다든가, 힘 제어 루프에 Sparsh-skin 피처를 반영하는 등의 응용이 가능할 것입니다. 이를 위해서는 인코더의 <strong>추론 속도 최적화</strong>와 실시간 신뢰도 평가 등이 뒷받침되어야 합니다.</p></li>
+</ul>
+<p>요약하면, Sparsh-skin 연구는 <strong>촉각 표현 학습</strong> 분야에 새로운 장을 열었으나, <strong>절대적 물리량 추정</strong>, <strong>다양한 센서 통합</strong>, <strong>새로운 형태로의 일반화</strong>, <strong>실시간 시스템 적용</strong> 등 앞으로 탐구해야 할 흥미로운 연구 과제가 남아 있습니다. 이러한 방향으로 지속적인 연구가 이뤄진다면, 장차 로봇이 사람 수준으로 <strong>풍부한 촉각지능</strong>을 갖추는 데 크게 기여할 것으로 보입니다.</p>
+</section>
+<section id="sparsh-시각-기반-촉각-표현-학습-연구와의-연관성" class="level2">
+<h2 class="anchored" data-anchor-id="sparsh-시각-기반-촉각-표현-학습-연구와의-연관성">💥 Sparsh (시각 기반 촉각 표현 학습) 연구와의 연관성</h2>
+<p>앞서 언급하였듯이, 본 논문의 Sparsh-skin은 2024년 CoRL에 발표된 <a href=""><strong>Sparsh</strong></a> 연구의 연장선 상에 있습니다. <strong>Sparsh</strong>는 <strong>“Self-supervised touch representations for vision-based tactile sensing”</strong>라는 제목 그대로, <strong>시각 정보를 활용하는 촉각 센서</strong>(예: GelSight, DIGIT와 같은 카메라 기반 촉각센서)를 위한 <strong>자기 지도 표현 학습 기법</strong>을 제시한 바 있습니다. Sparsh 연구의 배경에는, 최근 등장한 고해상도 촉각 카메라 센서들이 로봇 조작에 큰 도움이 되고 있지만, 각기 다른 센서마다 <strong>라이팅 조명, 젤 패턴, 카메라 특성</strong> 등이 달라 <strong>센서마다 별도의 모델</strong>을 만들어야 하는 비효율이 있다는 문제의식이 있었습니다. 또한 미끄러짐(slip) 감지나 접촉력 추정 등의 과제를 위한 <strong>레이블된 데이터 수집이 어려움</strong>도 존재했습니다. 이를 해결하고자 Sparsh에서는 다양한 촉각 카메라로부터 얻은 <strong>약 46만 장 이상의 촉각 이미지</strong>를 모아 합쳐서 <strong>통합된 자기 지도 학습</strong>을 수행하였습니다.</p>
+<p>구체적으로, Sparsh 연구진은 <strong>MAE(Masked Autoencoder)</strong>, <strong>DINO(자기 증류)</strong>, <strong>JEPA(Joint Embedding Predictive Architecture)</strong> 등 <strong>여러 자기 지도 학습 기법</strong>을 실험적으로 비교하여, 어떤 접근이 촉각 이미지 표현에 가장 효과적인지 분석했습니다. 그 결과 <strong>픽셀 공간에서 복원</strong>하는 MAE보다는, <strong>잠재 표현 공간에서 예측</strong>하도록 학습하는 DINO나 I-JEPA와 같은 기법이 더 우수하다는 결론을 얻었고, 최종적으로 <strong>Sparsh-DINO</strong>와 <strong>Sparsh-IJEPA</strong> 모델이 가장 경쟁력 있는 성능을 보였습니다. 이들 모델은 사전학습을 거치지 않은 end-to-end 학습 대비 <strong>TacBench</strong>로 명명된 촉각 벤치마크에서 <strong>평균 95.1%</strong>라는 압도적인 성능 향상을 보였는데, 이는 사전학습의 효과가 매우 크다는 것을 단적으로 보여줍니다. TacBench에는 <strong>6가지의 다양한 촉각 과제</strong>(예: 접촉력 맵 복원, 미끄럼 여부 분류, 물체 식별, 조작 계획 등)가 포함되는데, Sparsh 사전학습 모델은 이들 여러 과제와 서로 다른 센서들에 대해 모두 일관되게 뛰어난 성능을 발휘하였습니다. 요컨대 Sparsh 연구를 통해, <strong>시각 기반 촉각센서</strong> 분야에서도 거대한 데이터로 <strong>범용 촉각 표현을 학습</strong>하면 개별 문제에 일일이 학습하는 것보다 훨씬 효과적임이 입증된 것입니다.</p>
+<p>이러한 Sparsh의 철학과 성과는 <strong>Sparsh-skin</strong>으로 고스란히 이어졌습니다. 두 연구의 <strong>기술적 연속성</strong>과 <strong>차별점</strong>을 정리하면 다음과 같습니다:</p>
+<ul>
+<li><p><strong>학습 철학의 연속성:</strong> 두 연구 모두 <strong>“촉각 데이터의 범용 표현(foundation representation)”</strong>을 목표로 합니다. 라벨이 부족한 촉각 영역에서 <strong>자기 지도 학습</strong>을 도입하여 <strong>사전학습된 인코더</strong>를 만들고, 이를 다양한 작업에 적용하는 큰 흐름이 Sparsh에서 Sparsh-skin으로 이어집니다. 즉, <strong>시각 촉각이미지</strong>에서 <strong>자기 촉각피부 신호</strong>로 입력 modality만 달라졌을 뿐, <strong>비지도 사전학습 → 다운스트림 전이</strong>의 구조는 동일한 철학입니다.</p></li>
+<li><p><strong>센서 형태의 차이:</strong> Sparsh는 <strong>카메라 기반 촉각 센서</strong>(vision-based tactile) 즉, <strong>이미지 형태</strong>의 촉각 데이터를 다루었습니다. 반면 Sparsh-skin은 <strong>자기장 기반 촉각 피부 센서</strong>로, 데이터가 다중 지점의 <strong>아날로그 신호 시퀀스</strong> 형태입니다. Sparsh에서는 이미지 패치를 마스킹하거나 하는 식으로 <strong>이미지 처리 기법</strong>이 활용되었고, Conv-NeXt나 ViT와 같은 <strong>비전 신경망 백본</strong>을 사용했습니다. Sparsh-skin에서는 시계열 센서 신호이므로, <strong>시간 처리 및 센서 위치 임베딩</strong> 등 <strong>시계열+구조적 데이터 처리 기법</strong>이 필요합니다. 따라서 모델 아키텍처 관점에서 Sparsh는 <strong>CNN/Transformer 비전 백본</strong>이고, Sparsh-skin은 아마도 <strong>시계열 임베딩 + Transformer (혹은 GNN)</strong> 구조로 구현되는 등 차이가 있습니다. 또한 Sparsh는 <strong>한 번에 하나의 센서 이미지</strong>(손가락 한 개의 촉각 이미지)에 대해 동작하지만, Sparsh-skin은 <strong>손 전체의 여러 센서</strong>를 <strong>동시에</strong> 다룹니다. 즉 Sparsh는 <em>여러 센서 종류에 대해 각각 적용 가능</em>한 모델이었다면, Sparsh-skin은 <em>여러 센서가 이루는 하나의 시스템</em>을 한꺼번에 모델링한다는 차이가 있습니다.</p></li>
+<li><p><strong>학습 데이터와 범위:</strong> Sparsh는 여러 연구팀이 공개한 <strong>여러 촉각 이미지 데이터셋</strong>을 통합 활용하여 총 <strong>66만장 가량의 이미지</strong>를 모았습니다. 여기에는 <strong>GelSight 센서로 누른 물체 데이터</strong>, <strong>DIGIT 센서로 문지른 데이터</strong> 등 다양한 상황이 포함되어, <strong>한 가지 손가락 센서 이미지 내에서의 범용성</strong>을 키웠습니다. Sparsh-skin은 자체 수집한 <strong>4시간 분량의 멀티센서 시퀀스 데이터</strong>를 사용하였고, 이는 <strong>한 유형의 센서(uSkin)</strong>이지만 <strong>손의 여러 위치</strong>와 <strong>다양한 조작 동작</strong>을 아우르는 데이터를 담았습니다. Sparsh가 <strong>센서 간 범용성</strong>(다른 촉각 카메라들 모두에 통하는 모델)을 달성하려 했다면, Sparsh-skin은 <strong>손 내의 공간적 범용성</strong>(손가락~손바닥 어디에서 접촉이 일어나도 일관된 표현으로 통합)을 달성하려 했다고 볼 수 있습니다.</p></li>
+<li><p><strong>자기 지도 방식 비교:</strong> 두 연구 모두 self-supervised 기법을 썼지만, 접근법에 약간 차이가 있습니다. Sparsh에서는 <strong>마스킹 후 복원(MAE)</strong>과 <strong>자기 증류(DINO)</strong>, <strong>예측 코딩(JEPA)</strong> 등을 폭넓게 시도하고 비교실험을 했습니다. Sparsh-skin에서는 그 중 <strong>자기 증류(self-distillation)</strong> 방식을 채택하여 <strong>교사-학생 네트워크</strong> 구조로 학습을 진행했습니다. 이는 Sparsh에서 발견된 “<strong>잠재 공간에서의 자기 지도 학습이 픽셀 복원보다 효과적</strong>”이라는 교훈을 바탕으로, Sparsh-skin에서도 <strong>latent representation을 맞추는</strong> 방향의 알고리즘을 선택한 것으로 볼 수 있습니다. 다만 Sparsh-skin은 <strong>입력의 일부를 마스킹</strong>하고 <strong>완전 입력으로부터 학습</strong>하는 구조로, MAE와 DINO 아이디어를 절충한 <strong>비대칭 자기 증류</strong> 형태라고 할 수 있습니다. Sparsh의 DINO는 <strong>동일한 이미지를 두 가지 증강</strong>하여 둘 다 인코더에 통과시켜 임베딩을 맞추는 대칭적 구조인데, Sparsh-skin은 <strong>완전 vs 손상 입력</strong>의 비대칭 구조라는 점이 차별화됩니다.</p></li>
+<li><p><strong>다운스트림 과제 차이:</strong> Sparsh에서는 <strong>TacBench</strong>라는 벤치마크를 정의하여, 촉각 이미지로 할 수 있는 다양한 과제 (정상/전단력장 재현, 물체 식별, 접촉 여부 판별, 미끄럼 예측, 물체 포즈 추정, 조작 계획)을 평가했습니다. Sparsh-skin에서는 <strong>로봇 손 조작</strong>과 관련된 과제들 (힘 추정, 물체 자세 추정, 플러그 삽입 등)을 선정했습니다. Sparsh의 과제들이 주로 <strong>단일 촉각 센서</strong>의 범위에서 정의된 것이라면, Sparsh-skin의 과제들은 <strong>손 전체 협응</strong>이 필요한 좀 더 <strong>복잡한 조작</strong>까지 다루고 있습니다. 이는 센서 범위 확장에 따라 평가 범위도 확장된 것으로 볼 수 있습니다.</p></li>
+<li><p><strong>성능 지표:</strong> 두 연구 모두 사전학습의 이점으로 <strong>큰 성능 향상</strong>을 얻었지만, Sparsh에서는 <strong>95%</strong>에 달하는 향상을 본 반면 Sparsh-skin에서는 <strong>40~56%</strong> 정도의 향상을 보고했습니다. 이 차이는 여러 가지 요인이 있을 수 있습니다. 예를 들어 Sparsh의 TacBench는 비교적 단순한 분류/회귀 과제들이고 end-to-end 학습 성능이 낮았던 반면, Sparsh-skin의 과제들은 이미 일부 vision 정보도 병합되는 등 기본 성능이 높은 편이라 개선 폭이 제한적일 수 있습니다. 그럼에도 여전히 두 경우 모두 사전학습 표현의 <strong>우수성</strong>은 명확히 입증되었습니다.</p></li>
+</ul>
+<p>결론적으로, Sparsh와 Sparsh-skin은 <strong>“촉각의 범용 표현 학습”</strong>이라는 공통된 비전을 가지고 있으며, 전자는 <strong>손가락 촉각카메라</strong>로, 후자는 <strong>손 전체 촉각피부</strong>로 각각 그 비전을 실현한 작업입니다. Sparsh를 통해 <strong>여러 촉각 이미징 센서 간에 통하는 표준 모델</strong>의 가능성을 보였다면, Sparsh-skin은 <strong>손 전체를 활용한 촉각 지각</strong>의 가능성을 열었습니다. 두 연구 모두 로봇 촉각 분야에서 <strong>데이터 중심의 학습 접근</strong>이 유효함을 보여주었고, 나아가 이러한 기법이 <strong>멀티모달 통합</strong>이나 <strong>더 복잡한 조작 기술</strong>로 확장될 수 있음을 시사합니다. 앞으로 Sparsh 시리즈의 축적된 지식을 바탕으로, 로봇이 <strong>더 영리하고 민첩하게 물체를 다룰 수 있는 촉각 지능</strong>을 갖추게 되길 기대해 봅니다.</p>
+<hr>
+<p>아래는 <strong>“Self-supervised perception for tactile skin covered dexterous hands” (Sparsh-skin)</strong> 논문과 <strong>“Sparsh: Self-supervised touch representations for vision-based tactile sensing”</strong> 논문의 주요 항목별 <strong>비교표</strong>입니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 41%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>Sparsh (CoRL 2024)</th>
+<th>Sparsh-skin (arXiv 2025)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>목표</strong></td>
+<td>시각 기반 촉각 센서(GelSight, DIGIT 등)의 범용 표현 학습</td>
+<td>자기 기반 촉각 피부 센서(uSkin 등)의 손 전체 통합 표현 학습</td>
+</tr>
+<tr class="even">
+<td><strong>센서 유형</strong></td>
+<td>비전 기반 촉각 센서 (이미지 형태)</td>
+<td>자기장 기반 촉각 피부 센서 (3축 힘 벡터, 다지점)</td>
+</tr>
+<tr class="odd">
+<td><strong>입력 데이터</strong></td>
+<td>이미지 (단일 손끝 센서)</td>
+<td>시계열 힘 신호 + 센서 위치 정보 (손 전체 16개 센서)</td>
+</tr>
+<tr class="even">
+<td><strong>학습 방식</strong></td>
+<td>자기 지도 학습: MAE, DINO, I-JEPA 비교 실험</td>
+<td>자기 지도 학습: 비대칭 self-distillation (교사/학생 네트워크)</td>
+</tr>
+<tr class="odd">
+<td><strong>모델 아키텍처</strong></td>
+<td>비전 백본 (CNN, Vision Transformer)</td>
+<td>시계열/공간 정보 통합 인코더 (Transformer 또는 GNN 기반 추정)</td>
+</tr>
+<tr class="even">
+<td><strong>데이터 규모</strong></td>
+<td>약 66만 개 이미지 (여러 공개 데이터셋 활용)</td>
+<td>약 4시간 분량의 로봇 손 다중 센서 시퀀스 (자체 수집)</td>
+</tr>
+<tr class="odd">
+<td><strong>센서 다양성</strong></td>
+<td>다양한 종류의 촉각 이미지 센서 통합</td>
+<td>하나의 센서 종류(uSkin), 손 내의 다양한 위치 커버</td>
+</tr>
+<tr class="even">
+<td><strong>공간 커버리지</strong></td>
+<td>주로 손가락 끝 중심 (센서 1~2개)</td>
+<td>손가락, 마디, 손바닥까지 손 전체</td>
+</tr>
+<tr class="odd">
+<td><strong>입력 변형 기법</strong></td>
+<td>이미지 증강 (회전, 마스킹, 크롭 등)</td>
+<td>센서 마스킹, 노이즈 삽입 (손상된 입력 생성)</td>
+</tr>
+<tr class="even">
+<td><strong>다운스트림 과제</strong></td>
+<td>접촉력 추정, 미끄럼 감지, 물체 식별, 포즈 추정 등 (TacBench)</td>
+<td>힘 복원, 물체 자세 추정, 정밀 삽입 조작 정책 등</td>
+</tr>
+<tr class="odd">
+<td><strong>대표 실험 성능 향상</strong></td>
+<td>기존 대비 최대 +95% 향상</td>
+<td>기존 대비 평균 +41% 향상 (최대 +56%)</td>
+</tr>
+<tr class="even">
+<td><strong>핵심 기여 요약</strong></td>
+<td>비전 기반 촉각 표현의 범용화 및 평가 프레임워크 (TacBench) 제시</td>
+<td>손 전체 촉각 표현 학습과 자기 지도 기반 조작 응용 가능성 제시</td>
+</tr>
+<tr class="odd">
+<td><strong>일반화 방향</strong></td>
+<td>센서 종류 간의 범용 표현</td>
+<td>센서 위치·접촉 상황 간의 범용 표현</td>
+</tr>
+<tr class="even">
+<td><strong>주요 차별점</strong></td>
+<td>다양한 이미지 센서들에 대한 Cross-sensor 표현</td>
+<td>손 전체의 시공간적 센서 통합 표현</td>
+</tr>
+<tr class="odd">
+<td><strong>활용 예시</strong></td>
+<td>단일 센서 기반 분류/회귀 과제</td>
+<td>멀티센서 기반 조작 정책, 물체 추적 등 정밀 작업</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>요약하자면:</p>
+<ul>
+<li><strong>Sparsh</strong>는 “센서 종류의 다양성”을 아우르는 <strong>범용 촉각 표현</strong>에 초점을 맞추고,</li>
+<li><strong>Sparsh-skin</strong>은 “손 전체 위치의 다양성”을 고려한 <strong>통합 촉각 지각</strong>을 추구합니다.</li>
+</ul>
+<p>두 논문은 입력 modality와 센서 환경이 다르지만, 모두 <strong>촉각 표현을 self-supervised 방식으로 학습하여 여러 작업에 전이시키는 방식</strong>을 공통적으로 채택하고 있습니다.</p>
+<p><strong>참고문헌:</strong></p>
+<ol type="1">
+<li>Akash Sharma et al., <em>“Self-supervised perception for tactile skin covered dexterous hands”</em>, arXiv preprint 2505.11420 (2025)</li>
+<li>Carolina Higuera et al., <em>“Sparsh: Self-supervised touch representations for vision-based tactile sensing”</em>, CoRL 2024 (arXiv:2410.24090)</li>
+<li>Akash Sharma et al., <em>“Tactile Beyond Pixels: Multisensory Touch Representations for Robot Manipulation (Sparsh-X)”</em>, arXiv preprint (2025) (멀티모달 촉각 표현 확장 연구)</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

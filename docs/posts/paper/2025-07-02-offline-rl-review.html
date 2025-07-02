@@ -398,6 +398,12 @@ window.Quarto = {
 <li>본 논문은 오프라인 RL 기법을 분류하는 새로운 Taxonomy를 제안하고, 최신 알고리즘 및 벤치마크를 종합적으로 검토하며 다양한 데이터 특성에 따른 기법별 성능을 분석합니다.</li>
 <li>더불어 오프라인 정책 평가(Off-Policy Evaluation, OPE)를 포함한 미해결 과제들을 논의하고 분야의 향후 연구 방향에 대한 통찰을 제공합니다.</li>
 </ol>
+<center>
+<img src="../../images/2025-07-02-offline-rl-review/image 1.png" width="30%">
+<figcaption>
+Timeline illustrating the key developments in the field of offline RL
+</figcaption>
+</center>
 <hr>
 <section id="brief-review" class="level1">
 <h1>Brief Review</h1>
@@ -433,6 +439,7 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p><strong>오프라인 RL Benchmark로는 <a href="https://paperswithcode.com/paper/datasets-for-data-driven-reinforcement">D4RL</a>과 <a href="https://paperswithcode.com/paper/rl-unplugged-a-collection-of-benchmarks-for">RL Unplugged</a>가 널리 사용됩니다.</strong></p>
 </blockquote>
+<p><img src="../../images/2025-07-02-offline-rl-review/image 2.png" class="img-fluid"></p>
 <p>이들은 Narrow and Biased Data Distributions (좁고 편향된 데이터 분포), Undirected and Multitask Data (지향되지 않은 다중 작업 데이터), Sparse Rewards (희소 보상), Suboptimal Data (차선 데이터), Nonrepresentable Behavior Policies (표현 불가능한 행동 정책), Non-Markovian Behavior Policies (비 마르코프 행동 정책), Realistic Domains (현실적인 도메인) 등 실제 응용에 중요한 Dataset Design Factors (데이터셋 설계 요소)를 포함하는 다양한 환경과 데이터셋을 제공합니다.</p>
 <p>하지만 Stochastic Dynamics (확률적 동역학), Nonstationarity (비정상성), Risky Biases (위험한 편향), Multiagent 환경 등은 여전히 부족한 실정입니다. D4RL 벤치마크 성능 분석에 따르면 최근 방법(TT, IQL)과 트라젝토리 최적화 및 원스텝 방법이 희소 보상이나 다중 작업 데이터에서 강점을 보이며 유망한 분류로 나타납니다.</p>
 <p>미래 연구 방향으로는 OPE의 신뢰성 향상, Unsupervised RL 기법을 활용한 레이블 없는 데이터 활용, Incremental RL을 통한 온라인 Fine-tuning 전략 개발, Safety-critical RL (안전 필수 강화학습, 예: CVaR) 분야 연구 등이 제안됩니다. 효과적인 데이터 수집 및 curation 또한 알고리즘 개발만큼 중요합니다.</p>

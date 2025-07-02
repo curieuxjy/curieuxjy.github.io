@@ -15,6 +15,10 @@ description: A Survey on Physics Informed Reinforcement Learning - Review and Op
 2.  PIRL은 방정식, 제약 조건, 시뮬레이터 등 다양한 물리학적 사전 정보를 RL 파이프라인의 상태, 액션, 보상, 네트워크, 모델 등 다양한 부분에 통합하여 RL의 효율성과 안전성을 향상시킵니다.
 3.  이 논문의 분석은 PIRL의 다양한 적용 분야와 함께 해결되지 않은 문제점 및 향후 연구 방향을 제시하여 분야의 성장에 기여합니다.
 
+<center>
+<img src="../../images/2025-07-03-physics-rl/image 3.png" width="40%" />
+    <figcaption>PIRL taxonomy and further categories</figcaption>
+</center>
 
 ---
 
