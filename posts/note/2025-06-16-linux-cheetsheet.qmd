@@ -13,7 +13,7 @@ format:
 
 # git command로 commit
 
-```bash
+```{.sh code-line-numbers=false}
 # If the branch already exists:
 git checkout [branch-name]
 
@@ -22,14 +22,13 @@ git checkout -b [branch-name]
 
 ```
 
-```bash
+```{.sh code-line-numbers=false}
 git add .
 git commit -m "commit message"
 ```
 
-```bash
+```{.sh code-line-numbers=false}
 git push
-
 git push -u origin [branch-name]
 ```
 
@@ -41,13 +40,13 @@ git push -u origin [branch-name]
 
 터미널에서 아래 명령으로 현재 시스템에 붙어 있는 GPU 목록과 각 ID를 확인:
 
-```bash
+```{.sh code-line-numbers=false}
 nvidia-smi # 여기서 좌측의 `GPU` 컬럼이 실제 시스템 인덱스
 ```
 
 * **단일 GPU 사용**
 
-  ```bash
+  ```{.sh code-line-numbers=false}
   export CUDA_VISIBLE_DEVICES=1
   python train.py
   ```
@@ -56,7 +55,7 @@ nvidia-smi # 여기서 좌측의 `GPU` 컬럼이 실제 시스템 인덱스
 
 * **여러 GPU 사용**
 
-  ```bash
+  ```{.sh code-line-numbers=false}
   export CUDA_VISIBLE_DEVICES=0,2
   python train.py
   ```
@@ -97,7 +96,7 @@ AppImage icon 생성
 1. appimage 파일과 icon image를 `/opt`로 이동
    - e.g. `/opt/[app_name].AppImage` & `/opt/[app_name].png`
 2. 바로가기 설정 파일 `[app_name.desktop]`을 `/usr/share/applications`에 만들어줌
-  ```shell
+  ```{.sh code-line-numbers=false}
   [Desktop Entry]
   Name=[app_name]
   Comment=[AppImage entry]
@@ -115,7 +114,7 @@ AppImage icon 생성
 
 # conda lib error
 
-```
+```{.sh code-line-numbers=false}
 ImportError: libpython2.x.so.1.0: cannot open shared object file: No such file or directory
 ```
 - Solution: `export LD_LIBRARY_PATH=/home/avery/anaconda3/envs/[가상환경이름]/lib`
@@ -123,7 +122,7 @@ ImportError: libpython2.x.so.1.0: cannot open shared object file: No such file o
 
 # conda freezing
 
-```
+```{.sh code-line-numbers=false}
 conda env export > environment.yaml
 conda env create --file environment.yaml
 

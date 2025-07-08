@@ -1,0 +1,141 @@
+---
+title: "📝Git LFS 사용하기"
+toc: true
+date: "2025-07-08"
+description: Git LFS로 대용량 파일 깔끔하게 관리하기
+categories: [git, lfs, 2025]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+Git을 사용하다 보면 `.pt`, `.zip`, `.so`, `.h5` 같은 대용량 파일을 올려야 할 때가 있습니다. 그런데 Git에는 일반적으로 **100MB 이상 파일 제한**이 있어, 이런 파일을 그대로 커밋하면 푸시가 거부되거나 저장소가 무거워집니다.
+
+이 문제를 해결해주는 게 바로 **Git LFS (Large File Storage)** 입니다.
+
+이 글에서는 Git LFS의 개념부터 실전 사용법까지 간단하게 정리해보겠습니다.
+
+
+## ✅ Git LFS란?
+
+Git LFS는 대용량 파일을 Git 저장소 대신 별도의 LFS 서버에 저장하는 방식입니다.
+
+* Git에는 작은 포인터 파일만 저장됨
+* 진짜 파일은 LFS 서버에서 별도로 관리됨
+* 사용자는 기존 Git처럼 `add`, `commit`, `push`, `clone` 명령으로 작업 가능
+
+👉 GitHub, GitLab, Bitbucket 등 다양한 Git 호스팅 플랫폼에서 지원됩니다.
+
+
+## 🛠️ 설치 및 초기화
+
+### 1. Git LFS 설치
+
+```{.sh code-line-numbers=false}
+# macOS
+brew install git-lfs
+
+# Ubuntu / Debian
+sudo apt install git-lfs
+
+# Windows
+https://git-lfs.github.com 에서 설치 프로그램 다운로드
+```
+
+### 2. 설치 후 초기화
+
+```{.sh code-line-numbers=false}
+git lfs install
+```
+
+> 한 번만 실행하면 전역 설정에 등록됩니다.
+
+---
+
+## 📂 추적할 파일 등록
+
+예를 들어 `.pt`, `.zip`, `.so` 파일을 LFS로 추적하려면:
+
+```{.sh code-line-numbers=false}
+git lfs track "*.pt"
+git lfs track "*.zip"
+git lfs track "*.so"
+```
+
+→ `.gitattributes` 파일이 생성되며 추적 규칙이 저장됩니다.
+
+---
+
+## 📥 커밋 & 푸시하기
+
+1. 대용량 파일을 Git에서 제거하고, LFS로 다시 추가:
+
+```{.sh code-line-numbers=false}
+git rm --cached path/to/large_file.pt
+git add .gitattributes
+git add path/to/large_file.pt
+git commit -m "Move large file to Git LFS"
+git push origin main
+```
+
+> ⚠️ `.gitattributes` 파일도 꼭 커밋해야 추적이 유지됩니다.
+
+
+::: {.callout-tip icon="false"}
+## 💡 이미 푸시 에러가 난 경우?
+
+```{.sh code-line-numbers=false}
+error: GH001: Large files detected. You may want to try Git Large File Storage.
+```
+
+이런 메시지가 떴다면, 해당 파일을 위 과정처럼 LFS로 옮기고 다시 커밋하면 해결됩니다.
+:::
+
+## 📦 클론 시 LFS 파일 받기
+
+다른 사람이 저장소를 복제할 때도 Git LFS가 필요합니다.
+
+### 1. Git LFS 설치
+
+```{.sh code-line-numbers=false}
+git lfs install
+```
+
+### 2. 저장소 클론
+
+```{.sh code-line-numbers=false}
+git clone https://your-git-platform.com/user/repo.git
+cd repo
+git lfs pull
+```
+
+> 보통 `git clone` 시 자동으로 LFS 파일도 받아오지만, 안 될 경우 수동으로 `git lfs pull` 실행
+
+
+::: {.callout-tip icon="false"}
+
+## Optional: GPG 관련 오류가 나올 경우
+
+```{.sh code-line-numbers=false}
+fatal: bad config variable 'gpg.format'
+```
+
+→ `~/.gitconfig` 열어서 아래 항목을 제거하거나 수정:
+
+```{.txt code-line-numbers=false}
+[gpg]
+    format = ssh   # 또는 아예 제거
+```
+:::
+
+
+## (참고) LFS 저장소 용량 주의
+
+Git 플랫폼에 따라 LFS 저장소에 **용량 제한**이 있습니다:
+
+| 플랫폼       | 기본 제공 용량 (무료)    | 초과 시 정책      |
+| --------- | ---------------- | ------------ |
+| GitHub    | 1GB 저장 / 1GB 트래픽 | 유료 플랜 필요     |
+| GitLab    | 10GB 저장소 내 포함    | 초과 시 프로젝트 제한 |
+| Bitbucket | 1GB 저장 / 1GB 트래픽 | 유료 플랜 필요     |

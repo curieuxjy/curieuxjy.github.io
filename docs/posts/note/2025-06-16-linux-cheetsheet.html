@@ -400,16 +400,15 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <section id="git-command로-commit" class="level1">
 <h1>git command로 commit</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># If the branch already exists:</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">git</span> checkout <span class="pp">[</span><span class="ss">branch</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Otherwise, create it and switch:</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="pp">[</span><span class="ss">branch</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">git</span> add .</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"commit message"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">git</span> push</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">git</span> push <span class="at">-u</span> origin <span class="pp">[</span><span class="ss">branch</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If the branch already exists:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="pp">[</span><span class="ss">branch</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Otherwise, create it and switch:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="pp">[</span><span class="ss">branch</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"commit message"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin <span class="pp">[</span><span class="ss">branch</span><span class="pp">-</span><span class="ss">name</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="다중-gpu에서-사용할-특정-gpu-설정" class="level1">
 <h1>다중 GPU에서 사용할 특정 GPU 설정</h1>
@@ -418,15 +417,15 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><p>다중 GPU 환경에서 “어떤 GPU를 쓸지” 지정하는 가장 간단한 방법은 환경 변수 <code>CUDA_VISIBLE_DEVICES</code> 를 설정. 이 변수에 지정한 인덱스(들)만이 애플리케이션에서 “GPU 0,1,2…” 로 인식되기 때문에, 실제 머신에 여러 개 장착된 GPU 중에서 원하는 것만 골라 쓸 수 있음</p></li>
 </ul>
 <p>터미널에서 아래 명령으로 현재 시스템에 붙어 있는 GPU 목록과 각 ID를 확인:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">nvidia-smi</span> <span class="co"># 여기서 좌측의 `GPU` 컬럼이 실제 시스템 인덱스</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span> <span class="co"># 여기서 좌측의 `GPU` 컬럼이 실제 시스템 인덱스</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><p><strong>단일 GPU 사용</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>1</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">python</span> train.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>1</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>이렇게 하면 실제 시스템의 <code>GPU#1</code> 이 “내부적으로 0번 GPU” 로 보이게 됩니다.</p></li>
 <li><p><strong>여러 GPU 사용</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,2</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">python</span> train.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,2</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>이렇게 설정하면 시스템 GPU 0번과 2번만 보이게 되고, 내부적으로는 <code>[ “가상 GPU0” ← 시스템0, “가상 GPU1” ← 시스템2 ]</code> 로 취급됩니다.</p></li>
 </ul>
 <blockquote class="blockquote">
@@ -475,15 +474,15 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </ul></li>
 <li>바로가기 설정 파일 <code>[app_name.desktop]</code>을 <code>/usr/share/applications</code>에 만들어줌</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>[Desktop Entry]</span>
-<span id="cb7-2"><a href="#cb7-2"></a>Name=[app_name]</span>
-<span id="cb7-3"><a href="#cb7-3"></a>Comment=[AppImage entry]</span>
-<span id="cb7-4"><a href="#cb7-4"></a>Exec=/opt/[app_name].AppImage</span>
-<span id="cb7-5"><a href="#cb7-5"></a>Icon=/opt/[app_name].png</span>
-<span id="cb7-6"><a href="#cb7-6"></a>Type=Application</span>
-<span id="cb7-7"><a href="#cb7-7"></a>Terminal=false</span>
-<span id="cb7-8"><a href="#cb7-8"></a>Encoding=UTF-8</span>
-<span id="cb7-9"><a href="#cb7-9"></a>Categories=Utility;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[Desktop</span> Entry]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">Name</span><span class="op">=</span><span class="pp">[</span><span class="ss">app_name</span><span class="pp">]</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="va">Comment</span><span class="op">=</span>[AppImage <span class="ex">entry]</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="va">Exec</span><span class="op">=</span>/opt/<span class="pp">[</span><span class="ss">app_name</span><span class="pp">]</span>.AppImage</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="va">Icon</span><span class="op">=</span>/opt/<span class="pp">[</span><span class="ss">app_name</span><span class="pp">]</span>.png</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="va">Type</span><span class="op">=</span>Application</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="va">Terminal</span><span class="op">=</span>false</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="va">Encoding</span><span class="op">=</span>UTF-8</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="va">Categories</span><span class="op">=</span>Utility<span class="kw">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="conda-자동-활성화-해제" class="level1">
 <h1>conda 자동 활성화 해제</h1>
@@ -491,18 +490,18 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </section>
 <section id="conda-lib-error" class="level1">
 <h1>conda lib error</h1>
-<pre><code>ImportError: libpython2.x.so.1.0: cannot open shared object file: No such file or directory</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ImportError:</span> libpython2.x.so.1.0: cannot open shared object file: No such file or directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Solution: <code>export LD_LIBRARY_PATH=/home/avery/anaconda3/envs/[가상환경이름]/lib</code></li>
 </ul>
 </section>
 <section id="conda-freezing" class="level1">
 <h1>conda freezing</h1>
-<pre><code>conda env export &gt; environment.yaml
-conda env create --file environment.yaml
-
-pip list --format=freeze &gt; ./requirements.txt
-pip install -r requirements.txt</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env export <span class="op">&gt;</span> environment.yaml</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">--file</span> environment.yaml</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> list <span class="at">--format</span><span class="op">=</span>freeze <span class="op">&gt;</span> ./requirements.txt</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="symbolic-link-설정-및-관리" class="level1">
 <h1>symbolic link 설정 및 관리</h1>
