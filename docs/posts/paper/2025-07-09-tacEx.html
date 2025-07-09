@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-07-09">
+<meta name="description" content="GelSight Tactile Simulation in Isaac Sim – Combining Soft-Body and Visuotactile Simulators">
+
+<title>📃TacEx 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
+  <li><a href="#main-contributions" id="toc-main-contributions" class="nav-link" data-scroll-target="#main-contributions"><span class="header-section-number">2.2</span> Main Contributions</a></li>
+  <li><a href="#technical-implementation" id="toc-technical-implementation" class="nav-link" data-scroll-target="#technical-implementation"><span class="header-section-number">2.3</span> Technical Implementation</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">2.4</span> Evaluation</a></li>
+  <li><a href="#strengths-and-limitations" id="toc-strengths-and-limitations" class="nav-link" data-scroll-target="#strengths-and-limitations"><span class="header-section-number">2.5</span> Strengths and Limitations</a></li>
+  <li><a href="#future-work-and-impact" id="toc-future-work-and-impact" class="nav-link" data-scroll-target="#future-work-and-impact"><span class="header-section-number">2.6</span> Future Work and Impact</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃TacEx 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">gelsight</div>
+    <div class="quarto-category">isaacsim</div>
+    <div class="quarto-category">tactile</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    GelSight Tactile Simulation in Isaac Sim – Combining Soft-Body and Visuotactile Simulators
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 9, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/pdf/2411.04776v1">Paper Link</a></li>
+<li><a href="https://sites.google.com/view/tacex">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>🤗 TacEx는 Isaac Sim 및 Isaac Lab에 통합된 모듈형 프레임워크로, 접촉이 많은 로봇 조작 작업을 위한 GelSight 촉각 센서 시뮬레이션을 제공합니다.</li>
+<li>🔧 이 프레임워크는 GIPC와 PhysX 같은 소프트 바디 물리 엔진을 Taxim 및 FOTS와 같은 시뮬레이터와 결합하여 사실적인 젤 변형 및 시각적 촉각 데이터를 생성합니다.</li>
+<li>🤖 연구팀은 TacEx가 객체 밀기, 들기 등 다양한 강화 학습 환경에서 안정적으로 작동하며 고차원 촉각 관측치를 학습에 사용할 수 있음을 입증했습니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>이 논문은 NVIDIA Isaac Sim 및 Isaac Lab 환경 내에서 GelSight 촉각 센서, 특히 GelSight Mini의 시뮬레이션을 위한 프레임워크인 TacEx를 제안합니다. 로봇 공학에서 접촉이 풍부한 조작 작업에 촉각 센싱이 중요하지만, 기존의 시뮬레이터는 안정적이고 신뢰할 수 있으며 사용하기 쉬운 촉각 시뮬레이션, 특히 소프트 바디 상호작용과 촉각 센싱을 포함하는 시뮬레이션이 부족하다는 문제점을 해결하고자 합니다. TacEx는 이러한 격차를 해소하기 위해 개발되었으며, 모듈식이고 확장 가능하며 최신 촉각 시뮬레이션 기술을 기반으로 합니다.</p>
+<p>핵심 방법론은 여러 물리 엔진 및 촉각 시뮬레이터를 통합하는 것입니다.</p>
+<ol type="1">
+<li><strong>물리 시뮬레이션</strong>: GelPad 및 객체의 물리적 동작을 시뮬레이션하기 위해 세 가지 접근 방식을 지원합니다.
+<ul>
+<li><strong>PhysX Rigid Body with Compliant Contact</strong>: Isaac Sim의 기본 물리 엔진인 PhysX를 사용하여 GelPad를 컴플라이언트 접촉을 가진 강체로 시뮬레이션합니다. 이는 매우 빠르며 RL 환경 및 알고리즘 프로토타이핑에 유용합니다.</li>
+<li><strong>PhysX FEM-based Soft Body</strong>: PhysX의 FEM 기반 소프트 바디 시뮬레이션을 사용하여 GelPad를 시뮬레이션합니다. 이 접근 방식은 GelPad의 정확한 시뮬레이션을 목표로 하지만, 실험 결과 정적 마찰의 부족과 같은 일부 제한 사항으로 인해 객체 파지에 어려움이 있음을 보여주었습니다.</li>
+<li><strong>GIPC (GPU-accelerated, Inversion-Free Simulation of Soft-Body Contacts)</strong>: IPC(Incremental Potential Contact) 모델 [23]을 기반으로 하는 GIPC [18]를 통합합니다. GIPC는 GPU 가속을 통해 소프트 바디 시뮬레이션에서 안정성과 속도를 제공하며, 재료 매개변수나 변형의 심각성과 무관하게 Intersection 및 Inversion이 없는 시뮬레이션을 보장합니다. 이는 특히 Domain Randomization을 사용하는 RL 훈련에 유리합니다.</li>
+<li>GIPC와 Isaac Sim의 통합 방식은 다음과 같습니다. Isaac Sim은 장면 설정, 로봇 시뮬레이션 및 렌더링을 담당합니다. GelPad는 센서 케이스에 부착되어 로봇 움직임에 따라 운동학적으로 움직입니다(PhysX 처리). 비부착 GelPad 정점 및 GIPC로 모델링된 다른 객체는 GIPC가 처리합니다. Isaac Sim에서 로봇이 움직이면 센서 케이스가 움직이고 부착 지점이 재계산되며, GIPC 솔버를 호출하여 나머지 GelPad 정점 및 GIPC 객체의 새 위치를 계산합니다. GIPC 객체는 Wildmeshing [35]을 사용하여 USD 메시 데이터에서 Tetrahedra Mesh를 생성하여 만들어집니다. 시뮬레이션 상태는 PhysX 단계(로봇 움직임 등) 후에 GIPC 단계(부착 지점 업데이트, GIPC 솔버 실행, 정점 위치 업데이트)를 수행하여 계산됩니다. 렌더링을 위해 USDRT [36] API를 사용하여 Isaac Sim에서 USD 메시 정점 위치를 업데이트합니다. 부착 지점(Attachment Points)은 센서 케이스 내부에 있거나 가까운 정점들로 정의되며, Sphere Ray Casting을 통해 찾습니다. 부착 지점의 새 위치는 센서 케이스에 대한 상대적 오프셋을 사용하여 계산됩니다.</li>
+</ul></li>
+<li><strong>촉각 시뮬레이션 (Visuotactile Simulation)</strong>: GelSight 센서 출력을 생성하기 위해 기존의 최신 시뮬레이터를 활용합니다.
+<ul>
+<li><strong>Height Map Generation</strong>: Isaac Sim 카메라를 사용하여 GelPad 내부 객체 표면의 Height Map을 생성합니다. GelPad 두께 및 Indentation Depth를 기반으로 Height Map과 Pyramid Gaussian Kernels를 사용하여 GelPad 변형을 근사화합니다.</li>
+<li><strong>Optical Simulation (Taxim [11])</strong>: 생성된 Height Map의 Surface Normal을 Polynomial Look-up Table을 사용하여 RGB 값(광도)으로 매핑합니다. 더 현실적인 이미지를 위해 그림자(Shadows)를 추가합니다. GPU 가속 구현체 [27]를 사용합니다.</li>
+<li><strong>Marker Simulation (FOTS [19])</strong>: 생성된 Height Map을 사용하여 Marker Motion을 시뮬레이션합니다. Height Map 기반 Contact Center와 Isaac Sim으로부터 얻은 GelPad에 대한 객체의 z 회전을 사용하여 Marker Displacement를 지수 함수(Exponential Functions)로 모델링합니다.</li>
+</ul></li>
+</ol>
+<p>TacEx는 Isaac Lab 환경에서 RL 훈련에 활용될 수 있음을 검증하기 위해 객체 밀기(Object Pushing), 객체 들어 올리기(Object Lifting), 폴 균형 잡기(Pole Balancing) 등 여러 RL 환경을 구현했습니다. 실험을 통해 시뮬레이션의 안정성(Beam Twisting 예제), GIPC의 소프트 바디 파지 능력 및 PhysX 소프트 바디의 한계(Object Lifting 예제), 동적 환경에서의 동작(Ball Rolling 예제)을 시연했습니다. 또한, 촉각 시뮬레이션(Taxim/FOTS) 및 물리 시뮬레이션(PhysX, GIPC)의 성능(Simulation Speed)을 측정하여 제시했습니다.</p>
+<p>결론적으로 TacEx는 Isaac Sim/Lab 기반의 모듈식 GelSight 촉각 센서 시뮬레이션 프레임워크를 제공합니다. 이는 GIPC를 통한 강력한 소프트 바디 물리 시뮬레이션과 Taxim, FOTS를 통한 시각-촉각 시뮬레이션을 통합합니다. 프레임워크는 RL 훈련에 사용될 수 있도록 설계되었으며, 다양한 예제 및 RL 환경을 제공합니다. 현재 작업의 한계는 주로 정성적 실험과 시뮬레이션 내 데모에 초점을 맞추고 있으며, Sim2Real 성능에 대한 정량적 검증이 부족하다는 점입니다. 향후 연구에서는 다양한 촉각 시뮬레이션 접근 방식에 대한 정량적 비교와 Sim2Real 실험을 수행하고, 더 많은 RL 환경 및 촉각 시뮬레이션 접근 방식을 포함하여 촉각 시뮬레이터 및 알고리즘을 위한 벤치마킹 플랫폼을 구축할 계획입니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>TacEx – NVIDIA Isaac Sim에서 GelSight 촉각 시뮬레이션</p>
+</blockquote>
+<section id="introduction" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
+<p>로봇 제어 정책을 시뮬레이션으로 학습시키는 접근법이 최근 널리 활용되고 있지만, 접촉이 많은 정교한 조작 작업에 사용할 <strong>정밀하고 신뢰성 높은 촉각 시뮬레이터</strong>는 여전히 부족한 상태이다. 촉각 센싱은 인간의 촉감 인지와 로봇의 복잡한 조작 과제를 수행하는 데 핵심적인 역할을 하며, 접촉 지점을 통한 <strong>물체의 기하 형태, 재질 강도, 표면 질감</strong> 등의 정보를 얻거나 미끄럼 감지, 경도 추정, 부드러운 물체 파지와 같은 작업에 활용된다. 이러한 <strong>촉각 피드백</strong>을 로봇 제어에 적용하려면 고차원 센서 관측을 다루는 복잡한 제어가 필요하므로, 최근 <strong>심층 강화학습</strong>(Deep RL) 기법들이 탐구되어 왔다. 그러나 현재 <strong>심감 풍부한 조작 작업</strong>에 RL을 적용하는 데 가장 큰 장애 요인은, <strong>연질 물체 간 상호작용과 촉각 센싱을 모두 포함하는 안정적이고 신뢰할 수 있는 접촉 시뮬레이션의 부재</strong>이다. 최근 들어 이를 극복하기 위한 촉각 시뮬레이터들이 여럿 등장했지만, 각자 <strong>물리 엔진, 촉각 센서 모델, 로봇 플랫폼</strong>이 제각각이라 결과를 비교하거나 상호운용하기 어려운 실정이다.</p>
+<p>이러한 격차를 해소하고자 본 논문의 저자들은 <strong>TacEx</strong>라 명명된 새로운 촉각 시뮬레이션 프레임워크를 제안하였다. TacEx는 NVIDIA <strong>Isaac Sim</strong> 환경과 그 상위 RL 프레임워크인 <strong>Isaac Lab</strong>에 <strong>모듈식(modular)</strong>으로 내장되어 작동하며, 최신 촉각 시뮬레이션 기법들을 통합한 확장 가능한 플랫폼을 지향한다. 특히 GPU 가속 <strong>연질 물체 시뮬레이터</strong>인 GIPC를 통합하여 기존에 부족했던 연질-연질 접촉의 물리적 변형까지 실시간으로 모사하고, <strong>시각 기반 촉각 시뮬레이터</strong>(Taxim, FOTS)를 함께 결합함으로써 GelSight와 같은 <strong>비쥬얼태크타일(visuotactile)</strong> 센서의 작동을 포괄적으로 시뮬레이션한다. 아래에서는 TacEx의 주요 기여와 기술 구현, 실험 평가 결과를 순차적으로 살펴보고, 이 프레임워크의 장단점과 향후 연구에 대한 시사점을 논의한다.</p>
+</section>
+<section id="main-contributions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="main-contributions"><span class="header-section-number">2.2</span> Main Contributions</h2>
+<p>TacEx 프레임워크가 기존 대비 제공하는 핵심적인 기여는 다음과 같다:</p>
+<ul>
+<li><p><strong>통합된 촉각 시뮬레이션 플랫폼</strong> – 다양한 기존 촉각 시뮬레이터들이 서로 다른 엔진과 환경에서 동작했던 한계를 극복하고, NVIDIA Isaac&nbsp;Sim 안에 <strong>일원화된 모듈형 프레임워크</strong>로 구축되었다. 이를 통해 각기 다른 물리 엔진·센서·로봇으로 인해 비교가 어려웠던 상황을 개선하고 상호 운용성을 높였다. 한 환경에서 다양한 촉각 센서 시뮬레이션을 수행할 수 있어 <strong>비교 평가 및 공동 활용</strong>이 용이하다.</p></li>
+<li><p><strong>첨단 연질 물리 시뮬레이션 통합</strong> – TacEx는 <strong>GIPC</strong>라 불리는 최신 <strong>GPU&nbsp;가속 FEM 기반</strong> 연질 물체(contact) 시뮬레이션을 통합하였다. GIPC는 기존의 단순 <strong>강체(contact) 모델</strong>이나 간소화된 연질 모델과 달리, <strong>비선형 연질-연질 접촉</strong>을 정확하고 안정적으로 모사할 수 있으며(static/dynamic 마찰까지 포함), 완전 GPU 기반 구현으로 연산 속도 또한 대폭 향상되었다. 이는 동시대 연구인 TacSL 등의 접근과 비교했을 때 <strong>보다 정밀한 젤패드 변형 모델링</strong>을 제공하는 차별점이다.</p></li>
+<li><p><strong>시각-촉각 결합 센서 렌더링</strong> – 물리 시뮬레이션뿐 아니라 <strong>GelSight 촉각 센서</strong>의 출력 자체를 사실적으로 재현하기 위해 <strong>비쥬얼태크타일 시뮬레이션</strong>을 함께 구현하였다. TacEx는 기존 GelSight 시뮬레이터인 <strong>Taxim</strong>(광학적 촉각 영상 생성)과 <strong>FOTS</strong>(젤패드 표면의 마커 움직임 필드 생성)를 Isaac&nbsp;Sim에 내장함으로써, 물체와 접촉했을 때 얻어지는 <strong>RGB 촉각 영상</strong>과 <strong>마커 변위 데이터</strong>를 동시에 만들어낸다. 이 <strong>소프트 바디 + 시각 센서 하이브리드 접근</strong>을 통해 실제 GelSight 센서의 동작을 종합적으로 모사하는 <strong>새로운 방식</strong>을 제시하였다.</p></li>
+<li><p><strong>모듈식 설계와 구성 유연성</strong> – TacEx는 <strong>물리 시뮬레이션 방식</strong>과 <strong>센서 렌더링 구성</strong>을 필요에 따라 선택적으로 켜고 끌 수 있도록 설계되었다. 사용자는 과제의 요구에 맞춰 <strong>젤패드 물리 모델</strong>을 간단한 강체 접촉 모드부터 PhysX 기반 연질 모드, GIPC 기반 연질 모드까지 선택할 수 있으며, <strong>광학 시뮬레이션</strong>이나 <strong>마커 시뮬레이션</strong> 기능도 모듈 단위로 활용할 수 있다. 이러한 유연성은 정확도와 속도 사이의 트레이드오프를 상황에 맞게 조율할 수 있게 해주며, 프레임워크의 <strong>확장성</strong>을 높이는 장점이 된다.</p></li>
+<li><p><strong>강화학습 환경과의 통합</strong> – 본 시뮬레이터는 <strong>Isaac&nbsp;Lab</strong> 기반으로 구현되어 별도의 복잡한 설정 없이도 <strong>강화학습(RL) 실험</strong>에 바로 활용될 수 있다. 저자들은 TacEx를 이용해 <strong>물체 밀기, 물체 들어올리기, 막대 균형잡기</strong>와 같은 접촉 풍부한 작업의 RL 환경을 구성하고, <strong>PPO 알고리즘</strong> 등으로 정책을 학습시켰다. 이를 통해 TacEx가 <strong>병렬 시뮬레이션 및 텔레오퍼레이션</strong> 지원, 그리고 기존 RL 라이브러리와의 연계 등 <strong>학습 워크플로우에의 적합성</strong>을 입증한 것도 중요한 기여이다.</p></li>
+</ul>
+</section>
+<section id="technical-implementation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="technical-implementation"><span class="header-section-number">2.3</span> Technical Implementation</h2>
+<p>TacEx는 NVIDIA Isaac&nbsp;Sim 상에서 <strong>물리 시뮬레이션</strong> 계층과 <strong>시각-촉각 렌더링</strong> 계층을 결합하여 구현되었다. 구체적으로, <strong>GelSight 센서의 젤패드 변형</strong>을 시뮬레이트하기 위해 <strong>세 가지 물리 모델</strong>이 제공된다:</p>
+<ol type="1">
+<li><strong>강체 탄성(Contact) 모델</strong> – Isaac&nbsp;Sim의 기본 PhysX 엔진에서 젤패드를 <strong>탄성 계수를 가진 강체(compliant rigid body)</strong>로 간주하고 접촉 힘을 계산하는 간단한 모델.</li>
+<li><strong>PhysX&nbsp;FEM 연질 모델</strong> – PhysX 엔진의 <strong>유한 요소법(FEM)</strong> 기반 연질 물체 시뮬레이션 기능을 이용하여 젤패드 변형을 표현하는 모드.</li>
+<li><strong>GIPC 연질 모델</strong> – 저자들이 새롭게 통합한 <strong>GIPC 엔진</strong>을 통해 젤패드를 <strong>FEM 기반 완전 연질 물체</strong>로 시뮬레이션하는 모드.</li>
+</ol>
+<p>PhysX 기반의 모드(i, ii)는 Isaac&nbsp;Sim에서 자산 속성만 설정하면 비교적 쉽게 구현 가능하지만, GIPC 연동(iii)을 위해서는 GIPC 라이브러리의 코드를 수정하고 파이썬 바인딩을 작성하는 추가 개발 작업이 필요하였다. GIPC는 IPC(Incremental Potential Contact) 기법을 GPU 상에서 구현한 것으로, 기존 CPU 기반 FEM보다 <strong>계산 안정성과 속도 면에서 우수한 성능</strong>을 보인다.</p>
+<p><strong>TacEx–Isaac&nbsp;Sim 통합:</strong> TacEx의 물리 시뮬레이션은 Isaac&nbsp;Sim의 <strong>PhysX 엔진</strong>과 <strong>GIPC 엔진</strong>이 결합된 형태로 동작한다. 예를 들어 로봇 팔 끝에 GelSight 센서를 장착하여 어떤 물체를 누르는 상황을 생각해보면, 젤패드(센서의 젤 부분)는 센서 케이스에 부착되어 로봇의 움직임에 따라 함께 이동한다. 이러한 <strong>센서의 전체 운동</strong>(센서 케이스의 위치/자세 변화)은 PhysX가 처리하며, 그 결과 얻은 <strong>젤패드 부착 지점</strong>의 변위를 GIPC에 전달한다. GIPC 엔진은 젤패드 메시(mesh)의 나머지 <strong>비부착 자유 격자점들</strong>에 대해 물체와의 접촉 변형을 계산하여 새 위치를 결정하고, 그 변형 결과를 Isaac&nbsp;Sim 내의 해당 젤패드 메시에 실시간 업데이트해준다. 이로써 로봇의 강체 운동과 젤패드의 연질 변형이 <strong>동시에 시뮬레이션</strong>되어, GelSight 센서의 물리적 접촉 반응을 전체적으로 재현하게 된다.</p>
+<p><strong>촉각 센서 출력 렌더링:</strong> 물리 시뮬레이션으로 결정된 젤패드 변형 상태를 기반으로, TacEx는 GelSight <strong>시각 출력</strong>을 생성한다. 구체적으로, Isaac&nbsp;Sim 내 젤패드에 부착된 가상 <strong>카메라</strong>를 통해 접촉 면의 <strong>높이 맵(height map)</strong> 이미지를 획득한 후 가우시안 필터로 평활화한다. 이어서 이 높이 맵의 <strong>노멀 벡터</strong>를 다항식 LUT(룩업 테이블)에 대입하여 <strong>RGB 이미지</strong>로 변환하고, 그림자 효과를 추가함으로써 사람이 보는 GelSight 촉각 영상과 유사한 <strong>렌더링 이미지를 합성</strong>한다. 아울러, 생성된 높이 맵을 입력으로 별도의 <strong>FOTS 알고리즘</strong>을 적용하여 젤패드 표면의 <strong>마커(marker) 점들의 변위 벡터장</strong>도 계산한다. 이 마커 변위장은 젤패드의 미세한 변형 분포를 반영하는데, TacEx는 이를 최종 <strong>촉각 관측 정보</strong>로서 제공한다. 이러한 방식은 <strong>Taxim</strong>이 제공하는 데이터드리븐 광학 모델과 <strong>FOTS</strong>의 마커 모션 모델을 재사용하는 것으로, 실제 젤패드의 물리 모델링 정확도에 크게 의존하지 않으면서도 현실감 있는 촉각 출력을 산출할 수 있다는 장점이 있다.</p>
+<p><strong>강화학습 연계:</strong> TacEx는 <strong>Isaac&nbsp;Lab</strong>에 통합되어 있어 <strong>강화학습 실험 워크플로우</strong>에 자연스럽게 녹아들도록 구현되었다. 예를 들어 병렬로 다수의 환경을 실행하여 데이터를 수집하거나, <strong>ROS 통신 지원</strong>을 통해 외부 제어기와 연동하고, VR 장비로 원격 조작(teleoperation)을 하는 등의 고급 기능을 Isaac&nbsp;Sim의 인프라를 그대로 활용하여 구현할 수 있다. TacEx에서 출력하는 <strong>고차원 촉각 관측</strong> (젤패드 변형, RGB 이미지, 마커장 등)은 곧바로 RL 알고리즘의 입력으로 사용될 수 있으며, 저자들이 제공한 예시 환경과 코드베이스를 통해 PPO 등 <strong>표준 RL 알고리즘</strong>과도 손쉽게 접목시킬 수 있다.</p>
+</section>
+<section id="evaluation" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="evaluation"><span class="header-section-number">2.4</span> Evaluation</h2>
+<p>저자들은 TacEx의 성능과 가능성을 검증하기 위해 <strong>여러 시나리오에서의 실험</strong>을 수행하였다. 주요 실험 사례와 결과는 다음과 같다:</p>
+<ul>
+<li><p><strong>공 굴리기 (Ball Rolling)</strong>: 단일 GelSight 센서를 장착한 로봇이 젤패드를 이용해 바닥의 공을 굴리는 <strong>동적 접촉 상황</strong>을 시뮬레이션하였다. 이 실험을 통해 시뮬레이터의 <strong>안정성</strong>과 <strong>병렬 확장성</strong>을 시험했는데, PhysX <em>강체 모드</em>에서는 다수의 로봇을 동시에 시뮬레이션해도 안정적으로 동작했으나, <strong>카메라 렌더링 메모리 제한</strong> 때문에 일정 수 이상의 환경에서는 VRAM이 한계에 도달했다. 한편 GIPC 기반 <em>연질 모드</em>의 경우 연산 부하가 크기 때문에 VRAM 제약으로 <strong>동시에 한 대의 로봇</strong>만 정상적으로 시뮬레이션할 수 있었다. 이는 TacEx가 동적 시나리오에서 현실감 있는 접촉을 모사하면서도, <strong>연산 자원 측면의 제약</strong>을 받는다는 점을 보여준다.</p></li>
+<li><p><strong>물체 들어올리기 (Object Lifting)</strong>: 두 개의 GelSight 센서를 로봇 그리퍼에 장착하여 <strong>물체를 집어서 들어올리는 작업</strong>을 실험하였다. 이 예제를 통해 <strong>촉각 피드백을 활용한 그립(grasp) 안정성</strong>을 검증하고자 했는데, <strong>PhysX 연질 물체 모드</strong>만으로는 물체를 끝까지 붙들고 들어올리는 데 실패하였다. 젤패드의 강성, 감쇠 등의 여러 매개변수를 바꿔도 물체가 미끄러져 떨어졌는데, 이는 현재 PhysX의 연질 바디 시뮬레이션에 <strong>정적 마찰(static friction)</strong> 모델이 구현되어 있지 않기 때문이라고 보고되었다. 심지어 젤패드 하나만 연질로 하고 다른 하나는 강체로 한 혼합 설정에서도 그립이 불안정했으며, <strong>PhysX만으로는 신뢰성 있는 파지 동작을 재현하기 어려움</strong>을 확인하였다. 반면 <strong>GIPC 기반의 연질 젤패드</strong> 두 개를 사용한 경우 물체를 비교적 안정적으로 집어올릴 수 있었는데, 이는 GIPC의 접촉 모델이 정적 마찰과 연질-연질 상호작용을 표현할 수 있어 <strong>보다 실제에 가까운 파지 동작</strong>을 가능케 함을 보여준다.</p></li>
+<li><p><strong>빔 비틀기 (Beam Twisting)</strong>: 원단에 고정된 긴 <strong>연질 기둥(beam)</strong>을 로봇 팔에 부착된 두 젤패드로 붙잡고 <strong>비틀어 꼬는</strong> 극한 변형 시나리오를 실험하였다. 이 사례는 GIPC 연질 시뮬레이션의 한계를 시험하기 위한 것으로, 상당한 비틀림과 늘어남 변형에도 시뮬레이션이 <strong>발산하거나 불안정해지지 않고 유지</strong>되었다. 로봇이 비틀던 빔을 놓았을 때 원래 형태로 튕겨 돌아오는 과정에서 <strong>마찰</strong>도 현실성 있게 모사되어, TacEx의 GIPC 통합이 <strong>극한 변형 및 마찰 거동까지 견실하게 재현</strong>함을 확인하였다.</p></li>
+<li><p><strong>강화학습 테스트</strong>: 앞서 구현된 TacEx 기반 <strong>3가지 RL 환경</strong> (물체 밀기, 물체 들어올리기, 장대 세우기)을 활용하여, 촉각 센싱 정보를 포함한 RL이 가능한지 검증하는 실험도 수행되었다. 각 환경에서 젤패드 <strong>마커 변위장</strong> 등을 관측으로 사용하고, <strong>PPO 알고리즘</strong>으로 정책을 학습시킨 결과, 학습 파이프라인이 큰 문제 없이 작동함을 보였다. 다만 논문 시점에서는 아직 <strong>촉각 피드백을 활용한 성공적인 정책</strong>이 완성되지는 않았고, 저자들은 현재 해당 과제를 달성하기 위해 학습을 진행 중이라고 밝히고 있다. 그럼에도 불구하고, TacEx 환경에서 <strong>고차원 촉각 관측을 포함한 RL訓練이 안정적으로 가능함</strong>을 실증한 것은 의미가 크다.</p></li>
+<li><p><strong>성능 벤치마크</strong>: TacEx의 <strong>시뮬레이션 속도 및 확장성</strong>에 대한 평가도 이루어졌다. 논문에서는 다양한 병렬 환경 개수에 대하여 프레임 당 시뮬레이션 소요 시간을 측정하여 표로 보고하고 있다. <strong>광학+마커 시뮬레이션(Taxim+FOTS)</strong>의 경우 GPU 메모리 사용량이 커서 환경 수 증가에 따른 성능 저하가 뚜렷했으며, <strong>PhysX 물리 시뮬레이션</strong>도 연질 모델에서는 약 256개 환경에서 메모리 한계로 시뮬레이션이 불가해지는 등 확장에 제약이 있었다. 한편 <strong>GIPC 물리 시뮬레이션</strong>은 젤패드/물체의 <strong>메시 복잡도(격자 점/사면체 개수)</strong>에 따라 프레임 시간이 증가하는 양상을 보였지만, IPC 기반 기법을 완전히 GPU화한 덕분에 여전히 CPU FEM보다 <strong>대폭 향상된 속도</strong>를 나타냈다. 요약하면, TacEx는 단일/소수 환경 수준에서는 실시간 시뮬레이션에 근접하는 성능을 보여주나, <strong>대규모 병렬 환경 실행 시에는 연산 자원이 크게 요구</strong>됨을 알 수 있다.</p></li>
+</ul>
+</section>
+<section id="strengths-and-limitations" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="strengths-and-limitations"><span class="header-section-number">2.5</span> Strengths and Limitations</h2>
+<p><strong>장점:</strong> TacEx가 보여준 주요 강점은 다음과 같다:</p>
+<ul>
+<li><p><strong>현실감 있고 정밀한 촉각 모델링</strong> – 연질 젤패드의 <strong>FEM 기반 변형</strong>을 모사함으로써, 기존 강체 근사 방식보다 정확한 접촉 표현이 가능하다. 특히 GIPC 통합으로 <strong>정적 마찰</strong>과 <strong>연질-연질 접촉</strong>까지 시뮬레이션되어 실제 센서의 물리 반응을 충실히 재현한다. 빔 비틀기 등의 극한 상황에서도 시뮬레이션이 안정적으로 유지된 것은 이러한 물리 모델의 신뢰성을 보여준다.</p></li>
+<li><p><strong>모듈식 플랫폼의 유연성</strong> – 사용자 필요에 따라 물리 엔진과 센서 시뮬레이션 구성요소를 선택적으로 활용할 수 있는 설계는 <strong>다목적 활용</strong>을 가능케 한다. 예를 들어, 빠른 계산이 필요하면 간략한 강체 모델만 사용하고, 정확성이 필요하면 GIPC 연질 모델을 켜는 식으로 <strong>정밀도↔︎속도 트레이드오프</strong>를 조절할 수 있다. 또한 Taxim/FOTS 기반의 광학 시뮬레이션은 <strong>젤패드 물리 정확도에 덜 의존</strong>하면서도 촉각 이미지를 만들 수 있어, 극단적인 경우 강체 젤패드로도 마커 변위장을 생성하는 등 <strong>유연한 센서 시뮬레이션</strong>이 가능하다.</p></li>
+<li><p><strong>Isaac&nbsp;Sim 생태계 활용</strong> – TacEx는 NVIDIA Isaac&nbsp;Sim에 <strong>네이티브</strong>하게 포함되므로, 동 시뮬레이터의 강력한 기능들을 모두 활용할 수 있다는 장점이 있다. 예를 들어 <strong>물리 기반 렌더링</strong>으로 고해상도 촉각 이미지를 얻거나, <strong>ROS 지원</strong>을 바로 활용하고, <strong>GPU 가속 PhysX</strong>를 통한 빠른 로봇 시뮬레이션과 <strong>병렬 환경 실행</strong> 등을 그대로 사용할 수 있다. 이는 별도 맞춤 시뮬레이터를 개발하는 것보다 활용도와 편의성이 높아, <strong>연구 생산성</strong> 측면에서도 큰 이점을 제공한다.</p></li>
+<li><p><strong>강화학습 및 연구 확장성</strong> – 제공된 TacEx 환경들은 곧바로 RL 실험에 투입될 수 있을 만큼 잘 구성되어 있으며, 다양한 RL 알고리즘과 쉽게 연계된다. 본 프레임워크는 <strong>추가적인 촉각 센서 모듈이나 새로운 시나리오</strong>를 손쉽게 플러그인하는 형태로 확장할 수 있어, 향후 다른 유형의 촉각 센서나 멀티모달 센싱 시뮬레이션에도 응용할 수 있는 <strong>연구 플랫폼</strong>으로서의 잠재력이 있다.</p></li>
+</ul>
+<p><strong>한계:</strong> 반면 TacEx에는 다음과 같은 한계와 향후 보완 과제가 존재한다:</p>
+<ul>
+<li><p><strong>실세계 검증 부족</strong> – 현재 결과들은 <strong>시뮬레이션 상의 질적 실험</strong>에 국한되어 있으며, TacEx에서 얻은 촉각 데이터로 학습된 정책이나 시뮬레이터 자체를 <strong>실제 로봇 및 센서</strong>에 적용해본 <strong>Sim2Real 검증</strong>이 이루어지지 않았다. 따라서 시뮬레이터의 실제 유용성을 평가하려면 <strong>추가적인 물리 실험과 비교</strong>가 필요하다.</p></li>
+<li><p><strong>정량적 평가 미비</strong> – 논문에서는 다양한 사례를 보여주었지만, 각 구성 요소에 대한 <strong>정량적 성능 평가</strong>나 <strong>시뮬레이션 정확도 분석</strong>(예: 실제 GelSight 센서 데이터와의 비교)이 충분히 이루어지지 않았다. 예를 들어 GIPC vs PhysX의 <strong>모델 오차</strong>나 촉각 영상의 <strong>픽셀 단위 정확도</strong> 등에 대한 계량 평가가 없어, <strong>어느 정도의 물리 현실성을 확보했는지</strong> 정량적으로 판단하기 어렵다. 저자들은 향후 이러한 부분을 보완할 계획임을 언급하였다.</p></li>
+<li><p><strong>높은 계산 자원 요구</strong> – 사실적인 촉각 시뮬레이션의 대가로 <strong>연산 부하</strong>가 상당히 큰 편이다. 특히 GIPC 기반 연질 시뮬레이션과 고해상도 Taxim 렌더링은 <strong>GPU 메모리</strong>와 연산 시간을 많이 소모하여, 병렬 환경을 늘릴 경우 성능 저하나 메모리 부족에 직면한다. 이는 TacEx를 대규모 학습에 바로 활용하는 데 제약으로 작용할 수 있으며, 최적화나 경량화가 추후 과제로 남는다.</p></li>
+<li><p><strong>엔진 종속적 제약</strong> – TacEx가 의존하는 Isaac&nbsp;Sim/PhysX 엔진의 한계도 존재한다. 예를 들어 PhysX의 기본 연질 물리에서는 <strong>정적 마찰 모델 부재</strong>로 인해 실제와 다른 거동을 보였으며, 광학 시뮬레이션의 경우 Isaac&nbsp;Sim 카메라 성능에 일부 의존하기 때문에 매우 높은 프레임레이트로 진행하기 어렵다. 이러한 엔진 차원의 제한은 현재 GIPC 통합 등으로 일부 보완되었으나, 완전히 해결된 것은 아니다.</p></li>
+<li><p><strong>초기 단계 및 공개 여부</strong> – TacEx는 현재 워크숍에 게재된 비교적 <strong>초기 단계 연구</strong>로, 코드와 영상 등이 공개 예정이라고만 언급되어 있다. 커뮤니티에 공개되어 광범위한 테스트와 활용이 이뤄지기 전까지는, 예측하지 못한 문제나 <strong>사용성 측면의 개선점</strong>이 나타날 가능성이 있다.</p></li>
+</ul>
+</section>
+<section id="future-work-and-impact" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="future-work-and-impact"><span class="header-section-number">2.6</span> Future Work and Impact</h2>
+<p>논문의 결론에서 저자들은 <strong>TacEx의 다음 단계 연구 방향</strong>을 제시하고 있다. 우선, 현 시뮬레이터에 구현된 여러 <strong>물리 시뮬레이션 기법들의 성능을 정량적으로 비교</strong>하고, TacEx를 활용한 <strong>Sim2Real 실험</strong>을 통해 가상 환경에서 학습된 정책이 실제 로봇 촉각 센싱에도 통용될 수 있는지 검증할 계획이다. 또한 TacEx 프레임워크에 <strong>더 다양한 RL 환경과 촉각 시뮬레이션 방법</strong>을 계속 추가함으로써, 학계에서 공통으로 활용할 수 있는 <strong>촉각 시뮬레이션 벤치마크 플랫폼</strong>으로 발전시키고자 한다. 예를 들어, 다른 종류의 촉각 센서 모델이나 새로운 접촉 물리 엔진을 모듈로 통합하여 여러 방법론을 한 곳에서 시험·비교할 수 있도록 할 전망이다.</p>
+<p>이러한 노력은 <strong>촉각 로보틱스 연구</strong> 전반에 걸쳐 중요한 파급효과를 가져올 것으로 기대된다. TacEx와 같은 <strong>통합 시뮬레이션 플랫폼</strong>이 갖춰짐으로써, 연구자들은 <strong>촉각 데이터</strong>를 수반하는 복잡한 조작 과제를 보다 손쉽게 가상 실험으로 테스트하고, 효과적인 알고리즘을 빠르게 검증한 뒤 실제 로봇에 이전(Sim2Real)하는 사이클을 가속할 수 있다. 특히 시각 정보와 촉각 정보를 모두 <strong>포토리얼리스틱</strong>하게 생성해주는 TacEx의 접근은, 로봇이 사람처럼 <strong>시각–촉각 복합 인지</strong>를 할 수 있는 <strong>정교한 조작 기술</strong>을 연마하는 데 유용한 도구가 될 것이다. 앞으로 TacEx가 지속적으로 확장·보완되어 나간다면, 촉각 센싱을 활용한 로봇 학습의 <strong>표준 플랫폼</strong>이자 <strong>평가 벤치마크</strong>로서 자리매김하며 해당 분야의 발전을 크게 견인할 수 있을 것으로 보인다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
