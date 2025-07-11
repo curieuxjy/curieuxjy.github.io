@@ -837,7 +837,7 @@
     "href": "posts/code/2025-07-11-poe.html#맺음말",
     "title": "👩‍💻스크루-이론 기반 Product-of-Exponentials(PoE) 기구학 Deep-Dive",
     "section": "맺음말",
-    "text": "맺음말\nPoE 표현은 DH 기구학의 좌표계 의존성과 파라미터 불연속 문제를 근본적으로 해결한다. 스크루 \\xi와 홈 포즈 M만 정해지면 Forward Kinematics, Jacobian, 동역학까지 일관되게 파생되므로, 모델 보정·강화학습·MPC 등 고급 기법에서 탁월한 수렴성과 견고성을 보여 준다.\nPinocchio + CasADi 조합을 활용하면 파이썬 100여 라인 정도로 PoE 기구학 전체 파이프라인과 임베디드용 C 코드를 즉시 생성할 수 있다.\n\n이제 스크루 행렬과 홈 포즈만 준비했다면, 본문 코드 조각을 복사해 당신의 로봇 프로젝트에 바로 적용해 보자!"
+    "text": "맺음말\nPoE 표현은 DH 기구학의 좌표계 의존성과 파라미터 불연속 문제를 근본적으로 해결한다. 스크루 \\xi와 홈 포즈 M만 정해지면 Forward Kinematics, Jacobian, 동역학까지 일관되게 파생되므로, 모델 보정·강화학습·MPC 등 고급 기법에서 탁월한 수렴성과 견고성을 보여 준다.\nPinocchio + CasADi 조합을 활용하면 파이썬 100여 라인 정도로 PoE 기구학 전체 파이프라인과 임베디드용 C 코드를 즉시 생성할 수 있다.\n\n이제 스크루 행렬과 홈 포즈만 준비했다면, 본문 코드 조각을 복사해 당신의 로봇 프로젝트에 바로 적용해 보자!\n\nReference\n\nhttps://hades.mech.northwestern.edu/images/7/7f/MR.pdf#page=154.20\nhttps://en.wikipedia.org/wiki/Product_of_exponentials_formula\nhttps://ddangeun.tistory.com/26\nhttps://web.casadi.org/\nhttps://stack-of-tasks.github.io/pinocchio/\nhttps://github.com/stack-of-tasks/pinocchio"
   },
   {
     "objectID": "posts/code/2022-12-21-torch-tensor-inverted.html",

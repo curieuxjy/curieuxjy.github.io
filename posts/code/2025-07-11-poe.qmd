@@ -334,3 +334,13 @@ PoE 표현은 DH 기구학의 좌표계 의존성과 파라미터 불연속 문�
 **Pinocchio + CasADi** 조합을 활용하면 파이썬 100여 라인 정도로 PoE 기구학 전체 파이프라인과 **임베디드용 C 코드**를 즉시 생성할 수 있다.
 
 > 이제 스크루 행렬과 홈 포즈만 준비했다면, 본문 코드 조각을 복사해 **당신의 로봇 프로젝트**에 바로 적용해 보자!
+
+
+**Reference**
+
+- https://hades.mech.northwestern.edu/images/7/7f/MR.pdf#page=154.20
+- https://en.wikipedia.org/wiki/Product_of_exponentials_formula
+- https://ddangeun.tistory.com/26
+- https://web.casadi.org/
+- https://stack-of-tasks.github.io/pinocchio/
+- https://github.com/stack-of-tasks/pinocchio
