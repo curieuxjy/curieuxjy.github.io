@@ -1,0 +1,336 @@
+---
+title: "👩‍💻스크루-이론 기반 Product-of-Exponentials(PoE) 기구학 Deep-Dive"
+toc: true
+number-sections: false
+date: "2025-07-11"
+description: DH 파라미터 벗어나서 PoE로 기구학 다뤄보기
+categories: [poe, fk, code]
+execute:
+  freeze: auto
+---
+
+
+> **Executive Summary**
+> **PoE 기구학**은 관절 스크루 $\xi$와 **홈 포즈** $M$만으로 전·역기구학, Jacobian, 동역학을 유기적으로 서술한다.
+> 좌표계 선택에 의존적인 **DH 패러다임**을 벗어나 **$C^1$ 연속**·**좌표계 불변** 파라미터화를 제공하므로 **모델 보정·딥러닝·고속 제어** 환경에서 뛰어난 수렴 특성을 발휘한다.
+
+---
+
+## 1  왜 PoE인가? — DH 모델과의 구조적 비교
+
+|  구분          | Classic / Modified DH  | **PoE (Lie 기반)**                                     |
+| :----------- | :--------------------- | :--------------------------------------------------- |
+| **파라미터 개수**  | 링크당 `(α, a, d, θ₀)` 4개 | Revolute당 6(\xi) + M(6) (전역 1개)                      |
+| **필요 프레임 수** | 링크마다 좌표계 지정            | Base + Tool 2개면 충분                                   |
+| **파라미터 연속성** | ±π 경계에서 불연속            | 스크루 $(\mathbb S^2!\times!\mathbb R^3)$, $C^1$ 연속 |
+| **학습·보정 수렴** | 비평활 → LM 불안정           | GD·LM 모두 우수 수렴                                       |
+| **수학적 기반**   | 유클리드 + ad‑hoc          | Lie 군 SE(3) + 스크루 이론                                 |
+
+::: {.callout-tip icon="false"}
+###  직관적 예시
+**비틀림각 α = ±π 경계**를 지나는 2‑링크 평면 로봇을 생각해 보자. DH 방식에서는 α 값이 +π→–π로 순간 점프하며 Jacobian이 불연속이 된다. PoE는 동일 축을 **단일 스크루**로 표현하므로 경계가 사라진다.
+:::
+
+---
+
+## 2  수학 기초 — SE(3)·스크루·지수맵
+
+### 2.1  SE(3) 정의 및 기하적 의미
+
+$$
+T = \begin{bmatrix} R & p \\ 0 & 1 \end{bmatrix},\qquad R \in SO(3),\; p \in \mathbb R^3
+$$
+
+
+→ **회전** $R$과 **병진** $p$를 동시에 나타내는 4×4 변환 행렬.
+
+### 2.2  스크루 벡터 $\xi=[\omega;v]$
+
+* **Revolute 관절**: $|\omega|=1$,  $v=-\omega\times q$
+  (축을 지나는 점 $q$에서 속도가 0이 되도록 $v$ 결정)
+* **Prismatic 관절**: $\omega=0$,  $v$가 이동 축 단위벡터.
+
+스크루는 **나사 운동**을 일반화한 개념으로, $\omega$가 "나사 축", $v$가 "나사 피치"에 대응한다.
+
+### 2.3  Rodrigues 지수맵
+
+$$
+\exp(\widehat\omega\,\theta)=I+\sin\theta\,\widehat\omega+(1-\cos\theta)\,\widehat\omega^2
+$$
+
+병진 항(해석적 적분)
+
+$$
+J(\theta)=I\theta+(1-\cos\theta)\widehat\omega+(\theta-\sin\theta)\widehat\omega^2,\quad p=J(\theta)\,v.
+$$
+
+> $\widehat\omega$는 $\omega$를 스큐‑대칭 행렬로 삽입한 Lie 대수 $\mathfrak{so}(3)$ 元.
+
+---
+
+## 3  PoE 전방기구학 — Pinocchio 실무 절차
+
+아래 예시는 **Allegro Hand 하나의 손가락(4 DoF)**를 대상으로 한다. URDF에서 **스크루 행렬 $S$**와 **홈 포즈 $M$**를 자동 추출한 뒤, NumPy로 PoE FK를 구현하고 Pinocchio 결과와 검증한다.
+
+### 3.1  스크루 행렬 **S** 자동 추출
+
+```python
+import pinocchio as pin
+import numpy as np
+from pinocchio.robot_wrapper import RobotWrapper
+from pathlib import Path
+
+# 1) URDF 로드 ─ 메시 로딩은 생략해 속도 향상
+urdf = Path("../allegro/allegro.urdf").resolve()
+robot = RobotWrapper.BuildFromURDF(
+    str(urdf), [str(urdf.parent)], geometry_types=()  # geometry 무시
+)
+model, data = robot.model, robot.data
+
+S_cols = []  # 스크루 벡터들을 저장할 리스트
+for jid in range(1, model.njoints):  # 0 = universe(월드)
+    # 2) 로컬 관절축 (URDF에서 정의) → 베이스 좌표계로 변환
+    axis_local = model.joints[jid].axis            # 3‑vector
+    oMi = model.jointPlacements[jid]               # 부모→관절 변환 SE3
+    omega = oMi.rotation @ axis_local              # ω: world frame 단위벡터
+
+    # 3) v = −ω × q (q = 관절축을 지나는 임의 점, 여기서는 관절 위치)
+    q_pt = oMi.translation
+    v = -np.cross(omega, q_pt)
+
+    S_cols.append(np.r_[omega, v])                 # [ω, v] 연결
+
+S = np.stack(S_cols, axis=1)  # shape = (6, n)
+print("Screw matrix shape:", S.shape)  # (6, 4)
+```
+
+> **설명:** Pinocchio가 제공한 `axis`와 `jointPlacements`만으로 **베이스 좌표계 기준 스크루**를 계산한다. 직선 관절이라면 `omega = 0`, `v`는 URDF의 이동축 단위벡터가 된다.
+
+### 3.2  홈 포즈 **M** 추출
+
+```python
+fid = model.getFrameId("link_3.0_tip")          # 손가락 끝 프레임 ID
+M = model.frames[fid].placement.homogeneous      # 4×4 numpy array
+```
+
+> **주의:** 홈 포즈는 \*“q=0일 때 엔드 이펙터 자세”\*이다. URDF에서 z-up / x-forward 등의 차이에 따라 달라질 수 있으므로, Jacobian 해석이 꼬이면 **M 정의부터** 의심하자.
+
+### 3.3  NumPy PoE FK 함수
+
+```python
+from scipy.linalg import expm
+
+def hat(xi: np.ndarray) -> np.ndarray:
+    """6‑벡터 → 4×4 잠재행렬(스크루 대수 元)"""
+    omega, v = xi[:3], xi[3:]
+    omega_hat = np.array([
+        [0,       -omega[2],  omega[1]],
+        [omega[2], 0,        -omega[0]],
+        [-omega[1], omega[0], 0]
+    ])
+    return np.block([
+        [omega_hat, v.reshape(3, 1)],
+        [np.zeros((1, 3)), 0]
+    ])
+
+def fk_poe(q: np.ndarray) -> np.ndarray:
+    """PoE Forward Kinematics (4×4)"""
+    T = np.eye(4)
+    for i in range(len(q)):
+        T @= expm(hat(S[:, i]) * q[i])  # 관절 i 변환 누적
+    return T @ M
+```
+
+### 3.4  Pinocchio FK와 일치성 검증
+
+```python
+for _ in range(50):
+    q_rand = pin.randomConfiguration(model)       # 무작위 관절벡터
+    pin.forwardKinematics(model, data, q_rand)
+    pin.updateFramePlacements(model, data)
+    T_pin = data.oMf[fid].homogeneous             # Pinocchio FK
+    assert np.allclose(fk_poe(q_rand), T_pin, atol=1e-10)
+print("PoE FK == Pinocchio FK ✅")
+```
+
+---
+
+## 4  Jacobians — Adjoint 기반 계산 & Pinocchio 비교
+
+### 4.1  Adjoint 연산의 기하적 의미
+
+**Adjoint(Ad)**는 한 변환 $T$가 주어졌을 때, **벡터 공간 $\mathfrak{se}(3)$** 상에서 좌표계를 변환하는 선형 연산자이다. 쉽게 말해, **공간 Jacobian**을 누적할 때 "지금까지 적용된 변환"이 다음 관절 축을 **베이스 좌표계에서 어떻게 보이게 하는지**를 알려준다.
+
+```python
+def Ad(T: np.ndarray) -> np.ndarray:
+    """4×4 변환행렬 → 6×6 Adjoint"""
+    R, p = T[:3, :3], T[:3, 3]
+    p_hat = np.array([
+        [0, -p[2], p[1]],
+        [p[2], 0, -p[0]],
+        [-p[1], p[0], 0]
+    ])
+    return np.block([
+        [R,            np.zeros((3, 3))],
+        [p_hat @ R,    R]
+    ])
+```
+
+### 4.2  공간 Jacobian 구현
+
+```python
+def jac_space(S: np.ndarray, q: np.ndarray) -> np.ndarray:
+    """6×n 공간 Jacobian (베이스 좌표계)"""
+    T_prev = np.eye(4)  # 첫 관절 전까지 변환 = I
+    cols = []
+    for i in range(S.shape[1]):
+        cols.append(Ad(T_prev) @ S[:, i])        # 열 i
+        T_prev @= expm(hat(S[:, i]) * q[i])      # 다음 관절로 누적
+    return np.column_stack(cols)
+```
+
+### 4.3  Pinocchio Jacobian과 검증
+
+```python
+q = pin.randomConfiguration(model)
+pin.computeJointJacobians(model, data, q)
+pin.updateFramePlacements(model, data)
+J_pin = pin.getFrameJacobian(
+    model, data, fid,
+    pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
+)
+J_poe = jac_space(S, q)
+np.testing.assert_allclose(J_poe, J_pin, atol=1e-8)
+print("PoE Jacobian == Pinocchio Jacobian ✅")
+```
+
+### 4.4  바디 Jacobian 변환
+
+```python
+T_ee = fk_poe(q)
+J_body = Ad(np.linalg.inv(T_ee)) @ J_poe
+```
+
+> 바디 Jacobian은 엔드이펙터 프레임에서 해석된 Jacobian이다. Inverse Kinematics나 컨트롤에서 **엔드이펙터 기준 오차**를 직접 사용하고 싶을 때 유용하다.
+
+---
+
+## 5  CasADi CodeGen → 딥러닝 연동
+
+PoE 수식을 **CasADi**로 표현하면, **C 코드 자동 생성**을 통해 임베디드 MCU나 GPU 커스텀 연산자로 쉽게 연결할 수 있다.
+
+### 5.1  C 코드 자동 생성 (float/double 전환 지원)
+
+```python
+import casadi as ca
+import numpy as np
+
+# ── 1. 한 관절의 exp(\hat\xi θ) 구현 (SX 심볼릭) ─────────────
+
+def exp6_cas(xi, theta):
+    omega, v = xi[:3], xi[3:]
+    omega_hat = ca.skew(omega)          # 3×3
+    I = ca.SX.eye(3)
+
+    R = I + ca.sin(theta) * omega_hat + \
+        (1 - ca.cos(theta)) * (omega_hat @ omega_hat)
+
+    J = I * theta + (1 - ca.cos(theta)) * omega_hat + \
+        (theta - ca.sin(theta)) * (omega_hat @ omega_hat)
+    P = J @ v
+
+    T = ca.SX.zeros(4, 4)
+    T[:3, :3], T[:3, 3], T[3, 3] = R, P, 1
+    return T
+
+# ── 2. 4‑DoF 손가락 FK & Jacobian 심볼릭 정의 ────────────
+
+q = ca.SX.sym("q", 4)           # 관절 변수 심볼릭
+T = ca.SX.eye(4)
+for i in range(4):
+    T @= exp6_cas(ca.DM(S[:, i]), q[i])
+T @= ca.DM(M)
+
+Jp = ca.jacobian(T[:3, 3], q)                       # 선속도 Jacobian
+Jw = ca.hcat([S[:3, i] for i in range(4)])          # 각속도 부분(상수)
+J6 = ca.vertcat(Jp, Jw)
+
+f = ca.Function("allegro_finger_jac", [q], [J6])
+
+# ── 3. 코드 생성 ─────────────────────────────——
+cg = ca.CodeGenerator("allegro_finger_jac.c")
+cg.add(f)
+cg.generate()            # allegro_finger_jac.c / .h 생성
+print("C code generated ✔")
+```
+
+> `CASADI_REAL` 매크로로 float/double 전환 가능.
+> MCU(예: STM32) 등에 포팅 시 `-DCASADI_REAL=float`로 컴파일하면 싱글 프리시전 사용.
+
+### 5.2  PyTorch Custom Autograd 연동 (GPU 호환)
+
+```python
+import torch
+from ctypes import CDLL, c_float, POINTER
+import numpy as np
+
+# 1) 로드한 .so는 gcc -shared -fPIC ... 로 빌드했다고 가정
+lib = CDLL("./allegro_finger_jac.so")
+lib.allegro_finger_jac.argtypes = [POINTER(c_float), POINTER(c_float)]
+lib.allegro_finger_jac.restype  = None
+
+class FingerJac(torch.autograd.Function):
+    """CasADi 생성 코드를 사용하는 PyTorch 연산자"""
+
+    @staticmethod
+    def forward(ctx, q):
+        q_np = q.detach().cpu().numpy().astype("float32")
+        J_np = np.empty((24,), dtype="float32")
+
+        # C 함수 호출: J_np = f(q_np)
+        lib.allegro_finger_jac(q_np.ctypes.data_as(POINTER(c_float)),
+                               J_np.ctypes.data_as(POINTER(c_float)))
+
+        J = torch.from_numpy(J_np.reshape(6, 4)).to(q.device)
+        ctx.save_for_backward(q)  # backward 용 저장
+        return J
+
+    @staticmethod
+    def backward(ctx, dL_dJ):
+        q, = ctx.saved_tensors
+        # 심플: 실습용으로 0 그라드 반환. 실제 프로젝트에선
+        # CasADi로 Hessian 생성, 또는 finite diff 등 사용.
+        return torch.zeros_like(q)
+
+# ── 사용 예시 ─────────────────────────────
+q_t = torch.randn(4, requires_grad=True)
+J_t = FingerJac.apply(q_t)
+loss = (J_t ** 2).sum()
+loss.backward()
+print("dLoss/dq:", q_t.grad)
+```
+
+> **Tip 💡** `torch.utils.cpp_extension.load()`를 사용하면 빌드 및 로딩을 PyTorch가 자동 관리해, CUDA 커널을 포함한 확장 연산자를 빠르게 실험할 수 있다.
+
+---
+
+## 6  현업 Tips & 잠재적 함정
+
+|  항목            | 체크포인트                                                                                                           |
+| :------------------------: | :----------------------------------------------------------------------------------------- |
+| **축 방향 부호**    | CAD/URDF 축이 ± 반대일 수 있다. ω 부호 확인 후 핸드 규격서와 대조.                                                                   |
+| **홈 포즈 $M$** | 프레임 잘못 잡으면 Jacobian 해석 오류. 툴 프레임 기준을 명확히.                                                                       |
+| **수치 안정성**     | 관절 수가 많은 로봇은 $\exp(\hat\xi_i q_i)$ 누적 시 오차가 커질 수 있음. <br>→ 중간마다 `Adjoint` 재계산하여 드리프트 억제.                    |
+| **모델 보정**      | $\xi$ 파라미터는 매니폴드 $\mathbb S^2!\times!\mathbb R^3$에 놓인다. <br>→ `Sophus` 또는 `pin.bias`를 이용한 **Lie 샘플러**로 최적화. |
+| **딥러닝 통합**     | CasADi C → `torch.autograd.Function` 래핑 시 GPU inference ≈ native PyTorch 속도.                                    |
+| **병렬·폐쇄체인**    | PoE는 직렬 체인 가정. 폐쇄 루프는 가상 6‑DoF 조인트 추가 후 <br>라그랑주 승수로 제약 처리.                                                     |
+
+---
+
+## 맺음말
+
+PoE 표현은 DH 기구학의 좌표계 의존성과 파라미터 불연속 문제를 **근본적으로 해결**한다. 스크루 $\xi$와 홈 포즈 $M$만 정해지면 **Forward Kinematics, Jacobian, 동역학**까지 일관되게 파생되므로, **모델 보정·강화학습·MPC** 등 고급 기법에서 탁월한 수렴성과 견고성을 보여 준다.
+
+**Pinocchio + CasADi** 조합을 활용하면 파이썬 100여 라인 정도로 PoE 기구학 전체 파이프라인과 **임베디드용 C 코드**를 즉시 생성할 수 있다.
+
+> 이제 스크루 행렬과 홈 포즈만 준비했다면, 본문 코드 조각을 복사해 **당신의 로봇 프로젝트**에 바로 적용해 보자!
