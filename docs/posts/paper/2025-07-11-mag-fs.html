@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-07-11">
+<meta name="description" content="A Gradiometric Magnetic Force Sensor Immune to Stray Magnetic Fields for Robotic Hands and Grippers">
+
+<title>📃Gradiometric Magnetic FS 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#서론" id="toc-서론" class="nav-link" data-scroll-target="#서론"><span class="header-section-number">2.1</span> 서론</a></li>
+  <li><a href="#기술적-개요" id="toc-기술적-개요" class="nav-link" data-scroll-target="#기술적-개요"><span class="header-section-number">2.2</span> 기술적 개요</a></li>
+  <li><a href="#주요-기여" id="toc-주요-기여" class="nav-link" data-scroll-target="#주요-기여"><span class="header-section-number">2.3</span> 주요 기여</a></li>
+  <li><a href="#기술적-분석" id="toc-기술적-분석" class="nav-link" data-scroll-target="#기술적-분석"><span class="header-section-number">2.4</span> 기술적 분석</a></li>
+  <li><a href="#한계점-및-향후-과제" id="toc-한계점-및-향후-과제" class="nav-link" data-scroll-target="#한계점-및-향후-과제"><span class="header-section-number">2.5</span> 한계점 및 향후 과제</a></li>
+  <li><a href="#분석-및-비판적-논평" id="toc-분석-및-비판적-논평" class="nav-link" data-scroll-target="#분석-및-비판적-논평"><span class="header-section-number">2.6</span> 분석 및 비판적 논평</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Gradiometric Magnetic FS 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">melexis</div>
+    <div class="quarto-category">magnetic</div>
+    <div class="quarto-category">force sensor</div>
+    <div class="quarto-category">tactile</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A Gradiometric Magnetic Force Sensor Immune to Stray Magnetic Fields for Robotic Hands and Grippers
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9695271">Paper Link</a></li>
+<li><a href="https://www.melexis.com/bg/news/2022/8feb2022-melexis-gives-robots-a-sense-of-touch">Post Link</a></li>
+</ul>
+<ol type="1">
+<li>기존 자기 힘 센서는 외부 자기장 간섭에 취약하여 측정 정확도가 떨어집니다.</li>
+<li>본 논문은 다중 픽셀을 이용해 자기장 <em>구배</em>를 측정함으로써 외부 자기장에 면역인 새로운 센서 디자인을 제시합니다.</li>
+<li>이 센서는 외부 자기장 영향 없이 우수한 힘 분해능과 온도 보상 기능을 유지하며, 로봇 손 적용 시 강건한 성능을 입증했습니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문은 로봇 손과 그리퍼를 위한 미세 자장(stray magnetic fields) 간섭에 강한 자기력 센서(Gradiometric Magnetic Force Sensor Immune to Stray Magnetic Fields)를 제안합니다. 기존의 자기력 센서는 엘라스토머에 내장된 자석의 변위를 단일 자기 픽셀(magnetometer)로 측정하여 3D 힘을 감지하는 방식이었습니다. 이 방식은 미세 자장에 매우 취약하여, 지구 자기장, 모터 또는 근처 자석으로 인한 자기장이 측정값에 직접 유입되어 힘 측정 정확도를 저해하는 문제가 있었습니다.</p>
+<p>제안된 센서는 이러한 문제를 해결하기 위해 ‘gradiometric’ 개념을 도입합니다. 단일 칩 패키지 내에 여러 개의 자기 픽셀을 통합하여, 절대 자기장 값이 아닌 픽셀 간의 자기장 <em>차이</em>, 즉 자기장의 <em>gradient</em>를 측정합니다. 프로토타입은 repurposed MLX90372 칩을 사용했으며, 이 칩은 하나의 패키지에 4개의 자기 픽셀(각 픽셀은 <span class="math inline">B_x</span>, <span class="math inline">B_z</span> 측정)을 포함합니다. 이 픽셀들은 약 2 mm 간격으로 배치되어 밀리미터 스케일에서 자기장 gradient를 측정합니다. 센서는 소프트 엘라스토머(Dragon Skin 20)와 그 안에 내장된 원통형 자석으로 구성됩니다. 외부 힘에 의해 엘라스토머가 변형되면 자석이 움직여 자기장 패턴이 변화하고, 이 변화가 다중 픽셀에 의해 감지됩니다.</p>
+<p>센서의 신호 처리 과정은 다음과 같습니다.</p>
+<ol type="1">
+<li><strong>Sensitivity Correction</strong>: 온칩 온도 센서(<span class="math inline">T_{sensor}</span>) 측정값을 사용하여 홀 효과의 민감도 변화 및 엘라스토머의 열팽창/강성 변화를 보정합니다. 보정된 자기장(<span class="math inline">B_{corr}</span>)은 다음과 같습니다: <span class="math display">B_{corr} = B_{raw}(1 + \alpha\Delta T) + \beta\Delta T</span> 여기서 <span class="math inline">\Delta T = T_{chip} - 35^\circ\text{C}</span>이며, <span class="math inline">\alpha, \beta</span>는 엘라스토머 특성 변화를 보상하는 상수입니다.</li>
+<li><strong>Mean Removal</strong>: 4개 픽셀에서 측정된 <span class="math inline">B_x</span> 성분들의 평균 <span class="math inline">B_{mean,x}</span>와 <span class="math inline">B_z</span> 성분들의 평균 <span class="math inline">B_{mean,z}</span>를 계산하여 각 픽셀의 <span class="math inline">B_x, B_z</span> 측정값에서 빼줍니다. 이는 균일한 미세 자장 성분을 제거하고 자기장의 차이(<span class="math inline">\Delta B_x/\Delta x</span>, <span class="math inline">\Delta B_z/\Delta x</span> 등 gradients의 유한 차분 근사)만 남깁니다.</li>
+<li><strong>Feature Augmentation</strong>: 각 픽셀의 자기장 벡터 크기 <span class="math inline">B_{norm,i} = \sqrt{B_{x,i}^2 + B_{z,i}^2}</span>를 계산하여 새로운 특징으로 추가합니다. 이 단계 후 총 12개의 특징 벡터가 생성됩니다.</li>
+<li><strong>Polynomial Augmentation</strong>: 12개의 특징 벡터의 모든 2차 다항식 조합(상호항 포함)과 바이어스 항(1)을 생성하여 총 91개의 특징 벡터를 얻습니다.</li>
+<li><strong>Inference</strong>: 91차원 특징 벡터에 캘리브레이션을 통해 얻은 91x5 크기의 가중치 행렬(<span class="math inline">M_{weights}</span>)을 곱하여 3D 힘(<span class="math inline">F_x, F_y, F_z</span>) 및 2D 토크(<span class="math inline">T_x, T_y</span>)를 출력합니다.</li>
+</ol>
+<p>센서 캘리브레이션은 ATI nano17 레퍼런스 로드셀과 3축 이동 플랫폼을 사용하여 수행되었으며, 총 13,000개의 데이터셋을 기반으로 다항식 모델 가중치 행렬을 학습했습니다. 학습 결과는 <span class="math inline">F_z</span> (0.996), <span class="math inline">F_x</span> (0.966), <span class="math inline">F_y</span> (0.949)의 높은 결정계수(R²)를 보여주었습니다.</p>
+<p>핵심 실험 결과는 다음과 같습니다.</p>
+<ul>
+<li><strong>미세 자장 내성 (Stray-Field Immunity)</strong>: ±2 mT의 균일 외부 자기장 하에서 테스트 결과, 미세 자장 오차는 전체 스케일(2 N)의 0.3% 이내로 제한되었습니다. 이는 기존 단일 픽셀 방식(에뮬레이션 결과 약 20% 오차) 대비 약 두 자릿수 향상된 성능입니다.</li>
+<li><strong>힘 분해능 (Force Resolution)</strong>: 무부하 상태에서 2.7 mN의 RMS 힘 분해능을 달성했습니다. 이는 로봇 촉각 센서 요구 사양(10 mN)을 만족하는 수준이며, 미세 자장 내성을 제공함에도 기존 센서와 경쟁적인 성능입니다.</li>
+<li><strong>열 드리프트 보상 (Thermal Drift Compensation)</strong>: 0–50°C 범위에서 온칩 온도 센서를 활용한 보정 알고리즘이 엘라스토머 특성 변화로 인한 힘 측정값의 드리프트를 효과적으로 보상함을 입증했습니다.</li>
+<li><strong>로봇 핸드 통합 (Robotic Hand Integration)</strong>: qb SoftHand 로봇에 센서를 통합하여 근처의 강한 자석(미세 자장 약 3 mT) 존재 하에서도 풍선을 안정적으로 잡는 힘 제어를 시연했습니다. 반면 기존 단일 픽셀 방식은 미세 자장에 의해 제어가 실패했습니다.</li>
+</ul>
+<p>결론적으로 본 논문은 기존 자기력 센서의 장점(3D 힘 감지, 부드러움, 소형, 비용 효율성)을 유지하면서, 다중 픽셀 gradiometric 개념을 통해 실세계 환경에서 치명적인 약점이었던 미세 자장 간섭 문제를 효과적으로 해결하여 로봇 힘 감지의 강건성을 크게 향상시켰습니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>그래디오메트릭 자기 힘 센서 심층 리뷰: 외란 자기장에 면역인 로봇 손/그리퍼용 촉각 센서</p>
+</blockquote>
+<section id="서론" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="서론"><span class="header-section-number">2.1</span> 서론</h2>
+<p>로봇이 인간 수준의 섬세함으로 물체를 다루려면 <strong>촉각 센서</strong>를 통한 정밀한 힘 제어가 필수적입니다. 시각 센싱만으로는 한계가 있기 때문에, 접촉 지점에서의 수직(normal) 및 수평 방향(tangential) 힘 정보를 얻어 <strong>미끄럼 감지</strong>와 <strong>정밀 힘 제어</strong>를 수행해야 합니다. 이를 통해 로봇은 깨지기 쉬운 물체도 안전하게 잡거나, 미지 물체의 무게를 추정하고, 사람과의 <strong>안전한 상호작용</strong>도 가능해집니다. 인간 촉각의 성능을 고려한 로봇용 촉각 센서의 목표 사양으로는, 약 <strong>10&nbsp;mN(1&nbsp;그램 정도 무게)</strong> 수준의 힘 분해능, 5&nbsp;mm 간격의 공간 해상도, 3축(force 3D 벡터) 측정, 1000:1의 다이나믹 레인지, 1&nbsp;ms 응답속도 등이 제시되어 있습니다. 또한 센서 표면은 피부처럼 부드러워야 하며 접촉면적을 넓히기 위해 일정 수준의 <em>유연성(compliance)</em>을 가져야 합니다. 관절에 장착되는 경성 6축 힘-토크 센서와 달리, 손가락 끝 <strong>피부 표면에 분산 배치</strong>될 부드러운 촉각 센서 기술이 요구됩니다.</p>
+<p>현재까지 다양한 촉각 센서 기술들이 연구되어 왔습니다. 예를 들어, 유체(microfluid) 압력 또는 저항 변화를 이용한 센서들은 손가락 전체를 둘러싼 <strong>분산형 촉각 피부</strong>를 구현할 수 있지만, 국소적인 3축 힘을 직접 측정하지는 못합니다. 카메라 기반의 <strong>광학 촉각 센서</strong>(예: GelSight, NeuroTac)는 높은 해상도로 접촉면 변형을 측정하여 물체의 패턴이나 질감을 인식할 수 있으나, <strong>부피가 크고 데이터 처리량이 많으며</strong> 전력 소모도 상당합니다. 포토다이오드 4분할 검출기를 이용한 상업 센서(구 OptoForce 등)는 카메라보다 경량화했으나 여전히 수백&nbsp;mW 이상의 전력을 소모하며, 현재는 단품 판매가 중단되었습니다. <strong>자기 센서 기반 촉각 센서</strong>는 이러한 대안으로 주목받아 왔습니다. 자기장 방식은 일반적으로 작은 3축 자기 센서 칩과 자석, 그리고 탄성체(elastomer)로 구성되며, 힘이 가해지면 자석이 미세 변위하여 주변 자기장이 변하고 이를 측정해 3축 힘을 계산합니다. 이 방식은 <strong>구조가 단순하고 비용 효율적</strong>이며, 한 개의 칩만으로도 3축 힘을 감지하는 <strong>컴팩트한 패키지</strong>를 구현할 수 있어 다수의 촉각 픽셀(taxel) 배열에 적합합니다. 실제로 선행 연구들에서 단일 센서의 힘 분해능이 수&nbsp;mN 수준(수직 1.42&nbsp;mN, 전단 0.71&nbsp;mN)에 도달하였고, 이를 2×2 배열로 확장한 사례나 4×4, 최대 24개의 센서를 손끝에 분산 배치한 자기 촉각 피부 구현까지 보고되었습니다. 이러한 자기 촉각 센서는 <strong>3차원 힘 벡터</strong>를 <strong>높은 감도</strong>로 측정하고 <strong>소형화</strong>가 가능하며, 표면을 부드러운 실리콘 등의 탄성 재질로 만들어 <strong>인체 피부와 유사한 촉감</strong>을 가지게 할 수 있다는 장점이 있습니다.</p>
+<p>그러나 기존의 단일 자기 센서 기반 촉각 센서는 치명적인 약점이 있었는데, 바로 <em>외부 자기장 교란(stray magnetic field)</em>에 매우 민감하다는 점입니다. 센서가 측정하는 자기장은 원래 탄성체 내부 자석의 위치 변화로 인한 것이지만, 주변에 존재하는 다른 자석이나 전류에 의한 자기장이 있으면 센서는 이를 구분하지 못하고 합쳐서 측정해버립니다. 예컨대 지구 자기장(약 50&nbsp;μT)이나 로봇 구동 모터, 가까운 자석에서 발생하는 필드는 센서 출력에 그대로 더해져, 실제 접촉력과 무관한 <strong>오차를 발생</strong>시킵니다. 실험실이 아닌 <strong>실제 환경의 로봇</strong>에는 이런 자속 교란이 흔하므로, 기존 자기 촉각 센서를 로봇에 탑재할 경우 신뢰성 문제가 제기되어 왔습니다. 일부 연구에서는 코일을 이용한 <strong>유도식 보상 방법</strong> 등으로 저주파 외란을 줄이려 했으나, 센서 크기가 1&nbsp;cm 이상 커지고 주변 금속에도 민감한 단점이 있었습니다. 이러한 배경에서, 2022년 RA-Letter 논문 “A Gradiometric Magnetic Force Sensor Immune to Stray Magnetic Fields for Robotic Hands and Grippers”는 <strong>외란 자기장에 영향을 받지 않는 새로운 자기 촉각 센서 설계</strong>를 제안하였습니다. 이 센서는 <strong>다중 픽셀 자기 센서</strong> 구조를 통해 자기장의 <em>기울기(gradient)</em>를 측정함으로써 균일한 외부 자기 신호를 제거하는 방법을 사용합니다. 이하에서는 해당 논문의 기술적 내용과 기여를 심층 분석하고, 기존 기술과의 비교, 한계점 및 향후 발전 방향을 논의합니다.</p>
+</section>
+<section id="기술적-개요" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="기술적-개요"><span class="header-section-number">2.2</span> 기술적 개요</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2025-07-11-mag-fs/1.png" class="img-fluid figure-img"></p>
+<figcaption>1</figcaption>
+</figure>
+</div>
+<p><em>그림 1. 단일 픽셀 기반 자기 힘 센서(위)와 다중 픽셀 <strong>그래디오메트릭</strong> 자기 힘 센서(아래) 개념도 비교. 기존 방식은 하나의 3축 자기 센서로 자석 변위를 측정하므로 외부 균일 자기장 <span class="math inline">B_{\text{stray}}</span>에 취약하여 힘 출력이 교란된다(왼쪽). 반면 새로운 다중 픽셀 센서는 동일한 패키지 내 4개의 자기 센서 픽셀을 배치하고, 내부적으로 </em>차동 측정(differential measurement)**을 수행하여 균일한 외란 자기장을 상쇄한다(오른쪽).*</p>
+<p><em>그래디오메트릭 자기 힘 센서(GMFS)</em>는 하나의 센서 모듈 안에 여러 개의 미소 자기 센서 픽셀을 가까이 배치하여, 출력 신호 간 <em>차분(differential)</em>을 취하는 방식으로 동작합니다. 논문에서는 Melexis 사의 Triaxis® 기반 <strong>MLX90372</strong> 칩을 활용했는데, 이 칩은 5&nbsp;mm × 4.3&nbsp;mm × 0.9&nbsp;mm 크기의 작은 패키지 안에 <em>2개의 CMOS 다이(die)</em>를 담고 있고, 다이마다 2개의 자기 픽셀이 배열되어 있어 총 4개의 픽셀을 제공합니다. 픽셀 간 거리는 약 2&nbsp;mm에 불과하여, 실질적으로 수&nbsp;mm 공간 크기에서의 <em>자기장 구배(gradient)</em>를 측정할 수 있습니다. 각 픽셀은 2축의 자기장 성분(칩 표면에 수직인 <span class="math inline">B_z</span> 축 성분과 한 방향의 수평 성분 <span class="math inline">B_x</span>)을 측정합니다. (※ MLX90372 칩은 두 번째 수평 축 <span class="math inline">B_y</span>는 출력하지 않지만, 이는 설계상 큰 문제는 없었습니다.) 이러한 <strong>멀티픽셀 자기 센서 IC</strong> 위를 부드러운 실리콘 계열 탄성체(논문에서는 Smooth-On사의 Dragon Skin 20)를 덮고 그 내부에 <strong>소형 원형 자석</strong>(네오디뮴 자석, 축 방향 자기화)을 매립합니다. 이 구조는 기존 단일 자기 촉각 센서와 유사하나, 한 패키지 안에 복수의 센서 픽셀이 있다는 점이 다릅니다. 외부에서 탄성체 표면에 힘이 가해지면, 자석이 미세하게 움직이면서 주변 자기장 분포가 변합니다. 이 변화를 바로 아래 배치된 4개의 픽셀이 각기 다른 위치에서 감지하여, <strong>자석과 픽셀들 간 위치 관계 변화</strong>를 읽어내는 것입니다.</p>
+<p>자석의 변위가 <strong>수직 방향</strong>일 때는 모든 픽셀에서 자장 세기가 거의 균일하게 증가하거나 감소하지만, 서로 인접한 픽셀의 출력 차이를 보면 특히 <span class="math inline">B_x</span> 성분의 공간 구배(∂<span class="math inline">B_x</span>/∂x)가 뚜렷하게 나타납니다. 반대로 자석이 <strong>측면 방향</strong>으로 이동(전단 힘 작용)하면 픽셀마다 자석과의 거리가 달라져서 <span class="math inline">B_z</span> 성분 분포에 차등이 생기고, 주로 ∂<span class="math inline">B_z</span>/∂x 성분이 변화합니다. 다시 말해, 4개의 픽셀이 <strong>위치별 자기장 변화를 동시에 측정</strong>함으로써 자석의 3차원 이동을 추정할 수 있습니다. 그림 1의 개념도에서 보이듯, 이러한 <strong>공간 구배 신호</strong>는 공간 전체에 고르게 미치는 외란 자기장에 대해서는 모두 동일하게 나타나므로, 픽셀 간 평균값을 빼주면 상쇄됩니다. 결과적으로 센서는 <strong>자석의 위치 변화로 인한 국소적인 자기장 불균일 신호만 추출</strong>하게 되어, 외부에서 유입되는 균일한 자기 간섭에는 거의 영향을 받지 않게 됩니다.</p>
+<p>한편, 기계적 구조 측면에서 이 센서는 원통형의 평평한 실리콘 쿠션을 사용하였습니다. 이전 연구들에서는 피라미드형 돌기나 돔 형태의 탄성체를 쓰기도 했지만, 평평하고 넓은 접촉면을 주면 접촉 시 자석이 기울어지는 것을 줄이고 물체를 감싸는 <strong>안정적인 접촉</strong>이 가능하다는 이점이 있습니다. (자석 주변 탄성체를 육면체로 만들고 그 위에 얇은 피부를 덮는 형태도 대안이 될 수 있다고 합니다.) 자석은 탄성체 내부에 매립되어 있기 때문에 외부와 직접 접촉하지 않으며, 센서가 철제 물체에 달라붙는 일도 방지할 수 있습니다.</p>
+<p>이 센서의 설계에서 중요한 트레이드오프로 <strong>최대 측정 힘 범위</strong>(full-scale force)와 <em>민감도(signal-to-noise ratio, SNR)</em>를 들 수 있습니다. 일반적으로 더 큰 자석이나 자속이 강한 자석을 쓰면 픽셀이 얻는 자기 신호가 커져 SNR은 향상되지만, 탄성체의 강성과 두께에 따라 센서가 견딜 수 있는 최대 힘에는 큰 변화가 없었습니다. 반면 <strong>자석과 센서 간 거리</strong>(airgap)를 줄이면 신호는 커지지만 자석이 움직일 수 있는 물리적 여유가 줄어들어 최대 측정 힘이 감소합니다. 탄성체의 <em>경도(hardness)</em>도 유사한 trade-off를 보이는데, 더 단단한 재료일수록 동일 힘에 자석 변위가 작아져 신호 변화량이 작아지므로 감도는 떨어지지만, 큰 힘에도 덜 변형되므로 최대 측정 범위는 커집니다. 탄성체의 <strong>지름(diameter)</strong> 역시 영향을 주는데, 지름을 키우면 동일 힘이 넓은 면적으로 분산되어 자석 아래 국부 압력이 낮아지므로 신호가 줄어들지만 대신 더 큰 힘까지 버틸 수 있습니다. 논문에서는 로봇 손가락용으로 약 <strong>2&nbsp;N 정도의 풀스케일 힘</strong>을 목표로 설계를 최적화했고, 이는 실제 서비스 로봇 손끝이 깨지기 쉬운 물체(예: 달걀)를 다룰 때 사용하는 힘 범위와 유사한 수준입니다.</p>
+</section>
+<section id="주요-기여" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="주요-기여"><span class="header-section-number">2.3</span> 주요 기여</h2>
+<p>이 논문이 제안한 그래디오메트릭 자기 힘 센서는 기존 기술 대비 다음과 같은 주요 혁신과 성능 개선을 달성했습니다.</p>
+<ul>
+<li><p><strong>외란 자기장 억제를 위한 다중 픽셀 차동 설계:</strong> 단일 3축 홀 센서로 구성된 기존 자기 촉각 픽셀은 외부 자기 교란에 취약하여, 주변에 자석이나 전류가 있을 경우 측정 힘 값이 크게 왜곡되었습니다. 반면 본 연구의 센서는 4개의 센서 픽셀이 <strong>칩 내부에서 밀집 배열</strong>되어 있어, 모든 픽셀에 공통으로 인가되는 균일 자기장을 서로 소거할 수 있습니다. 즉, 각 픽셀의 출력에서 공통 성분(평균 값)을 빼면 자석 위치 변화로 인한 국부적인 변화만 남기 때문에, <strong>외부 자기장의 영향 없이 오직 접촉력에 의한 신호만을 읽어낼 수 있게</strong> 됩니다. 이러한 원리는 Helmholtz 코일로 ±2&nbsp;mT의 강한 자기장을 걸어 실험한 결과에서 잘 나타났습니다. 제안된 센서는 <em>±2&nbsp;mT의 균일 외란 필드가 존재해도 출력 힘 오차가 전체 범위의 약 0.3%</em>에 불과했지만, 동일 조건에서 기존 단일 픽셀 방식으로 동작하도록 설정하면 <strong>약 20%에 달하는 큰 오차</strong>가 발생했습니다. 이는 <strong>두 자릿수(약 100배) 이상</strong>의 외란 내성 향상으로, 로봇에 센서를 장착한 상황에서 모터나 주변 자석으로 인한 잘못된 힘 피드백 문제를 획기적으로 줄일 수 있음을 의미합니다.</p></li>
+<li><p><strong>고차 모델 기반 신호처리 및 실험적 검증:</strong> 여러 픽셀의 자기장 데이터를 종합하여 3축 힘으로 변환하기 위해, 저자들은 <strong>다항 회귀 모델</strong>을 이용한 신호처리 체계를 구축했습니다. 4개 픽셀로부터 얻은 <span class="math inline">B_x, B_z</span> 값들에 대해 우선 온도에 따른 센서 감도 변화를 2차 보정하고, 각 축 성분의 평균을 제거하여 <strong>자기장 구배 성분</strong>을 추출했습니다. 이어서 각 픽셀의 <span class="math inline">B</span> 벡터 크기(norm)까지 포함하여 픽셀당 3개의 특징을 만들고(총 12차원), 이들을 2차까지 조합한 <strong>다항식 특징 91개</strong>를 생성하였습니다. 마지막으로 이 91차원 벡터에 대해 <em>선형 가중치 행렬(91×5)</em>를 곱하여 5개의 출력(3축 힘 <span class="math inline">F_x, F_y, F_z</span> 및 수평면내 2축 토크 <span class="math inline">T_x, T_y</span>)를 계산하도록 모델을 설계했습니다. (자석의 축 대칭성 때문에 수직 방향 토크 <span class="math inline">T_z</span>는 감지할 수 없음도 언급하고 있습니다.) 이러한 모델의 <strong>가중치 파라미터</strong>는 실제 힘 데이터를 이용해 학습되었는데, ATI Nano17 6축 로드셀을 장착한 3축 스테이지로 센서를 눌러가며 약 <strong>13,000개의 다양한 3D 위치</strong>에서 센서 출력과 참조 힘을 측정한 <strong>대규모 캘리브레이션</strong>을 수행했습니다. 수집된 데이터에 대해 <em>허버 손실(Huber loss)</em>과 L1 정규화를 사용한 확률적 경사하강법으로 최적의 매핑 가중치를 학습한 결과, 모델이 예측한 힘과 로드셀이 측정한 힘 간 상관도가 수직 힘 <span class="math inline">F_z</span>에 대해 <span class="math inline">R^2 = 0.996</span>, 수평 힘 <span class="math inline">F_x, F_y</span>에 대해서도 0.966 및 0.949로 매우 높게 나타났습니다. 이는 <strong>3축 전체에 걸쳐 정밀한 힘 복원</strong>이 가능함을 보여주며, 마찬가지로 2축 토크도 높은 상관도로 일치함을 확인했습니다. 또한 센서 IC 내부의 온도 센서를 활용한 1차 보정 알고리즘으로 <em>온도 변화(0–50&nbsp;℃)</em>에 따른 출력 드리프트를 최소화하여, 열 팽창으로 인한 오차도 효과적으로 보상했습니다.</p></li>
+<li><p><strong>고해상도 및 고감도 힘 감지 성능:</strong> 그래디오메트릭 설계는 신호 간 차동 동작으로 인해 <strong>이론적으로 신호 대 잡음비(SNR)가 낮아질 우려</strong>가 있었습니다. 매우 인접한 픽셀들에서 측정하는 자기장 분포 차이는 절대값에 비해 작기 때문에, 미세 신호를 증폭하는 과정에서 잡음 영향이 커질 수 있기 때문입니다. 그러나 논문 결과에 따르면, 제안된 센서는 약 <em>2.7&nbsp;mN (0.0027&nbsp;N)</em>의 힘 분해능(RMS 기준)을 달성하여, 인간 촉각 수준으로 제시된 10&nbsp;mN 목표치를 훨씬 뛰어넘고 기존 단일 픽셀 자기 센서들과도 <strong>대등한 수준의 해상도</strong>를 유지했습니다. <span title="Tactaxis 프로토타입의 3축 힘 분해능은 2.7 mN으로, 약 0.3그램의 무게 변화를 감지할 수 있는 수준이다.">이는 센서 출력 힘 0.3&nbsp;그램 미만의 변화도 구별할 수 있는 민감도에 해당합니다</span>. 흥미로운 점은, 다중 픽셀의 <strong>신호 결합으로 오히려 SNR을 향상</strong>시켜 이러한 성능 손실을 보완했다는 것입니다. 즉, 픽셀들의 출력을 조합함으로써 잡음 평균화 효과를 얻었고, 결과적으로 <strong>외란 자기장에 대한 면역성을 확보하면서도 높은 힘 감도를 유지</strong>할 수 있었습니다. 전체 센서의 크기도 5×5×5&nbsp;mm 정도로 매우 작아 로봇 손가락 내부에 쉽게 내장할 수 있으며, 한 패키지에 센서 소자와 신호처리 회로 일부가 집적되어 있어 <strong>소형 모듈로 대량 생산</strong>하기에 적합한 형태를 보여주었습니다.</p></li>
+</ul>
+</section>
+<section id="기술적-분석" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="기술적-분석"><span class="header-section-number">2.4</span> 기술적 분석</h2>
+<p><strong>1) 기존 자기 촉각 센서와의 비교:</strong> 그래디오메트릭 자기장 센서는 기존의 단일 홀센서 기반 촉각 픽셀들과 비교해 <strong>근본적인 전자기적 이점</strong>을 제공합니다. 과거의 자기 촉각 센서들은 Melexis MLX90393과 같은 단일 픽셀 3축 홀IC를 사용하였고, 여러 장을 배열하여 촉각 피부를 구성하더라도 <strong>각 픽셀이 개별적으로 외란 필드에 취약</strong>하다는 한계가 있었습니다. 반면 본 연구는 동일 칩 내에 복수의 센서를 넣어 외란을 <em>장비적(하드웨어적으로 상쇄)</em>하는 개념을 적용하여 이 문제를 해결했습니다. 이 접근법은 추가적인 외부 보정장치 없이도 센서 자체가 <strong>환경 자기 노이즈를 견딜 수 있는 내성</strong>을 가지게 했다는 점에서 가치가 큽니다. 그 결과, 센서를 로봇에 통합할 때 모터, 스피커, 전류선 등의 영향으로 센서가 오작동하거나 재보정해야 하는 빈도를 크게 줄여줄 것으로 기대됩니다.</p>
+<p>또한 그래디오메트릭 방식은 기존 자기 센서의 <strong>장점은 그대로 유지</strong>합니다. 즉, 접촉면이 부드러운 탄성체로 이루어져 있어 사람 피부처럼 물체와 <strong>안정적으로 밀착</strong>할 수 있고, 센서 단가도 카메라나 광센서에 비해 낮으며, 소모 전력도 매우 적습니다. Optical 센서의 경우 외란 자기장 문제는 없지만 여러 개의 광학 부품과 카메라로 구성되어 가격이 센서 한 개당 수백 달러 수준으로 높았던 반면, 자기장 센서는 수&nbsp;달러 수준으로 대량 생산이 가능합니다. 실제로 Meta(Facebook) AI에서 발표한 ReSkin과 같은 개방형 자기 촉각 센서는 개당 6달러 정도의 저가에 제작할 수 있으나, 외란 자기장에 취약하다는 한계가 지적되었습니다. 본 논문의 연구는 이러한 <strong>실용적 약점을 근본적으로 개선</strong>함으로써, 자기 촉각 센서 기술을 연구실 단계에서 산업 현장으로 가져가는 데 기여할 것으로 보입니다. 아울러 Honeywell의 FMA 시리즈와 같은 상용 소형 힘 센서는 압전저항 소자를 이용해 작은 힘을 정밀 측정하지만 수직 방향 힘만 감지할 수 있는 제약이 있는데, 이 그래디오메트릭 센서는 한 개 모듈로 <strong>3축 힘을 모두 측정</strong>할 수 있어 한층 풍부한 촉각 정보를 제공합니다. 종합하면, 제안된 센서는 기존 자기 촉각 센서들의 장점(3D 벡터 측정, 부드러운 표면, 저가격, 소형화)을 그대로 가지면서도 가장 큰 약점이던 외란 필드 민감도를 극복한 <strong>균형 잡힌 혁신</strong>이라고 평가할 수 있습니다.</p>
+<p><strong>2) 그래디오메트릭 설계의 장단점:</strong> 다중 픽셀을 이용한 그래디오메트릭 구조는 <strong>하드웨어적으로 보다 복잡</strong>합니다. 단일 센서로 구현하던 것을 4배수의 센서로 구현하므로, 칩 설계나 데이터 처리 측면에서 신호 경로가 늘어나고 보정해야 할 요소가 많습니다. 예를 들어 4개 픽셀의 <strong>상대 정렬</strong>이나 <strong>감도 편차</strong> 등을 고려한 보정이 선행되어야 하고, 3축 힘을 얻기 위해 다차원 다항식 연산을 수행해야 합니다. 논문에서도 센서 출력을 실제 힘으로 변환하기 위해 13,000개나 되는 캘리브레이션 데이터를 모아 학습시킨 바 있는데, 이 정도의 <strong>데이터 수집 및 모델 트레이닝 과정</strong>은 센서 제작 후 매번 수행하기 어려우므로 양산 시에는 모델 일반화 또는 공장 초기보정 등의 현실적인 방안이 필요할 것입니다. 다만 저자들은 현재의 신호처리 알고리즘은 오프라인(PC)으로 구현되었지만, 충분히 경량화 가능하며 칩에 통합하거나 마이크로컨트롤러로 실시간 처리하는 것도 가능하다고 언급하고 있습니다. 또 하나의 제한점으로는, 이 센서가 자석의 수평 회전에 대해 대칭 구조이므로 <strong>회전(z축 토크) 감도는 거의 없다는 점</strong>입니다. 즉, 물체를 비틀거나 하는 토크까지 한 픽셀로 측정하는 것은 어렵고, 이러한 6축 정보까지 필요할 경우 센서를 여러 개 배치하거나 구조를 수정해야 할 것입니다. <strong>SNR 측면의 단점</strong>도 이론적으로 존재하는데, 균일한 자기장은 제거되나 그만큼 유용신호 성분도 차분으로 인해 감소하므로, 주어진 회로에서의 잡음 비중이 커질 수 있습니다. 논문에서는 멀티픽셀 신호 결합으로 이 문제를 어느 정도 만회했지만, 근본적으로 단일센서 대비 <em>신호 여유(margin)</em>가 줄어드는 것은 감수해야 합니다. 따라서 향후에는 홀 센서 대신 TMR이나 GMR 같은 <strong>고감도 자기 센서 소자</strong>를 픽셀로 활용하거나, 픽셀 수를 늘려 신호를 증폭하는 방식도 고려될 수 있습니다. 요약하면 그래디오메트릭 구조는 <strong>약간의 복잡성과 추가 보정 노력</strong>을 요구하지만, 그 대가로 실사용에 치명적이었던 외란 민감도를 해결하고 3축 벡터와 높은 해상도를 유지하게 해주는, 충분히 투자 가치가 있는 개선으로 볼 수 있습니다.</p>
+<p><strong>3) 로보틱 플랫폼 통합 가능성:</strong> 본 센서는 이미 소형 패키지로 구현되어 있어 <strong>로봇 손가락이나 그리퍼에 손쉽게 장착</strong>할 수 있습니다. 저자들은 시연을 위해 이 센서를 이탈리아 qbrobotics의 상용 <strong>qb SoftHand</strong> 로봇 손에 부착하고, 간단한 <strong>힘 제어 알고리즘</strong>을 적용하여 풍선을 살짝 쥐는 실험을 수행했습니다. 그 결과, 외란 자석이 없는 상태에서는 이전의 단일 픽셀 센서와 신형 센서 모두 풍선을 적절한 힘으로 잡았지만, 손 가까이에 자석을 가져다 대자 두 접근법의 차이가 극명하게 드러났습니다. <strong>단일 픽셀 센서</strong>로 동작한 경우 자석의 필드 때문에 센서 출력이 오동작하여 로봇 손이 풍선을 <strong>놓쳐 버리거나 지나치게 힘을 주어 터뜨리는</strong> 상황이 발생했지만, <strong>다중 픽셀 그래디오메트릭 센서</strong>로 동작한 경우 자석이 매우 가까이 접근해 약 3&nbsp;mT 수준의 강한 교란이 가해져도 <strong>센서 출력이 흔들리지 않아</strong> 손이 풍선을 계속 안정적으로 쥐고 있을 수 있었습니다. 이는 실제 응용에서 이 센서가 가지는 큰 강점을 보여줍니다. 로봇이 전자제품 주위나 자기 재료가 많은 환경에서 작업할 때도 <strong>안정적인 그립 제어</strong>를 유지할 수 있고, 추가 차폐 없이도 센서가 작동하기 때문입니다. 더욱이 이 센서는 완전한 <strong>반도체 공정 기반</strong>으로 제작되었기 때문에, 기존의 광학식 촉각 센서처럼 복잡한 정렬이나 보정 없이도 칩 단위로 <strong>공장 출하 시 교정된 형태의 모듈</strong>로 제공할 수 있습니다. Melexis 등 반도체 업체를 통해 대량생산이 이루어지면, 로봇 손가락마다 수십 개의 촉각 픽셀을 피부처럼 붙이는 것도 비용 면에서 현실화될 수 있습니다. 실제로 저자들은 본 연구를 “Tactaxis”라는 프로토타입 센서로 명명하고 있으며, 차후 이 기술을 발전시켜 <strong>대량 생산 가능 제품화</strong>를 추진할 계획임을 밝히고 있습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2025-07-11-mag-fs/2.png" class="img-fluid figure-img"></p>
+<figcaption>2</figcaption>
+</figure>
+</div>
+<p><em>그림 2. <strong>그래디오메트릭 자기 촉각 센서</strong>를 로봇 손에 통합하여 풍선을 잡은 상태에서 외란 자기장의 영향을 시험한 실험 장면. (a) 제안된 다중 픽셀 센서는 옆의 강한 자석이 접근해도 출력이 교란되지 않아 로봇 손이 풍선을 계속해서 안정적으로 쥐고 있다. (b) 기존 단일 픽셀 센서는 자석 때문에 측정값이 변동하여 로봇 손이 풍선을 놓치거나 눌러 터뜨리는 문제가 발생한다. (c) 실험에 사용된 폐회로 힘 제어 알고리즘의 개략도.</em></p>
+</section>
+<section id="한계점-및-향후-과제" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="한계점-및-향후-과제"><span class="header-section-number">2.5</span> 한계점 및 향후 과제</h2>
+<p>그래디오메트릭 자기 힘 센서 기술은 외란 환경에서의 탁월한 성능을 입증하였지만, 실용화를 위해 고려해야 할 <strong>한계점과 도전 과제</strong>도 존재합니다. 먼저, <strong>설계의 확장성(scale-up)</strong> 측면에서 현재 프로토타입은 4픽셀 한 묶음의 센서 하나로 동작했습니다. 로봇 전체 손바닥이나 손가락에 <strong>다수의 촉각 픽셀 배열</strong>을 형성하려면, 이와 같은 센서를 여러 개 매트릭스 형태로 배치해야 하는데, 이 경우 인접한 센서들 간 자석 필드 간섭 또는 패키지 간 간격 등에 대한 추가 연구가 필요합니다. 예컨대 픽셀 사이 거리 2&nbsp;mm 수준에서는 한 픽셀의 자석이 주변 픽셀의 센서에 영향을 줄 가능성도 있으므로, 여러 센서 모듈을 동시에 사용할 때 발생하는 <em>크로스토크(crosstalk)</em>를 평가하고 방지하는 설계가 필요합니다. 다행히, 이전 연구들에서 단일 픽셀 자기 센서를 2×2, 4×4, 5×5 등으로 <strong>격자 배열</strong>한 사례들이 있었고 특별한 문제 없이 동작했으므로, 그래디오메트릭 센서 역시 모듈 단위로 배열하는 것이 충분히 가능할 것으로 보입니다.</p>
+<p>다음으로 <strong>양산 및 보정 문제</strong>가 있습니다. 앞서 기술한 바와 같이 이 센서는 제조 후 비교적 복잡한 다차원 보정 절차를 거쳐야 정확한 힘 값을 출력합니다. 이는 연구 단계에서는 충분히 가능한 작업이지만, 수많은 센서를 생산하여 일일이 교정하기에는 현실적인 비용과 시간이 문제가 될 수 있습니다. 따라서 <strong>공장 출하시 표준 캘리브레이션 데이터</strong>를 활용해 개별 센서의 보정 파라미터를 빠르게 세팅하거나, 생산 공정의 정밀도를 높여 센서 간 편차를 최소화함으로써 보정 과정을 단순화하는 방안 등이 필요합니다. Melexis 보도자료에 따르면 이러한 공정 통합과 <strong>자동 교정</strong>에 대한 로드맵이 언급되고 있는데, 이는 그래디오메트릭 센서가 상용화되기 위해 반드시 넘어야 할 과제입니다. 또한 현재 신호처리는 외부 프로세서에서 이뤄지지만, 최종적으로는 센서 출력이 바로 힘 값으로 제공될 수 있도록 <strong>온칩 신호처리</strong>를 포함하는 방향으로 발전할 수 있습니다. 이것은 센서 데이터를 다루는 시스템 통합을 간소화하고, 통신 대역폭 요구를 줄이며, <strong>실시간 제어</strong>에 유리할 것입니다.</p>
+<p><strong>기계적 신뢰성</strong> 및 <strong>내구성</strong>도 고려해야 합니다. 탄성체로 된 센서는 반복된 하중에 따른 피로, 크립(creep) 특성, 온도 및 시간에 따른 경도 변화 등이 발생할 수 있습니다. 논문에서도 온도 변화 0–50&nbsp;℃ 구간에서 탄성체 열팽창과 연화로 인한 힘 측정 드리프트가 최대 20~30%까지 생기는 것을 확인하고 1차 보정으로 이를 보상하였지만, <strong>장시간 사용 시의 열적/기계적 안정성</strong>은 추가 검증이 필요합니다. 예를 들어 50&nbsp;℃ 이상 고온 환경이나 0&nbsp;℃ 이하 저온 환경, 또는 수만 회 이상의 반복 힘 작용 후에도 초기의 캘리브레이션이 유지되는지 관찰해야 합니다. 자석의 <em>영구자화 세기 감소(demagnetization)</em>나 탄성체의 <strong>변형 영구잔류(hysteresis)</strong> 등이 발생하면, 힘-자기장 모델이 변동하여 오차가 늘어날 수 있기 때문입니다. 이러한 문제에 대해서는 자석 재질 및 코팅의 개선, 탄성체 소재의 선택, 온도 센서 피드백을 활용한 <strong>다차원 온도 보정 알고리즘</strong> 등으로 대응할 수 있을 것입니다. 끝으로, 이 센서는 <strong>수직 토크 성분</strong>에 대해 민감하지 않다는 태생적 한계가 있습니다. 로봇 손가락 촉각에는 일반적으로 접촉력 3축 정보만으로도 충분한 경우가 많지만, 만약 물체와의 마찰로 발생하는 비틀림을 감지하려면 센서 구조를 추가하거나 다른 보조 메커니즘을 마련해야 합니다. 예를 들어 십자 배열로 두 개의 자석을 배치하거나, 비대칭 형상의 자석을 사용해 토크에 대한 응답을 일부러 만들어내는 등의 연구가 향후 진행될 수 있습니다.</p>
+<p>요약하자면, <strong>그래디오메트릭 자기 촉각 센서</strong>는 큰 가능성을 지닌 기술이지만 상용 로봇에 폭넓게 적용되기까지는 생산 공정 최적화, 다중 센서 어레이 구성, 장기 안정성 검증 등의 추가 과제가 남아 있습니다. 이러한 부분은 향후 연구 및 개발을 통해 충분히 개선할 수 있으며, 실제 제품화 시 엔지니어링 솔루션으로 보완될 것으로 기대됩니다.</p>
+</section>
+<section id="분석-및-비판적-논평" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="분석-및-비판적-논평"><span class="header-section-number">2.6</span> 분석 및 비판적 논평</h2>
+<p>이 논문은 로봇용 촉각 센서 분야에서 오랫동안 지적되어 온 <strong>외란 자기장 문제</strong>를 해결하기 위한 창의적 해법을 제시하고, 이를 실험적으로 입증했다는 점에서 큰 의의가 있습니다. 기술적 기여도 매우 명확하여, 기존 자기 촉각센서의 <strong>현실 적용성</strong>을 가로막던 장애를 극복하고도 성능 타협이 거의 없음을 보여주었습니다. 실제로 2&nbsp;mT 수준의 강한 외부 자기장 하에서도 센서 출력 오차가 0.3%에 불과하다는 결과는 놀라운 수준이며, 3축 2.7&nbsp;mN 해상도 역시 현재 보고된 촉각 센서 중 최상위권에 속합니다. 특히 주목할 점은, 이러한 <strong>외란 면역 설계가 로봇 제어에 미치는 효과</strong>를 직접 시연한 부분입니다. 단순히 센서 스펙 향상에 그치지 않고, 실제 로봇 손으로 풍선을 잡는 데 적용하여 기존 센서였으면 발생했을 문제(자석으로 인한 오작동)를 새로운 센서로는 해결할 수 있음을 명확히 보여주었습니다. 이는 이 기술의 <strong>실용적 가치</strong>를 독자들에게 강하게 인식시키는 요소로, 응용 측면과 학술 기여의 균형을 잘 맞춘 사례라 할 수 있습니다.</p>
+<p>물론 한편으로는 이 연구에서 다루지 않은 <strong>잠재적 문제</strong>들도 존재합니다. 첫째, <strong>온도 변화 및 장기 안정성</strong> 이슈는 완전히 해결된 것이 아닙니다. 논문에서는 0–50&nbsp;℃ 구간에서의 선형 보정으로 온도 드리프트를 줄였지만, 센서가 다양한 환경(예: -20&nbsp;℃ 냉동창고나 70&nbsp;℃ 온실 등)에서 사용할 경우나 수개월 이상의 시간 경과 후에도 동일한 성능을 유지하는지는 추가 검증이 필요합니다. 탄성체의 열적 특성과 자석의 온도 의존성, 그리고 기계적 피로는 시간이 지날수록 보정 모델과 어긋날 수 있기 때문에, <em>자동 재교정(auto-calibration)</em>이나 추가 센서(예: 스트레인 게이지로 탄성체 변형 직접 측정 등) 도입 등의 보완이 고려될 수 있습니다. 둘째, <strong>비균일한 외부 자기장</strong>에 대한 면역성은 여전히 한계가 있을 것입니다. 그래디오메트릭 센서는 공간적으로 거의 일정한 외란 필드를 제거하는 데 최적화되어 있지만, 만약 외부 자석이 센서 한쪽 가까이에 위치하여 <strong>국부적으로 강한 구배 필드</strong>를 유발한다면 이를 완전히 구분해내기는 어려울 수 있습니다. 예를 들어 로봇이 영구자석 자체를 집거나, 강한 자기체를 지닌 물체를 다루는 경우, 그 물체에서 나오는 필드 패턴이 센서의 예상 모델과 섞여 오차를 일으킬 가능성이 있습니다. 이런 상황은 일반적이지는 않지만, 그래도 <strong>센서의 적용 범위</strong>에 대한 한계로 인지해야 합니다. 셋째, <strong>자기적 간섭</strong> 외에 다른 요인들—예를 들어 인접한 금속 구조에 의한 자기장 왜곡, 혹은 전자기적 잡음—에 대해서도 추가적인 실험이 필요합니다. 논문에서는 로봇 손가락의 알루미늄/플라스틱 구조에서 문제없이 작동했지만, 만약 센서 주변에 강자성체 부품이 있다면 자석의 필드가 그쪽으로 달라붙어 왜곡되거나 감도가 저하될 수 있습니다. 따라서 센서 주위 재질 선택과 설치 위치 등도 신중히 고려해야 할 것입니다.</p>
+<p>마지막으로, <strong>실용화 관점에서의 경제성</strong>도 짚어볼 점입니다. 이 논문은 기업(Melexis) 주도로 수행되어 비교적 현실을 감안한 내용이지만, 아직은 연구 프로토타입 단계로 소량 제작되었습니다. 대량 생산 시 <strong>단가</strong>와 <strong>신뢰성</strong>, 수율 등이 중요할 텐데, 그래디오메트릭 센서는 구조가 다소 복잡하여 단일 센서 대비 제조 공정이 늘어날 수 있습니다. 하지만 반도체 공정 기술과 센서 보정 기법이 꾸준히 발전하고 있으므로 이러한 문제는 충분히 해결 가능해 보입니다. 특히 메틀룩시스(Melexis) 등에서 이미 stray-field immune 위치 센서 등을 양산한 경험이 있다는 점을 감안하면, 본 촉각 센서도 조만간 상용 로봇에 탑재될 수준으로 개선될 수 있을 것입니다.</p>
+<p><strong>결론적으로</strong>, “그래디오메트릭 자기 힘 센서” 연구는 로봇 촉각 센싱 분야에서 <strong>학술적 독창성</strong>과 <strong>응용적 유용성</strong>을 고루 갖춘 성과로 평가됩니다. 다중 자기 픽셀을 활용한 차동 측정 개념은 향후 다른 센서 분야(예: 전류 센싱, 지자기 계측 등)에도 응용될 잠재성이 있습니다. 이 연구를 발판으로, 보다 <strong>견고하고 정교한 로봇 촉각 센서</strong>들이 실현되어 로봇이 인간처럼 섬세한 촉감을 갖추는 날이 앞당겨지길 기대합니다.</p>
+<!--
+**참고문헌:** Dahiya 등의 인간 촉각 성능 분석, Kappassov 등의 촉각 센서 기술 분류, Abd 등의 유체 기반 센서, GelSight 및 NeuroTac 관련 연구, Sundaram의 ReSkin 연구, Honeywell FMA 데이터시트 등이 본 연구의 배경으로 참고되었습니다. 또한 본 논문의 저자들이 수행한 이전 자기 촉각 센서 연구들(MagTrix 등)과 Melexis 사의 기술 자료 및 보도자료가 본 리뷰에서 인용 및 참조되었습니다.
+-->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
