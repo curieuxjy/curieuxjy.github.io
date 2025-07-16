@@ -1,0 +1,243 @@
+---
+title: "📃DexCtrl 리뷰"
+date: 2025-07-16
+categories: [sim2real, adaptive, rl, hand]
+toc: true
+number-sections: true
+description: Towards Sim-to-Real Dexterity with Adaptive Controller Learning
+---
+
+
+- [Paper Link](https://arxiv.org/pdf/2505.00991)
+
+1.  🤖 Dexterous manipulation의 sim-to-real transfer 문제는 저수준 controller dynamic 불일치로 인해 발생하며, 기존 방법은 manual tuning이나 randomization에 의존했습니다.
+2.  🧠 본 논문은 historical information을 활용하여 action과 controller parameters를 동시에 학습하는 adaptive controller 학습 프레임워크인 DexCtrl을 제안합니다.
+3.  🚀 DexCtrl은 실행 중 자동으로 control parameters를 조정하여 sim-to-real gap을 크게 줄이고 contact-rich dexterous task에서 우수한 real-world 성능을 달성합니다.
+
+<center>
+<img src="../../images/2025-07-16-dexctrl/1.png" alt="Overview" width="100%" />
+    <figcaption>Overview</figcaption>
+</center>
+
+---
+
+# Brief Review
+
+DexCtrl은 시뮬레이션(sim)에서 훈련된 로봇 제어 정책을 실제(real) 환경으로 이전할 때 발생하는 난제, 특히 저수준(low-level) 제어기 동역학 불일치 문제를 해결하는 데 중점을 둔 연구입니다. 기존 접근 방식들은 수동 튜닝(manual tuning)이나 제어기 무작위화(controller randomization)에 의존했는데, 이는 노동 집약적이고 특정 작업에만 유효하며 학습 난이도를 높이는 단점이 있었습니다. 본 논문은 이러한 한계를 극복하기 위해 동작(action)과 제어 매개변수(controller parameter)를 동시에 학습하는 새로운 프레임워크인 DexCtrl을 제안합니다.
+
+**핵심 문제 식별:**
+
+연구는 시뮬레이션-실제 불일치(sim-to-real gap)의 중요한 원인 중 하나로 로봇 제어기 간의 차이를 지목합니다. **동일한 궤적(trajectory)이라도 제어 매개변수가 다르면 실제 접촉력(contact force)과 동작이 크게 달라질 수 있기 때문입니다.** 기존의 방식은 제어 매개변수를 고정하거나 훈련 시 무작위화하여 robustness를 높이려 했지만, 이는 실질적인 문제 해결에 한계가 있었습니다.
+
+**DexCtrl의 방법론:**
+
+DexCtrl은 과거의 궤적 정보와 제어기 정보를 기반으로 동작과 제어 매개변수를 동시에 예측하고 적응적으로 조정하는 메커니즘을 사용합니다. 이를 통해 정책이 실행 중에 제어 매개변수를 자동으로 튜닝하여 시뮬레이션-실제 간극을 완화하고, 접촉력 상호작용에 대한 추론을 개선하여 실제 시나리오에서 로버스트니스를 향상시킵니다.
+
+**핵심 방법론 세부 사항:**
+
+1.  **데이터 수집을 위한 Oracle Policy:**
+    *   DexCtrl은 먼저 시뮬레이션 환경에서 다양한 물체 물리 매개변수(object physical parameters)를 사용하여 훈련된 "오라클 정책(oracle policy)"으로부터 충분한 데이터를 수집합니다.
+    *   오라클 정책은 모델-프리(model-free) 강화 학습(Reinforcement Learning) 기법인 **PPO(Proximal Policy Optimization)**를 사용하여 학습됩니다.
+    *   각 시간 단계 $t$에서 오라클 정책 $\pi(a_t, K_t | s_t)$는 현재 상태 $s_t$를 입력받아 조인트 동작(joint action) $a_t$와 제어 매개변수 $K_t$를 동시에 출력합니다. 여기서 $a_t$는 $t$ 시점의 조인트 위치 변화량을 나타내며, 원하는 조인트 궤적은 이전 desired joint position에 $a_t$를 더하여 $q^d_t = q^d_{t-1} + a_t$로 얻어집니다. desired joint velocity는 0으로 설정됩니다.
+    *   로봇 제어는 조인트 토크 제어(joint torque control) 방식을 따르며, 토크 $\tau$는 다음과 같이 계산됩니다:
+        $$\tau = K_P (q_d - q_c) + K_D (\dot{q}_d - \dot{q}_c)$$
+        여기서 $q_d$와 $q_c$는 각각 원하는(desired) 조인트 위치와 현재(current) 조인트 위치를 나타내며, $\dot{q}_d$와 $\dot{q}_c$는 각각 원하는 조인트 속도와 현재 조인트 속도를 나타냅니다. $K_P$와 $K_D$는 강성(stiffness) 및 감쇠(damping) 행렬을 나타내는 제어 매개변수이며, 간단함을 위해 대각 행렬(diagonal matrices)로 가정합니다. $K = \{K_P, K_D\}$는 전체 제어 매개변수 집합입니다.
+    *   **상태(State) 구성:** 상태 $s_t \in \mathbb{R}^{219}$는 지난 세 단계의 물체 및 로봇 관측 정보를 포함합니다.
+        *   로봇 정보 $s^r_t \in \mathbb{R}^{64}$: 현재 조인트 위치 $q^c_t$, 원하는 조인트 위치 $q^d_t$, 제어 매개변수 $K_t$.
+        *   물체 정보 $s^{obj}_t \in \mathbb{R}^9$: 물체 자세(pose) $p^{obj}_t \in \mathbb{R}^6$, 물체 속성 벡터 $\mu \in \mathbb{R}^3$ (스케일, 질량, 마찰).
+        $$s_t \triangleq (s^r_{t-2:t}, s^{obj}_{t-2:t})$$
+        $$s^r_t \triangleq (q^c_t, q^d_t, K_t)$$
+        $$s^{obj}_t \triangleq (p^{obj}_t, \mu)$$
+    *   **보상(Reward) 함수:** 보상 $r_t$는 주로 네 가지 부분으로 구성됩니다: $$r_t = r_{rotation} + r_{contact} + r_{smoothness} + r_{terminate}$$
+
+1.  **동작 예측 및 제어 매개변수 예측 모듈:**
+    *   오라클 정책이 수집한 데이터를 사용하여, DexCtrl은 학생 정책(student policy)을 두 개의 분리된 모듈로 훈련합니다: 동작 예측 모듈(Action Prediction Module)과 제어 매개변수 예측 모듈(Control Parameters Prediction Module). 이는 각 모듈이 태스크의 근본적으로 다른 측면을 인코딩하며, 제어 매개변수 예측이 동작 예측에 영향을 미치지 않도록 하기 위함입니다.
+    *   **Historical Information 사용:** 오라클 정책은 실제 환경에서 직접 접근하기 어려운 물체 속성 같은 원시 정보(primitive information)를 사용합니다. 이를 해결하기 위해 DexCtrl은 로봇의 고유수용성(proprioception) 이력 상태(last ten steps의 현재 및 원하는 조인트 궤적, 해당 제어 매개변수)를 학생 정책의 입력으로 사용합니다.
+    *   **모듈 설계:**
+        *   **동작 예측 모듈:** temporal historical input을 모델링하기 위해 self-attention 메커니즘을 사용합니다. 이는 조인트 궤적 변화의 경향(trend)을 파악합니다.
+        *   **제어 매개변수 예측 모듈:** cross-attention을 사용하며, 현재 동작(current action)이 쿼리(query) 역할을 하고 historical input가 키(key)와 값(value) 역할을 합니다. 이는 현재 조인트 동작과 이력 정보 간의 관계를 모델링하여 제어 매개변수를 추론하는 데 활용됩니다.
+    *   **훈련 및 추론:**
+        *   **훈련:** 두 모듈은 개방 루프(open-loop) 방식으로 훈련됩니다. 즉, 모든 입력 데이터는 수집된 시뮬레이션 데이터셋에서 직접 가져옵니다.
+        *   **추론:** 시뮬레이션과 실제 환경 모두에서 폐쇄 루프(closed-loop) 방식으로 수행됩니다. 즉, 현재 궤적 값은 실제 로봇 센서로부터 얻어집니다.
+        *   시뮬레이션에서 실제 시스템으로 제어 매개변수를 선형적으로 매핑하며, 이는 대략적인 상한 및 하한 추정치만으로도 충분합니다.
+        *   학생 정책 훈련 중 현재 궤적 값에 가우시안 노이즈(Gaussian noise)를 추가하는 것이 시뮬레이션-실제 전이(sim-to-real transfer)에 충분하다는 것을 발견했습니다.
+
+**실험 및 결과:**
+두 가지 접촉 기반의 복잡한 조작 작업(in-hand object rotation, flipping)에서 DexCtrl의 성능을 평가했습니다.
+
+1.  **시뮬레이션 성능 향상:**
+    *   교란(disturbance) 유무에 관계없이 시뮬레이션 환경에서 DexCtrl은 기존의 "Manual Tuning" 및 "Ours w/o PD" (제어 매개변수 예측 모듈이 없는 버전) 베이스라인 대비 현저히 우수한 성능을 보였습니다. 특히, 회전 속도(RotR) 및 실패까지의 시간(TTF)이 크게 향상되었고, 토크 패널티(Torque) 및 물체 선형 속도(ObjVel)는 감소했습니다.
+    *   이는 DexCtrl이 제어기 불일치가 없는 상황에서도 동작과 제어 매개변수를 동시에 조정함으로써 작업 프로세스를 효과적으로 안정화하고 가속화할 수 있음을 입증합니다.
+
+2.  **Sim-to-Real Gap 완화:**
+    *   실제 환경에서 DexCtrl은 제로샷(zero-shot) 시뮬레이션-실제 전이를 통해 베이스라인들을 압도적으로 능가했습니다. 특히, 시뮬레이션에서보다 실제 환경에서 DexCtrl과 "Ours w/o PD" 간의 성능 격차가 훨씬 더 크게 나타났습니다.
+    *   이 결과는 실제 로봇에서 매 단계마다 제어 매개변수를 적응적으로 조정하는 것의 중요성을 강조하며, DexCtrl이 시뮬레이션-실제 문제를 해결하는 데 핵심적인 역할을 함을 보여줍니다.
+
+3.  **다양한 물리 매개변수를 가진 물체에 대한 성능:**
+    *   질량(mass)과 마찰(friction)이 다른 물체에 대한 추가 테스트에서 DexCtrl은 특히 무거운 물체에서 베이스라인보다 훨씬 뛰어난 성능을 보였습니다. 이는 DexCtrl이 다양한 물리적 특성을 가진 물체에 더 잘 적응할 수 있음을 나타냅니다.
+
+4.  **제어 매개변수(특히 강성)의 영향 분석:**
+    *   학습된 강성($K_P$)이 물체 질량 및 마찰과 어떻게 관련되는지 분석했습니다. 시뮬레이션 데이터 분석 결과, 강성은 질량과 단조 증가(monotonically increasing) 관계를 보였습니다 (무거운 물체는 더 큰 힘 필요).
+    *   마찰과의 관계는 더 미묘하여, 특정 경우에는 증가하고 다른 경우에는 감소하는 등 작업 의존적인 동역학을 나타냈습니다.
+    *   실제 환경 분석에서는 무거운 물체에 대해 강성이 특정 시간 단계에서 증가하거나 최대 값으로 더 오래 유지되는 경향을, 부드러운(smoother) 물체에 대해서는 일부 조인트에서 유사한 패턴을, 다른 조인트에서는 상반된 경향을 보였습니다.
+    *   이는 학습된 제어 매개변수가 필요한 접촉력의 변화를 인코딩하며, 물체 조작 성능 향상에 기여한다는 가설을 검증합니다.
+
+**결론 및 한계:**
+
+- DexCtrl은 이력 정보를 기반으로 동작과 제어 매개변수를 동시에 출력하여 민첩한 조작(dexterous manipulation)의 시뮬레이션-실제 간극을 효과적으로 줄였습니다.
+- 향후 연구에서는 여러 민첩한 작업이 단일 제어 매개변수 예측 모듈을 공유하거나, 하드웨어 지원 시 실시간 힘 피드백(force feedback) 기반의 온라인 미세 조정(fine-tuning)을 수행할 계획입니다.
+- 현재 방법의 한계는 하드웨어 제약으로 인해 실제 힘 또는 촉각 센서(tactile sensing)를 통합하지 못하고, LeapHand 플랫폼에 한정된 실제 환경 평가에 있습니다.
+
+---
+
+# Detail Review
+
+> DexCtrl: Towards Sim-to-Real Dexterity with Adaptive Controller Learning – A Deep Dive
+
+## Introduction and the Sim-to-Real Challenge in Dexterous Manipulation
+
+
+Dexterous robotic manipulation has made remarkable strides in simulation, achieving complex feats like in-hand object rotation, tool use, and even piano playing. However, **transferring** these learned manipulation skills **from simulation to real robots** remains notoriously difficult. One critical but often under-addressed culprit is the **low-level controller mismatch** between simulation and reality. In other words, even if a policy learns a perfect motion trajectory in sim, the way a real robot’s motors execute that trajectory (governed by controller parameters like stiffness and damping) can differ, leading to **vastly different forces and outcomes**. Identical motions can succeed in simulation but slip or fail on the real hardware due to these dynamics discrepancies.
+
+
+Traditionally, researchers have tackled the sim-to-real gap through tedious **manual tuning** of controller gains (e.g. adjusting PD controller stiffness/damping so the real robot’s behavior matches sim) or by massive **domain randomization** of physics parameters during training. Unfortunately, **both approaches have drawbacks**: manual tuning is labor-intensive and often imprecise, while randomizing controller parameters can **significantly increase training difficulty** and still may not guarantee success in the real world. These methods rely on trial-and-error and human intuition rather than a principled solution, and they **demand extensive human effort** in choosing parameter schedules or noise ranges. Clearly, there is a need for a better way to bridge this “controller gap” in a ***robust, automatic*** manner.
+
+**Enter DexCtrl** – a new framework proposed to address this very challenge. DexCtrl explicitly targets the controller mismatch by allowing the policy to **adapt its own low-level controller parameters on the fly**, rather than treating them as fixed or randomly perturbed constants. In essence, DexCtrl lets the robot policy not only decide *what* actions to take, but also *how* to execute those actions in terms of controller stiffness/damping. By doing so, it aims to **mitigate the sim-to-real gap at the source**: the torque-generation level. This deep-dive review will explore **how DexCtrl works**, its key contributions and novelty, and examine in detail the experimental evidence of its effectiveness in both simulation and real-world trials.
+
+## Key Idea: Adaptive Controller Learning with DexCtrl
+
+At its core, **DexCtrl is about jointly learning the control actions *and* the controller parameters** needed to carry out those actions. The key insight is that the policy can be trained to automatically tune its controller gains (like a robot adjusting its “muscle stiffness”) based on what it has felt and done in the recent past. This is achieved by giving the policy **historical context** and letting it output two things at each time step: (1) the next high-level action (e.g. desired joint positions), and (2) the appropriate controller parameters (e.g. stiffness $K$ and damping $D$ for a PD controller) to apply that action. By continuously adjusting these parameters in a closed loop, DexCtrl can compensate for modeling errors or unexpected force interactions *as they occur*, rather than hoping a fixed controller will work for all situations.
+
+Crucially, DexCtrl’s policy **observes the controller state itself**. The current stiffness/damping values are fed into the observation space along with recent trajectory data, so the policy is aware of “how hard” it’s driving the motors at any given time. This enables better reasoning about contact forces – if a task isn’t going as expected, the policy can sense if maybe the controller was too stiff or too compliant, and adjust accordingly. By explicitly including controller parameters in the observation, the agent can directly capture force-related feedback that would otherwise be hidden.
+
+**Figure 1** below illustrates the concept. The top shows a conventional approach where the policy outputs only the action $a_t$ (like desired joint positions) and uses a fixed controller gain $K_{\text{const}}$ for the whole task. This often requires **extensive manual gain tuning** and still might be inaccurate if conditions change. The bottom shows DexCtrl’s approach: the policy outputs both $a_t$ and an adaptive gain $K_t$ at each step, allowing it to tweak the controller behavior continually. This adaptive scheme promises **reduced labor (no manual tuning)** and **better accuracy** in execution.
+
+<center>
+<img src="../../images/2025-07-16-dexctrl/2.png" width="100%" />
+</center>
+<b>
+<figcaption>*Conceptual comparison. **Top:** Standard policy outputs action $a_t$ with fixed controller parameters ($K_{\text{const}}$), requiring manual tuning and risking performance mismatch. **Bottom:** DexCtrl outputs both action and adaptive controller parameters ($K_t$) each step, automatically adjusting the “torque controller” to current needs (green check). The right shows dexterous manipulation tasks (in-hand rotation and flipping) where DexCtrl was evaluated.*</figcaption>
+</b>
+
+The **novelty** of DexCtrl’s adaptive controller learning lies in this **automatic, time-varying adjustment of control gains as part of the policy**. Previous works in dexterous manipulation sim-to-real mostly ignored this lever – they would train with a fixed or randomly perturbed controller and hope for the best. While adaptive force control has been explored in simpler robotic tasks (like adjusting stiffness for wiping or pivoting tasks), it had **rarely been applied to complex dexterous hand manipulation**. DexCtrl is among the first to show that *learning to adjust control parameters* in tandem with the action policy can yield significant gains for dexterous hands, providing a more **principled approach to closing the sim-to-real gap** at the controller level. In summary, the key contributions of DexCtrl can be highlighted as follows:
+
+* **Identifying Controller Mismatch:** It pinpoints the often-overlooked **mismatch in robot low-level controllers** as a critical factor in sim-to-real failure, and directly tackles it by making control parameters adaptable. This shifts sim-to-real transfer from being a manual tuning art to an automated learning problem.
+* **Joint Action-Control Learning:** It introduces a **simple yet effective framework** that jointly learns the high-level actions and the low-level controller gains from historical data. By leveraging recent trajectories and past controller settings, the policy gains adaptivity to variations in force requirements and object dynamics.
+* **Improved Performance Across Domains:** Through extensive experiments, DexCtrl demonstrates **significantly better performance than baseline approaches** (manual tuning and non-adaptive policies) both in simulation and in zero-shot real-world tests, across multiple contact-rich tasks. The results include not just task success metrics but also stability and efficiency measures, along with insightful analysis of *why* it works.
+
+Next, we dive into **how DexCtrl is designed and trained**, before examining the experimental evidence in detail.
+
+## DexCtrl Framework and Methodology
+
+### How DexCtrl Works: Overview of the Architecture
+
+The DexCtrl framework consists of a two-stage learning process: first training an *oracle policy* in simulation via reinforcement learning, and then **distilling that experience into two learned modules** – one for action prediction and one for controller parameter prediction. **Figure 2** provides an overview of this pipeline. During an offline training phase (Fig. 2a), a high-performing oracle policy (trained with RL in diverse simulated settings) is used to generate a dataset of trajectories. This dataset contains sequences of states, actions, and the oracle’s chosen controller parameters at each step. Then, DexCtrl trains two separate neural networks (students) on this data via supervised learning: one network learns to predict the next action, and the other learns to predict the next controller parameters, both based on the history. At runtime (Fig. 2b), these two learned modules work together in a closed loop: the action module predicts the desired next joint motion, and the controller module immediately predicts the appropriate stiffness/damping to execute that motion, given what has happened in the recent past.
+
+
+<center>
+<img src="../../images/2025-07-16-dexctrl/3.png" width="100%" />
+</center>
+<b>
+<figcaption>***DexCtrl framework.** (a) *Open-Loop Training:* An oracle policy (trained with PPO in simulation) generates rollouts of states $s_t$ with actions $a_t$ and controller gains $K_t$. A dataset of sequences $(q^c, q^d, a, K)$ is collected (where $q^c, q^d$ are current and desired joint angles). Two student networks are distilled on this data: an **Action Prediction Module** (blue) that learns to output $\hat{a}_t$ (desired joint positions) from historical trajectories, and a **Control Parameters Prediction Module** (purple) that learns to output $\hat{K}*t$ (controller gains) from the history *and* the current intended action. (Losses are mean-squared errors to the oracle’s outputs.) (b) *Closed-Loop Inference:* On the real robot or new simulation runs, the policy observes the actual robot state $q^c_t$ (and a window of past states $q^c*{t-1},…$), feeds the recent history into the action module to get $\hat{a}_t$, then feeds the history plus the proposed action into the control module to get $\hat{K}_t$. The robot’s low-level torque controller then executes, applying torque $\tau_t$ based on the chosen $K_t$ and the error between $q^d_t$ and $q^c_t$. This loop repeats every time step, continually adapting actions and controller parameters.*</figcaption>
+</b>
+
+Under the hood, DexCtrl’s observation at each decision step contains a **window of historical information**. In the implementation, the authors use the past 10 time steps of robot proprioceptive data – specifically, the sequences of **actual joint positions $q^c$**, the **previous desired joint positions $q^d$**, and the **controller parameters $K$ (stiffness, damping)** applied at those steps. This rich history serves as the input for both student networks.
+
+To effectively extract insights from this temporal data, DexCtrl employs an **attention-based architecture**. The action prediction module uses a **self-attention mechanism** over the time window of past states, allowing it to learn temporal patterns and trends in the trajectory (for example, to estimate object motion and infer what the next goal should be). In contrast, the controller prediction module uses a **cross-attention mechanism**: it takes the current planned action as a query and attends to the historical states as keys/values. Intuitively, this helps the controller module learn the relationship between *what action you’re about to do* and *what controller settings worked well in the past in similar situations*. The authors note that while both modules see the same form of input (the last 10 steps of $q^c, q^d, K$), their roles are different – the action module is understanding the motion trajectory context, whereas the controller module is learning how past actions and gains led to outcomes, analogous to how a human might adjust their grip stiffness based on recent success or slip events.
+
+It’s worth emphasizing that **DexCtrl decouples the learning of actions and controller parameters** into two separate prediction modules on purpose. This design ensures that the task of choosing the best motor commands isn’t entangled with the task of tuning gains – which could otherwise make learning unstable. By training them separately (but on the same experiences), DexCtrl can achieve adaptive control without sacrificing the quality of the action policy.
+
+### Training and Deployment Strategy
+
+The training of DexCtrl’s neural modules is done in an **open-loop, supervised fashion** using the logged simulation data. That is, during training they directly feed in historical sequences from the oracle’s trajectories and train the networks to predict the oracle’s next action and gain, step by step. This avoids any compounding error during training and is effectively a form of **behavioral cloning/distillation** from the oracle RL policy. Because the oracle was trained with access to privileged simulation information (like object pose and properties) that may not be available on real robots, DexCtrl’s student networks rely purely on the observable history of joint states. Impressively, the authors show that the networks can infer necessary information (like how the object is moving or how heavy it might be) just from proprioceptive history, sidestepping the need for direct object state input. This is analogous to a robot feeling the weight of an object through the effort it needed over the last few moments.
+
+When deploying to the real world (or for closed-loop testing), DexCtrl runs in **real-time closed-loop**: it uses the robot’s actual sensor readings at each step as the latest “current state” in the history, then produces an action and controller adjustment which are immediately applied. Notably, **no further training or fine-tuning was done on the real robot** – the policy is deployed zero-shot after training in simulation. To account for units differences between sim and real, they apply a simple linear scaling of the controller parameters (based on approximate upper/lower bounds) rather than any painstaking system identification. Beyond that, no manual calibration was needed.
+
+An interesting detail is how DexCtrl manages to transfer well without heavy randomization. The oracle policy was trained on a range of object physical properties (mass, friction) for generality, but the authors did **not** perform extreme randomization of sensor noise or controller gains when training the oracle. Instead, they added a small amount of Gaussian noise to the student networks’ inputs during training, which turned out to be **sufficient for sim-to-real transfer**. This suggests that because DexCtrl’s policy can adjust to discrepancies on the fly, it doesn’t require as broad a training distribution to cover every possible gap – a little bit of noise was enough to make the student robust, simplifying the training process for the teacher (oracle) policy. In other words, DexCtrl inherently handles some variability through adaptation, whereas a fixed-gain policy would have needed aggressive domain randomization to cope with the same variability.
+
+## Experimental Evaluation and Results
+
+The authors evaluated DexCtrl on **two challenging dexterous manipulation tasks** using a 16-degree-of-freedom *LEAP hand* (a sophisticated robotic hand platform). The tasks were designed to be **contact-rich** and sensitive to force execution, thus ideal for testing sim-to-real performance:
+
+* **In-Hand Object Rotation:** The robot hand must rotate a grasped object (e.g. a cube, apple, etc.) around a specified axis using finger dexterity, without dropping it. This task stresses object-hand contacts and requires controlled forces to keep the object stable while spinning it.
+* **Object Flipping on a Table:** The hand, starting with an object resting on a surface (table), must flip the object 180° (like flipping a block or a Rubik’s cube to its other face) using a coordinated push-lift motion. This involves contact between the object, the hand, *and* the table – increasing sensitivity to dynamics (e.g. friction with the table and impact forces).
+
+Both tasks were first learned in simulation (using PyBullet or a similar physics simulator), then the policies were deployed on a **real-world setup** with the LEAP hand performing the same tasks on real objects. To quantify performance, the authors defined several metrics:
+
+* **Rotation Rate (RotR):** How fast the object rotates around the target axis. In simulation this was measured via a shaped reward; in real experiments it’s measured in radians of rotation achieved per trial. Higher RotR means better task success (faster rotation).
+* **Time to Fail (TTF):** How long the hand can continue the task before failing (dropping the object in rotation, or the object falling off course in flipping). This reflects stability – longer is better.
+* **Object Linear Velocity (ObjVel):** The average translational speed of the object during the task (only measured in sim). Lower velocity implies the object isn’t rattling or moving erratically, hence indicating a *stable manipulation*.
+* **Torque Penalty:** A measure of energy or effort, computed from the torques applied (sim only). Lower torque penalty means the controller is efficient and smooth, not applying excessive forces.
+
+### Baselines for Comparison
+
+DexCtrl was compared against two main baselines to isolate the benefits of adaptive controller tuning:
+
+* **Manual Tuning Baseline:** This represents the *conventional approach*: First, manually adjust the simulator’s controller parameters (PD gains) and add slight randomness so that a policy trained in sim might transfer to real. In practice, the authors carefully tuned the stiffness/damping by comparing simulated vs real trajectory responses, and trained a new RL “oracle” policy with those tuned gains (plus minor gain randomization for robustness). This oracle and its student policy **do not adapt gains at runtime** – they output only fixed-gain actions. Essentially, this baseline is a well-tuned fixed controller approach, requiring significant human effort to set up.
+* **Ours w/o PD (No Adaptive Gains):** This ablation is *DexCtrl without the core idea* – the adaptive gain module is turned off. The policy is trained using the same oracle data as DexCtrl (which had varying gains in simulation), but during student training and deployment, the controller gains are fixed to the manually tuned values. The action module is still trained on the oracle’s trajectories, but it ignores the adaptive aspect. This baseline tests whether the advantage comes simply from our data collection and better action trajectories, versus the *addition of adaptive control*.
+
+Both baselines and DexCtrl share the same training dataset size and neural network architecture for the action module, ensuring a fair comparison.
+
+### Simulation Results: Performance Boost Even Without a Gap (Q1)
+
+Before tackling sim-to-real transfer, the authors first asked: *Even if there is no sim-to-real discrepancy (i.e., using the same controllers in sim as in training), does jointly adapting controller parameters improve performance?* To test this, they evaluated the policies in simulation under ideal conditions (no controller mismatch) and also with some external disturbances (random forces applied to the object) to simulate a more challenging scenario.
+
+The results were striking: **DexCtrl outperformed both baselines in simulation, even when all methods used the same simulator dynamics**. For the in-hand rotation task, DexCtrl achieved higher rotation speeds and longer stability than the manually tuned baseline, *and* used significantly less torque on average. For example, with random disturbances applied, DexCtrl’s rotation speed (RotR) was about 24% higher than the manual baseline, and it sustained the rotation for longer (TTF \~256 vs 239 time steps). It also expended only \~25% of the torque effort that the manual baseline did, indicating much more efficient control. Even the “Ours w/o PD” ablation (no adaptive gains) performed better than the manual baseline in rotation, thanks to the improved trajectories generated by our training approach, but **full DexCtrl still had the edge**.
+
+On the flipping task, the difference was even more pronounced. DexCtrl nearly **doubled the rotation rate** of the flipped object compared to the manual-tuning baseline in simulation (RotR \~172 vs 91 with disturbances). It essentially solved the flipping with minimal failures (TTF almost maxed out at 297+ steps) and very low torque usage, whereas the fixed baseline struggled to get the object around as quickly. Interestingly, the ablation without adaptive control *did not outperform* the manual baseline on flipping at all – it had lower RotR (\~82 vs 91 with disturbance). This highlights that flipping (which involves impacts with a table and complex contact) is **highly sensitive to controller parameters**, and a fixed PD policy couldn’t find a one-size-fits-all gain. **DexCtrl’s adaptive gains were key to its success in flipping**, adjusting stiffness on-the-fly to handle the transitions. In summary, even in simulation without any real-world discrepancies, letting the policy co-optimize *how* to control yields better stability and faster task completion than using a fixed controller. The authors also noted DexCtrl’s training was faster to converge than massive randomization approaches, since the policy doesn’t have to brute-force learn robustness – it gets to sense and correct for variations directly.
+
+### Zero-Shot Transfer to Real Robots: Narrowing the Gap (Q2)
+
+The true test of DexCtrl is zero-shot transfer from simulation to a **real dexterous hand**. The team deployed the learned policies directly onto a real LEAP hand robot, with **no additional fine-tuning**, to see how well the skills carry over and whether DexCtrl indeed narrows the sim-to-real gap. They evaluated the in-hand rotation task on **12 different real objects** spanning a range of shapes, masses, and surface frictions (including a cube, bottle, apple, yogurt cup, baseball, Rubik’s cube, etc.), to ensure generality. Each object’s performance was measured over 10 test trials with different initial poses, and averages were compared.
+
+The **real-world results** strongly favored DexCtrl. In fact, the performance gaps that were somewhat modest in simulation became **much larger in the real world**, underscoring how important adaptive control is outside the simulator. DexCtrl significantly outperformed the manually tuned baseline on all objects, achieving higher rotation speeds and similar or longer times before failure. For instance, across objects, the baseline might achieve only \~2–3 radians of rotation on average, whereas DexCtrl was often achieving **5–15+ radians**, essentially an order-of-magnitude improvement in some cases. It also maintained near-max stability (many objects never dropped within the 300-step trial limit, TTF = 300) whereas the baseline dropped some objects sooner. Even the non-adaptive variant (Ours w/o PD) did reasonably well in real – better than the manual baseline, showing that the learned trajectories were inherently more robust – but **DexCtrl’s adaptive module gave it a clear extra boost** in real conditions. The authors point out that the gap between DexCtrl and its no-PD ablation was **much larger in real-world tests than it had been in sim**, emphasizing that real hardware has many small unpredictabilities (friction, slight delays, minor calibration errors, etc.) that **require continual controller adjustment**. DexCtrl was uniquely capable of handling those, whereas a fixed-gain policy, even a strong one, was inevitably less optimal for some objects or moments.
+
+They also demonstrated the flipping task on the real hand (with a Rubik’s cube being flipped on a table) to show generalization. Visual results (as seen in Fig. 1 and the paper’s videos) indicate that DexCtrl could perform the flip in reality as well. While detailed real-world numbers for flipping weren’t given for each baseline in the text, the success of DexCtrl in flipping further validates the approach’s generalizability to tasks involving external contacts (hand-object-table interactions). The overall takeaway is that **DexCtrl dramatically narrowed the sim-to-real gap** – policies that would normally degrade when going to real instead retained high performance, thanks to adaptive control. The manual baseline, despite careful tuning, could not match this, highlighting the limitations of one-time tuning.
+
+### Robustness to Object Variations (Q3)
+
+One of the promises of adaptive controller learning is improved robustness to variations in object properties, since the policy can *tune its behavior on the fly* to suit the object being manipulated. The authors designed a set of experiments to explicitly test how DexCtrl handles changes in **mass** and **friction** of the object, in a controlled way. They took a **single object shape (a cube)** and created multiple versions: for mass variation, they used a hollow cube and inserted different weights to make it light, medium, or heavy; for friction variation, they used cubes of the same weight but with different surface textures (smooth, medium, rough) to alter the friction coefficient.
+
+The results, summarized in Table 4 of the paper, show that **DexCtrl consistently outperformed the baselines across all mass and friction conditions**. Notably, the advantage of DexCtrl was **most pronounced for the most challenging cases** – e.g. the heavy object and the very slippery object. For the heaviest cube, DexCtrl achieved a high rotation speed and didn’t drop the object (TTF \~300), whereas the fixed-gain baseline could barely rotate it (RotR near 0.6) and tended to fail much sooner. This indicates that DexCtrl’s policy learned to **increase stiffness/force output for heavier objects** to overcome their inertia, something a fixed controller tuned for lighter objects couldn’t do effectively. Similarly, for the low-friction (smooth) cube, DexCtrl spun it the fastest (since low friction makes rotation easier) but also managed stability adequately, whereas the baseline had lower speed and still occasional drops.
+
+Interestingly, the pattern of performance across these variations aligned with intuitive **force-based reasoning**: lighter objects (or lower friction) can be flipped or rotated more easily (so they achieve higher speeds) but are also less stable (easier to slip), whereas heavier or rougher objects move more slowly but are inherently more stable once gripped. DexCtrl was able to handle both ends of these spectrums by adapting its control gains appropriately, confirming that its adaptive strategy generalizes to new physical properties. In contrast, the manual baseline had to pick one compromise setting of stiffness/damping – it could neither apply enough force for heavy objects, nor gentle enough control for very light/smooth objects, leading to either weak performance or instability in those extremes.
+
+### Understanding the Learned Adaptive Strategies (Q4)
+
+A natural question arises: *What exactly is DexCtrl’s controller module learning to do?* To demystify this, the authors analyzed the **learned stiffness profiles** under different object conditions. Since the controller outputs a stiffness and damping for each joint at each time step, we can look at how those values change for, say, a heavy object vs a light object, or a high-friction vs low-friction scenario. The paper focuses on **stiffness (K)** since it had a more pronounced effect on performance than damping in their tasks.
+
+Two notable analyses were presented:
+
+* **Average Stiffness vs Object Properties:** They computed the average stiffness used (across time and joints) for different object masses and frictions. In simulation, they observed a **monotonic increase of stiffness with object mass** – heavier objects induced the policy to choose higher stiffness values on average. This matches intuition: a heavier object requires more force (higher gain) to manipulate effectively, so DexCtrl “cranks up the strength” accordingly. For friction, the relationship was not one-directional: in one axis of rotation task, stiffness increased with more friction (perhaps because more friction means more resistance to sliding, needing stronger control), while in another case stiffness decreased with more friction (possibly because friction helps hold the object, so less stiffness was needed). The takeaway is that **DexCtrl learned a nuanced strategy** where stiffness tuning depended on the specific context of how friction was affecting the task dynamics. This reflects the complexity of dexterous manipulation – friction can both help and hinder movement depending on the situation, and the policy adjusted different joints differently to compensate.
+
+* **Temporal Stiffness Patterns:** They also looked at how stiffness evolved over the course of a trial for different objects (Figure 7 in the paper). To isolate the effect of the controller module, they fed the *ground-truth actions* (from a successful trajectory) into the controller network and observed what gains it outputs over time for, say, a heavy vs light object. The trends showed that for **heavier objects, DexCtrl often raised stiffness at critical moments or maintained a higher stiffness for longer durations** (essentially keeping the “muscles flexed”). For **smoother (low-friction) objects**, certain joints showed *opposite stiffness trends* compared to rougher objects – in some joints the stiffness would spike for smooth objects (to prevent slip), while in others it might reduce (perhaps to avoid pushing too hard and causing loss of contact). These joint-specific adjustments illustrate that the policy isn’t simply using a single scalar gain – it’s tuning a *vector of gains* across the hand’s joints, tailoring the force distribution to the task. This level of adaptive control is very hard to achieve with manual tuning.
+
+Overall, this analysis confirmed the hypothesis that **DexCtrl’s controller parameters encode meaningful adjustments to contact forces**, adapting systematically to the object’s mass and friction to improve performance. In essence, the policy learned to answer questions like “Is this object heavy? Then use a stiffer controller to grab it firmly,” or “Is this surface slippery? Maybe tighten grip in some fingers but loosen in others to keep balance.” This provides an insightful peek into *why* DexCtrl outperforms the fixed strategies – it’s because it’s actively modulating the interaction forces to suit the situation, rather than hoping one fixed setting will work everywhere.
+
+## Effectiveness, Limitations, and Outlook
+
+**Effectiveness:** The combination of results from simulation, real-world tasks, and controlled variation tests builds a strong case that DexCtrl is an effective solution to narrow the sim-to-real gap in dexterous manipulation. By **adaptively tuning the robot’s controller each time step**, DexCtrl achieved higher task success rates, better stability, and more energy-efficient control compared to state-of-the-art non-adaptive approaches. It essentially offloads some of the burden of sim-to-real transfer from human engineers (who previously had to fine-tune gains or exhaustively randomize environments) to the learning algorithm itself. The approach proved its worth especially in real-world evaluations: tasks that normally required careful gain tuning were accomplished **zero-shot with minimal manual effort**, and even challenging objects were manipulated reliably. In short, DexCtrl demonstrates that **learning “how to control” is as important as learning “what to do”** for robust robot dexterity.
+
+**Limitations:** Despite its promising results, DexCtrl is not without limitations, as the authors openly discuss:
+
+* **Lack of Explicit Force/Tactile Sensing:** Currently, DexCtrl relies solely on **proprioceptive data** (joint angles, etc.) and inferred object information from history. The real robot experiments did not use any tactile or force sensors on the hand. This was partly due to hardware limitations (the LEAP hand might not have rich tactile sensors). As a result, the policy might not observe some subtle aspects of contact (like the onset of slip or precise contact forces) directly. Integrating **real-time force feedback or tactile sensing** could further improve DexCtrl’s ability to adapt, essentially giving it an even clearer signal for how the interaction is going. The authors suggest that incorporating high-fidelity force/tactile data is a promising direction for future work. We can imagine a future DexCtrl that *feels* an object starting to slip and immediately boosts stiffness, even faster than it could infer from joint motions alone.
+
+* **Hardware Generalization:** The study’s real-world tests were confined to the **LEAP hand platform** – a specific 16-DOF dexterous hand at UC Berkeley. While the tasks and objects were varied, it remains to be proven that the DexCtrl approach generalizes to other robot hands (e.g., anthropomorphic hands with different kinematics or pneumatic actuators with different dynamics). The framework itself is general (it could, in principle, be applied to any torque-controlled system with adjustable gains), but practical differences in hardware could pose new challenges. The authors plan to extend evaluations to other dexterous hands to validate generalizability.
+
+* **Task Generality and Shared Controllers:** DexCtrl was demonstrated on two tasks. Scaling to a wider range of tasks or more unstructured scenarios might require further development. One idea the authors mention is training a **single controller adaptation module that could be shared across multiple skills**. This could be useful if you want one system to perform many tasks but still benefit from adaptive control – perhaps by fine-tuning gains appropriate for each task context.
+
+* **Simulation Reliance:** Like most learning-based robotics approaches, DexCtrl still relies on a high-quality simulation (with diverse randomization of object properties) to learn the policy. If the simulator’s physics are very far off from reality, adaptive gains alone might not rescue performance. However, the need for less extreme domain randomization is a plus. Future work might explore if a small amount of **online learning or fine-tuning on real hardware** (e.g., a brief adaptation phase with real data) could further improve performance, especially as suggested if real force sensors are available.
+
+In summary, **DexCtrl’s adaptive controller learning brings a new level of robustness to dexterous manipulation**, but incorporating richer sensing and testing its generality on other platforms are important next steps to fully realize its potential.
+
+## Conclusion
+
+DexCtrl represents an exciting development at the intersection of reinforcement learning, adaptive control, and robotics. By giving a dexterous robot hand the ability to **tune its own controller parameters on the fly**, the approach addresses a long-standing barrier in sim-to-real transfer. The method is conceptually elegant – use past experience to inform both what action to take and how aggressively to take it – and it proved remarkably effective in practice. Key contributions include highlighting the often-neglected role of low-level controller differences in sim-to-real gap and providing a principled learning-based solution to tackle it. The experiments showed improved performance over manual tuning even in simulation, and a dramatic reduction of performance loss when moving to real hardware, across various objects and conditions.
+
+For a technical audience, DexCtrl offers insight into how **policy and controller design can be interwoven**: rather than treating the controller as a fixed black box, it becomes part of the learning problem. This blurs the line between high-level planning and low-level control, potentially leading to more integrated and resilient robotic systems. It also suggests that some challenges previously addressed by brute-force domain randomization might be better solved by model adaptation mechanisms like this, which can be more sample-efficient and targeted.
+
+Looking forward, the idea of **adaptive controller learning** could be extended in many ways. As noted, adding direct force sensing could allow even finer-grained adaptation (imagine a robot that adjusts stiffness based on real-time tactile feedback, achieving human-like delicacy). Additionally, applying DexCtrl to more complex multi-step tasks or to legged robots and other domains could test the limits of its generality. If successful, these advances could bring us closer to robots that can reliably perform intricate tasks in unpredictable real-world environments – a step change toward truly **robust, real-world dexterous manipulation**.
+
+Overall, *DexCtrl: Towards Sim-to-Real Dexterity with Adaptive Controller Learning* demonstrates that bridging the sim-to-real gap is not only about better simulators or more data, but also about smarter control strategies. By **learning to adapt** at the control level, robots can achieve a new level of dexterity and reliability, which is an exciting prospect for the field of robotics and its real-world applications.
+
+**Sources:** The analysis and results discussed are based on the paper by Zhao *et al.* (2025) and the references therein.
