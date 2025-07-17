@@ -17,8 +17,9 @@ description: Learning Fine-Grained Manipulation with a Portable Visuo-Tactile Gr
 3. 이 표현은 섬세한 조작 작업에서 로봇 정책 학습의 효율성과 정확성을 크게 향상시켜, 외부 교란에도 견고한 정밀 조작(예: 시험관 삽입, 피펫을 이용한 유체 이동)을 가능하게 합니다.
 
 
-
-![2](../../images/2025-07-18-touch-wild/2.png)
+<center>
+<img src="../../images/2025-07-18-touch-wild/2.png" width="100%" />
+</center>
 
 
 <center>
