@@ -202,12 +202,7 @@ X_{out} &= \text{Linear}(C, C)( \text{Concat}(X_1, X_2) )
 
 # Detail Review
 
-알겠습니다. "MambaVision: A Hybrid Mamba-Transformer Vision Backbone" 논문을 기술에 관심 있는 일반 독자들을 대상으로, 다소 전문적인 깊이를 더해 심층 분석한 블로그 포스팅 형식으로 작성하겠습니다. 특히 Mamba와 Transformer의 장점을 어떻게 결합했는지를 중심으로 자세히 설명하겠습니다.
-
-잠시만 기다려 주세요. 분석을 마친 후 게시글 형식으로 정리해 드리겠습니다.
-
-
-# MambaVision: Mamba-Transformer 하이브리드 비전 백본 분석
+> MambaVision: Mamba-Transformer 하이브리드 비전 백본 분석
 
 ## 소개 (Introduction)
 

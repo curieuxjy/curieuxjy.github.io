@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-07-22">
+<meta name="description" content="Chaining Dexterous Policies for Long-Horizon Manipulation">
+
+<title>Sequential Dexterity 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#논문-개요-및-문제-제기" id="toc-논문-개요-및-문제-제기" class="nav-link" data-scroll-target="#논문-개요-및-문제-제기"><span class="header-section-number">2.1</span> 논문 개요 및 문제 제기</a></li>
+  <li><a href="#방법론-상세-분석" id="toc-방법론-상세-분석" class="nav-link" data-scroll-target="#방법론-상세-분석"><span class="header-section-number">2.2</span> 방법론 상세 분석</a></li>
+  <li><a href="#실험-설정-및-벤치마크" id="toc-실험-설정-및-벤치마크" class="nav-link" data-scroll-target="#실험-설정-및-벤치마크"><span class="header-section-number">2.3</span> 실험 설정 및 벤치마크</a></li>
+  <li><a href="#결과-분석" id="toc-결과-분석" class="nav-link" data-scroll-target="#결과-분석"><span class="header-section-number">2.4</span> 결과 분석</a></li>
+  <li><a href="#한계점-및-향후-연구-방향" id="toc-한계점-및-향후-연구-방향" class="nav-link" data-scroll-target="#한계점-및-향후-연구-방향"><span class="header-section-number">2.5</span> 한계점 및 향후 연구 방향</a></li>
+  <li><a href="#총평-및-기여도-평가" id="toc-총평-및-기여도-평가" class="nav-link" data-scroll-target="#총평-및-기여도-평가"><span class="header-section-number">2.6</span> 총평 및 기여도 평가</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Sequential Dexterity 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">assembly</div>
+    <div class="quarto-category">hand</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Chaining Dexterous Policies for Long-Horizon Manipulation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 22, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2309.00987">Paper Link</a></li>
+<li><a href="https://sequential-dexterity.github.io/">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 본 논문은 복잡하고 장기적인 조작 작업을 위해 여러 Dexterous 정책들을 효율적으로 연결하는 “Sequential Dexterity” 시스템을 제안합니다.</li>
+<li>⚙️ 이 시스템은 전방 초기화(forward initialization)와 Transition Feasibility Function을 활용한 후방 미세 조정(backward fine-tuning)을 포함하는 양방향 최적화 과정을 통해 정책 간의 원활한 전환을 가능하게 합니다.</li>
+<li>✅ 제안된 프레임워크는 시뮬레이션 및 실제 로봇 환경에서 기존 단방향 스킬 체이닝 방법들보다 작업 성공률을 크게 향상시키고, 새로운 객체 모양에 대한 일반화 및 zero-shot transfer 능력을 입증했습니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-07-22-seqdex/1.gif" width="80%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문은 다양한 서브태스크들로 구성된 장기적(long-horizon)이고 복잡한 조작 작업을 수행하기 위한 RL(Reinforcement Learning) 기반의 일반 시스템인 Sequential Dexterity를 제안한다. 덱스터러스 핸드(dexterous hand)는 높은 자유도와 적응성으로 이러한 복잡한 작업에 적합하지만, 고차원적인 행동 공간과 복합적인 동역학으로 인해 활용이 어렵다는 문제가 있다. Sequential Dexterity는 여러 덱스터러스 정책(policy)을 연결(chain)하여 장기적 작업 목표를 달성하며, 시스템의 핵심은 전이 가능성 함수(Transition Feasibility Function, TFF)이다. 이 TFF는 정책 연결의 성공률을 높이기 위해 서브 정책(sub-policy)을 점진적으로 미세 조정(finetune)하고, 실패로부터의 복구 및 불필요한 단계를 건너뛰기 위한 자율적인 정책 전환(policy-switching)을 가능하게 한다. 시뮬레이션에서 소수의 객체로만 훈련되었음에도 불구하고, 본 시스템은 새로운 객체 형상에 대한 일반화 능력을 보이며, 실제 로봇 시스템으로 제로-샷 전이(zero-shot transfer)가 가능하다.</p>
+<p>기존 연구들은 단일 스킬(skill)에 중점을 두거나, 인접한 스킬 간의 상태 공간 정규화(regularization)에 집중하여 장기적 목표가 초기 정책에 미치는 영향을 고려하지 않았다. 본 연구는 이와 달리 이중 방향 최적화(bi-directional optimization) 과정을 제안하여 전체 스킬 체인(skill chain)을 포괄적으로 최적화한다. 이는 순방향 초기화(forward initialization) 과정과 역방향 미세 조정(backward fine-tuning) 과정으로 구성된다.</p>
+<p>핵심 방법론은 다음과 같다. 1. <strong>덱스터러스 서브 정책 학습(Learning dexterous sub-policies):</strong> 장기적 작업을 처음부터 학습하는 것은 매우 어렵기 때문에, 먼저 전체 작업을 <span class="math inline">K</span>단계의 서브태스크 <span class="math inline">G = (g_1, g_2, ..., g_K)</span>로 분해하고, 각 서브 정책 <span class="math inline">\pi_i</span>를 PPO(Proximal Policy Optimization) 알고리즘으로 학습한다. 각 서브태스크는 MDP(Markov Decision Process) <span class="math inline">M = (\mathcal{S}, \mathcal{A}, \pi, T, R, \gamma, \rho)</span>로 공식화된다. <strong>순방향 초기화(Forward initialization):</strong> 개별 서브 정책을 훈련하기 위한 초기 상태를 정확하게 샘플링하는 것은 어렵다. 본 연구는 이전 서브태스크 <span class="math inline">\pi_{i-1}</span>의 성공적인 최종 상태(<span class="math inline">\mathbf{s}_T^{i-1}</span>)가 다음 서브 정책 <span class="math inline">\pi_i</span>의 그럴듯한 초기 상태(<span class="math inline">\rho_i</span>)를 제공한다는 점에 착안한다. 따라서, 프레임워크는 태스크의 시간 순서에 따라 서브 정책들을 순차적으로 훈련한다. 각 서브 정책 <span class="math inline">\pi_i</span>를 훈련한 후, 성공적인 종료 상태 집합 <span class="math inline">\{\mathbf{s}_T^i\}</span>을 수집하고, 이를 다음 정책 <span class="math inline">\pi_{i+1}</span>을 훈련하기 위한 초기 상태 분포 <span class="math inline">\rho_{i+1}</span>로 사용한다. 이 순방향 훈련 방식은 초기 상태의 유효성을 보장하여 덱스터러스 정책 학습의 효율성을 높인다.</p>
+<ol start="2" type="1">
+<li><p><strong>전이 가능성 함수를 이용한 정책 연결(Policy chaining with Transition Feasibility Function):</strong> 순방향 초기화만으로는 이전 정책 <span class="math inline">\pi_{i-1}</span>이 다음 정책 <span class="math inline">\pi_i</span>가 해결할 수 없는 종료 상태에 도달할 수 있으므로 성공을 보장하지 못한다. 이 문제를 해결하기 위해, 다음 정책 <span class="math inline">\pi_i</span>의 가능성(feasibility)을 이전 정책 <span class="math inline">\pi_{i-1}</span>에 역으로 전달하여, <span class="math inline">\pi_{i-1}</span>이 <span class="math inline">\pi_i</span>가 처리할 수 있는 상태로 최적화되도록 해야 한다. 이를 위해 전이 가능성 함수를 이용한 역방향 정책 미세 조정 메커니즘을 제안한다. <strong>전이 가능성 함수 학습(Learning Transition Feasibility Function):</strong> 주어진 상태에 대한 정책의 가능성은 해당 상태에서 시작할 때 정책이 최종적으로 성공할 수 있는 능력으로 정의된다. 이 개념은 전이 상태 <span class="math inline">\mathbf{s}_0^i \in \rho_i</span> (이는 <span class="math inline">\mathbf{s}_T^{i-1}</span>와 동일)를 서브태스크 실행 내의 예상 보상 합 <span class="math inline">E_{\pi_i} \left[ \sum_{t=0}^{T-1} r_t \right]</span>으로 매핑하는 함수 <span class="math inline">F: \mathcal{S} \rightarrow \mathbb{R}</span>로 정형화된다. TFF는 단일 상태 <span class="math inline">\mathbf{s}_T^{i-1}</span>만으로는 <span class="math inline">\pi_i</span>의 성능을 구분하기에 불충분하므로, 이전 서브태스크로부터의 객체 속도와 같은 시간적 정보를 포함하여 10단계의 관찰 상태 시퀀스 <span class="math inline">\mathbf{s}_{[0:T-1]}^{i-1}</span>를 입력으로 사용하고, Multi-head Attention Network를 활용하여 적절한 시간 정보를 추출한다. TFF <span class="math inline">F^i</span>의 최종 학습 목표는 다음과 같다: <span class="math display">L_i = \|F^i(\mathbf{s}_{[0:T-1]}^{i}) - E_{\pi_i} \left[ \sum_{t=0}^{T-1} r_t \right] \|_2^2</span> <strong>역방향 정책 미세 조정(Backward policy fine-tuning):</strong> <span class="math inline">F^i</span>가 훈련되면, <span class="math inline">F^i</span>를 보조 보상 구성 요소로 통합하여 이전 정책 <span class="math inline">\pi_{i-1}</span>을 미세 조정할 수 있다. 미세 조정은 마지막 서브태스크 정책 <span class="math inline">\pi_{K-1}</span>부터 시작하여 첫 번째 정책 <span class="math inline">\pi_1</span>이 업데이트될 때까지 각 이전 정책을 순차적으로 개선한다. 각 미세 조정 단계에서, <span class="math inline">F^i</span>는 원본 서브태스크 보상 <span class="math inline">R_{i-1}</span>과 결합되어 <span class="math inline">\pi_{i-1}</span>을 미세 조정하는 추가 보상으로 사용된다. 최종 정책 미세 조정 보상 함수는 다음과 같다: <span class="math display">R'_{i-1}(\mathbf{s}_t, \mathbf{a}_t, \mathbf{s}_{t+1}; F^i) = \lambda_1 R_{i-1}(\mathbf{s}_t, \mathbf{a}_t, \mathbf{s}_{t+1}) + \lambda_2 F^i_{\omega}(\mathbf{s}_{[0:T-1]}^i)</span> 여기서 <span class="math inline">\lambda_1</span>과 <span class="math inline">\lambda_2</span>는 가중치 계수이다. <span class="math inline">\pi_{i-1}</span>이 개선되면, 데이터(초기 상태 <span class="math inline">\mathbf{s}_{[0:T-1]}^{i-2}</span>에서 <span class="math inline">\pi_{i-1}</span>이 받은 누적 보상 <span class="math inline">E_{\pi_{i-1}} [\sum r_t]</span>까지 매핑)를 수집하여 새로운 전이 가능성 함수 <span class="math inline">F^{i-1}</span>를 구성하고, 이는 다시 이전 정책 <span class="math inline">\pi_{i-2}</span>를 미세 조정하는 데 사용된다.</p></li>
+<li><p><strong>전이 가능성 함수를 이용한 정책 전환(Policy switching with Transition Feasibility Function):</strong> 여러 덱스터러스 정책을 연결하는 데 중요한 과제는 다음 정책으로 언제, 어떤 정책으로 전환해야 할지 결정하는 것이다. 본 연구에서는 훈련된 TFF를 정책 전환 식별자로 활용한다. 각 시간 단계에서 다음 서브 정책의 전이 가능성 함수는 가능성 점수 <span class="math inline">c_{i+1}^t = F^{i+1}(\mathbf{s}_{[0:t-1]}^t)/h_{i+1}</span>를 출력하며, <span class="math inline">h_{i+1}</span>은 성공적인 태스크 실행의 보상에 기반한 임계값이다. 정책 전환의 이상적인 시점은 <span class="math inline">c_{i+1}^t &gt; 1</span>일 때로 정의된다. 또한, 로봇이 이전 정책을 사용하여 복구해야 하거나 이미 달성된 서브태스크를 건너뛰어야 할 수도 있으므로, 학습된 TFF 그룹 (<span class="math inline">F^2, ..., F^K</span>)을 단계 추정기(stage estimator)로 활용한다. 매 정책 전환 단계에서, 전체 태스크의 최종 TFF부터 역방향으로 가능성 점수를 계산하여, 처음으로 <span class="math inline">c_i^t &gt; 1</span>인 서브 정책이 다음 실행 정책으로 선택된다. 어떤 점수도 만족하지 않으면, 로봇은 전체 태스크를 처음부터 재시작한다. 이러한 방식은 정책 실행 중 예상치 못한 실패에 대한 로봇의 견고성(robustness)을 향상시키고, 불필요한 단계를 건너뛰어 효율적인 태스크 실행을 촉진한다.</p></li>
+</ol>
+<p>본 시스템은 Lego 블록 구조 구축 및 도구 위치 지정이라는 두 가지 장기적 덱스터러스 조작 태스크에 대해 평가되었다. 실험 결과, 본 연구의 이중 방향 최적화 방식은 기존의 단일 방향 스킬 연결 방법들(V-Chain, Policy-Seq, T-STAR)보다 태스크 성공률에서 20% 이상 크게 뛰어난 성능을 보였다. 특히, TFF는 PPO로 훈련된 가치 함수보다 다음 정책의 가능성을 더 잘 모델링하여 30% 이상 높은 성공률을 달성했다. 또한, TFF에 시간적(temporal) 정보를 입력으로 사용했을 때 정적 상태 정보만 사용했을 때보다 8% 더 나은 성능을 보여, 동적인 손가락 움직임을 포함하는 덱스터러스 정책 연결에 있어 시간 정보 추출의 중요성을 강조했다. 자율적인 정책 전환 능력은 30% 이상의 성공률 향상을 가져와 장기적 태스크 성공에 필수적임을 입증했다. 실제 로봇 실험에서도 본 접근 방식은 기존 방법들보다 30% 이상 높은 성공률을 보이며, 두 개의 블록을 쌓는 도전적인 8단계 태스크에서 33%의 성공률을 기록했다(다른 베이스라인은 0%).</p>
+<p>본 연구의 한계점으로는 접촉이 많은 삽입 과정을 시뮬레이션하기 어렵고, 실제 로봇 배포 시 수동으로 설계된 누름 동작이 필요하다는 점과, 모터 촉각(motor tactile) 정보가 성능 향상에 큰 기여를 하지 못했다는 점이 있다. 향후 연구에서는 센서 기반 촉각 신호의 잠재력을 탐색할 수 있다.</p>
+<p>결론적으로, Sequential Dexterity는 심층 강화 학습으로 학습된 다수의 덱스터러스 정책을 연결하는 이중 방향 최적화 과정을 통해 장기적 덱스터러스 조작 태스크를 해결하는 시스템이다. 시스템의 핵심인 전이 가능성 함수는 서브 정책의 점진적인 미세 조정과 동적 정책 전환을 가능하게 하여 정책 연결의 성공률을 크게 향상시킨다. 본 시스템은 실제 덱스터러스 로봇으로 제로-샷 전이가 가능하며, 새로운 객체 형상에 대한 일반화 능력을 보인다. 본 이중 방향 최적화 프레임워크는 덱스터러스 조작을 넘어 양팔 로봇(bimanual robots)을 위한 스킬 연결과 같은 잠재적 응용 분야에서도 일반적인 스킬 연결 방법으로 활용될 수 있다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>Sequential Dexterity: 다단계 정교한 조작을 위한 정책 연쇄 심층 분석</p>
+</blockquote>
+<section id="논문-개요-및-문제-제기" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="논문-개요-및-문제-제기"><span class="header-section-number">2.1</span> 논문 개요 및 문제 제기</h2>
+<p><strong>Sequential Dexterity</strong>는 긴 시퀀스로 이루어진 복잡한 조작 작업을 다중 <strong>서브 정책</strong>(sub-policy)을 <strong>연쇄</strong>하여 수행하는 강화학습 기반 프레임워크입니다. 현실 세계의 조작 과업들은 여러 <strong>서브태스크</strong>(예: 탐색, 정렬, 파지, 삽입)로 구성되는 경우가 많으며, 각 단계의 요구사항이 상이합니다. 사람의 손과 유사한 <strong>다지(多指) 로봇 손</strong>(dexterous hand)은 도구 교체나 재파지 없이 다양한 조작 모드를 전환할 수 있어 이러한 <strong>장기 다단계 작업</strong>에 잠재력이 크지만, 동시에 <strong>자유도</strong>와 <strong>행동 공간</strong>이 고차원이라 학습과 제어가 매우 어려운 도전과제를 제시합니다.</p>
+<p>기존에는 전체 작업을 단일 정책으로 학습하기 어려워 태스크를 분할한 뒤 각 단계를 순차 실행하는 접근이 검토되었으나, <strong>나이브한 순차 실행</strong>은 앞 단계에서 도달한 상태가 다음 단계 정책이 학습된 분포를 벗어나는 경우 쉽게 실패하게 됩니다. 다시 말해, 한 단계의 종료 상태가 다음 단계 정책의 시작 상태 분포 밖에 있다면 연쇄에 실패하게 됩니다. 이러한 <strong>상태 분포 불일치 문제</strong>와 긴 호라이즌에 걸친 <strong>복잡한 동적 상호작용</strong>은 다단계 정책 연쇄의 핵심 난제로 지목됩니다. Sequential Dexterity 논문은 이러한 문제를 해결하고자, <strong>정책 체이닝(policy chaining)</strong>을 위한 새로운 <strong>양방향 최적화 프레임워크</strong>를 제안합니다. 이를 통해 시뮬레이션에서 학습한 복수의 손 동작 정책들을 한 데 묶어 복잡한 목표를 달성하고, 학습에 사용하지 않은 새로운 물체 형태에도 일반화하며, 나아가 <strong>추가 학습 없이 실물 로봇에 적용(제로샷 전이)</strong>할 수 있음을 시연하였습니다.</p>
+</section>
+<section id="방법론-상세-분석" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="방법론-상세-분석"><span class="header-section-number">2.2</span> 방법론 상세 분석</h2>
+<p> <em>그림 1: Sequential Dexterity 프레임워크 개요. (a) 시뮬레이션에서 각 서브태스크별 정책 <span class="math inline">\pi^1, \pi^2, \pi^3, \pi^4</span>를 순차 학습하는 <strong>순방향 초기화</strong>(파란색)와, 학습 완료 후 이전 정책을 미세조정하는 <strong>역방향 파인튜닝</strong>(빨간색) 과정. <span class="math inline">\rho^i</span>는 정책 <span class="math inline">\pi^i</span>의 상태 분포, <span class="math inline">F^i</span>는 서브태스크 <span class="math inline">i</span>와 <span class="math inline">i!-!1</span> 사이의 <strong>전이 가능성 함수</strong>. (b) 실 로봇 적용 시 정책 입력으로 6D 물체 자세와 로봇 상태가 주어지며, <strong>정책 선택</strong>은 최근 10스텝 상태를 고려한 <span class="math inline">F^i</span> 출력이 임계값 <span class="math inline">h^i</span>를 넘는지에 따라 이루어진다. 단계 <span class="math inline">\pi^2</span> Orient, <span class="math inline">\pi^3</span> Grasp, <span class="math inline">\pi^4</span> Insert를 실 로봇에서 수행하는 모습.</em></p>
+<p><strong>Sequential Dexterity</strong>의 핵심 아이디어는 긴 조작 작업을 구성하는 각 단계를 독립적인 <strong>하위 정책</strong>으로 정의하고 강화학습으로 학습한 뒤, 이들을 <strong>체계적으로 연결</strong>하여 전체 작업을 수행하도록 만드는 것입니다. 이를 위해 논문에서는 <strong>양방향 최적화</strong>(bi-directional optimization)라고 불리는 학습 절차를 도입하였습니다. 우선, <strong>순방향 초기화 단계</strong>에서는 각 서브태스크마다 개별 정책을 학습합니다. 이때 <strong>PPO 알고리즘</strong> 등의 강화학습 방법을 사용하여 각 서브태스크를 MDP로 정의하고 정책을 훈련하며, 이전 단계의 <strong>종료 상태 분포</strong>를 활용해 다음 단계 정책의 <strong>초기 상태</strong>로 샘플링함으로써 연쇄 시 발생할 상태 분포를 미리 포함시킵니다. 이렇게 하면 각 정책 <span class="math inline">\pi^i</span>가 전 단계 <span class="math inline">\pi^{i-1}</span>가 만들어낼 법한 상태에서도 동작하도록 <strong>전방위 학습</strong>을 수행할 수 있습니다.</p>
+<p>이후 <strong>역방향 파인튜닝 단계</strong>에서는 <strong>전이 가능성 함수</strong>(Transition Feasibility Function, <span class="math inline">F^i</span>)를 활용하여 이웃한 정책 사이의 접속을 더욱 최적화합니다. 전이 가능성 함수 <span class="math inline">F^i(s)</span>란 <strong>서브태스크 <span class="math inline">i</span>의 초기 상태</strong> <span class="math inline">s</span>에 대해 해당 상태에서 정책 <span class="math inline">\pi^i</span>를 시작했을 때 <strong>성공 가능성이나 성과</strong>를 출력하는 함수입니다. 논문에서는 각 <span class="math inline">\pi^i</span>를 학습한 후, <span class="math inline">\pi^{i-1}</span>의 종료 상태(즉 <span class="math inline">\pi^i</span>의 시작 상태)들과 그로부터 <span class="math inline">\pi^i</span>를 실행했을 때 얻은 누적 보상 또는 성공 여부를 모아서 <span class="math inline">F^i</span>를 <strong>지도 학습</strong>으로 훈련합니다. 이렇게 학습된 <span class="math inline">F^i</span>는 상태 <span class="math inline">s</span>가 다음 단계 정책에 얼마나 <strong>적합한지</strong>를 예측하는 역할을 하며, 마치 다음 정책의 <strong>가치 함수</strong>처럼 동작하지만 일반적인 RL 가치 함수와 달리 <strong>할인되지 않은 최종 성과</strong>에 집중합니다. 실제 PPO 등으로 얻은 가치 함수는 할인의 영향으로 후속 정책의 성공 가능성을 제대로 평가하지 못하는데, 저자들은 별도의 <span class="math inline">F^i</span> 학습으로 이 문제를 해결하였다고 보고합니다. 특히 <span class="math inline">F^i</span>에는 최근 몇 스텝 동안의 상태 변화를 입력으로 사용하여 <strong>시간적 맥락</strong>도 반영하였는데, 이렇게 <strong>과거 상태 이력</strong>을 통합함으로써 단순 단일 상태 기준보다 전이 성공 여부를 정확히 예측할 수 있었습니다.</p>
+<p>이 전이 가능성 함수를 이용해 이전 단계 정책을 <strong>역방향으로 미세조정</strong>합니다. 구체적으로, 정책 <span class="math inline">\pi^{i-1}</span>의 학습에 <span class="math inline">F^i</span>를 통한 <strong>추가 보상</strong> 또는 <strong>규제 항</strong>을 부여하여, <span class="math inline">\pi^{i-1}</span>이 종료 시 상태를 <span class="math inline">F^i</span> 기준으로 높은 <strong>전이 점수</strong>를 얻는 방향으로 유도합니다. 예를 들어 서브태스크 2 (Orient)의 전이 함수 <span class="math inline">F^3</span>가 “이 상태에서 서브태스크 3 (Grasp)이 성공할 가능성”을 나타낸다면, <span class="math inline">\pi^2</span>의 종료 상태가 <span class="math inline">F^3</span> 상 높은 점수를 받도록 <span class="math inline">\pi^2</span>를 업데이트하는 식입니다. 이를 통해 각 하위 정책의 <strong>종료 상태 분포를 다음 정책의 초기 상태 분포와 최대한 일치</strong>시키며, 결과적으로 <strong>정책 연쇄의 성공률을 극대화</strong>합니다. Lee 등(2021)의 T-STAR와 같은 기존 <strong>기술 연쇄 기법</strong>들이 종료 상태 분포를 줄이는 <strong>대항훈련(어드버서리) 방식</strong>으로 접근한 것과 대비되며, Sequential Dexterity는 보다 <strong>직접적으로 후속 성공 가능성을 예측</strong>하여 활용한다는 차별점이 있습니다.</p>
+<p>마지막으로, <strong>정책 체이닝 실행 단계</strong>에서 중요한 것이 <strong>자율적인 정책 전환 메커니즘</strong>입니다. 고정된 단계 순서로 한 번씩만 정책을 실행하는 대신, <strong>전이 가능성 함수</strong>를 활용하여 <strong>실시간으로 적절한 정책을 선택</strong>합니다. 구체적으로 로봇이 작업 도중 매 시점마다 현재 상태를 가지고 각 다음 가능 단계들의 <span class="math inline">F</span> 값을 평가하고, <strong>임계값</strong>을 넘겨 <strong>실행 준비가 된</strong> 것으로 판정된 <strong>가장 후순위 단계</strong>부터 실행합니다. 예를 들어 블록 쌓기 작업에서, 현재 상태에서 <strong>삽입 단계</strong>가 바로 가능하다고 판단되면 (예: 블록을 이미 손에 쥐고 있고 자세도 맞다면) 중간 단계를 건너뛰고 삽입을 수행합니다. 반대로, 만약 현재 단계 수행이 잘못되어 목표 상태에 도달하지 못하더라도, <span class="math inline">F</span>가 알려주는 바에 따라 이전 단계로 <strong>되돌아가 교정</strong>할 수도 있습니다. 실제로 저자들은 <strong>정책 전환을 역순으로 탐색</strong>하는 방식을 취하는데, 삽입(<span class="math inline">\pi^4</span>)→파지(<span class="math inline">\pi^3</span>)→정렬(<span class="math inline">\pi^2</span>) 순으로 각각의 <span class="math inline">F</span> 값을 확인해 <strong>가능한 가장 진전된 단계</strong>로 점프하거나, 모든 <span class="math inline">F</span> 출력이 기준 미만이면 <strong>처음부터 탐색(<span class="math inline">\pi^1</span>)</strong>을 다시 실행하도록 설계했습니다. 이러한 <strong>동적 스위칭</strong>은 실패 복구와 불필요한 단계 생략을 모두 가능케 하여 체이닝의 <strong>강인성</strong>을 크게 높였습니다. 요컨대, Sequential Dexterity는 학습 단계에서 <strong>각 정책이 연쇄에 적합하도록 양방향으로 최적화</strong>되고, 실행 단계에서는 <strong>전이 가능성 함수 기반의 지능형 전환</strong>을 통해 긴 계획을 견고하게 수행합니다.</p>
+<p>각 서브태스크의 <strong>보상 설계</strong>는 해당 단계의 목표 완료에 중점을 두고 이루어졌습니다. 예를 들어 “탐색” 정책에는 올바른 블록을 식별하거나 접근했을 때의 보상, “정렬” 정책에는 물체의 자세를 목표 자세에 가깝게 만들수록 부여되는 보상, “파지”에는 성공적으로 블록을 쥐었을 때의 보상 등이 주어집니다. <strong>Sparse reward(희소 보상)</strong>보다 <strong>shaping 보상</strong>을 적절히 추가하여 학습을 유도했을 것으로 추측되며, 최종 단계인 “삽입”도 블록이 목표 위치에 안착하면 보상을 얻도록 설계되었습니다. 특히 역방향 파인튜닝 시에는 앞서 언급한 대로 <span class="math inline">F^i</span>의 출력을 일종의 <strong>추가 보상</strong>으로 취급하여 이전 정책의 종료 상태를 향상시키는 데 사용하였고, 이는 기존 보상과 합쳐져 에이전트가 <strong>다음 단계의 성공까지 염두에 둔 행동</strong>을 하도록 합니다. 이러한 보상 체계와 전이 함수 활용을 통해 <strong>부분 최적해</strong>에 머무르기 쉬운 개별 정책들을 <strong>전체 작업의 성공</strong>이라는 <strong>글로벌 목표</strong>에 수렴시키도록 유도한 것이 본 방법론의 특징입니다.</p>
+</section>
+<section id="실험-설정-및-벤치마크" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="실험-설정-및-벤치마크"><span class="header-section-number">2.3</span> 실험 설정 및 벤치마크</h2>
+<p>본 논문에서는 제안한 Sequential Dexterity 프레임워크를 <strong>시뮬레이션 실험</strong>과 <strong>실 로봇 실험</strong>을 통해 검증했습니다. 사용된 시뮬레이터는 대규모 병렬 환경을 지원하는 <strong>Isaac Gym</strong>으로, 각 서브태스크 정책을 학습할 때 최대 1024개의 환경에서 병렬로 데이터를 수집함으로써 학습 효율을 높였습니다. 실험은 두 가지 대표적인 <strong>다단계 조작 과제</strong>에 대해 이루어졌으며, 각 과제에 대해 제안 기법의 성능을 기존 방법들과 비교 평가했습니다.</p>
+<ul>
+<li><p><strong>과제 1: 블록 조립 (Building Blocks)</strong> – 다양한 색상과 크기의 블록들이 섞여있는 상자에서 지정된 블록을 찾아 (<strong>탐색</strong>), 손가락을 이용해 적절한 자세로 <strong>정렬</strong>한 후, 블록을 <strong>파지</strong>하여 들어 올리고, 목표 구조물의 해당 위치에 <strong>삽입</strong>하는 일련의 작업입니다. 이 과제는 <strong>Mega Bloks</strong> 장난감을 사용한 간이 조립 작업으로 볼 수 있으며, 전체 구조를 완성하기 위해 이러한 네 가지 서브태스크를 블록 개수만큼 반복 수행해야 하는 <strong>복합 장기과업</strong>입니다. 시뮬레이션 환경에서는 블록들이 무작위로 쌓여있고 로봇은 손목 카메라 등의 감각을 통해 블록을 인식하게 됩니다. 실험에 사용된 로봇은 <strong>다관절 로봇 손</strong>(4-finger dexterous hand)을 장착한 로봇 팔로, 시뮬레이션에서 학습한 정책을 그대로 적용하여 실제 플라스틱 블록 조립을 수행했습니다. 실 로봇 환경에서는 상단에 장착된 카메라로 테이블 위 블록들의 대략적 위치를 파악하고, 손목에 장착된 RGB-D 카메라 영상에서 목표 블록을 분할(segmentation) 및 추적하여 실시간 6D 자세를 추정하는 <strong>비전 파이프라인</strong>을 구축했습니다. 이 정보를 실시간으로 정책에 입력하여 로봇이 블록을 찾아 집을 수 있도록 했습니다. 다만 시뮬레이터에서 블록을 홈에 끼워 넣는 <strong>삽입</strong> 동작의 아주 세밀한 부분(블록을 완전히 눌러 끼우는 과정)은 접촉 모델 한계로 구현이 어려웠기 때문에, 시뮬레이션에서는 <strong>삽입 정책</strong>이 블록을 목표 위치에 대략 놓는 것으로 학습되었습니다. 실 로봇 실험에서는 블록을 제자리에 올려놓는 것까지를 학습된 정책으로 수행하고, 마지막에 로봇 팔로 <strong>블록을 아래로 눌러 완전히 끼우는 동작은 스크립트로 처리</strong>하는 방식으로 실제 조립을 구현했습니다. 이러한 부분은 본 방법의 <strong>물리 한계</strong>를 보완하기 위한 조치로, 이후 한계점에서 추가 논의됩니다.</p></li>
+<li><p><strong>과제 2: 공구 자세 맞추기 (Tool Positioning)</strong> – 테이블 위에 임의 자세로 놓인 공구를 <strong>파지</strong>하여 들어올린 뒤, 사용하기 편한 <strong>준비 자세로 재정렬</strong>(reorient)하는 작업입니다. 실험에서는 망치(hammer)를 대표적인 공구로 사용하여 학습하였고, 초기에는 망치가 바닥에 아무렇게나 놓여 있습니다. 로봇 손이 망치를 집어 드는 동작(Grasp)이 1단계, 이어서 공구를 회전시켜 손잡이 부분이 아래로 향하도록 세우는 동작(Orient)이 2단계로 구성됩니다. 이 과제는 <strong>두 단계의 체이닝</strong>이지만, 핵심은 <strong>첫 파지의 방식이 두 번째 단계의 난이도에 큰 영향을 준다</strong>는 점입니다. 예컨대 망치를 엉뚱한 각도로 집으면 회전 단계에서 균형을 잡기 어렵거나 충돌이 발생해 실패할 수 있습니다. 따라서 <strong>초기 파지 단계부터 전체 과업을 고려한 최적의 방식</strong>을 취하는 것이 중요합니다. 이 과제 역시 시뮬레이션으로 학습한 후 실제 로봇으로 <strong>제로샷 검증</strong>되었으며, 추가로 <strong>일반화 성능</strong> 평가를 위해 학습에 사용하지 않은 공구(주걱, 숟가락 등의 도구)를 대상으로도 실험이 수행되었습니다.</p></li>
+</ul>
+<p> <em>그림 2: 실험 환경 및 비교. (a) <strong>블록 조립</strong> 과제 – 시뮬레이터(왼쪽)와 실제 로봇(오른쪽)의 작업 환경. 로봇 팔 끝에 4손가락 로봇 핸드와 손목 카메라(빨간 상자), 상단에 전역 카메라(파란 상자)가 배치되어 블록을 탐색하고 조립한다. (b) <strong>공구 자세 맞추기</strong> 과제 – 초기 상태에 놓인 망치를 대상으로, <strong>Baseline</strong>(기존 순차 실행 방법) vs <strong>Ours</strong>(제안 방법)의 비교 예시. Baseline은 1단계 파지 이후 망치를 비스듬히 잡아 2단계 정렬에 실패(빨간 X)하지만, 제안 방법은 첫 파지부터 각도를 고려해 잡음으로써 최종 정렬에 성공(녹색 체크)한다.</em></p>
+<p><strong>벤치마크 방법</strong>으로는 다음과 같은 비교 대상이 선정되었습니다. 첫째, 각 서브태스크를 개별적으로 학습한 후 <strong>아무 조정 없이 순서대로 실행</strong>하는 <strong>기본 정책 연쇄</strong> 방법이 있습니다. 이는 전이 가능성 함수를 사용하지 않고 단순히 정해진 순서로 한 번씩 정책을 적용하는 것으로, <strong>전이 분포 불일치 문제</strong>를 그대로 가지는 baseline입니다. 둘째, Lee 등(2021)이 제안한 <strong>T-STAR</strong> 기법 등 기존 <strong>기술 체이닝</strong> 알고리즘과의 비교가 수행되었습니다. T-STAR는 종료 상태 분포를 제한하기 위해 <strong>적대적 학습</strong>을 활용했던 선행 연구로, 본 논문의 문제 설정(특히 다지 로봇 손 사용)과는 차이가 있지만 아이디어상 인접한 기법입니다. 셋째, <strong>V-Chain</strong>이라고 명명된 비교 방법은 <strong>다음 단계 정책의 RL 가치함수</strong>를 전이 평가에 활용하여 이전 정책들을 파인튜닝하는 방식으로, 전이 가능성 함수를 쓰는 대신 PPO로 학습된 <strong>가치망</strong>으로 연쇄를 시도한 경우입니다. 저자들은 이를 통해 <strong>전이 가능성 함수의 이점</strong>을 검증하고자 했습니다. 넷째, <strong>Ours w/o temporal</strong>이라고 하는 <strong>변형 모델</strong>은 제안한 전이 가능성 함수에서 <strong>시간적 이력(상태 시퀀스)</strong> 입력을 제외하고 <strong>현재 상태만으로</strong> 전이 판정을 하도록 한 버전입니다. 이를 통해 전이 함수에 시간 정보를 포함시키는 것이 성능에 미치는 영향을 확인하였습니다. 마지막으로, 본 논문의 <strong>Ours (제안 기법)</strong>은 <strong>양방향 최적화 + 전이 가능성 함수 + 자율 스위칭</strong>의 풀셋을 사용한 완전한 Sequential Dexterity 시스템입니다.</p>
+<p><strong>평가 지표</strong>로는 각 과제에서 <strong>최종 목표를 성공적으로 달성</strong>했는지의 <strong>성공률</strong>이 주요하게 사용되었습니다. 블록 조립의 경우 주어진 구조물을 모두 완성하는 데 성공한 실험 에피소드 비율로 측정되며, 공구 자세 맞추기는 공구를 바른 자세로 세워서 안정적으로 유지하는 데 성공한 비율로 정의됩니다. 이 과정에서 서브태스크별 <strong>단계 성공률</strong>이나 수행 시간, 정책 전환 횟수 등도 부가적으로 관찰되었으나, 가장 중요한 평가지표는 <strong>전체 작업의 완수 여부</strong>였습니다. 또한 <strong>정성적 평가</strong>로 각 과정의 행동 궤적과 최종 상태를 비교하고, 정책 전환 전략에 따른 <strong>성공/실패 사례</strong>를 분석하였습니다. <strong>일반화 평가</strong>로는, 앞서 언급한 대로 공구 과제에서는 <strong>학습 시 보지 못한 새로운 도구</strong>(예: 주걱, 숟가락)를 투입하여 성공 여부를 측정하였고, 블록 조립 과제에서는 <strong>새로운 구조 조립</strong>(예: 다른 형태의 블록 조합 구조)에 대한 적용을 살펴보았습니다. 끝으로, <strong>실제 로봇 검증</strong>에서는 시뮬레이션에서 학습한 정책을 그대로 사용하여 실제 환경에서 작업을 수행하도록 하고, 그 <strong>성공 사례 영상과 빈도</strong>를 보고하였습니다. 성공률의 경우 시뮬레이션만큼 다수 반복하지는 못했지만, 몇 차례 시연에서 <strong>지속적으로 작업 완수에 성공</strong>하는 모습을 보여 <strong>제로샷 학습 전이</strong>의 가능성을 확인했습니다.</p>
+</section>
+<section id="결과-분석" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="결과-분석"><span class="header-section-number">2.4</span> 결과 분석</h2>
+<p>실험 결과, Sequential Dexterity 프레임워크는 제안한 요소들이 모두 결합되었을 때 <strong>기존 방법 대비 현저한 성능 향상</strong>을 이루는 것으로 나타났습니다. 특히 <strong>전체 작업 성공률</strong> 지표에서 두 과제 모두 유의미한 개선을 달성했습니다.</p>
+<p>먼저 <strong>블록 조립 과제</strong>를 살펴보면, 제안 기법은 약 <strong>80% 이상의 최종 성공률</strong>을 기록하여, <strong>기본 순차 실행 방식</strong>(전이 최적화 없이 각 단계 한 번씩 수행) 대비 약 <strong>30%포인트 이상 상승</strong>한 성과를 보였습니다. 구체적으로, baseline의 경우 여러 번의 시행 중 절반도 안 되는 에피소드에서만 구조 완성에 성공한 반면, Sequential Dexterity를 적용하면 <strong>10번 중 8번 이상</strong>은 로봇이 모든 블록을 제자리에 정확히 쌓아올릴 수 있었습니다. <strong>공구 자세 맞추기 과제</strong>에서도 유사한 경향으로, 제안 기법은 약 <strong>90%에 가까운 성공률</strong>을 달성하여 baseline(약 60% 수준)보다 크게 앞섰습니다. 이로써 <strong>정책 체이닝의 효과</strong>가 정량적으로 입증되었는데, 특히 <strong>전이 가능성 함수 기반의 자율 스위칭</strong>이 없었던 경우(정책 전환 허용 횟수 0일 때) 성공률이 크게 낮았다가, 스위칭을 1회, 2회, 3회로 늘릴수록 성공률이 단계적으로 향상되는 양상을 보였습니다. <strong>그림 3-(a)</strong>에서 보이듯이, 정책 스위칭을 전혀 허용하지 않으면 블록 조립 성공률은 50% 미만에 머물렀으나, 최대 3회까지 재시도를 허용하자 약 80% 수준까지 높아졌습니다. 마찬가지로 공구 과제도 0회 스위칭 시 ~60%에서 3회 시 ~90%로 상승하여, <strong>동적 정책 전환</strong>이 복잡한 조작을 성공으로 이끄는 데 핵심적인 역할을 함을 알 수 있습니다.</p>
+<p> <em>그림 3: 성능 지표 및 전이 함수 효과 분석. (a) <strong>정책 스위칭 허용 횟수에 따른 최종 성공률</strong> – 스위칭을 늘릴수록 블록 조립(파란색)과 공구 조정(주황색) 과제 모두 성공률이 크게 향상됨을 보여준다. (b) <strong>물체 자세 분포 비교(T-STAR vs Ours)</strong> – 블록 조립 과제의 정렬 단계에서, 기존 방법(T-STAR)은 로봇이 다양한 각도로 블록을 배치하여 후속 파지 단계에 진입하지만(위, 파란점 분포), 제안 방법은 <strong>블록의 돌기가 위로 향한 자세</strong>에 대부분 모이도록 유도함으로써 이후 파지와 삽입을 쉽게 만들고 성공 확률을 높인다(아래). 이는 전이 가능성 함수가 <strong>다음 단계 성공에 최적인 상태</strong>를 학습하고 이전 단계 정책을 그 방향으로 유도한 결과이다.</em></p>
+<p><strong>전이 가능성 함수의 활용</strong>은 단순한 성공률 상승뿐 아니라, 각 단계의 <strong>정성적 동작 품질</strong>도 향상시켰습니다. 예를 들어 블록 조립에서 <strong>정렬(Orient) 정책</strong>은 블록의 <strong>방향을 어떻게 잡느냐</strong>가 이후 <strong>파지</strong> 및 <strong>삽입</strong> 성공에 결정적인데, 제안 기법은 정렬 단계에서 블록의 <strong>돌기가 위로 향하도록</strong> 회전시키는 경향을 보였습니다. 이는 사람이 레고 블록을 끼울 때 윗면 돌기가 위로 오도록 맞추는 것과 유사한 전략으로, 이러한 <strong>계획적 동작</strong>은 <strong>전이 가능성 함수가 “이 자세가 다음 단계에 유리하다”는 신호를 주었기 때문</strong>입니다. 반면, 전이 함수를 쓰지 않은 방법이나 T-STAR 등의 기존 접근은 정렬 단계에서 다양한 각도로 블록을 놓아 후속 단계에 더 <strong>넓은 초기 분포</strong>를 허용하지만, 오히려 그 때문에 파지나 삽입 단계에서 <strong>불필요한 어려움</strong>이 생길 수 있습니다. <strong>그림 3-(b)</strong>는 이러한 차이를 잘 보여주는데, T-STAR 방식으로 최적화된 정책은 블록의 최종 자세 분포가 비교적 <strong>넓게</strong> 퍼져 있는 반면(Ours 이전의 참고용), Sequential Dexterity의 정책은 <strong>한정된 범위</strong>(거의 돌기가 위쪽을 향한 영역)에 몰려 있습니다. 이렇듯 <strong>우리 방법이 목표 상태 공간을 효과적으로 제한</strong>함으로써 <strong>전체 연쇄의 성공 가능성을 높였음</strong>을 알 수 있습니다.</p>
+<p><strong>Baseline 대비 성능 개선</strong>은 개별 사례 비교를 통해서도 드러납니다. 공구 자세 맞추기 과제의 경우, 기존 순차 실행 방식(baseline)은 첫 파지에서 망치를 옆으로 눕힌 채 잡는 경우가 많았고, 이 상태에서는 아무리 회전하려 해도 망치머리가 걸려 <strong>자세 변경에 실패</strong>하곤 했습니다 (위 그림 2-(b) 빨간 X 상황). 반면 Sequential Dexterity를 통해 학습된 정책은 첫 단계에서부터 망치를 세울 것을 염두에 두고 <strong>손잡이 부분을 아래쪽으로 향하게 잡는 전략</strong>을 취했습니다. 그 결과 두 번째 단계에서 <strong>자연스럽게 망치를 똑바로 세울 수 있었고</strong> 최종적으로 안정된 자세를 만들 수 있었습니다 (그림 2-(b) 녹색 체크 상황). 이처럼 <strong>초기 단계에서의 적절한 결정이 후속 단계 성공으로 이어지는 사례</strong>가 다수 관찰되었습니다.</p>
+<p><strong>일반화 성능</strong> 측면에서도 고무적인 결과가 보고되었습니다. 공구 과제에서 학습에 사용하지 않은 <strong>주걱, 숟가락</strong> 등의 도구에 대해서도 제안 정책은 큰 성능 저하 없이 작업을 수행해냈습니다. 예컨대 숟가락의 넓적한 부분을 잡을 때에도 학습된 망치 파지 정책을 응용하여 <strong>비슷한 원리로 파지 및 세우기 동작</strong>을 성공시켰습니다. 성공률 수치는 망치에 비해 다소 낮아질 수 있으나, baseline과 비교하면 여전히 <strong>높은 성공 비율</strong>을 유지하며 <strong>우수한 일반화</strong> 능력을 시현했습니다. 블록 조립의 경우 학습에는 몇 가지 크기와 색상의 블록만 사용되었지만, 테스트에서는 <strong>처음 보는 형태의 블록</strong>(예: 다른 모양의 조립 블록)을 투입해도 손쉽게 적응하는 모습을 보였습니다. 이는 제안한 정책이 물체의 정확한 CAD 모델에 의존하기보다는 <strong>시각/촉각 피드백에 기반한 조작 스킬</strong>을 학습했음을 시사합니다. 또한 블록의 초기 배치나 목표 구조의 형태가 달라져도, 주어진 <strong>조립 설명서</strong>만 바꾸면 (예: GUI로 원하는 구조를 지정) 로봇이 동일한 연쇄 정책으로 새로운 구조를 쌓아올렸습니다. 이러한 <strong>태스크 적응력</strong>은 본 기법의 <strong>범용성</strong>을 뒷받침하는 증거입니다.</p>
+<p>끝으로, <strong>실제 로봇 실험 결과</strong> Sequential Dexterity의 실용 가능성을 보여주었습니다. 시뮬레이션에서 학습한 정책들을 그대로 이식한 로봇은, 카메라로 식별한 블록을 찾아 집어서 구조물을 쌓는 일련의 동작을 <strong>성공적으로 수행</strong>했습니다. 논문에 공개된 동영상을 보면 로봇이 여러 형태의 블록 구조 (예: 다층 탑, 특정 패턴 조립 등)를 사람의 도움 없이 완성하는 인상적인 시연이 포함되어 있습니다. 특히 <strong>추가 학습이나 미세조정 없이</strong> 시뮬레이션 정책을 바로 사용했다는 점에서, <strong>시뮬레이션-현실 간 격차(sim2real gap)</strong>를 최소화한 정책 학습의 효과를 실증했다고 볼 수 있습니다. 물론 완벽한 제로샷 전이를 위해 몇 가지 엔지니어링이 더해졌습니다. 예를 들어, 시뮬레이터에서는 손가락 움직임이 빠르게 튀는 <strong>진동 현상</strong>이 있었으나, 실제 로봇에서는 이를 <strong>지수평활 필터</strong>로 평탄화하여 제어의 안정성을 높였습니다. 또한 앞서 설명한 대로 마지막 삽입 동작은 약간의 스크립트 보조를 받았습니다. 그럼에도 불구하고, <strong>학습된 부분(탐색<del>정렬</del>파지)</strong>만으로도 로봇이 스스로 블록을 집어 정확한 자세로 위치시키는 건 기존에는 보기 드문 성과로, <strong>모델 자유 강화학습</strong>(model-free RL) 기법으로 이렇게 복잡한 실제 조립 작업을 성공한 <strong>첫 사례 중 하나</strong>로 평가됩니다.</p>
+</section>
+<section id="한계점-및-향후-연구-방향" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="한계점-및-향후-연구-방향"><span class="header-section-number">2.5</span> 한계점 및 향후 연구 방향</h2>
+<p>Sequential Dexterity는 긴 수평선(long-horizon)의 다단계 작업에 대한 새로운 접근법을 제시했지만, 여전히 몇 가지 <strong>한계점</strong>이 존재하며 향후 개선 여지가 있습니다.</p>
+<p>첫째, <strong>서브태스크의 분할과 정의가 사람에 의해 사전에 주어지는 점</strong>입니다. 본 논문에서는 블록 탐색, 정렬, 파지, 삽입의 4단계와 공구 파지, 정렬의 2단계를 전제로 했습니다. 이러한 <strong>서브태스크 분할</strong>은 도메인 지식을 활용한 것으로, 복잡한 문제를 풀기 쉽게 만든 장점이 있지만 <strong>범용 인공지능적 접근</strong>과는 거리가 있습니다. 향후에는 로봇이 스스로 서브태스크를 발견하거나, 고수준 목표만 주어져도 내부적으로 적절한 정책 체인을 구성할 수 있는 <strong>자동 계층화 학습</strong>으로 확장될 수 있을 것입니다.</p>
+<p>둘째, <strong>학습 비용</strong>의 문제입니다. 각 서브 정책을 강화학습으로 훈련하는 데 상당한 시뮬레이션 시간이 걸렸습니다. 논문에 따르면 블록 조립의 경우 서브태스크 하나를 학습하는 데 <strong>하루~이틀 정도</strong> 소요되며, 모든 단계를 순차/역방향으로 최적화하는 데 상당한 계산자원이 필요했습니다. 이는 현재 기술 수준에서 불가피한 면도 있지만, 향후 더 효율적인 학습 알고리즘(PPO 외에 모델 기반 기법 등)이나 <strong>지표함수 재사용</strong> 등을 통해 훈련 시간을 단축할 수 있을 것입니다. 또한 현재는 시뮬레이터 상에서 대량의 병렬 환경을 사용했는데, <strong>실제 로봇 학습</strong>으로 이러한 기법을 확장하려면 표본 효율을 높이거나 인간 시연으로 초기 정책을 얻는 등의 추가 연구가 필요합니다.</p>
+<p>셋째, <strong>시뮬레이션과 현실의 차이</strong>로 인한 한계가 있습니다. 논문에서도 지적했듯이 블록 삽입과 같은 <strong>접촉이 많은 세밀한 동작</strong>은 시뮬레이터에서 정확히 구현하기 어려웠고, 결국 일부를 스크립트에 의존했습니다. 이는 곧 <strong>접촉력, 마찰, 변형 등의 물리적 상호작용을 정확히 다루는 어려움</strong>을 뜻합니다. 향후 연구에서는 <strong>전이 가능성 함수</strong>에 이러한 <strong>접촉 안정성</strong>에 대한 평가를 포함시키거나, 시뮬레이션 단계에서부터 물리 파라미터를 다양화하는 <strong>도메인ラン덤화(domain randomization)</strong>를 통해 현실 적응력을 높일 수 있을 것입니다. 또한 <strong>촉각 센서</strong>나 <strong>힘 제어</strong>를 통합하여, 단순 시각 정보로 어려운 미세 접촉 동작의 성공률을 높이는 방향도 고려해볼 수 있습니다.</p>
+<p>넷째, <strong>센싱 및 시스템 복잡도</strong>의 한계입니다. 본 연구는 시뮬레이션에서는 완전상태 관찰(ground-truth state)을 주로 사용하여 학습했고, 현실 실험에서는 이를 보완하기 위해 2대의 카메라와 세분화/추적 및 6D 포즈 추정 알고리즘(XMem, DenseFusion 등)을 사용했습니다. 이러한 <strong>인지 시스템</strong>은 추가적인 오류 가능성을 내포하며, 실제 적용 시 상당한 설정과 보정이 필요합니다. 향후에는 학습 단계에서부터 <strong>영상 입력</strong>을 받아 end-to-end로 정책을 학습하거나, 보다 경량의 센서 구성으로 동작할 수 있도록 단순화하는 연구가 필요합니다. 예를 들어, 손목 카메라 하나만으로도 목표 물체를 탐지하고 조작하도록 학습시키는 방향입니다. 이는 난이도가 높지만, 성공한다면 시스템 구성의 복잡도를 줄이고 실용성을 높일 수 있을 것입니다.</p>
+<p>다섯째, <strong>정책 연쇄의 범위</strong>에 관한 한계입니다. Sequential Dexterity는 현재 <strong>고정된 순서의 스킬 체인</strong> 내에서만 동작합니다 (비록 스위칭으로 반복이나 생략은 가능하지만). 만약 작업 도중 전혀 새로운 하위 과제가 필요해지거나 분기(branch)가 발생하는 시나리오에서는 그대로 적용하기 어렵습니다. 예를 들어 조립 작업 중 블록이 떨어지거나 파손되는 등 <strong>예외 상황</strong>이 발생하면, 현재 체계로는 사전에 학습된 서브태스크로 대처할 수 없을 수 있습니다. 이러한 <strong>비정형 상황</strong>에 대응하려면 상위 계층의 <strong>플래닝 알고리즘</strong>이나 <strong>온디맨드 학습</strong>과 결합이 필요할 것입니다. 향후 연구는 체스와 같은 전략 게임에서 보듯이, 고수준 플래너가 서브 정책들을 호출하고 조합하는 <strong>계층적 제어 구조</strong>로 확장하는 방향을 제시할 수 있습니다. 또한 여러 대의 로봇 손이나 사람-로봇 협업 등의 <strong>다중 에이전트</strong> 상황에서도 이와 유사한 정책 체이닝 개념을 적용하려면 어떻게 할지 탐구해볼 수 있습니다.</p>
+<p>마지막으로, <strong>다지 로봇 손 자체의 한계</strong>도 존재합니다. 사람 손과 유사한 로봇 핸드는 유연성이 높지만 제어가 어려워, 현재까지는 병렬 그리퍼 등에 비해 신뢰도가 낮은 편입니다. 논문에서도 평행그리퍼로는 수행이 어려운 작업이 본 과제였음을 강조하고 있으나, 반대로 말하면 다지 손이 반드시 필요하지 않은 작업에서는 체이닝 기법 없이도 성공할 수 있습니다. 그러므로 <strong>어떤 유형의 작업에 다지 손 + 체이닝 접근이 유리한지</strong>를 식별하고, 불필요한 경우에는 단순 그리퍼나 단일 정책으로도 충분한지를 구분하는 연구가 실용적 관점에서 중요합니다. 또한 다지 손의 고유한 문제인 <strong>관절 제약, 내구성, 제어 지연</strong> 등이 현실 적용에 걸림돌일 수 있어, 이러한 부분을 개선하거나 체이닝 기법이 그러한 하드웨어 한계를 완화할 수 있는지도 살펴봐야 합니다.</p>
+</section>
+<section id="총평-및-기여도-평가" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="총평-및-기여도-평가"><span class="header-section-number">2.6</span> 총평 및 기여도 평가</h2>
+<p>Sequential Dexterity 논문은 <strong>로봇 강화학습 분야에서 장기 horizon 과업</strong>을 풀기 위해 한 걸음 나아간 중요한 연구로 평가됩니다. 특히 <strong>다관절 로봇 손</strong>과 같이 제어가 까다로운 매니퓰레이터를 활용하여, 이전에는 사람이 개입하거나 실패율이 높았던 <strong>다단계 조작 작업</strong>을 <strong>자율적으로 학습 수행</strong>해낸 점에서 큰 의의가 있습니다. 이 논문의 주요 <strong>기여도(contribution)</strong>는 다음과 같이 정리할 수 있습니다:</p>
+<ul>
+<li><p><strong>다단계 섬세 조작을 위한 정책 체이닝의 개척</strong>: 본 연구는 <strong>장기 다단계 조작 작업에 정책 연쇄 기법을 적용한 최초의 사례</strong> 중 하나로, 특히 다지 로봇 손을 이용한 정교한 작업에 초점을 맞추었습니다. 기존에는 주로 단순 그리퍼나 단일 단계 작업 위주로 연구되던 분야에, 복잡한 손 조작 시나리오를 제시하고 해결책을 모색했다는 점에서 학술적 가치를 지닙니다.</p></li>
+<li><p><strong>일반적인 양방향 최적화 프레임워크 제안</strong>: 단순히 개별 실험 결과를 넘어서, <strong>순방향 학습 + 전이 함수 기반 역방향 파인튜닝</strong>이라는 일반화 가능한 프레임워크를 구축하였습니다. 이 프레임워크는 향후 다른 형태의 다단계 작업이나 다른 로봇 플랫폼에도 응용될 수 있는 설계로서, <strong>정책 체이닝에 대한 보편적인 방법론</strong>을 제시한 점이 높이 평가됩니다. 특히 value 함수가 아닌 별도의 <strong>전이 가능성 함수</strong>를 도입하고, 이를 <strong>정책 전환 전략</strong>까지 통합시킨 것은 본 논문의 기술적 창의성이라 할 수 있습니다.</p></li>
+<li><p><strong>다단계 조작에서의 SOTA 성능과 실환경 검증</strong>: 제안한 방법을 통해 <strong>기존 방법들이 실패하거나 성능이 낮았던 복합 작업을 성공적으로 해결</strong>하였으며, 수치적으로도 높은 성공률을 입증했습니다. 예를 들어, 이전 강화학습 연구에서는 모델 프리 방식으로는 풀지 못했던 IKEA 가구 조립류의 작업을 본 연구와 유사한 접근으로 해결했고, 본 논문 역시 블록 조립 작업을 최초로 달성했습니다. 또한 <strong>학습된 정책을 바로 실제 로봇에 이식하여 작업 성공</strong>을 시연함으로써, 시뮬레이션 결과에 그치지 않고 현실 적용 가능성까지 보여주었습니다. 이는 로봇 학습 연구에서 상당히 까다로운 단계인데, 저자들의 통합적 노력(시뮬레이터 선정, 비전 모듈 개발, 제어 안정화 등)으로 이루어낸 성과입니다. 이러한 <strong>sim-to-real 성공 사례</strong>는 학계와 업계 모두에 영감을 주며, 향후 유사한 연구에 대한 <strong>신뢰도</strong>를 높이는 데 기여합니다.</p></li>
+</ul>
+<p>이 논문을 <strong>관련 문헌들과 비교</strong>해보면, 이전의 <strong>스킬 체이닝</strong> 연구들은 주로 <strong>상태 공간 확장</strong>이나 <strong>옵션 프레임워크</strong> 등을 통해 정책 연결을 시도했는데, Sequential Dexterity는 <strong>상태 분포의 폭발적 증가를 억제</strong>하는 방향으로 접근한 점이 독특합니다. 특히 T-STAR(Lee et al., 2021) 등이 adversarial training으로 분포를 제한한 데 반해, 본 논문은 <strong>학습된 전이 가능성 함수를 활용한 직접적인 보상 피드백</strong>으로 문제를 해결하여 <strong>안정적이면서도 효과적인 개선</strong>을 이루었습니다. 또한 과거 연구들이 병렬 그리퍼 등 제한된 조작에서 단순 작업(예: 블록 쌓기 2~3단계 정도)을 시연한 것에 비해, 본 연구는 <strong>다지 손의 풍부한 조작 가능성</strong>을 활용해 더 복잡한 작업을 했다는 점에서 <strong>실용적 가치</strong>가 있습니다. 사람의 손처럼 다양한 형태의 물체를 다뤄야 하는 과제에서 본 방법이 진가를 발휘할 수 있음을 보여준 셈입니다.</p>
+<p>물론 Sequential Dexterity에도 앞서 논의한 개선점들이 있지만, <strong>현재 시점 기준</strong>으로 볼 때 이 논문은 <strong>장기 강화학습 제어와 로봇 조작</strong>의 교차점에서 상당한 진전을 이룬 것으로 평가됩니다. <strong>학문적으로는</strong>, 긴 시간범위의 의사결정 문제를 해결하기 위해 <strong>계획(plan)</strong>과 <strong>학습(learning)</strong>을 접목한 한 가지 성공 예를 제시했고, <strong>실용적으로는</strong> 향후 산업용 로봇이나 가정용 로봇의 복잡한 작업 학습에 적용될 수 있는 기술 방향을 제안했습니다. 특히, <strong>전이 가능성 함수</strong>라는 개념은 추후 다양한 <strong>계층형 강화학습</strong> 시나리오에서 활용될 수 있는 아이디어로, 다른 연구자들이 이를 변형·확장하여 새로운 알고리즘을 만들 가능성도 있습니다. 예를 들어, 사람의 시연을 활용한 정책 연쇄 학습이나, 다중 로봇 협업 과제에 전이 가능성 평가를 도입하는 방향 등이 떠오릅니다.</p>
+<p><strong>결론적으로</strong>, “Sequential Dexterity: Chaining Dexterous Policies for Long-Horizon Manipulation” 논문은 다단계 조작 문제에 도전한 혁신적인 연구로서, <strong>정책 연쇄를 통한 장기 과업 해결</strong>이라는 로봇학습 분야의 난제를 한 단계 전진시켰습니다. 이 연구의 성과는 향후 로봇이 인간 수준의 다양하고 긴 작업을 수행하기 위해 어떤 학습 프레임워크가 필요한지에 대한 <strong>통찰</strong>을 제공하며, 관련 분야 연구자 및 학생들에게 유용한 벤치마크와 아이디어의 <strong>기준점</strong>이 될 것입니다. 앞으로 이 방향의 연구가 더욱 발전하여, 로봇이 실제 세계에서 연속적인 복합 작업을 <strong>안전하고 신뢰성 있게 수행</strong>하는 날이 앞당겨지길 기대해봅니다. </p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
