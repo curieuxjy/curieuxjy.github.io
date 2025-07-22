@@ -1,5 +1,5 @@
 ---
-title: "Touch in the Wild 리뷰"
+title: "📃Touch in the Wild 리뷰"
 date: 2025-07-18
 categories: [touch, visuo-tactile, gripper]
 toc: true

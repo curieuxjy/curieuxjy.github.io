@@ -1,5 +1,5 @@
 ---
-title: "CuRobo 리뷰"
+title: "📃CuRobo 리뷰"
 date: 2025-07-17
 categories: [sim2real, adaptive, rl, hand]
 toc: true

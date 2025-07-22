@@ -1,5 +1,5 @@
 ---
-title: "MambaVision 리뷰"
+title: "📃MambaVision 리뷰"
 date: 2025-07-19
 categories: [mamba, transformer, vision]
 toc: true

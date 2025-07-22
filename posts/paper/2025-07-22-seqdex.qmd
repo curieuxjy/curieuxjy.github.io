@@ -1,5 +1,5 @@
 ---
-title: "Sequential Dexterity 리뷰"
+title: "📃Sequential Dexterity 리뷰"
 date: 2025-07-22
 categories: [rl, assembly, hand]
 toc: true
