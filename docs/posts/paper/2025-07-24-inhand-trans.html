@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-07-24">
+<meta name="description" content="Learning In-Hand Translation Using Tactile Skin With Shear and Normal Force Sensing">
+
+<title>📃In-Hand Translation Learning 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#기술-개요-배경과-목적" id="toc-기술-개요-배경과-목적" class="nav-link" data-scroll-target="#기술-개요-배경과-목적"><span class="header-section-number">2.1</span> 기술 개요: 배경과 목적</a></li>
+  <li><a href="#실험-세팅-로봇-손-센서와-작업-환경" id="toc-실험-세팅-로봇-손-센서와-작업-환경" class="nav-link" data-scroll-target="#실험-세팅-로봇-손-센서와-작업-환경"><span class="header-section-number">2.2</span> 실험 세팅: 로봇 손, 센서와 작업 환경</a></li>
+  <li><a href="#핵심-방법론-촉각-센서-모델링과-2단계-학습" id="toc-핵심-방법론-촉각-센서-모델링과-2단계-학습" class="nav-link" data-scroll-target="#핵심-방법론-촉각-센서-모델링과-2단계-학습"><span class="header-section-number">2.3</span> 핵심 방법론: 촉각 센서 모델링과 2단계 학습</a></li>
+  <li><a href="#실험-결과-및-해석" id="toc-실험-결과-및-해석" class="nav-link" data-scroll-target="#실험-결과-및-해석"><span class="header-section-number">2.4</span> 실험 결과 및 해석</a></li>
+  <li><a href="#한계점-및-논의" id="toc-한계점-및-논의" class="nav-link" data-scroll-target="#한계점-및-논의"><span class="header-section-number">2.5</span> 한계점 및 논의</a></li>
+  <li><a href="#연구-의의-및-향후-방향" id="toc-연구-의의-및-향후-방향" class="nav-link" data-scroll-target="#연구-의의-및-향후-방향"><span class="header-section-number">2.6</span> 연구 의의 및 향후 방향</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃In-Hand Translation Learning 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">tactile</div>
+    <div class="quarto-category">shear-force</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Learning In-Hand Translation Using Tactile Skin With Shear and Normal Force Sensing
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 24, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2407.07885">Paper Link</a></li>
+<li><a href="https://jessicayin.github.io/tactile-skin-rl/">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>3축 촉각 피부 모델을 통해 이론적 시뮬레이션과 실제 환경간의 제로샷 전이 가능하게 함</li>
+<li>촉각 및 고유감각 피드백을 활용하여 다양한 물체 및 손의 동적 변화에 적응하는 RL 정책 학습</li>
+<li>190회 이상의 실제 환경에서의 평가를 통해 3축 촉각 정책이 기존 베이스라인에 비해 우수한 성능 달성</li>
+</ol>
+<center>
+<img src="../../images/2025-07-24-inhand-trans/1.png" width="80%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문은 강화 학습(RL)과 촉각 감지 분야의 발전을 활용하여 로봇의 능숙한 손안 조작(in-hand manipulation)을 향상시키는 데 중점을 둡니다. 특히, 촉각 시뮬레이션과 실제 환경 간의 격차로 인해 발생하는 문제, 즉 시뮬레이션의 단순화된 촉각 신호 사용 문제를 해결합니다. 이를 위해 전단력과 법선력을 모두 감지하는 촉각 피부를 위한 새로운 센서 모델을 제안하며, 이 모델은 3축 촉각 신호의 zero-shot 시뮬레이션-실제 전이(sim-to-real transfer)를 가능하게 합니다.</p>
+<p><strong>핵심 기여:</strong></p>
+<ul>
+<li><strong>RL-학습 가능한 촉각 피부 센서 모델:</strong> 바이너리 법선 신호와 3진수 전단 신호를 제로샷 시뮬레이션-실제 전이할 수 있는, 순응성 촉각 피부(compliant tactile skin)를 위한 최초의 RL-학습 가능한 센서 모델을 제안합니다. 이 모델은 두 개의 NVIDIA RTX-4090 GPU에서 초당 5000 프레임(FPS)의 훈련 속도를 달성하며, 이는 촉각 센서 없이 훈련하는 속도의 약 70%에 해당합니다.</li>
+<li><strong>손안 조작을 위한 RL 제어 정책 학습:</strong> 제안된 3축 센서 모델을 사용하여 접촉이 풍부하고 제어된 미끄러짐(controlled sliding)을 요구하는 손안 번역(in-hand translation) 작업을 위한 RL 제어 정책을 학습합니다.</li>
+<li><strong>실험적 검증:</strong> 3축 촉각 정책이 미지의 물체 특성, 새로운 손 방향 및 물체 역학에 대한 적응에서 기존의 기준선(전단력만 사용, 법선력만 사용, 고유 수용 감각만 사용)보다 일관되게 우수한 성능을 보임을 190개 이상의 실제 실험을 통해 입증합니다.</li>
+</ul>
+<p><strong>방법론:</strong></p>
+<p>본 연구는 Allegro Hand 로봇에 ReSkin이라는 자기 탄성체 촉각 피부를 부착하여 진행합니다. ReSkin은 팔레트에 부착되어 있으며, 내부의 자성 입자 변형을 통해 3축 힘을 자기장 변화로 측정합니다. 시뮬레이션과 실제 환경 모두에서 히스테리시스(hysteresis) 및 크로스토크(cross-talk) 효과를 최소화하기 위해 센서 출력을 이진화(binarize)합니다.</p>
+<p><strong>1. 촉각 피부 모델 (Tactile Skin Model):</strong></p>
+<p>IsaacGym 시뮬레이터에서 ReSkin 팔레트를 두 부분으로 모델링합니다. 첫째, ReSkin 팔레트 패드를 실제 센싱 피부와 동일한 물리적 치수를 가진 강체 볼륨으로 모델링하여 보다 정확한 동역학을 위한 연속적인 충돌 표면 역할을 하게 합니다. 둘째, ReSkin은 연속적이지만, 센싱 피부를 16개의 개별 택셀(taxel)로 이산화하며, 각 택셀은 기본 자기계의 위치에 해당합니다. 각 ReSkin 택셀은 원통형 충돌 형상(반경 <span class="math inline">r = 1.5 \, \text{cm}</span>)으로 모델링되어 ReSkin 팔레트 표면에 배치됩니다.</p>
+<ul>
+<li><p><strong>전단 신호(Shear Signal) 계산:</strong> 탄성 접촉 모델에서 영감을 받아 다음과 같이 계산합니다: <span class="math inline">S_{x,t} = \left(\sum_{i=1}^n P_i\right) D (v_{x,t} + \omega_{x,t})</span> <span class="math inline">S_{y,t} = \left(\sum_{i=1}^n P_i\right) D (v_{y,t} + \omega_{y,t})</span> 여기서:</p>
+<ul>
+<li><span class="math inline">x</span>와 <span class="math inline">y</span>는 센서 표면에 접하는 전역 좌표축을 나타냅니다.</li>
+<li><span class="math inline">S_{x,t}</span>와 <span class="math inline">S_{y,t}</span>는 각 택셀이 생성하는 전단 신호입니다.</li>
+<li><span class="math inline">v_{x,t}</span>와 <span class="math inline">v_{y,t}</span>는 물체의 선형 속도입니다.</li>
+<li><span class="math inline">\omega_{x,t}</span>와 <span class="math inline">\omega_{y,t}</span>는 물체의 각속도입니다.</li>
+<li><span class="math inline">\sum_{i=1}^n P_i</span>는 센싱 범위 내에 있는 물체 점들의 침투 거리(<span class="math inline">P_i</span>)의 합계입니다. <span class="math inline">P_i</span>는 센서 원점에서 물체 점까지의 거리를 센서 범위 <span class="math inline">R</span>에서 뺀 값(<span class="math inline">R - l_i</span>)입니다.</li>
+<li><span class="math inline">D</span>는 물체 점 밀도(총 물체 점 수를 물체 부피로 나눈 값)입니다.</li>
+</ul></li>
+<li><p><strong>법선력 신호(Normal Force Signal) 계산:</strong> <span class="math inline">S_{z,t} = \left(\sum_{i=1}^n P_i\right) D</span> 물체 점 침투 거리의 합계를 물체 점 밀도로 나눈 값으로 법선력을 계산하며, 물체 점 침투 거리는 법선력의 대리(proxy) 값입니다. 물체 점 밀도로 나누는 것은 물체의 다양한 크기를 고려합니다.</p></li>
+<li><p><strong>신호 이진화:</strong> 시뮬레이션-실제 간의 격차를 해소하기 위해 제어 정책은 모델로부터 임계값 처리된 센서 신호로 훈련됩니다: <span class="math inline">S_{x,t} \in \{-1, 0, 1\}</span>, <span class="math inline">S_{y,t} \in \{-1, 0, 1\}</span>, <span class="math inline">S_{z,t} \in \{0, 1\}</span> 부호 있는 3축 정책(S3-Axis)은 전단 신호의 양수 및 음수 부호를 유지하여 각 축에 대한 방향 정보를 제공합니다. 부호 없는 3축 정책(U3-Axis)은 전단 신호의 절대값을 취합니다.</p></li>
+<li><p><strong>실제 환경 이진 촉각 처리:</strong> ReSkin의 원시 신호는 상당한 히스테리시스를 가지므로, 단순한 임계값 처리만으로는 이진화에 충분하지 않습니다. 대신, 신호의 시간 미분(time derivative)에 대한 임계값을 사용합니다. 신호 이력과 현재 신호 버퍼 간의 차이가 임계값을 초과하면 1 또는 -1을 반환합니다(그렇지 않으면 0).</p></li>
+</ul>
+<p><strong>2. RL 정책 학습 (RL Policy Training):</strong></p>
+<p>정책 학습은 두 단계로 시뮬레이션에서 전적으로 수행됩니다.</p>
+<ul>
+<li><strong>1단계: 오라클 정책 훈련:</strong> 시뮬레이터에서 공개적으로 사용할 수 있는 특권 정보(privileged information)를 사용하여 오라클 정책(<span class="math inline">\pi</span>)을 훈련합니다. 특권 정보는 물체 위치, 속도, 크기, 질량, 질량 중심(COM), 마찰 계수 등을 포함하며, 8차원 벡터 <span class="math inline">z_t</span>로 인코딩됩니다. 오라클 정책의 입력은 손의 고유 수용 감각(proprioception)에서 오는 손가락 관절 위치와 인코딩된 특권 정보 <span class="math inline">z_t</span>입니다. 정책은 PD 제어기의 16개 관절 위치 목표 <span class="math inline">a_t \in \mathbb{R}^{16}</span>를 출력합니다.</li>
+<li><strong>2단계: 촉각 정책 훈련:</strong> 오라클 정책(<span class="math inline">\pi</span>)은 고정하고, 제안된 시뮬레이션 센서 모델을 사용하는 관측 인코더(observation encoder)를 훈련합니다. 관측 인코더의 입력은 고유 수용 감각(<span class="math inline">q_t</span>)과 촉각 피부 모델(<span class="math inline">[S_{x,t}, S_{y,t}, S_{z,t}]</span>)에서 오는 시뮬레이션 센서 데이터입니다. 관측 인코더는 1) <span class="math inline">z_t</span>와 <span class="math inline">\hat{z}_t</span> 사이의 L2 norm을 최소화하여 특권 정보를 재현하고, 2) <span class="math inline">a_t</span>와 <span class="math inline">\hat{a}_t</span> 사이의 L2 norm을 최소화하여 오라클 제어 정책과 동일한 동작을 재현하도록 훈련됩니다.</li>
+<li><strong>보상 함수:</strong> 물체 상태에 대한 페널티(손안 번역 작업 정의)와 로봇 동작에 대한 페널티(손가락 보행 생성)를 사용하여 구성됩니다. 보상 함수는 주로 작업 보상(<span class="math inline">r_{iht}, r_{goal}</span>), 동작 페널티(<span class="math inline">r_{rotp}, r_{pose}</span>), 에너지 페널티(<span class="math inline">r_{work}, r_{torque}, r_{force}</span>)로 구성됩니다.</li>
+<li><strong>알고리즘:</strong> PPO(Proximal Policy Optimization)를 사용하여 오라클 정책을 최적화하고, 정책과 비평가 네트워크 간에 가중치를 공유합니다.</li>
+</ul>
+<p><strong>실험 및 결과:</strong></p>
+<p>실제 환경에서 190회 이상의 롤아웃을 통해 정책을 평가했습니다.</p>
+<ul>
+<li><strong>내부 도메인(In-Domain) 성능:</strong> 훈련 설정과 동일한 정방향 실린더 물체를 사용하여 S3-Axis와 Proprio-Only 정책을 비교했습니다. S3-Axis 정책은 Proprio-Only 정책에 비해 번역 거리가 38% 증가하고 물체 속도가 94% 빨라졌으며, 더 일관된 성능을 보였습니다.</li>
+<li><strong>OOD(Out-of-Domain) 손 기울기 적응:</strong> 손 기울기가 0~15도까지 변하는 조건에서 정책 적응을 테스트했습니다. 손 기울기가 증가함에 따라 작업 난이도가 증가하고 성능이 저하되었지만, S3-Axis는 모든 기울기 각도에서 Proprio-Only보다 우수한 성능을 유지했습니다.</li>
+<li><strong>3축 촉각 감지 기반 OOD 적응:</strong> 손 기울기 각도와 OOD 물체(드라이버, 망치, 물병)라는 두 가지 유형의 교란에 대한 정책 적응을 동시에 테스트했습니다.
+<ul>
+<li><strong>드라이버 (어려운 형상, 0° 손 기울기):</strong> U3-Axis 정책이 가장 효과적이었으며, 다음으로 좋은 정책에 비해 거리 6.3%, 속도 32% 향상을 달성했습니다.</li>
+<li><strong>망치 (불균형 COM, 직사각형 형상, 15-20° 손 기울기):</strong> S3-Axis 정책이 가장 우수한 작업 지표를 달성했습니다. 20도 기울기에서 S3-Axis는 다음 정책에 비해 거리 149% 증가, 성공률 20% 증가를 보였습니다. U3-Axis는 이 경우 완전히 실패했습니다.</li>
+<li><strong>물병 (가변 COM, 불규칙 형상, 0-10° 손 기울기):</strong> 물병의 가변 COM과 불규칙한 형상에도 불구하고 U3-Axis 정책이 다음으로 좋은 정책에 비해 거리 12.5%, 속도 153% 향상을 달성했습니다.</li>
+</ul></li>
+<li><strong>실험 분석:</strong>
+<ul>
+<li><strong>잠재 공간 분석:</strong> t-SNE를 사용하여 <span class="math inline">\hat{z}_t</span> 벡터를 분석한 결과, <span class="math inline">\hat{z}_t</span> 클러스터의 분산 정도가 정책 실패와 상관관계가 있음을 발견했습니다. 성공적인 S3-Axis 정책은 모든 롤아웃에서 <span class="math inline">\hat{z}_t</span>의 조밀한 클러스터를 보여주었습니다.</li>
+<li><strong>더 많은 손가락 보행 탐색:</strong> 촉각 정책들이 Proprio-Only 정책에 비해 평균적으로 더 다양한 관절 상태를 탐색하며, 특히 망치와 물병에서 이러한 경향이 두드러짐을 확인했습니다. S3-Axis의 포앙카레 단면(Poincaré section)을 통한 교차점의 표준 편차는 Proprio-Only에 비해 35% 증가했습니다. 이는 태스크 성공 및 보행 적응에 중요한 요소가 될 수 있습니다.</li>
+</ul></li>
+</ul>
+<p><strong>결론 및 향후 연구:</strong></p>
+<p>본 연구는 새로운 촉각 센서 모델을 제안하고, 이를 사용하여 도전적인 손안 조작 작업을 위한 RL 정책을 시뮬레이션에서 훈련할 수 있음을 보여주었습니다. ReSkin을 사용한 능숙한 손안 번역 정책은 실제 환경에 제로샷 배포될 수 있으며, ReSkin의 전단 및 법선력 감지가 OOD 손 방향과 물체 모두에 대한 최상의 적응 및 내부 도메인 성능을 일관되게 가능하게 함을 입증했습니다. 이는 일반적인 손안 조작을 위한 촉각 피드백의 핵심 단계입니다.</p>
+<p>향후 연구는 현재의 경험론적(heuristic) 모델보다 물리적 기반 모델(특히 연속적인 촉각 신호에 대한)을 탐색하고, 여러 개의 개별 센서 간의 크로스토크 모델링과 같은 ReSkin 커버리지의 시뮬레이션-실제 전이 문제를 해결하는 데 집중할 것입니다. 또한, 시뮬레이션-실제 촉각 전이를 위한 도메인 적응(domain adaptation) 방법과 3축 촉각 감지가 다른 능숙한 기술의 정책 성능을 어떻게 향상시키는지 탐구할 계획입니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>손바닥 촉각 피부로 학습하는 손안 물체 이동</p>
+</blockquote>
+<p>이 논문은 로봇 손바닥에 부착된 촉각 센서를 활용하여 손 안에서 물체를 <strong>평행 이동</strong>(in-hand translation)시키는 기술을 강화학습으로 학습한 연구입니다. 특히 <strong>전단 힘</strong>(shear force)과 <strong>법선 방향 힘</strong>(normal force)을 동시에 감지하는 <strong>촉각 피부(tactile skin)</strong> 모듈을 시뮬레이션하고, 이를 통해 시뮬레이션에서 학습한 정책을 실세계에 <strong>zero-shot</strong>으로 바로 적용하는 성과를 보였습니다. 아래에서는 이 논문의 기술적 배경과 방법론, 실험 설정, 주요 결과와 그 의미, 그리고 한계점과 향후 방향에 대해 심층적으로 분석합니다.</p>
+<section id="기술-개요-배경과-목적" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="기술-개요-배경과-목적"><span class="header-section-number">2.1</span> 기술 개요: 배경과 목적</h2>
+<p>사람은 일상적인 물체 조작에서 <strong>촉각</strong>에 크게 의존하며, 이를 모방하여 로봇에 촉각 센서를 장착하려는 연구가 활발합니다. 그러나 정교한 촉각 센서를 만들고 이를 로봇 제어에 활용하는 데에는 어려움이 있습니다. 고해상도의 촉각 정보는 처리와 시뮬레이션에 시간이 많이 들고, 반대로 빠른 시뮬레이션은 촉각 정보를 지나치게 단순화하는 경향이 있어 실제와 차이가 큽니다. 이러한 문제로 현재 많은 강화학습 기반 조작 연구에서는 촉각 정보를 생략하거나 단순화된 접촉 신호만 사용하는 경우가 많았습니다.</p>
+<p>본 논문에서는 이러한 <strong>시뮬레이션-실세계 격차(sim-to-real gap)</strong>를 줄이기 위해, 로봇 손바닥의 <strong>자기 기반 탄성 촉각 피부(sensor)</strong>인 <strong>ReSkin</strong>을 모델링하여 <strong>이산화된 촉각 신호</strong>를 출력하는 시뮬레이터를 개발했습니다. 이 모델은 각 촉각 센서 소자(taxel)에서 <strong>법선 방향 힘은 2값(binary)</strong>으로, <strong>전단력은 3값(ternary)</strong>으로 출력합니다. 즉, 물체가 센서를 누르고 있으면 법선 방향 접촉 신호가 1 (없으면 0)이며, 전단력은 미끄러지는 방향에 따라 +1 또는 -1 (미끄럼 없음은 0)으로 표시됩니다. 이렇게 단순화한 촉각 표현을 통해 시뮬레이터의 효율을 높였으며, 두 개의 GPU 상에서 <strong>5000Hz 이상의 모의 센싱 속도</strong>로 동작하여 촉각이 없는 경우 대비 약 70%의 속도로 학습을 진행할 수 있었습니다. 이 센서 모델의 가장 큰 장점은, <strong>시뮬레이션에서 학습한 정책을 실세계로 별도 미세조정 없이 바로 옮길 수 있다는 점</strong>(zero-shot transfer)으로, 논문 저자들은 이 모델로 훈련한 정책을 190회의 실험을 통해 검증하며 실제 로봇에서 안정적으로 동작함을 보였습니다.</p>
+<p><strong>문제 정의:</strong> 저자들은 이 센서 모델을 활용하여 <strong>손바닥 위에서 물체를 한쪽에서 반대쪽으로 이동</strong>시키는 <strong>손안 평행이동(in-hand translation)</strong> 과제를 수행했습니다. 이 과제는 물체를 손가락들 사이에서 <strong>미끄러뜨리며 이동</strong>시켜야 하기 때문에 지속적인 <strong>슬라이딩 접촉 제어</strong>가 필요하고, 따라서 <strong>전단력에 대한 촉각 피드백</strong>이 특히 중요하다고 가정했습니다. 기존 연구들은 주로 물체의 <strong>자세 변경(회전)</strong>에 초점을 맞추거나, 촉각을 사용하더라도 <strong>법선 힘(접촉 여부)</strong>만 활용한 경우가 많았습니다. 반면 본 연구는 회전에 국한되지 않은 <strong>평행이동</strong>이라는 새로운 조작 기술에 도전하고 있으며, 특히 <strong>법선+전단 3축의 촉각 정보</strong>를 활용해 <strong>강화학습 정책</strong>을 학습함으로써 복잡한 접촉 상황에서의 적응 능력을 높이고자 했습니다. 저자들의 목표는 이처럼 복잡한 촉각 정보를 다루는 <strong>최초의 RL-활용 촉각 피부 모델</strong>을 제시하고, 이를 통해 <strong>섬세한 물체 조작(dexterous manipulation)</strong> 기술을 한 단계 발전시키는 것이었습니다.</p>
+<p>요약하면, 이 논문의 핵심 기여는 <strong>(1)</strong> 시뮬레이션에서 사용 가능한 고속 <strong>촉각 피부 센서 모델</strong>을 개발하여 전단/법선 촉각 신호의 sim-to-real 전이를 가능케 한 것, <strong>(2)</strong> 이를 활용해 <strong>손안에서의 물체 평행이동</strong>이라는 난이도 높은 조작 작업을 <strong>강화학습 정책</strong>으로 성공적으로 학습한 것, 그리고 <strong>(3)</strong> 실제 로봇 실험을 통해 <strong>촉각 센싱(특히 3축 전단+법선)</strong>이 있을 때 <strong>없는 경우보다 월등히 높은 성능과 일반화 능력</strong>을 발휘함을 실증한 것입니다.</p>
+</section>
+<section id="실험-세팅-로봇-손-센서와-작업-환경" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="실험-세팅-로봇-손-센서와-작업-환경"><span class="header-section-number">2.2</span> 실험 세팅: 로봇 손, 센서와 작업 환경</h2>
+<p><strong>하드웨어:</strong> 실험에는 <strong>SimLab Allegro Hand</strong> 로봇 손이 사용되었습니다. 이 손은 사람 손과 유사하게 4개의 손가락(엄지 포함)을 가지고 각 손가락에 4개의 관절이 있어 총 16자유도를 갖습니다. 각 관절에는 <strong>관절 위치 센서(proprioception)</strong>가 있으며, 강화학습 정책은 매 30Hz마다 관절별 목표 위치 명령을 내고, 이 명령은 내부 PID 제어를 통해 토크로 변환되어 구동됩니다. 촉각 센서는 Meta AI에서 개발한 <strong>ReSkin</strong>이라는 자성 기반의 얇은 촉각 피부를 사용했으며, 약 <strong>37×96 mm</strong> 크기의 패치를 손바닥 중앙에 부착했습니다. ReSkin은 탄성 재질 안에 자성을 띤 미세 입자를 포함하고 있어, 변형될 때 그 분포 변화로 <strong>자기장 센서(magnetometer)</strong>가 3축 힘의 변화를 감지하는 원리입니다. 실험에서 ReSkin은 약 120Hz 속도로 데이터를 출력했고, 시뮬레이션 학습 단계에서는 이 센서의 동작을 가상 모델로 구현했습니다.</p>
+<p>한 가지 실제 구현상의 문제는, <strong>ReSkin 표면과 물체 사이 마찰력이 매우 높다</strong>는 점이었습니다. 손바닥에 물체가 닿으면 쉽게 미끄러지지 않으므로 손가락에 과도한 힘이 필요하고, 이는 Allegro Hand의 모터 발열이나 토크 한계를 초래할 수 있습니다. 이를 완화하기 위해 연구진은 <strong>ReSkin 위에 얇은 PET 필름(0.25mm)을 덮어서 마찰력을 감소</strong>시켰습니다. 또한 손가락 일부에는 고무 테이프를 부착해 <strong>물체가 손가락에서 잘 미끄러지지 않도록</strong> 보조했습니다. 이러한 물리적 조치는 강화학습 정책의 성능에는 직접 영향하지 않지만, <strong>하드웨어 한계로 인한 문제를 완화</strong>하여 실험을 안정적으로 수행하기 위한 것입니다.</p>
+<p><strong>훈련과 환경:</strong> 정책 학습은 NVIDIA Isaac Gym 시뮬레이터에서 이루어졌습니다. 시뮬레이션 환경에는 Allegro Hand 모델과 손바닥의 촉각 센서 모델, 그리고 이동시킬 <strong>원기둥 물체</strong>가 포함됩니다. 학습시 물체는 일정한 크기의 원기둥이 아니라 <strong>무작위로 크기(scale)를 바꾼 원기둥</strong>을 사용하여, 정책이 다양한 크기에 일반화하도록 했습니다. 매 에피소드마다 물체의 질량, 마찰계수, 무게중심 위치 등 물리 속성도 랜덤으로 변화시켜 <strong>도메인 무작위화(domain randomization)</strong>를 적용했습니다. 물체는 항상 초기에 손바닥 쪽으로 단단히 쥐어진 상태(안정된 파지)에서 시작하며, 목표 위치는 손바닥을 가로질러 초기 위치로부터 x축 방향 일정 거리 떨어진 지점으로 주어졌습니다. 에이전트(로봇 손)의 목표는 <strong>물체를 손에서 떨어뜨리지 않고 제한 시간 동안 목표 지점까지 이동</strong>시키는 것입니다. 한 에피소드는 4초(시뮬레이션 400 스텝)에 걸쳐 진행되며, 도중에 물체를 떨어뜨리면 실패로 간주하고 에피소드를 종료합니다.</p>
+<p><strong>테스트 환경:</strong> 학습이 완료된 정책은 <strong>실제 로봇 손</strong>에 이식되어 검증되었습니다. 테스트에 사용된 물체는 총 4가지로, <strong>훈련과 같은 원기둥</strong>(직경 5cm, 길이 15cm)을 비롯하여, <strong>망치</strong>(머리 부분에 무게가 치우친 비대칭 물체), <strong>드라이버</strong>(손바닥에 여러 점으로 닿는 복잡한 형상), <strong>물병</strong>(안의 물이 움직여 무게중심이 변하는 물체) 등을 선택했습니다. 이들 중 원기둥 하나만이 <strong>훈련(domain) 범위 내</strong> 물체이고, 나머지 셋은 <strong>훈련에 없던 새로운 물체(OOD)</strong>로 간주되어 정책의 <strong>일반화 성능</strong>을 평가합니다. 또한 물체 이동 난이도를 조절하기 위해 로봇 손 자체를 기울이는 실험을 했습니다. 손바닥을 수평이 아니라 <strong>중력에 대해 최대 20도까지 기울여서</strong> 물체를 이동시키면, 중력에 의해 물체가 아래로 미끄러지려는 힘이 생겨 이동이 더 어려워집니다. 연구진은 0도(수평)에서 5도, 10도, 15도, 20도까지 기울인 상황을 시험하여, 기울기 변화(중력 영향)에 대한 정책의 <strong>견실성(robustness)</strong>도 평가했습니다. 각 조건(물체 종류 + 손 기울기)에 대해 약 5회의 실험 롤아웃을 수행했고, 총 190회의 실세계 실험 데이터를 수집하여 성능을 분석했습니다. 실험 중에는 OptiTrack 모션 캡처로 물체의 <strong>실제 이동 거리(cm)</strong>와 <strong>이동 속도(cm/s)</strong>를 측정하여 정량적 성과 지표로 사용했습니다. 또한 <strong>성공 여부</strong>는 제한 시간(최대 120초) 내에 <strong>물체가 0cm 이상이라도 움직였는지</strong>로 정의하여, 아예 물체를 떨어뜨리거나 전혀 못 움직인 경우만 실패로 간주했습니다. (※ 임계값을 0cm로 둔 이유는, 경사 환경에서는 일부 정책이 물체를 전혀 이동시키지 못하는 경우가 있어 이를 분리하기 위함입니다.)</p>
+<p><strong>비교 대상:</strong> 정책의 효과를 분석하기 위해 <strong>여러 가지 입력 조합에 따른 정책들</strong>을 학습시켜 비교했습니다. 모든 정책은 동일한 강화학습 알고리즘과 보상 함수를 사용하되, 관찰 입력에 따라 다음과 같이 나뉩니다:</p>
+<ul>
+<li><strong>Proprioception Only (고유감각만):</strong> <strong>촉각 없이</strong> 관절각도 등 로봇의 상태만으로 학습한 정책 (기준 시나리오).</li>
+<li><strong>Normal Only (법선 힘만):</strong> 촉각 중 <strong>법선 접촉 신호만 2값</strong> 입력으로 사용한 정책. 이는 기존 연구에서 흔히 사용하는 접촉 유무 센싱과 유사합니다.</li>
+<li><strong>Signed Shear Only (전단만, 부호 포함):</strong> <strong>전단력 신호만 3값</strong>(방향성 포함) 입력으로 사용한 정책. 물체가 어디로 미끄러지는지 방향만 감지하고 접촉 유무는 고려하지 않습니다.</li>
+<li><strong>Unsigned 3-Axis (U3-Axis, 전단 절대값):</strong> <strong>법선+전단 모두 사용</strong>하되 전단력의 부호는 무시하고 크기만 반영한 정책입니다. 즉 전단도 2값(binary) 형태로 간주하여, 촉각 센서가 미끄러짐을 감지하면 방향에 상관없이 1로 처리하는 방식입니다. 실제 ReSkin 센서의 이산화에도 유사하게 <strong>전단 변화의 절대값</strong>만 사용하기 때문에 도입된 변형입니다.</li>
+<li><strong>Signed 3-Axis (S3-Axis):</strong> <strong>본 논문의 제안 방법</strong>, 전단력 방향까지 살린 <strong>3축 촉각 (법선+전단)</strong> 입력을 모두 사용하는 정책입니다.</li>
+</ul>
+<p>이들 정책은 모두 동일한 환경에서 학습되어, <strong>촉각 정보의 유무와 종류가 성능에 미치는 영향</strong>을 평가하게 됩니다. 학습을 위한 알고리즘으로는 Proximal Policy Optimization (<strong>PPO</strong>)이 사용되었으며, 반복 학습을 통해 각 정책이 충분한 성능에 수렴하도록 했습니다. 특히 S3-Axis와 U3-Axis 정책은 <strong>동일한 사전학습된 “오라클” 정책</strong>으로부터 파생되는데, 이 상세 내용은 다음 방법론에서 설명합니다.</p>
+</section>
+<section id="핵심-방법론-촉각-센서-모델링과-2단계-학습" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="핵심-방법론-촉각-센서-모델링과-2단계-학습"><span class="header-section-number">2.3</span> 핵심 방법론: 촉각 센서 모델링과 2단계 학습</h2>
+<p><strong>1. 촉각 피부 시뮬레이션 모델:</strong> 저자들은 시뮬레이터에서 ReSkin 촉각 피부의 동작을 근사하기 위해, <strong>손바닥 면적 전체를 연속적인 접촉 면</strong>으로 모사하고 그 위에 <strong>16개의 가상 촉각 소자(taxel)</strong>를 균일하게 배치했습니다. 각 촉각 소자는 실제 하드웨어의 자력 센서에 대응되며, 해당 위치의 피부 변형을 감지한다고 가정합니다. 구체적인 모델링 절차는 다음과 같습니다:</p>
+<ul>
+<li>손바닥 면과 물체 표면 사이의 충돌을 감지하기 위해, 물체의 표면을 여러 개의 점(point)으로 <strong>표면 점군(point cloud)</strong>화 합니다. 이때 손바닥에 매우 가까이 있는 물체 점들을 찾기 위해, 각 촉각 소자 위치를 중심으로 작은 원통형 <strong>감지 영역</strong>(sensing range)을 정의합니다. 논문에서는 각 taxel마다 물체와 충돌을 계산하는 기본 지오메트리(원통)를 두고, 그 반경을 약간 확대하여 소프트 재질의 <strong>탄성(compliance)</strong> 효과를 모사했다고 설명합니다. 다시 말해, 실제 촉각 피부가 약간 눌려도 접촉을 느끼는 것처럼 시뮬레이션에서도 <strong>충돌 판정 거리를 늘려</strong>서 물체가 완전히 부딪히지 않아도 가까이 오면 힘으로 간주합니다. 이러한 <strong>범위 확장과 다중 점 샘플링</strong> 기법을 통해, 일반적인 물리엔진의 “한 접촉당 한 점” 모델 대신 <strong>넓은 면적의 접촉으로 인한 힘 분포</strong>를 근사할 수 있습니다.</li>
+</ul>
+<center>
+<img src="../../images/2025-07-24-inhand-trans/4.png" width="80%">
+</center>
+<blockquote class="blockquote">
+<p>촉각 스킨의 시뮬레이션-실사 전달을 위한 모델링 접근 방식입니다. A) 손바닥을 16개의 개별 taxel이 있는 연속적인 표면으로 모델링하며, 각 taxel은 하부의 자력계에 해당합니다. B) 각 taxel에 대해 실린더를 사용하고 감지 범위 <span class="math inline">(R)</span>을 충돌 지오메트리 너머로 확장합니다. C) 물체에서 점들을 샘플링하고 충돌 표면을 포인트 클라우드로 나타냅니다. 감지 범위 내의 점들은 <span class="math inline">i</span>로 표시됩니다. D) 침투 거리 <span class="math inline">P_i = R - l_i</span>를 합산하며, 여기서 <span class="math inline">l_i</span>는 점 <span class="math inline">i</span>에서 센서 원점까지의 거리입니다. 전단력 및 수직력에 대한 센서 신호는 <span class="math inline">\sum_{i=1}^{n} P_i</span>, 물체 속도 및 물체 점 밀도를 사용하여 계산합니다.</p>
+</blockquote>
+<ul>
+<li><p><strong>법선 힘 (Normal force)</strong>: 각 촉각 소자에 대해 감지 영역 내 들어온 물체 표면 점들의 <strong>침투 깊이(penetration distance)</strong>를 합산합니다. 이 합산 값이 일정 임계치 이상이면, 해당 소자에 <strong>물체가 눌리고 있다(접촉 있음)</strong>고 판단하여 <strong>법선 접촉 신호 = 1</strong>을 출력하고, 아니면 0을 출력합니다. 침투 깊이 합산값 자체는 물체가 누르는 <strong>힘의 근사치</strong>로 간주됩니다. 또한 물체 크기에 따라 이 값이 달라지는 것을 보정하기 위해, 물체의 표면 점 밀도(점 개수/부피)로 나눈 정규화를 수행합니다.</p></li>
+<li><p><strong>전단력 (Shear force)</strong>: 전단의 경우 물체와 손바닥 사이에 <strong>상대 운동</strong>이 있어야 발생합니다. 저자들은 콜롬 마찰 모델에 착안하여, <strong>물체의 순간 속도</strong>(선형 및 각속도)와 위에서 계산된 <strong>법선 힘 근사치</strong>를 활용해 전단 신호를 계산했습니다. 쉽게 말해, 물체가 손바닥을 <strong>미끄러지는 방향</strong>으로 움직이고 있고 (속도 방향), 접촉력도 일정 수준으로 작용하면 그 방향으로 <strong>전단 접촉 신호 = 1 (또는 -1)</strong>을 출력하도록 했습니다. 구체적으로는 물체의 x, y축 방향 속도 성분을 가져와, 그 방향에 <strong>법선 힘 규모에 비례하는 전단 값</strong>을 산출한 뒤 이 역시 임계값 기반으로 이진화합니다. 전단의 부호(방향)는 속도 방향으로 정해지며, 예를 들어 물체가 +x 방향으로 미끄러지면 해당 taxel의 x축 전단 신호 = +1, -x로 미끄러지면 = -1, 거의 정지되어 있으면 0으로 표현됩니다. 이렇게 계산된 <strong>전단력 신호 두 축(x, y)</strong>과 <strong>법선 신호(z)</strong>, 총 3축의 이산 촉각 출력이 최종적으로 강화학습 정책의 입력으로 제공됩니다.</p></li>
+<li><p><strong>이산화 및 이력 처리:</strong> 현실의 ReSkin 센서는 연속적인 아날로그 신호를 내지만, 이는 히스테리시스 등의 문제로 곧바로 사용하기 어렵습니다. 따라서 시뮬레이션에서는 처음부터 임계값을 넘겨 <strong>0/1 (또는 ±1)</strong>로 <strong>이산화(discretization)</strong> 하여 RL에 사용했고, 실제 센서에서도 시간에 따른 변화량을 보고 임계값을 넘을 때에만 상태가 바뀌는 방식으로 <strong>신호를 이진 처리</strong>했습니다. 예를 들어, 실제 실험에서 센서 출력이 한 방향으로 지속적으로 힘을 받고 변화가 없으면, 일정 시간이 지나 <strong>출력 0(변화 없음)</strong>으로 간주합니다. 이렇게 해야 ReSkin의 특성상 발생하는 <strong>신호 잔류(hysteresis)</strong>를 억제할 수 있었기 때문입니다. 다행히도 손안에서 물체를 움직이는 동안 센서 신호는 자주 변화하기 때문에, 이러한 방법이 크게 문제되지 않았다고 합니다.</p></li>
+</ul>
+<p><strong>2. 강화학습 정책 학습 (두 단계):</strong> 촉각 피부 모델이 준비되었지만, 곧바로 3축 촉각 정보를 넣어 강화학습을 시키면 학습 난이도가 매우 높을 수 있습니다. 특히 초기에는 랜덤한 정책으로 인해 물체를 쉽게 떨어뜨릴 것이고, Sparse한 보상 때문에 학습이 안 될 위험이 있습니다. 저자들은 이 문제를 해결하고자 <strong>“교사-학생 학습”</strong>과 유사한 <strong>2단계 학습(framework)</strong>을 도입했습니다. 이는 [Chen et al., 2022] 등이 사용한 접근을 따랐다고 명시되어 있습니다:</p>
+<ul>
+<li><p><strong>1단계 – 오라클(Oracle) 정책 학습:</strong> 여기서 오라클이란 학습에 <strong>시뮬레이터의 “특권 정보(privileged information)”</strong>를 활용한 이상적인 정책을 말합니다. 구체적으로, 시뮬레이션 내부의 물체 상태(물체의 위치, 속도, 크기, 질량, 무게중심, 마찰계수 등)를 모두 알고 있다고 가정하고, 이 정보를 8차원 벡터로 압축하여 정책의 입력으로 제공합니다. 물론 로봇의 관절 상태(proprioception)도 함께 입력됩니다. 이렇게 하면 정책이 <strong>어떤 상황에서 어떤 동작이 필요한지 쉽게 학습</strong>할 수 있습니다. 보상 함수는 물체를 목표 지점까지 이동시키는 정도(목표에 가까이 갈수록 큰 보상)와 물체를 떨어뜨리지 않는 것, 그리고 손가락 움직임의 효율성 등을 종합한 형태입니다. 저자들은 PPO 알고리즘으로 이 정책을 약 <strong>1.68일</strong>간 학습하여 높은 성능의 오라클 정책을 얻었습니다. 오라클 정책은 물체가 어디 있는지 정확히 아는 상태에서 동작하므로, 목표 달성에 매우 효과적이며 물체를 잡는 <strong>손가락 gait 패턴</strong>도 비교적 안정적으로 발견했습니다.</p></li>
+<li><p><strong>2단계 – 촉각 정책 학습:</strong> 두 번째 단계에서는 실제 우리가 원하는 <strong>촉각 기반 정책</strong>을 학습합니다. 이때 1단계의 오라클 정책을 <strong>고정된 교사</strong>로 삼고, 학생인 촉각 정책은 <strong>오라클의 행동을 모방</strong>하도록 훈련됩니다. 구체적으로, 학생 정책은 관절 상태 + <strong>시뮬레이터의 촉각 센서 출력(3축 이산 신호)</strong>를 입력으로 받으며, <strong>Transformer 인코더 구조</strong>를 사용해 이 입력을 처리합니다. 인코더의 역할은, 촉각+관절 정보를 받아서 오라클 정책이 이용했던 8차원 <strong>잠재 상태 정보(extrinsics 벡터)</strong>를 최대한 재현하는 것입니다. 즉, 학생은 촉각을 통해 <strong>물체의 상태를 간접적으로 추정</strong>하도록 학습됩니다. 논문에 따르면, 이 단계에서는 두 가지 목표로 학습이 진행됩니다: <strong>(a)</strong> 학생 인코더의 출력이 오라클의 잠재 벡터와 가깝도록 하고, <strong>(b)</strong> 학생 정책의 행동이 오라클 정책의 행동과 유사하도록 합니다. 이를 통해 학생 정책은 촉각만 가지고도 마치 물체 상태를 알고 있는 것처럼 행동하게 됩니다. 이 두 번째 단계는 <strong>지도학습적 손실</strong>로 이루어지므로 비교적 빠르게 수렴하며, 약 <strong>6.27시간</strong>만에 완료되었다고 보고됩니다. 최종적으로 얻어진 정책은 <strong>오라클 없이도</strong> 촉각과 관절 정보만으로 동작하므로, 이를 그대로 실제 로봇에 이식하여 테스트를 진행합니다.</p></li>
+</ul>
+<center>
+<img src="../../images/2025-07-24-inhand-trans/3.png" width="80%">
+</center>
+<p>이러한 2단계 학습 전략은 시뮬레이션 상의 풍부한 정보를 활용해 <strong>학습 신호를 강화</strong>하는 한편, 최종 정책은 <strong>실제 센서 정보만으로 구동</strong>되도록 보장하기 때문에 sim-to-real 시 유리합니다. 또한 오라클 정책과 동일한 보상 함수를 사용하므로, 학생 정책도 <strong>물체 이동과 손가락 gait</strong> 두 측면을 모두 고려한 동작을 하도록 유도됩니다. 요약하면, <strong>오라클은 “이상적인 플레이”를 보여주는 역할</strong>, <strong>학생은 그 플레이를 촉각 감으로 보고 배우는 역할</strong>을 수행한다고 이해할 수 있습니다.</p>
+</section>
+<section id="실험-결과-및-해석" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="실험-결과-및-해석"><span class="header-section-number">2.4</span> 실험 결과 및 해석</h2>
+<p><strong>실험 성능 비교:</strong></p>
+<center>
+<img src="../../images/2025-07-24-inhand-trans/2.png" width="80%">
+</center>
+<ul>
+<li><p>왼쪽 그래프는 <strong>손바닥 기울기(경사) 각도</strong>에 따른 정책들의 <strong>평균 이동 거리(cm)</strong>와 <strong>이동 속도(cm/s)</strong>를 보여줍니다. 보라색 선은 3축 촉각 정책(S3-Axis), 주황색 선은 촉각 없는 정책(Proprio-Only)입니다. 경사가 증가할수록 두 정책 모두 성능이 떨어지지만, <strong>S3-Axis 정책이 모든 각도에서 Proprio-Only보다 일관되게 더 나은 성능</strong>을 보입니다. 0도 (평지) 환경에서는 S3-Axis가 Proprio-Only 대비 <strong>약 38% 더 긴 이동거리(+2cm)</strong>를 달성했고, <strong>이동 속도도 94% 더 빠르게(+0.16cm/s)</strong> 물체를 움직였습니다. 또한 S3-Axis는 시행 간 성능 변동성(표준편차)도 더 작아서, <strong>더 안정적인 조작</strong>을 함축했습니다. 경사 각도가 커지면(5도, 10도, 15도) 두 정책 모두 성능이 떨어졌지만, <strong>S3-Axis가 항상 Proprio-Only보다 높은 거리와 속도</strong>를 유지했습니다. 이는 <strong>촉각 피드백 덕분에</strong> 손이 기울어 물체가 미끄러지려는 상황에서도 <strong>신속히 대응하여</strong> 물체를 붙잡고 목표 방향으로 밀어내는 <strong>손가락 조정 능력</strong>이 향상되었음을 시사합니다.</p></li>
+<li><p>오른쪽의 막대 그래프들은 <strong>여러 정책들을 비교</strong>한 결과로, <strong>평균 성공률</strong>, <strong>평균 이동 거리</strong>, <strong>평균 속도</strong>를 나타냅니다. 보라색 계열이 3축 촉각 정책들(S3-Axis 진한 보라, U3-Axis 옅은 보라), 분홍은 전단만(Signed Shear), 빨강은 법선만(Normal), 주황은 Proprio-Only입니다. <strong>성공률</strong>에서 S3-Axis 정책은 약 <strong>93%</strong>로 가장 높았고, 이는 Proprio-Only의 성공률을 크게 상회했습니다. <strong>이동 거리</strong> 역시 S3-Axis가 평균적으로 가장 길었으며(두 번째 좋은 정책보다 50% 이상 더 이동), <strong>이동 속도</strong>는 U3-Axis 정책이 약간 더 빠르긴 했지만 S3-Axis도 상위권을 유지했습니다. 한눈에 보면, <strong>3축 촉각을 모두 활용</strong>하는 두 정책(S3, U3)이 <strong>단일 촉각 종류만 쓰는 경우나 촉각 없는 경우보다 전반적으로 우수</strong>함을 알 수 있습니다. 이는 <strong>법선+전단 촉각정보의 결합이 시너지</strong>를 내어, 물체 이동 작업에서 <strong>향상된 피드백 제어</strong>를 가능케 한다는 연구의 주장을 뒷받침합니다.</p></li>
+</ul>
+<p><strong>일반화 성능:</strong> 새로운 물체(OOD)들에 대한 성능을 자세히 보면, 상황별로 촉각 정책들의 흥미로운 특징이 관찰됩니다:</p>
+<ul>
+<li><p><strong>드라이버 (복잡한 표면, 0도 경사):</strong> 드라이버는 표면에 홈과 돌기가 있어 손바닥에 <strong>불연속적인 접촉</strong>을 만드는 물체입니다. 이 경우 모든 정책이 어느 정도 작업을 수행할 수 있었지만, <strong>U3-Axis 정책이 가장 좋은 성능</strong>을 보였습니다. S3-Axis와 큰 차이는 아니지만, U3-Axis가 두 번째로 좋은 정책보다도 <strong>이동 거리 6.3% 길게, 속도 32% 빠르게</strong> 목표에 도달했습니다. 전단 방향 정보를 무시하고 <strong>크기 변화에만 반응</strong>하는 U3-Axis가 오히려 유리했던 것은, 드라이버처럼 접촉 지점이 여러 개이고 복잡할 때 <strong>전단 방향 신호가 잡음이 많아질 수 있기 때문</strong>으로 해석됩니다. 이때는 차라리 <strong>“미끄러짐 발생 여부”</strong>만 보는 편이 더 안정적으로 물체 움직임을 감지한 것으로 보입니다.</p></li>
+<li><p><strong>망치 (무게중심 치우침, 15~20도 경사):</strong> 망치는 머리 부분에 무게가 집중되어 있고 손잡이는 직사각형 단면이라, 손바닥에 닿는 면적이 훈련때의 원기둥보다 넓습니다. 게다가 손을 기울이면 무거운 망치머리가 한쪽으로 쏠려 <strong>강한 회전 토크</strong>가 발생하기 때문에, 이 조합은 <strong>가장 어려운 시나리오</strong> 중 하나였습니다. 결과는 극적이어서, <strong>15도 경사</strong>까지는 대부분의 정책이 어떻게든 임무를 수행했지만 <strong>20도 경사</strong>에서는 S3-Axis를 제외한 거의 모든 정책이 실패했습니다. 특히 <strong>U3-Axis 정책은 아예 물체를 전혀 옮기지 못하고 실패</strong>했는데, 이는 전단 방향 정보를 버림으로써 <strong>망치가 어느 쪽으로 기울어지는지 감지하지 못한 것</strong>으로 추측됩니다. 반면 S3-Axis 정책과 (참고로 비교군인) Signed Shear Only 정책만이 간신히 망치를 붙잡고 이동을 수행할 수 있었습니다. 그 중에서도 <strong>S3-Axis 정책은 가장 뛰어나서</strong>, 다른 방법 대비 <strong>약 149% 더 긴 이동 거리</strong>를 기록했고 성공률도 <strong>20%p 이상 높았습니다</strong>. 이 결과는 <strong>전단력의 방향성 정보가 물체의 난류한 동적 거동에 대응하는 데 필수적</strong>임을 보여줍니다. 무게중심이 틀어진 물체가 미끄러질 때, 그 방향을 알아야 손가락들로 적절히 버티거나 밀어줄 수 있기 때문입니다.</p></li>
+<li><p><strong>물병 (유동 질량중심, 0~10도 경사):</strong> 물이 반쯤 든 물병은 이동 중에 <strong>내용물이 움직여 무게중심이 바뀌는</strong> 특성이 있습니다. 초기에는 물이 아래에 있다가, 손바닥을 가로질러 이동하는 동안 물이 흔들리며 점차 중앙으로, 끝으로 옮겨집니다. 이러한 상황에서도 3축 촉각 정책들은 비교적 잘 적응했는데, <strong>U3-Axis 정책이 가장 우수한 이동 속도</strong>를 보였습니다. U3-Axis는 다음으로 좋은 정책보다 <strong>속도 153% 빠르게</strong> 물체를 움직일 수 있었고, 이동 거리도 약간(12.5%) 길었습니다. S3-Axis도 실패하지는 않았지만 속도 면에서 U3보다 낮았는데, 이것은 <strong>내용물 이동에 따른 센서 신호 변화</strong>가 S3에 약간 혼선을 준 가능성이 있습니다. U3는 방향을 무시하고 변화의 크기만 보니, 물 sloshing에도 <strong>민감하게 반응하여 빠르게 조절</strong>한 것으로 보입니다. 비록 U3가 일부 시나리오에서 두각을 나타냈지만, <strong>종합적으로 볼 때 S3-Axis 정책이 모든 실험을 통틀어 가장 안정적이고 높은 평균 성능</strong>을 냈습니다. 특히 S3-Axis는 어떤 환경에서도 완전히 실패하지 않았지만, U3-Axis는 앞서 본 망치 20도 등 특정 조건에서 치명적인 실패를 겪었습니다.</p></li>
+</ul>
+<p><strong>내부 행동 분석:</strong> 흥미로운 것은 촉각 정책이 <strong>어떻게 다르게 동작하는가</strong>에 대한 분석입니다. 저자들은 정책 신경망 내부의 <strong>잠재 상태 표현(extrinsics vector)</strong>을 t-SNE로 저차원 시각화한 결과, <strong>정책이 실패할 때 내부 표현들도 일관성을 잃고 흩어지는 경향</strong>을 발견했습니다. 예컨대 U3-Axis가 망치 20도에서 실패한 실험들의 잠재 표현은 군집을 이루지 못하고 널리 퍼져 있었는데, 이는 정책이 상황을 제대로 파악하지 못하고 불안정하게 행동했음을 시사합니다. 반대로 S3-Axis 정책은 대부분의 실험에서 <strong>잠재 표현 공간이 밀집된 하나의 군집</strong>을 이루었는데, 이는 다양한 조건에서도 정책이 <strong>일관된 전략</strong>을 가지고 대응했음을 보여줍니다.</p>
+<p>또한 손가락 <strong>gait 패턴</strong>에 대해서도 정량적 비교를 했습니다. 각 정책의 실험 로그에서 <strong>손가락 관절 궤적</strong>을 분석한 결과, <strong>촉각을 사용하는 정책들이 촉각이 없는 정책보다 평균적으로 더 다양한 관절 상태를 탐색</strong>함이 드러났습니다. 이는 촉각 피드백이 있을 때 로봇 손이 <strong>더 적극적으로 손가락들을 재배치하고 움직이는 경향</strong>을 보인다는 의미입니다. 예를 들어 S3-Axis 정책은 Proprio-Only에 비해 손가락 움직임의 <strong>위상 공간에서 35% 더 넓은 범위</strong>를 탐색했다고 합니다. 쉽게 말해, 촉각이 있다 보니 <strong>손가락들을 이리저리 더 많이 써보면서</strong> 최적의 움직임을 찾아가는 것입니다. 이러한 <strong>탐색적 거동</strong>은 특히 새로운 물체나 경사 조건에서 <strong>유연한 대처</strong>를 가능하게 해 주며, 결과적으로 더 높은 성공률로 이어졌습니다. 반면 촉각이 없는 정책은 제한된 정보로 인해 손가락 움직임 패턴이 반복적이고 경직되어, OOD 상황에서 적응력이 떨어졌음을 알 수 있습니다.</p>
+</section>
+<section id="한계점-및-논의" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="한계점-및-논의"><span class="header-section-number">2.5</span> 한계점 및 논의</h2>
+<p>이 연구는 촉각 센싱을 강화학습에 통합하여 인핸드 조작의 새로운 가능성을 열었지만, 몇 가지 <strong>한계점</strong>도 존재합니다:</p>
+<ul>
+<li><p><strong>시각 정보 부재:</strong> 본 정책은 <strong>오로지 촉각과 고유감각</strong> 정보만으로 동작합니다. 이는 목표 위치가 미리 손안의 좌표로 정의된 평행이동 작업이기에 가능했습니다. 그러나 일반적인 조작 작업에서는 <strong>시각(vision)</strong>이 필요할 수밖에 없습니다. 예를 들어 물체를 정확한 위치나 자세로 옮기는 목표가 주어질 때, <strong>카메라로 목표를 인지하고 조작을 미세조정</strong>해야 합니다. 저자들도 해당 정책을 보다 <strong>정밀한 작업에 적용하려면 시각 정보를 통합</strong>하는 것이 필수적임을 한계이자 향후 과제로 언급했습니다.</p></li>
+<li><p><strong>정책의 고정 및 온라인 학습 부재:</strong> 시뮬레이션에서 학습된 정책을 실세계에 <strong>그대로 고정하여 적용</strong>(zero-shot)한 점이 본 연구의 특징입니다. 하지만 이는 동시에 한계이기도 합니다. 실제 실험 중에 정책이 보완되어야 할 부분이 보여도, <strong>온라인으로 추가 학습이나 파라미터 수정이 불가능</strong>했습니다. 현실 환경에서 추가 학습이 된다면 더 나은 성능을 낼 여지가 있지만, 본 연구에서는 안전성과 일관성 때문에 정책을 고정한 채 실험했습니다. 저자들은 <strong>실제 tactile 피드백을 이용한 파인튜닝</strong>이나 <strong>온-라인 학습으로의 확장</strong>을 미래의 연구방향으로 제시했습니다.</p></li>
+<li><p><strong>이산 촉각 신호의 한계:</strong> 촉각 센서 모델은 효율을 위해 <strong>신호를 이진화(또는 3단계화)</strong>했습니다. 이로 인해 세밀한 힘의 크기 변화는 정보를 잃게 됩니다. 예컨데 전단력이 약하게 작용하는지 매우 강하게 작용하는지는 (임계값만 넘으면) 동일하게 취급됩니다. 이러한 단순화가 정책 학습에는 오히려 도움이 되었지만, 궁극적으로 <strong>연속적인 촉각 신호</strong>를 제대로 활용하는 것이 이상적입니다. 실제 ReSkin 센서도 아날로그 출력을 가지고 있으므로, 장기적으로는 <strong>연속 값 접촉 힘을 정확히 모사하는 시뮬레이터</strong>로 개선할 필요가 있습니다. 저자들 역시 <strong>연속 신호로의 시뮬레이션 개선</strong>이 성능 향상에 기여할 수 있다고 보고, 이를 향후 연구로 제안했습니다.</p></li>
+<li><p><strong>테스트 범위:</strong> 본 연구는 손바닥 평행이동이라는 단일 유형의 작업에 집중했습니다. 따라서 회전이나 복합 조작 등 <strong>다른 인핸드 조작 스킬에 바로 적용될지는 미지수</strong>입니다. 또한 OOD 객체들도 망치, 드라이버, 물병 정도였으며 <strong>형상/크기 분포가 한정</strong>되어 있습니다. 물론 이미 다양한 요소를 실험하긴 했지만, 예를 들어 더 큰 물체나 표면 재질이 다른 물체, 혹은 손가락에 닿는 경우 등에서는 추가 검증이 필요합니다. <strong>손바닥에만 촉각 센서</strong>가 있다는 제한도 있습니다. 물체가 손가락 끝쪽으로 치우치면 촉각 정보가 줄어들어 정책 성능이 저하될 수 있습니다. 실제로 저자들도 실험 시작 전 <strong>항상 물체가 손바닥에 닿도록 안정된 파지</strong>를 준비하여 초기화했는데, 이는 촉각 입력이 충분히 주어지는 조건에서만 정책이 작동함을 의미합니다. 향후에는 <strong>손가락 측면이나 끝부분에도 촉각 센서</strong>를 달거나, 초기 파지에 의존하지 않고도 물체를 다룰 수 있도록 해야 할 것입니다.</p></li>
+<li><p><strong>하드웨어 제약:</strong> 앞서 언급한 대로, 실제 로봇 핸드의 마찰/토크 문제로 추가 장치(필름, 테이프)를 붙이는 등 <strong>환경을 인위적으로 조정</strong>해야 했습니다. 이는 연구의 핵심은 아니지만, <strong>현재 로봇 손의 기계적 한계</strong>를 보여주는 대목입니다. 더욱 강력한 구동기나 정교한 마찰 제어가 가능했다면, 이러한 조치는 불필요하고 더 다양한 환경을 다뤘을지도 모릅니다. 따라서 <strong>로봇 플랫폼의 개선</strong> 역시 이러한 촉각 조작 연구의 진전을 위해 병행되어야 할 과제입니다.</p></li>
+</ul>
+<p>요약하면, 본 연구는 <strong>촉각 기반 강화학습</strong>의 가능성을 증명했으나, <strong>시각과의 결합, 온라인 적응 학습, 연속센서 모델링, 다양한 작업 확장, 실제 로봇 성능 향상</strong> 등 앞으로 해결해야 할 문제들이 남아 있습니다. 이는 동시에 이 분야의 <strong>흥미로운 열린 문제들</strong>이기도 합니다.</p>
+</section>
+<section id="연구-의의-및-향후-방향" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="연구-의의-및-향후-방향"><span class="header-section-number">2.6</span> 연구 의의 및 향후 방향</h2>
+<p>이 논문은 로보틱스에서 오랫동안 도전적이었던 <strong>손안 조작(in-hand manipulation)</strong> 분야에 촉각을 적극 활용한 성공 사례를 제시했습니다. 특히 <strong>전단력 센싱</strong>을 포함한 <strong>3축 촉각 피부</strong>를 시뮬레이션과 실제에 적용함으로써, <strong>촉각 피드백이 다섯 손가락 로봇 손의 섬세한 동작을 향상</strong>시킬 수 있음을 명확히 보여주었습니다. 기존에는 촉각 정보를 단순 접촉 여부로만 쓰거나, 비전 센싱에 의존하는 경우가 많았지만, 이 연구는 <strong>“보이지 않아도 만져서 조작할 수 있다”</strong>는 것을 멋지게 증명한 것입니다. 특히 학습된 정책이 <strong>한번도 본 적 없는 물체나 상황에서도 높은 성공률로 적응</strong>한 점은, 향후 범용 로봇 손 개발에 중요한 통찰을 줍니다. 촉각이 있으면 로봇이 <strong>물체의 미끄러짐이나 무게 변화를 즉각 감지하고 대응</strong>하여, 비전으로는 한참 늦을 피드백을 빠르게 반영할 수 있다는 것을 입증했습니다.</p>
+<p>또한 시뮬레이션 분야에서는, 복잡한 촉각 센서를 <strong>효율적으로 모델링</strong>하여 <strong>강화학습 훈련에 사용 가능</strong>하게 한 공헌이 큽니다. 고속 시뮬레이션과 현실감의 균형을 맞춘 이 방법은 향후 다른 촉각 센서 (예: GelSight와 같은 비전 기반 촉각)에도 아이디어를 적용할 수 있을 것입니다. 논문 저자들이 밝힌 대로, 이 연구는 <strong>“일반적인 손안 조작을 위한 촉각 피드백 활용의 중요한 한 걸음”</strong>이며, 앞으로 <strong>시각-촉각 멀티모달 통합</strong>, <strong>연속 신호 처리</strong>, <strong>실시간 학습</strong> 등으로 확장해 갈 수 있습니다. 예를 들어, 추후 연구에서는 <strong>시각으로 물체의 대략적 정보를 얻고 촉각으로 미세 조정을 학습</strong>하는 체계를 만들 수도 있고, 현재 이진화된 촉각 출력을 <strong>연속값으로 세분화</strong>하여 더 부드러운 제어를 구현할 수도 있을 것입니다.</p>
+<p>끝으로, 본 연구는 <strong>모범적인 시뮬레이션-현실 연계 사례</strong>로서도 의미가 있습니다. 시뮬레이터에서만 학습한 정책을 전혀 수정 없이 실제 로봇에서 190회나 실행하며, 그 과정에서 얻은 통찰을 분석했습니다. 이는 향후 강화학습 기반 로봇기술 개발에 있어 <strong>시뮬레이션 활용의 가능성과 한계</strong>를 잘 보여주며, 데이터 효율적인 로봇 학습을 위한 방향성을 제시합니다. 전반적으로, <strong>촉각 피부를 장착한 로봇 손</strong>이 어떻게 <strong>학습을 통해 환경과 상호작용</strong>할 수 있는지를 깊이 있게 탐구한 이 논문의 성과는, 로봇의 <strong>감각 지능</strong>을 한 단계 끌어올린 것으로 평가할 수 있습니다. 향후 이러한 접근들이 누적되면, 인간처럼 <strong>보고 느끼고 조작하는 다재다능한 로봇 손</strong>에 한층 가까워질 것으로 기대됩니다.</p>
+<p><strong>참고:</strong> 해당 연구의 프로젝트 웹사이트에는 실제 로봇 실험 영상들이 공개되어 있어, 정책이 물체를 어떻게 손가락으로 “걸어 옮기는지” 생생히 확인할 수 있습니다. 촉각 정보를 활용한 로봇의 새로운 능력을 보고 싶다면 한 번 살펴볼 가치가 있을 것입니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
