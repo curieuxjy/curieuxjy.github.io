@@ -14,6 +14,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-07-29-stmr.html",
       "/posts/paper/2025-07-28-reward-engineering.html",
       "/posts/paper/2025-07-26-pp-tac.html",
       "/posts/paper/2025-07-25-catching.html",
@@ -73,6 +74,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-07-29-stmr.html",
       "/posts/paper/2025-07-28-reward-engineering.html",
       "/posts/paper/2025-07-26-pp-tac.html",
       "/posts/paper/2025-07-25-catching.html",

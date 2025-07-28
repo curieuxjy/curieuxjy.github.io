@@ -159,12 +159,7 @@ RL 문제는 MDP(Markov Decision Process)로 정의되며, 에이전트의 목�
 
 # Detail Review
 
-좋습니다. 논문 "Comprehensive Overview of Reward Engineering and Shaping in Advancing Reinforcement Learning Applications"의 각 섹션 내용을 세부적으로 정리하고, 기술적 기법을 자세히 설명하며, 그 강점과 한계를 분석해 연구자들에게 설득력 있게 전달하는 심층 리뷰 분석글을 작성하겠습니다.
-
-완료되면 바로 알려드릴게요.
-
-
-# 강화학습에서의 Reward Engineering 및 Reward Shaping: 종합 개관 및 심층 분석
+> 강화학습에서의 Reward Engineering 및 Reward Shaping: 종합 개관 및 심층 분석
 
 ## 서론
 
