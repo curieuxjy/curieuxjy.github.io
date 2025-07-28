@@ -84,6 +84,49 @@ gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -360,13 +403,53 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li><a href="https://arxiv.org/abs/2404.11557">Paper Link</a></li>
 </ul>
 <ol type="1">
-<li>💡 본 논문은 Reinforcement Learning (RL)에서 보상 설계(reward design)의 중요성을 강조하며, Reward Engineering 및 보상 쉐이핑(reward shaping) 방법론과 기술을 포괄적으로 검토합니다.</li>
-<li>🛠️ 주요 내용은 보상 설계의 도전 과제(예: sparse/delayed rewards, reward hacking), 스칼라/벡터 보상 논쟁, 그리고 정책 경사(Policy Gradient), 잠재 기반(Potential-Based), 인간 피드백(Human Feedback) 등 다양한 보상 쉐이핑 기법의 상세 분류를 포함합니다.</li>
-<li>🚀 이 연구는 보상 설계가 로봇 공학, 자율 주행 등 실제 응용 분야에서 학습 효율성과 견고성을 향상시키며, Sim-to-Real 간극 해소에 필수적임을 보여주고 향후 자동화된 튜닝과 인간-로봇 협업 연구 방향을 제시합니다.</li>
+<li>🐾 이 연구는 사족보행 로봇을 위한 시공간 모션 리타겟팅(Spatio-Temporal Motion Retargeting, STMR) 방법을 제안하여, 다양한 소스 모션의 역동적이고 민첩한 움직임을 로봇의 형태 및 물리적 제약에 맞춰 재조정합니다.</li>
+<li>🤖 STMR은 모션 리타겟팅을 공간(SMR) 및 시간(TMR) 영역의 두 단계로 분해하여, 노이즈가 있는 키포인트 궤적(baseless keypoint trajectories)으로부터 발 미끄러짐과 관절 침투를 방지하며 물리적으로 실현 가능한 전신 모션을 생성합니다.</li>
+<li>🚀 시뮬레이션에서 기존 방법 대비 66.7% 향상된 추적 성능을 보였고, 실제 Unitree Go1, Go2, AlienGo, B2 로봇에 성공적으로 배포되어 지형을 고려한 백플립과 같은 역동적인 동작을 수행할 수 있음을 입증했습니다.</li>
 </ol>
+<center>
+<img src="../../images/2025-07-29-stmr/1.png" width="100%">
+</center>
 <hr>
 <section id="brief-review" class="level1">
 <h1>Brief Review</h1>
+<p>이 논문은 사족 보행 로봇을 위한 스페이시오-템포럴 모션 리타겟팅(Spatio-Temporal Motion Retargeting, STMR) 접근 방식을 제안합니다. 이 방법은 다양한 소스 모션으로부터 역동적이고 민첩한 움직임을 로봇으로 전달하며, 로봇의 형태적 차이를 해소하고 물리적 실현 가능성을 보장합니다.</p>
+<p>핵심 방법론은 두 단계로 나뉩니다: 공간 모션 리타겟팅(Spatial Motion Retargeting, SMR)과 시간 모션 리타겟팅(Temporal Motion Retargeting, TMR).</p>
+<p><strong>I. 공간 모션 리타겟팅 (SMR)</strong></p>
+<p>SMR은 운동학적 수준에서 모션을 리타겟팅하여 발 미끄럼(foot sliding)이나 발 침투(foot penetration)와 같은 운동학적 오류를 제거하고 접촉 스케줄을 보존합니다. 이는 특히 전역 기저 자세 정보가 없는 키포인트 궤적(baseless keypoint trajectories)으로부터 전신 모션을 재구성할 때 중요합니다.</p>
+<p>기존의 Unit Vector Method(UVM)는 인접 키포인트 간의 방향 벡터를 유지하지만, 발 미끄럼, 침투, 그리고 접촉 스케줄 불일치와 같은 원치 않는 오류를 유발할 수 있습니다. 또한, UVM은 로봇의 운동학적 구성에 맞춰 기저 궤적을 조정할 수 없습니다.</p>
+<p>SMR은 이러한 문제를 해결하기 위해 발 제약(foot constraints)을 도입합니다. 이 제약은 접촉 중인 발의 위치를 지면에 고정(발 잠금)하고, 원본 모션과 동일한 접촉 타이밍을 보장하며 발 침투를 방지합니다(접촉 보존).</p>
+<p>SMR의 과정은 다음과 같습니다:</p>
+<ol type="1">
+<li><strong>초기 전신 모션 생성:</strong> 먼저, 기저 궤적이 포함되지 않은 키포인트 궤적 <span class="math inline">\bar{p}_{0:T}</span>를 사용하여 비제약 역운동학(IK) 문제와 유사하게 UVM을 통해 초기 일반화된 좌표 솔루션 <span class="math inline">q_{0:T}</span>를 얻습니다.</li>
+<li><strong>속도 수준 최적화:</strong> <span class="math inline">q_{0:T}</span>의 시간 미분인 <span class="math inline">\dot{q}_{0:T}</span>를 참조 속도 목표로 사용하고, 다음 단일 프레임에 대한 최적화 문제를 풉니다. 이 문제는 현재 좌표 <span class="math inline">q_i</span>와 참조 좌표 <span class="math inline">\tilde{q}_i</span> 간의 스케일된 오차 <span class="math inline">\delta \tilde{q}_i = K_q(\tilde{q}_i - q_i)</span>에 대한 속도 <span class="math inline">\dot{q}_i</span>를 최소화합니다. 이때 발 제약은 선형화되어 적용됩니다. <span class="math display">\dot{\bar{q}}_i = \arg \min_{\dot{q}_i} \frac{1}{2} \left\| \dot{q}_i - \delta \tilde{q}_i \right\|^2_Q</span> <span class="math display"> s.t. \ \  J^i_j \dot{q}_i = c_j K_p(\tilde{p}_j - FK_j(q_i)) \quad j \in [1, 2, 3, 4]</span> 여기서 <span class="math inline">J^i_j</span>는 <span class="math inline">j</span>번째 키포인트에 대한 기하 Jacobian 행렬이고, <span class="math inline">c_j</span>는 <span class="math inline">j</span>번째 발의 접촉 여부(불리언 값), <span class="math inline">K_p</span>는 제어 이득, <span class="math inline">\tilde{p}_j</span>는 발의 고정점(anchor position)입니다. 이 발 고정점은 접촉 중인 발의 위치를 지면에 투영한 값입니다.</li>
+<li><strong>비행 단계 처리:</strong> 로봇의 모든 발이 공중에 있는 비행 단계에서는, 로봇의 기저가 탄도 궤적을 따른다고 가정합니다. SMR은 기저 궤적 기록에 다항 함수를 적합시켜 이탈 속도(exit velocity)를 계산하고, 중력 가속도를 통합하여 탄도 궤적을 따르도록 합니다.</li>
+</ol>
+<p><strong>II. 시간 모션 리타겟팅 (TMR)</strong></p>
+<p>TMR은 SMR을 통해 얻은 운동학적으로 실현 가능한 모션을 동적 제약 조건에 맞춰 시간 영역에서 더 정교하게 다듬어 동적으로 실현 가능한 모션을 생성합니다. 이는 특히 공중 동작(flight phases)이 포함된 모션에 중요하며, 로봇의 크기나 구동력에 따라 공중 체공 시간이 달라져야 합니다.</p>
+<p>TMR은 SMR의 결과인 <span class="math inline">\bar{p}_{0:T}</span>를 기반으로 최적의 시간 매개변수 <span class="math inline">\alpha</span>와 제어 시퀀스 <span class="math inline">u_{0:T_\alpha}</span>, 로봇 상태 <span class="math inline">x_{0:T_\alpha}</span>를 탐색하는 중첩 최적화 문제(nested optimization problem)로 정의됩니다.</p>
+<p><span class="math display">\min_{\alpha \in I}\left(\min_{u_{0:T_\alpha}, x_{0:T_\alpha}} \frac{1}{2T_\alpha} \sum_{k=0}^{T_\alpha} \left\| FK(x_k) - LI(s_\alpha(t_k); \bar{p}_{0:T}) \right\|^2_Q\right.</span> <span class="math display">\quad \text{s.t. } x_{k+1} = f(x_k, u_k),</span> <span class="math display">\quad h(x_k, u_k) \le 0,</span> <span class="math display">\quad g_{eq}(x_k) = 0,</span> <span class="math display">\quad g_{in}(x_k) \le 0 \quad \left. \vphantom{\min_{u_{0:T_\alpha}, x_{0:T_\alpha}} \frac{1}{2T_\alpha} \sum_{k=0}^{T_\alpha} \left\| FK(x_k) - LI(s_\alpha(t_k); \bar{p}_{0:T}) \right\|^2_Q} \right)</span> 여기서 <span class="math inline">s_\alpha(t)</span>는 시간 변형 함수로, 소스 모션을 <span class="math inline">S</span>개의 세그먼트로 나누고 각 세그먼트를 <span class="math inline">\alpha</span>의 각 요소에 따라 시간적으로 스케일링합니다. <span class="math inline">LI(\cdot)</span>는 선형 보간 함수입니다.</p>
+<p>TMR의 과정은 다음과 같습니다:</p>
+<ol type="1">
+<li><strong>매개변수 샘플링:</strong> 시간 매개변수 <span class="math inline">\alpha</span>를 초기 구간 <span class="math inline">[ \alpha_{min}, \alpha_{max} ]</span> 내에서 무작위로 샘플링합니다.</li>
+<li><strong>시간 변형(Temporal Deformation):</strong> 샘플링된 <span class="math inline">\alpha</span>를 사용하여 SMR을 통해 얻은 키포인트 궤적 <span class="math inline">\bar{p}_{0:T}</span>에 시간 변형을 적용합니다.</li>
+<li><strong>모델 기반 최적 제어 (MBOC) 및 스코어링:</strong> 변형된 모션을 추적하기 위해 Differential Dynamic Programming(DDP)을 활용한 MBOC를 수행합니다. 추적 결과는 다음 스코어링 함수 <span class="math inline">C(\alpha)</span>로 평가됩니다. <span class="math display">C(\alpha) = -d_b(p_b, \bar{p}_b) - d_E(h, \bar{h}_b) + w_c IoU(c, \bar{c})</span> 여기서 <span class="math inline">d_b</span>는 기저 위치의 L1 거리, <span class="math inline">d_E</span>는 기저 방향의 L1 거리, <span class="math inline">IoU</span>는 접촉 스케줄 일치도를 나타내는 Intersection over Union 값입니다. 스코어링 함수는 키포인트 추적, 접촉 일치뿐만 아니라 시간 매개변수의 극단적인 값을 규제하여 모방 성능을 향상시킵니다.</li>
+<li><strong>베이시안 최적화:</strong> 이전 <span class="math inline">\alpha</span> 값들과 그에 해당하는 스코어 <span class="math inline">C_k</span>를 기반으로 가우시안 프로세스 회귀(Gaussian Process Regression)를 사용하여 대리 함수(surrogate function)를 피팅합니다. 이후 기대 개선(Expected Improvement, EI)이라는 획득 함수(acquisition function)를 최대화하여 다음 <span class="math inline">\alpha</span>를 샘플링합니다. 이 과정은 <span class="math inline">\alpha</span>가 수렴할 때까지 반복됩니다.</li>
+</ol>
+<p><strong>III. 잔여 정책 학습 (Residual Policy Learning)</strong></p>
+<p>STMR 단계에서 식별된 최적의 제어 시퀀스는 시뮬레이션에서 개방 루프 제어를 통해 리타겟팅된 모션을 성공적으로 생성할 수 있습니다. 그러나 불확실성과 모델 불일치를 극복하고 실제 환경에서 모션을 견고하게 배치하기 위해서는 피드백 정책이 필요합니다. 따라서 STMR에서 얻은 개방 루프 제어 시퀀스 <span class="math inline">\ast x_{0:T_\alpha}</span>에 보정 값을 추가하는 잔여 정책 <span class="math inline">\pi</span>를 학습합니다. 이 정책은 PD 제어기와 결합하여 모터 토크 명령을 생성합니다. <span class="math display">\tau = K_p(\ast \theta + \Delta \theta - \theta) - K_d \dot{\theta}</span> 잔여 정책은 강화 학습(Reinforcement Learning, RL)으로 훈련되며, 로봇의 관절 위치, 기저 위치, 기저 방향, 키포인트 위치에 대한 추적 측정을 기반으로 보상이 정의됩니다. 시뮬레이션-실제 간극(sim-to-real gap)을 줄이기 위해 도메인 무작위화(domain randomization)와 추가 관측(예: 기저 선형/각속도, 높이)이 적용됩니다.</p>
+<p><strong>실험 결과:</strong></p>
+<p>시뮬레이션 및 실제 환경 실험을 통해 제안된 방법의 효과를 검증했습니다.</p>
+<ul>
+<li><strong>모션 추적 성능:</strong> STMR은 기존 방법들(UVM (DeepMimic), UVM (AMP), TO)에 비해 훨씬 낮은 추적 오차를 보여주며, 특히 비행 단계가 포함된 HopTurn 및 SideSteps와 같은 동적 모션에서 탁월한 성능을 보였습니다. SMR만으로는 비행 단계 모션을 처리할 수 없었습니다.</li>
+<li><strong>발 제약 강제:</strong> SMR은 평균 0.34mm의 발 미끄럼과 0.998의 IoU를 달성하여 발 미끄럼을 효과적으로 제거하고 접촉 스케줄을 보존하는 데 크게 기여했습니다.</li>
+<li><strong>전신 모션 재구성:</strong> STMR은 기저 움직임이 없는 키포인트 궤적으로부터 전신 모션을 성공적으로 재구성했으며, 다른 형태의 로봇에 맞게 기저 궤적을 조정하여 높은 복구율(70-80%)을 보였습니다.</li>
+<li><strong>비행 단계 동적 모션 (BackFlip):</strong> TMR의 시간 최적화는 BackFlip과 같은 역동적인 모션을 성공적으로 수행하는 데 결정적인 역할을 했습니다. 시간 최적화 없이 B2 로봇은 BackFlip에 실패했지만, 시간 최적화를 통해 모션 지속 시간을 조정(B2의 경우 47% 증가)하여 성공적인 BackFlip을 가능하게 했습니다.</li>
+<li><strong>실제 환경 배치:</strong> STMR로 리타겟팅된 모션은 Unitree Go1, Go2, AlienGo, B2 네 가지 다른 로봇 플랫폼에서 성공적으로 배치되었습니다. 이 로봇들은 서로 다른 치수와 물리적 특성을 가지고 있으며, STMR은 각 로봇의 특성(예: 출력 대 질량 비율)에 맞춰 모션의 공간적 및 시간적 측면을 적절히 변형하여 HopTurn 및 SideSteps와 같은 동적 모션을 정확하게 수행했습니다.</li>
+<li><strong>영상으로부터의 모션 리타겟팅 및 지형 인식 리타겟팅:</strong> 잡음이 많은 비디오 키포인트 데이터와 불규칙한 지형(예: 상자 위에서의 BackFlip)에 대해서도 STMR이 성공적으로 모션을 재구성하고 동적 실현 가능성을 보장하며 실제 로봇에서 실행될 수 있음을 보여주었습니다.</li>
+</ul>
+<p><strong>한계 및 미래 연구:</strong> 제안된 방법은 정확한 접촉 추정에 크게 의존합니다. 부정확한 접촉 추정은 불규칙한 움직임을 초래할 수 있습니다. 또한, TMR 문제 해결에 사용된 베이시안 최적화는 고차원 공간으로 확장될 때 한계가 있습니다. 향후 연구에서는 더 발전된 접촉 추정 방법과 확장성 있는 최적화 기술을 탐색할 계획입니다.</p>
+<p><strong>결론:</strong> 이 논문은 IL 과정을 안내하기 위해 운동학적으로-동역학적으로 실현 가능한 모션을 생성하는 STMR 문제를 제시합니다. STMR은 전역 참조 원점이 알려지지 않은 모션 데이터를 사용하여 자연스러운 동물 움직임의 민첩성과 표현력을 모방하는 전신 모션을 생성할 수 있도록 돕습니다. 제안된 방법은 시뮬레이션에서 뛰어난 제어 정책 학습과 정확한 모션 추적 성능을 보여주었으며, 발 미끄럼을 제거하고 접촉 스케줄을 정확하게 보존했습니다. 궁극적으로, STMR은 네 가지 실제 로봇 하드웨어 플랫폼에서 성공적으로 배치되어 일반적인 사족 보행 로봇을 위한 자연스럽고 동적인 모션 생성의 실용적인 적용 가능성을 강조했습니다.</p>
 <hr>
 </section>
 <section id="detail-review" class="level1">
@@ -381,8 +464,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="방법의-강점-일반화-능력-강인성-학습-전략-및-설계" class="level2">
 <h2 class="anchored" data-anchor-id="방법의-강점-일반화-능력-강인성-학습-전략-및-설계">방법의 강점: 일반화 능력, 강인성, 학습 전략 및 설계</h2>
 <p>STMR 방법은 여러 측면에서 <strong>뛰어난 강점</strong>을 보였습니다. <strong>일반화 능력</strong> 측면에서, 이 기법은 <strong>서로 다른 형태와 물리 특성을 지닌 로봇들</strong>에 대해서도 적용 가능함을 보였습니다. 저자들은 크기와 질량이 서로 다른 세 종류의 사족 로봇(예: Unitree A1, Go1, AlienGo)에 대해, <strong>6가지의 상이한 난이도의 동물 모션</strong>들을 성공적으로 리타게팅 및 모방 학습시켰습니다. 그 결과 생성된 참조 모션은 <strong>접촉 타이밍을 충실히 보존</strong>하고 <strong>발 미끄러짐이 거의 제거</strong>되어, 크기가 다른 로봇이라도 원본 동작의 의미를 잃지 않도록 했습니다. 이처럼 STMR은 <strong>동작 다양성</strong>(여러 종류의 걸음걸이: 트롯, 페이스, 옆걸음, 점프회전 등)과 <strong>로봇 플랫폼 다양성</strong>에 모두 잘 대응하여, <strong>우수한 일반화 성능</strong>을 입증했습니다.</p>
-<p><strong>강인성(Robustness)</strong> 측면에서도 장점을 확인할 수 있습니다. RL 정책 학습 시 <strong>잔여 정책(residual policy)</strong> 접근을 도입함으로써, <strong>기본 PD 제어기의 추종 성능에 학습 기반 보정 정책을 더하는 형태</strong>를 취했는데, 이는 <strong>학습의 안정성과 실환경 강건성</strong>을 크게 높였습니다. 구체적으로, 참조 모션을 그대로 추종하도록 하는 <strong>피드포워드 제어 신호</strong>에, RL 에이전트가 <strong>모델 불일치나 외란을 보정하는 미세 조정 신호</strong>만 더하게 함으로써, 순수 RL에 비해 <strong>훈련이 용이하고 수렴이 빠르며</strong>, 실제 로봇 적용 시에도 <strong>균형 유지 및 외란 견디기 성능</strong>이 향상되었습니다. 실제로 시뮬레이션에서는 임의의 힘으로 로봇을 밀치는 등의 <strong>도메인 랜덤화</strong>를 적용해도 정책이 잘 작동했고, 이를 통해 <strong>모델링 오차나 환경 불확실성에 대한 견디기 능력</strong>을 강화하여 실험실 밖 <strong>실세계 조건에서도 정책이 유효</strong>함을 검증했습니다. 이러한 강인성은 <strong>모델 기반 최적화로 생성된 물리적으로 타당한 참조</strong>가 있었기에 가능했으며, 결과적으로 다른 방법보다 <strong>높은 안정성으로 실제 로봇에 적용</strong>할 수 있었습니다.</p>
-<p><strong>학습 전략과 구조적 설계</strong> 또한 STMR의 중요한 강점입니다. 이 방법은 <strong>오프라인 최적화(모션 리타게팅)</strong> 단계와 <strong>온라인 학습(정책 RL)</strong> 단계를 분리하여 효율을 높였습니다. 먼저 <strong>비지도 최적화</strong>를 통해 <strong>참조 모션을 사전에 보정</strong>해 둠으로써, RL 단계에서는 복잡한 동적 제약을 만족하는 모션을 <strong>이미 확보</strong>한 상태에서 학습이 시작됩니다. 이로써 RL은 보다 <strong>용이한 보상 설계</strong>(이미 물리적 타당성 확보)와 <strong>향상된 모방 효율</strong>을 보이며, 실제 실험에서도 <strong>기존 기법 대비 적은 학습으로 높은 정확도 추종</strong>을 달성했습니다. 예를 들어, 본 연구의 RL 정책은 약 5천만 스텝(약 1시간)의 훈련으로 높은 성능을 보였으며, <strong>기존 AMP 기반 정책이 수배 더 많은 학습이 필요</strong>했던 것에 비하면 효율적입니다. 또한 <strong>공간-시간 단계별로 문제를 디컴포즈</strong>한 설계는 <strong>복잡한 모션 리타게팅 문제를 해결하기 쉽게 만든 구조적 이점</strong>이 있습니다. 각각의 단계에서 <strong>기성의 알고리즘</strong>(예: IK 기반 <strong>Unit Vector</strong> 방법, DDP 기반 최적화)을 활용하여 신뢰성을 확보했고, 최종적으로 RL 제어기를 결합하는 <strong>모듈식 설계</strong>로서 각 구성요소의 역할이 명확합니다. 이러한 구조 덕분에 <strong>새 동작 추가나 다른 로봇 적용 시에도 일부 모듈 교체/재학습으로 대응 가능</strong>하며, <strong>실시간 적용</strong>을 위한 향후 확장도 모색하기 용이한 프레임워크라고 볼 수 있습니다. 정리하면, STMR의 학습전략은 <strong>최적화된 참조로 학습 가이드</strong>를 제공하고, 아키텍처 설계는 <strong>문제 복잡도 감소와 모듈화</strong>를 통해 <strong>효율성과 확장성</strong>을 모두 갖춘 점이 큰 강점입니다.</p>
+<p>Robustness 측면에서도 장점을 확인할 수 있습니다. RL 정책 학습 시 <strong>잔여 정책(residual policy)</strong> 접근을 도입함으로써, <strong>기본 PD 제어기의 추종 성능에 학습 기반 보정 정책을 더하는 형태</strong>를 취했는데, 이는 <strong>학습의 안정성과 실환경 강건성</strong>을 크게 높였습니다. 구체적으로, 참조 모션을 그대로 추종하도록 하는 <strong>피드포워드 제어 신호</strong>에, RL 에이전트가 <strong>모델 불일치나 외란을 보정하는 미세 조정 신호</strong>만 더하게 함으로써, 순수 RL에 비해 <strong>훈련이 용이하고 수렴이 빠르며</strong>, 실제 로봇 적용 시에도 <strong>균형 유지 및 외란 견디기 성능</strong>이 향상되었습니다. 실제로 시뮬레이션에서는 임의의 힘으로 로봇을 밀치는 등의 <strong>도메인 랜덤화</strong>를 적용해도 정책이 잘 작동했고, 이를 통해 <strong>모델링 오차나 환경 불확실성에 대한 견디기 능력</strong>을 강화하여 실험실 밖 <strong>실세계 조건에서도 정책이 유효</strong>함을 검증했습니다. 이러한 강인성은 <strong>모델 기반 최적화로 생성된 물리적으로 타당한 참조</strong>가 있었기에 가능했으며, 결과적으로 다른 방법보다 <strong>높은 안정성으로 실제 로봇에 적용</strong>할 수 있었습니다.</p>
+<p><strong>학습 전략과 구조적 설계</strong> 또한 STMR의 중요한 강점입니다. 이 방법은 <strong>오프라인 최적화(모션 리타게팅)</strong> 단계와 <strong>온라인 학습(정책 RL)</strong> 단계를 분리하여 효율을 높였습니다. 먼저 <strong>비지도 최적화</strong>를 통해 <strong>참조 모션을 사전에 보정</strong>해 둠으로써, RL 단계에서는 복잡한 동적 제약을 만족하는 모션을 <strong>이미 확보</strong>한 상태에서 학습이 시작됩니다. 이로써 RL은 보다 <strong>용이한 보상 설계</strong>(이미 물리적 타당성 확보)와 <strong>향상된 모방 효율</strong>을 보이며, 실제 실험에서도 <strong>기존 기법 대비 적은 학습으로 높은 정확도 추종</strong>을 달성했습니다. 예를 들어, 본 연구의 RL 정책은 약 5천만 스텝(약 1시간)의 훈련으로 높은 성능을 보였으며, <strong>기존 AMP 기반 정책이 수배 더 많은 학습이 필요</strong>했던 것에 비하면 효율적입니다. 또한 <strong>공간-시간 단계별로 문제를 디컴포즈</strong>한 설계는 <strong>복잡한 모션 리타게팅 문제를 해결하기 쉽게 만든 구조적 이점</strong>이 있습니다. 각각의 단계에서 <strong>기성의 알고리즘</strong>(예: IK 기반 Unit Vector 방법, DDP 기반 최적화)을 활용하여 신뢰성을 확보했고, 최종적으로 RL 제어기를 결합하는 <strong>모듈식 설계</strong>로서 각 구성요소의 역할이 명확합니다. 이러한 구조 덕분에 <strong>새 동작 추가나 다른 로봇 적용 시에도 일부 모듈 교체/재학습으로 대응 가능</strong>하며, <strong>실시간 적용</strong>을 위한 향후 확장도 모색하기 용이한 프레임워크라고 볼 수 있습니다. 정리하면, STMR의 학습전략은 <strong>최적화된 참조로 학습 가이드</strong>를 제공하고, 아키텍처 설계는 <strong>문제 복잡도 감소와 모듈화</strong>를 통해 <strong>효율성과 확장성</strong>을 모두 갖춘 점이 큰 강점입니다.</p>
 </section>
 <section id="잠재적-약점-제한된-상황-복잡도-및-기타-고려사항" class="level2">
 <h2 class="anchored" data-anchor-id="잠재적-약점-제한된-상황-복잡도-및-기타-고려사항">잠재적 약점: 제한된 상황, 복잡도 및 기타 고려사항</h2>
@@ -408,13 +491,16 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <p>본 논문의 STMR에 담긴 <strong>모션 리타게팅 기법과 시간적 동작 조정, 운동학적 제약 처리 기술</strong>은 <strong>다관절 로봇 손</strong>의 동작 모방 및 학습에도 유용하게 응용될 수 있습니다. 사람의 섬세한 손동작을 로봇 손으로 전달하거나, 인간의 조작 기술을 로봇이 학습하도록 하는 문제는 사족 보행의 모션 모방과 유사하면서도 고유한 도전과제를 가집니다. 이하에서는 <strong>(a) 인간 손의 자세 및 동작을 로봇 손으로 리타게팅하는 경우</strong>와 <strong>(b) 그런 리타게팅 모션을 활용해 로봇 손이 물체 조작을 학습/모방하는 경우</strong>로 나누어, 해당 논문의 기법을 어떻게 적용하거나 변형할 수 있을지 논의합니다.</p>
 <section id="인간-손-동작의-로봇-손으로-리타게팅-자세-및-궤적-매핑" class="level3">
 <h3 class="anchored" data-anchor-id="인간-손-동작의-로봇-손으로-리타게팅-자세-및-궤적-매핑">인간 손 동작의 로봇 손으로 리타게팅 (자세 및 궤적 매핑)</h3>
-<p><strong>사람 손의 복잡한 관절 움직임을 로봇 손에 대응시키는 리타게팅</strong>에는 STMR의 <strong>공간적 모션 리타게팅(SMR)</strong> 개념이 핵심적으로 활용될 수 있습니다. 사람 손과 로봇 손은 <strong>형태학적 차이</strong>(모양, 크기, 관절 자유도 수) 때문에 직접적인 1:1 대응이 어려운데, 이는 사족 동물과 로봇의 다리 구조 차이와 유사한 문제입니다. STMR이 제시한 <strong>“키포인트-기반 운동학적 매핑”</strong>은 손의 경우에도 적용 가능합니다. 예를 들어, 인간 손의 <strong>관절 마디 위치나 손가락 끝점(fingertip)</strong> 등을 <strong>키포인트</strong>로 정의하고, <strong>로봇 손의 대응 키포인트</strong>와 <strong>방향 단위 벡터</strong>를 맞추는 방식으로 <strong>초기 자세를 변환</strong>할 수 있습니다. 이는 논문에서 SMR 단계에 사용한 <strong>Unit Vector 방법</strong>과 유사하게, <strong>인접 마디 간 방향을 보존</strong>하도록 로봇 손가락 관절을 설정하는 방식입니다. 이렇게 하면 로봇 손이 인간 손의 <strong>손가락 뻗는 방향, 구부리는 각도 비율</strong> 등을 크게 벗어나지 않게 되어 <strong>자연스러운 초기 모션</strong>을 얻을 수 있습니다. 이후, <strong>역기구학(IK) 풀이</strong>를 통해 로봇 손의 각 관절 각도를 찾아내면, 일단 <strong>운동학적으로 유효한 로봇 손 자세 시퀀스</strong>를 얻어낼 수 있을 것입니다. 이 과정에서 <strong>로봇 손의 관절 가동 범위 제한</strong>이나 <strong>자기 충돌</strong>(손가락 끼리 겹치지 않도록) 등의 <strong>운동학적 제약</strong>을 포함시키면, 마치 STMR의 SMR이 <strong>발 관통을 방지</strong>하듯이 <strong>손가락 관통이나 비현실적 꺾임</strong>을 방지할 수 있습니다. 또한 <strong>접촉 관련 제약</strong>도 중요한데, 이는 뒤에서 다룰 <strong>조작 시나리오</strong>와 겹치는 부분이 있지만, 기본적으로 <strong>사람 손의 접촉 의도</strong>(예: 어느 손가락이 어떤 지점에서 물체를 터치하는지)를 파악하여 로봇 손에서도 <strong>해당 손가락(또는 대응 손가락)이 비슷한 시점에 비슷한 위치를 접촉</strong>하도록 매핑해야 합니다. 이를 위해 <strong>손가락 끝점</strong>을 키포인트로 두고, 인간 손에서 접촉했던 시공간 정보를 <strong>로봇 손 끝점의 위치/속도 제약</strong>으로 활용하면, STMR의 <strong>접촉 스케줄 보존</strong> 개념을 구현할 수 있습니다. 예컨대, 사람 검지 손가락이 1초 시점에 물체 표면을 누르는 동작이 있었다면, 로봇 손에서도 대응되는 손가락(혹은 로봇의 검지에 해당하는 링크)이 그 시점에 그 위치를 누르도록 목표를 설정하는 식입니다. 이처럼 <strong>공간적 리타게팅 단계</strong>를 거치면, 비록 로봇 손의 형태가 달라도 <strong>인간 손 동작의 형태적 특징과 접촉 의도</strong>를 최대한 유지한 <strong>전체 손가락 궤적</strong>을 생성할 수 있습니다.</p>
+<p><strong>(1) SMR</strong></p>
+<p><strong>사람 손의 복잡한 관절 움직임을 로봇 손에 대응시키는 리타게팅</strong>에는 STMR의 <strong>공간적 모션 리타게팅(SMR)</strong> 개념이 핵심적으로 활용될 수 있습니다. 사람 손과 로봇 손은 <strong>형태학적 차이</strong>(모양, 크기, 관절 자유도 수) 때문에 직접적인 1:1 대응이 어려운데, 이는 사족 동물과 로봇의 다리 구조 차이와 유사한 문제입니다. STMR이 제시한 <strong>“키포인트-기반 운동학적 매핑”</strong>은 손의 경우에도 적용 가능합니다. 예를 들어, 인간 손의 <strong>관절 마디 위치나 손가락 끝점(fingertip)</strong> 등을 <strong>키포인트</strong>로 정의하고, <strong>로봇 손의 대응 키포인트</strong>와 <strong>방향 단위 벡터</strong>를 맞추는 방식으로 <strong>초기 자세를 변환</strong>할 수 있습니다. 이는 논문에서 SMR 단계에 사용한 <strong>Unit Vector 방법</strong>과 유사하게, <strong>인접 마디 간 방향을 보존</strong>하도록 로봇 손가락 관절을 설정하는 방식입니다. 이렇게 하면 로봇 손이 인간 손의 <strong>손가락 뻗는 방향, 구부리는 각도 비율</strong> 등을 크게 벗어나지 않게 되어 <strong>자연스러운 초기 모션</strong>을 얻을 수 있습니다. 이후, <strong>역기구학(IK) 풀이</strong>를 통해 로봇 손의 각 관절 각도를 찾아내면, 일단 <strong>운동학적으로 유효한 로봇 손 자세 시퀀스</strong>를 얻어낼 수 있을 것입니다. 이 과정에서 <strong>로봇 손의 관절 가동 범위 제한</strong>이나 <strong>자기 충돌</strong>(손가락 끼리 겹치지 않도록) 등의 <strong>운동학적 제약</strong>을 포함시키면, 마치 STMR의 SMR이 <strong>발 관통을 방지</strong>하듯이 <strong>손가락 관통이나 비현실적 꺾임</strong>을 방지할 수 있습니다.</p>
+<p>또한 <strong>접촉 관련 제약</strong>도 중요한데, 이는 뒤에서 다룰 <strong>조작 시나리오</strong>와 겹치는 부분이 있지만, 기본적으로 <strong>사람 손의 접촉 의도</strong>(예: 어느 손가락이 어떤 지점에서 물체를 터치하는지)를 파악하여 로봇 손에서도 <strong>해당 손가락(또는 대응 손가락)이 비슷한 시점에 비슷한 위치를 접촉</strong>하도록 매핑해야 합니다. 이를 위해 <strong>손가락 끝점</strong>을 키포인트로 두고, 인간 손에서 접촉했던 시공간 정보를 <strong>로봇 손 끝점의 위치/속도 제약</strong>으로 활용하면, STMR의 <strong>접촉 스케줄 보존</strong> 개념을 구현할 수 있습니다. 예컨대, 사람 검지 손가락이 1초 시점에 물체 표면을 누르는 동작이 있었다면, 로봇 손에서도 대응되는 손가락(혹은 로봇의 검지에 해당하는 링크)이 그 시점에 그 위치를 누르도록 목표를 설정하는 식입니다. 이처럼 <strong>공간적 리타게팅 단계</strong>를 거치면, 비록 로봇 손의 형태가 달라도 <strong>인간 손 동작의 형태적 특징과 접촉 의도</strong>를 최대한 유지한 <strong>전체 손가락 궤적</strong>을 생성할 수 있습니다.</p>
+<p><strong>(2) TMR</strong></p>
 <p>다음으로, <strong>시간적 조정(TMR)</strong> 개념을 손 동작에 적용할 수 있습니다. 인간과 로봇 손은 <strong>관절 동작 속도, 토크 능력</strong> 등이 다르기 때문에, 동일한 시간 프로파일로 움직이면 로봇이 따라가지 못하거나 과도한 힘을 내는 문제가 발생할 수 있습니다. STMR의 TMR 단계처럼, <strong>모션의 시간축을 늘이거나 줄여서</strong> 로봇 손에 <strong>동역학적으로 적합한 속도와 가속도</strong>를 찾는 최적화를 수행할 수 있습니다. 예를 들어, 사람은 순식간에 손가락을 펼쳐 물체를 놓을 수 있지만 로봇 손은 관절 속도가 한계가 있을 때, <strong>놓는 동작의 시간을 늘려</strong> 로봇이 충분히 따라할 수 있도록 합니다. 반대로, 사람 손이 천천히 움직이는 동작이라도 로봇에 매우 가벼운 부하라면 <strong>시간을 압축</strong>해도 되겠죠. 이러한 시간 최적화는 단순히 속도의 문제뿐 아니라, <strong>동역학적 일관성</strong>과 <strong>접촉 안정성</strong>을 고려해야 합니다. 예를 들어 물체를 쥐었다 놓는 시나리오에서, 로봇 손의 각 손가락이 <strong>동시에 물체를 이격</strong>해야 물체가 예상대로 떨어지지, 타이밍이 어긋나면 물체가 미끄러질 수 있습니다. 따라서 <strong>손가락들 간의 타이밍 조율</strong>, 그리고 <strong>중력 및 물체 관성에 대응한 속도 조정</strong> 등이 포함된 <strong>시간적 파라미터 최적화</strong>가 필요합니다. 이를 위해 STMR에서 활용한 방식처럼 <strong>모델 기반 시뮬레이션</strong>을 내부에 두고, 로봇 손+물체의 물리를 고려한 <strong>최적 제어(예: DDP)</strong>를 수행할 수 있습니다. 실제 논문에서는 로봇의 도약 높이와 체공시간을 DDP로 조정했듯이, 손의 경우 <strong>물체가 들렸다 놓이는 동작</strong>을 시뮬레이션하면서 <strong>손가락 접촉력, 마찰 조건</strong> 등을 만족하는 <strong>시간 스케일</strong>을 찾는 것입니다. 이러한 동적 리타게팅을 통해, 결과 모션은 로봇 손에게 <strong>과도한 힘이나 충돌 없이</strong> 실행 가능한 <strong>물리적으로 타당한 조작 모션</strong>이 될 것입니다. 기존 연구에서도 인간→로봇 손 리타게팅 시 <strong>단순 위치 매핑은 관통 및 불안정한 접촉</strong>을 초래하기 쉽고, 이를 개선하려 <strong>에너지 함수 기반 최적화</strong>로 관통을 줄였지만 <strong>인간 동작의 풍부한 제약</strong>(손가락 간 협조 움직임 등)을 충분히 반영하지 못한 문제가 지적됩니다. STMR의 접근은 <strong>인간 손의 풍부한 kinematic 제약</strong>을 보존하면서도 <strong>물리적 안정성</strong>까지 확보하도록 두 단계 최적화를 제안하므로, 로봇 손 리타게팅에서도 이러한 <strong>일련의 공간-시간 분리 접근</strong>이 효과적일 것으로 기대됩니다.</p>
 <p>이 과정에서 <strong>모션 프라이어</strong>의 통합도 고려할 수 있습니다. 사족 보행의 경우 AMP 같은 방법이 참고될 수 있었던 것처럼, 손 동작의 경우도 <strong>인간 손 움직임에 대한 사전 모델</strong>을 활용하면 도움이 됩니다. 예를 들어 <strong>인간 그립(grasp) 동작의 통계적 분포</strong>나 <strong>손가락 사이의 공조 움직임(예: 손가락의 synergy)</strong>에 대한 모션 프라이어를 사용하면, 로봇 손이 더 <strong>자연스러운 자세</strong>를 취하도록 유도할 수 있습니다. STMR에서는 명시적으로 모션 프라이어를 쓰지 않았지만, 손 로봇에 적용 시에는 이러한 <strong>인간 손의 선험적 지식</strong>(예: 대부분의 그립에서 새끼손가락은 약간 굽혀진다든지)을 최적화 과정에 반영하면 리타게팅 품질을 향상시킬 여지가 있습니다. 요컨대, <strong>공간적 정합 + 시간적 조정 + (필요시) 모션 프라이어</strong>라는 세 가지 요소를 조합하는 것은 <strong>복잡한 로봇 손 동작 리타게팅</strong>에서도 핵심 원리로 적용될 수 있습니다.</p>
 </section>
 <section id="시공간-모션-전이를-통한-조작-행동-학습-모방-및-제어" class="level3">
 <h3 class="anchored" data-anchor-id="시공간-모션-전이를-통한-조작-행동-학습-모방-및-제어">시공간 모션 전이를 통한 조작 행동 학습 (모방 및 제어)</h3>
-<p>다음으로, 이렇게 리타게팅된 인간-로봇 손의 모션 데이터를 활용하여 <strong>로봇 손의 조작 행동을 학습</strong>시키는 방안을 STMR의 기법에 비추어 논의합니다. 기본 아이디어는 STMR이 <strong>물리적으로 실행 가능한 참조 모션</strong>을 만들어 RL 정책 학습을 <strong>가이드</strong>한 것처럼, 로봇 손의 경우에도 <strong>인간 시연을 로봇 버전으로 변환한 “참조 조작 모션”</strong>을 만들어 이를 <strong>학습에 활용</strong>하는 것입니다. 사람의 조작은 섬세하고 빠른 경우가 많아, 로봇이 이를 그대로 따라하려 하면 <strong>동역학적 실패</strong>(물체를 놓쳐버리거나 떨어뜨림, 충돌 등)로 이어질 수 있습니다. 따라서 앞서 언급한 리타게팅 단계를 거쳐 <strong>로봇이 따라할 수 있는 수준으로 변환된 조작 시나리오</strong>를 준비하면, 그 다음 <strong>강화학습이나 모방 학습</strong>으로 정책을 훈련시키는 것이 훨씬 수월해집니다.</p>
+<p>다음으로, 이렇게 리타게팅된 인간-로봇 손의 모션 데이터를 활용하여 <strong>로봇 손의 조작 행동을 학습</strong>시키는 방안을 STMR의 기법에 비추어 논의합니다. 기본 아이디어는 STMR이 <strong>물리적으로 실행 가능한 참조 모션</strong>을 만들어 RL 정책 학습을 가이드한 것처럼, 로봇 손의 경우에도 <strong>인간 시연을 로봇 버전으로 변환한 “참조 조작 모션”</strong>을 만들어 이를 <strong>학습에 활용</strong>하는 것입니다. 사람의 조작은 섬세하고 빠른 경우가 많아, 로봇이 이를 그대로 따라하려 하면 <strong>동역학적 실패</strong>(물체를 놓쳐버리거나 떨어뜨림, 충돌 등)로 이어질 수 있습니다. 따라서 앞서 언급한 리타게팅 단계를 거쳐 <strong>로봇이 따라할 수 있는 수준으로 변환된 조작 시나리오</strong>를 준비하면, 그 다음 <strong>강화학습이나 모방 학습</strong>으로 정책을 훈련시키는 것이 훨씬 수월해집니다.</p>
 <p>예를 들어, 인간이 공을 집어 다른 곳에 놓는 시범 영상을 생각해봅시다. 이를 로봇 손에 모방시키고자 할 때, 먼저 <strong>공을 집는 동작</strong>의 <strong>손가락 궤적</strong>과 <strong>접촉 타이밍</strong>을 STMR 유사 방식으로 변환해 둡니다. 이렇게 얻은 <strong>로봇 손의 기준 궤적</strong>은 공을 안정적으로 잡고 옮기기에 적합하도록 <strong>시간과 공간이 조율</strong>되어 있겠지요. 이제 RL의 <strong>보상 함수</strong>를 이 참조 궤적과의 <strong>유사도</strong>로 설계하여 로봇이 이 동작을 익히게 할 수 있습니다. 구체적으로, STMR 논문에서와 마찬가지로 <strong>관절 각도, 손목(기저) 위치와 자세, 손가락 키포인트 위치</strong> 등이 참조 모션과 가까울수록 높은 보상을 주는 식입니다. 또한 <strong>접촉 유지/해제의 시점</strong>도 보상에 넣어, 예를 들어 공을 놓을 때 너무 늦게 손가락을 펴면 벌점을 주고, 참조와 같은 타이밍에 펴면 보상을 주는 형태로 설계할 수 있습니다. 이런 식의 <strong>세밀한 모방 보상 설계</strong>는 이미 참조 모션이 <strong>물리적으로 타당</strong>하기 때문에 가능해집니다. 만약 참조 모션이 부자연스럽거나 물리를 무시했다면 (예: 사람 손 동작을 그대로 써서 로봇 손엔 무리인 속도로 손가락을 편다든지), RL 단계에서 에이전트가 따라하려다 <strong>실패하거나 학습이 불안정</strong>해질 것입니다. STMR이 강조한 바와 같이, <strong>물리적으로 일관된 레퍼런스가 있을 때 RL 모방 학습이 원활</strong>해지므로, 로봇 손의 조작 학습에서도 이 원칙이 동일하게 적용됩니다.</p>
 <p><strong>Residual Learning</strong> 개념 역시 로봇 손 제어에 응용할 수 있습니다. 예를 들어, 로봇 손에 <strong>기본 오픈루프 제어기</strong>를 내장하여, 앞서 얻은 참조 궤적을 따라 <strong>손가락 관절에 PD 제어</strong>로 힘을 가하는 베이스를 깔아둡니다. 그런 다음, RL로 학습된 <strong>잔여 정책</strong>이 미세 조정 (예: “약간 더 강하게 쥐기”나 “마찰 증가를 위해 각도 보정” 등)을 출力하도록 합니다. 이는 STMR에서 <strong>참조 joint 값 + RL 출력 = 최종 토크 명령</strong>으로 구성한 것과 같은 방식입니다. 이렇게 하면 로봇 손이 물체를 쥐고 이동하는 동안, 기본 제어기는 <strong>참조 궤적대로 손가락을 움직이려</strong> 하고, RL 정책은 <strong>물체의 미끄러짐을 막기 위해 필요한 추가 힘</strong>이나 <strong>모델 오차 보정 동작</strong>을 학습하게 됩니다. 결과적으로, 처음부터 모든 것을 학습시키는 것보다 <strong>안정적이고 샘플 효율적인 학습</strong>이 가능하며, 실환경에서 <strong>예기치 않은 상황</strong>(물체 무게 변화, 마찰 계수 불확실성 등)에도 더 견고한 제어 정책을 얻을 수 있습니다. 실제 STMR 실험에서도 잔여 학습 기법이 <strong>외란에 강한 정책</strong>을 만들어냈고, 로봇 손의 미끄럼 방지나 <strong>확률적 성공률</strong> 향상에도 같은 이점을 기대할 수 있습니다.</p>
 <p>또 하나 고려할 점은, <strong>환경(대상 물체)과의 상호작용</strong> 자체를 학습하는 부분입니다. 사족 로봇의 경우 지면은 고정되어 있고 발이 밀리지 않게 하는 것이 주 목표였지만, 로봇 손은 <strong>잡은 물체를 안정적으로 다루는 것</strong>이 핵심입니다. 따라서 RL 보상에는 <strong>물체의 상태 안정성</strong>(예: 물체의 목표 위치 도달 여부, 잡는 동안 떨어뜨리지 않기 등)을 포함해야 하고, 모션 리타게팅 단계에서도 <strong>물체에 가해지는 힘</strong>을 고려하는 것이 좋습니다. 이를테면, TMR 단계에서 <strong>물체의 동역학까지 포함된 시뮬레이션</strong>으로 로봇 손가락 궤적을 최적화하면, 단순히 손가락 움직임뿐 아니라 <strong>물체가 미끄러지지 않는 경로</strong>를 찾게 될 것입니다. 이와 관련하여, 최근 연구들은 <strong>사람-로봇 손 동작 매핑</strong> 시 <strong>접촉력과 상호작용까지 모사</strong>하려는 시도를 하고 있습니다. 예를 들어, <strong>접촉맵(contact map)</strong> 생성이나 <strong>이중 임계값 기반 접촉 검출</strong> 및 <strong>프레임간 접촉 상태 스무딩</strong> 같은 기법이 보고되는데, 이는 STMR에서 발 접촉을 부드럽게 처리한 것과 상통합니다. DexFlow 등 기존 연구에서는 이러한 <strong>시간적 접촉 추적 및 스무딩</strong>을 통해 손-물체 간 <strong>접촉 불안정(따닥거림)</strong>을 해소했다고 합니다. 로봇 손의 조작 모방에서도, <strong>참조 모션 생성 시 접촉 사건을 안정적으로 추출 및 매핑</strong>하고, RL 학습 시에도 <strong>접촉 유지/이탈 여부</strong>를 보상으로 다루어 <strong>접촉 패턴을 제대로 모방</strong>하도록 해야 합니다. STMR에서 <strong>발바닥 접촉 IoU</strong>로 평가를 했듯이, 손에서는 <strong>물체와 손가락의 접촉 IoU</strong>나 <strong>미끄럼 정도</strong> 등을 사용해 성능을 평가하고 최적화 방향을 설정할 수 있을 것입니다.</p>
@@ -425,8 +511,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <p>아래는 본 논문의 주요 기법들과 그 <strong>로봇 손 분야로의 전이 가능성</strong>을 정리한 표입니다. 이 표에서는 STMR에서 제안된 요소들이 로봇 손의 <strong>자세 리타게팅</strong> 및 <strong>조작 행동 학습</strong>에 어떻게 활용될 수 있는지 대비하여 나타내었습니다.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 27%">
-<col style="width: 72%">
+<col style="width: 34%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -461,7 +547,6 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </tr>
 </tbody>
 </table>
-<p>上述한 기법들의 응용을 통해, 로봇 손은 인간의 섬세한 조작 기술을 보다 정확하고 안정적으로 모방할 수 있을 것으로 기대됩니다. STMR 논문의 접근법을 손 분야에 확장함으로써, <strong>이기종 플랫폼 간 모션 모방</strong>이라는 도전적인 문제를 해결하는 보편적인 프레임워크를 구축할 수 있습니다. 이는 향후 <strong>인간과 로봇의 상호작용</strong>, <strong>원격 조작</strong>, <strong>로봇 기술 전수</strong> 등의 영역에서 중요한 역할을 할 것입니다.</p>
 
 
 </section>
