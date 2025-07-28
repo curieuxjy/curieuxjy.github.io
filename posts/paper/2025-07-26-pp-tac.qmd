@@ -15,8 +15,6 @@ description: Paper Picking Using Tactile Feedback in Dexterous Robotic Hands
 2. 이 시스템은 전방향 촉각 감지 및 실시간 슬립 감지를 제공하는 새로운 원형 촉각 센서(R-Tac)가 장착된 다지 로봇 핸드를 특징으로 합니다.
 3. 사람의 집기 동작에서 영감을 받은 확산 기반 정책은 합성된 데이터와 도메인 무작위화를 통해 훈련되어 다양한 재료와 지형에서 87.5%의 성공률을 달성하며 견고한 성능을 입증했습니다.
 
-
-
 <center>
 <img src="../../images/2025-07-26-pp-tac/2.gif" width="80%" />
 </center>
