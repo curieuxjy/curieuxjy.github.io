@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-07-20">
+<meta name="description" content="Human-Level Reward Design via Coding Large Language Models">
+
+<title>📃Eureka 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#논문-개요-및-주요-기여" id="toc-논문-개요-및-주요-기여" class="nav-link" data-scroll-target="#논문-개요-및-주요-기여">논문 개요 및 주요 기여</a></li>
+  <li><a href="#eureka-시스템-구현-코드-구현-방식" id="toc-eureka-시스템-구현-코드-구현-방식" class="nav-link" data-scroll-target="#eureka-시스템-구현-코드-구현-방식">Eureka 시스템 구현 (코드 구현 방식)</a>
+  <ul class="collapse">
+  <li><a href="#llm환경-인터페이스-환경-코드-활용" id="toc-llm환경-인터페이스-환경-코드-활용" class="nav-link" data-scroll-target="#llm환경-인터페이스-환경-코드-활용">LLM–환경 인터페이스: <strong>환경 코드 활용</strong></a></li>
+  <li><a href="#코드-생성-및-평가-진화적-reward-탐색" id="toc-코드-생성-및-평가-진화적-reward-탐색" class="nav-link" data-scroll-target="#코드-생성-및-평가-진화적-reward-탐색">코드 생성 및 평가: <strong>진화적 Reward 탐색</strong></a></li>
+  <li><a href="#reward-reflection-텍스트-기반-성능-피드백" id="toc-reward-reflection-텍스트-기반-성능-피드백" class="nav-link" data-scroll-target="#reward-reflection-텍스트-기반-성능-피드백">Reward Reflection: <strong>텍스트 기반 성능 피드백</strong></a></li>
+  <li><a href="#구현-상세-및-재현성" id="toc-구현-상세-및-재현성" class="nav-link" data-scroll-target="#구현-상세-및-재현성">구현 상세 및 재현성</a></li>
+  </ul></li>
+  <li><a href="#이론적-기여-및-기존-연구와의-차별성" id="toc-이론적-기여-및-기존-연구와의-차별성" class="nav-link" data-scroll-target="#이론적-기여-및-기존-연구와의-차별성">이론적 기여 및 기존 연구와의 차별성</a>
+  <ul class="collapse">
+  <li><a href="#기존-reward-설계-접근과-eureka의-차별점" id="toc-기존-reward-설계-접근과-eureka의-차별점" class="nav-link" data-scroll-target="#기존-reward-설계-접근과-eureka의-차별점">기존 Reward 설계 접근과 Eureka의 차별점</a></li>
+  <li><a href="#이론적-기반과-의의" id="toc-이론적-기반과-의의" class="nav-link" data-scroll-target="#이론적-기반과-의의">이론적 기반과 의의</a></li>
+  <li><a href="#한계-및-향후-전망" id="toc-한계-및-향후-전망" class="nav-link" data-scroll-target="#한계-및-향후-전망">한계 및 향후 전망</a></li>
+  </ul></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Eureka 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">retargeting</div>
+    <div class="quarto-category">hand</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Human-Level Reward Design via Coding Large Language Models
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 20, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2310.12931">Paper Link</a></li>
+<li><a href="https://eureka-research.github.io/">Project Link</a></li>
+<li><a href="https://github.com/eureka-research/Eureka">Github Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 EUREKA는 대규모 언어 모델(LLM)을 활용하여 강화 학습(RL)을 위한 Reward 함수를 자율적으로 설계하는 알고리즘으로, 코드 작성 및 컨텍스트 내 개선 능력을 통해 Reward 코드를 진화적으로 최적화합니다.</li>
+<li>🏆 이 시스템은 29가지 다양한 RL 환경에서 전문가가 설계한 Reward보다 83%의 작업에서 평균 52% 더 뛰어난 성능을 보였으며, 복잡한 펜 스피닝과 같은 섬세한 조작 작업을 최초로 가능하게 했습니다.</li>
+<li>🤝 EUREKA는 환경 소스 코드와 인간의 텍스트 피드백을 활용하여 작업별 프롬프트 없이도 새로운 Reward 함수를 자율적으로 생성하고 개선하며, 이는 인간과 정렬된 행동을 유도할 수 있음을 보여줍니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>EUREKA는 대규모 언어 모델(LLM)을 활용하여 로봇의 저수준(low-level) 조작 작업을 위한 Reward 함수(reward function)를 자동 설계하는 알고리즘입니다. 기존 LLM은 로봇의 고수준(high-level) 의미론적 계획에는 탁월했지만, 펜 돌리기와 같은 복잡한 저수준 조작 기술 학습에는 한계가 있었습니다. Reward 함수 설계는 강화 학습(RL)에서 매우 중요하지만, 실제로는 수동적인 시행착오 과정이 많고 최적이 아닌 Reward을 초래하는 경우가 많습니다. EUREKA는 이러한 문제를 해결하기 위해 GPT-4와 같은 LLM의 코드 작성, 제로샷(zero-shot) 생성, 인컨텍스트 개선(in-context improvement) 능력을 활용하여 진화적 최적화(evolutionary optimization)를 수행합니다.</p>
+<p>EUREKA의 핵심 방법론은 세 가지 주요 알고리즘 설계로 구성됩니다.</p>
+<ol type="1">
+<li><p><strong>환경을 컨텍스트로 제공(Environment as Context)</strong>합니다. EUREKA는 환경의 원본 소스 코드(Reward 코드 제외)를 LLM에 직접 입력하여 실행 가능한 Reward 함수를 제로샷으로 생성합니다. 이는 LLM이 환경의 상태(state) 및 액션(action) 변수에 접근하고 이를 활용하여 Reward 함수를 구성할 수 있도록 합니다. 실제로는 LLM의 컨텍스트 창(context window) 한계를 고려하여 환경의 상태 및 액션 변수를 노출하고 완전히 명시하는 코드 스니펫만을 자동 추출하여 제공합니다. 이 접근 방식 덕분에 EUREKA는 환경별 프롬프트 엔지니어링이나 Reward 템플릿 없이도 첫 시도에 타당한 Reward 코드를 생성할 수 있습니다. 예를 들어, <code>fingertip pos</code>와 같은 기존 관측 변수를 활용하여 유능한 Reward 코드를 만듭니다.</p></li>
+<li><p><strong>진화적 탐색(Evolutionary Search)</strong>을 수행합니다. EUREKA는 초기 Reward 함수의 잠재적인 오류나 sub-optimality을 극복하기 위해 반복적으로 Reward 후보들을 제안하고 가장 유망한 것들을 LLM 컨텍스트 내에서 개선합니다. 각 반복마다 LLM으로부터 여러 개의 독립적인 Reward 함수를 샘플링합니다. 이전 반복에서 가장 성능이 좋았던 Reward 함수와 그에 대한 Reward 반영(reward reflection)을 다음 반복의 컨텍스트로 사용하여 K개의 새로운 Reward 함수를 생성합니다. 이 과정은 지정된 반복 횟수(예: 5회)까지 계속되며, 더 나은 최적점을 찾기 위해 여러 번의 무작위 재시작(random restarts)을 수행합니다. EUREKA는 이 진화적 최적화를 통해 초기에는 좋지 않았던 성능이 꾸준히 개선되어 궁극적으로 인간 설계 Reward을 능가하는 결과를 보여줍니다.</p></li>
+<li><p><strong>Reward 반영(Reward Reflection)</strong> 메커니즘을 사용합니다. 이는 생성된 Reward 함수의 품질을 텍스트로 요약하는 자동화된 피드백입니다. EUREKA는 Reward 함수가 개별 Reward 구성 요소들을 사전 형태로 노출하도록 요청하며, Reward 반영은 훈련 과정에서 이들 구성 요소의 스칼라 값과 전체 작업 적합도 함수(task fitness function)의 스냅샷 값을 추적합니다. 예를 들어, <code>av penalty</code>와 같은 개별 Reward 구성 요소 값의 목록이 피드백으로 제공됩니다. 이는 작업 적합도 함수 자체만으로는 신용 할당(credit assignment)에 대한 유용한 정보를 제공하지 못하고, Reward 최적화가 RL 알고리즘의 특정 선택에 의존한다는 점 때문에 중요합니다. Reward 반영은 LLM이 보다 복잡하고 목표 지향적인 Reward 편집을 수행할 수 있도록 상세한 정보를 제공합니다.</p></li>
+</ol>
+<p>실험 결과, EUREKA는 10가지 로봇 형태를 포함한 29개의 오픈소스 RL 환경에서 인간 전문가가 설계한 Reward 함수보다 뛰어난 성능을 보였습니다. 83%의 태스크에서 인간 전문가를 능가했으며, 평균 52%의 정규화된 개선을 달성했습니다. 정규화된 개선 점수 <span class="math inline">\frac{\text{Method}-\text{Sparse}}{|\text{Human}-\text{Sparse}|}</span>로 평가했을 때, EUREKA는 인간 Reward과 L2R(Language-to-Rewards)을 일관되게 능가했습니다. 특히 고차원 조작 태스크에서 더 큰 성능 향상을 보였습니다. EUREKA는 수동 Reward 엔지니어링으로는 이전에 불가능했던 펜 돌리기(pen spinning)와 같은 복잡한 태스크를 커리큘럼 학습(curriculum learning)과 결합하여 성공적으로 해결했음을 보여주었습니다. 또한, EUREKA는 인간 피드백으로부터의 강화 학습(RLHF)에 대한 새로운 경사도 없는(gradient-free) 인컨텍스트 학습 접근 방식을 가능하게 하여, 기존 인간 Reward 함수를 개선하거나 순수한 텍스트 피드백을 통해 인간 의도에 더 부합하는 Reward을 생성할 수 있음을 입증했습니다. 이는 LLM이 관련 상태 변수에 대한 인간의 지식과 Reward 설계 숙련도의 부족을 보완할 수 있음을 시사합니다.</p>
+<p>결론적으로 EUREKA는 LLM과 진화적 알고리즘을 결합하는 간단한 원리가 Reward 설계와 같은 어려운 개방형 탐색 문제에 대한 일반적이고 확장 가능한 접근 방식임을 보여줍니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<section id="논문-개요-및-주요-기여" class="level2">
+<h2 class="anchored" data-anchor-id="논문-개요-및-주요-기여">논문 개요 및 주요 기여</h2>
+<p><strong>Eureka</strong> (Evolution-driven Universal <strong>RE</strong>ward <strong>K</strong>it for <strong>A</strong>gent)은 대형언어모델(LLM)을 활용하여 <strong>강화학습의 Reward 함수를 자동으로 설계</strong>하는 새로운 알고리즘입니다. 이 논문은 GPT-4와 같은 <strong>코드 생성 특화 LLM</strong>의 뛰어난 능력을 활용하여, <strong>인간 전문가 수준</strong> 또는 그 이상의 품질을 가진 Reward 함수를 <strong>자동 생성 및 개선</strong>하는 방법을 제안합니다. 저자들은 29개의 공개 RL 환경(로봇형상 10종 포함)에서 실험하여, <strong>Eureka가 83%의 과제에서 인간이 설계한 Reward을 능가</strong>하고 평균 52%의 성능 향상을 달성했음을 보고합니다. 특히 <strong>복잡한 고차원 조작 작업</strong>(예: 5지 로봇 손으로 펜 돌리기)에서도 기존 수작업 Reward으로 달성하기 어려웠던 성공을 <strong>처음으로 실현</strong>해 보였습니다. 또한 Eureka는 <strong>인간 피드백을 Reward 설계에 통합</strong>하여 에이전트의 행동을 인간 선호에 맞게 조정하는 <strong>새로운 방식의 RLHF</strong>(강화학습 환경에서 인간 피드백 활용)도 선보입니다.</p>
+<p>논문은 아래와 같은 <strong>세 가지 주된 기여</strong>를 강조합니다:</p>
+<ol type="1">
+<li><p><strong>범용적 Reward 설계 성능</strong> – 사전 정의된 템플릿이나 과제별 프롬프트 없이도 여러 분야의 과제에서 <strong>전문가 수준 Reward 함수</strong>를 자동 생성하여, <strong>대부분의 과제에서 인간 Reward보다 우수한 성능</strong>을 보였습니다.</p></li>
+<li><p><strong>신규 난제 해결</strong> – 기존에 <strong>수작업 Reward으로 불가능</strong>했던 <strong>고난도 조작 과제</strong>(예: 펜 회전)를 Eureka Reward과 <strong>교육과정 학습</strong>(curriculum learning)을 통해 <strong>최초로 성공</strong>시켰습니다. 이는 Eureka가 복잡한 스킬 학습을 견인할 수 있다는 것을 증명합니다.</p></li>
+<li><p><strong>인간 피드백 통합</strong> – <strong>모델 파인튜닝 없이도</strong> 사람의 피드백을 Reward 함수 개선에 활용하는 <strong>새로운 gradient-free RLHF 접근</strong>을 제시합니다. Eureka는 기존 인간 Reward 함수를 출발점으로 삼아 더 나은 Reward으로 개선하거나, 오직 <strong>텍스트 형태의 인간 피드백만으로</strong> 에이전트 행동을 사람이 선호하는 방향으로 조율할 수 있음을 보였습니다.</p></li>
+</ol>
+<p>이러한 기여를 통해 <strong>Eureka는 인간 수준의 Reward 설계를 자동화</strong>하는 토대를 마련했습니다. <strong>Reward 함수 설계의 어려움</strong>은 오랫동안 RL의 병목으로 지적되어 왔는데, 연구 조사에 따르면 92%의 RL 연구자들이 <strong>Reward 설계를 시행착오에 의존</strong>하고 89%는 자신들의 Reward이 <strong>최적 이하</strong>이며 <strong>의도치 않은 행동</strong>을 유발한 경험이 있다고 합니다. Eureka는 이러한 문제를 해결하기 위해 <strong>LLM 기반의 범용 Reward 프로그래밍 알고리즘</strong> 가능성을 묻고, 이를 구현한 것입니다.</p>
+</section>
+<section id="eureka-시스템-구현-코드-구현-방식" class="level2">
+<h2 class="anchored" data-anchor-id="eureka-시스템-구현-코드-구현-방식">Eureka 시스템 구현 (코드 구현 방식)</h2>
+<p>Eureka는 <strong>“환경을 이해하는 LLM”</strong>과 <strong>“강화학습 환경”</strong>을 연결하여 Reward 코드를 생성하고 개선하는 <strong>자동화 파이프라인</strong>으로 구성됩니다. 구체적으로, <strong>환경 정보와 과제 설명을 입력</strong>으로 LLM이 <strong>파이썬 Reward 함수 코드</strong>를 작성하고, 이를 RL 환경에서 실행하여 <strong>정책 학습 성과를 평가한 뒤</strong>, <strong>평가 결과를 LLM에 피드백</strong>으로 제공하여 Reward 함수를 <strong>반복적으로 개선</strong>합니다. 아래 그림은 Eureka 시스템의 흐름을 나타냅니다.</p>
+<center>
+<img src="../../images/2025-07-20-eureka/2.png" width="80%">
+</center>
+<blockquote class="blockquote">
+<p>Eureka 프레임워크 개요 – 환경 <strong>소스 코드</strong>와 <strong>과제 자연어 설명</strong>을 LLM(GPT-4)에 컨텍스트로 제공하면, LLM이 즉시 실행 가능한 <strong>Reward 함수 코드</strong>를 생성합니다. 이렇게 생성된 Reward 함수를 활용하여 <strong>GPU 가속 시뮬레이터</strong>(예: NVIDIA Isaac Gym)에서 에이전트의 <strong>강화학습 정책을 훈련</strong>하고, <strong>학습 통계</strong>(에피소드 성공률, Reward 구성요소 값 변화 등)를 수집합니다. 그 후 <strong>“Reward 성찰 (reward reflection)”</strong> 단계에서 LLM에 <strong>학습 피드백</strong>(예: Reward 구성별 값 추이, 정책 성능 지표 등)을 요약된 텍스트로 전달하고, 이를 바탕으로 <strong>Reward 함수를 수정/개선</strong>하도록 새로운 Reward 코드 생성을 요청합니다. 이러한 <strong>코드 생성 → RL훈련 → 피드백 → 코드 수정</strong>의 <strong>반복 루프</strong>를 통해 Reward 함수는 점진적으로 향상됩니다.</p>
+</blockquote>
+<section id="llm환경-인터페이스-환경-코드-활용" class="level3">
+<h3 class="anchored" data-anchor-id="llm환경-인터페이스-환경-코드-활용">LLM–환경 인터페이스: <strong>환경 코드 활용</strong></h3>
+<p>Eureka의 핵심 아이디어 중 하나는 <strong>환경을 그대로 LLM에 맥락으로 제공</strong>하는 것입니다. 구체적으로, 환경의 Python 소스코드에서 <strong>상태(observation)와 행동(action) 변수 정의 부분</strong>을 추출하여, 해당 <strong>환경 클래스/함수 코드</strong> 자체를 프롬프트에 포함시킵니다. 여기에 <strong>과제(task) 설명 문자열</strong>을 추가하여, LLM에게 “이 환경에서 주어진 과제를 해결할 <strong>Reward 함수를 작성하라</strong>”는 지시를 합니다. 이러한 <strong>“환경 자체를 프롬프트로”</strong> 제공하는 접근은 두 가지 이점을 가집니다:</p>
+<ul>
+<li><p><strong>직관적인 코드 작성 맥락</strong>: LLM이 이미 학습한 프로그래밍 언어와 환경의 변수명을 그대로 활용하여, <strong>익숙한 형식으로 코드</strong>를 작성할 수 있습니다. 이는 LLM이 일반적인 자연어 설명보다 <strong>정확히 필요한 Reward 항목</strong>을 포착하여 코드로 변환하는 데 유리합니다.</p></li>
+<li><p><strong>환경 정보의 총체적 제공</strong>: 환경 코드에는 <strong>과제의 상태공간과 동역학에 대한 단서</strong>가 내포되어 있습니다. 예를 들어 관절각, 목표 위치 등의 변수명이 주어지므로, LLM은 <strong>어떤 변수들이 Reward에 활용될 수 있는지</strong> 자연스럽게 파악합니다. 인간이 일일이 알려주지 않아도, <strong>환경이 허용하는 모든 관측치에 기반</strong>해 Reward 함수를 구성할 수 있게 되는 것입니다.</p></li>
+</ul>
+<p>중요한 점은, Eureka는 <strong>특정 과제에 맞춘 추가 힌트 없이도</strong> 이 방식만으로 <strong>타당해 보이는 초기 Reward 함수를 만들어낸다</strong>는 것입니다. 예를 들어, <strong>별도 템플릿 없이도</strong> GPT-4는 환경 코드에 나오는 <code>fingertip_pos</code> 등 관측 변수를 이용해 합리적인 Reward 공식을 작성할 수 있었습니다. 다만, 이렇게 <strong>첫 시도에서 생성된 Reward 함수</strong>는 <strong>문법 오류</strong>가 있거나, 실행되더라도 <strong>성능이 미흡</strong>할 수 있습니다. 이를 해결하기 위해 <strong>Eureka는 한 번의 생성에 그치지 않고 반복적 개선</strong> 절차를 도입합니다.</p>
+<blockquote class="blockquote">
+<p><strong>참고:</strong> 환경 코드가 너무 길 경우를 대비해, 저자들은 <strong>자동 스크립트</strong>로 중요한 부분만 추출하여 LLM 컨텍스트 길이에 맞게 조절했다고 합니다. 또한 시뮬레이터 종속적인 내부 코드(예: 물리엔진 세부 설정)는 제외하여, <strong>다른 환경에도 일반화될 수 있는 맥락</strong>만 제공하도록 유도했습니다.</p>
+</blockquote>
+</section>
+<section id="코드-생성-및-평가-진화적-reward-탐색" class="level3">
+<h3 class="anchored" data-anchor-id="코드-생성-및-평가-진화적-reward-탐색">코드 생성 및 평가: <strong>진화적 Reward 탐색</strong></h3>
+<p>Eureka는 <strong>진화적 탐색(evolutionary search)</strong> 전략을 통해, LLM이 생성한 Reward 코드의 품질을 <strong>점증적으로 향상</strong>시킵니다. 이 알고리즘은 아래와 같이 작동합니다:</p>
+<ul>
+<li><p><strong>다수 후보 생성</strong> – 각 <strong>반복(iteration)</strong> 단계마다 LLM에게 동일한 프롬프트를 여러 번 독립적으로 실행하여 <strong>K개의 Reward 함수 후보</strong>를 샘플링합니다. 기본 설정으로 <strong>한 번에 K=16개</strong>의 코드를 생성하는데, 이렇게 하면 <strong>최소 하나 이상의 실행 가능한 코드</strong>가 나올 확률이 매우 높습니다 (저자에 따르면 16개 중 적어도 1개는 오류 없이 실행되었다고 합니다). LLM의 출력을 다수 확보함으로써, 단일 시도 시 발생할 수 있는 <strong>코드 오류 문제를 완화</strong>합니다.</p></li>
+<li><p><strong>대규모 병렬 평가</strong> – 생성된 각 Reward 함수에 대해, <strong>동시에 RL 에이전트를 훈련</strong>시켜 성능을 평가합니다. NVIDIA Isaac Gym과 같은 GPU 가속 환경을 이용하여 <strong>여러 정책을 병렬로 훈련</strong>함으로써, 수십 개 Reward에 대한 평가를 <strong>신속히 수행</strong>할 수 있었습니다. 논문에서는 Isaac Gym을 통해 <strong>정책 학습 속도가 CPU 대비 최대 1000배까지 가속</strong>되었음을 언급하며, 대규모 Reward 탐색을 현실화하는 데 핵심적인 역할을 했다고 강조합니다. (구체적으로 어떤 RL 알고리즘을 사용했는지는 Isaac Gym 기본 RL 알고리즘(PPO 등)으로 추정되며, GPT-4 등 LLM과는 별개로 <strong>전통적 RL 학습</strong>이 이루어집니다.)</p></li>
+<li><p><strong>최고 성능 Reward 선택</strong> – 평가 결과 <strong>가장 높은 성능(score)</strong>을 낸 Reward 함수를 <strong>우선 선택</strong>합니다. 이 <strong>베스트 후보</strong>는 이후 LLM 프롬프트에 포함되어, 다음 세대 Reward 코드 생성에 <strong>참조 예시(context)</strong>로 사용됩니다. 이렇게 이전 세대의 우수한 Reward을 맥락에 추가함으로써, LLM이 <strong>기존 Reward의 구조와 성능 특성</strong>을 고려하여 <strong>개선된 변형</strong>을 만들도록 유도합니다.</p></li>
+<li><p><strong>반복 및 다중 시도</strong> – 위 과정을 <strong>N번 반복</strong>하여 Reward을 지속적으로 개선하며, <strong>여러 독립적인 검색 시도</strong>(random restarts)도 수행합니다. 논문 실험에서는 <strong>5회 독립 실행</strong>하여 <strong>각 5세대(iterations)</strong>씩 탐색했고, 최종적으로 얻은 최고 성능 Reward 함수를 결과물로 선택했습니다. (다중 시작은 전역 최적해를 찾기 위한 표준 기법으로, 초기 샘플링에 운 나쁘게 걸렸을 경우를 보완합니다.)</p></li>
+</ul>
+<p>진화적 탐색 과정에서 <strong>LLM은 두 가지 모드</strong>로 활용됩니다. <strong>처음 1세대</strong>에서는 오직 환경 코드+과제설명 만으로 <strong>“제로샷” Reward 생성</strong>을 수행하고, <strong>2세대부터는</strong> 이전 최고 Reward과 <strong>추가 지시</strong>를 맥락에 포함해 <strong>“변이(mutation)” 생성</strong>을 수행하는 것입니다. 변이를 유도하기 위해, 저자들은 프롬프트에 <strong>간단한 텍스트 지침</strong>(예: “이 Reward 함수를 약간 수정하여 더 나은 성능을 내도록 해보세요”)을 추가했다고 합니다. 이 지침은 구체적인 수정 방향을 강요하지 않고도, LLM이 <strong>다양한 형태의 Reward 변형</strong>을 시도하게 돕습니다. 실제로 Eureka가 만들어낸 개선들은 <strong>(1) 기존 Reward 성분의 가중치 등 </strong>하이퍼파라미터 조정<strong>, (2) 기존 성분의 </strong>수식 형태 변경<strong>, (3) 완전히 </strong>새로운 Reward 성분 추가** 등 매우 <strong>자유도 높은 변화</strong>들을 포괄했습니다. Fig.3 (논문 예시 그림)에서도 이러한 <strong>다양한 형태의 Reward 수정</strong>이 시각화되어 있습니다.</p>
+<center>
+<img src="../../images/2025-07-20-eureka/3.png" width="100%">
+</center>
+<p>요약하면, Eureka의 탐색은 <strong>폭넓은 Reward 공간</strong>에서 <strong>LLM의 생성 다양성</strong>과 <strong>병렬 RL평가</strong>를 결합하여 <strong>우수한 Reward 함수를 진화적으로 찾아가는 과정</strong>입니다. 이는 기존에 사람이 수동으로 Reward을 튜닝하던 <strong>시험-오류 과정</strong>을 자동화한 것으로 볼 수 있습니다.</p>
+</section>
+<section id="reward-reflection-텍스트-기반-성능-피드백" class="level3">
+<h3 class="anchored" data-anchor-id="reward-reflection-텍스트-기반-성능-피드백">Reward Reflection: <strong>텍스트 기반 성능 피드백</strong></h3>
+<p>Eureka가 <strong>LLM을 통해 Reward을 개선</strong>하기 위해서는, RL 훈련 결과를 어떻게든 <strong>LLM에 이해시킬 방법</strong>이 필요합니다. 단순히 “현재 점수 = X”와 같은 <strong>숫자 성적만 제공</strong>하면, LLM은 <strong>어떻게 Reward을 바꿔야 할지 감을 잡기 어렵습니다</strong>. 이를 해결하기 위해 도입된 개념이 <strong>“Reward 성찰 (reward reflection)”</strong>입니다.</p>
+<p><strong>Reward 성찰</strong>이란, <strong>정책 학습 과정의 핵심 동향</strong>을 <strong>요약한 텍스트 피드백</strong>으로서, LLM이 <strong>Reward 함수의 장단점을 파악</strong>하는 데 활용됩니다. Eureka는 이를 위해 <strong>Reward 함수를 특별한 형식으로 작성</strong>하도록 했습니다: <strong>Reward 함수가 각 시점에 계산하는 개별 Reward 구성 요소들을 딕셔너리로 출력</strong>하게 한 것입니다. 예를 들어, 펜 회전 과제라면 Reward 함수가 <code>"orientation_bonus"</code>, <code>"angular_velocity_penalty"</code> 등의 <strong>성분별 값</strong>을 매 시뮬레이션 단계마다 산출하여, 총 Reward 외에 <strong>구성별 값을 기록</strong>하도록 합니다. 이렇게 하면 RL 훈련 동안 <strong>각 구성 요소가 어떻게 변화</strong>하는지 추적할 수 있습니다. Eureka는 <strong>정해진 간격마다</strong> (예: 훈련의 20%, 40%, … 진행 시점) <strong>정책의 성능과 Reward 구성값 통계</strong>를 수집하여, 이를 사람 읽기 좋은 형태로 요약합니다.</p>
+<center>
+<img src="../../images/2025-07-20-eureka/1.png" width="100%">
+</center>
+<blockquote class="blockquote">
+<p><strong>예시:</strong> 논문에서는 <code>av_penalty</code> (각속도 패널티)라는 구성요소의 값이 <strong>훈련 초기에 높다가 나중에 낮아지는 추세</strong>를 보인 경우를 예로 듭니다. 이러한 정보를 텍스트로 <strong>“av_penalty 값이 점차 감소했다”</strong>, <strong>“성공률은 초기 0.1에서 최종 0.9로 상승했다”</strong> 등으로 표현하여, LLM에게 전달합니다. 그리고 프롬프트에 <strong>“위 피드백을 분석하여 Reward 함수를 개선하라”</strong>는 식의 요청을 덧붙입니다 (그림의 파란색 <strong>Reward Reflection</strong> 예시 참조).</p>
+</blockquote>
+<p>이런 <strong>상세한 피드백</strong>은 두 가지 이유로 중요합니다. 첫째, <strong>총 점수(score)</strong>만 알려주는 경우 <strong>어떤 부분이 문제인지</strong> 알 수 없습니다. 반면 성분별 피드백은 <strong>어느 Reward 항목이 정책에 잘 반영되었고, 어느 것이 무시되었는지</strong> 짐작할 수 있게 해줍니다. 둘째, <strong>Reward 함수의 효과는 사용된 RL 알고리즘에 따라 다를 수 있기 때문에</strong>, 성능 저하가 <strong>Reward 설계 문제인지, 알고리즘상의 한계인지</strong> 구분해야 합니다. 예컨대 동일한 Reward도 RL 하이퍼파라미터에 따라 성과가 달라질 수 있는데, Reward 성찰은 <strong>학습과정 자체의 반응</strong>을 보여주므로, LLM이 <strong>현 알고리즘에 최적화된 Reward으로 조정</strong>할 수 있도록 도와줍니다.</p>
+<p>결과적으로, <strong>Reward 성찰을 포함한 피드백</strong>을 제공할 때 LLM은 <strong>더 정교하고 목표 지향적인 수정 제안</strong>을 내놓게 됩니다. 실제 실험에서도 <strong>Reward 성찰의 유무</strong>에 따라 성능 차이가 컸습니다. <strong>Eureka에서 Reward 성찰을 제거</strong>하고 오직 최종 성능 수치만 피드백으로 준 경우, <strong>평균 성능이 28.6%나 떨어졌고</strong>, 특히 난이도 높은 과제일수록 성능 저하가 두드러졌다고 합니다. 이는 세밀한 텍스트 피드백이 <strong>복잡한 Reward 최적화에 필수적</strong>임을 보여줍니다.</p>
+</section>
+<section id="구현-상세-및-재현성" class="level3">
+<h3 class="anchored" data-anchor-id="구현-상세-및-재현성">구현 상세 및 재현성</h3>
+<p><strong>LLM 모델:</strong> Eureka는 <strong>OpenAI GPT-4</strong>(버전 gpt-4-0314;deprecated!)를 기본 LLM으로 사용하였습니다. GPT-4의 <strong>코드 생성 능력과 지시 이해 능력</strong>이 본 연구의 토대를 이루고 있습니다. (참고로, GPT-4의 지식 컷오프(2021년 9월) 이후 등장한 환경들도 실험에 포함되어, 사전 학습 지식 없이 <strong>진정한 제로샷 생성</strong> 능력을 평가했다고 언급합니다.)</p>
+<p><strong>보조 모델 및 도구:</strong> 특별히 명시된 <strong>별도의 보조 ML모델은 사용되지 않았으며</strong>, RL 정책 학습에는 표준 PPO 알고리즘(Isaac Gym 내장)을 활용한 것으로 보입니다. <strong>다만</strong>, 하나의 Reward 후보를 평가하는 데도 <strong>수천 회의 시뮬레이션 스텝</strong>을 수행해야 하므로, <strong>병렬처리와 GPU 가속</strong>이 핵심 기술 요소로 사용되었습니다. 또한 코드 구현 면에서, 생성된 Reward 함수의 <strong>문법 검사나 실행 테스트</strong>를 자동화하여, <strong>런타임 오류를 미리 감지</strong>하는 장치도 포함되었을 것으로 추측됩니다 (오픈소스 코드 상에서 확인 가능). 예를 들어 코드 실행 전 파싱을 시도하거나, 실행 중 예외 발생 시 해당 Reward을 점수 0으로 간주하는 식으로 <strong>견고성을 확보</strong>했을 것입니다.</p>
+<p><strong>오픈소스와 재현성:</strong> 저자들은 <strong>프롬프트, 환경, 생성된 Reward 함수 코드를 모두 공개</strong>하여 후속 연구가 용이하도록 한다고 밝혔습니다. 실제로 논문 발표와 함께 <strong>GitHub에 공식 구현 리포지터리</strong>가 공개되어 있으며, 이미 3천 개 이상의 Star를 받을 만큼 큰 호응을 얻고 있습니다. 공개 코드에는 <strong>커스텀 환경 정의</strong>(IsaacGym 기반), <strong>Eureka 알고리즘 (프롬프트, GPT API 호출, RL 학습 루프)</strong>, 그리고 <strong>29개 과제 각각에 대해 Eureka가 발견한 최적 Reward 함수 예제들</strong>이 포함되어 있습니다. 이를 통해 다른 연구자들이 <strong>결과를 재현</strong>하거나, <strong>새로운 환경에 Eureka를 적용</strong>해볼 수 있는 기반이 갖춰져 있습니다.</p>
+</section>
+</section>
+<section id="이론적-기여-및-기존-연구와의-차별성" class="level2">
+<h2 class="anchored" data-anchor-id="이론적-기여-및-기존-연구와의-차별성">이론적 기여 및 기존 연구와의 차별성</h2>
+<section id="기존-reward-설계-접근과-eureka의-차별점" class="level3">
+<h3 class="anchored" data-anchor-id="기존-reward-설계-접근과-eureka의-차별점">기존 Reward 설계 접근과 Eureka의 차별점</h3>
+<p>강화학습에서 <strong>Reward 설계(reward design)</strong> 문제를 자동화하려는 시도는 과거에도 여러 방향으로 연구되었습니다. 예를 들어, <strong>자연어 설명을 활용</strong>하여 Reward을 생성하는 접근으로 <strong>L2R</strong>(<code>Language to Reward</code>, Yu et al., 2023)이나 <strong>Text2Reward</strong> 등이 최근 제안되었습니다. 그러나 이러한 방법들은 <strong>LLM을 제한적 방식</strong>으로 활용했다는 한계가 있습니다. L2R의 경우 두 단계 프롬프트를 통해 <strong>사전 정의된 템플릿 형태의 Reward</strong>만 생성하도록 했습니다. 구체적으로, <strong>첫 번째 LLM</strong>이 “로봇의 동작에 대한 서술”을 채우면, <strong>두 번째 LLM</strong>이 이를 <strong>미리 준비된 Reward API 함수 호출 코드</strong>로 변환하는 식이었습니다. 이러한 <strong>템플릿 기반 접근</strong>은 인간이 정의한 <strong>Reward 프리미티브(기본 요소)</strong>의 조합으로 결과를 내므로 <strong>표현력이 제한</strong>되고, 새로운 Reward 구조를 만들어내기 어렵습니다. 또한 환경마다 템플릿을 조금씩 바꾸거나, LLM에 <strong>과제별 힌트(prompt)를 수동 제공</strong>해야 하는 등 <strong>범용성에도 한계</strong>가 있었습니다.</p>
+<p><strong>Eureka는 이러한 기존 접근과 몇 가지 중요한 차별점</strong>을 보입니다:</p>
+<ul>
+<li><p><strong>전용 프롬프트/템플릿의 부재:</strong> Eureka는 <strong>어떤 과제에도 동일한 전략</strong>(환경 코드 + 과제설명)만으로 적용됩니다. <strong>추가 예시, 템플릿, 수동 프롬프트 튜닝이 전혀 없으며</strong>, 순전히 LLM의 일반 능력에 의존해 Reward을 만듭니다. 그럼에도 <strong>대부분 과제에서 인간 Reward보다 나은 성능</strong>을 보였다는 점에서 <strong>범용성</strong>과 <strong>효과성</strong>을 입증했습니다.</p></li>
+<li><p><strong>자유 형식의 Reward 프로그램 생성:</strong> L2R 등이 <strong>정해진 함수들의 조합</strong>만 생성한 반면, Eureka는 <strong>파이썬 언어로 된 임의의 논리</strong>를 생성합니다. 덕분에 <strong>완전히 새로운 Reward 개념</strong>도 도입할 수 있습니다. 실제 Eureka가 만들어낸 Reward 중에는 <strong>인간 Reward과 상관관계가 거의 없거나 음의 상관관계를 보이면서도 성능이 뛰어난</strong> 것들이 발견되었습니다. 이는 <strong>인간이 생각하지 못한 Reward 설계 원리</strong>를 Eureka가 찾아냈음을 시사합니다. 예컨대 어떤 과제에서는 <strong>인간 Reward과 정반대 방향으로 작동하는 Reward</strong>이 오히려 학습을 촉진한 사례도 있었으며, 저자들은 해당 예시들을 부록에 제시했습니다. <strong>즉, Eureka는 사람의 직관을 뛰어넘는 창의적 해법</strong>을 발굴할 수 있습니다.</p></li>
+<li><p><strong>LLM 기반 반복 최적화:</strong> 기존 방법들은 Reward 함수를 <strong>한 번 생성하고 끝</strong>나는 경우가 많았습니다. 반면 Eureka는 <strong>LLM을 루프 안에서 반복 호출</strong>하며, <strong>학습으로부터 피드백을 받아 점진적 개선</strong>을 합니다. 이런 <strong>in-context learning 루프</strong>는 마치 LLM이 <strong>“Reward 디버깅”</strong>을 하는 것과 비슷합니다. 사람도 Reward 설계 후 정책 결과를 보고 수정하는데, Eureka는 이를 <strong>자동화</strong>하고 훨씬 <strong>빠른 사이클</strong>로 돌린다고 볼 수 있습니다. 특히 <strong>Reward 성찰</strong>을 통해 LLM이 <strong>실패 원인</strong>을 이해하고 수정하는 점은, 기존에 없던 혁신적인 요소입니다.</p></li>
+<li><p><strong>인간 통찰과의 결합:</strong> Eureka는 <strong>인간이 부분적으로 설계한 Reward과 협업</strong>할 수도 있습니다. 인간이 만든 초기 Reward을 <strong>1세대 출력으로 사용</strong>하여 그 위에 개선을 시작하면, <strong>Eureka (Human Init.)</strong> 버전이 나오는데, 이는 원본 인간 Reward이나 순수 Eureka보다 <strong>항상 더 좋은 성능</strong>을 보였습니다. 이는 <strong>인간의 직관</strong>(유용한 상태 변수 선택 등)과 <strong>LLM의 최적화 능력</strong>을 결합할 때 <strong>상승 효과</strong>가 있음을 보여줍니다. 연구진은 “인간은 어떤 상태 변수가 중요한지 아는 <strong>상식적 지식</strong>은 갖췄지만, 그것들을 <strong>어떻게 조합하여 Reward 설계로 활용할지는 상대적으로 미숙</strong>할 수 있다”는 통찰을 언급하며, Eureka가 <strong>인간의 약점을 보완하는 Reward 설계 조력자</strong>로 기능할 수 있음을 강조합니다.</p></li>
+<li><p><strong>안전성과 윤리적 정렬:</strong> Reward 함수가 항상 바람직한 행동을 담보하지는 않기에, <strong>인간 선호에 맞게 Reward을 수정</strong>하는 것이 중요합니다. 기존 RLHF는 주로 <strong>정책을 미세 조정</strong>하는 방식이지만, Eureka는 <strong>Reward 함수를 수정</strong>하는 방식의 RLHF를 선보였습니다. 예를 들어 인간 평가자들이 “로봇이 너무 앞으로 숙여 뛰니 <strong>똑바로 뛰도록 Reward 수정해달라</strong>”는 식의 피드백을 텍스트로 주면, Eureka가 그에 맞춰 Reward 함수에 <strong>자세 유지 패널티</strong> 등을 추가하도록 개선할 수 있습니다. 그 결과 <strong>더 안전하고 안정적인 동작</strong>이 유도되었고, 사용자 20명 중 15명이 원래 Reward으로 훈련된 로봇보다 <strong>인간 피드백 반영 Reward으로 훈련된 로봇을 선호</strong>했다고 합니다. 이러한 <strong>gradient-free RLHF</strong> 방식은 <strong>Reward 설계 차원에서의 인간-모델 상호작용</strong>이라는 새로운 가능성을 열었습니다.</p></li>
+</ul>
+</section>
+<section id="이론적-기반과-의의" class="level3">
+<h3 class="anchored" data-anchor-id="이론적-기반과-의의">이론적 기반과 의의</h3>
+<p>이 논문은 <strong>Reward 설계 문제</strong>를 공식적으로 정립하고, Eureka로 이를 해결하는 <strong>새로운 관점</strong>을 제시했다는 점에서 이론적인 의미도 갖습니다. 저자들은 우선 Singh et al.&nbsp;(2010)의 <strong>Reward설계 문제 (Reward Design Problem, RDP)</strong> 정의를 인용하며, <strong>“주어진 환경 MDP와 실제 성능 평가 함수 F 하에서, 최적의 정책이 최대의 F 점수를 얻도록 하는 Reward R을 찾는 문제”</strong>로 RDP를 설명합니다. 그리고 이를 <strong>프로그램 생성 맥락</strong>에 맞게 변형하여 <strong>“Reward 생성 문제 (Reward Generation Problem)”</strong>로 명명합니다. <strong>즉, 코드 형태로 표현된 Reward 함수 공간 R에서 하나의 코드 조각을 찾아내는 문제</strong>로 개념화한 것입니다. 이때 검색공간은 <strong>프로그램의 공간</strong>으로 매우 크고 비구조적이지만, LLM의 <strong>코드 작성 능력</strong>과 <strong>확률적 탐색</strong>을 통해 해법을 찾을 수 있음을 Eureka로 입증했습니다.</p>
+<p>Eureka의 성공 요인은 <strong>세 가지 설계 철학</strong>으로 요약됩니다:</p>
+<ul>
+<li><p><strong>환경을 맥락으로 제공</strong>함으로써 <strong>일반성</strong> 확보 – 모든 과제에 통용되는 입력(코드)만으로 LLM을 활용하였고, 덕분에 <strong>과제 특화된 인간 지식 없이도 작동</strong>했습니다.</p></li>
+<li><p><strong>진화적 탐색으로 품질 향상</strong> – 단일 샘플의 한계를 다수 샘플과 반복 개선으로 극복하여, <strong>LLM 출력의 약점을 보완</strong>했습니다.</p></li>
+<li><p><strong>Reward 성찰로 정교한 피드백 제공</strong> – 단순 성능 수치 이상의 <strong>맥락 정보를 LLM에 제공</strong>함으로써, <strong>세밀하고 효과적인 코드 수정을 유도</strong>했습니다.</p></li>
+</ul>
+<p>이러한 구성 요소들의 <strong>상호보완적 결합</strong>이 Eureka를 <strong>인간 수준</strong>까지 끌어올린 핵심 비결입니다. 그 결과 Eureka는 <strong>강화학습 Reward 설계의 패러다임을 전환</strong>하는 잠재력을 보여주었습니다. 사람 전문가가 오랜 경험을 통해야 할 작업을 LLM과 자동화 기법이 대체하거나 가속할 수 있음을 실증한 것이므로, <strong>미래의 RL 연구 프로세스</strong>에도 큰 영향을 줄 것으로 보입니다.</p>
+</section>
+<section id="한계-및-향후-전망" class="level3">
+<h3 class="anchored" data-anchor-id="한계-및-향후-전망">한계 및 향후 전망</h3>
+<blockquote class="blockquote">
+<p>(※ 논문에 직접 언급되진 않지만, 이해를 돕기 위해 고려할 점을 함께 서술합니다.)</p>
+</blockquote>
+<p>Eureka는 뛰어난 성과를 보였지만, <strong>전제로 하는 조건</strong>들이 있습니다. 예를 들어 <strong>환경의 내부 코드 또는 API 접근</strong>이 가능해야 하고, <strong>강화학습으로 평가할 수 있는 성능 함수 F</strong>가 있어야 합니다. 현실 세계 문제의 경우 환경 코드를 얻기 어렵거나, 시뮬레이터 없는 물리 환경에서는 Reward 평가에 시간이 오래 걸릴 수 있습니다. 이러한 경우 Eureka 접근을 그대로 적용하긴 어려울 수 있습니다. 향후에는 <strong>모델 기반 시뮬레이션</strong>이나 <strong>모상 학습</strong> 등을 접목해 현실에서도 빠른 Reward 탐색을 가능케 하는 연구가 나올 수 있습니다.</p>
+<p>또한 Eureka는 현재 GPT-4 같은 <strong>대규모 사설 LLM API</strong>에 의존하고 있어, <strong>재현 비용</strong>이나 <strong>모델 접근성</strong> 이슈도 존재합니다. 오픈소스 코드 LLM이 더 발전하면, 자체 호스팅으로 Eureka를 실행하는 방향도 고려될 것입니다. 실제로 저자들도 모든 프롬프트를 공개했으므로, 다른 LLM으로 대체하여 실험하는 연구가 이어질 수 있습니다.</p>
+<p>끝으로, <strong>Reward 설계 자동화가 지니는 함의</strong>에 대해 생각해볼 점이 있습니다. Reward은 곧 <strong>에이전트의 목표</strong>를 정의하는 것이므로, Eureka 같은 기법이 잘못 사용될 경우 <strong>의도치 않은 목표를 강화</strong>하거나, <strong>윤리적으로 논란이 될 행동</strong>을 부추길 위험도 있습니다. 따라서 <strong>인간 감독</strong>과 <strong>안전장치</strong>를 갖춘 활용이 중요하며, Eureka의 <strong>인간 피드백 통합 기능</strong>은 이러한 위험을 완화하는 방향의 좋은 시작이라 할 수 있습니다. 앞으로 Eureka를 활용한 <strong>안전한 Reward 설계</strong>, <strong>정렬된 AI 훈련</strong> 등의 연구가 활발히 전개될 것으로 기대됩니다.</p>
+</section>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">결론</h2>
+<p><strong>Eureka: Human-Level Reward Design via Coding LLMs</strong>는 대형언어모델을 통한 <strong>Reward 함수 자동 생성</strong>이라는 새로운 지평을 연 연구로서, <strong>강화학습의 난제</strong>였던 Reward 설계를 혁신적으로 해결했습니다. 코드 생성 LLM과 진화적 탐색, 그리고 RL 피드백 통합이라는 아이디어 조합을 통해, <strong>인간 전문가보다도 나은 Reward</strong>을 찾아내고 복잡한 로봇 제어 과제를 달성해낸 점이 인상적입니다. 또한 <strong>범용성</strong>을 지향한 구현과 <strong>오픈소스 공개</strong>로 학술적·실용적 파급력도 높습니다. 이 논문의 성과는 향후 <strong>자동화된 RL 문제설계</strong>, <strong>휴먼-인더-루프 학습</strong> 등 다양한 분야에 영향을 줄 것이며, <strong>AI 에이전트 개발 과정</strong>을 효율화하고 인간과의 협업을 증진하는 방향으로 계속 발전될 것으로 예상됩니다.</p>
+<hr>
+<ul>
+<li><a href="https://github.com/curieuxjy/Eureka">Updated Code-25.07.20</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,7 +1,7 @@
 ---
 title: "📃DexMachina 리뷰"
 date: 2025-07-30
-categories: [retargeting, quad]
+categories: [retargeting, hand]
 toc: true
 number-sections: false
 description: Functional Retargeting for Bimanual Dexterous Manipulation
