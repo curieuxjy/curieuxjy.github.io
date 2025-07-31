@@ -1,0 +1,368 @@
+---
+title: "📝Linux Cheet Sheet"
+toc: true
+date: "2025-07-31"
+description: 자주 사용하는 Commands
+categories: [linux, docker, cheetsheet, 2025]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+
+# git command로 commit
+
+```{.sh code-line-numbers=false}
+# If the branch already exists:
+git checkout [branch-name]
+
+# Otherwise, create it and switch:
+git checkout -b [branch-name]
+
+```
+
+```{.sh code-line-numbers=false}
+git add .
+git commit -m "commit message"
+```
+
+```{.sh code-line-numbers=false}
+git push
+git push -u origin [branch-name]
+```
+
+# 다중 GPU에서 사용할 특정 GPU 설정
+
+- `export CUDA_VISIBLE_DEVICES=<idx>[,<idx>...]` 로 사용할 GPU만 노출
+
+- 다중 GPU 환경에서 “어떤 GPU를 쓸지” 지정하는 가장 간단한 방법은 환경 변수 `CUDA_VISIBLE_DEVICES` 를 설정. 이 변수에 지정한 인덱스(들)만이 애플리케이션에서 “GPU 0,1,2…” 로 인식되기 때문에, 실제 머신에 여러 개 장착된 GPU 중에서 원하는 것만 골라 쓸 수 있음
+
+터미널에서 아래 명령으로 현재 시스템에 붙어 있는 GPU 목록과 각 ID를 확인:
+
+```{.sh code-line-numbers=false}
+nvidia-smi # 여기서 좌측의 `GPU` 컬럼이 실제 시스템 인덱스
+```
+
+* **단일 GPU 사용**
+
+  ```{.sh code-line-numbers=false}
+  export CUDA_VISIBLE_DEVICES=1
+  python train.py
+  ```
+
+  이렇게 하면 실제 시스템의 `GPU#1` 이 “내부적으로 0번 GPU” 로 보이게 됩니다.
+
+* **여러 GPU 사용**
+
+  ```{.sh code-line-numbers=false}
+  export CUDA_VISIBLE_DEVICES=0,2
+  python train.py
+  ```
+
+  이렇게 설정하면 시스템 GPU 0번과 2번만 보이게 되고, 내부적으로는 `[ “가상 GPU0” ← 시스템0, “가상 GPU1” ← 시스템2 ]` 로 취급됩니다.
+
+> **Tip**: 쉼표 없이 `CUDA_VISIBLE_DEVICES=0` 또는 `1`, 공백 없이 `0,2,3` 처럼 지정해야 합니다.
+
+
+# 소스코드 찾기 `grep`
+
+> 파일 내에서 또는 입력값으로부터 특정 패턴을 검색
+
+- option
+  - `-v` : 일치되는 내용이 **없는** **라인**을 표시
+  - `-c` : 일치되는 내용이 있는 **행의 개수**를 표시
+  - `-l` : 일치되는 내용이 있는 **파일 이름**만 표시
+  - `-h` : 일치되는 내용을 찾은 파일의 이름을 **표시하지 않음**
+  - `-n` : 일치되는 내용이 있는 행은 **행 번호와 함께** 표시
+
+- 특정 문자열로 찾기: `grep -r "TEXT" [PATH]`
+  - 예: `grep -r "TEXT" ./*`
+  - 색 옵션: `grep --color=auto "TEXT" ./*`
+- 파일명만 보기: `grep -l "TEXT" [PATH]`
+- 특정 경로 및 파일명을 명시하여 탐색: `find [PATH] -name "FILENAME" | xargs grep "TEXT"`
+
+**Advanced**
+
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [fzf](https://github.com/junegunn/fzf)
+
+# AppImage icon
+
+AppImage icon 생성
+
+- .AppImage 파일 및 icon 이미지(.png) 경로: `/opt`
+- desktop 바로가기 설정 경로: `/usr/share/applications`
+1. appimage 파일과 icon image를 `/opt`로 이동
+   - e.g. `/opt/[app_name].AppImage` & `/opt/[app_name].png`
+2. 바로가기 설정 파일 `[app_name.desktop]`을 `/usr/share/applications`에 만들어줌
+  ```{.sh code-line-numbers=false}
+  [Desktop Entry]
+  Name=[app_name]
+  Comment=[AppImage entry]
+  Exec=/opt/[app_name].AppImage
+  Icon=/opt/[app_name].png
+  Type=Application
+  Terminal=false
+  Encoding=UTF-8
+  Categories=Utility;
+  ```
+
+# conda 자동 활성화 해제
+
+`conda config --set auto_activate_base false`
+
+# conda lib error
+
+```{.sh code-line-numbers=false}
+ImportError: libpython2.x.so.1.0: cannot open shared object file: No such file or directory
+```
+
+또는
+
+```{.sh code-line-numbers=false}
+Traceback (most recent call last):
+  File "/path/to/project/load_object.py", line 3, in <module>
+    import torch
+  File "/path/to/env/lib/python3.10/site-packages/torch/__init__.py", line 367, in <module>
+    from torch._C import *  # noqa: F403
+ImportError: /path/to/env/lib/python3.10/site-packages/torch/lib/…/nvidia/cusparse/lib/libcusparse.so.12:
+  undefined symbol: __nvJitLinkComplete_12_4, version libnvJitLink.so.12
+```
+
+- Solution: `export LD_LIBRARY_PATH=/home/avery/anaconda3/envs/[가상환경이름]/lib`
+  - path는 `conda env list`로 구체적인 해당 경로 확인 필요. mamba나 miniforge3을 사용할 경우 경로가 다를 수 있음.
+
+
+# conda freezing
+
+```{.sh code-line-numbers=false}
+conda env export > environment.yaml
+conda env create --file environment.yaml
+
+pip list --format=freeze > ./requirements.txt
+pip install -r requirements.txt
+```
+
+
+# symbolic link 설정 및 관리
+
+> - 심볼릭 링크는 파일 시스템 내에서 다른 파일이나 디렉토리의 경로를 가리키는 "바로 가기"와 같은 역할을 하므로, 실제 파일이 아닌 링크 파일임을 유의
+> - 여러 버전의 라이브러리나 프로그램 관리 시, 심볼릭 링크가 어떤 타겟을 가리키고 있는지 확인하는 것이 중요
+> - 여러 버전의 프로그램(예: python, cuda)을 설치했을 때 어떤 버전이 활성화되어 있는지 관리
+
+- **심볼릭 링크 삭제**
+  ```{.sh code-line-numbers=false}
+  rm <symbolic_link>
+  ```
+  *예시:*
+  ```{.sh code-line-numbers=false}
+  rm /usr/local/bin/python
+  ```
+
+- **심볼릭 링크 생성**
+  ```{.sh code-line-numbers=false}
+  ln -s <target> <symbolic_link>
+  ```
+  *예시:*
+  ```{.sh code-line-numbers=false}
+  ln -s /opt/python3.9/bin/python /usr/local/bin/python
+  ```
+
+- **심볼릭 링크 변경 (덮어쓰기)**
+  기존 링크를 새 타겟으로 변경할 때 사용합니다.
+  ```{.sh code-line-numbers=false}
+  ln -Tfs <new_target> <symbolic_link>
+  ```
+  *예시:*
+  ```{.sh code-line-numbers=false}
+  ln -Tfs /opt/python3.10/bin/python /usr/local/bin/python
+  ```
+- **심볼릭 링크 확인**
+  ```{.sh code-line-numbers=false}
+  ls -l <symbolic_link>
+  ```
+  *예시:*
+  ```{.sh code-line-numbers=false}
+  ls -l /usr/local/bin/python
+  lrwxrwxrwx 1 root root 24 2025-01-22 12:34 /usr/local/bin/python -> /opt/python3.9/bin/python
+  ```
+
+# library 경로 설정
+
+> conda env lib 연결시
+
+```{.sh code-line-numbers=false}
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/usr/work/mylib
+
+vi ~/.bashrc (파일명 앞의 .은 숨김파일을 의미)
+export LD_LIBRARY_PATH=/home/user/work/mylib:${LD_LIBRARY_PATH}
+```
+
+# GPU Memory 해제
+
+> 프로세스가 죽지 않을때 강제 종료
+
+```commandline
+ps aux | grep python # 딥러닝 학습을 실행시킨 python 파일의 실행 ID를 찾기
+sudo kill -9 [ID_NUMBER]
+```
+
+# Docker
+
+- `docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].`
+- nvidia-container-toolkit 설치
+
+```{.sh code-line-numbers=false}
+$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+$ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+
+$ sudo systemctl restart docker
+```
+
+- GPU 설정
+  - `docker run -it --gpus '"device=0,1,2,3"'`
+
+- container를 image로 저장
+  - `docker commit [CONTAINER_ID] [IMAGE_NAME]`
+
+
+# terminal zsh/bash
+
+```{.sh code-line-numbers=false}
+chsh -s bin/bash
+chsh -s bin/zsh
+
+(@terminal)
+/bin/bash
+/bin/zsh
+```
+
+# 용량 확인
+
+```{.sh code-line-numbers=false}
+df -h
+```
+
+- 해당 경로에 있는 모든 파일과 폴더들을 용량 단위로 표기
+- 폴더가 1 순위, 파일이 2 순위로 나열
+- 경로에 있는 모든 폴더들과 각 폴더내에 있는 파일들을 모두 표기
+
+```{.sh code-line-numbers=false}
+du -ch [path] | sort -h
+```
+
+- 해당 경로의 폴더 기준 트리 구조의 깊이 1만큼의 수준까지 탐색
+- 용량이 큰 폴더가 아래로, 가장 용량이 큰 10개만 보임
+
+```{.sh code-line-numbers=false}
+du -ch [path] --max-depth=1 | sort -h | tail -10
+```
+
+- 현재 경로의 파일 용량
+
+  ```{.sh code-line-numbers=false}
+  ls -lh
+  ```
+
+# 파일 찾기
+
+```{.sh code-line-numbers=false}
+find [옵션] [경로] [표현식]
+
+# 현재 위치에서 log가 들어가는 파일 모두 찾기
+find . -name "*log*"
+
+# 현재 디렉토리에서 .txt 확장자 파일 검색 후 모두 삭제
+find . -name "*.txt" -delete
+```
+
+- options
+    - `P` : 심볼릭 링크를 따라가지 않고, 심볼릭 링크 자체 정보 사용.
+    - `L` : 심볼릭 링크에 연결된 파일 정보 사용.
+    - `H` : 심볼릭 링크를 따라가지 않으나, Command Line Argument를 처리할 땐 예외.
+    - `D` : 디버그 메시지 출력.
+
+# 폴더나 파일 갯수 찾기
+
+- 현재 위치에서의 **폴더** 개수 `ls -l | grep ^d | wc -l`
+- 현재 위치에서의 **파일** 개수 `ls -l | grep ^- | wc -l`
+- 현재 폴더의 하위 파일 개수 `find . -type f | wc -l`
+
+# mount 다중 경로 설정
+
+- 원래 마운트 지점에서 VFS(가상 파일 시스템) 노드를 생성
+  - `mount --bind original-dir original-dir`
+- 원래 마운트 지점을 공유로 표시
+  - `mount --make-shared original-dir`
+  - 선택한 마운트 지점과 그 아래의 모든 마운트 지점에 대한 마운트 유형을 `변경`하려면 `--make-shared` 대신 `--make-r shared` 옵션 사용
+- 중복 생성
+  - `mount --bind original-dir dupulicate-dir`
+- 지우기
+  - `sudo umount duplicate-dir`
+
+# 원격과 로컬 사이 파일 복사
+
+> `scp` 사용. `scp [options] [source] [target]`
+
+- 로컬에서 원격으로
+  - `scp [source_path] [User]@[IP]:[target_path]`
+  - `scp /media/avery/source/test.txt avery@xxx.xx.x.xxx:mnt/`
+- 원격에서 로컬로
+  - `scp [User]@[IP]:[source_path] [target_path]`
+  - `scp avery@xxx.xx.x.xxx:mnt/test.txt /home/avery/Documents`
+- 원격(A User)에서 원격(B User)으로
+  - `scp [User]@[IP]:[source_path] [User]@[IP]:[target_path]`
+  - `scp ai@xxx.xx.x.xxx:mnt/test.txt avery@xxx.xx.x.xxx:/home/avery/Documents`
+- 복수의 파일 전송
+  - 여러 경로를 `" "`을 이용하여 묶어줌
+  - `scp [options] [User]@[IP]:"[file_1] [file_2]" [target_path]`
+- Options
+  - `-r`: 폴더를 복사할 때 사용(전송 대상을 폴더로 지정). 모든 폴더들을 재귀적으로 복사
+  - `-P`: ssh 포트 지정
+  - `-i`: identity file을 지정해서 사용
+  - `-v`: 상세 내용을 보면서 디버깅할 때 사용
+  - `-p`: 전송 시 파일의 수정 시간과 권한을 유지
+
+# `.cache` 용량 해결
+
+- pip와 conda의 .cache 삭제
+
+```
+#pip
+pip cache purge
+
+#conda
+conda clean -a
+```
+
+- `.cache` 위치 변경
+
+```
+# .bashrc를 vim으로 열어서 아래 변수를 추가하기
+export XDG_CACHE_HOME="/{disk_location}/{user_name}/.cache"
+
+# 해당 경로 생성하기
+mkdir -p /{disk_location}/{user_name}/.cache
+```
+
+# vim 편집
+
+- `:%d`: 전체 내용 삭제 (press Esc to ensure you’re in Normal mode first)
+- `i` 입력 후, `Ctrl + Shift + v`: 새로운 내용 붙여넣기
+- `:wq`: 저장
+- Normal mode shortcuts:
+  - `gg` (go to the first line of the file)
+  - `dG` (delete from current line to the end of the file)
+
+# python module 경로 파악
+```
+import module
+print(module.__file__)
+```
+
+
+
