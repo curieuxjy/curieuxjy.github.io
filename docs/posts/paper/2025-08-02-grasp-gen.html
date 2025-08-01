@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-02">
+<meta name="description" content="A Diffusion-based Framework for 6-DOF Grasping with On-Generator Training">
+
+<title>📃GraspGen 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
+  <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work"><span class="header-section-number">2.2</span> Related Work</a></li>
+  <li><a href="#graspgen-프레임워크-proposed-method" id="toc-graspgen-프레임워크-proposed-method" class="nav-link" data-scroll-target="#graspgen-프레임워크-proposed-method"><span class="header-section-number">2.3</span> GraspGen 프레임워크 (Proposed Method)</a>
+  <ul class="collapse">
+  <li><a href="#grasp-generation-with-diffusion" id="toc-grasp-generation-with-diffusion" class="nav-link" data-scroll-target="#grasp-generation-with-diffusion"><span class="header-section-number">2.3.1</span> Grasp Generation with Diffusion</a></li>
+  <li><a href="#grasp-evaluation-with-on-generator-training" id="toc-grasp-evaluation-with-on-generator-training" class="nav-link" data-scroll-target="#grasp-evaluation-with-on-generator-training"><span class="header-section-number">2.3.2</span> Grasp Evaluation with On-Generator Training</a></li>
+  <li><a href="#graspgen-dataset" id="toc-graspgen-dataset" class="nav-link" data-scroll-target="#graspgen-dataset"><span class="header-section-number">2.3.3</span> GraspGen Dataset</a></li>
+  </ul></li>
+  <li><a href="#experimental-evaluation" id="toc-experimental-evaluation" class="nav-link" data-scroll-target="#experimental-evaluation"><span class="header-section-number">2.4</span> Experimental Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#simulation-results" id="toc-simulation-results" class="nav-link" data-scroll-target="#simulation-results"><span class="header-section-number">2.4.1</span> Simulation Results</a></li>
+  <li><a href="#analysis-of-on-generator-training" id="toc-analysis-of-on-generator-training" class="nav-link" data-scroll-target="#analysis-of-on-generator-training"><span class="header-section-number">2.4.2</span> Analysis of On-Generator Training</a></li>
+  <li><a href="#ablation-studies" id="toc-ablation-studies" class="nav-link" data-scroll-target="#ablation-studies"><span class="header-section-number">2.4.3</span> Ablation Studies</a></li>
+  <li><a href="#performance-on-multiple-grippers" id="toc-performance-on-multiple-grippers" class="nav-link" data-scroll-target="#performance-on-multiple-grippers"><span class="header-section-number">2.4.4</span> Performance on Multiple Grippers</a></li>
+  <li><a href="#real-robot-evaluation" id="toc-real-robot-evaluation" class="nav-link" data-scroll-target="#real-robot-evaluation"><span class="header-section-number">2.4.5</span> Real Robot Evaluation</a></li>
+  </ul></li>
+  <li><a href="#conclusion-limitations" id="toc-conclusion-limitations" class="nav-link" data-scroll-target="#conclusion-limitations"><span class="header-section-number">2.5</span> Conclusion &amp; Limitations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃GraspGen 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">difussion</div>
+    <div class="quarto-category">grasp</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A Diffusion-based Framework for 6-DOF Grasping with On-Generator Training
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 2, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2507.13097">Paper Link</a></li>
+<li><a href="https://graspgen.github.io/">Project Link</a></li>
+<li><a href="https://github.com/NVlabs/GraspGen">Github Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 GraspGen은 다양한 그리퍼와 복잡한 환경에서 6-DOF 그립 생성을 위한 새로운 확산 모델 기반 프레임워크를 제안하며, 기존 방식들의 일반화 및 안정성 부족 문제를 해결합니다.</li>
+<li>🚀 이 프레임워크는 Diffusion-Transformer 아키텍처와 생성 모델 자체의 오류를 학습하여 필터링하는 온-제너레이터(On-Generator) 학습 방식을 적용한 효율적인 Discriminator를 통합하며, 5,300만 개 이상의 대규모 그립 데이터셋을 제공합니다.</li>
+<li>✨ GraspGen은 시뮬레이션에서 이전 방법들보다 뛰어난 성능을 보였고, FetchBench 벤치마크에서 최첨단(SOTA) 결과를 달성했으며, 시끄러운 시각적 관측에도 불구하고 실제 로봇 환경에서 효과적인 그립 능력을 입증했습니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/cover_c-1754017991145-2.png" width="80%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문은 6-자유도(DOF) 그립 생성을 위한 확산 기반 프레임워크인 GraspGen을 제안한다. 기존 학습 기반 6-DOF 그립 접근 방식은 다양한 엔드이펙터 및 실제 환경에서 일반화에 어려움을 겪고, 특히 FetchBench와 같은 벤치마크에서 낮은 성공률을 보였다. 이를 해결하기 위해 본 연구는 확산 트랜스포머(Diffusion-Transformer) 아키텍처와 샘플링된 그립의 점수를 매기고 필터링하는 효율적인 판별자(discriminator)를 결합한 GraspGen을 선보인다.</p>
+<p>GraspGen의 핵심적인 기술적 기여는 두 가지다.</p>
+<ul>
+<li><p>첫째, 6-DOF 그립 생성 문제를 SE(3) 리 군(Lie group) 상의 확산 모델로 정식화한다. 기존 에너지 기반 모델(EBM) 대신 Denoising Diffusion Probabilistic Model(DDPM)을 사용하여 계산 효율성을 높이고 구현을 간소화한다. 그립의 translation 성분을 데이터셋 통계를 기반으로 정규화하는 계수 <span class="math inline">\kappa = \frac{1}{N}\sum_{i=0}^{N}(max(t_i) - min(t_i))</span>를 도입하며, 이는 translation이 객체 크기에 무관하게 정규화되도록 돕는다. 객체 인코더로는 계층적 특징 처리의 병목 현상을 우회하고 비정형 점 구름을 구조화된 형식으로 변환하여 트랜스포머에 적용하는 PointTransformerV3(PTv3)를 사용한다. 노이즈 예측 네트워크는 점 구름과 그립 포즈를 객체 평균 중심으로 변환하여 입력받고, 훈련 손실은 예측 노이즈와 실제 노이즈 간의 위치 및 방향 차이에 대한 평균 제곱 오차로 정의된다: <span class="math display">L = \|\epsilon - \varphi(t, \tilde{g}, \mathcal{X})\|_2^2</span> 여기서 <span class="math inline">\varphi</span>는 노이즈 예측 네트워크, <span class="math inline">\mathcal{X}</span>는 객체 점 구름, <span class="math inline">\tilde{g}</span>는 노이즈가 추가된 그립, <span class="math inline">t</span>는 확산 시간 단계이다. 특히 translation과 orientation 구성 요소에 대해 <strong>두 개의 별도 디노이징 프로세스를 실행</strong>하여 성능을 향상시킨다.</p></li>
+<li><p>둘째, 생성 모델의 오탐(false positives) 문제를 해결하기 위해 “온-제너레이터 훈련(On-Generator Training)”이라는 새로운 판별자 훈련 방법을 제안한다. 기존의 오프라인 데이터셋만으로는 생성 모델이 만들어내는 그립의 분포와 실제 실패 패턴을 충분히 반영하지 못한다는 점에 착안한다. 본 방법은 확산 모델로 샘플링된 그립들을 대상으로 시뮬레이션을 통해 성공/실패 여부를 다시 어노테이션하여 “온-제너레이터 데이터셋”을 구축하고, 이 데이터셋으로 판별자를 훈련시킨다. 이 과정을 통해 판별자는 확산 모델이 생성하는 약간의 충돌이나 이상치와 같은 특정 실패 모드를 인지하고 낮은 점수를 할당하도록 학습된다. 판별자 아키텍처는 생성 단계에서 사용된 PointTransformerV3 기반의 객체 인코더를 재사용하며, 이 인코딩된 객체 임베딩과 그립 포즈(SE(3) 표현)를 연결하여 멀티레이어 퍼셉트론(MLP)에 입력해 그립 성공 확률을 예측한다. 이 방식은 기존 판별자보다 메모리 효율성이 21배 높고 정확도도 개선되었다.</p></li>
+</ul>
+<p>GraspGen의 스케일 확장을 위해 Objaverse 데이터셋을 기반으로 8,515개 객체에 대해 Franka Panda, Robotiq-2f-140, 진공 그리퍼의 세 가지 그리퍼 유형에 걸쳐 총 5천3백만 개 이상의 그립으로 구성된 대규모 시뮬레이션 데이터셋을 공개한다. 그립 라벨링은 Isaac 시뮬레이터에서 객체 흔들림 시뮬레이션을 통해 안정적인 접촉 구성을 확인하는 방식으로 이루어진다.</p>
+<p>실험 평가는 시뮬레이션과 실제 로봇 환경 모두에서 이루어졌다.</p>
+<ul>
+<li>시뮬레이션에서는 ACRONYM 데이터셋의 단일 객체 그립 생성 및 FetchBench 벤치마크의 복잡한 클러터 환경에서 GraspGen이 기존의 Contact-point 기반(M2T2, Contact-GraspNet) 및 확산 기반(DexDiffuser, SE3-Diffusion Fields) 방법들을 압도하는 성능을 보여주며 SOTA를 달성했다. 특히, Precision-Coverage 곡선의 AUC(Area Under Curve) 지표에서 다른 모델들을 크게 능가했다. 또한, 부분/단일 시점 점 구름과 전체 점 구름에 모두 일반화하기 위해 두 가지 유형의 데이터를 혼합 훈련하는 접근 방식의 효과를 입증했다. 온-제너레이터 훈련의 중요성은 오프라인 데이터셋과의 EMD(Earth Mover’s Distance) 분석을 통해 확산 모델 생성 그립 분포와의 차이를 명확히 보여주었고, 이로 인해 판별자의 성능이 크게 향상됨을 확인했다. 다양한 그리퍼(Franka, Robotiq-2F-140, 진공)에 걸쳐 GraspGen의 우수성을 입증했으며, 특히 적응형 그리퍼인 Robotiq-2F-140에서는 기존 접촉점 기반 모델의 한계를 극복했다.</li>
+<li>실제 로봇 평가에서는 UR10 팔과 RealSense D435 카메라를 사용하여 격리된 객체뿐만 아니라 테이블, 바구니, 선반 등 다양한 클러터 환경에서 M2T2 및 AnyGrasp 대비 월등히 높은 그립 성공률(81.3%)을 달성하여 실제 환경으로의 강력한 일반화 능력을 입증했다.</li>
+</ul>
+<p>GraspGen은 심층 센싱 및 인스턴스 분할 품질에 의존하며, 특정 기하학적 형태(예: 큐보이드)에 대한 그립 예측에 어려움을 겪는 한계와 데이터 생성 및 훈련에 상당한 계산 자원(약 3K GPU 시간)이 소요된다는 점을 언급한다.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/gM5fgK2aZ1Y" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>GraspGen: On-Generator 훈련을 적용한 6-자유도 파지용 확산 기반 프레임워크 – 심층 리뷰</p>
+</blockquote>
+<section id="introduction" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
+<p>로봇의 <strong>6-자유도 파지(Grasping)</strong> 문제는 최근 많은 발전이 있었지만, 일반적인 로봇 파지 시스템을 구축하기에는 여전히 어려움이 남아 있다. 예를 들어, 최신 벤치마크인 FetchBench에서 현재 최첨단(SoTA) 기법조차도 20% 미만의 파지 성공률을 보였으며, 지식 기반 모바일 조작 시스템인 OK-Robot의 경우 파지 모듈 실패만으로도 약 8%의 작업 오류율을 기록하였다. 이는 다양한 로봇 형태나 복잡한 실제 환경에서 파지 모델의 일반화 성능에 한계가 있음을 보여준다. 기존의 파지 기법들은 정밀한 물체 자세 정보를 필요로 하거나, 단일 물체에 대해 다중 뷰 스캔을 요구하여 복잡한 환경에는 적용하기 어렵고, 혹은 <strong>접촉점 기반(contact-point-based)</strong> 표현에 의존함으로써 그리퍼(말단작동기)의 형태가 달라지면 성능이 크게 저하되는 문제가 있었다. 특히 접촉점 기반 파지 모델들은 대칭적인 평행 그리퍼 이외의 다른 형태로 일반화하기 어렵고, 예측한 그립의 점수화를 정확히 수행하는 데에도 한계를 보였다. 일부 연구에서는 복잡한 적재 환경(clutter)에서 여러 물체에 대해 파지를 생성하는 방안을 제시하였으나, 이러한 <strong>환경 중심(scene-centric)</strong> 접근은 전체 Scene을 시뮬레이션하거나 대규모의 실제 데이터 수집이 필요해 확장성이 떨어지며, 테스트 시 현실 세계 분포와의 괴리 문제를 야기한다. 더욱이 이러한 방법들도 궁극적으로는 인스턴스 세그멘테이션과 결합하여 목표 물체를 지정하는 방식을 사용하므로, 최근 <strong>SAM</strong> 등의 파운데이션 모델 기반 분할 기법의 발전으로 <strong>물체 중심(object-centric)</strong> 접근으로 회귀하여 파지 생성을 단순화할 수 있다는 논의가 제기되고 있다.</p>
+<p>이러한 배경에서, 본 리뷰의 대상인 <strong>GraspGen</strong>은 <strong>확산 기반</strong> 생성 모델과 효율적인 <strong>Discriminator(discriminator)</strong>를 결합한 새로운 6-자유도 파지 프레임워크로서, 기존 한계를 극복하고자 한다. 이 연구의 핵심 기여는 두 가지로 요약된다:</p>
+<ul>
+<li><p><strong>다양한 조건에 대한 유연한 파지 생성:</strong> GraspGen은 하나의 통합된 <strong>Diffusion-Transformer</strong> 기반 아키텍처로 <strong>여러 형태의 그리퍼</strong>(평행 그리퍼 두 종류와 흡착 패드)와 <strong>다양한 관측 환경</strong>(부분 point cloud vs.&nbsp;완전 point cloud), <strong>Scene 복잡도</strong>(단일 물체 vs.&nbsp;복잡한 적재 환경), <strong>시뮬레이션 vs.&nbsp;실제</strong> 등 <strong>다양한 설정에 걸쳐 확장성</strong>을 보이는 파지 생성 시스템을 구현하였다. 이는 현존 파지 시스템의 유연성 부족 문제를 개선한 것이다.</p></li>
+<li><p><strong>On-Generator 훈련을 통한 Discriminator 개선:</strong> 기존 6-자유도 파지 Discriminator들은 사전 수집된 오프라인 데이터로만 학습되었으나, GraspGen은 <strong>생성기가 만들어낸 샘플</strong> 분포를 직접 활용하여 Discriminator를 훈련시키는 <strong>On-Generator 훈련</strong> 방법을 도입하였다. 이를 통해 Discriminator가 생성 모델이 범하는 오류 패턴을 인지하고 잠재적 <strong>거짓 양성(false positive)</strong> 파지 후보에 낮은 점수를 부여하도록 학습됨으로써, 오직 오프라인 데이터로만 학습된 표준 Discriminator에 비해 성능이 크게 향상됨을 보였다. 다시 말해, GraspGen의 Discriminator는 확산 생성 모델의 고질적 실수(예: 물체와 미세 충돌하거나 물체에서 멀리 떨어진 부적절한 파지 자세)를 걸러내는 능력이 향상되었다.</p></li>
+</ul>
+<p>추가적으로 저자들은 GraspGen의 다양한 설계 선택(훈련 레시피부터 아키텍처 개선까지)이 이전 연구 대비 성능을 향상시킴을 입증하고 있으며, <strong>추론 속도와 메모리 사용량</strong> 면에서도 개선을 달성했음을 보고하였다. 또한 <strong>5,300만 개 이상의 파지 사례</strong>로 구성된 새로운 대규모 <strong>시뮬레이션 데이터셋</strong>을 공개하여, 본 분야 연구 커뮤니티에 자원을 제공하고 GraspGen의 객체/그리퍼 확장성을 뒷받침하였다. 본 리뷰에서는 이 논문의 동기와 관련 연구를 살펴보고, GraspGen 프레임워크의 전체적인 구성과 확산 기반 파지 생성 아키텍처의 설계 및 참신성, <strong>On-Generator 훈련 전략</strong>의 구체적 방법과 효과를 분석한다. 이어서 실험 구성과 결과를 섹션별로 상세히 검토하고, 성능상의 우위와 한계점을 비판적으로 논의한다. 마지막으로 이러한 고찰을 바탕으로 향후 연구 방향에 대해 제언한다.</p>
+</section>
+<section id="related-work" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="related-work"><span class="header-section-number">2.2</span> Related Work</h2>
+<p><strong>6-자유도 파지</strong>는 일반적으로 <strong>Grasp Sampling(GS)</strong>과 <strong>Grasp Analysis(GA)</strong>의 두 단계로 구성된다. 최근 <strong>생성 모델</strong>의 발전에 힘입어 GS 단계에 딥러닝 기반의 <strong>확률 생성 기법</strong>들이 도입되었다. 초기에는 자기회귀 모델이나 변분 오토인코더(VAE) 기반 접근법이 시도되었으며, 후속 연구에서는 <strong>확산 모델(diffusion model)</strong>을 6-DoF 파지 생성에 활용하는 방향으로 나아가고 있다. 대표적으로, Mousavian 등의 VAE 기반 GraspNet, Urain 등의 SE3-DiffusionFields, Weng 등의 DexDiffuser 등이 6-자유도 파지 문제에 확산 모델을 적용한 최근 연구들이다. 한편 GA 단계에서는 생성된 파지 후보의 <strong>성공 가능성을 점수화하고 순위 매기기 위한 Discriminator</strong> 모델이 주로 사용된다. 예를 들어, <em>GQCN</em> (Grasp Quality CNN, Mousavian 등 2019)이나 PointNetGPD (Liang 등 2019) 등이 단일 파지 평가기(discriminator)로 활용된 바 있으며, Weng 등은 확산 기반 생성기에 별도의 Discriminator를 접목하였다. 흥미로운 시도로는 <strong>단일 모델</strong>이 파지 후보 생성과 평가를 <strong>동시에 수행</strong>하도록 한 방법도 있는데, Sundermeyer 등은 그리퍼 접촉점을 표현한 후 이를 학습해 곧바로 최고 파지를 예측하도록 하였고, Yuan 등은 이를 변형하여 Transformer를 활용한 <strong>M2T2</strong> 모델을 개발하였다. <em>그러나 이러한 접촉점 기반 접근은 앞서 언급했듯이 그리퍼 형태가 달라지면 성능이 떨어지는 문제가 있다.</em></p>
+<p><strong>입력 데이터 형태</strong> 측면에서도 다양한 연구가 이루어졌다. 파지 모델은 물체의 3D 형상을 받아들이는데, <strong>point cloud</strong> 기반 표현이 많이 활용되었고, 이외에도 암시적 표현(Implicit surface)이나 복셀(voxel) 표현 등을 사용한 사례가 있다. GraspGen을 비롯한 다수의 최신 프레임워크는 물체 중심의 3D <strong>point cloud</strong> 입력을 필요로 하며, 이는 전이학습된 인스턴스 세그멘테이션 모듈 등을 통해 Scene에서 대상 물체의 point cloud을 분리하여 공급받는 시나리오를 가정한다. 물체 중심 접근의 장점은 훈련 시 복잡한 Scene을 일일이 생성하지 않아도 된다는 점이며, SAM2 등 분할 모델의 성숙으로 이러한 접근이 현실적으로 가능해졌다는 것이 저자들의 주장이다.</p>
+<p><strong>확산 모델과 로봇 조작</strong> 분야의 접목은 최근 활발하다. 확산 모델(Diffusion model)은 이미지 생성에서 큰 성공을 거두었고 (Ho 등 2020; Song &amp; Ermon 2019) 높은 차원 연속확률 분포를 모델링하는데 강력한 도구로 인정받고 있다. 로봇 분야에서도 이를 활용하여 <strong>비전-모터 정책</strong> 학습 (Chi 등 2024), <strong>모션 플래닝</strong> (Huang 등 2024), <strong>Scene 생성</strong> 등 다양한 문제를 다루고 있으며, 특히 <strong>파지 생성</strong>에는 여러 연구가 시도되었다. Urain 등은 <strong>antipodal 그립의 6-DoF 위치를 확산 모델로 생성하는 개념</strong>을 처음 제안하였고, Weng 등은 이를 미지의 물체와 <strong>멀티핑거 손 동작</strong>으로 확장하여 <strong>DexDiffuser</strong>를 발표하면서 Discriminator를 추가하였다. 이 두 연구는 GraspGen에 직접적인 선행으로 볼 수 있는데, GraspGen은 <strong>대규모 다중-그리퍼 데이터셋</strong>을 추가로 구축하고 <strong>생성(파지 후보 생성)</strong>과 <strong>평가(파지 판별)</strong> 단계 모두에서의 성능 향상을 꾀한 점에서 차별화된다. 다시 말해, GraspGen은 이전 확산 기반 파지 생성기의 개념을 발전시키면서, <strong>온-제너레이터 데이터 기반 Discriminator 학습</strong>이라는 새로운 요소를 도입하여 전체 파지 파이프라인의 정확도와 효율을 개선한 최신 프레임워크라고 할 수 있다.</p>
+</section>
+<section id="graspgen-프레임워크-proposed-method" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="graspgen-프레임워크-proposed-method"><span class="header-section-number">2.3</span> GraspGen 프레임워크 (Proposed Method)</h2>
+<p>GraspGen은 <strong>파지 후보 생성</strong>과 <strong>파지 평가</strong>의 두 모듈로 구성된 <strong>모듈식 프레임워크</strong>이다. 전자는 <strong>확산 모델</strong>에 기반한 <strong>생성기(generator)</strong>가 맡고, 후자는 별도로 학습된 <strong>Discriminator(discriminator)</strong>가 담당한다. 생성기와 Discriminator는 모두 <strong>물체 중심의 point cloud</strong> 입력에 조건부로 동작하며, 두 모듈 모두에 Transformer 신경망 구조를 활용한 것이 특징이다. 이하에서는 먼저 확산 기반 파지 생성기의 설계와 학습 방식을 살펴보고, 이어서 On-Generator 훈련 기법을 적용한 Discriminator의 구조와 훈련법을 설명한다. 마지막으로 GraspGen의 <strong>대규모 데이터셋</strong> 구성에 대해 언급한다.</p>
+<section id="grasp-generation-with-diffusion" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="grasp-generation-with-diffusion"><span class="header-section-number">2.3.1</span> Grasp Generation with Diffusion</h3>
+<p>GraspGen의 핵심은 <strong>SE(3)</strong> 공간에서의 6-자유도 파지 분포를 <strong>확산 모델</strong>로 학습하는 것이다. 각 물체에 대해 성공 가능한 파지 자세는 연속적이면서도 고도로 <strong>다중모드(multimodal)</strong> 분포를 이루므로, 이를 데이터 주도적으로 모델링하는 데 확산 기반 접근이 적합하다. 확산 모델에서는 학습 시 정답 데이터에 점차 <strong>노이즈를 주입</strong>하고, 추론 시는 반대로 <strong>노이즈로부터 데이터를 복원</strong>하는 과정을 거친다. Urain 등(2023)은 6-DoF 파지를 <strong>에너지 기반 모델(EBM)</strong>로 정식화하여 score-matching Langevin dynamics 방식의 확산을 구현하였으나, 이 접근은 추론 시 매 단계마다 EBM의 <strong>로그-밀도 기울기</strong>를 계산해야 하므로 매우 느리다는 단점이 있다. GraspGen은 대신 <strong>DDPM</strong>(Denoising Diffusion Probabilistic Model) 방식을 채택하여, 반복적 노이즈 제거로 분포를 모델링한다. DDPM은 구현이 간단하고 계산 효율이 높아 파지 문제에 더 적합하며, 최근 연구에 따르면 EBM 기반 SMLD와 DDPM 사이에 이론적 동등성이 성립함이 알려져 있다.</p>
+<p>한 가지 문제는 SE(3) 공간 중 <strong>회전 공간(SO(3))</strong>이 유클리드 공간이 아니라는 점인데, GraspGen은 Urain 등의 선행 연구와 유사하게 SE(3)을 <strong>translation(평행이동) 부분</strong>과 <strong>회전 부분</strong>으로 분리(factorize)하여 다룬다. SO(3)는 특수한 리 군 공간이지만, 이를 적절한 표현(예: 회전 행렬 또는 리 대수 등)으로 변환하면 사실상 유클리드 공간처럼 취급할 수 있다. GraspGen은 <strong>translation 벡터(3차원)</strong>와 <strong>회전 표현(3차원; 예: Lie algebra)</strong>로 그립을 표현하고, 이들 각각에 별도의 <strong>확산 프로세스</strong>를 적용하였다. 하나의 DDPM으로 translation+회전을 동시에 생성하는 것보다 두 개의 프로세스로 분리하여 병행 생성하는 편이 성능이 더 우수했는데, 저자들은 이렇게 분할함으로써 모델이 각 부분에 보다 특화된 학습을 할 수 있었기 때문으로 해석한다. 또한 파지의 총 차원이 6으로 비교적 낮기 때문에, 이미지 생성에 흔히 쓰이는 100회 이상의 확산 단계 대신 <strong>20회 미만의 노이즈 제거 스텝</strong>만으로도 충분한 성능을 얻을 수 있었다고 보고한다. (이미지의 경우 픽셀 차원이 수만 이상이므로 훨씬 복잡한 반면, 파지 자세는 6차원의 비교적 간단한 출력이라는 점을 고려한 것이다.)</p>
+<p>확산 모델 학습 시 입력과 출력의 <strong>스케일 정규화</strong>도 중요한 이슈이다. 특히 translation 성분의 경우 물체 크기에 따라 값의 범위가 크게 달라질 수 있다. GraspGen은 <strong>학습 데이터의 통계치</strong>를 이용하여 translation 벡터를 정규화하였는데, 모든 학습 데이터(성공 파지들의 translation 성분)를 모은 뒤 그 표준편차에 해당하는 값을 <strong>스케일 인자</strong>로 채택하였다. 이렇게 하면 별도 그리드 탐색 없이 자동으로 적절한 정규화 계수를 설정할 수 있으며, 실험 결과 이 값이 성능 측면에서 합리적인 <strong>국소 최적</strong> 역할을 함을 확인하였다. 예를 들어 Franka 그리퍼의 경우 약 3.27의 스케일 인자를 사용하였다. 한편 회전 성분은 이미 제한된 범위를 가지므로 (예: 6D 회전 표현의 경우 한정된 공간), 추가 정규화가 필요 없다.</p>
+<p>GraspGen의 <strong>확산 모델 네트워크</strong>는 <strong>Transformer</strong> 기반으로 구성된다. 우선 물체의 point cloud은 최신 구조인 <strong>PointTransformerV3 (PTv3)</strong>로 임베딩된다. 이전까지의 생성적 파지 연구들은 주로 PointNet++와 같은 PointNet 계열 백본을 사용했으나, GraspGen은 처음으로 트랜스포머 기반 point cloud 인코더를 도입하였다. PTv3는 비정형 point cloud을 일련의 토큰(시퀀스)으로 변환한 후 self-attention을 적용하는 방식으로, 기존 PointNet++의 복잡한 이웃 탐색 연산을 피하면서도 높은 표현력을 보여주는 최첨단 기법이다. 이렇게 얻은 <strong>물체 임베딩 토큰</strong>과, 그립의 현재 노이즈 상태(혹은 시간 step) 등의 정보를 결합하여 <strong>노이즈 예측 네트워크</strong>가 구성된다. 해당 네트워크는 <strong>Diffusion-Transformer</strong> 아키텍처라 불리며, 시간 스텝 인덱스 <span class="math inline">t</span>는 사인-코사인 위치 인코딩으로 임베딩되고 그립 포즈는 MLP를 통해 변환된 후 Transformer에 입력된다.</p>
+<p>학습 시에는 임의의 스텝 <span class="math inline">t</span>를 선택하여 현재의 그립 데이터에 노이즈를 섞은 후, 네트워크가 <strong>주입된 노이즈</strong>를 맞추도록 학습한다 (denoising loss). 보다 구체적으로, 노이즈 예측 네트워크 <span class="math inline">f_\theta</span>가 물체 point cloud <span class="math inline">P</span>에 조건부로 주어진다고 할 때, 손실함수는 실제 노이즈 <span class="math inline">\epsilon</span>과 예측 노이즈 <span class="math inline">\hat{\epsilon}=f_\theta(P, t, \text{noisy grasp})</span> 사이의 차이(평균제곱오차)로 정의된다.</p>
+<p>이렇게 훈련된 생성기는 추론 시 새로운 point cloud <span class="math inline">P</span>에 대해 랜덤 노이즈로 초기화된 그립 포즈들을 점진적으로 <strong>denoising</strong>하여 <strong>다양한 파지 후보들</strong>을 만들어낸다. GraspGen에서는 이러한 생성 과정에서 물체 point cloud과 그립 좌표계를 <strong>물체의 중심</strong>으로 정규화(평행이동)하여 입력함으로써, 좌표계 설정에 따른 혼동을 줄였다. 최종적으로 생성된 다수의 파지 후보들은 다음 단계인 Discriminator로 넘어가 <strong>성공 가능성 점수</strong>를 부여받게 된다.</p>
+</section>
+<section id="grasp-evaluation-with-on-generator-training" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="grasp-evaluation-with-on-generator-training"><span class="header-section-number">2.3.2</span> Grasp Evaluation with On-Generator Training</h3>
+<p><strong>생성 모델만으로 파지 후보를 생성할 경우</strong> 모델의 근사 오류로 인해 현실적으로는 성공 확률이 낮은 <strong>거짓 양성 파지(False Positive Grasp)</strong>들도 상당수 포함될 수 있다. 예컨대, 그립이 살짝 물체를 관통하거나 물체에서 상당히 떨어진 위치로 생성되는 등, 데이터 분포의 드문 영역에서 나온 부적절한 그립들이 있을 수 있다. 따라서 최종 로봇 실행 전에 이러한 후보들을 걸러낼 <strong>평가 메커니즘</strong>이 필수적이며, 많은 선행 연구가 <strong>별도의 학습된 Discriminator</strong>로 각 파지의 성공 가능성을 점수화하여 상위 몇 개를 선택하는 방식을 사용해왔다. GraspGen 역시 Discriminator를 활용하나, <strong>두 가지 중요한 개선점</strong>을 도입하여 기존 접근의 성능 한계를 극복하고자 했다.</p>
+<section id="on-generator-training" class="level4" data-number="2.3.2.1">
+<h4 data-number="2.3.2.1" class="anchored" data-anchor-id="on-generator-training"><span class="header-section-number">2.3.2.1</span> On-Generator Training</h4>
+<p>첫째는 앞서 강조한 <strong>On-Generator 훈련</strong> 기법이다. 기존의 시뮬레이션-현실(Sim-to-real) 파지 학습에서는 성공/실패로 라벨링된 <strong>오프라인 데이터셋</strong>만으로 Discriminator를 학습시켰다. 그러나 저자들은 <strong>생성기가 만들어내는 파지 분포</strong>가 이 오프라인 데이터 분포와 다르다는 점에 주목하였다. 오프라인 데이터의 실패 사례는 주로 물체에 전혀 접촉하지 못한 그립(예: 충돌 없이 허공을 집는 그립)이거나 아주 엉뚱한 위치의 그립들로 이루어지지만, 확산 생성기가 만들어내는 그립 중에는 <strong>물체를 살짝 관통</strong>하는 등 <strong>미세한 충돌</strong>을 일으키는 경우가 있다. 또한 생성 모델의 확률 분포 꼬리에 해당하는 <strong>이상치(outlier)</strong> 그립—예를 들면 물체에서 비정상적으로 멀리 떨어진 그립—도 나타날 수 있다. 이러한 사례들은 기존 오프라인 데이터의 실패 범주에는 거의 포함되지 않는 경우가 많다 (예: ACRONYM 데이터셋의 경우 충돌하는 실패 그립은 아예 생성하지 않았다 보고됨). 따라서 <strong>생성 모델의 고유한 에러 모드</strong>를 Discriminator가 학습하려면, 생성기 산출물을 활용한 별도 학습이 필요하다는 것이 저자들의 가설였다.</p>
+<p>이를 구현하기 위해, GraspGen은 <strong>Algorithm 1</strong>로 제시된 절차에 따라 <strong>On-Generator 데이터셋</strong>을 구축하여 Discriminator를 학습시켰다.</p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/algo.png" width="70%">
+</center>
+<p>구체적으로, 우선 학습에 사용된 <strong>모든 훈련 객체 약 7천 개</strong>에 대해 <strong>생성기 모델을 동결한 채</strong> 충분한 수의 파지 후보를 생성한다. 각 객체마다 약 2천 개씩, 총 <strong>1,400만 개 가량</strong>의 파지 샘플을 얻었으며, 이는 초기 오프라인 데이터셋(성공/실패 라벨이 있는 파지 데이터)의 규모와 비슷한 양이다. 다음으로 이 생성된 파지들에 대해, 오프라인 데이터 생성 때와 동일한 시뮬레이션 절차(예: 그립 후 흔들어서 유지되는지 확인하는 테스트)를 거쳐 <strong>성공 여부를 라벨링</strong>한다. 이렇게 얻은 <strong>On-Generator 데이터셋</strong>(생성기 출력에 대한 시뮬레이션 라벨)은 생성기의 오류 패턴이 반영된 <strong>실패 사례들</strong>을 다수 포함하고 있으므로, 이 데이터를 사용해 Discriminator를 학습시키면 생성기와 <strong>동일 분포</strong>에서의 <strong>판별 성능</strong>을 크게 높일 수 있다. 실제로 저자들의 분석에 따르면, 오직 오프라인 데이터로 학습한 모델 대비 On-Generator 데이터로 학습한 Discriminator가 <strong>현저히 높은 AUC</strong>를 기록하여 최고의 성능을 보였고, 두 분포를 모두 섞어서 학습한 경우 그 중간 정도 성능을 보였다. 요컨대 생성기 산출물에 특화된 훈련이 Discriminator의 <strong>거짓 양성 인지 능력</strong>을 비약적으로 향상시켰음을 알 수 있다. 참고로, 이러한 접근의 당위성은 저자들이 제시한 분포 비교를 통해서도 확인된다. <strong>지구 이동 거리(EMD)</strong>로 오프라인 vs.&nbsp;On-Generator 데이터의 분포 차이를 정량화한 결과, 두 분포 간에 상당한 차이가 존재하며 특히 <strong>실패 그립들</strong>에서 그 차이가 훨씬 큼을 보였다. 이는 실패 사례의 <strong>공간적 분포</strong>가 생성기 출력 쪽이 더 넓게 퍼져있음을 의미하며, On-Generator 훈련의 필요성을 뒷받침한다.</p>
+</section>
+<section id="efficient-distriminator" class="level4" data-number="2.3.2.2">
+<h4 data-number="2.3.2.2" class="anchored" data-anchor-id="efficient-distriminator"><span class="header-section-number">2.3.2.2</span> Efficient Distriminator</h4>
+<p>둘째 개선점은 <strong>효율적인 Discriminator 아키텍처</strong>이다. 기존의 6-DoF 파지 Discriminator는 물체 입력을 처리하기 위해 별도의 PointNet 기반 네트워크를 처음부터 다시 학습시키는 등 복잡한 구조를 사용했는데, GraspGen은 <strong>생성기 단계에서 학습한 물체 임베딩</strong>을 그대로 활용함으로써 이러한 중복을 제거했다. 구체적으로, 앞 단계의 PTv3 물체 인코더가 출력한 <strong>물체 임베딩 벡터</strong>를 가져오고, 여기에 대응하는 그립 자세를 <strong>간단한 형태로 표현한 벡터</strong>를 <strong>단순 연결(concatenation)</strong>하여 <strong>MLP Discriminator</strong>에 입력한다. 그립 자세의 표현으로는 SO(3)의 회전 부분을 좌표로 나타낸 벡터 등을 이용한다. 이는 Mousavian 등(2019)의 GQCN에서 사용한 기법—그립의 6D pose로 미리 정의된 그리퍼 점들을 변환시켜 물체 point cloud과 함께 PointNet에 넣는 복잡한 방식—보다 훨씬 단순화된 처리이다. 덕분에 GraspGen의 Discriminator는 <strong>최소한의 추가 매개변수와 연산</strong>만으로 동작하며, 물체 임베딩 부분은 학습된 것을 frozen하여 쓰고 오직 마지막 MLP 계층만 <strong>이진 교차 엔트로피 손실</strong>로 학습하면 된다. 이러한 경량 설계로 인해 GraspGen의 Discriminator는 기존 대비 <strong>메모리 사용을 크게 절감</strong>하면서도 정확도를 높였는데, 논문에 따르면 이전 SoTA Discriminator 구조에 비해 약 6.7 포인트 높은 AUC를 달성하면서 <strong>메모리 사용량을 21% 감소</strong>시켰다고 한다. 이처럼 가벼운 Discriminator는 다수의 파지 후보를 빠르게 평가하는 데 유리하며, 실제 GraspGen 프레임워크의 실시간 추론 성능(별도 최적화 전 약 20Hz 수준)에도 기여하는 부분이다.</p>
+</section>
+</section>
+<section id="graspgen-dataset" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="graspgen-dataset"><span class="header-section-number">2.3.3</span> GraspGen Dataset</h3>
+<p>GraspGen의 성공은 <strong>대규모 학습 데이터</strong>에 크게 힘입고 있다. 저자들은 GraspGen을 확장성 있게 학습시키기 위해 <strong>다양한 물체와 그리퍼</strong>를 포괄하는 방대한 <strong>시뮬레이션 파지 데이터셋</strong>을 구축하였다. 이 데이터셋은 총 3종의 그리퍼(Franka Panda, Robotiq 2F-140 병렬 그리퍼 두 가지; 직경 30mm의 진공 흡착 패드) 각각에 대해 약 <strong>1,700만 개씩</strong>의 파지 시도 데이터를 포함하며, 총 합하면 <strong>5,300만</strong>에 이르는 규모이다.</p>
+<p>데이터셋 구축을 위해 사용된 물체는 대규모 3D 자율형 객체 모음인 <strong>Objaverse</strong>에서 선정되었다. Objaverse는 수십만 개의 3D 모델을 담고 있는데, 이 중 저자들은 LVIS 데이터셋의 1,156개 범주와 겹치면서 라이선스가 CC-BY인 36,366개의 메쉬를 선별하였다. 이 방대한 물체 풀(pool)로부터 <strong>ShapeNetSem 기반</strong>의 기존 파지 데이터셋(예: ACRONYM)보다 <strong>더 크고 다양하며 라이선스 제약이 적은</strong> 학습 자원을 확보하였다. 다만 공정한 비교를 위해, 이 중 무작위로 8,515개의 객체를 뽑아 ACRONYM과 동일한 규모의 하위셋을 구성하고 이를 일부 실험에 활용하기도 했다.</p>
+<p>각 객체에 대해서는 표면 주변의 공간에서 <strong>uniform random</strong>로 2,000개의 파지 후보(6D 그립 자세)를 샘플링한 후, 시뮬레이터를 통해 <strong>성공 여부를 레이블링</strong>하였다. 레이블링 파이프라인은 ACRONYM에서 사용된 것과 동일하게, <strong>NVIDIA Isaac Gym/Sim</strong> 물리 시뮬레이터 안에서 그리퍼로 물체를 쥔 후 흔드는(shaking) <strong>동역학 테스트</strong>를 거쳐 물체가 떨어지지 않으면 성공으로 판정하는 방식을 따랐다. 다만 흡착 패드 그리퍼의 경우 흡착 모델 특성상 물리 시뮬레이션보다는 <strong>분석적 모델</strong>(Mahler 등 2018의 흡착 성공 판정 공식)을 사용하여 성공 여부를 결정하였다.</p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/image-20250801164958682.png" width="70%">
+</center>
+<p>이렇게 하여 평행 그리퍼 2종과 흡착 패드 각각에 대해 독립된 파지 데이터셋을 얻었으며, GraspGen은 이를 활용하여 <strong>다중-그리퍼에 공용으로 적용 가능한</strong> 생성 모델을 학습할 수 있었다. 이 새로운 데이터셋은 현 시점 가장 큰 규모의 공개 6-DoF 파지 데이터셋으로서, 향후 보다 복잡한 파지 문제(예: 다지 손가락 그리퍼나 모바일 매니퓰레이터 환경)로의 확장 연구에도 유용한 자원이 될 것으로 기대된다.</p>
+</section>
+</section>
+<section id="experimental-evaluation" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="experimental-evaluation"><span class="header-section-number">2.4</span> Experimental Evaluation</h2>
+<p>GraspGen의 성능은 다양하게 검증되었다. 저자들은 시뮬레이션 환경에서 기존 방법들과 비교 실험을 수행하였고, 복잡한 적재 시나리오 벤치마크에서의 성능을 측정하였으며, <strong>부분 관측 vs.&nbsp;완전 관측</strong> 상황에 대한 일반화 실험도 진행하였다. 아울러 <strong>On-Generator 훈련</strong>의 효과를 분석하기 위한 추가 실험과, 모델 설계 요소들에 대한 <strong>성능 기여도 분석(ablation)</strong>을 실시하였다. 마지막으로 실제 로봇 실험을 통해 시뮬레이션으로 학습된 GraspGen의 현실 적용성을 평가하였다. 각 결과를 순차적으로 살펴본다.</p>
+<section id="simulation-results" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="simulation-results"><span class="header-section-number">2.4.1</span> Simulation Results</h3>
+<p><strong>실험 셋팅</strong></p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/7.png" width="70%">
+</center>
+<p>우선 <strong>단일 물체에 대한 6-DoF 파지 생성 정확도</strong>를 기존 기법들과 비교하였다.</p>
+<p>비교 대상 <strong>베이스라인</strong>으로는 접촉점 기반 방법인 <strong>M2T2</strong> (Yuan 등 2023)와 <strong>Contact-GraspNet</strong> (Sundermeyer 등 2021), 확산 모델 기반 방법인 <strong>SE3-DiffusionFields</strong> (Urain 등 2023)와 <strong>DexDiffuser</strong> (Weng 등 2024), 그리고 강화학습 기반의 <strong>AnyGrasp</strong> (Fang 등 2023)를 포함하였다. 다만 Contact-GraspNet은 이전 연구에서 이미 M2T2보다 성능이 낮은 것으로 보고되어 본 장의 주요 비교에서는 제외하고, 후술하는 추가 실험에서 다루었다고 한다. 또한 AnyGrasp의 경우 라이선스 문제로 인해 클러스터 상의 시뮬레이션에서 직접 실행하지 못해, 시뮬레이션 비교에서는 빠지고 추후 실제 로봇 실험에서만 다루었다. 공정한 비교를 위해 모든 학습 모델은 앞서 소개한 동일한 GraspGen 데이터셋(Franka-ACRONYM 하위셋, 약 8.5k 객체)으로 훈련되었으며, 테스트는 그 중 815개의 미사용 객체에 대해 각 2,000개의 파지 후보를 생성하여 총 <strong>162만 회</strong>의 시뮬레이션 파지 시도로 성공률을 측정하는 방식으로 진행되었다.</p>
+<p><strong>Full Point Cloud of Single Objects</strong></p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/3.png" width="65%">
+</center>
+<p>이 실험에서는 <strong>full point cloud</strong> – 즉 물체의 3D 메쉬를 샘플링한 완전한 point cloud (스스로 가리는 경우가 없는 상황) – 을 입력으로 사용하여, 순수 파지 생성기의 성능을 평가하였다. 평가 지표로는 <strong>Precision-Coverage 곡선</strong>을 사용하였는데, <strong>Precision</strong>은 파지 성공률(정밀도)에 해당하고 <strong>Coverage</strong>는 예측한 그립들이 <strong>실제 양성 그립 분포를 얼마나 포괄하는지</strong> 나타내는 지표로서, 일정 거리 이내에 예측 그립이 존재하는 실제 성공 그립의 비율(Recall에 유사한 개념)로 정의된다. Coverage는 파지 결과의 <strong>공간적 다양성</strong>을 나타내는 척도이며, 두 값 사이의 <strong>AUC (곡선 아래 면적)</strong>가 높을수록 이상적이다.</p>
+<p>비교 결과, <strong>GraspGen이 모든 기준에서 우수한 성능</strong>을 보였다. Precision-Coverage 곡선의 AUC 측면에서 GraspGen은 기존 방법들을 크게 상회하였으며, <strong>AUC 기준 2위와의 격차가 상당한</strong> 것으로 보고되었다. 특히 Discriminator를 활용하는 방법들(GraspGen, DexDiffuser, M2T2)이 <strong>순수 생성 모델</strong>인 SE3-DiffusionFields보다 높은 성능을 보이며, <strong>Discriminator의 중요성</strong>을 재확인시켰다. 그 중에서도 GraspGen의 Discriminator는 <strong>On-Generator 훈련</strong> 덕분에 DexDiffuser의 Discriminator보다 생성기 출력 분포에 잘 적응되어 있어, 생성된 그립의 순위매김을 더 정확히 수행한 것으로 나타났다. 반면 M2T2의 접촉점 판별 모듈은 <strong>성공 그립에 대해서만 학습</strong>되어 실제로는 좋은/나쁜 접촉점 구별에 그치므로, <strong>실패 그립을 걸러내는 능력</strong>이 떨어져 전반적인 성능이 낮았다. 이러한 결과는 GraspGen의 <strong>생성-평가 결합 전략</strong>의 효과를 입증하는 동시에, 파지 문제에서 <strong>생성 품질과 함께 평가(스코어링) 품질</strong>이 중요함을 보여준다.</p>
+<p><strong>Task-level Evaluation in Clutter</strong></p>
+<p>추가로, GraspGen은 <strong>FetchBench</strong> 벤치마크를 통해 <strong>복잡한 적재 환경(clutter)에서의 파지</strong> 성능도 평가되었다.</p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/2.png" width="100%">
+</center>
+<p>FetchBench (Han 등 2024)는 다양한 물체들이 놓인 테이블 환경에서 <strong>인식-파지-경로계획-배치</strong>에 이르는 전체 파지 파이프라인을 종합 평가하는 시뮬레이션 벤치마크이다. 실험에서는 Franka Panda 로봇팔과 100개의 임의 생성 장면에 대해, 각 장면마다 60개의 파지-이동 작업을 시도하여 총 6,000회의 grasp-place 시나리오를 평가하였다. 이때 GraspGen의 입력은 단일 RGB-D 카메라 관측으로 생성된 부분 point cloud들이며, 인스턴스 세그멘테이션을 통해 물체별 point cloud을 얻는다 (실제 로봇 실험과 동일한 설정). 공정한 비교를 위해, 경로계획에는 장면의 정확한 충돌 모델(ground-truth collision mesh)을 사용함으로써 인식 오차나 모션 플래너의 불완전성이 파지 성능 평가에 끼치는 영향을 줄였다.</p>
+<p>결과 지표로는 <strong>task success</strong>과 <strong>grasp success</strong>이 사용되었는데, 전자는 물체를 집어 목표 위치에 놓는 전체 작업의 성공 비율이고 후자는 집어 드는 단계까지만 고려한 비율이다. (보통 grasp success가 더 높게 나오며, grasp 이후 운반 중 미끄러짐이나 충돌이 추가로 과제 실패를 야기할 수 있다.) 흥미롭게도, 전지적 시점에서 최상의 성능을 낼 수 있는 <strong>Oracle 플래너</strong>(즉 데이터셋에 있는 실제 성공 그립을 알고 있다고 가정)가 시도되어 비교되었는데, 이 Oracle의 성능조차 grasp success 약 80%, task success 65% 남짓에 그쳤다. 이는 FetchBench의 난이도가 매우 높음을 보여주며, 주요 원인으로는 <strong>충돌 없는 경로가 없는 경우</strong>, <strong>기존 모션 플래너 한계로 경로 탐색 실패</strong>, <strong>물체가 비좁은 공간에 있어 그립이 있어도 진입 불가능</strong> 등의 현실적인 문제가 지목되었다. 이러한 한계는 GraspGen 등 <strong>파지 모듈 외적인 요소</strong>로 인한 실패 요인으로, 차후 보다 고차원적인 <strong>통합적 계획/제어 정책</strong> 연구가 필요함을 시사한다.</p>
+<p>그럼에도 불구하고, GraspGen은 FetchBench에서 최신 기존 기법들을 능가하는 성과를 보였다. Contact-GraspNet과 M2T2 대비 각각 <strong>유의미한 향상폭</strong>(수 %~두 자릿수 %대)을 기록하며 종합적인 SOTA 성능을 달성했다. 이는 GraspGen이 복잡한 적재 환경에서도 강인한 파지 후보를 생성하고, 모션 플래너 등의 후속 단계에서 필터링을 거친 후에도 여전히 실행 가능한 좋은 파지들을 제공함을 뜻한다. 요약하면, <strong>단순 Scene</strong>(단일 물체)부터 <strong>복잡한 Scene</strong>(다중 물체)까지 GraspGen의 파지 생성/평가 품질이 동급 최고 수준임을 시뮬레이션으로 입증한 것이다.</p>
+<p><strong>Sensitivity to Occlucions</strong></p>
+<p>마지막으로, <strong>관측 정보의 불완전성</strong>에 대한 일반화 실험 결과를 살펴보자.</p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/4.png" width="65%">
+</center>
+<p>GraspGen은 부분 point cloud과 완전 point cloud 모두에 대응할 수 있도록 훈련될 수 있는데, 저자들은 <strong>훈련 데이터 구성</strong>에 따른 성능 변화를 분석하였다. 하나의 GraspGen 모델을 <strong>부분 관측 데이터</strong>(단일 뷰 point cloud)만으로 훈련한 경우 완전 point cloud 상황에서 성능 저하가 뚜렷했고, 그 반대의 경우도 마찬가지로 부분 point cloud에 대해 성능 문제가 나타났다. 이는 각각의 경우 모델이 한쪽 분포에 과적합되어 다른 경우에 적응하지 못한 것으로 볼 수 있다. 반면 <strong>두 가지 유형의 point cloud 데이터를 50:50 비율로 섞어</strong> 훈련한 모델은 <strong>부분/완전 point cloud 모두에 견고한 성능</strong>을 보였다. 이는 <strong>훈련 데이터의 다양성</strong>이 GraspGen의 <strong>관측 변화에 대한 일반화</strong>에 중요함을 시사하며, 실제 어플리케이션에서 센서 구성이 달라지거나 멀티뷰/싱글뷰 환경이 혼재할 경우를 대비해 혼합 데이터를 사용할 필요가 있음을 보여준다.</p>
+</section>
+<section id="analysis-of-on-generator-training" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="analysis-of-on-generator-training"><span class="header-section-number">2.4.2</span> Analysis of On-Generator Training</h3>
+<p>본 절에서는 <strong>On-Generator 훈련 기법의 효과</strong>를 정량적으로 분석한 결과에 대해 조금 더 자세히 언급한다. 앞서 On-Generator 데이터셋의 분포 차이를 EMD로 비교하여 그 필요성을 보인 바 있는데, 추가로 <strong>Discriminator 학습 데이터 구성에 따른 성능</strong>을 직접 시험하였다.</p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/5.png" width="65%">
+</center>
+<p>Discriminator를 <strong>오프라인 데이터로만 학습</strong>한 경우, <strong>On-Generator 데이터로만 학습</strong>한 경우, 그리고 <strong>두 데이터를 혼합</strong>하여 학습한 경우를 비교한 결과, <strong>On-Generator 전용 학습 모델이 가장 높은 성능</strong>을 보였고 혼합 학습이 그 다음, 순수 오프라인 학습이 가장 저조했다. 예를 들어 AUC 기준으로 오프라인 전용 대비 On-Generator 전용이 상당한 상승폭을 보였다고 보고된다. 이는 On-Generator 훈련이 생성기 고유의 실패 양상을 잡아내는 데 효과적임을 재확인해준다. 또한 On-Generator 데이터로 학습한 모델의 성공 사례를 분석해보면, <strong>물체와 살짝 겹치는 그립</strong>이나 <strong>경미한 자세 오류로 인해 불안정한 그립</strong> 등을 잘 걸러낸다는 점을 확인할 수 있다. 반면 오프라인 데이터로 학습한 Discriminator는 이러한 경우에 상대적으로 높은 점수를 줌으로써 잘못된 양성으로 남기는 경향이 있었다고 한다. 결국 On-Generator 훈련 덕분에 GraspGen의 Discriminator는 자기 생성기의 <strong>고질적 실수</strong>까지도 인지하여 걸러줄 수 있게 되었고, 이것이 전체 파지 성공률 향상에 핵심적인 기여를 했음을 알 수 있다.</p>
+<p>추가적인 <strong>소규모 ablation 실험</strong>도 Discriminator 구조의 장점을 뒷받침한다. 기존의 복잡한 PointNet 기반 Discriminator(Mousavian 등, 2019 등)와 비교하여 GraspGen의 <strong>경량 Discriminator</strong>는 <strong>메모리 사용을 1/5 수준(약 21%)으로 줄이면서도 정확도를 높였다</strong>고 보고된다. 이는 동일한 hardware 자원에서 훨씬 <strong>많은 수의 파지</strong>를 동시에 평가할 수 있음을 의미하며, 특히 복잡한 Scene에서 상위 파지를 찾기 위해 수백~수천 개의 후보를 걸러내야 하는 상황에서 큰 이점이 된다.</p>
+</section>
+<section id="ablation-studies" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="ablation-studies"><span class="header-section-number">2.4.3</span> Ablation Studies</h3>
+<p>GraspGen에 도입된 몇 가지 <strong>설계상의 선택들</strong>에 대해, 저자들은 별도의 실험을 통해 각각의 성능 영향도를 평가하였다. 주요 ablation 결과는 다음과 같다:</p>
+<ul>
+<li><strong>translation 정규화 스케일:</strong> 앞서 언급한 대로, translation 성분에 대한 정규화 스케일의 크기는 성능에 <strong>비선형적(convex) 관계</strong>를 보였다. 너무 작거나 너무 크게 정규화하면 오히려 파지 예측 오차가 증가하거나 recall(coverage)이 감소하였으며, 적절한 중간값에서 균형이 맞춰졌다. 실험 결과 저자들이 <strong>데이터 기반 공식</strong>으로 계산한 값이 이 최적점 근처의 성능을 보여, 번거로운 하이퍼파라미터 탐색을 대체할 수 있음을 확인하였다.</li>
+</ul>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/6.png" width="65%">
+</center>
+<ul>
+<li><p><strong>회전 표현:</strong> 회전을 나타내는 방법으로는 6차원 회전 벡터 표현, 오일러 각, Lie Algebra 등 여러 가지를 시험했는데, <strong>유의미한 성능 차이가 나타나지 않았다</strong>고 한다. 이는 GraspGen의 확산 모델이 회전 공간을 학습하는 데 있어 특정 표현에 크게 의존하지 않을 만큼 충분한 학습 용량을 지닌 것으로 해석할 수 있다.</p></li>
+<li><p><strong>point cloud 인코더 백본:</strong> PointNet++ 대비 <strong>PointTransformerV3</strong>를 사용함으로써 <strong>성공률 및 정밀도 향상</strong>을 얻었다. 구체적으로, PTv3로 교체 시 translation 오차가 감소하고 recall(coverage)이 증가하는 유의한 개선이 있었으며, 이는 최신 Transformer 기반 point cloud 처리 기법이 파지 생성 문제에도 효과적임을 보여준다.</p></li>
+</ul>
+</section>
+<section id="performance-on-multiple-grippers" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="performance-on-multiple-grippers"><span class="header-section-number">2.4.4</span> Performance on Multiple Grippers</h3>
+<p>GraspGen은 <strong>여러 종류의 그리퍼에 대해 단일 프레임워크로 학습될 수 있다</strong>는 유연성을 갖는다. 본문에서는 주로 Franka 병렬 그리퍼에 대한 결과를 다루었지만, <strong>부록</strong>에 Robotiq-2F-140 병렬 그리퍼와 흡착 패드 gripper에 대한 실험도 포함되었다고 한다. 핵심적으로, <strong>GraspGen은 모든 그리퍼에 대해 가장 뛰어난 성능</strong>을 보였으며, 성능 격차는 그리퍼 종류에 따라 다르게 나타났다. 예를 들어, Franka 시뮬레이션 실험에서 GraspGen이 M2T2 대비 약 두 자릿수 퍼센트의 향상을 보였는데, Robotiq-2F-140의 경우 그 격차가 <strong>더 벌어졌다</strong>고 한다. 이는 M2T2가 <strong>접촉점 표현</strong>을 사용하는데, 해당 표현이 Robotiq 같은 <strong>adaptive 그리퍼</strong>에는 적합하지 않아 성능이 크게 저하되었기 때문으로 분석된다. 반면 GraspGen은 입력 point cloud 기반이므로 그리퍼 형상 변화에 상대적으로 강인하여, 두 평행 그리퍼 모두에서 안정적인 성능을 유지하였다. 또한 흡착 패드의 경우에도 GraspGen이 SE3-DiffusionFields 등 다른 생성 모델 대비 우수한 결과를 얻었다고 보고된다. 이는 GraspGen의 아키텍처가 <strong>그리퍼 임베디드</strong> 형태 (즉, 물체+그리퍼 조건) 학습에 무리가 없음을 시사하며, 나아가 향후 다지그리퍼나 로봇 핸드와 같은 복잡한 형태로 확장하는 데도 기반이 될 수 있음을 보여준다.</p>
+</section>
+<section id="real-robot-evaluation" class="level3" data-number="2.4.5">
+<h3 data-number="2.4.5" class="anchored" data-anchor-id="real-robot-evaluation"><span class="header-section-number">2.4.5</span> Real Robot Evaluation</h3>
+<p>마지막으로, <strong>시뮬레이션에서 학습된 GraspGen의 Real World 성능</strong>을 검증하기 위한 실험이 수행되었다.</p>
+<center>
+<img src="../../images/2025-08-02-grasp-gen/8.png" width="80%">
+</center>
+<p>하드웨어 구성은 UR10 로봇 팔에 Robotiq-2F-140 그리퍼를 장착하고, 상단에 Intel RealSense D435 RGB-D 카메라 한 대를 설치하여 테이블을 내려다보는 형태였다. 소프트웨어적으로는 Jetson 보드 상에서 <strong>cuRobo</strong> (샘플 기반 모션 플래너)를 사용하여 경로계획 및 역기구학 필터링을 수행하고, <strong>NVBlox</strong>를 통해 실시간 충돌 맵을 생성하였다. Object instance 분할에는 SAM2 (세그멘테이션 파운데이션 모델), depth 보완에는 FoundationStereo 모델 등을 활용하여, 가능한 현실에서의 인식 성능을 끌어올렸다.</p>
+<p>테스트 환경은 네 가지로 구성되었다:</p>
+<ul>
+<li><strong>단일 물체 (isolated)</strong></li>
+<li><strong>테이블 위 다수 물체 (table clutter)</strong></li>
+<li><strong>바구니 안의 물체들 (basket)</strong></li>
+<li><strong>선반 위의 물체들 (shelf)</strong></li>
+</ul>
+<p>점차 난도가 올라가는 시나리오로, 특히 바구니나 선반의 경우 격자 내부나 좁은 공간이라 파지 및 인출 동작이 어렵다. 비교 대상으로는 시뮬레이션에서 우수한 성능을 보인 <strong>M2T2</strong>와, 실제 데이터로 학습된 <strong>AnyGrasp</strong>를 선정하였다. 두 모델 모두 공개된 학습 가중치와 파라미터를 그대로 사용하되, 실험 환경에 맞게 몇 가지 입력 처리를 조정하였다. 예를 들어 M2T2는 원래 Scene 전체 point cloud을 입력으로 사용하도록 학습되었는데, 본 실험에서는 카메라 좌표계를 기준으로 point cloud을 90도 회전시키고 로봇 작업 공간에 해당하는 영역만 <strong>크롭</strong>하여 주는 방식으로, 훈련 시 분포와의 차이를 줄여주었다. AnyGrasp의 경우 학습 데이터가 고정된 카메라 고도에서 수집되었기 때문에, 우리 환경의 카메라 깊이에 맞춰 <strong>z축 방향 오프셋</strong>을 point cloud에 주어 보정하였다. 또한 AnyGrasp는 원래 다중 예측된 그립 중 Non-Maximum Suppression을 적용하여 중복을 제거하는 후처리가 있었지만, 이 연구의 설정에서는 <strong>NMS를 사용하지 않는 편이 성능이 나아</strong> 이를 생략하였다. (아마도 우리의 모션 플래너가 목표 그립 셋에 대해 자체적으로 충돌 제거 등을 수행하므로, 중복이 있어도 괜찮았던 것으로 추측된다.) 이러한 <strong>전처리 없이</strong>는 M2T2나 AnyGrasp 모두 결과 그립을 거의 내지 못해, 부득이 저자들이 언급한 이러한 조정들을 거쳤음을 밝히고 있다. 이는 실제 환경의 분포 차이에 대한 타 모델들의 <strong>취약성</strong>을 보여주는 것으로, GraspGen처럼 다양한 관측 분포에 대해 훈련되지 않았을 경우 현실 적용이 어렵다는 점을 시사한다.</p>
+<p>각 방법은 Scene 당 여러 파지 후보를 출력하며, 상위 <strong>100개</strong> 그립을 모션 플래너의 목표로 사용하였다. 플래너는 이 중 로봇 <strong>충돌</strong>이나 <strong>역기구학 불능</strong>인 그립을 걸러내고, 남은 그립들 중 충돌 없는 경로를 찾아 집어올리기를 시도한다. 최종 <strong>파지 성공률</strong>은 해당 시나리오에서 잡기에 성공한 비율로 측정되었다. 결과를 보면, <strong>GraspGen은 전반적으로 가장 높은 성공률을 달성</strong>하였다. 특히 비교 대상들이 특정 어려운 환경에서 성능이 급격히 떨어진 데 비해, GraspGen은 <strong>모든 환경에서 고른 성능</strong>을 보였다. 예를 들어 단일 물체 환경에서는 GraspGen이 90.5%의 성공률로 M2T2(81.0%)와 AnyGrasp(85.7%)보다 높았고, 테이블 위 복잡 적재의 경우에도 GraspGen 83.3%로 M2T2(75.0%)를 상회하였다. 가장 어려운 <strong>선반(shelf)</strong> 시나리오에서는 GraspGen 71.4%에 비해 M2T2는 14.3%에 불과했고, AnyGrasp도 42.9%로 성능이 낮았다. <strong>전체 평균 성공률</strong>을 보면 GraspGen이 약 81.3%로, M2T2의 52.6%, AnyGrasp의 63.7%를 크게 앞섰다. 물론 GraspGen도 선반/바구니 환경에서 다른 경우보다 성능이 낮아졌는데, 이는 위에서 언급한 대로 <strong>로봇 팔의 가용 동작 범위 제한</strong>으로 인해 다수의 파지 후보들이 실행 불가능하게 필터링된 영향이 크다. 이러한 환경에서는 모델이 애초에 <strong>접근 가능한 그립</strong>을 많이 생성해야만 최종 성공률을 높일 수 있는데, GraspGen은 부분적으로나마 그 역량을 보인 반면, M2T2와 AnyGrasp는 훈련 데이터가 단순 탁상 환경에 국한되어 있었기 때문에 새로운 형태의 환경(basket, shelf)에 <strong>전혀 일반화하지 못한</strong> 것으로 분석된다. 특히 M2T2는 scene-level 모델로 학습된 한계상 작은 물체에 대한 파지 예측을 누락하는 문제도 있었다고 한다. 요컨대, <strong>GraspGen의 시뮬레이션→현실 일반화 능력</strong>과 <strong>환경 다양성에 대한 적응력</strong>이 실제 로봇 실험에서도 확인된 셈이다. 저자들은 추가로 여러 파지 예측 예시를 부록에 제시하였는데, GraspGen이 다양한 물체들에 대해 현실에서도 안정적인 파지 자세들을 산출함을 보여준다.</p>
+</section>
+</section>
+<section id="conclusion-limitations" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="conclusion-limitations"><span class="header-section-number">2.5</span> Conclusion &amp; Limitations</h2>
+<p>본 논문은 <strong>GraspGen</strong>이라는 새로운 6-DoF 파지 생성 프레임워크를 제시하고, 그 <strong>기술적 우수성</strong>을 다각도로 입증하였다. GraspGen은 <strong>확산 기반의 생성기</strong>와 <strong>효율적인 Discriminator</strong>를 결합함으로써 물체 중심 파지 문제에서 <strong>정확도와 범용성</strong>을 크게 향상시켰다. 다양한 시뮬레이션 실험에서 기존 방법들을 능가하는 성능을 보였고, FetchBench와 같은 복잡한 벤치마크에서 <strong>최신 최고 성과</strong>를 달성하였으며, 나아가 단 한 번도 실제 데이터를 학습하지 않고도 실제 로봇에서 우수한 파지 성공률을 보임으로써 <strong>시뮬레이터-현실 간 격차</strong>를 상당 부분 좁혔다. 이러한 성과를 통해 GraspGen은 향후 여러 고차원 로봇 조작 과제의 <strong>기반 모듈</strong>로 활용될 수 있는 가능성을 보여주었다. 예를 들어, GraspGen을 응용하면 <strong>목적 지향 파지</strong>(특정 부위를 잡기)나 <strong>언어 지시 기반 조작</strong> 등의 문제에 보다 강인한 파지 생성기를 제공할 수 있고, 복잡한 조작 작업에서 발생하는 파지 실패율을 낮춰 <strong>지능형 매니퓰레이션 시스템</strong>의 신뢰성을 높이는 데 기여할 수 있을 것이다.</p>
+<p>그러나 동시에 본 연구는 몇 가지 <strong>한계점</strong>과 <strong>향후 과제</strong>를 남긴다.</p>
+<ul>
+<li>우선, GraspGen의 성능은 여전히 <strong>센서 데이터 품질</strong>에 크게 의존한다는 점이 지적된다. 실제 로봇 실험에서 보았듯이, 정확한 <strong>깊이 추정</strong>과 <strong>물체 분할</strong>이 뒷받침되지 못하면 파지 후보의 정확도도 떨어질 수 있다. 이는 GraspGen이 <strong>물체 중심 point cloud</strong>에 의존하기 때문으로, 향후에는 잡음에 강인한 입력 처리나 멀티센서 융합을 통한 보완이 필요할 것이다.</li>
+<li>두 번째 한계로, <strong>특정 형상의 물체</strong>에 대한 일반화 부족이 관찰되었다고 한다. 저자들은 특히 <strong>직육면체 상자(cuboid)</strong> 형태의 물체에 대해 GraspGen이 실험에서 어려움을 겪었음을 보고하며, 이는 현재 데이터셋에 그러한 형태의 물체가 부족하기 때문으로 추정하였다. 향후 버전에서는 보다 <strong>박스형 물체 데이터</strong>를 늘려 이 문제를 완화할 계획이라고 언급하고 있다. 이처럼 데이터 분포의 편향에 따른 특정 경우 성능 저하는, <strong>데이터 커버리지 확대</strong> 및 <strong>도메인 일반화 기법</strong> 등을 통해 개선할 수 있을 것이다.</li>
+<li>셋째로, GraspGen의 학습에는 막대한 <strong>계산 비용</strong>이 소요된다. 시뮬레이션 데이터 생성과 학습을 합쳐 약 <strong>3,000 GPU-시간</strong>이 요구되었는데, 이는 누구나 모방하기 힘든 높은 장벽으로 작용할 수 있다. 특히 다양한 embodiment를 다루려면 여러 데이터셋에 대해 별도 학습을 해야 할 수도 있어, 추후 <strong>모델 경량화</strong>나 <strong>전이 학습</strong>을 통한 효율 향상 연구도 고려되어야 한다.</li>
+<li>마지막으로, GraspGen은 <strong>파지 자체의 성능</strong>을 향상하는 데 초점을 두었지만, 앞서 FetchBench 분석에서 논의되었듯 <strong>파지 이후의 이동 경로 계획</strong>이나 <strong>환경 상호작용</strong> 등 통합 문제는 별도의 도전 과제로 남아 있다. 예를 들어, 복잡한 장애물 환경에서 로봇팔이 파지한 물체를 꺼내오는 문제 등은 단순히 파지 성공률만 높인다고 해결되지 않으므로, 향후에는 파지 생성과 <strong>후속 동작 계획</strong>을 공동으로 최적화하는 방향의 연구도 필요할 것이다.</li>
+</ul>
+<p>종합적으로, GraspGen은 로봇 파지 분야에 <strong>확산 모델</strong>의 강력함을 증명하고, <strong>생성 모델과 Discriminator의 상호보완적 학습</strong>을 통해 성능 한계를 돌파한 의미 있는 연구로 평가된다. 다양한 형태의 로봇 손과 대상에 두루 적용가능한 <strong>범용 파지 생성</strong>의 가능성을 열었으며, 이는 향후 서비스 로봇, 제조 자동화, 의료 보조 등 <strong>정밀 조작이 요구되는 분야</strong>에서 활용될 여지를 보여준다.</p>
+<!--
+
+> GraspGen: 6-자유도 그리핑을 위한 디퓨전 기반 프레임워크 (On-Generator Training) 심층 리뷰
+
+## 1. 논문의 핵심 기여
+
+**「GraspGen: A Diffusion-based Framework for 6-DOF Grasping with On-Generator Training」** 논문은 로봇의 **6-DOF(6자유도) 그리핑** 문제를 해결하기 위해 **디퓨전 모델**을 활용한 새로운 프레임워크를 제안합니다. 주요 기여 사항은 다음과 같습니다.
+
+* **DiffusionTransformer 기반 그립 생성 모델 제안:** 객체 중심의 그립 생성 과정을 **확률적 디퓨전 프로세스**로 모델링하여, 복잡한 6-DOF 그리핑을 점진적인 **노이즈 제거 과정**으로 구현했습니다. 이를 위해 트랜스포머 구조를 결합한 **Diffusion-Transformer 아키텍처**를 도입하여 그립 생성의 품질을 향상시켰습니다.
+* **효율적인 Discriminator 및 *On-Generator Training* 도입:** 생성된 다수의 그립 후보를 평가하고 걸러내는 **경량화된 Discriminator**(grasp *scorer*)를 구성하고, 이를 **온-제너레이터 트레이닝(on-generator training)** 방식으로 학습시켰습니다. 이 새로운 학습 레시피를 통해 Discriminator가 *생성기 자신의 출력 분포* 상에서 효과적으로 동작하도록 함으로써 학습 효율과 그립 평가 성능을 높였습니다.
+* **다종 객체 및 그리퍼를 아우르는 대규모 데이터셋:** 다양한 로봇 **그리퍼 종류**(예: 병렬 그리퍼, 진공 흡착 패드 등)와 **수많은 객체**에 걸쳐 적용할 수 있도록, 시뮬레이션을 통해 **5천3백만 개 이상의 6-DOF 그립** 데이터셋을 구축하여 공개했습니다. 이 대규모 데이터는 GraspGen의 학습 및 평가에 활용되었으며, 향후 연구 커뮤니티의 발전에도 기여할 수 있습니다.
+* **탁월한 성능 입증:** 제안된 GraspGen 모델은 **여러 기존 방법 대비 뛰어난 그립 성공률과 정확도**를 보였습니다. 단일 물체에 대한 시뮬레이션 실험에서 **이전 방법들을 큰 폭으로 능가**했고, **FetchBench**와 같은 복잡한 환경 벤치마크에서도 **최신 최고 성능(State-of-the-Art)**을 달성했습니다. 아울러 잡음이 있는 센서 입력 환경의 실제 로봇 실험에서도 안정적인 그립 성공을 보여, 제안 기법의 실용 가능성을 시연하였습니다.
+
+## 2. 기존 6-DOF 그리핑 방법들과의 비교
+
+GraspGen이 등장하기 전까지 제안된 여러 **6-DOF 그립 생성 방법**들과 GraspGen을 비교하면, 접근 방식과 성능 면에서 다음과 같은 차별점이 드러납니다:
+
+* **접촉점 기반 그리핑 vs. 전체 포즈 생성:** Contact-GraspNet(Sundermeyer et al., 2021)이나 M2T2(Yuan et al., 2023) 등의 **접촉점 기반 접근법**들은 물체 표면상의 유효 접촉점을 예측한 뒤 이에 기반해 그립 자세를 결정하는 방식입니다. 이러한 방법들은 특정 **그리퍼 형태**에 특화되기 쉽고, 그리퍼 구조가 바뀔 경우 일반화에 한계가 있습니다. 실제로 M2T2의 경우 **긍정(grasp 성공) 데이터만으로 학습**되고 **좋은 접촉 지점 식별**에 집중한 나머지, **다양한 그리퍼 형상(예: 어댑티브 그리퍼)**에는 성능이 떨어지는 문제가 있었습니다. 반면 GraspGen은 애초에 **그립의 6-자유도 자세 자체를 직접 생성**하므로, 접촉점 방법보다 다양한 그리퍼에 범용적으로 대응할 수 있습니다.
+
+* **디퓨전 기반 기존 기법과의 차이:** GraspGen 이전에도 **생성 모델 기반** 시도가 없었던 것은 아닙니다. *SE3-Diffusion Fields*(Urain et al., 2023)와 같은 방법은 6-DOF 그립을 **확률적 생성 모델**로 취급하였지만, **생성된 결과에 대한 별도 평가 없이** 확률밀도(로그-우도)로만 좋은 그립을 선택했습니다. 이처럼 **Discriminator가 부재**한 접근은 성능상 한계가 있었고, GraspGen은 이를 보완하여 **생성+판별의 이점**을 모두 취했습니다. 한편 **DexDiffuser**(Weng et al., 2024)는 GraspGen과 유사하게 **디퓨전 샘플러+평가기** 구조를 취하였으나, **다지 손가락형 로봇손(복잡한 관절)**을 대상으로 개발된 방법입니다. GraspGen은 DexDiffuser를 **병렬 그리퍼 및 석션 그리퍼** 시나리오로 재구성해 비교하였는데, **GraspGen이 더 높은 성공률**을 보였습니다. 예를 들어, 프랑카(Franka) 병렬 그리퍼로 단일 물체를 집는 실험에서 **GraspGen의 Precision-Coverage AUC 점수는 0.947로**, M2T2(0.636)나 DexDiffuser(0.344)는 물론 디퓨전 기반이지만 Discriminator가 없는 SE3-Diffusion(0.200)을 크게 앞질렀습니다. 이는 GraspGen이 **기존 최고 성능 대비 거의 2배에 달하는 정확도 향상**을 이뤘음을 의미합니다. 또한 복잡한 **난이도 높은 환경(clutter)**에서도 GraspGen은 Contact-GraspNet 대비 약 **16.9%**, M2T2 대비 **7.8%** 높은 그립 성공률을 달성하여 우위를 입증했습니다.
+
+* **다중 그리퍼 및 시나리오 범용성:** 기존 학습 기반 그리핑 모델들은 주로 **단일 형태의 그리퍼**(예: 두 손가락 그리퍼)나 제한된 환경(단일 물체 혹은 간단한 배치)에서 성능을 보이는 경우가 많았습니다. GraspGen은 **여러 종류의 그리퍼** (Franka Panda, Robotiq-2F 병렬 그리퍼, 진공 흡착 패드 등)에 대해 **단일 모델**로 학습 및 적용이 가능하도록 설계되었습니다. 이는 데이터셋 구성과 모델 구조 양면에서 **embodiment (로봇 말단 장치)**의 차이를 흡수하도록 했기 때문입니다. 예를 들어, M2T2는 접촉점 방식 탓에 **그리퍼의 개별 구조 변화에 대응하기 어렵지만**, GraspGen은 물체와 그리퍼를 함께 고려하여 포즈를 생성함으로써 **한 모델로 다양한 형태의 그립 동작**을 만들어냅니다. 결과적으로 GraspGen은 다양한 작업(단일 물체 집기부터 **복잡한 적재 환경**까지)에서 **기존 기법 모두를 능가하는 일관된 성능 우위**를 보여주었습니다.
+
+요약하면, **GraspGen은 선행 연구들의 장점을 결합**하면서도 그 한계를 극복한 방식입니다. 디퓨전 기반의 **다양한 후보 생성**과, **학습된 평가기**를 통한 **엄선 과정**을 결합하여, **기존 대비 월등한 성공률과 범용성**을 달성한 것이 큰 차별점입니다. 특히 **On-Generator 훈련으로 강화된 Discriminator**는 GraspGen이 기존 방법보다 **더 정확히 좋은 그립을 가려낼 수 있게** 해주어 성능 격차를 벌린 핵심 요소입니다.
+
+## 3. 기술적 방법론 심화 분석
+
+이 절에서는 GraspGen이 사용한 주요 기술적 요소들에 대해 좀 더 깊이 있는 분석을 제공합니다: **디퓨전 모델을 활용한 생성 원리**, **6-DOF 그리핑 문제의 특성과 접근 방식**, 그리고 **On-Generator Training의 개념과 역할**에 대해 살펴봅니다.
+
+### 3.1 디퓨전 모델을 활용한 6-DOF 그립 생성
+
+GraspGen의 핵심은 **디퓨전 모델(diffusion model)**을 6-DOF 그립 생성 문제에 적용했다는 점입니다. 디퓨전 모델은 본래 이미지 생성 등에서 사용되던 **확률적 생성 모델**로, **노이즈가 섞인 데이터로부터 점진적으로 원본 형태를 복원**해가는 과정을 학습합니다. 이 논문에서는 **그립 포즈(잡기 자세)를 데이터 포인트**로 보고, 초기에는 랜덤에 가까운 그립 후보를 시작으로 다수의 **디퓨전 시간 단계**를 거쳐 **점차 실현 가능한(graspable) 자세로 refinement**하는 방식을 취했습니다. 쉽게 비유하자면, **로봇이 물체를 잡는 여러 전략을 단계적으로 상상하며 다듬어가는 과정**이라고 볼 수 있습니다.
+
+디퓨전 프로세스에서는 각 단계마다 현재의 그립 후보에 약간씩 수정(denoise)을 가하면서 **목적 분포**에 가까워지도록 합니다. GraspGen의 *DiffusionTransformer*는 이러한 과정을 담당하는 **노이즈 예측 네트워크**로서, 물체의 **포인트 클라우드**를 입력으로 받아 현재 단계의 그립 후보를 얼마나 조정해야 할지 출력합니다. *트랜스포머 기반 구조*를 사용함으로써, 복잡한 3D 형상의 객체 정보를 효과적으로 인코딩하여 **그립의 위치와 자세를 조율**해낼 수 있었습니다. 이러한 **iterative refinement(반복적 정제)** 접근은 한번에 하나의 예측을 내는 것보다 **다양한 가능성을 탐색**할 수 있고, *multi-modal*한 그립 분포(여러 가지 잡는 방법)까지 모델링하는 데 유리합니다. 실제로 GraspGen은 **한 객체에 대해 여러 그립 후보들을 생성**하며, 이 중에서 물리적으로 안정적인 선택을 하기 위한 후속 평가 단계를 갖추고 있습니다.
+
+GraspGen의 디퓨전 모델은 **DDPM(Denoising Diffusion Probabilistic Model)** 형태로 구현되었고, 학습 시에는 대규모 그립 데이터셋을 통해 **그립의 분포**를 학습합니다. 이때 **조건부 생성**이 이뤄지는데, **조건**은 잡으려는 **대상 물체의 포인트 클라우드**입니다. 즉, 모델은 주어진 물체를 입력으로 받아 그 물체를 잡을 수 있는 후보 자세들을 생성하도록 훈련됩니다. 이러한 **조건부 디퓨전 생성** 덕분에, GraspGen은 **보이지 않는 새 객체**에 대해서도 그 형상에 맞는 합리적인 그립 자세를 여러 개 제시할 수 있게 됩니다. 요약하면, **디퓨전 모델의 도입으로 GraspGen은 6-DOF 공간에서의 복잡한 탐색 문제를 확률적 생성 문제로 바꾸어**, **성공률 높고 다양성 있는 그립 솔루션**을 만들어냅니다.
+
+### 3.2 6-DOF 그리핑 문제와 표현 방식
+
+**6-DOF 그리핑**이란 로봇 그리퍼의 **3차원 위치 (x, y, z)**와 **회전 자세 (roll, pitch, yaw의 3축 회전)**를 모두 고려한 잡기를 의미합니다. 이는 단순한 탁상 로봇의 상향식(grasp from top) 2D 그립과 달리, **어떤 방향에서든 물체를 쥘 수 있는 일반적인 시나리오**를 포괄합니다. 따라서 6-DOF 그립 생성 문제는 **연속 공간에서의 탐색 문제**이며, 매우 **고차원적**이고 복잡합니다. GraspGen에서는 각 그립을 표현하기 위해 **SE(3)** 공간의 포즈(평행잡이 그리퍼인 경우 6자유도)와 추가로 그리퍼의 손가락 간격(또는 흡착 여부) 등을 변수로 포함시켰습니다. 예컨대 병렬 그리퍼의 경우, 최종 실행시에는 손가락 간격을 적절히 조절해야 하지만, 생성 단계에서는 주로 **그립 중심 위치와 방향**에 초점을 맞추고, 폭은 사후에 조정하거나 평가시 고려하는 방식입니다. (DexDiffuser와 달리 GraspGen은 **관절을 가지지 않은 단순 그리퍼**에 집중하기 때문에 생성 시 **그립 pose만 샘플링**하고 관절 값은 고정/단순화했습니다.)
+
+6-DOF 그립의 **평가 기준**은 주요하게 두 가지입니다: **물체를 안정적으로 잡을 수 있는가** (force closure나 충돌 없음 등)와 **잡은 후 들어올릴 때 미끄러지지 않는가**입니다. 이러한 기준을 학습시키기 위해 GraspGen은 **시뮬레이션**을 활용했습니다. 53백만 개에 이르는 그립 데이터는 시뮬레이터 상에서 다양한 객체를 다양한 각도로 시도한 결과로, **성공/실패 라벨**이 포함되어 있습니다. 이를 통해 GraspGen의 생성 모델은 **성공한 그립들의 분포**를 학습하고, Discriminator는 **성공/실패를 식별**하도록 훈련되었습니다. 6-DOF 문제의 난점 중 하나는 **부분 관찰(partial observation)**입니다. 로봇은 보통 하나의 카메라 시점에서 물체를 보기에, 물체의 숨은 면이 존재합니다. 이전 연구들은 **싱글 뷰 포인트 클라우드**만을 사용하거나, 또는 여러 뷰를 합쳐 **완전한 point cloud**으로 가정하기도 했는데, GraspGen 연구에서는 **두 경우를 모두 훈련**에 활용하여 편중되지 않은 성능을 얻었습니다. 그 결과 부분 관측이 있는 경우와 없는 경우 모두에 비교적 강인한 그립 생성을 할 수 있었으며, 이는 실제 로봇에서 **센서 노이즈나 시야 제한**이 있어도 잘 동작할 수 있는 비결입니다.
+
+### 3.3 On-Generator Training의 개념과 역할
+
+GraspGen 논문에서 강조하는 **On-Generator Training**은 디퓨전 **생성기(Generator)**의 분포 위에서 **Discriminator**를 학습시키는 새로운 전략입니다. 전통적으로 그립 평가 네트워크(Discriminator 또는 grasp scorer)를 학습시킬 때는 **오프라인 데이터셋**(성공/실패 라벨이 달린 그립 샘플들)을 사용합니다. 그러나 GraspGen 연구진은 **생성 모델이 만들어내는 그립 분포가 초기 학습데이터 분포와 차이가 있다**는 점에 주목했습니다. 실제로 분석 결과, **생성기가 산출하는 그립들**과 **오프라인으로 수집한 그립들** 사이에는 **분포 차이(distribution shift)**가 존재하며, 특히 **실패 그립들의 분포 차이**가 크게 나타났습니다. 예를 들어, 오프라인 데이터셋에는 **물체에 전혀 닿지 않거나 크게 충돌하는 엉뚱한 그립**은 애초에 포함되지 않지만, 생성 모델은 학습 초기에 그런 그립들도 샘플링할 수 있습니다. 또 미세한 좌표 오차로 인해 **불안정한 그립**(예: 살짝 떠있거나 미끄러운 그립)도 생성기는 만들어낼 수 있는데, 이런 사례들도 기존 데이터에는 거의 없습니다. 따라서 **오프라인 데이터만으로 학습된 평가기**는 생성기가 저지르는 고유한 실수들을 충분히 인지하지 못해, **거짓 양성(false positive)**으로 잘못 판정할 위험이 있습니다.
+
+**On-Generator Training**은 이러한 문제를 해결하기 위해, **생성기 자체가 뽑아낸 샘플들**을 활용하여 Discriminator를 훈련시키는 방법입니다. 구체적으로, GraspGen은 현재의 생성 모델로부터 다양한 그립 후보들을 대량 생성하고, 이를 시뮬레이션이나 충돌 검사로 **성공/실패 라벨링**하여 새로운 훈련 데이터로 삼습니다. 이렇게 하면 평가기가 **현재 생성기가 만들어내는 오류 사례들을 직접 학습**하게 되므로, **모델 자신의 약점을 인지**하게 됩니다. 논문에서는 **지구 이동 거리(EMD)** 같은 지표로 오프라인 vs 온-제너레이터 데이터 분포 차이를 정량화했으며, 특히 **실패 사례의 분포 차이**가 큼을 확인했습니다. 그리고 **온-제너레이터 데이터로만 학습한 Discriminator가 가장 성능이 좋았다**는 결과를 보고했습니다. 오프라인 데이터로만 학습한 경우보다 AUC 기준 **6.5% 이상 성능이 낮았고**, 온-제너레이터 방식이 **거의 모든 경우 최적**의 필터링 성능을 보였다고 합니다. 연구진은 **온-제너레이터 훈련을 통해 생성기의 *false positive* (겉보기에는 그립 같으나 실제로는 실패하는 케이스)를 훨씬 잘 잡아낸다**고 분석합니다. 예컨대 생성 모델이 살짝 충돌이 나는 그립을 제안하면, 오프라인 데이터로 학습된 모델은 그런 사례를 본 적 없어 잡아내지 못할 수 있지만, 온-제너레이터로 학습한 모델은 **그런 충돌 사례를 학습**했기에 곧바로 걸러낸다는 것입니다.
+
+또한 GraspGen의 Discriminator는 구조적으로도 효율적으로 설계되어, 이전 SOTA 평가기보다 **메모리 사용이 21배나 적으면서** 성능은 더 높다고 합니다. 이는 On-Generator Training의 효과를 극대화하면서도 실시간 적용을 위한 경량화를 이뤘다는 점에서 주목할 만합니다. 요컨대, **On-Generator Training**은 GraspGen의 **이중 모듈(생성기-Discriminator) 체계**를 성공으로 이끄는 핵심 기법으로, **생성기와 Discriminator의 상호보완적 학습**을 통해 최종적으로 **더 정확하고 신뢰도 높은 그립 제안**이 이루어지도록 합니다. 그 결과 GraspGen은 유사한 디퓨전 기반 방법(예: DexDiffuser)의 Discriminator보다도 **우수한 그립 스코어링 능력**을 보여주며, 전체 시스템 성능 향상에 크게 기여했습니다.
+
+## 4. 논문의 장점과 잠재적 한계
+
+**GraspGen** 연구의 장점과 강점을 정리하면 다음과 같으며, 동시에 현재 한계점이나 향후 개선이 필요한 부분도 짚어보겠습니다.
+
+* **탁월한 성능 및 신뢰성:** GraspGen은 다수의 벤치마크에서 **현재까지 보고된 최고 성능**을 달성하였습니다. 단일 물체 그립 성공률(AUC 등 지표)에서 경쟁 방법들을 압도했고, 복잡한 작업 환경(FetchBench 등)에서도 기존 방법 대비 크게 향상된 성공률(+16.9% 등)을 보여주었습니다. 특히 **생성 단계에서 다양한 후보를 만들고, 평가 단계에서 걸러내는 2단계 접근** 덕분에 **성공률과 신뢰도가 매우 높습니다**. 그립 실패 가능성이 높은 경우 Discriminator가 이를 제거하므로, 최종 선택된 그립은 성공 확률이 높습니다. 이러한 **고품질 그립 생성 능력**은 실제 로봇 응용에서 신뢰도를 높이는 데 크게 기여할 것입니다.
+
+* **범용성과 확장성:** 이 논문은 **여러 종류의 로봇 손 (embodiments)**에 대해 단일 프레임워크로 학습/적용이 가능함을 보였습니다. Franka 병렬그리퍼, Robotiq 2F-140, 진공 흡착그리퍼 등 서로 다른 구동 원리의 그리퍼에 대해 하나의 모델이 모두 대응하며, 물체도 가정된 카테고리나 사전 모델링 없이 **임의의 새로운 물체**에 적용 가능합니다. 이는 산업 현장에서 로봇 핸드를 교체하거나 다양한 부품을 다룰 때 **추가 학습 없이도 대응**할 수 있음을 시사합니다. 또한 부분 point cloud과 완전 point cloud 등 **센서 조건의 차이**에도 하나의 모델로 대응할 수 있음을 보였는데, 이는 현실 세계의 다양한 센서 세팅에도 유연하게 사용할 수 있다는 장점입니다. 나아가 **방대한 학습 데이터(53백만 그립)**를 공개함으로써, 향후 다른 연구자들이 이 프레임워크를 개선하거나 다른 과제로 확장하는 데 기반을 제공하고 있습니다.
+
+* **혁신적 학습 기법 (On-Generator Training):** 앞서 분석한 바와 같이, On-Generator Training은 생성기-Discriminator 구조의 학습 패러다임을 진일보시킨 것으로서, **모델 자신의 실수까지 학습에 활용**하는 똑똑한 방법입니다. 이를 통해 Discriminator의 품질을 크게 끌어올려 전체 시스템 성능을 향상시켰습니다. 이 기법은 GraspGen에 국한되지 않고, 향후 유사한 **생성-판별 구조의 로봇 학습**(예: 경로 생성+평가, 행동 생성+평가 등) 문제들에도 응용될 수 있는 **일반적인 아이디어**로 평가됩니다.
+
+* **실시간 동작 및 경량 구현:** 본 연구는 **디퓨전 모델 기반임에도 실시간 활용 가능성**을 보여주었습니다. 저자는 GraspGen의 추론이 **최적화 전에도 약 20Hz**로 동작하여, 사실상 **1초에 20개의 그립 제안**을 할 수 있음을 데모하였습니다. 이는 GPU 가속 등을 활용한 결과로 보이는데, 추가로 TensorRT 최적화를 하면 더 빨라질 수 있다고 합니다. 이 정도 속도면 산업용 로봇의 작업 사이클에도 충분히 투입 가능하다는 의미입니다. 또한 Discriminator는 동종 최고 기법 대비 **메모리 요구량이 1/21 수준**으로 매우 가볍게 설계되어, 임베디드 로봇 플랫폼에도 탑재하기에 유리합니다. 이러한 **효율성**은 GraspGen을 연구 용도뿐 아니라 **실제 제품화**하거나 현장에 적용하는 데 중요한 강점입니다.
+
+以上의 장점들에도 불구하고, **아직 남아있는 한계나 도전**들도 존재합니다:
+
+* **복잡한 형태에 대한 일반화 한계:** 저자들은 GraspGen의 성능이 **아주 복잡하거나 예측 불가능한 형상의 물체**에 대해서는 다소 떨어질 가능성을 언급했습니다. 학습 데이터에 포함되지 않은 기괴한 모양이거나, 잡기 매우 까다로운 물체 (예: 심하게 오목한 형태 등)의 경우 완벽히 일반화하려면 추가 연구가 필요합니다. 물론 대규모 데이터로 어느 정도 커버하려 했지만, **무한한 형태의 물체**에 대해 항상 성공을 보장할 수는 없는 한계가 남습니다.
+
+* **높은 연산 자원 요구 및 실시간 처리:** 비록 20Hz 추론이 보고되긴 했지만, 이는 **강력한 GPU 가속 환경**을 전제로 한 것입니다. 디퓨전 모델 특성상 한번 추론에 여러 스텝을 거치고 다수 샘플을 평가해야 하므로, **저사양 장치나 로보틱 임베디드 보드**에서 돌리기에는 여전히 무겁습니다. 특히 **여러 물체를 동시에 잡는 경우**나 **연속된 작업**에서는 실시간 처리에 제약이 있을 수 있습니다. 이 부분은 향후 모델 경량화, 추론 최적화, 또는 중요한 샘플만 골라내는 기법 등으로 개선이 요구됩니다.
+
+* **학습 데이터 및 환경 편중:** 5천만 개 이상의 그립 데이터셋을 구축했지만, 이는 전부 **시뮬레이터 상에서 생성된 것**입니다. 현실의 마찰계수나 물체 질감, 예기치 않은 환경 변화 등은 완벽히 반영되기 어렵습니다. 실제 로봇 실험에서 **노이즈 있는 관측**으로도 잘 동작했다고는 하지만, 이는 제한된 환경에서의 검증입니다. **보다 다양한 실제 환경**(예: 조명 변화, 센서 오류, 동적인 방해물 등)에서의 테스트가 추가로 필요합니다. 또한 **객체 인식 및 세그멘테이션 모듈**에 대한 가정도 있습니다. 논문에서도 GraspGen의 성능이 **입력되는 물체 point cloud의 품질, 특히 분리(segmentation)의 정확도에 영향을 받는다**고 언급합니다. 잘못된 세그멘테이션으로 엉뚱한 점들이 섞이면 그립 후보가 이상해질 수 있기에, 완전 자율 시스템을 위해서는 이 부분의 견고함이 과제로 남습니다.
+
+* **범용 로보틱 플랫폼에의 통합:** GraspGen은 현재 보고된 바로는 일부 산업용 로봇(Franka 등)과 설정에서 시험되었습니다. **다양한 로봇 팔**과의 통합이나, **모바일 매니퓰레이터** 등 다른 플랫폼에서의 검증은 추가로 이뤄져야 합니다. 예를 들어, 로봇 팔의 제어 주기나 모션 플래너와의 연계, 충돌 회피를 위한 실시간 경로 생성 등과 GraspGen을 결합하려면 부가적인 연구가 필요합니다. 저자들도 이러한 **일반화와 경량화**를 향후 과제로 지목하였습니다.
+
+요약하면, **GraspGen은 현재까지 6-DOF 그리핑 분야에서 가장 진일보한 결과를 보여주지만**, **현실 적용까지 넘어서야 할 공학적 과제들**이 일부 남아 있습니다. 다행히도 제시된 한계들은 뚜렷하며, 연구진은 이를 인지하고 **추가 연구 방향**(예: 모델 경량화, 범용성 향상)을 제안하고 있습니다. 따라서 이러한 부분들이 개선된다면 GraspGen의 영향력은 더욱 커질 것으로 기대됩니다.
+
+## 5. 산업적/실용적 활용 가능성 평가
+
+GraspGen이 보여준 기술은 **다양한 산업 분야와 실제 응용**에서 큰 잠재력을 지닙니다. 몇 가지 측면에서 그 활용 가능성을 평가해보겠습니다.
+
+* **제조 및 물류 자동화:** GraspGen의 **범용 물체 파지** 능력은 제조 공장이나 물류 창고의 **로봇 피킹** 작업에 바로 응용될 수 있습니다. 기존에는 로봇이 새로운 제품이나 부품을 집기 위해선 일일이 사례를 프로그래밍하거나, 제한된 각도로만 집도록 설계해야 했습니다. 하지만 GraspGen을 탑재한 로봇이라면 **사전에 본 적 없는 부품도 바로 잡아낼 수 있고**, 박스나 선반에 **무질서하게 놓인 물건(클러터)**도 효과적으로 집어낼 수 있습니다. 이는 **전자상거래 물류**에서 불특정 다품종의 아이템 피킹, **공장 조립라인**에서 다양한 부품의 정렬/공급 등에 혁신을 가져올 수 있습니다. 또한 여러 형태의 그리퍼를 하나의 모델로 커버할 수 있으므로, 생산 라인 교체나 제품 변경 시 **소프트웨어 업데이트만으로 대응**할 수도 있습니다.
+
+* **의료 및 서비스 로봇:** GraspGen의 기술은 **정밀하고 적응적인 물체 다루기**가 필요한 의료/서비스 분야에서도 유용합니다. 예를 들어, 간호 보조 로봇이 약병이나 의료기구 등 다양한 형상의 물체를 집어 전달하거나, 장애인 보조 로봇이 가정 내 일상 용품(컵, 책, 옷 등)을 스스로 집어 건네주는 시나리오를 생각해볼 수 있습니다. 이러한 경우 사전에 정의되지 않은 새로운 물건도 등장하기 마련인데, GraspGen의 학습된 지능은 **한 번도 본 적 없는 물건도 인간처럼 바로 집어드는** 적응성을 제공합니다. 특히 사람과 함께 일하는 환경에서는 실패나 물체 낙하가 위험할 수 있는데, GraspGen의 높은 신뢰도는 **안전성** 측면에서도 장점입니다.
+
+* **협동로봇 및 범용 로봇 플랫폼:** 최근 **협동로봇**이나 다목적 로봇 팔이 중소 제조현장이나 서비스 분야에 도입되고 있는데, GraspGen은 이러한 **범용 플랫폼의 핵심 모듈**로 활용될 수 있습니다. 과거에는 로봇을 한 가지 작업에 투입하려면 그에 맞는 **전용 그립 알고리즘**을 장착해야 했지만, GraspGen 같은 범용 그립 생성기가 있다면 로봇이 작업 종류를 바꿀 때마다 별도 프로그래밍이나 튜닝 없이도 **알아서 최적의 그립을 찾기** 때문에, **소프트웨어 업그레이드만으로 다양한 작업에 투입**할 수 있게 됩니다. 이는 로봇 활용도의 극대화와 운영 비용 절감으로 이어져 산업계에서 환영받을 요소입니다.
+
+* **실용화를 위한 고려사항:** GraspGen 기술을 산업에 실제 적용하려면 남은 과제들도 있습니다. 예를 들어, **연산 리소스** 문제를 들 수 있는데, 공장에서는 여러 로봇이 동시에 움직이므로 각각에 고성능 GPU를 장착하기보다 **엣지 컴퓨팅 장치나 중앙 서버**에서 연산을 처리하는 구조를 생각할 수 있습니다. 다행히 GraspGen의 추론이 20Hz급으로 보고되어 비교적 실시간성이 확보되므로, 이러한 구성을 통해 현장 적용이 현실화될 수 있습니다. 또한 **안전 기준**에 부합하도록 결과를 검증하는 절차 (예: 아주 드문 실패 케이스에 대한 대처)도 마련되어야 합니다. 하지만 이러한 공학적 조율이 이루어진다면, GraspGen이 지향하는 **“보고 배우는 로봇”**, 즉 **복잡한 물체 조작을 학습으로 익힌 로봇**이 산업 현장에 등장할 수 있을 것입니다.
+
+-->
+<p><strong>참고</strong></p>
+<ul>
+<li><a href="https://www.aitimes.com/news/articleView.html?idxno=201061">엔비디아, 차세대 로봇 손 기술 AI ‘그랩젠’ 공개</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

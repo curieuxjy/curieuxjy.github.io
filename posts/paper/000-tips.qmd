@@ -8,6 +8,8 @@ toc: true
 number-sections: true
 ---
 
+이미지
+
 ```html
 <center>
 <img src="../../images/2023-05-07-accessibility/22.png" alt="22" width="67%" />
@@ -15,6 +17,7 @@ number-sections: true
     <figcaption>Lecture 16 - Radial Basis Functions Slides(Caltech)</figcaption>
 </center>
 ```
+
 
 글자 색
 ```html
@@ -39,6 +42,13 @@ Isaac Orbit (or orbit in short) is **a unified and modular framework**, built on
 </details>
 
 ```
+
+비디오
+
+```
+{{< video https://www.youtube.com/embed/zCEYiCxrL_0 >}}
+```
+
 
 Tablesets(Tab과 같은 기능)
 
