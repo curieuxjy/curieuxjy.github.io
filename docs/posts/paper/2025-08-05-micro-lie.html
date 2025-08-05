@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-05">
+<meta name="description" content="A micro Lie theory for state estimation in robotics">
+
+<title>📃Micro Lie Theory 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#lie-군과-lie-대수-기본-개념-복습" id="toc-lie-군과-lie-대수-기본-개념-복습" class="nav-link" data-scroll-target="#lie-군과-lie-대수-기본-개념-복습"><span class="header-section-number">2.1</span> Lie 군과 Lie 대수 기본 개념 복습</a></li>
+  <li><a href="#상태-추정에서의-manifold-상태-표현과-oplus-연산-retraction" id="toc-상태-추정에서의-manifold-상태-표현과-oplus-연산-retraction" class="nav-link" data-scroll-target="#상태-추정에서의-manifold-상태-표현과-oplus-연산-retraction"><span class="header-section-number">2.2</span> 상태 추정에서의 Manifold 상태 표현과 <span class="math inline">\oplus</span> 연산 (Retraction)</a></li>
+  <li><a href="#lie-이론을-활용한-상태-추정-오차-표현과-필터-구성" id="toc-lie-이론을-활용한-상태-추정-오차-표현과-필터-구성" class="nav-link" data-scroll-target="#lie-이론을-활용한-상태-추정-오차-표현과-필터-구성"><span class="header-section-number">2.3</span> Lie 이론을 활용한 상태 추정: 오차 표현과 필터 구성</a></li>
+  <li><a href="#lie-군-위의-미분-jacobian-계산-방법" id="toc-lie-군-위의-미분-jacobian-계산-방법" class="nav-link" data-scroll-target="#lie-군-위의-미분-jacobian-계산-방법"><span class="header-section-number">2.4</span> Lie 군 위의 미분: Jacobian 계산 방법</a></li>
+  <li><a href="#유클리드-기반-필터와의-비교-무엇이-다르고-어떤-장점이-있나" id="toc-유클리드-기반-필터와의-비교-무엇이-다르고-어떤-장점이-있나" class="nav-link" data-scroll-target="#유클리드-기반-필터와의-비교-무엇이-다르고-어떤-장점이-있나"><span class="header-section-number">2.5</span> 유클리드 기반 필터와의 비교 – 무엇이 다르고 어떤 장점이 있나?</a></li>
+  <li><a href="#맺으며" id="toc-맺으며" class="nav-link" data-scroll-target="#맺으며"><span class="header-section-number">2.6</span> 맺으며</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Micro Lie Theory 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">lie</div>
+    <div class="quarto-category">state-estimation</div>
+    <div class="quarto-category">basic</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A micro Lie theory for state estimation in robotics
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 5, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/1812.01537">Paper Link</a></li>
+</ul>
+<ol type="1">
+<li>🎯 이 논문은 로봇 공학 분야의 상태 추정에서 Lie 군 이론을 로봇 공학자들이 더 쉽게 이해하고 활용할 수 있도록 ’마이크로 Lie 이론’으로 단순화하여 제시합니다.</li>
+<li>🛠️ 저자들은 Lie 이론의 필수적인 부분만을 선별하고, Exp, Log, ⊕, 와 같은 연산자를 도입하여 Lie 대수 대신 벡터 공간을 활용함으로써 불확실성 관리 및 야코비 행렬 계산을 단순화합니다.</li>
+<li>🤖 이 연구는 로봇 위치 추정 및 매핑(SLAM)과 같은 응용 분야에서 Kalman 필터와 그래프 기반 최적화 알고리즘을 통해 제안된 이론의 실용성과 우아함을 시연하며, 관련 C++ 라이브러리(manif)도 제공합니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-08-05-micro-lie/1.png" width="80%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>이 논문은 19세기 수학자 Sophus Lie가 연속 변환 <code>group</code> 이론의 기초를 마련한 이래 다양한 과학 기술 분야로 영향을 확장해 온 수학적 추상체인 <code>Lie group</code>에 대해 다룬다. 특히 로봇 공학 분야에서는 최근 <code>estimation</code>, 그 중에서도 <code>navigation</code>을 위한 <code>motion estimation</code> 분야에서 그 사용이 두드러지고 있다. 하지만 대다수의 로봇 공학자에게 <code>Lie group</code>은 여전히 고도로 추상적인 개념으로 이해하고 사용하기 어렵다.</p>
+<p>이 논문은 로봇 공학의 <code>estimation</code>에서 <code>Lie theory</code>의 모든 역량을 활용할 필요는 없다는 점에 착안하여, 이론의 핵심 원리만을 선별하여 명확하고 유용한 아이디어를 전달하고자 한다. 이러한 간소화된 <code>micro Lie theory</code>는 <code>SLAM</code>, 시각 <code>odometry</code> 등 현대 로봇 공학의 <code>estimation algorithm</code>에서 매우 유용함이 입증되었다. 이 <code>micro Lie theory</code>와 함께, 로봇 공학에서 가장 많이 사용되는 주요 <code>Lie group</code>에 대한 공식(대부분의 <code>Jacobian matrix</code>와 이를 쉽게 조작하는 방법 포함)을 참고 자료로 제공한다. 또한, 여기에 설명된 모든 기능을 구현하는 새로운 C++ <code>template-only library</code>인 <code>manif</code>도 소개한다.</p>
+<p><strong>I. 서론</strong></p>
+<p>최근 로봇 커뮤니티에서는 정밀도, 일관성 및 해법의 안정성에 대한 요구가 증가함에 따라 <code>estimation</code> 문제를 적절하게 공식화하려는 노력이 활발하다. 이는 상태 및 측정값, 이들을 연결하는 함수, 그리고 불확실성을 적절하게 모델링하는 것이 중요하기 때문이다. 이러한 노력은 상태 표현이 진화하는 <code>Lie group</code>의 부드러운 <code>topologic surface</code>인 <code>manifold</code>를 포함하는 설계로 이어졌다. <code>Lie theory</code>(<code>LT</code>)를 활용하여 불확실성, 미분 및 적분을 정밀하고 쉽게 다룰 수 있는 엄격한 계산 체계를 구축할 수 있다. 일반적으로 이러한 작업은 <code>SO(3)</code> 및 <code>SE(3)</code>와 같은 잘 알려진 <code>manifold</code>에 중점을 둔다.</p>
+<p><code>Lie group</code>을 처음 접할 때, 위상학적, 대수적, 기하학적 관점에서 접근하는 것이 중요하다. 위상학적 관점은 <code>manifold</code>의 형태를 다루며 <code>tangent space</code> 및 <code>exponential map</code>과의 관계에 대한 직관을 제공한다. 대수적 관점은 <code>group operation</code>과 구체적인 구현을 포함하여 대수적 속성을 활용하여 폐쇄형 공식을 개발하거나 단순화한다. 로봇 공학에 특히 유용한 기하학적 관점은 <code>group element</code>를 로봇의 위치, 속도, 방향 등과 연결한다.</p>
+<p><code>Lie theory</code>는 결코 간단하지 않다. 이 논문은 기존의 “기본”, “매우 기본”, “순진한” <code>Lie theory</code> 관련 서적들보다 더욱 간소화된 <code>micro Lie theory</code>를 제공한다. 이는 <code>Lie theory</code>에서 로봇 공학의 불확실성 관리에 필요한 작은 부분 집합만을 선별하고, <code>didactic</code>하게 많은 중복을 통해 설명함으로써 <code>Lie theory</code> 진입 장벽을 낮추려는 목적을 가진다. 특히, 대부분의 최적 <code>estimator</code>에 필수적이지만 구현에 어려움을 겪는 <code>Jacobian</code> 계산에 중점을 둔다. 이 논문은 새로운 <code>open-source</code> C++ <code>header-only library</code>인 <code>manif</code>(<code>https://github.com/artivis/manif</code>)와 함께 제공된다. <code>manif</code>는 널리 사용되는 <code>SO(2)</code>, <code>SO(3)</code>, <code>SE(2)</code>, <code>SE(3)</code> <code>group</code>을 구현하며 <code>analytic Jacobian</code> 생성을 지원한다.</p>
+<p><strong>II. A MICRO LIE THEORY</strong></p>
+<p><strong>A. <code>Lie Group</code></strong></p>
+<p><code>Lie group</code>은 <code>group</code>과 <code>smooth manifold</code>의 개념을 통합한 것으로, <code>group axiom</code>을 만족하는 <code>smooth manifold</code>이다. <code>smooth manifold</code>는 국소적으로 <code>linear space</code>와 유사한 <code>topological space</code>로, 곡면이지만 가장자리나 뾰족한 부분이 없는 부드러운 <code>(hyper)-surface</code>로 시각화될 수 있다. <code>manifold</code>의 부드러움은 각 지점에 고유한 <code>tangent space</code>가 존재함을 의미한다. <code>group axiom</code>은 다음과 같다:</p>
+<ul>
+<li>Closure under <code>◦</code>: <span class="math inline">X \circ Y \in G</span> (1)</li>
+<li>Identity <span class="math inline">E</span>: <span class="math inline">E \circ X = X \circ E = X</span> (2)</li>
+<li>Inverse <span class="math inline">X^{-1}</span>: <span class="math inline">X^{-1} \circ X = X \circ X^{-1} = E</span> (3)</li>
+<li>Associativity: <span class="math inline">(X \circ Y) \circ Z = X \circ (Y \circ Z)</span> (4)</li>
+<li><code>Lie group</code>에서는 모든 <code>tangent space</code>가 동일한 구조를 가지며, <code>group structure</code>는 <code>manifold</code> 요소들의 합성 결과가 <code>manifold</code> 내에 유지되고, 각 요소가 <code>manifold</code> 내에 <code>inverse</code>를 가지도록 한다. <code>identity</code>에서의 <code>tangent space</code>를 <code>Lie algebra</code>라고 한다.</li>
+</ul>
+<p><strong>B. <code>Group Action</code></strong></p>
+<p><code>Lie group</code>은 다른 <code>set</code>의 요소들을 변환하는 기능을 제공하며, 이는 로봇 공학에서 <code>rotation</code>, <code>translation</code>, <code>scaling</code> 등에 광범위하게 사용된다. <code>Lie group M</code>과 <code>set V</code>가 주어졌을 때, <span class="math inline">X \in M</span>의 <span class="math inline">v \in V</span>에 대한 <code>action</code>은 <span class="math inline">X \cdot v</span>로 표기하며 다음 <code>axiom</code>을 만족해야 한다: - Identity: <span class="math inline">E \cdot v = v</span> (6) - Compatibility: <span class="math inline">(X \circ Y) \cdot v = X \cdot (Y \cdot v)</span> (7) 일반적인 예로는 <code>rotation matrices SO(n)</code>, <code>unit quaternions group</code>, <code>rigid motion group SE(n)</code> 등이 있다.</p>
+<p><strong>C. <code>Tangent Space</code>와 <code>Lie Algebra</code></strong></p>
+<p><code>Lie group</code>의 <code>manifold M</code> 위를 움직이는 점 <span class="math inline">X(t)</span>의 속도 <span class="math inline">\dot{X} = \partial X / \partial t</span>는 <span class="math inline">X</span>에서의 <code>tangent space</code> <span class="math inline">T_X M</span>에 속한다. <code>manifold</code>의 부드러움은 각 지점에 고유한 <code>tangent space</code>가 존재함을 의미한다.</p>
+<ol type="1">
+<li><code>Lie algebra</code> <span class="math inline">\mathfrak{m}</span>: <code>identity</code> <span class="math inline">E</span>에서의 <code>tangent space</code> <span class="math inline">T_E M</span>를 <code>Lie algebra</code> <span class="math inline">\mathfrak{m}</span>이라 한다: <span class="math inline">\mathfrak{m} \triangleq T_E M</span> (8). 모든 <code>Lie group</code>에는 관련된 <code>Lie algebra</code>가 있다. <code>Lie algebra</code> <span class="math inline">\mathfrak{m}</span>은 <code>vector space</code>이다. 그 요소들은 <code>M</code>의 자유도 <code>m</code>에 해당하는 <code>m</code>차원 <code>vector</code>로 식별될 수 있다. <code>exponential map</code> <span class="math inline">\text{exp}: \mathfrak{m} \to M</span>은 <code>Lie algebra</code>의 요소를 <code>group</code>의 요소로 정확히 변환한다. <code>log map</code>은 역 연산이다. <code>multiplicative group</code>의 경우, <code>Lie algebra</code>의 요소들은 <span class="math inline">v^\wedge = X^{-1} \dot{X} = -\dot{X}^{-1} X</span> (9)와 같은 형태로 얻을 수 있다.</li>
+<li><code>Cartesian vector space</code> <span class="math inline">\mathbb{R}^m</span>: <code>Lie algebra</code> 요소 <span class="math inline">\tau^\wedge</span>는 <code>skew-symmetric matrices</code>, <code>imaginary numbers</code>, <code>pure quaternions</code>와 같은 비자명한 구조를 가지지만, 이는 <code>m</code>개의 <code>generator</code> <span class="math inline">E_i</span>의 <code>linear combination</code>으로 표현될 수 있다. <code>Hat</code> 및 <code>Vee</code>(<span class="math inline">\vee</span>)라는 두 개의 상호 역 <code>linear map</code> 또는 <code>isomorphism</code>을 통해 <span class="math inline">\mathfrak{m}</span>에서 <span class="math inline">\mathbb{R}^m</span>으로, 그 반대로 변환할 수 있다: Hat: <span class="math inline">\mathbb{R}^m \to \mathfrak{m}</span>; <span class="math inline">\tau \mapsto \tau^\wedge = \sum_{i=1}^m \tau_i E_i</span> (10) Vee: <span class="math inline">\mathfrak{m} \to \mathbb{R}^m</span>; <span class="math inline">\tau^\wedge \mapsto (\tau^\wedge)^\vee = \tau = \sum_{i=1}^m \tau_i e_i</span> (11) 따라서 <span class="math inline">\mathfrak{m}</span>은 <span class="math inline">\mathbb{R}^m</span>과 <code>isomorphic</code>하다 (<span class="math inline">\mathfrak{m} \cong \mathbb{R}^m</span>). 이 논문에서는 <span class="math inline">\mathfrak{m}</span>보다 <span class="math inline">\mathbb{R}^m</span>을 선호하며, 모든 연산자 (<code>adjoint</code>, <code>Jacobian</code>, <code>perturbation</code>, <code>covariance matrix</code>)는 <span class="math inline">\mathbb{R}^m</span>에 대해 정의된다.</li>
+</ol>
+<p><strong>D. <code>Exponential Map</code></strong></p>
+<p><code>exponential map</code> <span class="math inline">\text{exp}(\cdot)</span>은 <code>Lie algebra</code>의 요소를 <code>group</code>으로 정확히 변환하는 <code>retraction</code> 연산이다. 직관적으로 <code>exp()</code>는 <code>tangent element</code>를 <code>geodesic</code>을 따라 <code>manifold</code> 주위로 감싼다. 역 <code>map</code>은 <code>log()</code>이다. <span class="math inline">\dot{X} = X v^\wedge</span> (12) 이 <code>ODE</code>의 해는 <span class="math inline">X(t) = X(0) \text{exp}(v^\wedge t)</span> (13)이다.</p>
+<p><code>exponential map</code>과 그 역 <code>logarithmic map</code>은 다음과 같이 쓸 수 있다: <span class="math inline">\text{exp}: \mathfrak{m} \to M</span>; <span class="math inline">\tau^\wedge \mapsto X = \text{exp}(\tau^\wedge)</span> (14) <span class="math inline">\text{log}: M \to \mathfrak{m}</span>; <span class="math inline">X \mapsto \tau^\wedge = \text{log}(X)</span> (15)</p>
+<p>폐쇄형 <code>exponential map</code>은 <code>absolutely convergent Taylor series</code>를 사용하여 얻을 수 있다. <code>Capitalized Exp</code>와 <code>Log maps</code>: <code>Exp</code>와 <code>Log</code> <code>map</code>은 <code>vector element</code> <span class="math inline">\tau \in \mathbb{R}^m</span>를 <code>M</code>의 요소 <span class="math inline">X</span>에 직접 매핑하는 편리한 단축키이다. <span class="math inline">X = \text{Exp}(\tau) \triangleq \text{exp}(\tau^\wedge)</span> (23) <span class="math inline">\tau = \text{Log}(X) \triangleq (\text{log}(X))^\vee</span> (24)</p>
+<p><strong>E. <code>Plus</code> 및 <code>Minus</code> 연산자</strong></p>
+<p><code>Plus</code>(<span class="math inline">\oplus</span>) 및 <code>Minus</code>(<span class="math inline">\boxminus</span>) 연산자는 <code>curved manifold</code>의 요소들 사이에 증분을 도입하고 이를 <code>flat tangent vector space</code>에서 표현할 수 있도록 한다. 이들은 <code>Exp/Log</code> 연산과 <code>composition</code>을 결합한다. <code>composition</code>의 비가환성 때문에, 피연산자의 순서에 따라 <code>right-</code> 및 <code>left-</code> 버전으로 정의된다.</p>
+<ul>
+<li><code>right-⊕</code>: <span class="math display">Y = X \oplus X_\tau \triangleq X \circ \text{Exp}(X_\tau) \in M</span> (25)</li>
+<li><code>right-boxminus</code>: <span class="math display">X_\tau = Y \boxminus X \triangleq \text{Log}(X^{-1} \circ Y) \in T_X M</span> (26)</li>
+<li><code>left-⊕</code>: $<span class="math inline">Y = E_\tau \oplus X \triangleq \text{Exp}(E_\tau) \circ X \in M</span> (27)</li>
+<li><code>left-boxminus</code>: <span class="math display">E_\tau = Y \boxminus X \triangleq \text{Log}(Y \circ X^{-1}) \in T_E M</span> (28)</li>
+</ul>
+<p>이 논문에서는 기본적으로 <code>perturbation</code>을 국소적으로 표현하기 위해 <code>right</code> 형태의 <code>⊕</code> 및 <span class="math inline">\boxminus</span>를 사용한다.</p>
+<p><strong>F. <code>Adjoint</code> 및 <code>Adjoint Matrix</code></strong></p>
+<p><code>Eτ ⊕ X = X ⊕ Xτ</code>를 통해 국소(<code>local</code>) <code>tangent element</code>와 전역(<code>global</code>) <code>tangent element</code> 사이의 관계를 파악할 수 있다. - <code>Adjoint</code>: <code>M</code>의 <span class="math inline">X</span>에 대한 <code>Adjoint</code>는 <span class="math inline">\text{Ad}_X: \mathfrak{m} \to \mathfrak{m}</span>; <span class="math inline">\tau^\wedge \mapsto \text{Ad}_X (\tau^\wedge) \triangleq X \tau^\wedge X^{-1}</span> (29)로 정의되어 <span class="math inline">E_\tau^\wedge = \text{Ad}_X (X_\tau^\wedge)</span>를 만족한다. - <code>Adjoint matrix</code>: <span class="math inline">\text{Ad}_X</span>는 <code>linear</code>이므로, <code>Cartesian tangent vector</code> <span class="math inline">E_\tau \cong E_\tau^\wedge</span>와 <span class="math inline">X_\tau \cong X_\tau^\wedge</span>를 매핑하는 동등한 <code>matrix operator</code> <span class="math inline">\text{Ad}_X</span>를 찾을 수 있다: <span class="math inline">\text{Ad}_X: \mathbb{R}^m \to \mathbb{R}^m</span>; <span class="math inline">X_\tau \mapsto E_\tau = \text{Ad}_X X_\tau</span> (30) 이는 <span class="math inline">(\text{Ad}_X \tau = (X \tau^\wedge X^{-1})^\vee)</span> (31)를 개발하여 계산할 수 있다. <code>Adjoint matrix</code>는 <span class="math inline">X</span>에서의 <code>tangent space</code>의 <code>vector</code>를 <code>origin</code>에서의 <code>tangent space</code>의 <code>vector</code>로 <code>linear</code>하게 변환하는 데 자주 사용된다.</p>
+<p><strong>G. <code>Lie Group</code>에서의 미분</strong></p>
+<p><code>Lie group</code>에서의 미분은 주로 <code>vector tangent space</code>를 매핑하는 <code>Jacobian matrix</code> 형태로 정의된다. 이는 불확실성과 증분을 적절하고 쉽게 정의할 수 있기 때문이다. 이러한 <code>Jacobian</code>을 사용하면 <code>Lie group</code>의 불확실성 관리 공식이 <code>vector space</code>의 공식과 크게 유사해진다.</p>
+<ol type="1">
+<li><code>Vector space</code>에서의 <code>Jacobian</code>: 함수 <span class="math inline">f: \mathbb{R}^m \to \mathbb{R}^n</span>에 대해 <code>Jacobian matrix</code>는 모든 편미분을 쌓은 <span class="math inline">n \times m</span> <code>matrix</code>이다: <span class="math inline">J = \frac{\partial f(x)}{\partial x} \triangleq \begin{pmatrix} \frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_m} \\ \vdots &amp; \ddots &amp; \vdots \\ \frac{\partial f_n}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_n}{\partial x_m} \end{pmatrix} \in \mathbb{R}^{n \times m}</span> (35) <code>Jacobian</code>은 <span class="math inline">J = \frac{\partial f(x)}{\partial x} = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} \in \mathbb{R}^{n \times m}</span> (38)과 같이 정의할 수 있다.</li>
+<li><code>Lie group</code>에서의 <code>Right Jacobian</code>: <code>manifold</code>에서 작동하는 함수 <span class="math inline">f: M \to N</span>의 <code>Jacobian</code>을 정의하기 위해 <code>⊕</code> 및 <span class="math inline">\boxminus</span> 연산자를 사용할 수 있다: <span class="math inline">^X D_X f(X) \triangleq \lim_{\tau \to 0} \frac{f(X \oplus \tau) \boxminus f(X)}{\tau} \in \mathbb{R}^{n \times m}</span> (41a) 이를 <code>right Jacobian</code>이라 부른다. 이는 <code>X</code>와 <code>f(X)</code>에서의 국소 <code>tangent space</code>의 <code>vector</code>로 표현된 무한소 변화량의 미분이다.</li>
+<li><code>Lie group</code>에서의 <code>Left Jacobian</code>: <code>left plus</code> 및 <code>minus operator</code>에서 미분을 정의할 수도 있다: <span class="math inline">^E D_X f(X) \triangleq \lim_{\tau \to 0} \frac{f(\tau \oplus X) \boxminus f(X)}{\tau} \in \mathbb{R}^{n \times m}</span> (44) 이를 <code>left Jacobian</code>이라 부른다. 이는 <code>global tangent space</code>(<code>Lie algebra</code>)를 매핑하는 <code>matrix</code>이다. <code>left Jacobian</code>과 <code>right Jacobian</code>은 <code>adjoint</code>에 의해 관련된다: <span class="math inline">^E D_X f(X) \text{Ad}_X = \text{Ad}_{f(X)} ^X D_X f(X)</span> (46)</li>
+</ol>
+<p><strong>H. <code>Manifold</code>에서의 불확실성, <code>Covariance Propagation</code></strong></p>
+<p>점 <span class="math inline">\bar{X} \in M</span> 주변의 국소 <code>perturbation</code> <span class="math inline">\tau</span>는 <code>tangent vector space</code> <span class="math inline">T_{\bar{X}} M</span>에서 <code>right-⊕</code> 및 <span class="math inline">\boxminus</span>를 사용하여 정의된다: <span class="math inline">X = \bar{X} \oplus \tau</span>, <span class="math inline">\tau = X \boxminus \bar{X} \in T_{\bar{X}} M</span> (51) <code>Covariance matrix</code>는 이 <code>tangent space</code>에서 <code>expectation operator E[·]</code>를 통해 적절하게 정의될 수 있다: <span class="math inline">\Sigma_X \triangleq E[\tau \tau^&gt;] = E[(X \boxminus \bar{X})(X \boxminus \bar{X})^&gt;] \in \mathbb{R}^{m \times m}</span> (52) 이를 통해 <code>manifold</code>에 <code>Gaussian variable</code> <span class="math inline">X \sim N(\bar{X}, \Sigma_X)</span>를 정의할 수 있다. <code>global</code> 및 <code>local perturbation</code>은 <code>adjoint</code> (30)에 의해 관련되므로, <code>covariance</code>는 다음과 같이 변환될 수 있다: <span class="math inline">^E \Sigma_X = \text{Ad}_X {}^X \Sigma_X \text{Ad}_X^&gt;</span> (54) 함수 <span class="math inline">f: M \to N; X \mapsto Y = f(X)</span>를 통한 <code>covariance propagation</code>은 <code>Jacobian matrix</code> (41a)를 사용한 <code>linearization</code> (43)을 통해 익숙한 공식을 제공한다: <span class="math inline">\Sigma_Y \approx {}^X D_X f \Sigma_X {}^X D_X f^&gt; \in \mathbb{R}^{n \times n}</span> (55)</p>
+<p><strong>I. <code>Manifold</code>에서의 이산 적분</strong></p>
+<p><code>exponential map</code> <span class="math inline">X(t) = X_0 \circ \text{Exp}(vt)</span>는 <code>manifold</code> 위에서 일정 속도 <span class="math inline">v \in T_{X_0} M</span>의 연속 시간 적분을 수행한다. 비일정 속도 <span class="math inline">v(t)</span>는 일반적으로 <code>piecewise constant bit</code> <span class="math inline">v_k \in T_{X_{k-1}} M</span>와 짧은 지속 시간 <span class="math inline">\delta t_k</span>로 분할하여 이산 적분으로 구성된다: <span class="math inline">X_k = X_{k-1} \oplus \tau_k = X_{k-1} \circ \text{Exp}(\tau_k) = X_{k-1} \circ \text{Exp}(v_k \delta t_k)</span> (56)</p>
+<p><strong>III. <code>MANIFOLD</code>에서의 미분 규칙</strong></p>
+<p>일반적인 <code>manifold</code>에 대해, <code>inversion</code>, <code>composition</code>, <code>exponentiation</code> 및 <code>action</code>에 대한 기본 <code>Jacobian</code>의 폐쇄형을 결정할 수 있다. 또한, 이들 중 일부는 <code>adjoint</code> <span class="math inline">\text{Ad}_X</span>와 관련될 수 있으며, 이는 미분 과정의 핵심 <code>block</code>이 된다. 다른 <code>Log</code>, <code>⊕</code>, <span class="math inline">\boxminus</span>에 대한 형태는 이들로부터 쉽게 파생될 수 있다.</p>
+<p><strong>A. <code>Chain Rule</code></strong></p>
+<p><span class="math inline">Y = f(X)</span>이고 <span class="math inline">Z = g(Y)</span>일 때, <span class="math inline">Z = g(f(X))</span>이다. <code>chain rule</code>은 다음과 같다: <span class="math inline">D_X Z = D_Y Z D_X Y</span> 또는 <span class="math inline">J_X^Z = J_Y^Z J_X^Y</span> (58)</p>
+<p><strong>B. 기본 <code>Jacobian Block</code></strong></p>
+<ol type="1">
+<li><code>Inverse</code>: <span class="math inline">J_X^{X^{-1}} = - \text{Ad}_X</span> (62)</li>
+<li><code>Composition</code>: <span class="math inline">J_X^{X \circ Y} = \text{Ad}_{Y^{-1}}</span> (65), <span class="math inline">J_Y^{X \circ Y} = I</span> (66)</li>
+<li><code>Jacobians of M</code>: <code>Exp</code> <code>map</code>의 <code>right Jacobian</code>은 <span class="math inline">J_r(\tau) \triangleq {}^\tau D_\tau \text{Exp}(\tau) \in \mathbb{R}^{m \times m}</span> (67)로 정의된다. <code>left Jacobian</code>은 <span class="math inline">J_l(\tau) \triangleq {}^E D_\tau \text{Exp}(\tau) \in \mathbb{R}^{m \times m}</span> (71)로 정의된다. <code>right Jacobian</code>과 <code>left Jacobian</code>은 <code>adjoint</code>에 의해 관련된다: <span class="math inline">\text{Ad}_{\text{Exp}(\tau)} = J_l(\tau) J_r^{-1}(\tau)</span> (75)</li>
+<li><code>Group action</code>: <span class="math inline">X \in M</span> 및 <span class="math inline">v \in V</span>에 대한 <code>Jacobian</code>은 <span class="math inline">J_X^{X \cdot v} = {}^X D_X X \cdot v</span> (77) 및 <span class="math inline">J_v^{X \cdot v} = {}^v D_v X \cdot v</span> (78)로 정의된다.</li>
+</ol>
+<p><strong>C. 유도된 <code>Jacobian Block</code></strong></p>
+<ol type="1">
+<li><code>Log map</code>: <span class="math inline">J_X^{\text{Log}(X)} = J_r^{-1}(\tau)</span> (79)</li>
+<li><code>Plus</code> 및 <code>Minus</code>: <span class="math inline">J_X^{X \oplus \tau} = \text{Ad}_{\text{Exp}(\tau)^{-1}}</span> (80) <span class="math inline">J_\tau^{X \oplus \tau} = J_r(\tau)</span> (81) <span class="math inline">J_X^{Y \boxminus X} = -J_l^{-1}(\tau)</span> (82) <span class="math inline">J_Y^{Y \boxminus X} = J_r^{-1}(\tau)</span> (83)</li>
+</ol>
+<p><strong>IV. <code>Composite Manifold</code></strong></p>
+<p><code>Composite manifold</code> <span class="math inline">M = \langle M_1, \cdots, M_M \rangle</span>는 <code>M</code>개의 상호작용하지 않는 <code>manifold</code>의 연결이다. 이는 각 <code>block</code>에 대해 <code>identity</code>, <code>inverse</code>, <code>composition</code>을 별도로 정의함으로써 이루어진다. <code>Exp</code>와 <code>Log map</code> 또한 각 <code>block</code>에 대해 독립적으로 정의된다: <span class="math inline">\text{Exp}\langle\tau\rangle \triangleq \begin{pmatrix} \text{Exp}(\tau_1) \\ \vdots \\ \text{Exp}(\tau_M) \end{pmatrix}</span>, <span class="math inline">\text{Log}\langle X \rangle \triangleq \begin{pmatrix} \text{Log}(X_1) \\ \vdots \\ \text{Log}(X_M) \end{pmatrix}</span> (85) 이는 <code>composite</code>의 <code>right-plus</code> 및 <code>minus</code> 연산자를 생성한다: <span class="math inline">X \boxplus \tau \triangleq X \diamond \text{Exp}\langle\tau\rangle</span> (86) <span class="math inline">Y \boxminus X \triangleq \text{Log}\langle X^{-1} \diamond Y \rangle</span> (87) 이를 통해 새로운 미분을 정의할 수 있다: <span class="math inline">\frac{D f(X)}{D X} \triangleq \lim_{\tau \to 0} \frac{f(X \boxplus \tau) \boxminus f(X)}{\tau}</span> (88) <code>composite manifold</code>에서 작동하는 함수 <span class="math inline">f: M \to N</span>의 <code>Jacobian</code>은 <code>block-wise</code>로 결정될 수 있다.</p>
+<p><strong>V. <code>LANDMARK-BASED LOCALIZATION</code> 및 <code>MAPPING</code></strong></p>
+<p>이론의 적용 예시로 로봇 <code>localization</code> 및 <code>mapping</code>을 제공한다. 로봇 자세는 <code>SE(2)</code>(<code>App. C</code>)에, <code>beacon</code> 위치는 <code>R2</code>(<code>App. E</code>)에 존재한다. <code>control signal</code> <span class="math inline">u</span>는 <code>longitudinal velocity v</code>와 <code>angular velocity ω</code>를 포함하는 <code>se(2)</code>의 <code>twist</code>이다. <code>landmark</code> 측정값은 <code>range</code> 및 <code>bearing type</code>이지만 단순화를 위해 <code>Cartesian form</code>으로 표현된다. <strong>A. <code>Manifold</code>에서의 <code>Error-State Kalman Filter</code>를 이용한 <code>Localization</code></strong> <code>beacon</code>의 위치가 알려져 있다고 가정하고, 추정할 자세는 <span class="math inline">\hat{X} \in \text{SE(2)}</span>로 정의한다. 추정 오차 <span class="math inline">\delta x</span>와 그 <code>covariance</code> <span class="math inline">P</span>는 <code>tangent space</code>에서 (51), (52)를 사용하여 표현된다. <span class="math inline">\delta x \triangleq X \boxminus \hat{X} \in \mathbb{R}^3</span> (97) <span class="math inline">P \triangleq E[(X \boxminus \hat{X})(X \boxminus \hat{X})^&gt;] \in \mathbb{R}^{3 \times 3}</span> (98) 로봇의 움직임마다 <code>ESKF prediction</code>을 적용한다: <span class="math inline">\hat{X}_j = \hat{X}_i \oplus u_j</span> (99) <span class="math inline">P_j = F P_i F^&gt; + G W_j G^&gt;</span> (100) <code>beacon</code> 측정값 <span class="math inline">y_k</span>마다 <code>ESKF correction</code>을 적용한다: <code>State update</code>: <span class="math inline">\hat{X} \leftarrow \hat{X} \oplus \delta x</span> (101) <code>Covariance update</code>: <span class="math inline">P \leftarrow P - K Z K^&gt;</span> (102) 정규 <code>EKF</code>와의 유일한 차이점은 (99)와 (101)에서 정규 <code>+</code>가 <code>⊕</code>로 대체된다는 점이다. <code>Jacobian</code>은 모두 <code>Lie theory</code>를 사용하여 계산된다.</p>
+<p><strong>B. <code>Graph-based Optimization</code>을 이용한 <code>Smoothing</code> 및 <code>Mapping</code></strong></p>
+<p><code>SAM</code>(<code>smoothing and mapping</code>) 문제는 <code>beacon</code>의 위치와 로봇의 궤적을 추정하는 것으로, <code>graph-based iterative least-squares optimizer</code>를 사용한다. 문제 상태는 <code>composite</code> <span class="math inline">X = \langle X_1, X_2, X_3, b_4, b_5, b_6 \rangle</span>로 표현된다. 각 <code>prior</code> 또는 측정은 그래프에 <code>factor</code>를 기여한다. 최적화 단계 <span class="math inline">\delta x^*</span>는 <span class="math inline">\delta x^* = \arg \min_{\delta x} \sum_{p \in \mathcal{P}} r_p(X \boxplus \delta x)^&gt; r_p(X \boxplus \delta x)</span> (106)를 최소화하여 얻어진다. 각 <code>residual</code>은 <code>Jacobian</code>을 사용하여 선형화된다. 이 문제는 <code>least-squares</code>를 사용하여 <span class="math inline">\delta x^* = -(J^&gt; J)^{-1} J^&gt; r</span> (109)로 해결되며, 이 <code>optimal step</code> <span class="math inline">\delta x^*</span>는 상태를 업데이트하는 데 사용된다: <span class="math inline">X \leftarrow X \boxplus \delta x^*</span> (110). 이 과정은 수렴할 때까지 반복된다. <code>composite notation</code>의 사용은 <code>Jacobian</code>의 <code>block-wise</code> 정의와 업데이트를 가능하게 한다.</p>
+<p><strong>C. <code>Self-calibration</code>을 포함한 <code>Smoothing</code> 및 <code>Mapping</code></strong></p>
+<p>움직임 센서가 알 수 없는 <code>calibration bias</code> <span class="math inline">c = (c_v, c_\omega)^&gt;</span>에 영향을 받는다고 가정하면, <code>control</code>은 이제 <span class="math inline">\tilde{u} = (v \delta t + c_v, 0, \omega \delta t + c_\omega)^&gt; + w</span>가 된다. 상태 <code>composite</code>는 알 수 없는 <span class="math inline">c</span>로 확장된다. 최적 솔루션은 센서 <code>bias</code>의 최적 추정치를 포함한다.</p>
+<p><strong>D. 3D 구현</strong></p>
+<p>위의 모든 예시는 3D로 쉽게 확장될 수 있다. 모든 변수를 올바른 <code>space</code>(<span class="math inline">X \in \text{SE(3)}</span>, <span class="math inline">u \in \mathbb{R}^6 \cong \text{se(3)}</span>, 그리고 <span class="math inline">\{b_k, y\} \in \mathbb{R}^3</span>)에 정의하는 것으로 충분하다. <code>Jacobian</code>과 <code>covariance matrix</code>도 적절한 크기로 조정된다. <code>Lie theory</code>가 제공하는 추상화 수준 덕분에 2D와 3D에 대해 알고리즘의 모든 수학적 내용은 정확히 동일하다는 점이 중요하다.</p>
+<p><strong>VI. 결론</strong></p>
+<p>이 논문은 상태 추정에 능숙한 독자층, 특히 로봇 공학 응용 분야에 유용한 형태로 <code>Lie theory</code>의 필수적인 부분을 제시한다. 첫째, 가능한 한 추상적인 수학적 개념을 피하는 자료 선별을 통해 <code>Lie theory</code>의 도구를 이해하고 사용하기 쉽게 만들었다. 둘째, 상당한 중복을 포함한 <code>didactical approach</code>를 선택했다. 본문은 <code>Lie theory</code>의 추상적인 점들을 다루며, 구체적인 <code>Lie group</code>에 추상적인 개념을 적용하는 예시와 상세한 설명을 포함하는 그림들이 함께 제공된다. 셋째, <code>capitalized Exp()</code> 및 <code>Log()</code> <code>map</code>과 <code>plus</code>, <code>minus operator</code>(<code>⊕</code>, <span class="math inline">\boxminus</span>, <span class="math inline">\boxplus</span>, <span class="math inline">\boxminus</span>)와 같은 편리한 연산자 사용을 권장했다. 이를 통해 <code>tangent space</code>의 <code>Cartesian representation</code>에서 작업할 수 있으며, 표준 <code>vector space</code>의 공식과 크게 유사한 미분 및 <code>covariance</code> 처리 공식을 생성한다. 넷째, <code>Jacobian</code>의 정의, 기하학적 해석 및 계산에 특별히 강조했다. 이를 위해 <code>Jacobian matrix</code>와 <code>covariance</code>에 대한 표기법을 도입하여 시각적으로 강력한 조작을 가능하게 했다. 특히 <code>chain rule</code>은 이 표기법으로 명확하게 보인다. 다섯째, 부록에서 로봇 공학에서 가장 일반적으로 사용되는 <code>group</code>에 대한 광범위한 공식 모음을 제시한다. 여섯째, <code>Lie theory</code>가 로봇 공학 문제를 우아하고 정밀하게 해결하는 능력을 보여주는 몇 가지 응용 예시를 제시했다. 마지막으로, 이 논문은 여기에 설명된 도구를 구현하는 새로운 C++ 라이브러리 <code>manif</code>를 함께 제공한다. 이 논문은 새로운 이론적 내용을 도입하지는 않지만, <code>Lie theory</code>가 제시된 방식이 많은 연구자가 향후 개발을 위해 이 분야에 진입하는 데 도움이 될 것이라고 믿는다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>로봇 상태 추정과 Lie 이론: 이론과 응용의 직관적 해설</p>
+</blockquote>
+<p>로봇 공학의 상태 추정 문제에서는 <strong>Lie 군</strong>을 통한 표현이 갈수록 중요해지고 있습니다. 그러나 많은 로봇공학자들에게 Lie 이론은 여전히 추상적으로 느껴지곤 합니다. 이 글에서는 <em>Joan Solà</em> 등이 발표한 <strong>“A micro Lie theory for state estimation in robotics”</strong> 논문의 내용을 기반으로, Lie 군과 Lie 대수의 핵심 개념을 복습하고 이를 로봇 상태 추정에 적용하는 방법을 설명하겠습니다. 특히 <strong>retraction (<span class="math inline">\oplus</span> 연산)</strong>, <strong>perturbation (오차 표현)</strong>, <strong>Jacobian 계산</strong>을 중심으로, 기존의 유클리드 공간 기반 필터와 무엇이 다른지, 또 어떤 이점이 있는지 수식과 함께 상세히 해설합니다.</p>
+<section id="lie-군과-lie-대수-기본-개념-복습" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lie-군과-lie-대수-기본-개념-복습"><span class="header-section-number">2.1</span> Lie 군과 Lie 대수 기본 개념 복습</h2>
+<p><strong>Lie 군(Lie group)</strong>은 <em>매끄러운(manifold) 곡면</em> 위에 <strong>그룹 구조</strong>를 결합한 수학 객체입니다. 구체적으로, Lie 군 <span class="math inline">G</span>는 미분 가능한 <strong>매니폴드</strong>(국소적으로 평탄한 공간)로서 그 원소들이 그룹의 네 가지 공리(폐쇄성, 항등원, 역원, 결합법칙)를 만족합니다. 다시 말해, Lie 군은 국소적으로는 선형 공간처럼 미분 연산이 가능하면서도 전역적으로는 비선형 결합(composition)이 허용되는 구조를 갖습니다. 대표적인 예로 3차원 회전의 공간 SO(3)나 로봇 자세(pose)를 나타내는 SE(3) 등이 있습니다.</p>
+<p><strong>매니폴드</strong>란 국소적으로 유클리드 공간과 유사하지만 전역적으로는 곡률 등의 제약이 있는 공간입니다. 예를 들어, 단위 노름을 갖는 4차원 벡터들의 집합(유니터니언)은 4차원 구면 <span class="math inline">S^3</span>을 이루며, 이는 <strong>단위 쿼터니언</strong>의 공간이 됩니다. 이처럼 로봇 상태가 충족해야 할 제약(예: 쿼터니언의 단위 노름)은 매니폴드를 정의하며, 우리의 상태 벡터는 이 매끄러운 곡면 위를 움직인다고 볼 수 있습니다. 중요한 점은, 매니폴드 위의 <strong>모든 점마다 고유한 접공간(tangent space)</strong>이 존재하고, 이 접공간은 그 점을 스쳐 지나가는 평면으로 이해할 수 있습니다. 접공간은 <strong>선형 벡터 공간</strong>이므로 우리가 그 위에서는 미분이나 선형대수 계산을 자유롭게 할 수 있습니다.</p>
+<p>한편, Lie 군에는 한 특별한 원소(항등원 <span class="math inline">E</span>)와 그에 대응하는 접공간이 존재합니다. 이를 <strong>Lie 대수(Lie algebra)</strong>라고 부르며, 기호로 <span class="math inline">\mathfrak{g}=T_E G</span>로 나타냅니다. Lie 대수는 차원이 Lie 군의 자유도와 같고, 항등원에서의 접공간이기 때문에 <strong>벡터 공간</strong>의 구조를 가집니다. 특히 Lie 대수의 원소들은 종종 <span class="math inline">\mathbb{R}^n</span>의 벡터로 간주할 수 있는데, 이는 <span class="math inline">\mathfrak{g} \simeq \mathbb{R}^n</span> (벡터 공간으로 동형)이라는 의미입니다. 예를 들어 회전군 SO(3)의 Lie 대수인 so(3)은 <span class="math inline">3\times3</span> 반대칭 행렬들의 공간이지만, 이를 축각(axis-angle) 3-벡터로 대응시킬 수 있어서 <span class="math inline">\mathbb{R}^3</span>와 동형입니다. 이러한 벡터와 행렬 간 변환을 편리하게 하기 위해 <strong>해트 연산</strong>(<span class="math inline">^\wedge</span>)과 <strong>브이 연산</strong>(<span class="math inline">^\vee</span>)이 사용됩니다. 3-벡터 <span class="math inline">\omega = [\omega_x,\omega_y,\omega_z]^\top</span>에 대해 해트 연산은 so(3)의 원소인 <span class="math inline">[\omega]_\times</span> (skew-symmetric matrix)을 만들고, 브이 연산은 그 반대로 행렬을 벡터로 돌려놓습니다. 이를 통해 Lie 대수 원소와 유클리드 벡터를 자유롭게 넘나들며 계산할 수 있습니다.</p>
+<p>이제 <strong>지수 맵(Exponential)</strong>과 <strong>로그 맵(Logarithm)</strong>을 소개합니다. 지수 맵 <span class="math inline">\text{Exp}: \mathfrak{g} \to G</span>는 Lie 대수의 원소(접공간의 벡터)를 Lie 군의 원소로 변환하는 함수이고, 로그 맵 <span class="math inline">\text{Log}: G \to \mathfrak{g}</span>는 그 역변환입니다. 이는 일반적인 행렬 지수함수(<span class="math inline">\text{Exp}</span>)로 정의되며, 작은 변화량을 곡면 위의 유한한 움직임으로 바꿔주는 역할을 합니다. 예를 들어 so(3)에서 <span class="math inline">\text{Exp}([\omega]_\times)</span>는 <span class="math inline">\omega</span>만큼 회전하는 <strong>회전행렬</strong> <span class="math inline">R</span>을 생성하며, 이는 로드리게스 공식으로 주어집니다. 로드리게스 공식에 따르면 <span class="math inline">|\omega|</span>를 회전 크기로 할 때:</p>
+<p><span class="math inline">\text{Exp}_{SO(3)}(\omega^\wedge) = I + \frac{\sin\|\omega\|}{\|\omega\|}[\omega]_\times + \frac{1-\cos\|\omega\|}{\|\omega\|^2}[\omega]_\times^2,</span></p>
+<p>이는 <span class="math inline">\omega</span>가 충분히 작을 때 <span class="math inline">\text{Exp}(\omega^\wedge) \approx I + [\omega]_\times</span>로 근사되며 익숙한 소(小)각도 근사와 일치합니다. 마찬가지로 <span class="math inline">\text{Log}(R)</span>는 주어진 군 원소를 다시 Lie 대수의 벡터(회전벡터)로 돌려놓습니다. <strong>즉, <span class="math inline">\text{Exp}</span>와 <span class="math inline">\text{Log}</span> 덕분에 비선형 곡면인 Lie 군과 선형 공간인 Lie 대수를 서로 연결</strong>할 수 있으며, Lie 군상의 문제를 Lie 대수상의 문제로 변환해서 풀 수 있게 됩니다. 이러한 변환을 활용하면, 복잡한 제약을 직접 다루는 대신 <strong>간단한 선형 공간에서 계산을 수행한 뒤 결과를 다시 매니폴드로 옮기는 방법</strong>이 가능해집니다. Solà 등의 논문이 제시하는 “micro Lie theory” 역시 Lie 군의 깊은 이론 중 <strong>실용적인 핵심만 뽑아 쓴 것</strong>으로, Lie 군과 Lie 대수를 왕복하는 기본 도구들만으로도 로봇 상태 추정에 충분한 정밀도를 얻을 수 있음을 보여줍니다.</p>
+</section>
+<section id="상태-추정에서의-manifold-상태-표현과-oplus-연산-retraction" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="상태-추정에서의-manifold-상태-표현과-oplus-연산-retraction"><span class="header-section-number">2.2</span> 상태 추정에서의 Manifold 상태 표현과 <span class="math inline">\oplus</span> 연산 (Retraction)</h2>
+<p>로봇의 상태가 <strong>유클리드 공간 <span class="math inline">\mathbb{R}^n</span>에 국한되지 않고 곡면 위</strong>에 놓이는 경우, 이를 다루기 위해 특수한 연산이 필요합니다. 예를 들어 드론의 자세(orientation)를 나타내는 단위 쿼터니언은 4차원 벡터이지만 항상 단위 노름을 가져야 하므로 임의의 4차원 변화량을 <strong>더할 수 없습니다</strong>. 이 때 사용하는 개념이 바로 <strong>Lie 군상의 retraction</strong>, 즉 <span class="math inline">\oplus</span> 연산입니다. 유클리드 공간에서 상태 업데이트를 <span class="math inline">x_{\text{new}} = x_{\text{old}} + \Delta x</span>로 한다면, Lie 군에서는 이를 대체하는 연산으로 <strong><span class="math inline">X_{\text{new}} = X_{\text{old}} \oplus \Delta</span></strong>를 정의하는 것입니다. Solà 논문에서는 이를 <strong>플러스(<span class="math inline">\oplus</span>)</strong> 연산자로 표기하며, 한 번의 지수 맵(Exp)과 군 합성(<span class="math inline">\circ</span>)으로 구현됩니다. 구체적으로 <strong>오른쪽 플러스 (right-⊕)</strong>를 기준으로 하면 다음과 같습니다:</p>
+<p><span class="math inline">Y = X \oplus \delta := X \circ \text{Exp}(\delta), \qquad \delta = Y \ominus X := \text{Log}(X^{-1}\circ Y).</span></p>
+<p>즉, Lie 군 원소 <span class="math inline">X</span>에 접공간의 작은 벡터 <span class="math inline">\delta</span>를 <strong>지수맵으로 군 원소화</strong>한 <span class="math inline">\text{Exp}(\delta)</span>를 오른쪽에서 곱해 새로운 원소 <span class="math inline">Y</span>를 얻는 것이 <span class="math inline">X\oplus\delta</span>입니다. 반대로 두 원소 <span class="math inline">Y, X \in G</span> 사이의 “차이”를 나타내는 <strong>마이너스(<span class="math inline">\ominus</span>)</strong> 연산 <span class="math inline">Y \ominus X</span>는 <span class="math inline">X^{-1}Y</span>라는 군 연산의 결과를 로그맵으로 벡터화한 것입니다. 이러한 <span class="math inline">\oplus, \ominus</span> 연산자를 도입함으로써, Lie 군상에서 일반 덧셈이 불가능한 경우에도 <strong>마치 벡터 더하기/빼기처럼</strong> 상태의 합성과 차이를 표현할 수 있습니다. 특히 <span class="math inline">\oplus</span> 연산은 <strong>retraction(리트랙션)</strong>으로 볼 수 있는데, 이는 최적화나 필터링 맥락에서 <strong>국소 좌표계로 이동했다가 다시 매니폴드로 복원하는 함수</strong>를 의미합니다. 여기서는 정확한 지수맵 <span class="math inline">\text{Exp}</span>를 사용하여 retraction을 구현하므로, <em>매우 엄밀한 방식으로</em> 상태를 업데이트하게 됩니다.</p>
+<center>
+<img src="../../images/2025-08-05-micro-lie/2.png" width="80%">
+</center>
+<blockquote class="blockquote">
+<p>예를 들어, 위 그림은 매니폴드 곡면 (예: 단위 구면) 위의 한 상태 <span class="math inline">X</span>에 대해 <strong><span class="math inline">\oplus</span> 연산의 기하학적 의미</strong>를 보여줍니다. 점 <span class="math inline">X</span>가 매니폴드 위에 주어졌을 때, 그 <strong>접평면</strong>(회색) 위의 한 벡터 <span class="math inline">\tau</span> (빨간 화살표)를 취해 지수맵을 적용하면 곡면 위의 한 점으로 사상됩니다. <span class="math inline">X \oplus \tau = X \cdot \text{Exp}(\tau)</span>의 결과로 얻어진 새로운 점 <span class="math inline">X'</span>이 파란 화살표의 머리로 표시되어 있습니다. 이 과정은 곡면 위의 <span class="math inline">X</span>에서 시작하여 접공간을 따라 <span class="math inline">\tau</span>만큼 움직였다가 다시 곡면으로 돌아오는 동작에 해당합니다. 즉, <span class="math inline">\tau</span>가 작다면 <span class="math inline">X'</span>는 <span class="math inline">X</span>에서 조금 이동한 위치가 되며, <strong>항상 곡면 위에 머무르기 때문에</strong> 상태 제약이 자동으로 유지됩니다. 그림 상단의 <span class="math inline">I</span>는 군의 항등원으로, 이때 <span class="math inline">\tau</span>가 항등원 근처(글로벌 기준)와 <span class="math inline">X</span> 근처(로컬 기준)에서 <strong>동일하게 취급</strong>됨을 시사합니다. 이는 Lie 군에서는 <strong>모든 접공간이 본질적으로 동일한 구조</strong>를 가지기 때문이며, 곧 설명할 <strong>좌/우 플러스의 차이와 Adjoint</strong>와도 연결되는 개념입니다.</p>
+</blockquote>
+<p><span class="math inline">\oplus</span> 연산에는 <strong>오른쪽-플러스</strong>와 <strong>왼쪽-플러스</strong> 두 가지 버전이 있습니다. 이는 Lie 군의 비가환성(non-commutativity) 때문에 발생하는 구분으로, 변화량을 왼쪽에서 곱하느냐 오른쪽에서 곱하느냐에 따라 달라집니다. 예를 들어 오른쪽-플러스에서는 <span class="math inline">X \oplus \delta = X\text{Exp}(\delta)</span>인 반면, 왼쪽-플러스는 <span class="math inline">X \oplus^L \delta = \text{Exp}(\delta)X</span>와 같이 정의될 수 있습니다. 두 방식 모두 허용되지만, 논문에서는 <strong>로컬 좌표계에서의 표현</strong>에 맞게 오른쪽-플러스를 기본으로 사용합니다. 쉽게 말해, 현재 추정값 <span class="math inline">X</span>를 기준 좌표로 삼고 그 <strong>접공간에서 오차를 표현</strong>하는 방식을 택한 것입니다. 이렇게 하면 <span class="math inline">X</span> 자체가 변할 때 접공간도 함께 움직이므로 (접평면이 항상 <span class="math inline">X</span>에 붙어다님), 오차의 해석이 <strong>국소적</strong>으로 이루어집니다. 다른 문헌에서는 항등원에 대한 전역 좌표로 오차를 표현하기도 하지만, 그 경우에도 두 표현은 Adjoint 변환으로 상호 변환 가능함이 알려져 있습니다. 즉, 전역적인 오차 <span class="math inline">\delta_E</span>와 국소적인 오차 <span class="math inline">\delta_X</span> 사이에는 <span class="math inline">\delta_X = \text{Ad}_X^{-1},\delta_E</span> 관계가 있으며, 공분산 등의 변환에도 활용됩니다. Solà 등의 설명에 따르면 이 논문 및 여러 최신 방법들은 <strong>로컬 perturbation</strong> <span class="math inline">X \oplus \delta</span>를 사용하며, 만약 다른 접근법에서 전역 오차(<span class="math inline">E \oplus \delta</span> 형태)를 사용하더라도 최종 결과에서 차이는 Adjoint로 보정될 수 있습니다.</p>
+<p><strong>정리하자면</strong>, <span class="math inline">\oplus</span> 연산은 <em>현재 상태</em>에 <strong>작은 Lie 대수 오차</strong>를 적용하여 <strong>상태를 업데이트</strong>하는 연산이며, 이를 통해 필터나 최적화에서 <strong>항상 유효한 상태 (Lie 군 원소)</strong>를 유지할 수 있습니다. 반대로 <span class="math inline">\ominus</span> 연산은 두 상태 간의 <strong>상대적인 오차를 Lie 대수 벡터로 산출</strong>하여 접공간상의 차로 표현해줍니다. 이 두 연산을 도입함으로써 우리는 마치 유클리드 공간에서 하듯 상태를 더하고 빼며 오차를 정의할 수 있게 되었고, 이러한 아이디어는 <strong>오차 상태(error-state) 칼만 필터</strong>로도 불리는 현대 로봇 상태 추정 필터들의 토대가 되었습니다.</p>
+</section>
+<section id="lie-이론을-활용한-상태-추정-오차-표현과-필터-구성" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="lie-이론을-활용한-상태-추정-오차-표현과-필터-구성"><span class="header-section-number">2.3</span> Lie 이론을 활용한 상태 추정: 오차 표현과 필터 구성</h2>
+<p>이제 위에서 정의한 <span class="math inline">\oplus, \ominus</span> 개념을 실제 <strong>칼만 필터와 같은 상태 추정 문제</strong>에 어떻게 적용하는지 알아보겠습니다. 핵심 아이디어는 <strong>참된 상태(true state)</strong>와 <strong>추정 상태(estimate)</strong> 사이의 <strong>오차(perturbation)</strong>를 Lie 대수의 벡터로 표현하고 추적하는 것입니다. 예를 들어, 추정값을 <span class="math inline">X</span> (Lie 군의 원소)라 하고 실제 값을 <span class="math inline">X^*</span>라고 하면, 두 상태 간 오차를 다음과 같이 정의할 수 있습니다:</p>
+<p><span class="math inline">\tilde{\xi} := X^* \ominus X = \text{Log}(X^{-1} X^*) \in \mathfrak{g},</span></p>
+<p>여기서 <span class="math inline">\tilde{\xi}</span>는 Lie 대수상의 작은 벡터로서, <strong>추정에서 실제로 가는 “오차 상태”</strong>를 나타냅니다. <span class="math inline">X^* = X \oplus \tilde{\xi}</span>로 풀어쓰면 <span class="math inline">X^* = X \text{Exp}(\tilde{\xi})</span>가 되며, 실제 상태는 추정 상태에 작은 지수 이동을 가한 것으로 표현됩니다. 이 오차 벡터를 상태로 삼아 칼만 필터를 수행하면, 필터의 추정은 항상 <span class="math inline">X</span> 주변의 <strong>국소 선형 공간</strong>에서 이루어집니다. 다시 말해, 필터는 <span class="math inline">\tilde{\xi}</span>라는 <strong>접공간의 가우시안 상태</strong>를 추적하며, 필요한 경우 이것을 <span class="math inline">\text{Exp}</span>를 통해 다시 군상의 <span class="math inline">X</span>를 보정하는 방식으로 동작합니다. 이런 접근을 흔히 <strong>오차-상태 Kalman 필터</strong>라고 하며, Lie 군 이론을 적용한 필터에서는 자연스럽게 이러한 구조가 나타나게 됩니다.</p>
+<p>Solà 논문에서는 이러한 <strong>Lie 군 기반 필터의 절차</strong>를 유도하고, 그것이 전통적인 EKF와 거의 동일한 형태를 가짐을 보여줍니다. 우선 <strong>예측 단계</strong>를 생각해봅시다. 로봇의 상태가 시간에 따라 변화하는 모델이 주어졌다고 할 때, 만약 상태가 Lie 군 원소라면 그 <strong>상태 천이</strong> 역시 군 연산으로 표현됩니다. 예를 들어 임의의 작은 시간 <span class="math inline">\delta t</span> 동안 상태가 변화하는 미분방정식 <span class="math inline">\dot{X}(t) = f(X(t), u(t))</span>가 있다면, 이를 적분하여 이산화할 때 <strong><span class="math inline">\oplus</span> 연산을 이용한 누적곱</strong> 형태로 나타낼 수 있습니다:</p>
+<p><span class="math inline">X_{k+1} = X_k \oplus \tau_k = X_k \circ \text{Exp}(\tau_k), \qquad \text{여기서 } \tau_k \approx f(X_k, u_k)\,\delta t_k</span></p>
+<p>즉 이전 상태 <span class="math inline">X_k</span>에 각 시간구간의 작은 변화량 <span class="math inline">\tau_k</span> (Lie 대수 벡터)를 지수지도를 통해 적용함으로써 다음 상태를 얻습니다. 구체적인 예로, <span class="math inline">X</span>가 3차원 회전행렬 <span class="math inline">R</span>이고 제어입력으로 각속도 <span class="math inline">\omega</span>가 주어지는 경우, <span class="math inline">R_{k+1} = R_k \text{Exp}([\omega_k \delta t]*×)</span>와 같이 예측이 이루어집니다. 이 식은 <span class="math inline">R*{k+1} = R_k (I + [\omega_k \delta t]_\times)</span>로 1차 근사할 수 있으며, 소위 <strong>정확한 미분적분 방식</strong>을 제공하여, 유클리드 공간에서 오일러 각을 더하는 등의 근사보다 <strong>안정적이고 정확한 예측</strong>을 가능하게 합니다.</p>
+<p>예측 단계의 <strong>공분산</strong> 전파를 위해서는 선형화(Jacobian)가 필요합니다. Lie 군에서는 상태 천이가 비선형이지만, <em>오차 상태</em> <span class="math inline">\tilde{\xi}</span>의 관점에서는 이를 선형화할 수 있습니다. <span class="math inline">X_{k+1} = X_k \text{Exp}(\tau_k)</span>를 <span class="math inline">X_k</span>와 <span class="math inline">\tau_k</span>에 대해 미소 변화시켜 Jacobian을 구하면, 이는 대략적으로 <span class="math inline">F_k = \frac{\partial (X_k \circ \text{Exp}(\tau_k))}{\partial \tilde{\xi}_k}</span>와 같은 <strong>계산을 Lie 대수 공간에서 수행</strong>하는 것이 됩니다. 구체적인 Jacobian 계산은 다음 절에서 다루겠지만, 여기서는 결과적으로 <strong>Lie 군 기반 예측 공식이 기존 EKF의 형태와 거의 유사하게 나타난다</strong>는 점을 강조하겠습니다. 실제로 논문에서도 “이러한 Jacobian들을 사용하면 Lie 군에서의 불확실성 관리 공식이 <strong>벡터 공간에서와 매우 유사한 형태를 띤다</strong>”고 언급하고 있습니다. 이는 우리가 칼만 필터의 예측/갱신 공식을 거의 그대로 사용하되, 상태 더하기(<span class="math inline">+</span>)를 <span class="math inline">\oplus</span>로 바꾸고, 필요한 Jacobian 행렬들만 새롭게 계산해주면 된다는 뜻입니다. 요컨대, <strong>틀은 동일하고 내용물만 Lie 군에 맞게 조정되는</strong> 것입니다.</p>
+<p>다음으로 <strong>갱신 단계</strong>를 생각해보겠습니다. 로봇 센서로부터 관측된 값 <span class="math inline">z</span>가 상태 <span class="math inline">X</span>에 대한 어떤 함수 <span class="math inline">h(X)</span>로 주어진다고 할 때, EKF에서는 잔차 <span class="math inline">y = z - h(\hat{x})</span> 및 관측 Jacobian <span class="math inline">H = \partial h/\partial x</span> 등을 구해서 칼만 이득을 계산하고 추정값을 보정합니다. Lie 군에서도 마찬가지로, <strong>예측 관측값</strong> <span class="math inline">h(X_{k|k-1})</span>와 실제 관측 <span class="math inline">z_k</span>의 차이를 <strong><span class="math inline">\ominus</span> 연산으로 정의</strong>합니다. 예컨대 <span class="math inline">\tilde{y} := z_k \ominus h(X_{k|k-1}) = \text{Log}!\big(h(X_{k|k-1})^{-1} \circ z_k\big)</span> 같은 형태로 잔차를 구할 수 있습니다. 이는 관측값이 만약 Lie 군 (예: 카메라로 본 로봇의 자세 측정이 또 하나의 Lie 군 값일 때)이라면 필요하고, 일반적인 스칼라나 벡터 관측의 경우에는 보통 <span class="math inline">\ominus</span>를 실수 뺄셈으로 대체하면 됩니다. 핵심은 <strong>상태와 관측을 동일한 국소 좌표계로 사상</strong>하여 비교한다는 점입니다. 관측 함수의 Jacobian <span class="math inline">H</span>도 <span class="math inline">h: G \to \mathbb{R}^m</span>의 미분을 계산하여 구하는데, 이 역시 <span class="math inline">\frac{\partial h}{\partial X}(X) = \lim_{\tau\to0} \frac{h(X\oplus \tau) \ominus h(X)}{\tau}</span>로 정의할 수 있습니다. 이렇게 얻은 관측 Jacobian <span class="math inline">H</span>와 앞서의 예측 Jacobian <span class="math inline">F</span> 등을 사용하면, 칼만 필터의 공분산 예측/갱신 공식은 기존과 동일하게 적용됩니다:</p>
+<ul>
+<li>예측: <span class="math inline">P_{k|k-1} = F_k,P_{k-1|k-1},F_k^\top + Q_k</span></li>
+<li>갱신: <span class="math inline">K_k = P_{k|k-1} H_k^\top (H_k P_{k|k-1} H_k^\top + R_k)^{-1}</span>,</li>
+<li>상태 보정: <span class="math inline">\hat{X}*{k|k} = \hat{X}*{k|k-1} \oplus (K_k \tilde{y}_k)</span>,</li>
+<li>공분산 보정: <span class="math inline">P_{k|k} = (\mathbb{I} - K_k H_k) P_{k|k-1}</span>,</li>
+</ul>
+<p>여기서 <span class="math inline">Q_k, R_k</span>는 과정 및 관측 잡음 공분산이고, <span class="math inline">K_k</span>는 칼만 이득입니다. 위에서 <strong>상태 보정 단계</strong>에 <span class="math inline">\oplus</span> 연산이 사용된 것에 주목하세요. 필터가 계산한 <strong>오차 상태 추정</strong> <span class="math inline">K_k \tilde{y}_k</span> (접공간 벡터)를 <span class="math inline">\oplus</span>를 통해 실제 추정값에 반영함으로써, 새로운 <span class="math inline">\hat{X}</span>는 항상 유효한 Lie 군 원소로 유지됩니다. 이처럼 Lie 군을 사용한 칼만 필터는 <strong>구조적으로는 기존 EKF와 동일</strong>하지만, 내부 연산을 Lie 군에 맞게 조정하여 <strong>곡면 위의 상태도 일관되게 추정</strong>할 수 있게 해줍니다. Solà 등은 이를 두고 “우리의 미소 Lie 이론을 활용하면 결과적으로 얻어지는 필터 공식이 <strong>표준 EKF 공식과 거의 닮은 꼴</strong>”이라고 설명합니다.</p>
+<p>마지막으로, 이러한 방법론은 SLAM, 비주얼 오도메트리 등 다양한 모션 추정 분야에서 <strong>실용적인 가치</strong>를 입증하고 있습니다. 논문에는 몇 가지 응용 예제와 함께, 주요 Lie 군(SO(2), SO(3), SE(3), 쿼터니언 등)에 대한 <strong>수식 치트시트</strong>가 포함되어 있어, 실무자가 바로 활용할 수 있도록 했습니다. 또한 저자들은 이 이론을 구현한 C++ 라이브러리 <strong><code>manif</code></strong>를 공개하여, 개발자들이 보다 쉽게 Lie 이론 기반 필터를 적용할 수 있도록 지원하고 있습니다. 다음 절에서는 앞서 언급된 <em>Jacobians</em>(미분) 계산에 대해 조금 더 자세히 살펴보겠습니다.</p>
+</section>
+<section id="lie-군-위의-미분-jacobian-계산-방법" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="lie-군-위의-미분-jacobian-계산-방법"><span class="header-section-number">2.4</span> Lie 군 위의 미분: Jacobian 계산 방법</h2>
+<p>상태 추정에서 핵심은 <strong>선형화</strong>, 즉 Jacobian 행렬을 올바르게 구하는 것입니다. Lie 군에서는 입력과 출력이 모두 곡면 위에 있으므로, 그 미분 정의를 약간 변형해야 합니다. 일반적인 다변수 함수의 Jacobian은 <span class="math inline">J = \frac{\partial f(x)}{\partial x} = \lim_{h\to0}\frac{f(x+h)-f(x)}{h}</span>로 정의되지요. Lie 군에서는 뺄셈 대신 <span class="math inline">\ominus</span>를 사용하면 유사한 정의를 내릴 수 있습니다. <strong>함수 <span class="math inline">f: M \to N</span>가 Lie 군 <span class="math inline">M</span>의 원소를 받아 <span class="math inline">N</span> (또 다른 Lie 군 혹은 벡터 공간)의 원소를 반환</strong>한다고 할 때, <span class="math inline">X \in M</span>에서의 Jacobian <span class="math inline">\frac{\partial f}{\partial X}(X)</span>를 정의하는 한 가지 방법은 아래와 같습니다:</p>
+<p><span class="math inline">\frac{\partial f}{\partial X}(X) ~:=~ \lim_{\tau \to 0} \frac{\,f(X \oplus \tau)\; \ominus\; f(X)\,}{\tau}\,</span></p>
+<p>여기서 <span class="math inline">\tau \in T_X M</span>는 <span class="math inline">X</span>의 접공간에서 임의의 방향으로의 작은 변화입니다. 분자의 <span class="math inline">f(X \oplus \tau)\ominus f(X)</span>는 <strong><span class="math inline">f</span> 출력 공간의 접공간</strong>에 놓인 벡터가 되며, 이를 <span class="math inline">\tau</span>로 나누어 <span class="math inline">\tau \to 0</span> 극한을 취하면 두 접공간 사이의 선형 사상(matrix)으로 수렴합니다. 이때 분자에서 <span class="math inline">\ominus</span>를 취한 덕분에 <span class="math inline">f(X)</span>의 변화량 역시 출력 공간의 <strong>국소적 선형 좌표</strong>로 표현된 점에 유의하세요. 이렇게 정의된 Jacobian은 입력 <span class="math inline">X</span>의 국소 접공간에서 출력 <span class="math inline">f(X)</span>의 국소 접공간으로 매핑되는 <strong><span class="math inline">m\times n</span> 행렬</strong>이며, 우리가 익히 아는 Jacobian 개념을 Lie 군 상황에 맞게 일반화한 것에 해당합니다.</p>
+<p>이 정의는 개념적으로는 간단하지만, 실제 Jacobian을 계산할 때는 보통 함수 <span class="math inline">f</span>를 이루는 <strong>기본 연산들에 대한 미분</strong>을 조합하는 방식이 더 효율적입니다. 마찬가지로 Solà 논문에서도 “역함수(Inversion), 합성(Composition), 지수(Exponentiation), 작용(Action) 등의 부분적 미분 블록을 이용하면 임의의 미분을 체인 룰로 쉽게 계산할 수 있다”고 설명합니다. 즉, Lie 군에서 자주 등장하는 기본 함수들의 Jacobian을 미리 유도해 두고, 이를 조합하면 임의의 복잡한 <span class="math inline">f</span>의 Jacobian도 구할 수 있다는 것입니다. 예를 들어, <strong>군의 곱</strong> <span class="math inline">Y = X \circ U</span>에 대해 입력 <span class="math inline">X</span>에 대한 미분이나 <span class="math inline">U</span>에 대한 미분, <strong>역원</strong> <span class="math inline">X^{-1}</span>에 대한 미분, <strong>로그/지수 맵</strong>에 대한 미분 등이 그러한 기본 블록들입니다. 이런 미분들을 구하는 과정에서 등장하는 것이 바로 <strong>Adjoint(아조인트)</strong>와 <strong>Left Jacobian(왼쪽 야코비안)</strong> 같은 개념입니다.</p>
+<ul>
+<li><p><strong>Adjoint 행렬 <span class="math inline">\text{Ad}_X</span>:</strong> 이는 Lie 군 <span class="math inline">G</span>에서 특정 원소 <span class="math inline">X</span>가 Lie 대수 공간에 갖는 작용을 나타냅니다. 직관적으로, <span class="math inline">\text{Ad}_X: \mathfrak{g} \to \mathfrak{g}</span>는 항등원에서의 작은 움직임을 <span class="math inline">X</span>에서의 작은 움직임으로 변환해주는 선형 사상입니다. 공식적으로는 <span class="math inline">\text{Ad}_X(\tau) = \frac{d}{d\epsilon}\big|_{\epsilon=0} X \circ \text{Exp}(\epsilon\tau)\circ X^{-1}</span>로 정의할 수 있습니다. 실무적으로 중요한 특성은, <span class="math inline">\text{Ad}_X</span>가 <strong>전역 접공간과 로컬 접공간 사이의 좌표 변환 행렬</strong>이라는 점입니다. 예를 들어 앞서 언급한 <strong>전역 vs 로컬 perturbation</strong> 전환에서 <span class="math inline">\delta_X = \text{Ad}_X^{-1}\delta_E</span>라는 식으로 나타났던 바로 그 <span class="math inline">\text{Ad}</span>가 여기에 등장합니다. <span class="math inline">\text{Ad}_X</span>의 구체적인 형태는 Lie 군마다 다른데, 예를 들어 SE(3) (3차원 강체 변환군)의 경우 다음과 같습니다:</p>
+<p><span class="math inline">\text{Ad}_{(R,t)} = \begin{pmatrix} R &amp; -[t]_\times R \\ 0 &amp; R \end{pmatrix} \in \mathbb{R}^{6\times6}</span></p>
+<p>여기서 <span class="math inline">X=(R,t)</span>은 회전 <span class="math inline">R</span>과 병진 <span class="math inline">t</span>로 구성된 SE(3) 원소입니다. 이 행렬은 SE(3)의 Lie 대수 원소 <span class="math inline">(\rho,\theta)</span> (병진 <span class="math inline">\rho</span>, 회전 <span class="math inline">\theta</span>)에 작용하여, <span class="math inline">X</span> 좌표계에서 본 새로운 Lie 대수 값으로 변환하는 역할을 합니다. Adjoint 행렬은 군의 합성에 대한 미분을 다룰 때 유용합니다. 예를 들어 <span class="math inline">Y = X\circ U</span>에 대해 <span class="math inline">X</span> 쪽의 변화 <span class="math inline">\delta X</span>가 출력 <span class="math inline">Y</span>에 주는 영향은 <span class="math inline">U</span>의 Adjoint를 통해 <span class="math inline">\delta Y = \delta X \circ U = \text{Ad}_U(\delta X)</span>로 표현할 수 있습니다. 반대로 <span class="math inline">U</span>의 변화는 <span class="math inline">\delta Y = X \circ \delta U = \text{Ad}_X(\delta U)</span>로 나타나죠. 이처럼 Adjoint는 <strong>Lie 군의 곱셈 구조로 인한 미분적 상호작용</strong>을 선형 연산으로 옮겨주는 역할을 합니다.</p></li>
+<li><p><strong>왼쪽 Jacobian <span class="math inline">J_l</span> (및 오른쪽 Jacobian <span class="math inline">J_r</span>):</strong> 이는 흔히 Lie 대수에서 Lie 군으로의 지수 맵 미분에 등장하는 행렬입니다. 예를 들어 <span class="math inline">R = \text{Exp}(\theta)</span> (SO(3)에서)라고 할 때, <span class="math inline">\theta</span>의 작은 변화가 <span class="math inline">R</span>에 주는 영향을 나타내는 미분이 <strong>왼쪽 Jacobian</strong> <span class="math inline">J_l(\theta)</span>입니다. Taylor 전개 관점에서 <span class="math inline">\text{Exp}(\theta+\delta\theta) \approx \text{Exp}(\theta),J_l(\theta),\delta\theta</span>로 정의할 수 있습니다. SO(3)의 <span class="math inline">J_l(\theta)</span>에 대한 폐형식 해도 알려져 있으며, 다음과 같은 멱급수로 표현됩니다:</p>
+<p><span class="math inline">J_l(\theta) = I - \frac{1-\cos\|\theta\|}{\|\theta\|^2}[\theta]_\times + \frac{\|\theta\| - \sin\|\theta\|}{\|\theta\|^3}[\theta]_\times^2,</span></p>
+<p>이는 <span class="math inline">\theta</span>가 0에 가까울 때 <span class="math inline">J_l(\theta) \to I</span>로 수렴하며, 회전 각도가 커질수록 <span class="math inline">J_l</span>이 편차의 크기를 보정해주는 역할을 합니다. <strong>오른쪽 Jacobian <span class="math inline">J_r(\theta)</span></strong>는 이와 유사하지만, <span class="math inline">\text{Exp}(\theta)R</span> 같은 오른쪽 곱 상황의 미분에 나타나는 행렬입니다. 사실 <span class="math inline">J_r(\theta)</span>와 <span class="math inline">J_l(\theta)</span>는 서로 전치관계(<span class="math inline">J_r(\theta) = J_l(-\theta)</span>)에 있습니다. 이러한 Jacobian 행렬은 <strong>불확실성 전파</strong>에 중요하게 활용되는데, 예를 들어 각도 공간의 공분산을 회전행렬 공간의 공분산으로 변환할 때 <span class="math inline">P_R = J_l(\theta),P_\theta,J_l(\theta)^\top</span>와 같이 사용됩니다. 논문의 설명에 따르면 대부분의 파생된 Jacobian은 <em>오른쪽 미분</em>에 기반하고, 필요한 경우 왼쪽 Jacobian도 별도로 제공하고 있습니다.</p></li>
+</ul>
+<p>정리하면, Lie 군에서의 Jacobian 계산은 (1) 우선 <strong>각 개별 연산(Exp, Log, 곱, 역 등)</strong>의 미분 공식을 알고, (2) <strong>체인 룰</strong>을 적용하여 복잡한 함수의 Jacobian을 구성하는 방식으로 이루어집니다. 이렇게 하면 자칫 직접 미분하면 실수하기 쉬운 부분들도 블록 조립하듯 안전하게 얻을 수 있습니다. Solà 논문 부록에는 주요 Lie 군들에 대한 거의 모든 필요한 미분 공식이 나열되어 있는데, 이는 실무자가 EKF나 최적화 알고리즘을 구현할 때 큰 도움이 됩니다. 예를 들어, <span class="math inline">h(X) = X \cdot p</span> (Pose <span class="math inline">X</span>가 3D 점 <span class="math inline">p</span>에 작용) 같은 단순한 경우부터 IMU의 복잡한 상태 천이에 이르기까지, 미리 유도된 Jacobian들을 모아두면 <strong>프로토타이핑 속도</strong>와 <strong>신뢰성</strong>이 크게 향상됩니다. 실제로 <strong>Manif</strong> 라이브러리에는 이러한 Jacobian 계산이 모두 구현되어 있어, 사용자가 일일이 미분 공식을 유도할 필요 없이 함수를 호출해 사용할 수 있습니다.</p>
+<p>참고로, Jacobian을 수기로 유도하는 작업은 매우 번거롭고 오류가 잦기 때문에, 최근에는 <strong>자동 미분</strong>이나 <strong>수치 미분</strong>을 활용하는 경우도 많습니다. 그러나 Lie 이론을 한 번 익혀 두면, 자동 미분 없이도 문제를 해석적으로 풀 수 있고 보다 깊은 이해를 얻을 수 있다는 장점이 있습니다. 논문의 저자들도 “Lie 이론을 쓰면 빠르게 최종 Jacobian을 얻을 수 있지만 수학이 많이 필요하며, 체인 룰을 직접 쓰는 편이 더 쉬울 수도 있다”는 취지의 언급을 하고 있습니다. 이는 결국 개발자가 선호하는 방식에 달렸지만, <strong>원리를 알고 쓰는 것과 모르고 쓰는 것의 차이</strong>는 결과의 신뢰성과 확장성에서 드러날 것입니다.</p>
+</section>
+<section id="유클리드-기반-필터와의-비교-무엇이-다르고-어떤-장점이-있나" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="유클리드-기반-필터와의-비교-무엇이-다르고-어떤-장점이-있나"><span class="header-section-number">2.5</span> 유클리드 기반 필터와의 비교 – 무엇이 다르고 어떤 장점이 있나?</h2>
+<p>이제 Lie 이론 기반의 필터가 <strong>기존의 유클리드 공간 EKF 등과 어떻게 다른지</strong>, 또 <strong>어떤 장점</strong>을 갖는지 요약해보겠습니다. 핵심 차이는 당연히 <strong>상태를 다루는 방식</strong>입니다. 전통적인 필터에서는 상태를 하나의 벡터로 보고 그 위에서 <code>+</code> 연산을 수행합니다. 하지만 만약 상태가 본질적으로 <span class="math inline">\mathbb{R}^n</span>가 아닌 곡면(예: 회전)은, 기존 방식은 몇 가지 문제를 일으킵니다. 아래에 Lie 군 기반 접근의 <strong>차별점과 장점</strong>을 정리했습니다.</p>
+<ul>
+<li><p><strong>상태 제약의 자연스러운 유지:</strong> Lie 군 필터에서는 상태 업데이트를 <span class="math inline">\oplus</span>와 <span class="math inline">\text{Exp}</span>로 수행하므로, 추정한 상태가 항상 유효한 군 원소로 유지됩니다. 예를 들어, 쿼터니언을 사용해 자세를 나타낼 때, 기존 EKF는 보정시 벡터에 <span class="math inline">\Delta q</span>를 더한 후 <strong>재규격화</strong>(normalize)해야 하지만 Lie EKF에서는 <span class="math inline">q \leftarrow q \oplus \Delta q = q \cdot \text{Exp}(\Delta q)</span>로 업데이트함으로써 단위 노름 조건이 자동으로 보존됩니다. 이는 구현상 실수를 줄이고, 수학적으로도 <strong>일관성(consistency)</strong>을 확보해줍니다.</p></li>
+<li><p><strong>큰 회전/변위에 대한 정확한 선형화:</strong> 유클리드 필터는 상태가 크게 변할 경우 선형화 오차가 커질 수 있습니다. 반면 Lie 이론을 사용하면, 예를 들어 <span class="math inline">90^\circ</span> 회전도 축-각 벡터 <span class="math inline">(\pi/2)</span>로 정확히 표현하고 지수맵으로 반영할 수 있습니다. 따라서 <strong>변화가 클 때도 오차를 적절히 반영</strong>할 수 있어 필터의 안정성이 향상됩니다. 이러한 특성 덕분에 SLAM/비주얼-관성 항법 등의 <strong>대규모 변환이 수반되는 문제에서 필터의 성능이 향상</strong>되었다는 보고가 다수 있습니다.</p></li>
+<li><p><strong>통합적인 수학적 프레임워크:</strong> Lie 군은 다양한 유형의 상태(예: 2D/3D 회전, 위치, 확장된 포즈 등)를 하나의 이론으로 아우릅니다. 기존에는 각 경우마다 좌표 표현을 달리하며 EKF 공식을 유도해야 했지만, Lie 이론을 적용하면 <strong>하나의 통일된 틀</strong> 안에서 모든 경우를 다룰 수 있습니다. Solà 논문이 제공하는 것처럼, <em>주요 Lie 군에 대한 공통된 연산 표기와 공식</em>이 있으므로 학습곡선도 완만해집니다. 예를 들어, SO(2), SO(3), SE(3), <span class="math inline">\mathbb{R}^n</span> (트리비얼 군) 등을 모두 동일한 <span class="math inline">\oplus, \ominus</span> 표기로 다룰 수 있고, 필요한 Jacobian들도 형태는 유사한 구조를 가집니다.</p></li>
+<li><p><strong>체계적인 불확실성 전파:</strong> Lie 군 기반 필터에서는 공분산이 항상 <strong>접공간 상</strong>에 정의됩니다. 이는 곡면의 곡률을 직접 다루지 않고도 불확실성을 다룰 수 있게 해주며, 필요할 경우 접공간 상의 가우시안을 다시 군상에 <strong>랩핑(wrapping)</strong>해서 해석할 수 있습니다. 예를 들어, 아래 그림에서 빨간 타원은 접공간에서의 공분산 등고선이고, 이를 지수맵으로 곡면에 투영하면 파란 리본 모양으로 나타납니다. 이러한 시각화는 곡면 위의 불확실성 영역을 직관적으로 보여주며, 유클리드 필터에서는 얻기 어려운 통찰을 제공합니다. 더 나아가, Adjoint와 left Jacobian 등을 이용해 <strong>좌표계 변환에 따른 공분산 이식</strong>도 엄밀하게 수행할 수 있습니다. 이는 복잡한 로봇 센서 융합 시스템에서 서로 다른 표현 사이의 불확실성 변환을 일관되게 해주는 장점입니다.</p></li>
+<li><p><strong>기존 알고리듬과의 유사성 (쉬운 이식성):</strong> 앞서 설명했듯, Lie EKF의 수식은 기존 EKF와 거의 같은 형태를 띱니다. 따라서 이미 칼만 필터나 그래프 최적화 등에 익숙한 실무자라면 <strong>기존 코드를 약간 수정하는 것만으로</strong> Lie 군 버전으로 옮길 수 있습니다. 예를 들어, Plus 연산을 지원하는 데이터 구조(쿼터니언, 변환행렬 등)를 만들고, 칼만 필터의 업데이트 부분에서 벡터 합 대신 <span class="math inline">\oplus</span>를 호출하게 바꾸는 정도의 수정이면 됩니다. Solà 등은 <em>“Lie 이론을 적용해도 불확실성 관리 공식이 벡터 공간의 경우와 거의 닮아 있다”</em>고 강조하며, 독자들이 거부감 없이 기존 알고리듬을 확장하도록 돕고 있습니다.</p></li>
+<li><p><strong>이론적으로 검증된 정확성:</strong> Lie 군 필터는 근본적으로 <strong>미분 기하학에 기반</strong>하고 있어, 특이점(singularity)이나 좌표계 의존성 등의 문제가 최소화됩니다. 이는 특히 3차원 회전 같이 전통적으로 특이점 문제가 있던 경우 (예: 오일러 각의 짐벌락 문제)에도 강인합니다. 또한 시스템 모델이 <strong>좌표계 변화 아래 불변(invariant)</strong>인 성질을 이용하면, 필터의 구조적인 강건성을 높이는 <em>Invariant-EKF</em>와 같은 기법도 등장했는데, 이는 모두 Lie 군 이론의 산물입니다. 결과적으로 Lie 이론 기반 접근은 <strong>이론적으로 보다 철저히 검증</strong>되었고, 좌표 선택에 덜 민감한 추정을 가능케 합니다.</p></li>
+</ul>
+<p>이와 같은 장점에도 불구하고, 실무적으로 고려해야 할 점은 <strong>구현의 복잡성 증가</strong>입니다. Lie 군을 다루려면 수치적으로 Exp/Log를 계산해야 하고, Jacobian도 새롭게 구해야 하므로 초기 구현량은 다소 늘어날 수 있습니다. 하지만 앞서 언급한 <code>manif</code> 라이브러리나, 이미 잘 알려진 Sophus, g2o 등의 라이브러리를 사용하면 이러한 구현 부담은 크게 줄어듭니다. 무엇보다, 한 번 Lie 이론을 도입해두면 향후 새로운 상태 변수가 추가되어도 같은 원리로 확장할 수 있고, 시스템 전반의 <strong>일관성 유지</strong>와 <strong>디버깅 용이성</strong>이 좋아지는 효과가 있습니다. Solà 등은 “필요없는 이론까지 다 동원하지 않아도, 우리에게 유용한 핵심만으로도 충분히 정확한 알고리듬을 만들 수 있다”는 메시지를 전하고 있습니다. 이는 곧 <strong>실용성과 엄밀함의 균형</strong>을 의미하며, 로봇공학자가 Lie 이론을 학습할 충분한 이유가 될 것입니다.</p>
+</section>
+<section id="맺으며" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="맺으며"><span class="header-section-number">2.6</span> 맺으며</h2>
+<p>지금까지 <em>“A micro Lie theory for state estimation in robotics”</em> 논문을 따라가며 Lie 군/대수의 기본부터 상태 추정에의 응용까지 살펴보았습니다. 요약하면, <strong>Lie 군상의 칼만 필터</strong>는 상태를 매니폴드 위에서 표현하고, 오차는 접공간에서 가우시안으로 추정하며, 업데이트는 <span class="math inline">\text{Exp}</span>/<span class="math inline">\text{Log}</span> 연산을 통해 이루어집니다. 이는 <strong>항상 유효한 상태</strong>를 유지하고 <strong>선형화의 정확성</strong>을 높이며, 궁극적으로 필터의 성능과 안정성을 개선합니다. 논문 저자들이 강조하듯이, 로봇 상태 추정에서 Lie 이론의 <strong>일부분만 활용해도</strong> 얻을 수 있는 이득이 매우 크다는 것이 현대 사례들로 증명되고 있습니다. 독자께서도 오래 잊고 있던 이론 감각을 되살려, 실제 로봇 문제에 Lie 이론을 적용해보길 권합니다. 작은 Lie 이론이 모여 큰 발전을 이루듯, 엄밀한 수학적 도구의 현장 적용이 로봇공학의 견고한 발전으로 이어질 것입니다.</p>
+<p><strong>참고문헌:</strong> Joan Solà, Jérémie Deray, Dinesh Atchuthan, <em>A micro Lie theory for state estimation in robotics</em>, arXiv:1812.01537v9, 2021.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
