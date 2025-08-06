@@ -1,0 +1,70 @@
+---
+title: "📃SeqMultiGrasp 리뷰"
+date: 2025-08-06
+categories: [grasp, diffusion, multi-objects]
+toc: true
+number-sections: true
+description: Sequential Multi-Object Grasping with One Dexterous Hand
+---
+
+- [Paper Link](https://arxiv.org/abs/2503.09078)
+- [Project Link](https://hesic73.github.io/SeqMultiGrasp/)
+
+1. 🤖본 논문은 Allegro Hand를 사용하여 여러 객체를 한 손으로 순차적으로 파지하는 로봇 시스템인 SeqMultiGrasp을 제안합니다.
+2. ✋이 시스템은 먼저 손의 특정 링크에 제약된 단일 객체 파지 후보를 합성하고 시뮬레이션에서 검증한 후, 이를 병합하여 다중 객체 파지 구성을 생성합니다.
+3. ✅실제 환경 배포를 위해 Point Cloud 기반의 Diffusion Model이 파지 자세를 제안하고 휴리스틱 기반의 실행 전략을 통해 시뮬레이션에서 65.8%, 실제 환경에서 56.7%의 평균 성공률을 달성했습니다.
+
+<center>
+<img src="../../images/2025-08-06-seq-multi-obj/1.png" width="100%" />
+</center>
+
+---
+
+# Brief Review
+
+본 논문은 하나의 민첩한 손으로 여러 객체를 순차적으로 파지하는 문제를 다루며, 이를 위한 시스템인 SeqMultiGrasp를 제안합니다. 인간은 손의 뛰어난 민첩성을 활용하여 여러 객체를 동시에 또는 순차적으로 파지할 수 있지만, 로봇에게 이는 객체의 다양한 형상과 높은 자유도(high-DOF) 손의 복잡한 접촉 상호작용으로 인해 어려운 도전 과제입니다. 특히 하나의 객체를 파지한 상태에서 다른 객체를 파지해야 하는 순차적 시나리오에서 난이도는 더욱 증가합니다.
+
+SeqMultiGrasp는 네 손가락을 가진 Allegro Hand를 사용하여 두 개의 객체를 순차적으로 파지하는 데 초점을 맞춥니다. 이 시스템은 첫 번째 객체를 완전히 감싸 들어 올린 후, 첫 번째 객체를 떨어뜨리지 않으면서 두 번째 객체를 파지하는 것을 목표로 합니다.
+
+핵심 방법론은 다음과 같은 단계로 구성됩니다.
+
+1.  **단일 객체 그랩 후보 합성:**
+    *   우선, Differentiable Force Closure (DFC) [13] 알고리즘을 기반으로 단일 객체 그랩 포즈를 합성합니다. 이 과정은 파지 문제를 에너지 함수의 최적화로 정식화하여 해결합니다.
+    *   손 구성 $H = (\theta , T)$는 로봇 손의 관절 구성 $\theta \in \mathbb{R}^d$와 객체 $O$에 대한 상대 포즈 $T \in SE(3)$를 나타냅니다.
+    *   에너지 함수는 다음과 같습니다:
+        $$E = E_{fc} + w_{dis}E_{dis} + w_pE_p + w_{sp}E_{sp} + w_qE_q$$
+        여기서 $E_{fc}$는 force closure 항, $E_{dis}$는 접촉점과 객체 표면 간의 거리에 대한 페널티, $E_p$는 손, 객체, 탁자 간의 침투(penetration)에 대한 페널티, $E_{sp}$는 손의 자기 침투(self-penetration)에 대한 페널티, $E_q$는 관절 한계 위반에 대한 페널티를 나타냅니다. $w$ 항들은 각 구성 요소의 가중치 계수입니다.
+    *   합성 과정에서는 손 표면의 접촉 후보점에서 접촉점을 샘플링하고 초기 구성을 설정합니다. 이후 Metropolis-Adjusted Langevin Algorithm (MALA)과 결합된 경사 기반 접근 방식을 사용하여 최적화합니다. 특정 임계값을 초과하는 에너지를 가진 구성은 필터링됩니다.
+    *   순차적 다중 객체 파지를 위해, 첫 번째 객체는 엄지, 검지, 중지를 사용하는 pinch-like grasp, 두 번째 객체는 약지와 손바닥을 사용하는 side grasp에 접촉 후보점을 제한하는 등 기존 DFC 파이프라인에 여러 수정 사항이 적용되었습니다.
+
+2.  **물리 시뮬레이션 기반 그랩 유효성 검증:**
+    *   합성된 그랩 후보들은 GPU 가속 물리 시뮬레이터인 ManiSkill [39]에서 그랩을 실행하여 안정성과 실행 가능성을 검증합니다.
+    *   **Rotation Robustness:** 객체가 6가지 축 정렬 중력 방향(±x, ±y, ±z) 하에서 2.5초 시뮬레이션 후에도 손과 접촉을 유지하는지 평가합니다.
+    *   **Execution Feasibility:** 그랩이 환경과의 충돌 없이 성공적으로 실행될 수 있는지 확인합니다.
+
+3.  **다중 객체 그랩 구성 병합:**
+    *   검증된 단일 객체 그랩 포즈들을 병합하여 다중 객체 그랩 구성을 생성합니다. 이 과정은 관련 손 링크와 관절이 완전히 분리되어 있을 때만 가능합니다.
+    *   병합 시, 각 손가락의 관절 각도는 해당 손가락이 잡는 객체의 접촉점에 따라 설정됩니다. 어떤 객체도 잡지 않는 손가락의 관절 각도는 단일 객체 그랩 중 하나에서 무작위로 상속받아 비겹침 제어 제약 조건을 유지합니다.
+
+4.  **Diffusion-based 포즈 생성:**
+    *   그랩 포즈 생성의 계산 비용을 줄이기 위해, 객체의 point cloud $P = \{P_j\}_{j=1}^{N_o}$에 조건화된 diffusion model [40]을 훈련하여 손 포즈를 제안합니다.
+    *   **Forward Process (노이즈 추가):**
+        $q(H_t |H_{t-1}) = \mathcal{N} \left( H_t ; \sqrt{1 - \beta_t} H_{t-1}, \beta_t \mathbf{I} \right)$
+        여기서 $\beta_t$는 노이즈 레벨을 제어하고 $\mathbf{I}$는 항등 행렬입니다.
+    *   **Reverse Process (노이즈 제거 및 재구성):**
+        $p_\phi (H_{t-1}|H_t , P) = \mathcal{N} \left( H_{t-1}; \mu_\phi (H_t ,t, P), \Sigma_\phi (H_t ,t, P) \right)$
+        여기서 $\mu_\phi$와 $\Sigma_\phi$는 각각 예측된 평균과 공분산입니다.
+    *   네트워크는 PointNet++ [43]를 사용하여 point cloud 특징을 추출하고, 회전 행렬로 객체 방향을 표현하며, singular value decomposition (SVD) [44]를 적용하여 직교성을 보장합니다.
+
+5.  **휴리스틱 기반 실행 전략:**
+    *   복잡한 reinforcement learning (RL) 정책 대신, simple squeeze-and-lift 절차를 채택합니다.
+    *   CuRobo [45]를 사용하여 엔드 이펙터를 그랩 포즈에서 오프셋된 충돌 없는 포즈로 모션 플래닝합니다.
+    *   이후 충돌 검사 없이 그랩 포즈로 느리게 이동하며, 손 관절 위치를 두 단계로 조정합니다. 첫 번째는 `pre-grasp joint position`으로 손가락 끝을 후퇴시키고, 두 번째는 `target joint position`으로 손가락을 닫습니다.
+
+시뮬레이션 및 실제 환경에서 광범위한 실험이 수행되었습니다. 시뮬레이션에서는 8x8 객체 조합에 대해 Synthesized Grasp (SG) 방식이 평균 82.7%의 성공률을 보였으며, diffusion model 기반 Learned Grasp (LG) 방식은 65.8%의 성공률을 달성했습니다. 실제 로봇 시스템을 사용한 실험에서는 6x3 객체 조합에 대해 SG가 64.4%, LG가 56.7%의 평균 성공률을 기록했습니다. 실제 환경 point cloud 획득을 위해 Nerfstudio [50], COLMAP [51], Stable Normal [52], 2D Gaussian Splatting [53] 등의 기술이 활용되어 sim-to-real gap을 줄였습니다.
+
+SeqMultiGrasp는 여전히 두 개의 객체만 다루며 데이터셋 크기와 다양성, 그리고 휴리스틱에 대한 의존성 등 몇 가지 한계를 가지고 있지만, 다재다능한 다중 객체 파지 분야의 미래 연구를 위한 유망한 기반을 제공합니다.
+
+---
+
+# Detail Review
