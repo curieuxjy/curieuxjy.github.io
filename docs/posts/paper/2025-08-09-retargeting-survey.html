@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-09">
+<meta name="description" content="Human to Robot Hand Motion Mapping Methods - Review and Classification">
+
+<title>📃Retargeting Survey 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#연구-배경-및-필요성" id="toc-연구-배경-및-필요성" class="nav-link" data-scroll-target="#연구-배경-및-필요성"><span class="header-section-number">2.1</span> 연구 배경 및 필요성</a></li>
+  <li><a href="#직접-관절-매핑-direct-joint-mapping" id="toc-직접-관절-매핑-direct-joint-mapping" class="nav-link" data-scroll-target="#직접-관절-매핑-direct-joint-mapping"><span class="header-section-number">2.2</span> 직접 관절 매핑 (Direct Joint Mapping)</a></li>
+  <li><a href="#직접-데카르트-매핑-direct-cartesian-mapping" id="toc-직접-데카르트-매핑-direct-cartesian-mapping" class="nav-link" data-scroll-target="#직접-데카르트-매핑-direct-cartesian-mapping"><span class="header-section-number">2.3</span> 직접 데카르트 매핑 (Direct Cartesian Mapping)</a></li>
+  <li><a href="#과업-지향-매핑-task-oriented-mapping" id="toc-과업-지향-매핑-task-oriented-mapping" class="nav-link" data-scroll-target="#과업-지향-매핑-task-oriented-mapping"><span class="header-section-number">2.4</span> 과업 지향 매핑 (Task-Oriented Mapping)</a></li>
+  <li><a href="#차원-축소-기반-매핑-dimensionality-reduction-based-mapping" id="toc-차원-축소-기반-매핑-dimensionality-reduction-based-mapping" class="nav-link" data-scroll-target="#차원-축소-기반-매핑-dimensionality-reduction-based-mapping"><span class="header-section-number">2.5</span> 차원 축소 기반 매핑 (Dimensionality Reduction-Based Mapping)</a></li>
+  <li><a href="#자세-인식-기반-매핑-hand-pose-recognition-based-mapping" id="toc-자세-인식-기반-매핑-hand-pose-recognition-based-mapping" class="nav-link" data-scroll-target="#자세-인식-기반-매핑-hand-pose-recognition-based-mapping"><span class="header-section-number">2.6</span> 자세 인식 기반 매핑 (Hand Pose Recognition-Based Mapping)</a></li>
+  <li><a href="#하이브리드-매핑-hybrid-mapping" id="toc-하이브리드-매핑-hybrid-mapping" class="nav-link" data-scroll-target="#하이브리드-매핑-hybrid-mapping"><span class="header-section-number">2.7</span> 하이브리드 매핑 (Hybrid Mapping)</a></li>
+  <li><a href="#실제-응용-분야에서의-활용-가능성" id="toc-실제-응용-분야에서의-활용-가능성" class="nav-link" data-scroll-target="#실제-응용-분야에서의-활용-가능성"><span class="header-section-number">2.8</span> 실제 응용 분야에서의 활용 가능성</a></li>
+  <li><a href="#저자들의-미래-연구-방향-제언과-평가" id="toc-저자들의-미래-연구-방향-제언과-평가" class="nav-link" data-scroll-target="#저자들의-미래-연구-방향-제언과-평가"><span class="header-section-number">2.9</span> 저자들의 미래 연구 방향 제언과 평가</a></li>
+  <li><a href="#추가적인-시사점-및-제안" id="toc-추가적인-시사점-및-제안" class="nav-link" data-scroll-target="#추가적인-시사점-및-제안"><span class="header-section-number">2.10</span> 추가적인 시사점 및 제안</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.11</span> Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Retargeting Survey 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">retargeting</div>
+    <div class="quarto-category">survey</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Human to Robot Hand Motion Mapping Methods - Review and Classification
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 9, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/9896989/">Paper Link</a></li>
+</ul>
+<ol type="1">
+<li>📚 본 논문은 사람 손 동작을 로봇 손 동작으로 매핑하는 다양한 접근 방식을 검토하고 직접 관절, 직접 Cartesian, 작업 지향, 차원 축소 기반, 자세 인식 기반, 하이브리드의 여섯 가지 주요 범주로 분류합니다.</li>
+<li>🧐 역사적 개요를 통해 인체와 로봇 손 사이의 운동학적 차이에서 발생하는 주요 과제를 제시하고, 원격 조작 및 시연을 통한 학습과 같은 다양한 응용 분야에서 각 방법의 적합성을 분석합니다.</li>
+<li>✨ 저자들은 매핑 방법의 목표를 보다 체계적으로 정의하고, 사용자 관점에서의 자연스러움과 직관성을 개선하며, 운동학적 사전 정보 활용 및 증분 학습 가능성 등을 미래 연구 방향으로 제안합니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/1.png" width="100%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>이 논문은 인간 손(Human Hand, HH) 동작을 로봇 손(Robot Hand, RH) 동작으로 매핑하는 다양한 방법들을 검토하고 분류합니다. 이 문제는 텔레오퍼레이션(teleoperation)과 시연을 통한 학습(learning by demonstration)과 같은 여러 응용 분야에서 중요하며, 인간의 인지 능력과 손재주를 로봇 제어에 활용하려는 시도입니다.</p>
+<p>HH 대 RH 매핑(Human to Robot Hand Mapping, HRM)의 근본적인 문제는 PH(Primary Hand, 인간 손 및 센싱 장비)와 TH(Target Hand, 로봇 손 및 핸드 컨트롤러) 시스템 간의 불일치에서 발생합니다. 특히 HH의 현실적인 물리적 양(관절 중심, 길이 등)을 정확히 측정하기 어렵고(비침습적 센싱 장비(Sensing Equipment, SE)의 한계), HH 모델과 RH 기하학적 구조 간의 운동학적 차이(kinematic dissimilarities)가 존재합니다. 이러한 문제는 정확하고 직관적이며 일반적인 HRM 솔루션을 설계하는 것을 어렵게 만듭니다.</p>
+<p>이 논문은 기존의 HRM 방법들을 다음의 여섯 가지 주요 카테고리로 분류하여 포괄적이고 체계적인 관점을 제공합니다: 1. <strong>Direct Joint Mapping (직접 관절 매핑):</strong> * <strong>핵심 방법론:</strong> PH의 관절 각도 측정값을 TH의 해당 관절에 직접 연결합니다. * <strong>기술적 상세:</strong> <span class="math inline">n</span>개의 선택된 PH 관절 <span class="math inline">\theta_{\text{PH}_i}</span>와 TH 관절 <span class="math inline">\theta_{\text{TH}_i}</span>사이에 선형 관계 <span class="math inline">\theta_{\text{TH}_i} = k_i \theta_{\text{PH}_i} + c_i</span>를 적용합니다. 계수 <span class="math inline">k_i, c_i</span>는 경험적 기법, 최적화, 또는 수동 조정으로 결정됩니다. 때로는 정의된 <span class="math inline">m</span>개의 PH/TH 관절 설정 쌍에 대한 최소 제곱 적합(least-square fit)을 통해 매핑 행렬<span class="math inline">K</span>를 계산하여 <span class="math inline">\theta_{\text{TH}} = K \theta_{\text{PH}}</span>와 같이 사용하기도 합니다. HH 모델과 SE를 통해 PH 관절 값을 얻습니다. * <strong>장점:</strong> 구현이 간단하고 빠릅니다. 인체모방 RH에서 PH 형상을 잘 보존하여 제스처 재현성이 높고 TH 동작의 예측 가능성이 높습니다. * <strong>단점:</strong> TH의 운동학적 차이로 인해 손가락 끝 위치 정확도가 떨어집니다. 비인체모방 TH의 경우 경험적 관절 선택이 필요하여 정보 손실이 발생할 수 있습니다. 일반성이 부족합니다. * <strong>응용 분야:</strong> 단순한 파워 그립(power grasps), 빠른 텔레오퍼레이션 솔루션. Dataglove 또는 비전 시스템이 주로 사용됩니다.</p>
+<ol start="2" type="1">
+<li><strong>Direct Cartesian Mapping (직접 Cartesian 매핑):</strong>
+<ul>
+<li><strong>핵심 방법론:</strong> PH 손가락 끝(fingertip)의 Cartesian 위치와 방향(포즈)을 TH 손가락 끝에 부여합니다.</li>
+<li><strong>기술적 상세:</strong> HH 모델과 SE 측정값으로부터 전방 운동학(forward kinematics)을 사용하여 PH 손가락 끝 포즈 <span class="math inline">p_{\text{PH}_i} = F_i(\theta_{\text{PH}_{i1}}, \dots)</span>를 계산합니다. 이 포즈는 TH 작업 공간에 매핑된 후, 스케일링(scaling), 최적화(optimization), 또는 특정 설계 기준에 따른 변환을 거쳐 <span class="math inline">p_{\text{TH}}</span>가 됩니다. 최종적으로 역 운동학(inverse kinematics)<span class="math inline">\theta_{\text{TH}_i} = I_i(p_{\text{TH}_i})</span>을 사용하여 TH 관절 각도를 얻습니다. 작업 공간 스케일링이나 최적화(예: 거리 및 방향 기반 비용 함수 최소화)가 자주 사용됩니다.</li>
+<li><strong>장점:</strong> TH 손가락 끝 위치의 정밀도가 높습니다. 정밀 그립(precision grasps) 및 물체 내 조작(in-hand manipulation)에 적합합니다. 손 크기 차이 조정을 위해 스케일링 기법을 쉽게 적용할 수 있습니다.</li>
+<li><strong>단점:</strong> PH-TH 운동학적 차이로 인해 PH 형상이 TH에 보존되지 않습니다. TH 작업 공간에서 일부 PH 설정이 실현 불가능할 수 있습니다(workspace incongruity). 부정확성 보상 시 부자연스러운 HH 동작이 필요할 수 있습니다. 일반성과 기능적 정보 손실이 있습니다.</li>
+<li><strong>응용 분야:</strong> DLO(daily living object) 그립, Pick-and-place, 단순 정밀 그립. Dataglove, 비전 시스템이 사용됩니다.</li>
+</ul></li>
+<li><strong>Task-Oriented Mapping (작업 지향 매핑):</strong>
+<ul>
+<li><strong>핵심 방법론:</strong> 동작 정보를 손 운동학적 구조에 독립적인 작업 지향적 설명으로 캡슐화합니다.</li>
+<li><strong>기술적 상세:</strong> PH 동작은 작업 영역(task domain), 예를 들어 이미지 영역이나 가상 객체(virtual object)의 기하학적 설명으로 변환됩니다. 이 작업 영역에서 매핑 문제를 해결한 다음, 결과를 운동학적 영역의 TH에 다시 적용합니다. 가상 객체(원형 또는 구형)의 크기와 위치를 PH 손가락 끝 포즈에 기반하여 동적으로 조절하거나, PH 손가락의 특정 점(예: 손가락 끝) 변형을 캡슐화하는 동차 변환(homogeneous transformation)을 TH에 적용한 후 역 운동학을 사용합니다.</li>
+<li><strong>장점:</strong> PH-TH 운동학적 차이를 직접 고려하며, RH의 특정 운동학적 구조에 덜 종속적입니다. 제어 복잡성을 줄이며 다양한 종류의 TH를 사용할 수 있습니다. 저렴하고 신뢰성 있는 RH 활용에 유리합니다.</li>
+<li><strong>단점:</strong> 텔레오퍼레이션의 전반적인 직관성과 TH 동작의 예측 가능성이 떨어질 수 있습니다. 특정 작업에 매우 특화되어 다른 목적으로의 적용 가능성이 낮을 수 있습니다.</li>
+<li><strong>응용 분야:</strong> 객체 잡기(grasping), 조립 작업, 단순 정밀 그립. Dataglove가 주로 사용됩니다.</li>
+</ul></li>
+<li><strong>Dimensionality Reduction Based Mapping (차원 축소 기반 매핑):</strong>
+<ul>
+<li><strong>핵심 방법론:</strong> TH 입력 공간의 변수들에 조정을 도입하여 차원 축소를 강제합니다. PH 동작을 저차원 부분 공간(subspace)으로 인코딩한 후, 이 정보를 TH 동작 입력으로 디코딩합니다.</li>
+<li><strong>기술적 상세:</strong> 인간의 손 동작(예: 자세 시너지 postural synergies) 관찰이나 경험적 규칙(예: 작업별 주요 동작 방향 principal motion directions)을 통해 저차원 부분 공간을 정의합니다. 이 부분 공간은 연속적인 TH 설정 공간을 생성합니다. 인코딩/디코딩 함수 또는 행렬을 사용하여 PH 데이터를 저차원 공간에 투영하고 TH 관절 공간으로 변환합니다.</li>
+<li><strong>장점:</strong> 고차원 인체모방 RH 및 운동학적 차이가 큰 비인체모방 RH 모두에 대해 제어 복잡성을 줄입니다. 자율적인 로봇 잡기 플래너(grasping planner)에 인간 기술을 이전하는 데 적합합니다.</li>
+<li><strong>단점:</strong> TH의 가능한 동작이 정의된 매핑 부분 공간 내로 제한됩니다. 운영자가 매핑 방식을 학습하는 데 상당한 노력이 필요할 수 있으며, 학습 속도와 직관성에 대한 추가 연구가 필요합니다.</li>
+<li><strong>응용 분야:</strong> 파워 그립, DLO 그립, Pick-and-place, 도구 사용. Dataglove, 비전 시스템 등 다양한 SE와 인체모방/세 손가락 RH가 사용됩니다.</li>
+</ul></li>
+<li><strong>Hand Posture Recognition Based Mapping (손 자세 인식 기반 매핑):</strong>
+<ul>
+<li><strong>핵심 방법론:</strong> PH 동작 정보를 처리하여 특정 PH 자세(posture)나 제스처를 인식하고, 이를 기반으로 미리 정의된 TH 동작/설정을 활성화합니다.</li>
+<li><strong>기술적 상세:</strong> PH에서 얻은 데이터 특징을 사용하여 손 자세를 분류합니다. 머신 러닝 기법(신경망, Support Vector Machine (SVM), 결정 트리, k-Nearest Neighbourhood (k-NN), Hidden Markov Model (HMM), Deep Learning, Gaussian Mixture Model, Bayesian Network 등)이 주로 사용됩니다. 인식된 자세는 TH의 이산적이고 미리 정의된 동작 세트 중 하나를 트리거합니다. 때로는 유한 상태 기계(finite state machine)의 전이를 제어하는 데 사용되기도 합니다.</li>
+<li><strong>장점:</strong> TH 동작 세트가 미리 알려진 응용 분야에 적합합니다. 운영자는 자신의 손을 사용하여 일종의 고급 원격 컨트롤러처럼 TH를 제어할 수 있습니다. 필요한 경우 새로운 기능을 점진적으로 추가하기 용이합니다.</li>
+<li><strong>단점:</strong> TH의 연속적인 제어 가능성이 제한됩니다. 응용 분야의 복잡성이 증가함에 따라 미리 정의된 TH 동작 수가 늘어나 정확한 PH 자세 인식이 더 어려워질 수 있습니다. HRM의 자연성이 떨어집니다.</li>
+<li><strong>응용 분야:</strong> 시연을 통한 학습(teaching by demonstration), 텔레오퍼레이션(특히 제한된 동작 세트), 비언어적 통신, 가상 현실. 다양한 SE와 RH 유형 조합에 사용됩니다.</li>
+</ul></li>
+<li><strong>Hybrid Mappings (하이브리드 매핑):</strong>
+<ul>
+<li><strong>핵심 방법론:</strong> 앞선 카테고리 중 두 가지 이상의 방법을 결합하거나, 특정 응용에 특화된 ad hoc 솔루션을 사용합니다.</li>
+<li><strong>기술적 상세:</strong> 여러 매핑 방법을 구조 내에서 논리적, 시간적, 공간적 전환 기준과 함께 결합합니다. 예로는 음성 명령과 차원 축소 기반 매핑의 조합, 비전 시스템과 거리 추정의 조합, “숨겨진 로봇(hidden robot)” 개념(가상 중간 표현을 사용), 공유 제어(shared control, 자세 인식과 자율 미세 조정 결합), 직접 관절 매핑과 직접 Cartesian 매핑의 전환(fuzzy 분류기 또는 분석적 전환 함수 사용) 등이 있습니다.</li>
+<li><strong>장점:</strong> 단일 방법의 한계를 극복하고 다양한 텔레오퍼레이션 하위 문제를 해결하기 위해 여러 접근 방식의 장점을 활용할 수 있습니다. 모듈성 및 통합 가능성이 높습니다.</li>
+<li><strong>단점:</strong> 알고리즘 설계 복잡성이 증가합니다. 방법 간의 전환 동작 설계 및 기존 방법 재정의가 섬세하고 어려울 수 있습니다.</li>
+<li><strong>응용 분야:</strong> 조립, 도구 사용 등 복잡한 작업. 인체모방 RH와 Dataglove, 핸드 외골격(exoskeleton), 비전 시스템 등 다양한 SE가 사용됩니다.</li>
+</ul></li>
+</ol>
+<p><strong>논의: 응용 분야 및 바람직한 동향</strong></p>
+<p>이 논문은 각 카테고리별 SE, RH, 응용 분야의 분포를 분석합니다. Direct Joint Mapping은 주로 Dataglove와 인체모방 RH를 사용하여 단순 파워 그립에, Direct Cartesian Mapping은 정밀 그립과 DLO 그립에, Task-Oriented Mapping은 조립 및 정밀 그립에, Dimensionality Reduction Based Mapping은 파워 그립, DLO 그립, Pick-and-place, 도구 사용에, Hand Posture Recognition Based Mapping은 시연을 통한 학습 및 특정 작업 활성화에, Hybrid Mapping은 복잡한 조립 및 도구 사용 작업에 주로 적용됩니다.</p>
+<p>바람직한 미래 연구 방향은 다음과 같습니다:</p>
+<ol type="1">
+<li><strong>체계적인 목표 및 표준 지표:</strong> HRM 방법의 목표를 명확히 정의하고, 정량적이고 비교 가능한 표준 평가 지표(metrics)를 개발하여 연구 간 비교 및 점진적 발전을 촉진해야 합니다.</li>
+<li><strong>자연성 및 직관성:</strong> 사용자의 관점에서 매핑의 자연성(자신의 손처럼 움직일 수 있는 정도)과 직관성(매핑 기능을 학습하는 속도)을 정식으로 정의하고 측정하여 설계에 반영해야 합니다.</li>
+<li><strong>선험적 운동학적 정보 활용:</strong> 주어진 손의 운동학적 구조에서 얻을 수 있는 선험적 정보(작업 공간 모양, 속도 타원체, 손가락 접촉 가능 영역 등)를 매핑 설계에 활용하여 더 의미 있고 일반화 가능한 방법을 개발해야 합니다.</li>
+<li><strong>매핑 정보 피드백:</strong> 사용자에게 특정 매핑 매개변수/특징에 대한 피드백을 제공하여 온라인 사용 중 폐쇄 루프 제어 및 학습을 가능하게 해야 합니다. 이를 통해 사용자와 매핑 알고리즘 간의 공동 적응(coadaptation)을 도모하고, 작업 공간 불일치 등으로 인한 예측 불가능한 TH 동작을 완화할 수 있습니다.</li>
+<li><strong>점진적으로 업데이트 가능한 HRM:</strong> 모든 상황에 사용 가능한 단일 알고리즘 대신, 사용자의 필요에 따라 새로운 기능으로 쉽게 업데이트할 수 있는 점진적 학습(incremental learning) 패러다임 기반의 매핑 알고리즘을 개발해야 합니다.</li>
+</ol>
+<p>이 논문은 HRM 연구의 현재 상태를 종합하고 분류하며, 앞으로 해결해야 할 도전 과제와 유망한 연구 방향을 제시합니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>인간-로봇 손 동작 매핑 기법: 리뷰 및 분류</p>
+</blockquote>
+<section id="연구-배경-및-필요성" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="연구-배경-및-필요성"><span class="header-section-number">2.1</span> 연구 배경 및 필요성</h2>
+<p>사람의 손 움직임을 로봇 손으로 <strong>매핑</strong>하는 기술은 원격 조작(텔레오퍼레이션)부터 학습을 통한 시연(LbD, Learning by Demonstration)까지 다양한 분야에서 핵심적으로 활용됩니다. 인간 조작자의 높은 <strong>인지 능력과 손재주</strong>를 로봇 제어에 활용하면, 복잡한 작업의 계획, 오류 감지/회복 및 학습 과정을 사람에게 일부 맡길 수 있어 유용합니다. 실제로 우주 왕복선 및 국제우주정거장 로봇 암/손 조작, 해저 파이프 검사/수리, 의료 미세수술 로봇, 착용형 재활 로봇, 위험 물질 취급(원자력 시설 등), 물류 창고, 농업, 건설, 광산 등 다양한 응용 분야에서 인간 손 움직임을 로봇 손에 실시간으로 복제하는 연구가 진행되어 왔습니다. 이러한 <strong>텔레오퍼레이션</strong>에서는 오퍼레이터(사람)의 손동작 데이터를 측정해 실시간으로 로봇 손을 구동하며, 이를 통해 멀리 떨어진 환경에서도 정교한 조작이 가능합니다. 또한 <strong>시연 학습</strong> 분야에서는 사람의 손동작 데이터를 실시간 제어가 아닌 <strong>오프라인 학습 데이터</strong>로 활용하여, 자율 로봇 손의 <strong>기술 습득</strong>에 사용합니다. 예를 들어, 사람 손의 공잡이(preshaping)나 그립(grasp) 동작을 측정하여 로봇 손의 물체 파지 계획을 수립하거나, 물체 조작 시의 자세 최적화, 사람과 유사한 궤적 생성 등에 응용합니다.</p>
+<p>그러나 <strong>인간 손(HH)</strong>과 <strong>로봇 손(RH)</strong> 사이의 <strong>기구학적 불일치</strong>로 인해, 인간의 섬세한 손동작을 로봇 손에 그대로 재현하는 것은 겉보기만큼 간단하지 않습니다. 인간 손은 최대 25자유도(관절 25개 이상)까지 움직임을 만들어내는 반면, 로봇 손도 고도로 인간형으로 설계되면 많은 관절을 가지지만, 양쪽의 <strong>구조적 차이</strong>는 피할 수 없습니다. 예컨대 로봇 손이 인간 손과 <strong>형상이 유사</strong>할수록(즉 <strong>높은 인간형</strong>일수록) 매핑도 단순해지지만, 실제 로봇 손은 정확히 인간 손과 일치하지 않으므로 <strong>일대일 대응</strong>이 어렵고 추가적인 보정이나 변환이 필요하게 됩니다. 더구나 <strong>손가락 길이</strong>나 <strong>관절 위치</strong> 등의 개인차와, 센서 장비의 한계로 인해 사람 손의 실제 움직임을 100% 계측하는 것도 불가능하며, 이는 매핑 정확도에 한계를 줍니다. 결국 “<strong>인간-로봇 손 매핑 문제</strong>”는 여전히 풀리지 않은 개념적·분석적 도전과제로 남아 있으며, 이를 해결하기 위해 두 가지 하위 문제가 제기됩니다: <strong>(i)</strong> 사람 손동작의 <strong>의미 있고 정확한 계측</strong> (센서 기술)과 <strong>(ii)</strong> 측정된 데이터를 로봇 손동작으로 <strong>변환하는 매핑 알고리즘</strong>입니다. 본 논문은 이 중 <strong>매핑 알고리즘</strong> 자체에 초점을 맞추며, 다양한 연구에서 제안된 해결책들을 한데 모아 <strong>분류 체계화</strong>하고자 했습니다.</p>
+<p>지금까지 인간 손-로봇 손 매핑에 관한 연구들은 적용 분야나 사용 센서, 용어 및 목표가 제각각이라 전반적인 <strong>조망</strong>이 어려웠습니다. 과거 Li 등(2015)의 서베이 연구가 손 매핑 기법들을 정리한 바 있으나, 이는 주로 <strong>컴퓨터 비전 기반 장치</strong>에 치우쳐 있고 로보틱스적 관점이 부족하여 한계가 있었습니다. 예컨대 Li 등의 분류는 장치 종류에 따른 구분이라 <strong>일반성이 떨어지고</strong>, 손 <strong>운동 시너지</strong>(손가락 간 상관관계 이용)나 <strong>혼합형 접근법</strong> 등 중요한 방법론도 다루지 않았습니다. 이에 비해 Meattini 등 본 논문은 <strong>로봇공학적 관점</strong>에서 매핑 문제를 재조명하여, <strong>기술에 종속되지 않는</strong> 보편적 용어 정의와 분류 기준을 제시합니다. 특히 인간-로봇 손 매핑의 개념, 주요 도전과제들을 깊이 분석하고, 현대 연구들을 여섯 가지 <strong>핵심 범주</strong>로 체계화했습니다. 이후 센서/로봇 손 기술 요소와 적용 사례에 대한 논의를 추가하여 종합적인 전망을 제시합니다. 아래에서는 논문에서 제시한 <strong>6가지 매핑 접근법</strong> 각각의 개념과 대표 사례를 살펴보고, 장단점을 비판적으로 고찰하겠습니다. 더불어 실제 로봇 손 시스템의 <strong>응용 시나리오</strong>별로 어느 접근법이 어떻게 활용될 수 있는지 검토하고, 마지막으로 저자들이 제안한 <strong>미래 연구 방향</strong>과 그에 대한 평가, 그리고 이에 기반한 추가적인 시사점을 제안합니다.</p>
+</section>
+<section id="직접-관절-매핑-direct-joint-mapping" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="직접-관절-매핑-direct-joint-mapping"><span class="header-section-number">2.2</span> 직접 관절 매핑 (Direct Joint Mapping)</h2>
+<p><strong>개념:</strong> 직접 관절 매핑은 말 그대로 <strong>사람 손의 각 관절각도</strong>를 대응되는 <strong>로봇 손의 관절</strong>에 직접 할당하는 방식입니다. 전제 조건은 로봇 손의 <strong>기구학 구조</strong>가 인간 손과 어느 정도 일대일로 <strong>대응 관계</strong>를 가질 때입니다. 이상적인 경우 각 인간 손가락 관절이 로봇 손가락 관절에 1:1로 대응하며, 간단한 <strong>선형 비례식</strong>으로 매핑할 수 있습니다 (예: θ<sub>로봇,i</sub> = k·θ<sub>인간,i</sub> + c). 여기서 k와 c는 각 관절의 <strong>스케일링 계수와 오프셋</strong>으로, 사람 손과 로봇 손의 관절 가동 범위 차이를 보정하기 위해 <strong>경험적 조정</strong>이나 <strong>최적화</strong>를 통해 결정됩니다. 간단히 말해, 센서 장갑 등의 장비로 측정한 <strong>사람 손 관절각도 값</strong>을 <strong>거의 그대로</strong> 로봇 손의 구동 명령으로 쓰는 것입니다. 이러한 접근은 <strong>1980년대 말</strong>부터 등장하여, 1989년 Utah/MIT 로봇핸드에 처음 적용된 사례가 보고되었습니다. 이후 많은 원격 조작 시스템에서 <strong>데이터글러브+로봇손</strong> 조합으로 시도되어 온 가장 <strong>직관적</strong>인 매핑 방법입니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/2.png" width="100%">
+</center>
+<p><strong>대표 사례:</strong> 초기 연구 외에도 다양한 프로젝트에서 직접 관절 매핑을 구현했습니다. 예를 들어, DLR(독일항공우주센터)의 로봇 손을 데이터글러브로 제어한 실험이나, 한국 등에서 사람 손 장갑 데이터로 로봇 손 프로토타입의 각 관절을 움직인 연구들이 있습니다. 이러한 접근에서는 별다른 복잡한 계산 없이 <strong>센서 값→로봇 관절 명령</strong>으로 매핑하므로 구현이 용이합니다. 최근에도 연구자들이 신속한 프로토타이핑이나 <strong>간단한 그립 동작 실험</strong>을 할 때 직접 관절 매핑을 종종 사용하고 있습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/3.png" width="100%">
+</center>
+<p><strong>장점:</strong> 직접 관절 매핑의 최대 장점은 <strong>단순성과 구현 용이성</strong>입니다. 특별한 연산이나 알고리즘 없이도 빠르게 적용할 수 있어, 실시간성이 중요한 경우나 복잡한 연산 여력이 없는 시스템에서 유용합니다. 또한 로봇 손이 인간 손과 <strong>형상이 유사한 경우</strong>, 사람 손의 <strong>자세(shape)</strong>를 로봇 손에 그대로 보존할 수 있어 조작자가 <strong>시각적 피드백</strong>을 통해 로봇 손 움직임을 쉽게 예측하고 학습할 수 있습니다. 즉 로봇 손이 사람 손동작을 거울처럼 따라 하므로, 사용자가 로봇 손의 오차를 눈으로 보고 자기 손 자세를 보정하는 등 <strong>직관적인 제어</strong>가 가능합니다.</p>
+<p><strong>단점:</strong> 가장 큰 단점은 <strong>정밀한 위치/접촉 재현의 어려움</strong>입니다. 사람 손과 로봇 손의 <strong>길이 비율, 관절 축 차이</strong> 등으로 인해, 동일한 관절각도를 넣어도 손끝(<strong>지골 말단</strong>)의 실제 위치는 달라집니다. 따라서 사용자가 의도한 손가락 끝 위치나 힘 전달이 로봇에서 <strong>어긋날 수 있으며</strong>, 직관적이지 않은 동작이 나올 수 있습니다. 특히 로봇 손이 인간형이 아닐 경우(예: 두 손가락 집게 그리퍼 등) 어떤 인간 관절을 어떤 로봇 관절에 대응시킬지도 난감합니다. 필요에 따라 일부 인간 관절 정보를 <strong>버리거나 평균</strong>해야 하는데, 이는 <strong>정보 손실</strong>과 동작 왜곡을 야기합니다. 예를 들어, 인간 손의 새끼손가락과 약지 움직임을 로봇 손의 하나의 관절에 통합하는 식으로 단순화하면 섬세한 움직임 표현이 사라집니다. 요약하면 직접 관절 매핑은 <strong>빠르고 간단하지만 부정확</strong>하며, 로봇 손 구조와 크게 다를 경우 적용을 위해 많은 <strong>임시방편 조정</strong>이 필요합니다. 실제로 현재 이 방법은 <strong>높은 정확도가 필요 없고 빠른 구현이 우선인 경우</strong>에만 사용되는 경향이 있습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/4.png" width="100%">
+</center>
+</section>
+<section id="직접-데카르트-매핑-direct-cartesian-mapping" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="직접-데카르트-매핑-direct-cartesian-mapping"><span class="header-section-number">2.3</span> 직접 데카르트 매핑 (Direct Cartesian Mapping)</h2>
+<p><strong>개념:</strong> 직접 <strong>데카르트(Cartesian) 매핑</strong>은 인간 손 <strong>손끝의 위치와 방향(좌표)</strong>를 계산하여, 그대로 로봇 손 각 손가락의 목표 <strong>데카르트 좌표</strong>로 사용하는 접근입니다. 즉 <strong>관절 공간</strong> 대신 <strong>작업 공간</strong>(손가락 끝의 3차원 위치/orientation)을 1차적으로 맞추는 방식입니다. 구현을 위해 먼저 인간 손의 <strong>앞마디 손가락 끝 위치</strong>를 센서 데이터로부터 계산합니다. 데이터글러브라면 각 관절각도를 읽어 <strong>forward kinematics 계산</strong>으로 손끝 좌표를 얻고, 비전 카메라라면 손가락 끝의 3D 위치를 추적하는 식입니다. 이렇게 구한 <strong>사람 손끝 좌표</strong>를 로봇 손의 <strong>좌표계</strong>로 변환/대입하여 각 로봇 손가락의 목표 위치로 삼습니다. 마지막으로 그 위치를 로봇 손이 실제 구현하도록 <strong>역기구학 계산</strong>을 통해 로봇 관절각도로 변환합니다. 요약하면, 사람 손가락 끝의 현재 위치를 추적한 뒤 로봇 손가락 끝을 같은 위치로 오도록 움직이는 것입니다. 1990년에 <strong>최초의 직접 데카르트 매핑</strong> 연구가 보고되었으며, 이후 사람 손끝 위치 기반으로 로봇 손을 구동하는 다양한 시도가 이어졌습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/5.png" width="100%">
+</center>
+<p><strong>대표 사례:</strong> 시각 기반으로 사람 손끝을 추적해 로봇 DLR-Hand II의 손끝 위치를 따라가게 한 연구가 대표적입니다. 이 경우 데이터글러브의 관절 정보 대신 <strong>비전 시스템</strong>으로 얻은 손가락 끝 좌표를 <strong>신경망</strong>에 학습시켜 매핑했는데, 손가락 끝 <strong>포지션 정확도</strong>에 중점을 두고 중간 관절 자세는 무시했습니다. 다른 연구들에서는 정확한 손끝 좌표를 얻기 위해 <strong>인간 손 모델</strong>을 사용하거나, 얻은 좌표를 로봇 손에 투영한 후 <strong>스케일 조정</strong>이나 <strong>최적화</strong>를 수행하기도 했습니다. 예를 들어, [74] 연구에서는 사람 손 공간과 로봇 손 공간 크기의 차이를 보정하기 위해 단순 <strong>비례 스케일 인자</strong>를 적용했고, [75]에서는 5손가락 로봇에 대해 <strong>3D 스케일 + 회전 변환</strong>을 함께 자동 최적화하여 다중 선형변환을 찾아내기도 했습니다. 또한 [76]에서는 손끝들 간 거리와 방향을 고려한 비용함수를 정의해, 사람 손끝 좌표를 로봇에서 <strong>비접촉 충돌 없이 최대한 보존</strong>하도록 <strong>비선형 최적화</strong>를 수행하였습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/6.png" width="100%">
+</center>
+<p><strong>장점:</strong> 직접 데카르트 매핑은 <strong>로봇 손끝의 정확한 위치 제어</strong>가 중요한 경우 유리합니다. 사람 손가락 끝의 Cartesian 좌표를 그대로 따라가기 때문에, 정밀한 <strong>집게 잡기</strong>(precision grasp)나 <strong>손안 조작</strong>(in-hand manipulation) 등에서 원하는 지점에 손가락을 놓을 수 있습니다. 또한 사람 손과 로봇 손의 크기가 다를 경우, 앞서 언급한 <strong>스케일링</strong>이나 <strong>변환 최적화</strong> 기법을 적용해 공간 차이를 보정할 수 있습니다. 즉, 관절 매핑보다 <strong>손끝 기준의 정확도</strong>를 높게 가져갈 수 있으므로, 작은 물체를 집거나 정밀한 작업을 할 때 더 적합한 접근법입니다.</p>
+<p><strong>단점:</strong> 단점으로는 우선 <strong>손 모양 보존의 실패</strong>가 있습니다. 이 방법은 오직 손끝 위치만 맞추므로, 사람 손의 <strong>전체적인 자세(제스처)</strong>나 <strong>손바닥/손가락의 모양</strong>은 로봇에서 달라져도 개의치 않습니다. 그러다보니 <strong>제스처 재현</strong>이나 <strong>강한 파지(grasp)</strong> 등에서는 사람 손의 자세를 흉내 내지 못해 어색하거나 기능적으로 떨어질 수 있습니다. 또한 사람과 로봇의 <strong>작업 공간 차이</strong>로 인해, 인간 손끝이 갈 수 있는 위치 중 일부는 로봇 손으로 <strong>닿을 수 없는 영역</strong>일 수 있습니다. 이 경우 매핑 결과 로봇 손이 <strong>불가능한 명령</strong>을 받게 될 수 있어, 해당 인간 동작이 재현되지 않거나 이상한 동작이 나오게 됩니다. 마지막으로, 만약 센서나 인간 손 모델의 한계로 로봇 손끝이 목표에 정확히 안 갔을 때, 사용자가 이를 보정하려고 자신의 손을 <strong>일그러뜨려 움직여야</strong> 할 수 있습니다. 예컨대 로봇 손가락 끝이 약간 모자라게 닿으면 사람은 더 꺾어서 눌러야 할 수도 있는데, 이는 <strong>사용자 입장에서 부자연</strong>스러운 조작입니다. 종합하면 직접 데카르트 매핑은 <strong>정밀 위치 제어</strong>에는 좋지만 <strong>자연스러운 형태 모방</strong>과 <strong>범용성</strong>은 떨어지며, 실사용 시에는 시스템별 보정과 예외 처리가 많이 필요합니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/7.png" width="100%">
+</center>
+</section>
+<section id="과업-지향-매핑-task-oriented-mapping" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="과업-지향-매핑-task-oriented-mapping"><span class="header-section-number">2.4</span> 과업 지향 매핑 (Task-Oriented Mapping)</h2>
+<p><strong>개념:</strong> 과업 지향 매핑은 인간 손동작을 <strong>과업(task)의 관점에서 추상화된 정보</strong>로 변환한 뒤, 이를 로봇 손에 적용하는 방법입니다. 즉 <strong>관절 공간</strong>이나 <strong>좌표 공간</strong>이 아닌, 해당 작업에 적합한 <strong>파라미터 공간</strong>을 정의하여 매핑을 수행합니다. 이 파라미터들은 인간 손과 로봇 손의 <strong>기구학 구조와 무관</strong>하게 작업 자체를 기술하므로, 양쪽 손의 차이를 직접 다루지 않고도 동작을 전달할 수 있습니다. 예를 들어 어떤 물체를 쥐는 작업이라면, 인간 손의 동작을 그 물체와의 <strong>관계</strong>로 표현하는 식입니다. Fig. 4에 개략도가 제시되어 있는데, 사람 손동작 정보(KM)를 <strong>과업 공간의 이미지</strong>로 캡슐화한 후, 이를 다시 로봇 손동작 명령(KC)으로 변환하는 <strong>이단계 구조</strong>를 갖습니다. 중요한 것은 여기서 정의되는 <strong>과업 공간 변수들</strong>이 손의 형상에 의존하지 않는다는 점입니다. 이를테면 물체를 쥘 때 <strong>물체의 크기와 위치</strong> 같은 것이 과업 변수에 해당합니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/8.png" width="100%">
+</center>
+<p><strong>대표 사례:</strong> 과업 지향 매핑은 주로 <strong>물체 파지(grasp)</strong> 작업에 한정되어 연구되어 왔습니다. 초기 사례 중 하나로, 1990년대 [81] 연구에서는 시연 학습을 위해 <strong>직육면체 물체</strong>의 각 면 위치를 비전 시스템으로 인식하고, 데이터글러브로 측정한 사람 손 관절각을 이 <strong>물체 중심 좌표계</strong>로 변환하여 로봇 <strong>간이 집게(hand gripper)</strong>에게 잡기 동작을 가르쳤습니다. 또 다른 선구적 연구인 [82]에서는 <strong>“가상 물체”</strong> 개념을 도입했습니다. 사람의 <strong>검지와 엄지</strong> 사이에 가상의 <strong>원형 물체</strong>가 끼어있다고 가정하고, 두 손가락의 상대 위치를 이 가상물체의 <strong>지름과 중심 위치</strong>로 표현했습니다. 그런 다음 이 가상 물체의 크기와 위치를 로봇 (평면 2지 그리퍼)에 맞게 <strong>비선형 스케일링</strong>하여, 로봇 손가락들의 목표 간격으로 설정하고 역기구학으로 관절각을 계산했습니다. 이 방법을 통해 사람의 집게 잡기 동작을 로봇 집게에 <strong>과업 중심적</strong>으로 모사한 것입니다. 이후 [83][86][87]에서는 이 개념을 3차원으로 확장하여 <strong>세 손가락 (엄지, 검지, 중지)</strong>로 <strong>세 점 지지</strong>하는 가상 원판을 정의, 세 손가락 로봇에 적용했습니다. 그 결과 단순 직접 매핑보다 로봇 손으로 <strong>재현 가능한 인간 손 자세의 범위</strong>가 늘어남을 보여주어, 과업 지향 표현의 유용성을 입증했습니다. 이후 [11][88]에서는 가상 물체를 <strong>구(球)</strong> 형태로 일반화하여, 손끝 위치에 따라 반지름과 중심이 동적으로 변하는 <strong>가상 구</strong>로 사람 손 파지 동작을 표현했습니다. 이 방법은 로봇 손의 구조와 무관하게 적용될 수 있음을 보여주어, 특정 로봇에 종속적이었던 이전 가상물체 방법의 한계를 넘었습니다. 나아가 [90]에서는 아예 가상 물체의 형태도 일반화하여, 사람 손가락 몇 개 점들의 <strong>변형을 나타내는 호모그래피 변환</strong> 자체를 과업 정보로 사용하고, 이를 로봇 손가락의 해당 점들에 동일 적용하는 방식을 보였습니다. 이처럼 과업 지향 매핑은 주로 <strong>물체 잡기 동작</strong>에 초점을 맞춰 발전해 왔으며, 그 외에 <strong>제스처나 타이핑</strong> 등에는 아직 적용이 미흡한 상태입니다. 다만 [84] 연구에서는 가상 물체 기반 매핑에 <strong>수동 제어(passivity) 기반 안정화 제어</strong>를 접목해 로봇 파지의 <strong>안정성</strong>도 보장함을 보였고, [85][89] 등에서는 <strong>양방향 원격조작(bilateral telemanipulation)</strong>에도 적용할 수 있음을 시사했습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/9.png" width="100%">
+</center>
+<p><strong>장점:</strong> 과업 지향 매핑의 장점은 <strong>비인간형 로봇 손</strong>에도 사람의 기교를 전달할 수 있다는 점입니다. 예컨대 산업용 두손가락 그리퍼처럼 인간 손과 형태가 동떨어진 장비도, <strong>물체와의 관계</strong>나 <strong>과업 요구조건</strong>을 통해 제어하면 사람 손으로 제어하기 쉽습니다. 이를 통해 로봇 손을 굳이 인간 손처럼 복잡하고 비싼 형태로 만들지 않고도 다양한 작업에 활용할 수 있어, <strong>저비용·고신뢰성</strong> 시스템을 구현하는 데 유리합니다. 실제로 과업 지향 접근은 <strong>조립 작업</strong> 등에서 한정된 동작만 필요할 때 유용하며, 여러 종류의 로봇 손(2지, 3지, 5지 등)에 <strong>공통으로 적용</strong>할 수 있다는 이점이 있습니다. 요컨대 <strong>제어 복잡도를 줄이면서도 다양한 로봇 손 플랫폼에 사람이 손쉽게 명령</strong>을 내릴 수 있다는 것이 큰 매력입니다.</p>
+<p><strong>단점:</strong> 반면, 단점은 <strong>조작자의 입장에서 직관성이 떨어질 수 있다</strong>는 점입니다. 과업 지향 매핑은 사람-로봇 손 간 기구학을 “추상화”하지만, 결국 그 <strong>특정 과업 시나리오에 한정된 추상화</strong>입니다. 그 과업 맥락을 벗어나면 매핑이 전혀 맞지 않을 수 있고, 심지어 약간만 다른 목적이어도 적용성이 급격히 낮아집니다. 무엇보다 로봇 손이 실제로 어떻게 움직일지에 대한 <strong>예측 가능성</strong>이 낮아, 사용자가 <strong>직접 눈으로 피드백을 확인</strong>하기 전에는 감을 잡기 어렵습니다. 사람은 자기 손의 감각으로 제어하는데, 과업 공간으로 변환되면서 이 연결이 끊어지기 때문입니다. 결과적으로 <strong>텔레오퍼레이터의 학습 곡선</strong>이 길어질 수 있고, 즉각적인 제어에는 부적합할 수 있습니다. 현재까지 과업 지향 매핑 성능 평가는 주로 <strong>오프라인 모션 재현 실험</strong>에 머물러 있으며, <strong>실시간 원격 조작에서의 직관성 문제</strong> 등은 추가 연구가 필요한 상태입니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/10.png" width="100%">
+</center>
+</section>
+<section id="차원-축소-기반-매핑-dimensionality-reduction-based-mapping" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="차원-축소-기반-매핑-dimensionality-reduction-based-mapping"><span class="header-section-number">2.5</span> 차원 축소 기반 매핑 (Dimensionality Reduction-Based Mapping)</h2>
+<p><strong>개념:</strong> 차원 축소 기반 매핑은 <strong>사람 손 동작의 고차원 데이터를 저차원 특징 공간</strong>으로 압축하여 매핑하는 접근입니다. 인간 손은 관절이 많아 제어 입력의 차원이 매우 높은데, 이 방법은 로봇 손의 <strong>입력 공간 변수들에 일정한 </strong>상관관계<strong>를 부여함으로써 사실상 제어 차원을 줄입니다. 쉽게 말해, </strong>여러 관절 움직임을 묶어** 하나의 <strong>조합된 제어 변수</strong>로 표현하는 것입니다. 예를 들어 인간 손에서 자주 나타나는 <strong>움직임 패턴</strong>을 찾아내 그 <strong>주성분(Principal Components)</strong>을 새로운 축으로 삼고, 이 좌표로 사람 손 동작을 표현하면 차원이 크게 줄어듭니다. 그런 다음 이 저차원 좌표를 <strong>로봇 손의 동작 공간</strong>에 대응시켜 다시 <strong>고차원 관절 명령</strong>으로 복원합니다. 이러한 인코딩(차원축소) - 디코딩(복원) 과정을 통해, 본질적인 움직임만 추려내어 매핑 효율을 높입니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/11.png" width="100%">
+</center>
+<p><strong>대표 사례:</strong> 차원 축소 매핑의 대표적 아이디어는 이탈리아 Pisa대 연구진이 제안한 <strong>손 </strong>포스트럴 시너지<strong>(postural synergy)</strong> 개념입니다. Santello 등은 1998년 사람의 다양한 그립 자세를 분석하여, 실제 사람 손이 약 2~3개의 주성분(시너지)만으로 대부분의 자세 변화를 설명할 수 있음을 보였습니다. 이러한 <strong>인간 손 시너지</strong>를 로봇 손 제어에 이용하면, 몇 개의 변수를 통해 다관절 로봇 손을 제어할 수 있습니다. 이후 많은 연구에서 PCA(주성분 분석)나 KPCA(커널 PCA) 등으로 <strong>인간 손동작 데이터</strong>를 학습하여 저차원 <strong>시너지 공간</strong>을 추출하고, 이를 로봇 손의 관절 움직임에 매핑했습니다. 예를 들어 [97][98] 연구에서는 사람 손의 그립 데이터를 PCA로 분석해 <strong>연속적인 로봇 손 구성 공간의 서브스페이스</strong>를 도출하고, 이를 통해 <strong>다양한 형태의 로봇 손</strong>(인간형/비인간형 모두)에서 <strong>자동 그립 동작 계획</strong>을 성공적으로 수행했습니다. 또한 [100]에서는 완전 구동 로봇 손에 인간 손 시너지를 적용해 <strong>그립 제어</strong>를 개선했고, [102]에서는 그 방법을 <strong>언더액추에이트(구동부 적은)</strong> 로봇 손에도 확장했습니다. 한편, 인간의 일반적인 시너지 대신 특정 <strong>과업에 특화된 저차원 방향</strong>을 찾는 연구도 있었습니다. [10][111]에서는 <strong>주요 모션 방향</strong>(Principal Motion Directions)이라는 개념을 도입해, 작업별로 의미있는 저차원 축을 로봇 손 공간에서 직접 산출했습니다. 이를 통해 충돌 회피 등 조건을 포함한 그립 동작 계획을 효과적으로 수행하고, 일반 시너지와 성능이 비슷하면서도 특정 작업에 최적화된 제어가 가능함을 보였습니다. 전반적으로 차원 축소 기반 매핑은 <strong>사람의 풍부한 손 움직임 데이터</strong>를 학습해 <strong>복잡한 로봇 손 제어를 단순화</strong>하는 방향으로 발전해 왔습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/12.png" width="100%">
+</center>
+<p><strong>장점:</strong> 차원 축소 접근의 가장 큰 장점은 <strong>제어 입력의 복잡도를 줄여준다는 것</strong>입니다. 높은 자유도를 가진 로봇 손을 사람 손으로 직접 제어하려면 입력 공간이 방대하지만, 시너지 등의 기법으로 <strong>저차원 입력 공간</strong>을 만들면 사람도 <strong>훨씬 수월하게</strong> 로봇 손을 조종할 수 있습니다. 특히 로봇 손이 인간 손과 <strong>형상이 많이 달라도</strong>, 본질적인 움직임 패턴만 추려내 전달하면 <strong>차이를 상쇄</strong>할 수 있습니다. 이러한 이유로 차원 축소 매핑은 <strong>복잡한 로봇 손의 실시간 원격 제어</strong>나, 사람의 기교를 로봇에 학습시키는 <strong>기술 전수</strong>(예: 자율 그립 동작 학습) 등에 매우 유용합니다. 실제로 시너지 기반 매핑은 <strong>로봇의 자율 파지 동작</strong>에 사람의 손기술을 이식하는 데 성공적이어서, 로봇이 보다 인간에 가까운 <strong>자율 조작 능력</strong>을 갖추는 데 기여했습니다. 또한 입력 차원이 줄어드니 <strong>계산량과 센서 요구사항</strong>도 완화되어, <strong>실시간성</strong>이나 <strong>견고성</strong> 측면에서도 유리합니다.</p>
+<p><strong>단점:</strong> 반면, 차원 축소 매핑은 <strong>가능 동작의 범위를 인위적으로 제한</strong>한다는 단점이 있습니다. 저차원 공간으로 투영하는 과정에서, 로봇 손이 수행할 수 있는 동작은 정의된 <strong>서브스페이스 상의 조합</strong>으로 한정됩니다. 이는 곧 로봇 손이 <strong>보다 다양한 움직임</strong>을 하거나 <strong>특이한 동작</strong>을 재현하는 데 제약이 걸린다는 뜻입니다. 특히 사람 조작자가 원하는 동작이 시너지 공간에 충분히 표현되지 않으면, 로봇 손으로 완벽히 구현하기 어렵습니다. 또한 이러한 매핑을 사용하려면 <strong>사용자가 새로운 제어 방식에 익숙해져야</strong> 할 수 있습니다. 즉 관절 하나하나 움직이는 대신 시너지 축을 움직이는 감각을 익혀야 하므로, <strong>학습 노력</strong>이 필요하고 <strong>직관성</strong>이 떨어질 수 있습니다. 현재 이와 같은 사용자의 <strong>학습 속도</strong>나 <strong>인지 부하</strong>에 관한 연구가 부족하며, 보다 <strong>범용적이고 사용자 친화적인 시너지</strong> 정의에 대한 과제가 남아 있습니다. 요약하면 차원 축소 기반 매핑은 <strong>효율성</strong>은 높지만 <strong>자유도와 직관성의 희생</strong>이 따르며, 이를 개선하기 위한 추가 연구가 요구됩니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/13.png" width="100%">
+</center>
+</section>
+<section id="자세-인식-기반-매핑-hand-pose-recognition-based-mapping" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="자세-인식-기반-매핑-hand-pose-recognition-based-mapping"><span class="header-section-number">2.6</span> 자세 인식 기반 매핑 (Hand Pose Recognition-Based Mapping)</h2>
+<p><strong>개념:</strong> 자세 인식 기반 매핑은 사람 손의 현재 <strong>자세</strong>(또는 제스처)를 <strong>분류(classification)</strong>하여, 미리 정해둔 로봇 손의 <strong>불연속 동작 셋</strong> 중 하나를 <strong>발동(trigger)</strong>하는 방식입니다. 다시 말해, 연속적인 관절 제어를 하지 않고 사람 손의 자세를 <strong>이산적인 기호</strong>로 해석하여, 그에 대응하는 로봇 손의 동작을 실행합니다. 이를 위해 우선 사람 손의 센서 데이터를 처리해 <strong>특징(feature)</strong>을 추출하고, 이를 통해 정의된 <strong>몇 가지 손 자세</strong> 중 현재 사람이 어떤 자세를 취하고 있는지 인식합니다. 예를 들어 “주먹 쥐기”, “집게 손가락 펴기”, “손바닥 펴기” 등의 제스처를 구분하는 식입니다. 인식에는 주로 <strong>머신러닝 기법</strong>(딥러닝, SVM, kNN, HMM 등)이 활용되며, <strong>센서 장치 종류와 무관</strong>하게 특징만 잘 추출하면 적용 가능합니다. 이렇게 사람 손 자세가 결정되면, 미리 준비된 로봇 손의 동작(관절 사전 설정 또는 모션 시퀀스) 중 대응하는 것을 <strong>실행</strong>합니다. 예컨대 사람 손이 “pinch gesture”로 분류되면 로봇 손은 pinch 모양으로 모이도록 사전 정의된 움직임을 수행하는 식입니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/14.png" width="100%">
+</center>
+<p><strong>대표 사례:</strong> 이 접근은 <strong>프로그래밍-바이-데몬스트레이션</strong>(시연 학습) 분야에서 많이 연구되었습니다. 예를 들어, [1] 연구에서는 <strong>계층형 신경망</strong>으로 사람 손 데이터를 분석해 <strong>파워 그립</strong> vs <strong>정밀 그립</strong> 두 가지 유형을 분류하고, 이에 따라 로봇 손의 동작을 프로그래밍했습니다. [121] 연구에서는 <strong>SVM</strong>을 활용해 사람 손 자세를 여러 파지 형태로 분류하고, 이를 <strong>조립 작업</strong>용 로봇 손 시퀀스 프로그래밍에 이용했습니다. [122]에서는 <strong>비전 카메라</strong>와 데이터글러브를 결합한 센서로 손 자세를 <strong>의사결정트리</strong>로 분류하고, 거기에 맞춰 로봇 손의 <strong>힘 제어 그립 동작</strong>을 실행했습니다. 또한 k-최근접이웃(k-NN) 알고리즘을 써서 사람 손 자세를 실시간 분류하고 대응하는 로봇 손의 파지 패턴을 발동하는 연구도 보고되었습니다. 한편 <strong>텔레오퍼레이션</strong>에도 자세 인식 매핑이 활용되는데, [106]에서는 얕은 신경망을 사용해 <strong>온라인 제스처 인식</strong>을 구현하여, 사람이 제스처를 취하면 그에 대응하는 로봇 손 그립이 <strong>즉각 동작</strong>하도록 했습니다. [8]에서는 <strong>은닉 마르코프 모델(HMM)</strong>로 연속된 손 제스처 시퀀스를 인식하여, 로봇 손의 복합 동작을 일련의 상태머신으로 실행했습니다. 최근에는 딥러닝을 이용해 <strong>카메라 영상만으로 손 제스처</strong>를 인식하는 연구도 활발합니다. 예를 들어 [104][125]에서는 <strong>합성곱 신경망</strong>으로 카메라 영상에서 손 모양을 파악해 로봇 동작을 유도했습니다. 그밖에 GMM(가우시안 혼합모델)이나 베이지안 네트워크로 제스처를 분류하는 시도도 있었고, [108]에서는 아예 <strong>사람 손의 현재 잡고 있는 물체 종류</strong>를 인식해 이에 맞는 로봇 손 그립을 선택하는 흥미로운 접근도 제안되었습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/15.png" width="100%">
+</center>
+<p><strong>장점:</strong> 자세 인식 매핑의 장점은 <strong>필요한 동작 집합이 명확한 응용</strong>에서 매우 효과적이라는 점입니다. 수행할 로봇 손 동작들이 몇 가지로 한정되고 사전에 정해져 있는 경우(예: 특정 그립 동작 몇 개, 특정 제스처 몇 개 등), 사람 손의 동작도 그 <strong>유한한 세트 중 하나</strong>로 간주하여 <strong>명확하게 구분</strong>할 수 있습니다. 이렇게 하면 사람 손을 마치 <strong>원격 컨트롤러</strong>처럼 사용할 수 있어서, 사용자가 몇 가지 제스처만 <strong>학습</strong>하면 어렵지 않게 로봇을 제어할 수 있습니다. 또 새로운 기능이 필요하면 해당 제스처-동작 쌍만 추가하면 되므로, <strong>확장성이 뛰어나다</strong>는 이점도 있습니다. 예컨대 처음에는 다섯 가지 제스처로 다섯 가지 로봇 동작을 하다가, 이후 여섯번째 동작이 필요하면 새로운 제스처 하나를 학습시켜 추가하면 됩니다. 이러한 <strong>모듈식 추가</strong>가 가능하여 시스템을 점진적으로 발전시키기 용이합니다.</p>
+<p><strong>단점:</strong> 가장 큰 단점은 <strong>연속적이고 미세한 제어가 어렵다</strong>는 점입니다. 자세 인식 매핑에서는 사람이 <strong>로봇 손의 움직임을 연속적으로 따라가게</strong> 할 수 없습니다. 오직 <strong>이산적인 동작 명령</strong>만 내릴 수 있으므로, 중간 상태나 미세 조절이 필요한 작업에는 부적합합니다. 또한 응용의 복잡도가 높아질수록 필요한 <strong>제스처 개수</strong>가 늘어나는데, 사람은 너무 많은 제스처를 기억하고 정확히 구분하기 어려워집니다. 제스처 간 오인식 가능성도 올라가 시스템 신뢰성을 저해할 수 있습니다. 마지막으로, 연속 제어가 안 되다보니 사람 입장에서는 로봇을 자기 손처럼 자연스럽게 다룬다는 느낌이 적고, <strong>원격 조작의 자연스러움</strong>이 떨어질 수 있습니다. 실제로 이 방식은 <strong>가상현실에서 아바타 손동작 제어</strong>나 <strong>로봇과의 비언어적 의사소통</strong> 등 <strong>정밀한 그립이 필요없는 분야</strong>에는 널리 쓰였지만, 고도의 섬세함이 필요한 작업에서는 사용이 제한적입니다. 요컨대 자세 인식 기반 매핑은 <strong>명령 세트가 한정된 상황에서만 자연스럽게 작동</strong>하며, 그 한계를 넘어서면 <strong>자연스러운 조작감의 희생</strong>이 불가피합니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/16.png" width="100%">
+</center>
+</section>
+<section id="하이브리드-매핑-hybrid-mapping" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="하이브리드-매핑-hybrid-mapping"><span class="header-section-number">2.7</span> 하이브리드 매핑 (Hybrid Mapping)</h2>
+<p><strong>개념:</strong> 하이브리드 매핑은 말 그대로 앞서 소개한 여러 매핑 방법을 <strong>필요에 따라 결합</strong>한 접근을 통칭합니다. 단일 카테고리에 딱 떨어지지 않는 <strong>특수 목적의 솔루션</strong>이나, <strong>여러 기법을 연계</strong>하여 새로운 매핑을 구성한 경우 모두 포함됩니다. 크게는 (1) 특정 문제를 풀기 위해 고안된 <strong>맞춤형 기법</strong>, (2) 기존 매핑 방법들을 약간의 변형과 함께 <strong>병합</strong>한 구현, (3) <strong>여러 방식의 명시적 하이브리드 결합</strong>으로, 상황에 따라 <strong>전환 로직</strong>을 정의한 것 등을 예로 들 수 있습니다. 하이브리드 매핑은 그 <strong>이질성</strong> 때문에 일괄된 개념도식으로 묘사하긴 어렵지만, 요는 <strong>각 방법의 장점을 취합</strong>하고 <strong>단점을 보완</strong>하기 위해 <strong>모듈식으로 구성</strong>한다는 철학입니다.</p>
+<p><strong>대표 사례:</strong> 매우 다양한 변종이 존재하지만, 몇 가지 흥미로운 예를 소개합니다. [126] 연구에서는 <strong>우주 로봇 원격 조작</strong>을 위해 <strong>음성 명령 인식</strong>과 <strong>연속 글러브 제어</strong>를 결합한 하이브리드 방식을 선보였습니다. 오퍼레이터가 음성으로 “기본 동작”을 지시하면 로봇이 해당 작업 모드로 전환되고, 이후 <strong>데이터글러브</strong>로 세밀한 손동작을 보내 그 작업을 수행하게 했습니다. 예를 들어 “잡기 모드” 음성 명령 후 장갑 동작으로 손을 오므리면 로봇 손이 물체를 쥐는 식입니다. 또 다른 예로 [130]에서는 <strong>자세 인식 매핑</strong>으로 큰 틀의 파지 동작을 선택하고, <strong>로봇이 자동 미세조정</strong>을 수행하는 <strong>공동 제어(shared control)</strong>를 도입했습니다. 사람이 대략적인 그립 모양 제스처를 하면 로봇이 센서를 통해 물체를 감지하고 미끄러짐 없도록 그립을 보정해주는 방식으로, 인간과 자동제어의 장점을 결합했습니다. 유사하게 [131]에서는 사람의 제스처 인식으로 <strong>로봇 손의 사전 형상(preshape)</strong>을 결정하고, <strong>촉각 센서</strong>로 물체 접촉을 감지하면 자동으로 완전 파지를 수행하도록 했습니다. 한편 [128]에서는 특이하게 <strong>“hidden robot”</strong> 개념을 도입했는데, 사용자에게 로봇 손과 환경을 <strong>가상화된 형태</strong>로 제시한 후, 사용자가 실제로는 가상의 손을 조작하도록 하여 그 결과를 실제 로봇 손에 매핑하는 방식을 취했습니다. 이를 통해 사람-로봇의 차이를 한 번 더 추상계층으로 분리하는 독특한 접근을 시도했습니다. 이외에도 여러 연구에서 <strong>직접 관절 + 직접 데카르트 혼합</strong>을 이용했습니다. 예를 들어 [136]에서는 <strong>데이터글러브</strong>로 사람 손이 <strong>정밀 집기 동작</strong>을 하는지를 분류하여, 평소에는 <strong>직접 관절 매핑</strong>을 하다가 정밀 동작 시에는 <strong>직접 데카르트 매핑</strong>으로 전환하도록 했습니다. [137]에서는 엄지와 다른 손가락 사이 거리를 이용해, 그 거리가 좁아질수록 점진적으로 관절 매핑에서 데카르트 매핑으로 <strong>시그모이드 곡선 형태</strong>로 전환하는 <strong>연속 혼합</strong>을 구현했습니다. 요컨대 하이브리드 매핑은 문제와 상황에 맞게 여러 접근법을 <strong>유연하게 엮는 프레임워크</strong>라 할 수 있습니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/17.png" width="100%">
+</center>
+<p><strong>장점:</strong> 여러 방법을 조합한 하이브리드 접근은 <strong>현재 개별 방법들이 갖는 한계를 돌파</strong>하는 유망한 방향입니다. 각 방법이 잘 다루는 부분만 발췌하여 하나의 구조에 녹이면, 한 가지 방법으로는 풀기 어려운 복잡한 문제도 해결할 수 있습니다. 예컨대 위 사례들처럼 <strong>제스처 인식</strong>의 편의성과 <strong>직접 매핑</strong>의 연속성, <strong>자동 제어</strong>의 정밀성을 합치면, 사람과 로봇의 협업 제어를 극대화할 수 있습니다. 이러한 <strong>모듈화</strong>와 <strong>병합</strong>을 통해 시스템을 설계하면, 새로운 모드나 기능도 비교적 <strong>추가하기 용이</strong>하고 확장성 있는 프레임워크를 구축할 수 있습니다. 실제로 조립이나 공구 사용 등 <strong>난이도 높은 작업</strong>에 적용된 연구들을 보면, 단일 매핑보다는 하이브리드 구조에서 더 나은 성과를 보이는 경향이 있습니다.</p>
+<p><strong>단점:</strong> 그러나 <strong>알고리즘 설계의 복잡도</strong>가 크게 증가한다는 점은 피할 수 없습니다. 서로 다른 방법을 언제, 어떻게 전환하고 결합할지 정하는 <strong>논리 및 타이밍</strong> 설계가 어려우며, 자칫하면 <strong>불안정하거나 예측 불가능한 거동</strong>을 초래할 위험도 있습니다. 예를 들어 관절↔︎데카르트 모드 전환 시 경계 영역에서 로봇 손이 갑자기 튀는 현상을 막기 위해 <strong>이행 절차(smooth transition)</strong>를 잘 설계해야 합니다. 또한 여러 기법을 섞으면 각 구성요소의 파라미터 튜닝, 상호작용 효과 등을 모두 고려해야 하므로 개발/테스트 비용이 늘어납니다. 결국 하이브리드 매핑은 <strong>잠재력은 크지만 설계 난이도가 높은 접근</strong>이며, 이를 체계적으로 설계/최적화하는 방법론에 대한 <strong>추가 연구 필요성</strong>이 제기됩니다.</p>
+<center>
+<img src="../../images/2025-08-09-retargeting-survey/18.png" width="100%">
+</center>
+</section>
+<section id="실제-응용-분야에서의-활용-가능성" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="실제-응용-분야에서의-활용-가능성"><span class="header-section-number">2.8</span> 실제 응용 분야에서의 활용 가능성</h2>
+<p>앞서 살펴본 매핑 기법들은 용도와 상황에 따라 장단점이 다르므로, <strong>응용 분야에 맞는 선택과 변형</strong>이 중요합니다. 여기서는 <strong>수술 로봇</strong>, <strong>일반 원격 조작</strong>, <strong>재활/보조</strong>, <strong>가상현실(VR)</strong> 등을 중심으로 각 접근법의 활용성을 평가하겠습니다.</p>
+<ul>
+<li><p><strong>수술용 로봇 원격 조작:</strong> 의료 로봇, 특히 수술용 로봇에서는 <strong>높은 신뢰성과 정확성</strong>이 최우선입니다. 따라서 <em>가능한 한 단순하고 예측 가능한 매핑</em>이 요구됩니다. 실제로 논문에서 언급하듯이, 수술 로봇의 사례에서는 <strong>2지 그리퍼</strong> 같은 <strong>최소 복잡도 로봇 손</strong>을 <strong>손가락 힘 피드백 장치(엑소스켈레톤)</strong>로 제어하는 접근이 활용되었습니다. 이는 사실상 <strong>직접 관절 매핑</strong>에 가까운 형태로, 기계 구조를 단순화하여 매핑 오차 여지를 줄인 것입니다. 이러한 시스템은 세밀한 손놀림보다는 안정적인 집게 동작에 초점을 맞추기 때문에, 사람 손의 미세한 움직임을 모두 재현하지 않고 <strong>주요 동작만 1:1 대응</strong>시켜도 무방합니다. 반면, 수술 도구의 끝부분을 매우 정확히 위치시키는 것이 중요하므로, <strong>직접 데카르트 매핑</strong> 개념이 도입되어 사람 손끝 움직임이 수술 도구 팁의 움직임으로 변환되기도 합니다. 다빈치 수술로봇 등의 상용 시스템도 마스터 기구의 움직임을 스케일 조정하여 슬레이브 로봇 팔/도구에 전달하는데, 이것이 일종의 <strong>데카르트 매핑</strong>입니다. 결론적으로, 수술용 원격 조작에서는 <strong>안전성과 예측가능성</strong>을 위해 <strong>간단한 매핑</strong>(직접 관절 or 데카르트)을 기본으로, 필요 시 <strong>스케일 조정</strong>이나 <strong>하이브리드</strong> 기법으로 보완하는 방향이 적합합니다.</p></li>
+<li><p><strong>산업 현장 등의 일반 원격 조작:</strong> 우주, 해저, 폭발물 처리 등 사람 대신 로봇이 위험하거나 먼 현장에서 작업하는 경우, 인간 조작자의 <strong>즉각적인 직관적 제어</strong>가 중요합니다. 이때는 <strong>직접 매핑</strong>의 강점이 부각됩니다. 로봇 손이 인간형일수록 조작자는 자기 손 쓰듯 자연스럽게 제어할 수 있으므로, 가능하면 <strong>직접 관절 매핑</strong>으로 <strong>실시간 거울 동작</strong>을 구현하고자 합니다. NASA의 로보넛(RoboNut) 등이 데이터글러브로 조종되는 사례가 그 예입니다. 반면 로봇 손이 단순 그리퍼나 인간형이 아닐 때는, <strong>과업 지향 매핑</strong>이 유용할 수 있습니다. 예를 들어 원격 조작 로봇이 공구를 잡고 조이는 작업을 해야 한다면, 사람 손의 동작을 <strong>“공구 돌리기”</strong>라는 과업 변수로 변환해 로봇에 전달하면 기구학 차이를 극복할 수 있습니다. 또한 산업 현장은 작업 종류가 정형화되어 있는 경우가 많아, <strong>자세 인식 매핑</strong>으로 미리 정의된 몇 가지 동작(잡기, 놓기, 가리키기 등)을 트리거하는 방식도 실용적입니다. 특히 반복적인 조립 작업 등에서는 사람이 수십 분간 똑같은 동작을 지속해야 하므로, 연속 제어보다 <strong>버튼식 제어</strong>가 피로도를 낮출 수 있습니다. 따라서 <strong>원격 조작</strong> 일반 분야에서는 <strong>직접 매핑</strong>을 기본으로 하되, 로봇 형태나 작업 특성에 맞춰 <strong>과업 지향</strong>이나 <strong>제스처 인식</strong>을 혼용하는 방향이 권장됩니다. 실제 연구에서도 <strong>조립 작업</strong>에 과업 지향 매핑을 적용하거나, <strong>공구 사용</strong>에 하이브리드 매핑을 도입하여 성능을 높인 예가 있습니다.</p></li>
+<li><p><strong>재활 및 보조 로봇:</strong> 재활 분야에서는 <strong>착용형 기기</strong>나 <strong>의수(의족)</strong> 등의 제어에 손 매핑이 활용됩니다. 예를 들어, <strong>편마비 환자</strong>의 남은 건강한 손 동작을 센싱하여 <strong>마비된 쪽 로봇 손</strong>에 매핑함으로써 재활훈련을 돕는 경우가 있습니다. 이런 경우 <strong>양 손이 거의 대칭</strong>이라서 직접 관절 매핑으로도 상당한 효과를 볼 수 있습니다. 그러나 더 발전된 사례로, <strong>로봇 의수</strong> 제어에는 근전도(EMG) 신호 등을 통해 <strong>손 자세를 분류</strong>하고 <strong>그립 패턴</strong>을 구동하는 방안이 상용화되어 있습니다. 이는 앞서 설명한 <strong>자세 인식 기반 매핑</strong>과 유사한 원리입니다. 사용자에게 몇 가지 제스처(근육 신호 패턴)를 학습시켜서 집기, 가리키기 등의 <strong>이산 동작</strong>을 실행하게 하는 것이지요. 한편 재활 훈련용 장비에서는 <strong>차원 축소 매핑</strong>도 응용될 수 있습니다. 예를 들어 환자의 남은 운동범위를 PCA로 분석해 <strong>주요 운동 성분</strong>만 과장되게 로봇이 따라하게 함으로써, 잔존 운동능력을 극대화하는 훈련을 설계할 수 있습니다. 또한 <strong>힘보조 장치</strong>(엑소글러브 등)에서는 사람의 간단한 손 움직임(예: 쥐려는 의도)을 <strong>시너지 공간</strong>에서 포착해, 로봇 장치가 부족한 힘을 보충하는 식의 구현이 가능합니다. 정리하면, 재활 및 보조 분야에서는 대상자의 상태와 기기의 형태에 따라 <strong>직접 매핑</strong>으로 <strong>거의 1:1 운동재현</strong>을 하기도 하고, <strong>시너지/제스처 기반</strong>으로 <strong>보조적 제어</strong>를 하기도 합니다. 최근 연구에서는 로봇 의수의 <strong>복잡한 다자유도 제어</strong>를 위해 <strong>차원 축소 + 자세 인식 혼합</strong> 전략을 쓰기도 하며, 이는 사용자의 근신호를 몇 개 시너지로 나눠 읽고, 추가 제스처 신호로 모드 전환을 하는 형태입니다.</p></li>
+<li><p><strong>VR/AR 및 원격 협업:</strong> 가상현실에서 사람의 손동작은 주로 <strong>가상 아바타 손</strong>에 매핑되는데, 여기서는 <strong>실시간성</strong>과 <strong>자유로운 제스처 표현</strong>이 중요합니다. 상용 VR 시스템은 보통 장갑이나 컨트롤러로 <strong>손가락 움직임</strong>을 측정하고 가상손에 즉시 반영하는데, 이건 일종의 <strong>직접 관절 매핑</strong>입니다. 다만 VR 아바타 손은 실제 물리를 따지지 않아도 되므로, 굳이 로봇 공학적 제약을 고려할 필요 없이 <strong>사람 손 움직임을 1:1 복제</strong>하면 됩니다. 한편, VR/AR에서 제스처 인식을 이용해 <strong>명령 인터페이스</strong>로 쓰는 경우도 많습니다(예: 손가락 총 모양→메뉴 열기). 이처럼 <strong>비언어적 의사소통이나 UI 제어</strong>에서는 <strong>자세 인식 매핑</strong>이 효과적입니다. 미리 정의된 제스처들이 사용자와 시스템 간 신호로 쓰이는 것입니다. 또한 VR은 <strong>훈련 시뮬레이션</strong>의 역할도 하기 때문에, 로봇 원격 제어를 VR로 가상 연습할 때 <strong>매핑 알고리즘 테스트</strong>도 함께 진행할 수 있습니다. 가령 수술 로봇 매핑을 VR로 시뮬레이션하고 피드백을 조정하는 식입니다. 협업 로봇의 경우, AR 환경에서 인간 작업자의 손짓을 인식해 로봇 팔/손에게 지시를 내리는 연구도 있는데, 이때는 <strong>과업 지향</strong>과 <strong>제스처 인식</strong> 개념이 모두 활용되어 <strong>사람-로봇 팀워크</strong>를 원활히 합니다. 요컨대 VR/AR에서는 <strong>실시간 거울 매핑</strong>으로 몰입감을 주면서도, 특정 동작은 <strong>제스처 명령</strong>으로 추상화하는 혼합 운용이 일반적입니다.</p></li>
+</ul>
+</section>
+<section id="저자들의-미래-연구-방향-제언과-평가" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="저자들의-미래-연구-방향-제언과-평가"><span class="header-section-number">2.9</span> 저자들의 미래 연구 방향 제언과 평가</h2>
+<p>논문의 마지막에서는 인간-로봇 손 매핑 연구의 향후 발전을 위해 <strong>5가지 주요 방향</strong>이 제시됩니다. 이를 간략히 요약하고, 각 항목에 대한 평가를 덧붙입니다.</p>
+<ol type="1">
+<li><p><strong>매핑 목표의 명확화와 표준 평가척도 정립:</strong> 현행 연구들은 제각기 다른 목표(예: 손끝 위치 정확도, 제스처 유사도, 작업 성공률 등)를 내세우며, 성능 평가도 통일되어 있지 않습니다. 저자들은 <strong>매핑 알고리즘의 목표들을 체계적으로 정의</strong>하고, 다양한 접근법이 <strong>공통의 기준에서 성능을 비교</strong>할 수 있도록 해야 한다고 지적합니다. 예를 들어 “로봇 손가락 끝 위치 오류 5mm 이하” 같은 객관지표나, “사용자 학습시간 10분 이내” 같은 사용자 경험 척도를 도입할 필요가 있습니다. 지금까지는 많은 연구가 <strong>정성적 평가</strong>(예: “사람과 비슷한 모양이다”)에 머물러, 방법 간 우열이나 trade-off를 정확히 파악하기 어려웠습니다. <strong>표준화된 벤치마크와 메트릭 개발</strong>은 향후 학계의 공동 과제로 보입니다. 이는 연구자들 간 <strong>공동 언어</strong>를 형성하여, 서로 다른 접근들이 <strong>같은 목표 지향</strong> 하에 발전하도록 유도할 것으로 기대됩니다.</p></li>
+<li><p><strong>자연스러움(Naturalness)과 직관성(Intuitiveness)의 고려:</strong> 저자들은 사용자 입장에서 매핑의 <strong>자연스러움</strong>과 <strong>직관적 학습용이성</strong>을 앞으로 핵심 지표로 삼아야 한다고 강조합니다. 현재 대부분의 연구가 기계적 정확성에 초점을 맞추고, 정작 사람이 얼마나 편하게 조작하는지는 간과하고 있습니다. 자연스러움이란 “사용자가 마치 자기 손을 움직이듯 로봇 손을 움직일 수 있는 정도”를 뜻하고, 직관성은 “매핑 기능을 사용자가 <strong>얼마나 빨리 터득</strong>할 수 있는가”로 정의됩니다. 이상적인 매핑은 사용자가 별 교육 없이도 바로 자기 손처럼 다룰 수 있는 것이겠지요. 이를 정량화하고 향상시키는 연구가 거의 전무한데, 저자들은 이 방향의 연구가 <strong>새로운 통찰</strong>을 줄 것으로 기대합니다. 필자 역시 전적으로 동의하는 부분으로, <strong>사용자 경험(UX)</strong> 요소를 고려한 매핑 알고리즘 설계는 결국 실용화의 핵심 요건이 될 것입니다. 향후 실험을 통해 “어떤 매핑이 사용자에게 더 자연스러운가”를 비교하고, UI/피드백과 알고리즘을 통합적으로 개선하는 노력이 필요합니다.</p></li>
+<li><p><strong>손 기구학 구조의 사전정보 활용:</strong> 연구자들은 지금까지 <strong>인간 손과 로봇 손의 기구학적 특성</strong>을 충분히 활용하지 않았다고 지적합니다. 사실 하나의 손이 주어진다면, <strong>관절 가동 범위, 작업공간 형태, 손가락간 상대 위치</strong> 등 유용한 정보들이 사전에 모두 파악 가능합니다. 이러한 <strong>선험적 지식</strong>을 매핑 알고리즘 설계에 접목하면, 불필요한 탐색이나 시행착오를 줄이고 더 <strong>의미있는 매핑 변환</strong>을 도출할 수 있다는 것입니다. 예를 들어, “로봇 엄지와 검지가 만날 수 있는 공간 영역”을 미리 안다면, 인간 손 동작 중 그 영역 밖의 것은 애초에 제외하거나 보정할 수 있습니다. 또 로봇 손의 <strong>속도 타원체(velocity ellipsoid)</strong>나 <strong>연접 구조</strong> 등을 이용해, 사람 손의 유사한 속성들과 맞춰보는 접근도 생각해볼 수 있습니다. 이런 <strong>기하학적·토폴로지적 정보</strong>는 공짜로 주어지는 혜택이니, 이를 최대한 활용하는 방향으로 연구가 진전되어야 한다는 주장입니다. 필자는 이에 대해, 현재 일부 연구에서 <strong>자기 운동공간 최적화</strong> 등을 하는 사례가 있으나 보다 체계적이지는 않다고 봅니다. 앞으로 <strong>수학적 모델링</strong>과 <strong>최적화 이론</strong>을 접목해, 선험 지식을 활용한 <strong>매핑 함수 설계 프레임워크</strong>를 정립하면 큰 도움이 될 것입니다.</p></li>
+<li><p><strong>매핑 정보의 피드백 루프 도입:</strong> 저자들은 흥미로운 제안으로 <strong>사용자에게 매핑 상태 정보를 실시간 피드백</strong>하는 방안을 들었습니다. 현재는 사람이 손을 움직이면 로봇 손이 따라가는 <strong>개방형 루프</strong> 구조인데, 여기에 <strong>피드백 채널</strong>을 추가하여 사람과 알고리즘이 <strong>상호 적응(co-adaptation)</strong>하도록 만들자는 것입니다. 예컨대 시스템이 “지금 당신 손 자세는 로봇 손으로 완전히 재현 불가능한 영역에 있습니다”라는 피드백을 주면, 사용자가 그것을 인지하고 자기 손을 덜 벌리거나 하는 식으로 <strong>능동 조절</strong>이 가능할 수 있습니다. 이를 구현하려면 청각 경고음, 촉각 진동, 시각적 표시 등 <strong>다양한 인터페이스</strong>가 활용될 수 있습니다. 이러한 <strong>양방향 인터페이스</strong>가 도입되면, 매핑 품질은 단순 알고리즘에만 좌우되는 것이 아니라 <strong>사용자-알고리즘 협업</strong>으로 결정되며, 더 안전하고 정확한 제어가 가능해질 것으로 예상됩니다. 필자는 이 제안을 매우 혁신적인 방향이라 평가합니다. 다만 사용자에게 얼마나, 어떤 방식으로 피드백을 주는 것이 가장 효과적인지에 대한 <strong>인지공학적 연구</strong>가 병행되어야 할 것입니다. 자칫 정보 과부하로 <strong>사용자 혼란</strong>을 야기할 수 있으므로, <strong>직관적이고 최소한의 피드백 디자인</strong>이 핵심 과제가 될 것입니다.</p></li>
+<li><p><strong>점진적 학습 가능한 매핑 알고리즘:</strong> 마지막으로, 매핑 알고리즘을 <strong>모든 상황을 한 번에 포괄하려 하지 말고, 필요에 따라 </strong>점진적으로 업그레이드<strong>할 수 있게 만들자는 제안입니다. 이는 </strong>증강 학습(incremental learning)** 패러다임을 차용한 것으로, 사용자가 새로운 동작이나 기능이 필요할 때마다 데이터를 추가로 제공하면 알고리즘이 이를 학습하여 <strong>기능을 확장</strong>하는 형태입니다. 예를 들어 처음에는 기본 파지 동작들만 되던 로봇 손 매핑에, 사용자가 <strong>“집게로 가리키기”</strong> 동작 데이터를 추가로 학습시켜 그 기능을 덧붙이는 식입니다. 또 이후 새로운 로봇 손으로 바뀐다면, 그에 맞게 일부 매핑을 <strong>재학습/미세조정</strong>하여 적응할 수도 있을 것입니다. 이러한 유연한 알고리즘은 하나의 단일한 완벽 솔루션을 만들기 어려운 현실에서, <strong>사용자 맞춤형 최적화</strong>와 <strong>플랫폼 독립성</strong>을 확보하는 데 큰 도움이 될 것입니다. 필자는 특히 이 접근이 <strong>학습 기반 매핑</strong>(예: 신경망 활용) 연구와 궁합이 좋다고 봅니다. 요즘 머신러닝 기술이 발달함에 따라, 초기에 대략적인 모델을 만들어놓고 사용자 데이터를 점진적으로 더해 <strong>퍼스널라이징</strong>하는 것이 용이해졌습니다. 다만 이 경우 시스템이 업데이트되면서 <strong>기존 성능을 유지보장</strong>하는 문제, 그리고 <strong>학습 데이터 관리</strong> 등의 이슈가 따르므로, 신중한 설계와 장기적 평가가 필요할 것입니다.</p></li>
+</ol>
+<p>전체적으로 저자들의 미래 방향 제시는 <strong>매우 타당하고 시의적절</strong>해 보입니다. 특히 1)과 2)은 현재 연구 커뮤니티의 공감대가 큰 부분이고, 3)~5)은 비교적 새로운 아이디어로 향후 연구의 지평을 넓혀줄 것으로 기대됩니다. 이들 제안은 각각 <strong>평가 기준 정립</strong>, <strong>인간 요소 통합</strong>, <strong>이론 기반 설계</strong>, <strong>양방향 인터랙션</strong>, <strong>적응형 알고리즘</strong>으로 요약되는데, 이는 결국 인간-로봇 손 매핑 분야를 <strong>보다 성숙하고 실용적인 단계</strong>로 끌어올리기 위한 필수 과제들로 보입니다.</p>
+</section>
+<section id="추가적인-시사점-및-제안" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="추가적인-시사점-및-제안"><span class="header-section-number">2.10</span> 추가적인 시사점 및 제안</h2>
+<p>논문에 기반하여, 필자 역시 몇 가지 <strong>독자적인 시사점</strong>을 제안해 보고자 합니다.</p>
+<ul>
+<li><p><strong>다중 모달 입력의 통합:</strong> 현재 매핑 연구는 주로 <strong>손의 동작 데이터</strong>에 초점을 맞추지만, 향후에는 <strong>다른 인간 의도 신호</strong>(예: 시선, 음성, 표정, 발 움직임 등)와 결합한 <strong>멀티모달 매핑</strong>이 유망합니다. 예컨대 손동작+시선 방향을 함께 활용하면 “어디를 어떻게 잡을지”에 대한 풍부한 정보를 얻어 매핑 정확도를 높일 수 있습니다. 이미 [126] 사례에서 음성 명령을 병용한 바 있듯, 이러한 확장을 체계화하면 <strong>보다 직관적인 인터페이스</strong>를 구축할 수 있을 것입니다.</p></li>
+<li><p><strong>환경 피드백과 상호작용:</strong> 매핑 알고리즘과 환경 간 상호작용도 고려해야 합니다. 예를 들어 로봇 손이 물체를 잡았을 때 미끄러지면, 이를 사람 손에 촉각 또는 힘 피드백으로 알려주고 사람이 그립 강도를 높이도록 유도하는 식의 <strong>폐쇄루프 제어</strong>가 필요합니다. 단순한 기하학적 매핑을 넘어, <strong>물리적 상호작용 정보</strong>(마찰, 접촉력 등)까지 포함한 매핑으로 발전해야 <strong>정교한 조작</strong>이 가능해집니다. 이를 위해 로봇 손의 <strong>센서 데이터(힘/촉각)</strong>를 인간에게 제공하고, 인간의 <strong>미세 조정 능력</strong>을 활용하는 쪽으로 시스템 설계를 고민해볼 수 있습니다.</p></li>
+<li><p><strong>로봇 손 설계와 매핑의 동시 최적화:</strong> 지금까지는 주어진 로봇 손에 매핑을 맞추는 식이었지만, 이상적으로는 <strong>매핑을 쉽게 하는 방향으로 로봇 손을 설계</strong>하는 접근도 생각해볼 수 있습니다. 예컨대 특정 매핑 알고리즘(시너지 등)에 최적화되도록 로봇 손의 관절 비율이나 구동 방식을 디자인하면, 훨씬 자연스러운 모방이 가능할 것입니다. 이는 <strong>손 하드웨어와 소프트웨어의 co-design</strong> 개념으로, 인간 손의 움직임 특성을 잘 모사하면서도 구현 용이성을 양쪽에서 절충하는 방향입니다. 몇몇 연구에서 로봇 손의 <strong>기계적 시너지 구조</strong>를 도입한 바 있는데, 이를 매핑 알고리즘과 동시에 최적화하면 <strong>일체형 솔루션</strong>이 될 수 있습니다.</p></li>
+<li><p><strong>교육/훈련을 통한 사용자 적응 연구:</strong> 매핑이 완벽하지 않은 이상, <strong>사용자의 적응력</strong>도 큰 역할을 합니다. 따라서 얼마나 <strong>훈련을 통해</strong> 사용자가 매핑에 익숙해질 수 있는지, 어떤 <strong>피드백과 가이드</strong>가 학습을 돕는지 등의 연구가 필요합니다. 예를 들어 VR 환경에서 사용자에게 가상 손과 로봇 손의 차이를 시각화해 보여주고 보정 연습을 시키면 실제 조작 성능이 향상되는지 등을 실험할 수 있습니다. 이러한 <strong>사용자 트레이닝</strong> 측면을 체계화하면, 매핑 알고리즘의 한계를 <strong>인간의 학습으로 상쇄</strong>하는 방안도 마련될 것입니다.</p></li>
+<li><p><strong>표준 데이터셋과 대회 개최:</strong> 마지막으로, 연구 커뮤니티 차원에서 <strong>공개 데이터셋</strong>과 <strong>벤치마크 대회</strong>를 운영하는 것도 고려할 만합니다. 다양한 인간 손동작-로봇 손 대응 데이터, 다양한 로봇 손 모델 등이 포함된 데이터셋을 공유하면, 서로 다른 알고리즘을 공정하게 비교하고 발전시킬 수 있습니다. 또 예를 들어 “주어진 로봇 손으로 시演된 인간 동작을 가장 자연스럽게 따라하게 하기”와 같은 챌린지를 개최하면, 새로운 아이디어들이 촉발될 것입니다. 이러한 노력은 저자들이 언급한 <strong>표준화와 객관적 평가척도</strong> 정립에도 기여하면서, 연구의 <strong>협업 촉진</strong>과 <strong>속도 향상</strong>을 가져올 수 있습니다.</p></li>
+</ul>
+</section>
+<section id="conclusion" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.11</span> Conclusion</h2>
+<p>Roberto Meattini 등은 본 논문을 통해 인간-로봇 손 동작 매핑 분야의 지난 <strong>수십 년 간의 연구를 망라</strong>하며, 이를 여섯 가지 개념 범주로 명료하게 정리했습니다. 각 접근법의 이론적 배경부터 장단점, 적용 사례까지 폭넓게 다루어 연구자들에게 <strong>큰 그림</strong>을 제시한다는 점에서 의미가 큽니다. 요약하자면, <strong>직접 관절/데카르트 매핑</strong>은 가장 단순한 방법이지만 로봇 손이 사람 손과 다를 때 제약이 있고, <strong>과업 지향 매핑</strong>은 비인간형 로봇에서도 동작 전달이 가능하나 사용자 직관성이 낮으며, <strong>차원 축소 매핑</strong>은 제어를 간소화하지만 동작 자유도를 제한하고, <strong>자세 인식 매핑</strong>은 특정 동작 셋에 효율적이나 연속 제어가 어렵고, <strong>하이브리드 매핑</strong>은 여러 기법의 장점을 취하나 설계 복잡성이 높습니다. 이러한 통찰을 바탕으로, 연구자들은 각자의 응용 분야에 맞는 최적의 접근을 모색할 수 있을 것입니다. 또한 논문 말미의 미래 전망은 이 분야가 나아갈 길을 잘 짚어주고 있는데, <strong>평가지표 통일</strong>과 <strong>사용자 중심 설계</strong>, <strong>선험 정보 활용</strong>, <strong>양방향 피드백</strong>, <strong>적응형 알고리즘</strong> 등이 그 핵심입니다. 이는 모두 <em>“인간과 로봇의 연결”</em>이라는 매핑 문제의 본질을 더욱 잘 풀어나가기 위한 방향들로서, 필자 역시 이러한 노력들이 수행될 때 <strong>인간 손의 능숙함을 로봇 손에 온전히 불어넣는 날</strong>이 앞당겨질 것이라 기대합니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

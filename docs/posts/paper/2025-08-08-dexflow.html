@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-08">
+<meta name="description" content="A Unified Approach for Dexterous Hand Pose Retargeting and Interaction">
+
+<title>📃DexFlow 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#소개-배경-및-문제점" id="toc-소개-배경-및-문제점" class="nav-link" data-scroll-target="#소개-배경-및-문제점"><span class="header-section-number">2.1</span> 소개 (배경 및 문제점)</a></li>
+  <li><a href="#기술적-기여-핵심-아이디어-및-메커니즘" id="toc-기술적-기여-핵심-아이디어-및-메커니즘" class="nav-link" data-scroll-target="#기술적-기여-핵심-아이디어-및-메커니즘"><span class="header-section-number">2.2</span> 기술적 기여 (핵심 아이디어 및 메커니즘)</a></li>
+  <li><a href="#기존-연구와의-비교-dexflow의-차별점" id="toc-기존-연구와의-비교-dexflow의-차별점" class="nav-link" data-scroll-target="#기존-연구와의-비교-dexflow의-차별점"><span class="header-section-number">2.3</span> 기존 연구와의 비교 (DexFlow의 차별점)</a></li>
+  <li><a href="#실험-결과-분석-성능-평가-및-시각화" id="toc-실험-결과-분석-성능-평가-및-시각화" class="nav-link" data-scroll-target="#실험-결과-분석-성능-평가-및-시각화"><span class="header-section-number">2.4</span> 실험 결과 분석 (성능 평가 및 시각화)</a>
+  <ul class="collapse">
+  <li><a href="#정량적-지표-비교-single-frame-기준-성능" id="toc-정량적-지표-비교-single-frame-기준-성능" class="nav-link" data-scroll-target="#정량적-지표-비교-single-frame-기준-성능"><span class="header-section-number">2.4.1</span> 정량적 지표 비교 (Single-Frame 기준 성능)</a></li>
+  <li><a href="#시퀀스-모션-품질-및-동작-자연스러움" id="toc-시퀀스-모션-품질-및-동작-자연스러움" class="nav-link" data-scroll-target="#시퀀스-모션-품질-및-동작-자연스러움"><span class="header-section-number">2.4.2</span> 시퀀스 모션 품질 및 동작 자연스러움</a></li>
+  </ul></li>
+  <li><a href="#결론-및-시사점" id="toc-결론-및-시사점" class="nav-link" data-scroll-target="#결론-및-시사점"><span class="header-section-number">2.5</span> 결론 및 시사점</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃DexFlow 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">retargeting</div>
+    <div class="quarto-category">simulation</div>
+    <div class="quarto-category">optimization</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A Unified Approach for Dexterous Hand Pose Retargeting and Interaction
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>IEEE/RSJ IROS 2025</p>
+</blockquote>
+<ul>
+<li><a href="https://arxiv.org/abs/2505.01083">Paper Link</a></li>
+<li><a href="https://xiaoyilin-code.github.io/Dexflow_page/#">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>🤸 인간 손 모션을 로봇 손에 리타겟팅하여 사실적인 조작 데이터를 생성하는 문제 해결을 위해, 이 논문은 정확도와 상호작용을 개선하는 DexFlow 파이프라인을 제안합니다.</li>
+<li>🛠️ DexFlow는 전역 최적화로 초기 자세를 맞춘 후, 이중 임계값 및 시간 스무딩 기반의 접촉 감지, 그리고 순차적 손가락 최적화를 통해 손-객체 상호작용을 세밀하게 조정합니다.</li>
+<li>📊 이 방법은 기존 리타겟팅 방식보다 자세 정확도와 자연스러움을 크게 향상시키며, 새로운 데이터셋과 함께 물리적 타당성과 다양성을 갖춘 로봇 조작 데이터 생성에 기여합니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-08-08-dexflow/1.png" width="100%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>이 논문은 로봇 손을 위한 사실적인 능숙한 조작(dexterous manipulation) 데이터를 생성하는 데 있어서의 현재 한계점들을 해결하기 위한 새로운 통합 접근 방식인 DexFlow를 제안합니다. 기존의 리타겟팅(retargeting) 방법들은 종종 정확도가 낮고 손-객체 상호작용을 제대로 고려하지 못하여 상호관통(interpenetration)과 같은 아티팩트를 발생시키는 반면, 생성 모델(generative methods)들은 인간 손의 사전 지식(prior)이 부족하여 제한적이고 부자연스러운 포즈를 생성하는 문제에 직면합니다. DexFlow는 이러한 문제들을 극복하기 위해 인간 손과 객체 데이터를 여러 소스에서 통합하는 데이터 변환 파이프라인을 제안합니다. 이 접근 방식은 시간적 일관성(temporal consistency)을 보장하기 위해 차등 손실 제약(differential loss constraint)을 사용하고, 손-객체 상호작용을 정교화하기 위해 접촉 맵(contact maps)을 생성합니다. 실험 결과, 제안된 방법은 포즈 정확도, 자연스러움 및 다양성을 크게 향상시켜 손-객체 상호작용 모델링을 위한 견고한 해결책을 제시합니다.</p>
+<p>주요 기여는 다음과 같습니다.</p>
+<ul>
+<li>전역 포즈 탐색(global pose search)과 지역 접촉 정제(local contact refinement)를 결합한 계층적 최적화(hierarchical optimization) 접근 방식: 해부학적 정렬 정확도와 물리적 타당성(physical plausibility)을 동시에 다루는 새로운 에너지 수식(energy formulations)을 특징으로 합니다.</li>
+<li>이중 임계값 감지(dual-threshold detection)와 프레임 간 평활화(frame-to-frame smoothing) 메커니즘을 포함하는 시간 인식 접촉 처리 파이프라인(temporal-aware contact processing pipeline): 기존 리타겟팅 방법에서 관찰되는 접촉 상태 변동의 68%를 효과적으로 해결합니다.</li>
+<li>크로스-핸드 토폴로지 마이그레이션(cross-hand topology migration)을 지원하는 292K 프레임의 그랩(grasp)을 포함하는 첫 번째 포괄적인 벤치마크 데이터셋: 기존 리타겟팅 솔루션에 비해 의미적 성공률(semantic success rate)이 7.5배 향상되었음을 입증합니다.</li>
+</ul>
+<p><strong>II. 관련 연구</strong></p>
+<p>이 논문은 Vision-based teleoperation systems, 전통적인 retargeting frameworks, task-oriented grasp synthesis, 그리고 grasps transfer의 기존 연구들이 가진 한계점을 분석하고, 본 연구가 이러한 한계점들을 어떻게 극복하는지에 초점을 맞춥니다. 특히, 기존 retargeting methods의 침투 아티팩트(penetration artifacts), 불안정한 접촉(unstable contacts), 그리고 human motion priors의 비효율적인 활용 문제를 지적하며, DexFlow가 계층적 최적화와 시간적 일관성 통합을 통해 이러한 격차를 해소한다고 강조합니다.</p>
+<center>
+<img src="../../images/2025-08-08-dexflow/2.png" width="100%">
+</center>
+<p><strong>III. 방법론</strong></p>
+<p>DexFlow 프레임워크는 세 가지 연속적인 단계로 구성됩니다.</p>
+<ul>
+<li>먼저, 객체를 적응적으로 스케일링(scaling)하고 MANO 손 동작(hand motions)을 로봇 구성(robotic configurations)으로 리타겟팅하는 통합 전처리(unified preprocessing)를 수행합니다.</li>
+<li>다음으로, 2단계 접촉 감지 시스템(two-stage contact detection system)이 공간 임계값(spatial thresholds)과 시간적 평활화(temporal smoothing)를 사용하여 후보 접촉점(candidate contact points)을 필터링하여 일시적인 아티팩트(transient artifacts)를 제거합니다.</li>
+<li>마지막으로, 후속 손가락 관절 최적화(finger joint optimization)는 유효한 접촉 제약(effective contact constraints)이 있는 손가락만 고려하며, 엄지손가락부터 새끼손가락까지 각 손가락을 개별적으로 최적화하여 보다 정교한 접촉 최적화를 달성합니다.</li>
+</ul>
+<p><strong>A. Hand Model Alignment</strong></p>
+<p>MANO 손 모델의 zero-pose 파라미터를 ShadowHand 로봇 매니퓰레이터(robotic manipulator)에 정렬하기 위해 리타겟팅 작업을 수행합니다. 객체 모델과 MANO 손의 선형 치수(linear dimensions)를 <span class="math inline">s = 10^9</span> 계수로 스케일링하여 포인트 클라우드와 로봇 손 사이의 겹침을 개선하고, ShadowHand의 손끝 위치(fingertip positions)를 MANO 손에 더 세밀하게 정렬합니다.</p>
+<p><strong>B. Retargeting as an optimization problem</strong></p>
+<p>리타겟팅 과정의 핵심은 로봇 매니퓰레이터의 관절 각도(joint angles)를 최적화하여 MANO 손에서 추출된 목표 포즈(target poses)에 맞추는 전역 탐색 알고리즘 GN CRS2 LM입니다.</p>
+<p>시간 단계 <span class="math inline">t</span>에서 로봇 매니퓰레이터의 관절 각도를 <span class="math inline">\mathbf{q}_t \in \mathbb{R}^n</span>이라고 할 때, 여기서 <span class="math inline">n</span>은 자유도(DoF)의 수입니다. 목적 함수는 다음과 같이 정의됩니다.</p>
+<p><span class="math display">
+\min_{\mathbf{q}_t \in \mathbb{R}^n} \sum_{i=0}^N \| \mathbf{v}_i^H (\boldsymbol{\theta}_t, \boldsymbol{\beta}_t, \mathbf{r}_t) - \mathbf{v}_i^R(\mathbf{q}_t) \|^2 + \alpha \| \mathbf{q}_t - \mathbf{q}_{t-1} \|^2 \quad (1)
+</span></p>
+<p>여기서 <span class="math inline">\mathbf{v}_i^H</span>는 MANO 모델의 forward kinematics를 통해 계산된 인간 손의 Task-Space Vector (TSV)를 나타내며, <span class="math inline">\mathbf{v}_i^R</span>은 로봇 매니퓰레이터의 TSV입니다. <span class="math inline">\alpha</span>는 시간적 일관성(temporal consistency)을 보장하는 정규화 가중치(regularization weight)이며, <span class="math inline">N</span>은 최적화에서 고려되는 TSV의 수입니다(<span class="math inline">N=13</span>). 첫 번째 항은 로봇 손의 포즈가 Task Space에서 인간 손과 정렬되도록 보장하고, 두 번째 항은 프레임 간의 시간적 평활성을 강화합니다.</p>
+<p>프레임 간의 급격한 관절 각도 변화를 해결하기 위해 차등 손실(differential loss) 제약 조건을 도입합니다.</p>
+<p><span class="math display">
+L_{temp} = \lambda_T \sum_{t=2}^T \| \mathbf{q}_t - 2\mathbf{q}_{t-1} + \mathbf{q}_{t-2} \|_{\Sigma^{-1}}^2 \quad (2)
+</span></p>
+<p>여기서 <span class="math inline">\Sigma \in \mathbb{R}^{28 \times 28}</span>는 관절 운동 불확실성(joint motion uncertainty)을 나타내는 운동학적 공분산 행렬(kinematic covariance matrix)이고, <span class="math inline">\mathbf{q}_t, \mathbf{q}_{t-1}, \mathbf{q}_{t-2}</span>는 현재, 이전, 두 단계 전 프레임의 관절 각도이며, <span class="math inline">\lambda = 0.1</span>은 차등 손실에 대한 가중치입니다.</p>
+<p>최적화 중에는 현재 프레임 상태 <span class="math inline">\mathbf{q}_t</span>와 과거 윈도우 <span class="math inline">W_t = \{\mathbf{q}_{t-k}, \ldots, \mathbf{q}_t\}</span>를 공동으로 최적화하기 위한 슬라이딩 윈도우(sliding window) 메커니즘을 설정합니다. 최종 최적화 문제는 다음과 같습니다.</p>
+<p><span class="math display">
+\mathbf{q}^*_t = \arg \min_{\mathbf{q}_t} L_{align} + L_{temp} + \gamma \| \mathbf{q}_t - \mathbf{q}^{pred}_t \|^2 \quad (3)
+</span></p>
+<p>여기서 <span class="math inline">L_{align}</span>은 작업 간 정렬 손실을 나타내고, <span class="math inline">\mathbf{q}^{pred}_t = \mathbf{q}_{t-1} + \Delta t \dot{\mathbf{q}}_{t-1}</span>은 이전 프레임의 속도를 기반으로 예측된 관절 각도이며, <span class="math inline">\gamma = 0.5</span>는 운동 연속성(motion continuity)을 더욱 향상시키는 동적 평활화 가중치(dynamic smoothing weight)입니다. 이 목적 함수는 생성된 운동 궤적(motion trajectory)이 헤시안 행렬(Hessian matrix)의 정규화(regularization)를 통해 <span class="math inline">C^2</span> 연속성(continuity)을 만족하도록 보장하여 물리적 타당성을 향상시킵니다.</p>
+<p><strong>C. Contact map</strong></p>
+<p>리타겟팅 후, 로봇 손 관절 각도 시퀀스는 인간 손 동작 시퀀스와 정렬됩니다. 객체와 상호작용하기 위한 보다 사실적인 관절 구성을 달성하기 위해 관절 각도를 추가로 정제합니다. 이를 위해, 손과 객체 사이의 상호작용 정보를 수집하기 위해 이중 임계값 알고리즘(dual-threshold algorithm)을 사용하여 접촉 맵을 추출합니다. 이 맵은 접촉 상태로 판단된 손 포인트 클라우드(hand point cloud)와 가장 가까운 객체 메쉬 정점(object mesh vertices) 간의 대응(correspondence)을 포함합니다. 그런 다음, 접촉 상태의 급격한 변화를 완화하기 위해 프레임 간 평활화(frame-to-frame smoothing)를 도입합니다.</p>
+<ol type="1">
+<li><strong>Dual-Threshold Contact Information Extraction</strong>: 로봇의 목표 위치(<span class="math inline">\mathbf{q}_t</span>)를 매핑한 후, 이중 임계값 알고리즘을 사용하여 접촉 상태를 결정합니다. 각 손끝(fingertip)에 대해 손끝과 객체 표면 사이의 거리를 계산합니다. 거리가 하한 임계값(<span class="math inline">dis_{min}</span>)보다 작으면 손끝이 접촉 상태로 간주되고, 상한 임계값(<span class="math inline">dis_{max}</span>)보다 크면 접촉 상태가 아닌 것으로 간주됩니다. 거리가 두 임계값 사이에 있으면 손끝의 접촉 상태는 이전 프레임과 동일하다고 가정합니다.</li>
+<li><strong>Frame-to-Frame Contact Inference</strong>: 이중 임계값 설정은 접촉 상태를 정확하게 포착하는 것과 원래 동작의 의미론적 일관성을 유지하는 것 사이의 절충이 필요합니다. 따라서, 노이즈(noisy fluctuations)로 인한 중간 프레임의 접촉 정보 지터(jitter) 문제를 해결하기 위해 운동학적 제약(kinematic constraints)을 통합한 시간적 일관성 인식 보간 메커니즘(temporal coherence-aware interpolation mechanism)을 개발합니다.</li>
+</ol>
+<p><span class="math display">
+C_t = I \left( \frac{\|C_{t-1} + C_{t+1}\|^2}{2} + \alpha v_f \Delta t &gt; \tau_c \right) \quad (4)
+</span> 여기서 <span class="math inline">I(\cdot)</span>는 지시 함수(indicator function)이고, <span class="math inline">\alpha=0.6</span>은 속도 영향(velocity influence)을 조절하며, <span class="math inline">\tau_c=0.7</span>은 접촉 신뢰도 임계값(contact confidence threshold)입니다. 속도 항 <span class="math inline">v_f \Delta t</span>는 다음과 같이 프레임 간 손가락 변위(finger displacement)를 추정합니다. <span class="math display">
+\Delta x = \int_{t-1}^{t+1} v_f(t) dt \approx \frac{1}{2} (v_{t-1} + v_{t+1}) \Delta t \quad (5)
+</span></p>
+<p>세 단계의 결정 프로토콜은 물리적 타당성을 보장합니다.</p>
+<ul>
+<li><strong>Motion Continuity Check</strong>: 5 프레임 윈도우(<span class="math inline">t-2, \ldots, t+2</span>) 위치를 사용하여 3차 스플라인 궤적(cubic spline trajectory) <span class="math inline">T</span>를 계산합니다. <span class="math display">
+T(u) = \sum_{i=0}^3 a_i (u - u_{t-2})^i, \quad u \in [t-2, t+2] \quad (6)
+</span></li>
+<li><strong>Contact Likelihood Estimation</strong>: 가속도(<span class="math inline">\ddot{T}</span>)를 기반으로 접촉 가능성(<span class="math inline">P_c(t)</span>)을 추정합니다. <span class="math display">
+P_c(t) = \sigma (\beta_1 (\ddot{T}(t) - \ddot{T}_{object}(t))) \quad (7)
+</span> 여기서 <span class="math inline">\sigma(\cdot)</span>는 시그모이드 함수(sigmoid function)입니다.</li>
+<li><strong>State Imputation</strong>: 최종 접촉 상태 <span class="math inline">C^{final}_t</span>를 결정합니다. <span class="math display">
+C^{final}_t = \begin{cases} C^{interp}_t, &amp; \text{if } P_c(t) &gt; 0.5 \land \nabla T(t) &lt; v_{max} \\ C^{raw}_t, &amp; \text{otherwise} \end{cases} \quad (8)
+</span></li>
+</ul>
+<p><strong>D. Third Stage Optimization</strong></p>
+<p>이 단계에서는 그랩 정확도(grasping accuracy)와 안정성(stability)을 향상시키기 위해 손 포즈, 특히 손가락 수준에서의 최적화에 중점을 둡니다. 최적화 과정은 각 손가락에 대한 개별 최적화로 나뉘어 접촉점과 손 포즈를 정밀하게 조정할 수 있습니다.</p>
+<ol type="1">
+<li><strong>Sequential Finger Ordering Prior to Optimization</strong>: 최적화 시작 전에 개별 손가락을 최적화하기 위한 사전 정의된 순서(엄지부터 새끼손가락까지)를 설정합니다. 이는 최적화 동작 공간을 줄이고(reducing the optimization action space), 주요 기능 손가락(primary functional fingers)이 충돌을 피하기 위해 부자연스럽게 변형되는 것을 방지합니다.</li>
+<li><strong>Optimization Process</strong>: 최적화는 각 손가락의 손 포즈를 조정하는 것으로 시작합니다. 초기 손 포즈(initial hand pose)에서 각 손가락의 접촉점(contact points)이 정의되며, 목표는 이러한 접촉점과 관련된 에너지를 최소화하면서 손의 관절 각도를 실행 가능한 범위 내로 유지하는 것입니다. 최적화 과정은 다음 항들을 포함하는 가중치 에너지 함수(weighted energy function)를 활용합니다.</li>
+</ol>
+<ul>
+<li><p><strong>Distance Energy (<span class="math inline">E_{dis}</span>)</strong>: 손의 접촉점과 객체 표면 사이의 거리를 계산하여 적절한 상호작용을 보장하기 위해 이 거리를 최소화하는 것을 목표로 합니다. <span class="math display">
+E_{dis} = \sum_{i=1}^n \| \mathbf{p}_i - \mathbf{o}_i \|^2 \quad (9)
+</span> 여기서 <span class="math inline">\mathbf{p}_i</span>는 손의 접촉점이고 <span class="math inline">\mathbf{o}_i</span>는 객체의 해당 점입니다.</p></li>
+<li><p><strong>Penetration Energy (<span class="math inline">E_{pen}</span>)</strong>: 손이 객체를 관통하는 경우에 불이익을 줍니다. <span class="math display">
+E_{pen} = \sum_{i=1}^n \max(0, \delta_i - d_i)^2 \quad (10)
+</span> 여기서 <span class="math inline">\delta_i</span>는 객체에서 손까지의 거리를 나타내고 <span class="math inline">d_i</span>는 관통 깊이(penetration depth)입니다.</p></li>
+<li><p><strong>Alignment Energy (<span class="math inline">E_{align}</span>)</strong>: 손의 접촉점이 객체의 표면 법선 벡터(surface normal vectors)와 정렬되도록 장려하여 그랩이 물리적으로 타당하도록 보장합니다. <span class="math display">
+E_{align} = \sum_{i=1}^n (1 - \mathbf{n}_i \cdot \mathbf{n}^O_i)^2 \quad (11)
+</span> 여기서 <span class="math inline">\mathbf{n}_i</span>는 손의 <span class="math inline">i</span>-번째 접촉점에서의 법선 벡터이고, <span class="math inline">\mathbf{n}^O_i</span>는 객체의 해당 접촉점에서의 법선 벡터입니다.</p></li>
+<li><p><strong>Self-Penetration Energy (<span class="math inline">E_{spen}</span>)</strong>: 손가락이나 손바닥이 서로 충돌하는 것을 방지하여 적절한 분리(separation)를 유지합니다. <span class="math display">
+E_{spen} = \sum_{p \in P_c} \sum_{q \in P_o} \max(\delta - d(p, q), 0) \quad (12)
+</span> 여기서 <span class="math inline">P_c</span>는 현재 최적화된 손가락의 점 집합을 나타내고, <span class="math inline">P_o</span>는 나머지 손가락의 점 집합을 나타냅니다. <span class="math inline">d(p, q)</span>는 현재 손가락의 점 <span class="math inline">p</span>와 다른 손가락의 점 <span class="math inline">q</span> 사이의 거리를 측정하며, <span class="math inline">\delta</span>는 충돌 패널티가 적용되는 임계 거리입니다.</p></li>
+<li><p><strong>Regularization Energy (<span class="math inline">E_{joints}</span>)</strong>: 이 항은 초기 손 포즈로부터의 큰 편차에 불이익을 주어 자연스러운 구성을 유지하는 데 도움을 줍니다. <span class="math display">
+E_{joints} = \sum_{i=1}^d \| \theta_i - \theta_{init,i} \|^2 \quad (13)
+</span> 여기서 <span class="math inline">\theta_i</span>는 현재 관절 각도이고, <span class="math inline">\theta_{init,i}</span>는 초기 관절 각도입니다.</p></li>
+</ul>
+<p>총 에너지는 이러한 구성 요소들의 가중 합으로 이루어집니다. <span class="math display">
+E_{total} = E_{dis} + w_{pen}E_{pen} + w_{align}E_{align} + w_{spen}E_{spen} + w_{joints}E_{joints} \quad (14)
+</span> 여기서 <span class="math inline">w_{pen}, w_{align}, w_{spen}, w_{joints}</span>는 각 에너지 항의 중요도를 제어하는 가중치입니다.</p>
+<p><strong>IV. 실험 결과</strong></p>
+<p>실험은 Intel Core i9-13900HK CPU, 32GB RAM, NVIDIA GeForce RTX 4080 GPU를 갖춘 Linux 시스템에서 수행되었습니다. 본 연구에서는 개선된 최적화 파이프라인을 기반으로 MANO 손 동작 캡처(motion capture) 데이터를 ShadowHand/Allegro 로봇에 리타겟팅하여 다중 모드 그랩 시퀀스(multi-modal grasp sequences)를 생성했습니다. 50개의 YCB 객체에 대해 292k 프레임의 최적화된 그랩 궤적(grasp trajectories)이 생성되었으며, 이는 안정적인 그랩(stable grasping), 동적 조정(dynamic adjustments), 다중 손가락 협업(multi-finger collaborative operations)과 같은 시나리오를 포함합니다. 또한, 동일한 인간 손 동작을 다른 로봇 손 구조에 매핑하여 의미론적 그랩 의도(semantic grasping intentions)를 보존하는 크로스-핸드 토폴로지 마이그레이션(cross-hand topology migration)이 지원됩니다.</p>
+<p><strong>Single-Frame Data Quality Evaluation</strong></p>
+<p>Isaac Gym [27]과 PhysX를 사용하여 시뮬레이션을 진행했습니다. 그랩의 성공 여부는 그리퍼(gripper)가 객체와 100 시뮬레이션 단계 동안 중력이 적용되는 모든 6축 정렬 방향(axis-aligned directions)에서 접촉을 유지하는 경우 성공으로 간주됩니다. 기존 분석적 합성 방법들과 비교했을 때, DexFlow는 접촉 품질에서 두 번째로 낮은 Contact Distance를 달성했으며, DexGraspNet 및 SpringGrasp에 비해 한 자릿수 향상을 보였습니다. 물리적 타당성 분석에서는 전통적인 방법에 비해 Penetration을 크게 줄였습니다. 본 방법은 40.32%의 Semantic Success Rate (SSR)를 달성하여 기존 리타겟팅 방법인 DexRetarget의 5.35%보다 7.5배 높은 성능을 보였습니다.</p>
+<p><strong>Trajectory Motion Quality Analysis</strong></p>
+<p>궤적 평가에는 시간 정렬된 Chamfer Distance (CD)가 사용되었습니다. <span class="math display">
+CD = \frac{1}{T} \sum_{t=1}^T \min_{\mathbf{p} \in P^{ref}_t, \mathbf{q} \in P^{gen}_t} \| \mathbf{p} - \mathbf{q} \|^2 \quad (15)
+</span> 여기서 <span class="math inline">P^{ref}_t</span>와 <span class="math inline">P^{gen}_t</span>는 각각 시간 단계 <span class="math inline">t</span>에서의 참조 및 생성된 객체 포인트 클라우드입니다. 리타겟팅 단계에서 0.008 CD를 달성하여 DexRetarget의 0.016보다 50% 낮은 수치를 보였으며, 이는 뛰어난 시간적 형상 일관성(temporal shape consistency)을 나타냅니다. 이후 최적화에서도 이 장점(0.009 CD)이 유지되면서 관통(penetrations) 문제를 해결하여, 기하학적 충실도(geometric fidelity)와 물리적 타당성을 동시에 보존하는 이중 기능을 입증했습니다. 0.48의 Velocity KL Divergence (DexRetarget 대비 11% 향상)는 자연스러운 움직임 보존을 확인시켜주며, 통제된 가속도 증가(0.073에서 0.080 RMS)는 필요한 접촉 보정(contact corrections)을 반영합니다.</p>
+<p><strong>V. 결론</strong></p>
+<p>제안된 방법은 로봇 그랩 및 조작을 위한 새로운 패러다임을 확립하여 리타겟팅을 통해 로봇 그랩 데이터 획득을 크게 향상시킵니다. 생성된 단일 프레임(single-frame) 데이터의 품질이 아직 일부 기존 방법을 능가하지 못하고 모든 시나리오에서 그랩 성공이 완전히 보장되지 않을 수 있지만, 본 접근 방식은 핵심 지표에서 최첨단 방법과 비교할 수 있는 성능을 달성합니다. 나아가, 복잡한 손-객체 상호작용 작업에서 더 높은 정밀도, 자연스러움 및 다양성을 가능하게 합니다. 본 연구를 통해 얻은 통찰력과 데이터는 로봇 그랩 및 능숙한 조작의 미래 발전을 위한 귀중한 참고 자료가 될 것입니다.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/s-NKJb3qodo?si=-DXLsq2WRYdx-097" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>DexFlow: 섬세한 손 포즈 리타게팅 및 상호작용을 위한 통합 접근법 (논문 심층 리뷰)</p>
+</blockquote>
+<section id="소개-배경-및-문제점" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="소개-배경-및-문제점"><span class="header-section-number">2.1</span> 소개 (배경 및 문제점)</h2>
+<p>로봇의 <strong>섬세한 손 동작 조작</strong>(dexterous manipulation)을 위해 인간 손의 동작을 로봇 손으로 <strong>포즈 리타게팅</strong>(pose retargeting)하는 기술은 오랫동안 도전적인 문제로 남아 있습니다. 오늘날 인간 손의 모션 캡처 기술(예: MANO 모델 등)로부터 정밀한 손 추적이 가능해졌지만, 이를 로봇 손으로 옮기는 과정에는 여전히 여러 <strong>난제가 존재</strong>합니다. 대표적으로 <strong>(1)</strong> 인간 손과 로봇 손의 <strong>형태적 차이</strong>(길이, 관절 범위 등)로 인한 불일치, <strong>(2)</strong> 손과 물체 사이 <strong>접촉 상호작용</strong>을 제대로 모델링하지 못해 발생하는 비현실적인 동작(예: 손가락이 물체를 뚫고 지나가는 <strong>관통 현상</strong> 등), 그리고 <strong>(3)</strong> <strong>비효율적인 최적화 과정</strong>으로 인한 실시간성 부족 및 부정확성 문제가 지적되어 왔습니다. 기존의 단순 <strong>운동학적 매핑 기반 리타게팅</strong> 방법들은 사람 관절 각도를 로봇 관절에 직접 대응시키지만, 사람/로봇 손 구조 차이를 고려하지 않아 <strong>손가락이 물체를 관통</strong>하거나 <strong>접촉이 불안정</strong>해지는 문제가 컸습니다. 한편 <strong>에너지 최적화 기반</strong> 접근들은 관통 페널티나 접촉 거리 최소화 같은 <strong>인위적인 비용 함수</strong>를 설계하여 문제를 풀려고 시도했으나, <strong>인간 손 동작의 고유한 제약</strong>(예: 자연스러운 그립 형태)을 활용하지 못해 한계가 있었습니다. 또한 <strong>학습 기반</strong> 방법(예: <strong>DexPilot</strong>, <strong>AnyTeleop</strong> 등 실시간 테레오퍼레이션 기법)은 데이터 기반 사전지식을 활용하여 속도는 높였지만, <strong>정밀한 공간 정렬</strong>이나 <strong>시간적 일관성</strong> 측면에서는 여전히 부족함을 보였습니다. 요컨대, 이전까지의 방법들은 <strong>정확도 vs.&nbsp;속도</strong>, <strong>물리적 현실감 vs.&nbsp;데이터 다양성</strong> 사이에서 균형 잡힌 해법을 제시하지 못했습니다.</p>
+<p><strong>DexFlow</strong>는 이러한 문제들을 해결하기 위해 제안된 <strong>통합적 손 포즈 리타게팅 및 상호작용 모델</strong>로서, 사람 손의 동작을 로봇 손으로 옮기는 과정에서 <strong>정확성과 현실감</strong>, 그리고 <strong>데이터 확보 효율</strong>까지 모두 향상시키는 것을 목표로 합니다. 이 논문 리뷰에서는 DexFlow의 <strong>기술적 기여</strong>, <strong>기존 연구와의 차별점</strong>, 그리고 <strong>실험 결과</strong>를 중점적으로 살펴보겠습니다.</p>
+</section>
+<section id="기술적-기여-핵심-아이디어-및-메커니즘" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="기술적-기여-핵심-아이디어-및-메커니즘"><span class="header-section-number">2.2</span> 기술적 기여 (핵심 아이디어 및 메커니즘)</h2>
+<p>DexFlow가 제안하는 핵심 아이디어는 <strong>계층적 최적화</strong>와 <strong>접촉 인식</strong>을 결합한 파이프라인으로, 사람 손의 자연스러운 동작을 로봇 손에 이식하면서도 물리적으로 <strong>그립(grip)</strong> 상호작용이 사실적으로 유지되도록 하는 것입니다. 구체적으로, <strong>전역 최적화 → 접촉 추출/필터링 → 국소 최적화</strong>의 3단계로 구성된 절차를 통해 문제를 단계별로 해결합니다. 아래에서는 DexFlow의 주요 기술적 기여를 세 가지 측면에서 정리합니다:</p>
+<ul>
+<li><p><strong>① 계층적 전역-국소 최적화 접근:</strong> 우선 사람 손 포즈와 최대한 유사한 로봇 손 초기 자세를 얻기 위해 <strong>전역 최적화(global search)</strong>를 수행합니다. 이는 사람 손 관절 구성과 로봇 손 관절 사이의 차이를 줄이는 <strong>에너지 함수</strong>를 정식화하여, 로봇 손이 <strong>해부학적으로 정렬된 자세</strong>를 취하도록 하는 단계입니다. 논문에서는 GN_CRS2_LM이라는 글로벌 탐색 알고리즘을 사용해 로봇 손의 관절 각도를 최적화했다고 설명하는데, 이 과정에서 사람 손의 관절 제약과 로봇 손의 기구학을 모두 고려하여 <strong>초기 관절 구성</strong>을 찾아냅니다. 이렇게 얻은 초기 포즈를 바탕으로, 두 번째 단계에서는 <strong>지역적 탐색 및 접촉 조정</strong>을 수행합니다. 즉, 전역 단계 결과를 출발점으로 <strong>빠르게 현실성 있는 손가락 구성</strong>을 찾아낸 뒤, 실제 물체와의 접촉을 고려한 <strong>미세 조정(contact-aware refinement)</strong>을 적용합니다. 이러한 <strong>2단계 최적화 전략</strong>을 통해 먼저 <strong>인간 동작의 거시적 형태</strong>를 맞추고, 이후 <strong>미시적 접촉</strong>까지 정확히 반영함으로써 <strong>해부학적 정합성과 물리적 개연성</strong>을 동시에 달성합니다. 특히, 저자들은 새롭게 설계된 에너지 항들을 도입하여 <strong>정렬 오차 최소화</strong>와 <strong>물리적 그립 안정성</strong> 두 목표를 균형 있게 달성했다고 강조합니다.</p></li>
+<li><p><strong>② 이중 임계값 접촉 감지 및 시간적 스무딩:</strong> DexFlow의 두 번째 기여는 <strong>손-물체 접촉 정보를 안정적으로 추출</strong>하는 모듈입니다. 전역 리타게팅 단계를 거친 로봇 손이 물체에 근접하고 난 후, 각 손가락이 물체에 <strong>접촉했는지 여부를 판정</strong>해야 합니다. 이를 위해 <strong>이중 임계값(double-threshold) 기반 접촉 검출</strong> 알고리즘을 도입합니다. 구체적으로, 손가락 끝과 물체 표면 사이 거리가 <strong>첫 번째 임계값</strong> 이내로 들어오면 잠정적으로 접촉으로 간주하고, <strong>두 번째 더 엄격한 임계값</strong>을 적용해 노이즈나 오차로 인한 잘못된 접촉 판단을 걸러냅니다. 이렇게 프레임별 얻어진 접촉 정보는 바로 사용되지 않고, <strong>인접 프레임들과 비교하여 스무딩</strong>됩니다. 즉, 접촉 상태가 한 프레임에서 발생했다 사라지는 <strong>일시적 플럭투에이션(출렁임)</strong>을 제거하기 위해 <strong>슬라이딩 윈도우 기반의 프레임-투-프레임 완화(smoothing)</strong> 처리를 합니다. 이러한 <strong>시간적 필터링</strong>을 거치면 잡음에 강인한 <strong>안정된 접촉 지도(contact map)</strong>를 얻을 수 있으며, 연속된 동작 시퀀스에서 접촉 여부가 일관성 있게 유지됩니다. 요약하면, <strong>이중 기준으로 접촉을 검출하고 시간적으로 확정</strong>함으로써 기존 방법에서 흔했던 <strong>접촉 신호의 들쭉날쭉함</strong>을 효과적으로 해소했습니다.</p></li>
+<li><p><strong>③ 대규모 데이터 변환 파이프라인 및 크로스-핸드(topology) 이식:</strong> DexFlow는 단일 알고리즘에 그치지 않고, <strong>데이터 생성 측면</strong>에서도 큰 기여를 합니다. 저자들은 DexFlow를 활용해 <strong>다양한 데이터 소스로부터 인간 손 및 객체 상호작용 데이터를 통합</strong>하고, 이를 통해 <strong>대규모 로봇 그립 동작 데이터셋</strong>을 구축했습니다. 구체적으로, 인간 손 모션 캡처 데이터(MANO 기반)와 여러 3D 물체 모델(YCB 벤치마크 객체 등)을 결합하여, 로봇 손(ShadowHand 및 Allegro Hand)에 대한 <strong>292,000프레임에 달하는 그립 시퀀스 데이터</strong>를 생성했습니다. 이 데이터셋은 다양한 <strong>그립 동작 시나리오</strong>(안정적 파지, 동적 조정, 여러 손가락 협력 등)를 포괄하며, 특히 한 인간 손 동작을 서로 다른 로봇 손 형태에 매핑하는 <strong>크로스-손 토폴로지 이식</strong>까지 지원하는 것이 특징입니다. 예를 들어, 인간 손의 하나의 grasp 동작(예: 집게 잡기, 감싸잡기 등)을 <strong>ShadowHand</strong>와 <strong>Allegro</strong> 같이 <strong>손가락 개수와 형태가 다른 로봇 손</strong>에 각각 전달해도 본래의 <strong>의도된 파지 형태</strong>가 유지되도록 합니다. 이러한 데이터 파이프라인을 통해 얻은 <strong>통합 데이터셋</strong>은 기존 대비 <strong>학습 및 평가에 유리한 규모와 다양성</strong>을 가지며, DexFlow의 성능 개선을 정량적으로 뒷받침합니다. 논문에 따르면 이 데이터셋을 활용한 DexFlow는 기존 리타게팅 솔루션들 대비 <strong>수 배에 이르는 semantic 성공률 향상</strong>을 보여주었다고 보고됩니다.</p></li>
+</ul>
+<center>
+<img src="../../images/2025-08-08-dexflow/1.png" width="100%">
+</center>
+<blockquote class="blockquote">
+<p><strong>그림 1</strong>: DexFlow가 제안하는 손-물체 <strong>그립 리타게팅</strong> 파이프라인의 개략도. 사람 손 동작과 물체 상호작용 시퀀스(왼쪽)를 입력받아, <strong>(1) 객체 스케일 조정 및 초기 로봇 손 자세 리타게팅</strong>을 수행한다. 이후 <strong>(2) 이중 문턱 접촉 검출 알고리즘</strong>으로 로봇 손과 물체 간 초기 접촉 정보를 추출하고, 인접 프레임들에 걸쳐 <strong>시간적 스무딩</strong>을 적용하여 안정된 접촉 상태를 확보한다. 마지막으로 <strong>(3) 손가락별 세부 최적화 단계</strong>를 통해 접촉이 감지된 손가락(예: 엄지, 중지 등)을 순차적으로 미세 조정한다. 이때 접촉 정보가 없는 손가락(그림 예시의 검지)은 건너뛰어 불필요한 계산을 줄이고 효율을 높인다. 이런 단계적 최적화를 거치면 사람 손의 조작 의도가 로봇 손에 정확히 전달되는 동시에 물리적으로도 실행 가능한 파지 동작이 완성된다.</p>
+</blockquote>
+</section>
+<section id="기존-연구와의-비교-dexflow의-차별점" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="기존-연구와의-비교-dexflow의-차별점"><span class="header-section-number">2.3</span> 기존 연구와의 비교 (DexFlow의 차별점)</h2>
+<p>손 포즈 리타게팅 및 상호작용 분야에서 DexFlow가 가지는 <strong>차별점</strong>을 이해하기 위해, 몇 가지 대표적인 기존 접근들과 <strong>기술적으로 비교</strong>해보겠습니다.</p>
+<ul>
+<li><p><strong>직접 매핑 기반 리타게팅 vs.&nbsp;DexFlow:</strong> 초창기 리타게팅 기법들은 주로 <strong>운동학적 직접 매핑</strong>을 사용하여, 인간 손 각도를 로봇 손 관절에 단순 대응시켰습니다. 이러한 방법은 구현이 쉽고 실시간 적용에 유리하지만, <strong>사람 손 vs.&nbsp;로봇 손의 형태 차이</strong>(예: 손가락 길이, 관절 범위)가 반영되지 않아 손가락이 물체나 다른 손가락을 <strong>뚫고 지나가는 관통</strong> 문제가 심각했습니다. 예컨대 사람에겐 자연스러운 움켜잡는 동작이 로봇에 그대로 적용되면 로봇 손가락이 겹치거나 물체 내부로 들어가는 경우가 빈번했습니다. DexFlow는 이러한 문제를 <strong>전역 최적화 단계</strong>에서 로봇 손을 사람 손에 최대한 맞추고, <strong>지역 접촉 최적화 단계</strong>에서 관통을 줄이는 방향으로 <strong>체계적으로 해결</strong>합니다. 즉, 단순히 관절각을 복사하는 대신 <strong>최적화 문제</strong>로 정식화하여 <strong>물리적 제약</strong>을 반영함으로써, <strong>관통 아티팩트</strong>와 <strong>불안정한 접촉</strong> 패턴을 크게 개선했습니다. 결과적으로 DexFlow는 기존 직접 매핑 기법에 비해 <strong>현실적인 그립 재현</strong>을 달성합니다.</p></li>
+<li><p><strong>최적화 기반/물리 시뮬레이션 기법 vs.&nbsp;DexFlow:</strong> 관절 각도 최적화를 통해 그립을 생성하는 접근은 DexFlow 이전에도 존재했으며, 물리 시뮬레이터나 에너지 함수 최적화를 활용한 예로 <strong>GraspIt!</strong>, <strong>DexGraspNet</strong>, <strong>FRoGGeR</strong>, <strong>SpringGrasp</strong> 등이 있습니다. 이들은 물체 파지를 <strong>제약 충족 문제</strong>로 보고 접촉 안정성, 힘 폐쇄(grasp wrench) 등 조건을 만족하는 그립을 찾았습니다. 그러나 <strong>전통적 최적화 기법</strong>들은 대체로 <strong>계산량</strong>이 많고, 무엇보다 <strong>인간 손의 자연스러운 모션에 대한 사전지식</strong>이 부족했습니다. 예를 들어, FRoGGeR나 SpringGrasp 같은 물리 기반 방법은 다양한 그립을 만들어내지만 그 과정에서 <strong>사람스러운 손모양</strong>을 보장하지는 못하고, 해답 탐색에 <strong>긴 시간</strong>이 소요되었습니다. DexFlow는 이러한 점을 <strong>인간 시演 데이터 활용</strong>과 <strong>계층적 접근</strong>으로 개선했습니다. 사람 손 모션 캡처 데이터(MANO)를 기반으로 출발하기 때문에 <strong>초기 해</strong>가 현실성 있고, 이를 토대로 <strong>빠른 전역 탐색 후 국소 접촉 미세조정</strong>을 함으로써 <strong>계산 효율을 높였습니다</strong>. 실제 논문 비교에 따르면 DexFlow는 DexGraspNet 대비 <strong>접촉 거리(contact distance)를 한 </strong>자리 수로 줄이고** (6.90 → 0.77), SpringGrasp 대비 <strong>관통 깊이(penetration depth)</strong>를 크게 낮추는 등 물리적 품질 면에서 <strong>한 단계 향상</strong>된 결과를 보입니다. 특히 <strong>접촉 품질</strong> 면에서 DexFlow의 접촉 간격은 기존 대비 <strong>10배 이상 개선</strong>되었고, 관통 현상은 기존 방법들에 비해 <strong>현저히 감소</strong>했습니다. 다만 특정 최적화 기법(BODex 등)이 관통을 거의 완전히 제거하도록 특화된 경우도 있는데, DexFlow도 이에 버금가는 수준에 근접하면서도 <strong>전반적인 균형 잡힌 성능</strong>을 달성한 것이 특징입니다. 요약하면, DexFlow는 이전 최적화/시뮬레이션 기반 접근들의 <strong>물리적 현실성</strong>을 계승하면서도 <strong>인간 동작의 자연스러움</strong>과 <strong>계산 효율</strong>을 동시에 확보한 발전된 기법입니다.</p></li>
+<li><p><strong>학습 기반(영상·시演·강화학습) 기법 vs.&nbsp;DexFlow:</strong> 최근 들어 인간 동작 데이터를 활용한 <strong>학습 기반 접근</strong>도 다수 등장했습니다. <strong>DexMV</strong>는 비디오로부터 3D 손-물체 포즈 시퀀스를 추출하여 로봇으로 모방하는 시도를 했으나, 객체의 정확한 상태 정보를 가정해야 하는 등 현실 적용에 제약이 있었습니다. <strong>AnyTeleop</strong>, <strong>DexPilot</strong> 등의 <strong>텔레옵 제어</strong> 시스템은 카메라로 추적한 인간 손 동작을 로봇 손에 <strong>실시간 전송</strong>해 원격 조작을 구현했지만, 빠른 응답을 위해 정교함을 일부 포기하면서 정밀 작업에서 <strong>공간 정렬 오차</strong>가 발생하곤 했습니다. 또한 <strong>ViViDex</strong>와 같이 <strong>강화학습</strong>을 통해 인간 비디오 시演을 모방하는 접근도 제안되었는데, 물리적 그립 성공률을 높이기 위해 <strong>과거 궤적 보상</strong> 등을 사용하면서도 <strong>특정 작업별 대량의 학습 데이터</strong>가 필요하다는 단점이 있었습니다. 이와 달리 DexFlow는 <strong>명시적인 최적화</strong>와 <strong>접촉 검출 메커니즘</strong>으로 문제를 풀기 때문에, 새로운 작업이나 객체에 대해 <strong>범용적으로 적용하기 수월</strong>하고 특정 작업 데이터에 덜 의존적입니다. 또한 학습 기반 방법들이 간혹 놓치는 <strong>미세한 손가락 위치</strong>나 <strong>시간적 안정성</strong>을 DexFlow는 <strong>에너지 함수를 통한 미세조정과 스무딩</strong>으로 확보합니다. 결과적으로 DexFlow는 <strong>실시간성</strong>은 다소 양보하지만, 학습 기반 기법들이 달성하지 못했던 <strong>공간적 정확도</strong>와 <strong>일관성 있는 프레임간 동작</strong>을 구현하여 <strong>오프라인 데이터 생성</strong> 측면에서 뛰어난 성능을 보입니다. 생성된 데이터는 차후 학습 알고리즘의 학습용으로 활용될 수 있기 때문에, DexFlow는 <strong>기술 데모</strong> 뿐 아니라 <strong>데이터 기반 학습 파이프라인의 전처리</strong>로서도 의미가 큽니다.</p></li>
+</ul>
+</section>
+<section id="실험-결과-분석-성능-평가-및-시각화" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="실험-결과-분석-성능-평가-및-시각화"><span class="header-section-number">2.4</span> 실험 결과 분석 (성능 평가 및 시각화)</h2>
+<p>DexFlow의 유효성을 확인하기 위해 저자들은 <strong>다양한 벤치마크 실험</strong>을 수행했습니다. 실험은 주로 <strong>시뮬레이션 환경</strong>에서 이루어졌으며, 50개의 YCB 표준 물체에 대해 ShadowHand 로봇 손(5지)과 Allegro 로봇 손(4지)을 이용한 다수의 그립 시퀀스를 생성하고 평가했습니다. 앞서 언급한 바와 같이 약 <strong>292K (29만 2천)</strong> 프레임의 그립 데이터가 DexFlow로부터 생성되었고, 이 데이터를 기존의 공개 데이터셋 및 기법들과 비교 분석하였습니다.</p>
+<center>
+<img src="../../images/2025-08-08-dexflow/4.png" width="70%">
+</center>
+<p><strong>Table I</strong>은 DexFlow가 생성한 데이터셋과 기존 데이터셋들의 규모를 비교한 것입니다. 예를 들어, 기존 <strong>DexGraspNet</strong>은 약 132만 개의 그립을 시뮬레이션으로 생성한 반면, DexFlow는 50개 물체에 대해 29만여 프레임의 <strong>연속 동작 시퀀스</strong>를 제공함으로써 <strong>다양한 시나리오</strong>를 포괄하는 새로운 데이터 자원을 제시했습니다. 또한 DexFlow 데이터는 <strong>다양한 로봇 손 구조(Shadow, Allegro)</strong>에 모두 적용 가능하도록 생성된다는 점에서, 특정 손에 한정되지 않는 <strong>범용성</strong>을 입증했습니다.</p>
+<section id="정량적-지표-비교-single-frame-기준-성능" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="정량적-지표-비교-single-frame-기준-성능"><span class="header-section-number">2.4.1</span> 정량적 지표 비교 (Single-Frame 기준 성능)</h3>
+<p>논문에서는 DexFlow의 성능을 기존 방법들과 정량적으로 비교하기 위해 <strong>여러 품질 지표</strong>를 측정하였습니다.</p>
+<center>
+<img src="../../images/2025-08-08-dexflow/5.png" width="70%">
+</center>
+<p><strong>Table II</strong>는 대표적인 생성 기법들의 성능을 비교한 표로, 주로 <strong>단일 프레임</strong> 기준의 그립 품질 통계를 담고 있습니다. 여기에는 <strong>Semantic Success Rate (SSR)</strong>, <strong>생성 속도(SPD)</strong>, <strong>관통 깊이(PD)</strong>, <strong>접촉 거리(CD)</strong>, <strong>그립 안정성 지표(FVR)</strong> 등이 포함됩니다. 각 지표는 BODex라는 선행 연구의 평가 프로토콜을 따르는데, 간략히 설명하면 다음과 같습니다:</p>
+<ul>
+<li><strong>Semantic Success Rate (SSR)</strong>: 생성된 그립이 <strong>성공적인 파지</strong>로 간주되는 비율입니다. 논문에서는 물리 시뮬레이션 상에서 <strong>어떤 방향으로 중력</strong>을 걸어도 100 스텝 동안 물체를 놓치지 않으면 성공으로 판정하였으며, 그 비율을 SSR로 보고합니다. 값이 높을수록 많은 그립이 <strong>실제로 물체를 들 수 있음</strong>을 의미합니다.</li>
+<li><strong>생성 속도 (SPD)</strong>: 초당 몇 개의 그립을 생성할 수 있는지를 나타내는 지표로 볼 수 있습니다. 수치가 클수록 <strong>데이터 생성 속도</strong>가 빠름을 의미하며, 실시간성에 가까움을 나타냅니다.</li>
+<li><strong>관통 깊이 (PD)</strong>: 손가락 메쉬가 물체를 <strong>얼마나 깊게 관통</strong>했는지를 측정한 값입니다. 값이 작을수록 <strong>관통이 적어</strong> 물리적으로 더 타당한 파지입니다.</li>
+<li><strong>접촉 거리 (CD)</strong>: 손가락과 물체 사이 <strong>접촉점 간격</strong>을 나타냅니다. 이 값이 작을수록 손가락이 물체를 <strong>빈틈없이 밀착</strong>하게 잡고 있음을 의미합니다. (일부 문맥에서 Chamfer Distance를 의미하기도 하나, 여기서는 접촉 품질 관련 지표로 활용되었습니다.)</li>
+<li><strong>FVR</strong>: 논문에서 정의한 추가적인 품질 지표로, (force closure나 grasp 안정성과 연관된 비율로 추정됩니다. 값이 높을수록 안정적인 그립일 가능성이 높음)</li>
+</ul>
+<p>이러한 지표로 비교한 결과, DexFlow는 <strong>전반적으로 균형 잡힌 성능</strong>을 보여주었습니다. 우선 <strong>Semantic Success Rate</strong>(SSR)을 보면, DexFlow는 약 <strong>40.3%</strong>의 성공률을 달성하여, 기존 전통적 리타게팅 방법인 <strong>DexRetarget</strong>의 <strong>5.35%</strong>에 비해 <strong>큰 폭(약 7.5배)으로 향상</strong>된 것을 확인할 수 있습니다. (DexRetarget은 DexMV의 후속 오픈소스 기법으로, 접촉 고려가 없어 성공률이 매우 낮았습니다.) DexFlow의 SSR 40%대는 학습 기반 최적화 기법인 <strong>FRoGGeR</strong>의 41.97%와 거의 유사한 수준으로, <strong>데이터 기반 접근이 아닌 방법론으로 이룬 성과치고는 매우 고무적</strong>입니다. 한편 <strong>BODex</strong>라는 최적화 기법은 SSR이 89.5%로 유달리 높았지만, 이는 특정 로봇 손에 특화된 접근으로 DexFlow와 직접 비교하기엔 성격 차이가 있습니다. 그 외의 기법들(DexGraspNet: 31.4%, SpringGrasp: 37.2%)과 비교하면 DexFlow가 <strong>가장 앞선 그룹</strong>에 속함을 알 수 있습니다.</p>
+<p>다른 물리적 지표들을 살펴보면, <strong>관통 깊이(PD)</strong> 측면에서 DexFlow는 <strong>8.5</strong>로, 기존 리타게팅(예: DexRetarget의 84.4)에 비해 <strong>현격히 낮은 관통</strong>을 보였습니다. 이는 DexFlow의 접촉 최적화 단계가 <strong>손가락이 물체를 지나치게 파고드는 현상</strong>을 효과적으로 억제했음을 나타냅니다. 비록 FRoGGeR나 BODex가 관통 깊이를 각각 2.17, 0.37까지 줄여 DexFlow보다 더 우수하지만, 이들은 물리엔진 기반의 반복 최적화로 <strong>계산 비용이 큰 대가</strong>를 치른 결과입니다. <strong>접촉 거리(CD)</strong>는 DexFlow가 <strong>0.77</strong>을 기록하여, FRoGGeR(0.88)보다 낮고 BODex(0.28) 다음으로 <strong>두 번째로 우수한 접촉 밀착도</strong>를 보였습니다. DexFlow의 CD는 DexGraspNet(6.90)이나 SpringGrasp(6.18)에 비해 <strong>10배 이상 작은 값</strong>으로, 사람이 잡듯이 <strong>빈틈없이 물체를 쥐는</strong> 자연스러운 그립을 얻었음을 알 수 있습니다. 마지막으로 <strong>생성 속도(SPD)</strong>를 보면 DexFlow는 <strong>0.37</strong>로, 1.0에 가까운 DexRetarget(0.96)보다는 느리지만 DexGraspNet(0.93)과 유사한 수준이고 SpringGrasp(0.48)보다는 약간 느린 정도였습니다. 특히 FRoGGeR의 SPD가 <strong>0.0002</strong>에 불과한 것과 비교하면, DexFlow가 <strong>현실적인 시간 안에 데이터 생성을 수행</strong>할 수 있음을 의미합니다 (FRoGGeR는 물리 기반 미분 가능 최적화를 사용하여 한 개 그립을 찾는데 매우 오래 걸림). 종합하면, <strong>DexFlow는 절대적인 성공률 면에서 일부 최적화 기법에 약간 뒤쳐질지 몰라도, 관통/접촉/속도 등 여러 지표에서 고르게 우수한 “균형형” 성능을 발휘</strong>한다는 것이 실험으로 입증되었습니다. 이는 곧 DexFlow가 <strong>현실적인 로봇 그립 데이터 생성에 전반적으로 적합</strong>한 접근임을 보여줍니다.</p>
+<center>
+<img src="../../images/2025-08-08-dexflow/3.png" width="70%">
+</center>
+<blockquote class="blockquote">
+<p><strong>그림 2</strong>: <strong>크로스-도메인 손 모션 이식</strong>에 대한 DexFlow의 데모 장면. 왼쪽은 <strong>인간 손</strong>이 작은 상자를 검지와 엄지 손가락으로 집는 <strong>pinch grasp</strong> 동작이고, 오른쪽은 해당 동작을 <strong>Allegro 로봇 손</strong>(파란색, 4손가락)으로 리타게팅한 결과입니다. 사람 손의 엄지~약지 4개 손가락 움직임이 로봇 손의 4개 손가락에 자연스럽게 대응되어, 로봇 손도 동일한 물체를 성공적으로 집을 수 있습니다. DexFlow는 이처럼 <strong>서로 형태가 다른 로봇 손들 간에도 일관된 파지 동작 이식</strong>을 가능케 하며, 인간 손 동작의 <strong>의미론적 의도</strong>(어떤 방식으로 잡는가)를 유지한다는 점에서 큰 강점을 보입니다.</p>
+</blockquote>
+</section>
+<section id="시퀀스-모션-품질-및-동작-자연스러움" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="시퀀스-모션-품질-및-동작-자연스러움"><span class="header-section-number">2.4.2</span> 시퀀스 모션 품질 및 동작 자연스러움</h3>
+<p>DexFlow의 평가에서는 단일 프레임 성공률뿐 아니라, <strong>연속적인 동작 시퀀스의 품질</strong>도 중요하게 다루어졌습니다. 이를 위해 논문에서는 <strong>시간에 따른 물체 위치 변화</strong>를 정밀 비교하는 <strong>Chamfer Distance (CD)</strong> 기반 지표와, <strong>속도/가속도 프로파일</strong>의 차이를 분석하였습니다. 우선 <strong>시퀀스 Chamfer 거리</strong>는 각 시점에서 물체의 점군(point cloud)을 비교하여 <strong>로봇 손이 물체를 움직이는 궤적이 원본 인간 시연과 얼마나 일치하는가</strong>를 나타냅니다. DexFlow의 1단계 <strong>리타게팅 결과</strong>는 Chamfer Distance가 <strong>0.008</strong>로, 기존 DexRetarget의 <strong>0.016</strong>보다 <strong>절반으로 감소</strong>했습니다. 이는 <strong>로봇 손이 물체를 움직이는 궤적의 형상이 사람 손의 궤적과 매우 가깝게 맞아떨어진다</strong>는 것을 의미하며, DexFlow의 전역 최적화가 <strong>공간적 정합성</strong>을 크게 개선했음을 보여줍니다. 이어서 <strong>접촉 최적화 후</strong>에도 Chamfer 값이 <strong>0.009</strong>로 소폭 증가했을 뿐으로, 여전히 DexRetarget 대비 상당히 낮은 오차를 유지했습니다. 즉, DexFlow는 <strong>형태 추종 면에서 뛰어난 정확도</strong>를 유지하면서도 <strong>관통 문제를 해결</strong>하는 <strong>두 마리 토끼</strong>를 잡았다고 볼 수 있습니다.</p>
+<p>또한 DexFlow가 생성한 동작의 <strong>시간적 자연스러움</strong>을 측정하기 위해 <strong>속도 분포 차이</strong>와 <strong>가속도 변화</strong>를 비교했습니다. 인간 손 동작 대비 로봇 손 동작의 <strong>속도 분포</strong> 차이는 KL 발산으로 측정되었는데, DexRetarget의 값이 0.54인 반면 DexFlow 리타게팅 결과는 <strong>0.48</strong>로 더 낮아졌습니다. 이는 <strong>로봇 손 움직임의 속도 패턴이 인간의 원본 동작과 더 유사</strong>해졌음을 의미합니다. 접촉 최적화를 거치면서 속도 분포 차이는 약간 증가하여 0.57이 되었지만, 이는 접촉을 조정하는 과정에서 <strong>불가피한 미세 조정</strong>이 들어갔기 때문입니다. 그에 반해 <strong>가속도 RMS</strong> 값은 DexRetarget의 0.083에서 DexFlow 리타게팅 단계에서 <strong>0.073</strong>으로 감소하였다가, 최종 최적화 후 <strong>0.080</strong>으로 소폭 상승하였습니다. 가속도 RMS 증가는 손가락 관통을 없애는 <strong>마지막 단계 최적화</strong>에서 다소 급격한 조정이 추가된 영향이지만, 여전히 DexRetarget 수준과 비슷하게 유지되었습니다. 저자들은 이러한 변화를 두고 <em>“리타게팅 단계에서는 기하학적 정합성을 극대화하여 Chamfer 오차를 줄이고, 이후 물체 중심의 세밀 조정 단계에서 약간의 가속도 증가(움직임 변화)를 받아들이는 <strong>균형 잡힌 최적화 전략</strong>”</em>이라고 설명합니다. 즉, <strong>1단계에서는 형상을 맞추고 2단계에서는 물리적 충돌을 해결</strong>하는 <strong>분리 최적화</strong> 덕분에, 전체적으로 <strong>자연스러운 움직임 흐름은 최대한 보존</strong>하면서 <strong>필요한 부분만 수정</strong>할 수 있었다는 것입니다.</p>
+<p>마지막으로, DexFlow가 생성한 다양한 그립 동작들은 <strong>시각적으로도 자연스럽고 다양</strong>한 것으로 나타났습니다. 논문에는 여러 물체에 대한 로봇 손의 파지 결과들을 나열한 그림이 포함되어 있는데, 이를 통해 DexFlow가 <strong>큰 물체부터 작은 도구, 원통형 물체, 박스형 물체 등</strong>에 이르기까지 <strong>다양한 형태의 그립</strong>을 구현하는 모습을 볼 수 있습니다. 특히 사람 손의 의도가 잘 반영되어, 예를 들어 긴 막대형 물체는 <strong>집게손가락과 엄지로 집는 동작</strong>, 큰 원통형 물체는 <strong>손바닥 전체로 감싸쥐는 동작</strong> 등 <strong>맥락에 맞는 파지 형태</strong>가 나오는 것이 인상적입니다. 이러한 정성적 결과는 DexFlow의 데이터가 <strong>자연스러운 인간 그립 동작을 닮았기 때문</strong>으로, 기존 생성 기법에서 지적된 <strong>부자연스러운 손모양</strong> 문제를 크게 완화시켰습니다.</p>
+</section>
+</section>
+<section id="결론-및-시사점" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="결론-및-시사점"><span class="header-section-number">2.5</span> 결론 및 시사점</h2>
+<p>DexFlow는 인간 손 모션을 로봇 손으로 옮기는 <strong>손 포즈 리타게팅</strong> 문제와, 로봇 손의 <strong>물체 파지 상호작용</strong> 문제를 하나의 프레임워크 안에서 효과적으로 해결한 <strong>통합 접근법</strong>입니다. 기술적으로 <strong>전역-국소 이중 단계 최적화</strong>, <strong>접촉 상태 인식 및 시간적 안정화</strong>, <strong>대규모 데이터 통합</strong> 등의 기여를 통해, 기존 방법들이 개별적으로 다뤘던 문제들을 <strong>한꺼번에 addressed</strong>하였습니다. 실험 결과 DexFlow는 <strong>정량적 지표</strong>에서 기존 대비 뛰어난 성능(특히 <strong>성공률 약 7~8배 향상</strong>, <strong>관통/접촉 오류 감소</strong> 등)을 보였고, <strong>정성적</strong>으로도 인간스러운 그립 동작을 다양하게 구현해냈습니다. 비록 일부 최고 성능 기법들과 비교해 <strong>단일 프레임 성공률</strong>만 놓고 보면 절대값에서 약간 모자랄 수 있으나, DexFlow는 <strong>종합적인 균형</strong>과 <strong>데이터 활용성</strong> 면에서 <strong>새로운 패러다임</strong>을 제시했다고 평가할 만합니다. 특히 본 논문이 제공하는 <strong>대규모 로봇 손 조작 데이터셋</strong>과 <strong>접촉 처리 기법</strong>은 향후 이 분야 연구자들에게 소중한 자원이자 아이디어의 기반이 될 것입니다. 저자들도 논문에서 현재 한계로 <strong>입력 데이터(인간 시연)의 정밀도</strong> 문제와 <strong>메타데이터 오차</strong>에 따른 제한사항을 언급하며, 앞으로 <strong>비디오로부터 직접 신뢰도 높은 접촉 정보</strong>를 얻는 방향 등 추가 연구 과제를 남겼습니다. 그럼에도 불구하고 DexFlow는 <strong>로봇 손의 섬세한 조작</strong>을 위한 데이터 생성과 모델링에 있어서 <strong>새로운 지평</strong>을 열었으며, 향후 <strong>로봇 학습, 텔레로보틱스, 인간-로봇 상호작용</strong> 분야에서 다양하게 응용될 것으로 기대됩니다. 전체적으로 DexFlow는 손 기반 조작 연구 커뮤니티에 <strong>정확성, 자연스러움, 다양성</strong>을 모두 충족시키는 솔루션의 가능성을 보여준 의미있는 성과입니다.</p>
+<p><strong>참고 문헌:</strong> DexFlow 논문 원문 및 관련된 선행 연구들을 참조하였습니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
