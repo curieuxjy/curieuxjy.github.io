@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-11">
+<meta name="description" content="enchmarking Generalizable Dexterous Manipulation with Articulated Objects">
+
+<title>Single-Camera Teleoperation 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Single-Camera Teleoperation 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">benchmark</div>
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">survey</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    enchmarking Generalizable Dexterous Manipulation with Articulated Objects
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2305.05706">Paper Link</a></li>
+</ul>
+<ol type="1">
+<li>💡 이 연구는 단일 카메라 원격 조작 시스템을 통해 다중 손가락 로봇의 능숙한 조작을 위한 인간 시연 데이터를 효율적으로 수집하는 새로운 방법을 제안합니다.</li>
+<li>🤖 본 시스템은 iPad로 인간의 손을 촬영하여 시뮬레이터에 맞춤형 로봇 손을 생성한 후, 이 데이터를 Allegro, Schunk 등 여러 종류의 실제 로봇 손에 맞게 오프라인으로 리타겟팅하여 모방 학습에 활용합니다.</li>
+<li>🏆 제안된 방식으로 수집된 시연 데이터는 모방 학습 정책의 시뮬레이션 성능을 크게 향상시키고, Sim2Real 전환 시 더 견고하고 인간과 유사한 동작을 가능하게 함을 보여줍니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 논문은 단일 카메라 기반 텔레오퍼레이션(teleoperation)을 통해 숙련된 조작(dexterous manipulation)을 위한 인간 시범 데이터(human demonstration data)를 수집하고, 이를 이용하여 다지(multi-finger) 로봇 핸드에 대한 Imitation Learning 정책을 학습하는 새로운 프레임워크를 제안합니다. 궁극적으로 학습된 정책을 실제 로봇에 성공적으로 전이(transfer)시키는 것을 목표로 합니다.</p>
+<p><strong>I. 소개</strong></p>
+<p>다지 로봇 핸드를 이용한 Dexterous Manipulation은 로봇공학에서 가장 도전적이고 중요한 문제 중 하나입니다. 로봇 핸드와 조작 대상 간의 복잡한 접촉 패턴은 모델링하기 어렵고, 구조화되지 않은 환경에서 접촉이 많은 작업을 해결하는 제어기를 수동으로 설계하는 것은 매우 어렵습니다. 최근 Reinforcement Learning (RL)이 유망한 결과를 보여주지만, 높은 Degree-of-Freedom (DoF)과 불연속적인 접촉은 RL 정책 훈련의 샘플 복잡성(sample complexity)을 증가시킵니다. 또한, RL 보상을 통한 블랙박스 최적화는 예상치 못하거나 안전하지 않은 행동으로 이어질 수 있습니다. 텔레오퍼레이션을 통해 수집된 인간 시범으로부터 학습하는 것은 Dexterous Manipulation을 위한 자연스러운 해결책입니다. 그러나 대부분의 기존 텔레오퍼레이션 시스템은 Virtual Reality (VR) 장치나 유선 글러브(wired gloves)를 필요로 하여 유연성과 확장성(scalability)이 제한됩니다. Vision-based 텔레오퍼레이션은 특수 장비 착용의 필요성을 없애 비용을 절감하고 확장성을 높이지만, 인간 손 움직임을 로봇 손 움직임으로 변환하는 모션 리타겟팅(Motion Retargeting)이라는 새로운 과제를 제시합니다. 이 과정이 직관적이지 않으면 인간 작업자가 로봇을 제어하기 어렵고, 특정 로봇 손으로 수집된 시범은 동일한 로봇에서만 Imitation Learning에 사용될 수 있다는 한계가 있습니다.</p>
+<p>본 논문은 이러한 도전 과제를 해결하기 위해 단일 카메라 텔레오퍼레이션 시스템을 도입합니다. 이 시스템은 iPad와 컴퓨터만으로 효율적으로 3D 시범을 수집할 수 있습니다. 핵심 기여 중 하나는 물리 시뮬레이터(physical simulator) 내에서 각 사용자에 대해 사용자 맞춤형 로봇 핸드(customized robot hand)를 생성한다는 점입니다. 이 핸드는 작업자 손과 동일한 구조를 모방하여 직관적인 인터페이스를 제공하고 데이터 수집 시 불안정한 인간-로봇 핸드 리타겟팅을 피하여 대규모의 고품질 데이터를 얻을 수 있게 합니다. 데이터 수집 후, 맞춤형 로봇 핸드의 궤적(trajectory)은 다양한 실제 로봇 핸드(예: Schunk Robot Hand, Adroit Robot Hand, Allegro Robot Hand)로 변환되어 훈련 시범으로 사용될 수 있습니다. 본 논문의 데이터와 Imitation Learning을 통해 여러 복잡한 조작 작업에서 기존 baseline 대비 큰 개선을 보였습니다. 특히, 학습된 정책이 실제 로봇으로 전이될 때 훨씬 더 강건함(robust)을 보여주었습니다.</p>
+<p><strong>II. 제안하는 시스템 개요</strong></p>
+<p>제안하는 프레임워크는 다음 세 단계로 구성됩니다 (그림 2 참조): 1. <strong>Customized Hand Teleoperation</strong>: iPad에서 RGB-D 비디오 스트리밍을 통해 작업자의 손 모양을 추정하고, 이를 기반으로 물리 시뮬레이터에 사용자 맞춤형 로봇 핸드를 실시간으로 구성합니다. 인간 작업자는 이 맞춤형 로봇 핸드를 제어하여 Dexterous Manipulation 작업을 수행합니다. 이 시스템을 통해 시간당 약 60개의 성공적인 시범을 효율적으로 수집할 수 있습니다. 2. <strong>Multi-Robots Demonstration Translation</strong>: 맞춤형 핸드로 수집된 시범 궤적을 오프라인에서 Motion Retargeting 최적화를 통해 실제 로봇 핸드(Schunk, Allegro, Adroit Robot Hand 등)의 상태-액션 궤적(joint position 및 motor command)으로 변환합니다. 이 변환은 손의 기하학적 구조, DoF, 심지어 손가락 개수가 다른 로봇에도 적용 가능합니다. 3. <strong>Demonstration-Augmented Policy Learning</strong>: 변환된 시범 데이터를 사용하여 Dexterous Manipulation 정책을 훈련합니다. 이는 RL 목적 함수에 시범을 사용하여 Behavior Cloning을 결합하는 방식입니다 (Demo Augmented Policy Gradient, DAPG). 이 프레임워크는 RL 단독으로는 잘 해결되지 않는 복잡한 작업에서 효율적으로 인간과 유사한 기술을 학습할 수 있게 합니다.</p>
+<p>학습된 정책은 XArm-6 로봇에 부착된 실제 Allegro Hand로 Sim2Real 전이 실험을 수행하였으며, 본 논문의 시범 데이터를 학습에 통합함으로써 Sim2Real 갭(gap)에 대한 정책의 강건함을 크게 향상시키는 것을 보여주었습니다.</p>
+<p><strong>III. Customized Hand Teleoperation</strong></p>
+<p>텔레오퍼레이션 시스템은 iPad와 노트북으로 구성됩니다 (그림 3 참조). iPad의 전면 카메라를 사용하여 25fps로 인간 작업자의 RGB-D 비디오를 스트리밍합니다. 시스템은 물리 시뮬레이터, 인간 동작을 포착하는 Hand Detector, 시뮬레이션 환경을 시각화하는 GUI로 이루어져 있습니다.</p>
+<p><strong>A. Task Description</strong></p>
+<p>시뮬레이션 환경은 SAPIEN [47]에서 구축되었으며, 세 가지 Dexterous Manipulation 작업이 설계되었습니다: * <strong>Relocate</strong>: 로봇이 물체(예: YCB dataset의 Tomato Soup Can, Potted Meat Can, Mustard Bottle)를 들어 목표 위치로 옮깁니다. 초기 및 목표 포즈가 무작위로 설정되는 목표-조건부(goal-conditioned) 작업입니다 (그림 1, 첫째 줄). * <strong>Flip</strong>: 로봇이 테이블 위의 머그컵을 뒤집습니다. 머그컵의 위치와 중력 방향을 따라 수평 회전이 무작위로 설정됩니다 (그림 1, 둘째 줄). * <strong>Open Door</strong>: 로봇이 문 손잡이를 돌려 문을 잠금 해제한 다음 당겨서 문을 엽니다. 문의 위치가 무작위로 설정됩니다 (그림 1, 셋째 줄).</p>
+<p><strong>B. Hand Detector</strong></p>
+<p>Hand Detector는 RGB-D 프레임을 입력받아 손목 포즈, 손 포즈 파라미터, 손 모양 파라미터를 출력합니다. MediaPipe [49]와 FrankMocap [50]을 기반으로 구현되었습니다. MediaPipe hand tracker로 손 영역의 바운딩 박스를 감지하고, 이를 FrankMocap 모델에 입력하여 SMPL-X [51] 모델 기반의 포즈 및 모양 파라미터를 추정합니다. SMPL-X 모델은 손의 기하학적 구조에 대한 모양 파라미터와 변형에 대한 포즈 파라미터로 손을 나타냅니다. 추정된 파라미터와 PnP (Perspective-n-Point) 알고리즘을 통해 손목의 카메라 변환을 계산합니다.</p>
+<p><strong>C. Customized Robot Hand</strong></p>
+<p>본 시스템은 각 사용자의 손 기하학적 구조를 기반으로 맞춤형 로봇 핸드를 구축합니다. 초기화 시 추정된 손 모양 파라미터로부터 인간 손의 관절 골격(joint skeleton)을 추출하고, 이를 기반으로 물리 시뮬레이터에 동일한 운동학적 구조(kinematics structure)를 가진 로봇 모델을 만듭니다 (그림 4 참조). 효율적인 충돌 감지 및 안정적인 시뮬레이션을 위해 손바닥은 상자, 손가락은 캡슐과 같은 기본 도형을 사용합니다. 맞춤형 핸드는 SMPL-X 모델과 일치하는 45 DoF (15 * 3)를 가지며, Motion Retargeting 없이 감지된 포즈 파라미터를 사용하여 직접 제어됩니다 (표 I 참조).</p>
+<p>Customized Robot Hand의 관절 각도는 PD controller로 제어됩니다. 추정된 포즈는 저역 통과 필터(low-pass filter)를 거쳐 위치 목표(position target)로 설정됩니다. 시각 텔레오퍼레이션의 지각 오류(perception error) 문제를 해결하기 위해, 손 모양 추정 결과를 신뢰도 점수(confidence score)로 활용합니다. 초기화 시 최적의 시야에서 추정된 모양 파라미터를 ground-truth로 사용하고, 현재 프레임의 모양 파라미터와의 오차를 통해 포즈 정확도의 신뢰도를 계산합니다. 신뢰도 기반 PD 제어는 다음 수식으로 표현됩니다:</p>
+<p><span class="math inline">u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}</span></p>
+<p>여기서 <span class="math inline">u(t)</span>는 관절 토크(joint torque), <span class="math inline">K_p</span>와 <span class="math inline">K_d</span>는 PD 파라미터이며, <span class="math inline">p(t)</span>는 정규화된 확률 밀도(normalized probability density)로 계산된 신뢰도 점수입니다. 지각 오류가 클 경우, 제어기의 강성(stiffness)을 줄여 원치 않는 갑작스러운 움직임을 제거합니다.</p>
+<p><strong>IV. Multi-Robots Demonstration Translation</strong></p>
+<p><strong>A. Hand Pose Retargeting</strong></p>
+<p>맞춤형 핸드에서 수집된 시범을 특정 로봇 핸드로 변환하기 위해 Hand Pose Retargeting을 수행합니다. 본 시스템은 이를 오프라인 최적화 문제로 정의합니다.</p>
+<p><span class="math inline">\min_{q_R}\sum_{i=0}^N|| f_C^i (q_C_t ) - f_R^i (q_R_t )||^2 + \alpha||q_R_t - q_R_{t-1}||^2</span> s.t. <span class="math inline">q_{R_{lower}} \le q_R_t \le q_{R_{upper}}</span></p>
+<p>여기서 <span class="math inline">q_C_t</span>는 맞춤형 로봇의 시간 <span class="math inline">t</span>에서의 관절 위치, <span class="math inline">q_R_t</span>는 특정 로봇(예: Schunk Robot Hand)의 해당 관절 위치입니다. <span class="math inline">f_C^i</span>와 <span class="math inline">f_R^i</span>는 두 로봇의 <span class="math inline">i</span>-번째 키포인트(예: 손가락 끝 위치)에 대한 전방 운동학(forward kinematics) 함수를 나타냅니다. 시간적 일관성(temporal consistency)을 개선하기 위해 관절 위치 변화를 패널티하는 정규화 항을 추가하고, <span class="math inline">q_R_t</span>를 <span class="math inline">q_R_{t-1}</span>의 값으로 초기화합니다. 이 최적화 문제를 해결하면 어떤 특정 로봇에 대해서도 관절 위치 궤적 <span class="math inline">q_R_t</span>를 계산할 수 있습니다 (그림 5 참조).</p>
+<p><strong>B. Action Computation</strong></p>
+<p>Joint Pose Trajectory 외에도 Demo-augmented Policy Learning을 위해 각 손가락 관절에 대한 액션(action), 즉 joint torque 또는 motor control command가 필요합니다. DexMV [54]의 절차를 따라, 먼저 joint pose trajectory를 1차 저역 통과 필터에 통과시킨 후, 로봇 역동학(inverse dynamics)의 조작기 방정식(manipulator equation) <span class="math inline">\tau = f_{inv}(q, q', q'')</span>를 통해 joint torque를 계산합니다.</p>
+<p><strong>V. Demonstration-Augmented Policy Learning</strong></p>
+<p>무작위로 초기화되거나 목표 포즈가 주어지는 작업에서는 단순한 Behavior Cloning만으로는 성공하기 어렵습니다. 따라서 본 논문은 시범을 RL에 통합하는 Imitation Learning 알고리즘인 Demo Augmented Policy Gradient (DAPG) [3]를 사용합니다. DAPG의 목적 함수는 다음과 같습니다:</p>
+<p><span class="math inline">g_{aug} = \sum_{(s,a)\in\rho^\pi}\nabla \ln \pi(a|s)A^\pi (s, a)+\sum_{(s,a)\in\rho^{\pi_{demo}}}\nabla \ln \pi_\theta (a|s)\lambda_0\frac{\lambda_1}{k} \max_{(s',a')\in\rho^\pi}A^\pi (s', a')</span></p>
+<p>여기서 첫 번째 항은 RL의 일반적인 정책 기울기(policy gradient) 목적 함수이고, 두 번째 항은 시범을 이용한 Imitation 목적 함수입니다. 이는 Behavior Cloning과 온라인 RL의 조합으로 볼 수 있습니다. <span class="math inline">\rho^\pi</span>는 정책 <span class="math inline">\pi</span> 하에서의 점유 측정(occupancy measure), <span class="math inline">\lambda_0</span>와 <span class="math inline">\lambda_1</span>은 하이퍼파라미터, <span class="math inline">k</span>는 훈련 반복 횟수입니다. <span class="math inline">A^\pi (s', a')</span>는 이점 함수(advantage function)입니다.</p>
+<p><strong>VI. 실험</strong></p>
+<p><strong>A. Teleoperation User Study</strong></p>
+<p>제안된 Customized Robot Hand의 이점을 입증하기 위해 17명의 인간 작업자를 대상으로 텔레오퍼레이션 사용자 연구를 수행했습니다. 작업자들은 Customized Robot Hand, Schunk SVH Hand, Adroit Hand, Allegro Hand의 네 가지 로봇 핸드 모델을 사용하여 Relocate 및 Open Door 작업을 수행했습니다. Customised Robot Hand의 경우 인간 포즈 파라미터를 각 관절의 PD 목표로 직접 사용했지만, 나머지 세 로봇의 경우 온라인 Motion Retargeting이 필요했습니다.</p>
+<p>결과는 표 II(Relocate)와 표 III(Open Door)에 나타나 있습니다. Customized Robot Hand는 다른 세 로봇 핸드의 온라인 Retargeting 방식에 비해 모든 작업에서 월등히 높은 성공률을 달성했습니다. 예를 들어, Relocate 작업의 경우 Customized Hand는 시간당 약 60개의 성공적인 데모를 수집할 수 있었지만, Allegro Hand를 직접 조작할 때는 10개에 불과했습니다. 사용자들은 Customized Hand가 다른 로봇 핸드보다 제어하기 쉽다고 보고했습니다. 이는 온라인 Motion Retargeting 단계에서 발생하는 제어 불가능한 시간 소모(평균 76 ± 65ms, 큰 편차) 때문인 것으로 분석되었습니다. 온라인 Retargeting을 제거함으로써 시스템은 더 부드럽고 즉각적인 피드백을 제공합니다.</p>
+<p><strong>B. Task Learning Comparison</strong></p>
+<p>Relocate (세 가지 다른 물체), Flip, Open Door 작업에서 처리된 시범 데이터를 사용하여 정책을 훈련하고 RL baseline과 비교했습니다. RL baseline으로는 Trust Region Policy Optimization (TRPO) [56]을 사용했습니다. 정책 및 가치 함수(value function)는 32 × 32의 2-layer Multi-Layer Perceptrons (MLPs)로 구성되었고, TRPO는 각 스텝마다 200개의 궤적을 사용했습니다. Imitation Learning 알고리즘은 DAPG를 사용했으며, 각 작업에 대해 50개의 시범 궤적을 수집하고 이를 특정 로봇으로 Retargeting했습니다.</p>
+<p>훈련 곡선은 그림 6에, 세 가지 특정 로봇 핸드의 성공률은 표 IV에 요약되어 있습니다. Imitation Learning 방식인 DAPG는 대부분의 작업과 로봇에서 RL baseline을 능가했습니다. 이는 Motion Retargeting을 통해 생성된 시범이 정책 훈련을 크게 개선할 수 있음을 보여줍니다. 유일한 예외는 Allegro Hand를 사용한 Open Door 작업이었는데, DAPG는 자연스러운 행동으로 손잡이를 잡고 문을 열려고 시도하는 반면, RL 정책은 큰 힘으로 손잡이를 누르며 마찰에 의존하여 문을 여는 경향을 보였습니다 (그림 8). 이는 시범이 정책의 행동을 예상된(인간과 같은) 안전한 방향으로 조절하는 데 중요한 가치를 제공함을 강조합니다.</p>
+<p><strong>C. Ablation Study</strong></p>
+<p>다양한 동적 조건과 시범 데이터 수의 영향을 조사하기 위해, 물체 마찰, 제어기 파라미터, 물체 밀도, 시범 데이터 수를 대상으로 Relocate (tomato soup can, Schunk Robot) 작업에서 Ablation Study를 수행했습니다 (그림 7). 학습 곡선은 마찰 변화에 강건함을 보였는데, 이는 다지 핸드가 여러 접촉점을 통해 힘 폐쇄(force closure)를 형성하여 마찰에 덜 민감하기 때문입니다. 물체 밀도에 대해서도 유사한 결과가 나타났습니다. 제어기 파라미터의 경우, 강성이 클수록 더 빨리 목표에 도달했지만, 작은 PD 값으로도 작업을 해결할 수 있었습니다. 더 많은 시범 데이터를 사용할수록 더 나은 성능을 달성했으며, 20-30개의 데모에서는 분산(variance)이 더 크게 나타났습니다.</p>
+<p><strong>D. Real-World Robot Experiments</strong></p>
+<p>실제 로봇 실험에서는 XArm-6 로봇 암 [58]에 Allegro Hand를 부착했습니다 (그림 9 참조). Relocate 및 Flip 작업을 평가했으며, Sim2Real 전이를 용이하게 하기 위해 훈련 중 물체 포즈에 가산 가우시안 노이즈(additive Gaussian noise)를 적용하고 마찰, 밀도, PD 제어 파라미터와 같은 동적 파라미터를 무작위화했습니다. 관측 공간은 로봇 고유 상태(proprioceptive state), 물체 포즈(초기 포즈는 RealSense D435 카메라로 캡처된 포인트 클라우드를 ICP 알고리즘으로 추정), 그리고 Relocate의 경우 목표 위치를 포함했습니다.</p>
+<p>Relocate 작업에서는 훈련에 사용된 물체(known object)와 훈련 중 보지 못한 새로운 물체(novel object) 그룹으로 나누어 정책을 평가했습니다 (그림 10). 정량적 결과(표 V)는 Imitation Learning (DAPG)이 순수 RL보다 실제 로봇 전이 시 훨씬 더 큰 성능 차이를 보임을 보여줍니다. 이는 인간과 유사한 조작 정책이 Sim2Real 갭에 더 강건하기 때문으로 추정됩니다. 더욱 흥미롭게도, 학습된 정책은 훈련 중 보지 못한 새로운 물체에도 일반화되었습니다. 이는 다지 핸드가 인간처럼 작동할 때 형상 변화에 대한 일정 수준의 강건함을 제공함을 시사합니다.</p>
+<p>정책 시각화(그림 11)는 Sim2Real 갭에 대한 Imitation Learning 정책의 강건함을 설명합니다. Relocate 작업에서 RL 정책은 불안정한 접촉(두 손가락만 사용)으로 물체를 잡는 경향이 있었지만, 시범으로 훈련된 정책은 네 손가락 모두를 사용하여 안정적으로 잡았습니다. 이로 인해 실제 로봇에서는 RL 정책의 물체가 손에서 미끄러지는 반면, Imitation Learning 정책은 안정적으로 물체를 잡았습니다. Flip 작업에서도 순수 RL 정책은 시뮬레이터에서 컵을 빠르게 밀어 해결했지만, Imitation Learning 정책은 한 손가락을 컵 안에 넣고 손목을 회전시키는 인간과 유사한 행동을 보였습니다. 이러한 RL 정책의 행동은 실제 로봇 핸드에서는 거의 성공하지 못했습니다. 두 가지 예시 모두에서 순수 RL은 시뮬레이터의 물리적 특성을 ’해킹’하여 부자연스러운 행동을 학습하는 경향이 있으며, 이는 실제 세계로 전이되기 어렵습니다. 반면, 본 논문의 시범을 사용하여 인간과 유사한 행동을 학습하는 Imitation Learning은 실제 세계 응용에 훨씬 더 강건하고 안정적인 정책을 가능하게 합니다.</p>
+<p><strong>VII. 결론</strong></p>
+<p>본 논문은 Imitation Learning을 위한 인간 손 조작 데이터를 수집하기 위해 새로운 단일 카메라 텔레오퍼레이션 시스템을 제안합니다. 특히, 다양한 인간 작업자가 데이터를 보다 직관적으로 수집할 수 있도록 맞춤형 로봇 핸드(customized robot hand) 개념을 도입했습니다. 수집된 시범 데이터가 여러 로봇에서의 Dexterous Manipulation 학습을 개선하고, 데이터 수집이 단 한 번만 필요함에도 불구하고 실제 세계에 배치될 때 강건성을 높임을 보여주었습니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

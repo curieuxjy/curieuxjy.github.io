@@ -1,0 +1,121 @@
+---
+title: "📃DexArt 리뷰"
+date: 2025-08-12
+categories: [benchmark, rl, survey]
+toc: true
+number-sections: true
+description: Benchmarking Generalizable Dexterous Manipulation with Articulated Objects
+---
+
+- [Paper Link](https://arxiv.org/abs/2204.12490)
+- [Project Link](https://yzqin.github.io/dex-teleop-imitation/)
+- [Code Link](https://github.com/yzqin/dex-hand-teleop)
+
+1. 🕹️ 이 논문은 다지(multi-finger) 로봇 손을 사용하여 다양한 다관절 객체를 조작하는 능력을 벤치마킹하는 새로운 데이터셋 및 태스크 스위트인 DexArt를 제안합니다.
+2. 🤖 DexArt 벤치마크는 3D Point Cloud 관측값을 기반으로 RL(Reinforcement Learning) 정책을 학습하며, 특히 학습되지 않은 객체에 대한 일반화 성능과 시각적 표현 학습의 영향을 평가합니다.
+3. 💡 연구 결과, 더 많은 객체로 훈련할수록 일반화 성능이 향상되고, 더 작은 PointNet 인코더가 효율적이며, 객체 부분 분할(part segmentation) 사전 학습이 조작 성능 및 카메라 시점 변화에 대한 강건성을 크게 개선함을 밝혀냈습니다.
+
+
+
+---
+
+# Brief Review
+
+본 논문은 단일 카메라 기반 텔레오퍼레이션(teleoperation)을 통해 숙련된 조작(dexterous manipulation)을 위한 인간 시범 데이터(human demonstration data)를 수집하고, 이를 이용하여 다지(multi-finger) 로봇 핸드에 대한 Imitation Learning 정책을 학습하는 새로운 프레임워크를 제안합니다. 궁극적으로 학습된 정책을 실제 로봇에 성공적으로 전이(transfer)시키는 것을 목표로 합니다.
+
+**I. 소개**
+
+다지 로봇 핸드를 이용한 Dexterous Manipulation은 로봇공학에서 가장 도전적이고 중요한 문제 중 하나입니다. 로봇 핸드와 조작 대상 간의 복잡한 접촉 패턴은 모델링하기 어렵고, 구조화되지 않은 환경에서 접촉이 많은 작업을 해결하는 제어기를 수동으로 설계하는 것은 매우 어렵습니다. 최근 Reinforcement Learning (RL)이 유망한 결과를 보여주지만, 높은 Degree-of-Freedom (DoF)과 불연속적인 접촉은 RL 정책 훈련의 샘플 복잡성(sample complexity)을 증가시킵니다. 또한, RL 보상을 통한 블랙박스 최적화는 예상치 못하거나 안전하지 않은 행동으로 이어질 수 있습니다. 텔레오퍼레이션을 통해 수집된 인간 시범으로부터 학습하는 것은 Dexterous Manipulation을 위한 자연스러운 해결책입니다. 그러나 대부분의 기존 텔레오퍼레이션 시스템은 Virtual Reality (VR) 장치나 유선 글러브(wired gloves)를 필요로 하여 유연성과 확장성(scalability)이 제한됩니다. Vision-based 텔레오퍼레이션은 특수 장비 착용의 필요성을 없애 비용을 절감하고 확장성을 높이지만, 인간 손 움직임을 로봇 손 움직임으로 변환하는 모션 리타겟팅(Motion Retargeting)이라는 새로운 과제를 제시합니다. 이 과정이 직관적이지 않으면 인간 작업자가 로봇을 제어하기 어렵고, 특정 로봇 손으로 수집된 시범은 동일한 로봇에서만 Imitation Learning에 사용될 수 있다는 한계가 있습니다.
+
+본 논문은 이러한 도전 과제를 해결하기 위해 단일 카메라 텔레오퍼레이션 시스템을 도입합니다. 이 시스템은 iPad와 컴퓨터만으로 효율적으로 3D 시범을 수집할 수 있습니다. 핵심 기여 중 하나는 물리 시뮬레이터(physical simulator) 내에서 각 사용자에 대해 사용자 맞춤형 로봇 핸드(customized robot hand)를 생성한다는 점입니다. 이 핸드는 작업자 손과 동일한 구조를 모방하여 직관적인 인터페이스를 제공하고 데이터 수집 시 불안정한 인간-로봇 핸드 리타겟팅을 피하여 대규모의 고품질 데이터를 얻을 수 있게 합니다. 데이터 수집 후, 맞춤형 로봇 핸드의 궤적(trajectory)은 다양한 실제 로봇 핸드(예: Schunk Robot Hand, Adroit Robot Hand, Allegro Robot Hand)로 변환되어 훈련 시범으로 사용될 수 있습니다. 본 논문의 데이터와 Imitation Learning을 통해 여러 복잡한 조작 작업에서 기존 baseline 대비 큰 개선을 보였습니다. 특히, 학습된 정책이 실제 로봇으로 전이될 때 훨씬 더 강건함(robust)을 보여주었습니다.
+
+**II. 제안하는 시스템 개요**
+
+제안하는 프레임워크는 다음 세 단계로 구성됩니다 (그림 2 참조):
+1.  **Customized Hand Teleoperation**: iPad에서 RGB-D 비디오 스트리밍을 통해 작업자의 손 모양을 추정하고, 이를 기반으로 물리 시뮬레이터에 사용자 맞춤형 로봇 핸드를 실시간으로 구성합니다. 인간 작업자는 이 맞춤형 로봇 핸드를 제어하여 Dexterous Manipulation 작업을 수행합니다. 이 시스템을 통해 시간당 약 60개의 성공적인 시범을 효율적으로 수집할 수 있습니다.
+2.  **Multi-Robots Demonstration Translation**: 맞춤형 핸드로 수집된 시범 궤적을 오프라인에서 Motion Retargeting 최적화를 통해 실제 로봇 핸드(Schunk, Allegro, Adroit Robot Hand 등)의 상태-액션 궤적(joint position 및 motor command)으로 변환합니다. 이 변환은 손의 기하학적 구조, DoF, 심지어 손가락 개수가 다른 로봇에도 적용 가능합니다.
+3.  **Demonstration-Augmented Policy Learning**: 변환된 시범 데이터를 사용하여 Dexterous Manipulation 정책을 훈련합니다. 이는 RL 목적 함수에 시범을 사용하여 Behavior Cloning을 결합하는 방식입니다 (Demo Augmented Policy Gradient, DAPG). 이 프레임워크는 RL 단독으로는 잘 해결되지 않는 복잡한 작업에서 효율적으로 인간과 유사한 기술을 학습할 수 있게 합니다.
+
+학습된 정책은 XArm-6 로봇에 부착된 실제 Allegro Hand로 Sim2Real 전이 실험을 수행하였으며, 본 논문의 시범 데이터를 학습에 통합함으로써 Sim2Real 갭(gap)에 대한 정책의 강건함을 크게 향상시키는 것을 보여주었습니다.
+
+**III. Customized Hand Teleoperation**
+
+텔레오퍼레이션 시스템은 iPad와 노트북으로 구성됩니다 (그림 3 참조). iPad의 전면 카메라를 사용하여 25fps로 인간 작업자의 RGB-D 비디오를 스트리밍합니다. 시스템은 물리 시뮬레이터, 인간 동작을 포착하는 Hand Detector, 시뮬레이션 환경을 시각화하는 GUI로 이루어져 있습니다.
+
+**A. Task Description**
+
+시뮬레이션 환경은 SAPIEN [47]에서 구축되었으며, 세 가지 Dexterous Manipulation 작업이 설계되었습니다:
+*   **Relocate**: 로봇이 물체(예: YCB dataset의 Tomato Soup Can, Potted Meat Can, Mustard Bottle)를 들어 목표 위치로 옮깁니다. 초기 및 목표 포즈가 무작위로 설정되는 목표-조건부(goal-conditioned) 작업입니다 (그림 1, 첫째 줄).
+*   **Flip**: 로봇이 테이블 위의 머그컵을 뒤집습니다. 머그컵의 위치와 중력 방향을 따라 수평 회전이 무작위로 설정됩니다 (그림 1, 둘째 줄).
+*   **Open Door**: 로봇이 문 손잡이를 돌려 문을 잠금 해제한 다음 당겨서 문을 엽니다. 문의 위치가 무작위로 설정됩니다 (그림 1, 셋째 줄).
+
+**B. Hand Detector**
+
+Hand Detector는 RGB-D 프레임을 입력받아 손목 포즈, 손 포즈 파라미터, 손 모양 파라미터를 출력합니다. MediaPipe [49]와 FrankMocap [50]을 기반으로 구현되었습니다. MediaPipe hand tracker로 손 영역의 바운딩 박스를 감지하고, 이를 FrankMocap 모델에 입력하여 SMPL-X [51] 모델 기반의 포즈 및 모양 파라미터를 추정합니다. SMPL-X 모델은 손의 기하학적 구조에 대한 모양 파라미터와 변형에 대한 포즈 파라미터로 손을 나타냅니다. 추정된 파라미터와 PnP (Perspective-n-Point) 알고리즘을 통해 손목의 카메라 변환을 계산합니다.
+
+**C. Customized Robot Hand**
+
+본 시스템은 각 사용자의 손 기하학적 구조를 기반으로 맞춤형 로봇 핸드를 구축합니다. 초기화 시 추정된 손 모양 파라미터로부터 인간 손의 관절 골격(joint skeleton)을 추출하고, 이를 기반으로 물리 시뮬레이터에 동일한 운동학적 구조(kinematics structure)를 가진 로봇 모델을 만듭니다 (그림 4 참조). 효율적인 충돌 감지 및 안정적인 시뮬레이션을 위해 손바닥은 상자, 손가락은 캡슐과 같은 기본 도형을 사용합니다. 맞춤형 핸드는 SMPL-X 모델과 일치하는 45 DoF (15 * 3)를 가지며, Motion Retargeting 없이 감지된 포즈 파라미터를 사용하여 직접 제어됩니다 (표 I 참조).
+
+Customized Robot Hand의 관절 각도는 PD controller로 제어됩니다. 추정된 포즈는 저역 통과 필터(low-pass filter)를 거쳐 위치 목표(position target)로 설정됩니다. 시각 텔레오퍼레이션의 지각 오류(perception error) 문제를 해결하기 위해, 손 모양 추정 결과를 신뢰도 점수(confidence score)로 활용합니다. 초기화 시 최적의 시야에서 추정된 모양 파라미터를 ground-truth로 사용하고, 현재 프레임의 모양 파라미터와의 오차를 통해 포즈 정확도의 신뢰도를 계산합니다. 신뢰도 기반 PD 제어는 다음 수식으로 표현됩니다:
+
+$u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}$
+
+여기서 $u(t)$는 관절 토크(joint torque), $K_p$와 $K_d$는 PD 파라미터이며, $p(t)$는 정규화된 확률 밀도(normalized probability density)로 계산된 신뢰도 점수입니다. 지각 오류가 클 경우, 제어기의 강성(stiffness)을 줄여 원치 않는 갑작스러운 움직임을 제거합니다.
+
+**IV. Multi-Robots Demonstration Translation**
+
+**A. Hand Pose Retargeting**
+
+맞춤형 핸드에서 수집된 시범을 특정 로봇 핸드로 변환하기 위해 Hand Pose Retargeting을 수행합니다. 본 시스템은 이를 오프라인 최적화 문제로 정의합니다.
+
+$\min_{q_R}\sum_{i=0}^N|| f_C^i (q_C_t ) - f_R^i (q_R_t )||^2 + \alpha||q_R_t - q_R_{t-1}||^2$
+s.t. $q_{R_{lower}} \le q_R_t \le q_{R_{upper}}$
+
+여기서 $q_C_t$는 맞춤형 로봇의 시간 $t$에서의 관절 위치, $q_R_t$는 특정 로봇(예: Schunk Robot Hand)의 해당 관절 위치입니다. $f_C^i$와 $f_R^i$는 두 로봇의 $i$-번째 키포인트(예: 손가락 끝 위치)에 대한 전방 운동학(forward kinematics) 함수를 나타냅니다. 시간적 일관성(temporal consistency)을 개선하기 위해 관절 위치 변화를 패널티하는 정규화 항을 추가하고, $q_R_t$를 $q_R_{t-1}$의 값으로 초기화합니다. 이 최적화 문제를 해결하면 어떤 특정 로봇에 대해서도 관절 위치 궤적 $q_R_t$를 계산할 수 있습니다 (그림 5 참조).
+
+**B. Action Computation**
+
+Joint Pose Trajectory 외에도 Demo-augmented Policy Learning을 위해 각 손가락 관절에 대한 액션(action), 즉 joint torque 또는 motor control command가 필요합니다. DexMV [54]의 절차를 따라, 먼저 joint pose trajectory를 1차 저역 통과 필터에 통과시킨 후, 로봇 역동학(inverse dynamics)의 조작기 방정식(manipulator equation) $\tau = f_{inv}(q, q', q'')$를 통해 joint torque를 계산합니다.
+
+**V. Demonstration-Augmented Policy Learning**
+
+무작위로 초기화되거나 목표 포즈가 주어지는 작업에서는 단순한 Behavior Cloning만으로는 성공하기 어렵습니다. 따라서 본 논문은 시범을 RL에 통합하는 Imitation Learning 알고리즘인 Demo Augmented Policy Gradient (DAPG) [3]를 사용합니다. DAPG의 목적 함수는 다음과 같습니다:
+
+$g_{aug} = \sum_{(s,a)\in\rho^\pi}\nabla \ln \pi(a|s)A^\pi (s, a)+\sum_{(s,a)\in\rho^{\pi_{demo}}}\nabla \ln \pi_\theta (a|s)\lambda_0\frac{\lambda_1}{k} \max_{(s',a')\in\rho^\pi}A^\pi (s', a')$
+
+여기서 첫 번째 항은 RL의 일반적인 정책 기울기(policy gradient) 목적 함수이고, 두 번째 항은 시범을 이용한 Imitation 목적 함수입니다. 이는 Behavior Cloning과 온라인 RL의 조합으로 볼 수 있습니다. $\rho^\pi$는 정책 $\pi$ 하에서의 점유 측정(occupancy measure), $\lambda_0$와 $\lambda_1$은 하이퍼파라미터, $k$는 훈련 반복 횟수입니다. $A^\pi (s', a')$는 이점 함수(advantage function)입니다.
+
+**VI. 실험**
+
+**A. Teleoperation User Study**
+
+제안된 Customized Robot Hand의 이점을 입증하기 위해 17명의 인간 작업자를 대상으로 텔레오퍼레이션 사용자 연구를 수행했습니다. 작업자들은 Customized Robot Hand, Schunk SVH Hand, Adroit Hand, Allegro Hand의 네 가지 로봇 핸드 모델을 사용하여 Relocate 및 Open Door 작업을 수행했습니다. Customised Robot Hand의 경우 인간 포즈 파라미터를 각 관절의 PD 목표로 직접 사용했지만, 나머지 세 로봇의 경우 온라인 Motion Retargeting이 필요했습니다.
+
+결과는 표 II(Relocate)와 표 III(Open Door)에 나타나 있습니다. Customized Robot Hand는 다른 세 로봇 핸드의 온라인 Retargeting 방식에 비해 모든 작업에서 월등히 높은 성공률을 달성했습니다. 예를 들어, Relocate 작업의 경우 Customized Hand는 시간당 약 60개의 성공적인 데모를 수집할 수 있었지만, Allegro Hand를 직접 조작할 때는 10개에 불과했습니다. 사용자들은 Customized Hand가 다른 로봇 핸드보다 제어하기 쉽다고 보고했습니다. 이는 온라인 Motion Retargeting 단계에서 발생하는 제어 불가능한 시간 소모(평균 76 ± 65ms, 큰 편차) 때문인 것으로 분석되었습니다. 온라인 Retargeting을 제거함으로써 시스템은 더 부드럽고 즉각적인 피드백을 제공합니다.
+
+**B. Task Learning Comparison**
+
+Relocate (세 가지 다른 물체), Flip, Open Door 작업에서 처리된 시범 데이터를 사용하여 정책을 훈련하고 RL baseline과 비교했습니다. RL baseline으로는 Trust Region Policy Optimization (TRPO) [56]을 사용했습니다. 정책 및 가치 함수(value function)는 32 × 32의 2-layer Multi-Layer Perceptrons (MLPs)로 구성되었고, TRPO는 각 스텝마다 200개의 궤적을 사용했습니다. Imitation Learning 알고리즘은 DAPG를 사용했으며, 각 작업에 대해 50개의 시범 궤적을 수집하고 이를 특정 로봇으로 Retargeting했습니다.
+
+훈련 곡선은 그림 6에, 세 가지 특정 로봇 핸드의 성공률은 표 IV에 요약되어 있습니다. Imitation Learning 방식인 DAPG는 대부분의 작업과 로봇에서 RL baseline을 능가했습니다. 이는 Motion Retargeting을 통해 생성된 시범이 정책 훈련을 크게 개선할 수 있음을 보여줍니다. 유일한 예외는 Allegro Hand를 사용한 Open Door 작업이었는데, DAPG는 자연스러운 행동으로 손잡이를 잡고 문을 열려고 시도하는 반면, RL 정책은 큰 힘으로 손잡이를 누르며 마찰에 의존하여 문을 여는 경향을 보였습니다 (그림 8). 이는 시범이 정책의 행동을 예상된(인간과 같은) 안전한 방향으로 조절하는 데 중요한 가치를 제공함을 강조합니다.
+
+**C. Ablation Study**
+
+다양한 동적 조건과 시범 데이터 수의 영향을 조사하기 위해, 물체 마찰, 제어기 파라미터, 물체 밀도, 시범 데이터 수를 대상으로 Relocate (tomato soup can, Schunk Robot) 작업에서 Ablation Study를 수행했습니다 (그림 7). 학습 곡선은 마찰 변화에 강건함을 보였는데, 이는 다지 핸드가 여러 접촉점을 통해 힘 폐쇄(force closure)를 형성하여 마찰에 덜 민감하기 때문입니다. 물체 밀도에 대해서도 유사한 결과가 나타났습니다. 제어기 파라미터의 경우, 강성이 클수록 더 빨리 목표에 도달했지만, 작은 PD 값으로도 작업을 해결할 수 있었습니다. 더 많은 시범 데이터를 사용할수록 더 나은 성능을 달성했으며, 20-30개의 데모에서는 분산(variance)이 더 크게 나타났습니다.
+
+**D. Real-World Robot Experiments**
+
+실제 로봇 실험에서는 XArm-6 로봇 암 [58]에 Allegro Hand를 부착했습니다 (그림 9 참조). Relocate 및 Flip 작업을 평가했으며, Sim2Real 전이를 용이하게 하기 위해 훈련 중 물체 포즈에 가산 가우시안 노이즈(additive Gaussian noise)를 적용하고 마찰, 밀도, PD 제어 파라미터와 같은 동적 파라미터를 무작위화했습니다. 관측 공간은 로봇 고유 상태(proprioceptive state), 물체 포즈(초기 포즈는 RealSense D435 카메라로 캡처된 포인트 클라우드를 ICP 알고리즘으로 추정), 그리고 Relocate의 경우 목표 위치를 포함했습니다.
+
+Relocate 작업에서는 훈련에 사용된 물체(known object)와 훈련 중 보지 못한 새로운 물체(novel object) 그룹으로 나누어 정책을 평가했습니다 (그림 10). 정량적 결과(표 V)는 Imitation Learning (DAPG)이 순수 RL보다 실제 로봇 전이 시 훨씬 더 큰 성능 차이를 보임을 보여줍니다. 이는 인간과 유사한 조작 정책이 Sim2Real 갭에 더 강건하기 때문으로 추정됩니다. 더욱 흥미롭게도, 학습된 정책은 훈련 중 보지 못한 새로운 물체에도 일반화되었습니다. 이는 다지 핸드가 인간처럼 작동할 때 형상 변화에 대한 일정 수준의 강건함을 제공함을 시사합니다.
+
+정책 시각화(그림 11)는 Sim2Real 갭에 대한 Imitation Learning 정책의 강건함을 설명합니다. Relocate 작업에서 RL 정책은 불안정한 접촉(두 손가락만 사용)으로 물체를 잡는 경향이 있었지만, 시범으로 훈련된 정책은 네 손가락 모두를 사용하여 안정적으로 잡았습니다. 이로 인해 실제 로봇에서는 RL 정책의 물체가 손에서 미끄러지는 반면, Imitation Learning 정책은 안정적으로 물체를 잡았습니다. Flip 작업에서도 순수 RL 정책은 시뮬레이터에서 컵을 빠르게 밀어 해결했지만, Imitation Learning 정책은 한 손가락을 컵 안에 넣고 손목을 회전시키는 인간과 유사한 행동을 보였습니다. 이러한 RL 정책의 행동은 실제 로봇 핸드에서는 거의 성공하지 못했습니다. 두 가지 예시 모두에서 순수 RL은 시뮬레이터의 물리적 특성을 '해킹'하여 부자연스러운 행동을 학습하는 경향이 있으며, 이는 실제 세계로 전이되기 어렵습니다. 반면, 본 논문의 시범을 사용하여 인간과 유사한 행동을 학습하는 Imitation Learning은 실제 세계 응용에 훨씬 더 강건하고 안정적인 정책을 가능하게 합니다.
+
+**VII. 결론**
+
+본 논문은 Imitation Learning을 위한 인간 손 조작 데이터를 수집하기 위해 새로운 단일 카메라 텔레오퍼레이션 시스템을 제안합니다. 특히, 다양한 인간 작업자가 데이터를 보다 직관적으로 수집할 수 있도록 맞춤형 로봇 핸드(customized robot hand) 개념을 도입했습니다. 수집된 시범 데이터가 여러 로봇에서의 Dexterous Manipulation 학습을 개선하고, 데이터 수집이 단 한 번만 필요함에도 불구하고 실제 세계에 배치될 때 강건성을 높임을 보여주었습니다.
+
+---
+
+# Detail Review

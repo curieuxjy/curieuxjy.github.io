@@ -2,6 +2,8 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-08-12-dexart.html",
+      "/posts/paper/2025-08-11-dexhand-teleop.html",
       "/posts/paper/2025-08-09-retargeting-survey.html",
       "/posts/paper/2025-08-08-dexflow.html",
       "/posts/paper/2025-08-06-seq-multi-obj.html",
@@ -72,6 +74,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-08-12-dexart.html",
+      "/posts/paper/2025-08-11-dexhand-teleop.html",
       "/posts/paper/2025-08-09-retargeting-survey.html",
       "/posts/paper/2025-08-08-dexflow.html",
       "/posts/paper/2025-08-06-seq-multi-obj.html",
