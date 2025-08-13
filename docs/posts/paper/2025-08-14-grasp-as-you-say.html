@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-14">
+<meta name="description" content="Language-guided Dexterous Grasp Generation">
+
+<title>📃Grasp as You Say 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#핵심-아이디어-및-문제-설정" id="toc-핵심-아이디어-및-문제-설정" class="nav-link" data-scroll-target="#핵심-아이디어-및-문제-설정"><span class="header-section-number">2.1</span> <strong>핵심 아이디어 및 문제 설정</strong></a></li>
+  <li><a href="#제안한-방법의-기술적-기여-및-기존-연구와의-차별성" id="toc-제안한-방법의-기술적-기여-및-기존-연구와의-차별성" class="nav-link" data-scroll-target="#제안한-방법의-기술적-기여-및-기존-연구와의-차별성"><span class="header-section-number">2.2</span> <strong>제안한 방법의 기술적 기여 및 기존 연구와의 차별성</strong></a></li>
+  <li><a href="#모델-아키텍처-및-학습-방법의-구체적-분석" id="toc-모델-아키텍처-및-학습-방법의-구체적-분석" class="nav-link" data-scroll-target="#모델-아키텍처-및-학습-방법의-구체적-분석"><span class="header-section-number">2.3</span> <strong>모델 아키텍처 및 학습 방법의 구체적 분석</strong></a></li>
+  <li><a href="#실험-결과-분석-데이터셋-비교-대상-성능-지표-평가" id="toc-실험-결과-분석-데이터셋-비교-대상-성능-지표-평가" class="nav-link" data-scroll-target="#실험-결과-분석-데이터셋-비교-대상-성능-지표-평가"><span class="header-section-number">2.4</span> <strong>실험 결과 분석 – 데이터셋, 비교 대상, 성능 지표 평가</strong></a></li>
+  <li><a href="#강점과-한계-향후-발전-가능성" id="toc-강점과-한계-향후-발전-가능성" class="nav-link" data-scroll-target="#강점과-한계-향후-발전-가능성"><span class="header-section-number">2.5</span> <strong>강점과 한계, 향후 발전 가능성</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Grasp as You Say 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">llm</div>
+    <div class="quarto-category">retargeting</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Language-guided Dexterous Grasp Generation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 14, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2405.19291">Paper Link</a></li>
+<li><a href="https://isee-laboratory.github.io/DexGYS/">Project Link</a></li>
+<li><a href="https://github.com/iSEE-Laboratory/Grasp-as-You-Say">Code Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 본 논문은 로봇이 자연어 명령에 따라 정교한 조작(dexterous grasping)을 수행하는 새로운 과제인 DexGYS를 제안하고, 이를 위해 언어 안내가 포함된 대규모 데이터셋 DexGYSNet을 구축했습니다.</li>
+<li>📚 DexGYSNet은 인간-객체 상호작용 리타겟팅(HOIR) 및 LLM(Large Language Model) 지원 언어 주석 시스템을 활용하여 비용 효율적으로 구축되었으며, 5만 쌍의 고품질 덱스터러스 그랩 데이터와 해당 언어 지시를 포함합니다.</li>
+<li>🧠 또한, 의도 일치, 높은 다양성, 고품질 그랩 생성을 위한 DexGYSGrasp 프레임워크를 제안하며, 이는 복잡한 학습 과정을 두 가지 점진적 목표로 분해하여 기존 최신 방법론 대비 우수한 성능을 달성했습니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>이 논문은 로봇이 자연어 명령에 기반하여 정교한(dexterous) 그립을 수행할 수 있도록 하는 새로운 태스크인 “언어를 통한 정교한 그립(Dexterous Grasp as You Say, DexGYS)”을 탐구합니다. 이 분야의 발전을 가로막는 주요 장애물은 자연어 안내가 포함된 데이터셋의 부족입니다. 이를 해결하기 위해 저자들은 고품질의 정교한 그립 주석과 유연하고 세밀한 인간 언어 안내를 제공하는 언어 안내 정교한 그립 데이터셋인 DexGYSNet을 제안합니다.</p>
+<p><strong>DexGYSNet 데이터셋 구축:</strong></p>
+<p>DexGYSNet은 비용 효율적인 방식으로 구축됩니다.</p>
+<ol type="1">
+<li><strong>Hand-Object Interaction Retargeting (HOIR)</strong>: 쉽게 얻을 수 있는 인간의 손-객체 상호작용 데이터를 로봇의 정교한 손에 재타겟팅하여 접촉 일관성과 고품질 그립 자세를 유지합니다. HOIR 전략은 세 단계로 구성됩니다:
+<ul>
+<li><strong>자세 초기화(pose initialization)</strong>: 인간 자세의 유사한 구조로부터 정교한 손 파라미터를 복사하여 초기값을 설정합니다.</li>
+<li><strong>손가락 끝 정렬(fingertip alignment)</strong>: 정교한 손 자세를 파라미터 공간에서 최적화하여 손가락 끝 위치를 인간의 손과 정렬시킵니다. 이는 다음의 목적 함수를 통해 달성됩니다: <span class="math display">\min_{G_{dex}=(r,t,q)} \sum_k \|p_{dex,ft_k} - p_{mano,ft_k}\|_2^2</span> 여기서 <span class="math inline">p_{dex,ft_k}</span>는 정교한 손의 <span class="math inline">k</span>번째 손가락 끝 위치를, <span class="math inline">p_{mano,ft_k}</span>는 MANO 모델의 <span class="math inline">k</span>번째 손가락 끝 위치를 나타냅니다.</li>
+<li><strong>상호작용 정제(interaction refinement)</strong>: 물리적 상호작용의 타당성을 높이고 일관성을 유지하기 위해 정교한 손 자세를 추가로 최적화합니다. 이 단계에서는 접촉 영역을 이전 단계의 출력과 일관되게 유지하고 이동(translation)을 고정시킵니다. 최적화 목적 함수는 다음과 같습니다: <span class="math display">\min_{(r,q)} (\lambda_{1pen}L_{pen} + \lambda_{1spen}L_{spen} + \lambda_{1joint}L_{joint} + \lambda_{1cmap}L_{cmap})</span> 여기서 <span class="math inline">L_{pen}</span>은 객체 침투 손실(object penetration loss), <span class="math inline">L_{spen}</span>은 자기-침투 손실(self-penetration loss), <span class="math inline">L_{joint}</span>는 관절 각도 손실(joint angle loss), <span class="math inline">L_{cmap}</span>은 접촉 맵 손실(contact map loss)입니다. 각 손실은 다음과 같이 정의됩니다:
+<ul>
+<li>객체 침투 손실 <span class="math inline">L_{pen}</span>: <span class="math inline">\sum_i I(dsdf_i &gt; 0) \cdot dsdf_i</span>, 여기서 <span class="math inline">dsdf_i</span>는 객체 점으로부터 손 메시까지의 부호화된 거리입니다.</li>
+<li>자기-침투 손실 <span class="math inline">L_{spen}</span>: <span class="math inline">\sum_{i,j}I(i=j) \cdot \max(0, \delta - d(p_{dex,sp_i}, p_{dex,sp_j}))</span>, 여기서 <span class="math inline">p_{dex,sp}</span>는 손에 미리 정의된 앵커 스피어이며, <span class="math inline">\delta</span>는 임계값입니다. (논문에 제시된 <span class="math inline">I(i=j)</span> 표기는 통상적인 자기-침투 손실 표현과 다소 상이할 수 있습니다.)</li>
+<li>관절 각도 손실 <span class="math inline">L_{joint}</span>: <span class="math inline">\sum_i(\max(0, q_i - q_{max_i}) + \max(0, q_{min_i} - q_i))</span>, 여기서 <span class="math inline">q_i</span>는 관절 각도, <span class="math inline">q_{max_i}</span>와 <span class="math inline">q_{min_i}</span>는 각각 최대 및 최소 관절 각도입니다.</li>
+<li>접촉 맵 손실 <span class="math inline">L_{cmap}</span>: <span class="math inline">\sum_i\|c_{obj_i} - \hat{c}_{obj_i}\|_2^2</span>, 여기서 <span class="math inline">c_{obj_i}</span>는 대상 접촉 맵, <span class="math inline">\hat{c}_{obj_i}</span>는 예측된 접촉 맵입니다.</li>
+</ul></li>
+</ul></li>
+<li><strong>LLM-assisted Language Guidance Annotation</strong>: 대규모 언어 모델(LLM)의 도움을 받아 유연하고 세밀한 언어 안내 주석을 생성하는 coarse-to-fine 자동 주석 시스템을 개발합니다. 이 시스템은 객체 카테고리와 간략한 인간 의도를 기반으로 간략한 안내를 생성한 다음, 각 손가락의 접촉 정보를 언어 설명자로 구성하고, 최종적으로 이 정보들을 GPT-3.5에 입력하여 자연스러운 주석 안내를 생성합니다.</li>
+</ol>
+<p><strong>DexGYSGrasp 프레임워크:</strong></p>
+<p>DexGYSNet 데이터셋을 기반으로 저자들은 의도 정렬, 고품질, 다양성을 보장하는 DexGYSGrasp 프레임워크를 제안합니다. 이 프레임워크는 복잡한 학습 과정을 두 가지 관리 가능한 점진적 목표로 분해하고 이를 실현하기 위한 두 가지 구성 요소를 도입합니다.</p>
+<p><strong>점진적 그립 목표 (Progressive Grasp Objectives):</strong></p>
+<p>단일 모델이 의도 정렬, 다양성, 고품질이라는 세 가지 요구사항을 동시에 충족하기 어렵다는 문제를 해결하기 위해, 특히 손-객체 침투를 방지하는 데 사용되는 침투 손실(<span class="math inline">L_{pen}</span>)이 다양성과 의도 정렬을 저해하는 문제에 주목합니다. 이를 해결하기 위해 학습 목표를 다음과 같이 분해합니다: 1. <strong>생성적 목표</strong>: 그립 분포 학습에 중점을 둡니다. 이 단계에서는 품질보다는 의도 정렬과 생성 다양성에 초점을 맞추며, 침투 손실의 제약 없이 최적화합니다. 2. <strong>회귀적 목표</strong>: 초기 거친 그립을 동일한 의도와 다양성을 유지하면서 고품질 그립으로 정제합니다. 이 단계에서는 침투 손실을 활용하여 객체 침투를 방지합니다.</p>
+<p><strong>점진적 그립 구성 요소 (Progressive Grasp Components):</strong></p>
+<p>이러한 점진적 목표를 달성하기 위해 두 가지 구성 요소를 설계합니다: 1. <strong>의도 및 다양성 그립 구성 요소 (Intention and Diversity Grasp Component, IDGC)</strong>: * 그립 분포를 효율적으로 학습하고 의도 정렬 및 다양한 생성을 달성하기 위해 조건부 확산 모델(conditional diffusion model)을 기반으로 합니다. * 입력으로 객체 포인트 클라우드(<span class="math inline">O</span>)는 PointNet++ [45]로 인코딩되고, 언어 안내(<span class="math inline">L</span>)는 사전 학습된 CLIP 모델 [46]로 인코딩되어 조건부 정보로 사용됩니다. * DDPM [47]을 샘플링 프로세스로 사용하며, 이는 다음과 같이 정형화됩니다: <span class="math display">p_{\theta}(G_{dex0} | O, L) = p(G_T) \prod_{t=1}^T p(G_{t-1} | G_t, O, L)</span> 여기서 <span class="math inline">G_{dex0}</span>는 원래의 그립 자세, <span class="math inline">G_T</span>는 노이즈가 추가된 자세, <span class="math inline">G_t</span>는 중간 시간 단계의 자세입니다. * 학습 시에는 회귀 손실만을 사용하며, 침투 손실은 의도 일관성과 그립 다양성을 향상시키기 위해 배제됩니다. 손실 함수는 다음과 같습니다: <span class="math display">L_{IDG} = \lambda_{2para}L_{para}(G_{dex0}, \hat{G}_{dex}) + \lambda_{2chamfer}L_{chamfer}(H(G_{dex0}), H(\hat{G}_{dex}))</span> 여기서 <span class="math inline">L_{para}</span>는 자세 파라미터에 대한 MSE 손실이며, <span class="math inline">L_{chamfer}</span>는 손 포인트 클라우드에 대한 Chamfer Distance 손실입니다. 2. <strong>품질 그립 구성 요소 (Quality Grasp Component, QGC)</strong>: * 첫 번째 구성 요소에서 생성된 거친 그립은 의도는 잘 정렬되고 다양하지만, 객체 침투가 심하여 품질이 좋지 않습니다. QGC는 이러한 거친 그립(<span class="math inline">\hat{G}_{dex}</span>)을 입력으로 받아 품질을 정제하는 역할을 합니다. * 입력으로 거친 자세 <span class="math inline">\hat{G}_{dex}</span>, 거친 손 포인트 클라우드 <span class="math inline">H(\hat{G}_{dex})</span> 및 객체 포인트 클라우드 <span class="math inline">O</span>를 받으며, <span class="math inline">\Delta G_{dex}</span>를 출력하여 정제된 그립 <span class="math inline">\tilde{G}_{dex} = \hat{G}_{dex} + \Delta G_{dex}</span>를 얻습니다. * 학습 쌍은 IDGC가 생성한 거친 그립과 가장 유사한 그라운드-트루스 그립으로 구성되어, 정제된 그립이 의도된 행동과 일관성을 유지하도록 보장합니다. * 이 구성 요소는 침투 손실을 포함한 손실 함수를 사용합니다: <span class="math display">L_{QG} = \lambda_{3para}L_{para} + \lambda_{3chamfer}L_{chamfer} + \lambda_{3pen}L_{pen} + \lambda_{3cmap}L_{cmap} + \lambda_{3spen}L_{spen}</span> 여기서 <span class="math inline">\lambda</span>는 각 손실 항의 가중치입니다.</p>
+<p><strong>실험 결과:</strong></p>
+<p>DexGYSNet 데이터셋 및 실제 환경에서의 광범위한 실험을 통해 제안된 방법이 다양한 객체에 대해 의도 일관성, 높은 다양성, 그리고 고품질의 그립 자세를 생성할 수 있음을 입증합니다. 기존 최첨단(SOTA) 방법들과 비교하여 의도 일관성과 그립 다양성 측면에서 훨씬 뛰어난 성능을 보이며, 그립 품질 측면에서도 경쟁력 있는 성능을 달성합니다. 특히, 침투 손실의 영향에 대한 정량적 분석과 점진적 구성 요소 및 손실의 필요성을 검증하는 어블레이션 연구는 제안된 프레임워크의 핵심 통찰력을 뒷받침합니다. 또한, HOIR 전략의 효과성과 다른 SOTA 방법에 대한 플러그-앤-플레이(Plug-and-play) 가능성도 확인되었습니다. 실제 세계 실험에서는 Allegro hand, Flexiv Rizon 4 암, Intel Realsense D415 카메라를 사용하여 제안된 방법의 실용적 적용 가능성을 보여주었습니다.</p>
+<p>결론적으로, 이 논문은 로봇이 인간 언어에 맞춰 고품질의 정교한 그립을 수행할 수 있도록 하는 “Dexterous Grasp as You Say”라는 새로운 태스크를 탐구하고, 이를 달성하기 위한 비용 효율적인 데이터셋 DexGYSNet과 점진적 학습 프레임워크 DexGYSGrasp를 제안합니다. 이는 인간-로봇 상호작용을 촉진하고 로봇의 실제 환경 배포를 가속화하는 데 중요한 기여를 합니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>Grasp as You Say: 언어로 안내하는 다지 로봇 핸드 그립 생성 – NeurIPS&nbsp;2024 논문 리뷰</p>
+</blockquote>
+<section id="핵심-아이디어-및-문제-설정" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="핵심-아이디어-및-문제-설정"><span class="header-section-number">2.1</span> <strong>핵심 아이디어 및 문제 설정</strong></h2>
+<p>다지 로봇 손을 이용한 <strong>섬세한 파지</strong>(dexterous grasping)를 사람의 <strong>자연어 지시</strong>로 수행하는 새로운 과제 <strong>“Dexterous Grasp as You Say (DexGYS)”</strong>를 제안한 논문입니다. 기존의 다지 손 파지 연구들은 주로 <strong>그립 안정성</strong> 확보에 집중했지만, <strong>사람 의도에 맞는 섬세한 파지</strong>에는 미치지 못했습니다. 예를 들어, 이전 작업들은 로봇 손이 물체를 떨어뜨리지 않도록 잡는 데 초점을 맞추었으나, <strong>“손잡이를 검지로 눌러 잡아라”</strong>와 같이 <strong>특정 방식으로 물체를 잡는</strong> 인간의 의도를 반영하지는 못했습니다. 최근 <strong>과업 지향</strong> 또는 <strong>기능 지향</strong> 다지 파지 연구들이 등장했지만, 미리 정해진 한정적 작업들만 대응하여 <strong>유연성과 범용성</strong>이 부족했습니다.</p>
+<p><strong>DexGYS 과제</strong>는 사람이 자연어로 설명하는 <strong>유연하고 세분화된 파지 의도</strong>를 로봇 손이 그대로 구현하는 것을 목표로 합니다. 이 과제 설정의 <strong>핵심 아이디어</strong>는, 로봇에게 <strong>언어로 의도를 전달</strong>하여 인간과 보다 자연스러운 상호작용을 가능케 하고, 로봇 다지 손의 잠재력을 <strong>의도 기반의 인간유사 파지</strong>로 활용하는 것입니다. 하지만 이러한 새로운 과제에는 두 가지 <strong>큰 도전</strong>이 존재합니다.</p>
+<p>첫째, <strong>자연어 지시가 포함된 다지 파지 데이터</strong>가 부족합니다. 다지 손의 자세와 그에 대응되는 사람의 언어 지시를 동시에 고품질로 수집하는 것은 비용이 매우 높고 번거롭습니다. 기존에 언어와 결합된 파지 데이터셋이 없기 때문에, <strong>학습을 위한 데이터 기반</strong> 자체가 부족한 상황이었습니다. 둘째, <strong>의도 정합성</strong>, <strong>파지 품질(안정성)</strong>, <strong>다양성</strong>을 모두 만족하는 로봇 손 자세를 <strong>동시에 생성</strong>하는 것이 어렵습니다. 특히, 다지 손이 물체를 관통하지 않도록 하는 <strong>penetration loss</strong>를 학습에 넣으면 파지 품질은 좋아지지만 오히려 <strong>의도에서 벗어나거나 다양성이 감소</strong>하는 현상이 발생합니다. 반대로 관통 페널티를 없애면 손가락이 물체를 뚫고 지나가는 <strong>물리적으로 불가능한 파지</strong>가 생길 수 있습니다. 이러한 <strong>트레이드오프</strong> 때문에 <strong>의도-품질-다양성</strong>을 한꺼번에 달성하기가 까다로운 문제가 제기됩니다.</p>
+</section>
+<section id="제안한-방법의-기술적-기여-및-기존-연구와의-차별성" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="제안한-방법의-기술적-기여-및-기존-연구와의-차별성"><span class="header-section-number">2.2</span> <strong>제안한 방법의 기술적 기여 및 기존 연구와의 차별성</strong></h2>
+<p>이 논문의 기여는 <strong>데이터셋부터 모델에 이르는 총체적 해결책</strong>을 제시했다는 데 있습니다. 주요 기술적 기여와 기존 작업과의 차별성을 정리하면 다음과 같습니다.</p>
+<ul>
+<li><p><strong>세계 최초의 언어 안내 다지 파지 데이터셋 구축:</strong> 저자들은 <strong>DexGYSNet</strong>이라는 <strong>대규모 언어-다지 파지 데이터셋</strong>을 새로 구축했습니다. 이 데이터셋은 <strong>1,800개 일상 물체</strong>에 대해 <strong>50,000쌍</strong>의 로봇 손 자세와 인간 자연어 지시로 이루어져 있습니다. 이전에는 이러한 형태의 데이터가 없어 학습에 어려움이 있었는데, DexGYSNet은 <strong>LLM(대규모 언어 모델)</strong>을 활용한 텍스트 주석 생성과 <strong>손-물체 상호작용 재타깃팅(HOIR)</strong> 기법으로 <strong>비용 효율적</strong>이면서도 <strong>고품질의 데이터</strong>를 확보했다는 점에서 큰 기여를 합니다. HOIR 기법을 통해 <strong>인간 손 모션 캡처 데이터</strong>를 로봇 손 모델로 전이하여 <strong>접촉 지점의 일치</strong>와 <strong>자연스러운 손 자세</strong>를 얻었고, LLM 기반 자동 주석으로 <strong>세밀하고 다양한 표현의 언어 지시</strong>를 생성했습니다. 이는 <strong>기존 작업</strong>들이 소수의 정형화된 지시나 제한된 기능만 다룬 것과 달리, <strong>유연하고 풍부한 언어-행동 쌍 데이터</strong>를 처음 제공한 것입니다.</p></li>
+<li><p><strong>의도 정합성과 품질을 모두 만족하는 </strong>새로운 파지 생성 프레임워크 제안:** 데이터셋을 바탕으로 저자들은 <strong>DexGYSGrasp</strong>라는 <strong>2단계 파지 생성 프레임워크</strong>를 제안했습니다. 이는 <strong>기존</strong>에 하나의 모델로 모든 목표를 달성하려다 <strong>관통 페널티로 인한 성능 저하</strong>를 겪었던 접근들과 달리, 학습 목표를 <strong>두 단계로 분리</strong>하여 문제를 해결합니다. <strong>첫 번째 단계</strong>는 <strong>“의도 및 다양성 파지 생성 (IDGC: Intention &amp; Diversity Grasp Component)”</strong>으로, <strong>언어 의도에 부합하면서 다양한 파지</strong>를 생성하는 <strong>확산 생성 모델</strong>입니다. 이 단계에서는 <strong>관통에 대한 제약을 과감히 제외</strong>하여, 모델이 <strong>의도 정합한 다양한 손 자세 분포</strong>를 자유롭게 학습하도록 합니다. <strong>두 번째 단계</strong>는 <strong>“품질 향상 파지 생성 (QGC: Quality Grasp Component)”</strong>으로, 1단계 출력인 <strong>거친 파지 결과(coarse pose)</strong>를 받아 <strong>미세 조정</strong>함으로써 <strong>안정적이고 물체를 관통하지 않는</strong> 고품질 파지로 개선합니다. 이 단계에서는 <strong>관통 손실과 품질 관련 손실</strong>을 적용하여 손가락들이 물체 표면에 밀착되도록 조정하되, <strong>손바닥의 위치나 전체 의도는 유지</strong>하여 처음 의도에서 벗어나지 않도록 합니다. 이러한 <strong>점진적 학습 전략</strong>은 기존 연구에 없던 발상으로, <strong>복잡한 최적화 문제를 둘로 쪼개어</strong> 각각 해결함으로써 <strong>의도-품질-다양성</strong>을 모두 달성한다는 점에서 차별화됩니다. 저자들은 특히 <strong>관통 손실을 1단계에서 배제</strong>하고 <strong>2단계에서만 적용</strong>하는 <strong>프로그레시브 학습</strong> 아이디어로, 기존 방법들이 직면했던 <strong>학습 상충 문제</strong>를 해결했다는 점을 강조합니다.</p></li>
+<li><p><strong>기존 기법 대비 향상된 성능 입증:</strong> 제안한 DexGYSGrasp 프레임워크는 다양한 <strong>비교 대상(SOTA 기법)</strong>보다 <strong>우수한 성능</strong>을 보였습니다. 예를 들어, <strong>GraspCVAE</strong>(확률적 생성모델), <strong>GraspTTA</strong>(테스트시 최적화 기법), <strong>SceneDiffuser</strong>(확산 모델 기반), <strong>DGTR</strong>(Transformer 기반) 등과 비교했을 때, <strong>의도 정합성 오차가 가장 낮고</strong> 파지 <strong>자세의 다양성은 월등히 높으면서도</strong> 파지 <strong>안정성도 우수</strong>했습니다. 또한 학습 전략의 유효성을 검증하기 위한 <strong>내부 실험(삭제 실험)</strong>에서도, <strong>제안한 2단계 구성과 손실 설계가 없으면 성능이 급격히 악화</strong>됨을 보여주어, 해당 설계가 이 문제에 필수적임을 증명하였습니다. 요약하면, 이 논문은 <strong>새로운 문제 설정</strong>과 함께 이를 해결하기 위한 <strong>데이터셋, 모델, 학습법을 모두 제시</strong>하고, 그 결과로 <strong>사례 연구 분야에서의 새로운 SOTA</strong>를 달성했다는 점에서 큰 기술적 의미를 갖습니다.</p></li>
+</ul>
+</section>
+<section id="모델-아키텍처-및-학습-방법의-구체적-분석" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="모델-아키텍처-및-학습-방법의-구체적-분석"><span class="header-section-number">2.3</span> <strong>모델 아키텍처 및 학습 방법의 구체적 분석</strong></h2>
+<p><strong>DexGYSGrasp 프레임워크</strong>는 앞서 언급한 두 가지 컴포넌트(단계)로 구성됩니다. <strong>첫 번째 컴포넌트(IDGC)</strong>는 <strong>조건부 확산 모델</strong>로서, <strong>물체의 점 구름(point cloud)</strong>과 <strong>언어 임베딩</strong>을 입력 받아 <strong>로봇 손의 포즈(자세 파라미터)</strong>를 생성합니다. 이때 물체의 형상 정보는 <strong>PointNet++</strong>로 인코딩하고, 언어 지시는 <strong>사전 학습된 CLIP</strong> 모델로 임베딩하여 조건으로 활용합니다. 확산모델은 <strong>DDPM (Denoising Diffusion Probabilistic Model)</strong> 기법을 사용하여, 노이즈에서부터 점진적으로 손 자세를 생성해냅니다. 한마디로, IDGC는 <strong>“노이즈 → 손 파지 자세”</strong>로의 <strong>분포 생성</strong>을 학습하는 모듈입니다. 학습 시 <strong>손실 함수</strong>는 <strong>L2 회귀 손실</strong>(예측한 관절 각도 등이 실제 값과 가까워지도록)과 <strong>손 모양 챔퍼 손실</strong>(예측 손 모델과 정답 손 모델 간의 Chamfer 거리 최소화)로 구성됩니다. 중요한 점은, <strong>이 단계에서는 물체와 손의 겹침(관통)에 대한 페널티를 넣지 않습니다</strong>. 관통 제약이 없어야 모델이 <strong>다양한 자세</strong>를 자유롭게 시도하며 <strong>언어 의도에 맞는 거친 파지 형태</strong>들을 폭넓게 익힐 수 있기 때문입니다. 이렇게 함으로써 IDGC는 <strong>의도 정합성과 다양성</strong>을 최우선으로 학습합니다.</p>
+<p><strong>두 번째 컴포넌트(QGC)</strong>는 <strong>Transformer 기반의 후처리 모듈</strong>로, 1단계에서 생성된 거친 파지 결과를 <strong>세밀 조정</strong>하여 <strong>물리적으로 실행 가능한 고품질 파지</strong>로 변환합니다. QGC는 <strong>회귀적 접근(regressive manner)</strong>을 취하는데, 거친 손 자세와 해당 상황의 <strong>물체/손 점구름 정보</strong>를 입력으로 받아 <strong>미세 조정된 새로운 손 자세 출력을 예측</strong>합니다. 이때 학습 데이터는 IDGC로 생성한 거친 파지 결과에 대해, <strong>유사한 의도의 인간 시연 정답(grasp)</strong>을 <strong>타겟</strong>으로 짝지어 구성합니다. 예를 들어 언어 지시가 “컵을 옆면에서 집게손가락과 엄지로 집어라”인 경우, IDGC 출력이 컵 옆면을 향하고 있다면, 그와 <strong>의도적으로 비슷한</strong> 데이터셋 내의 실제 그립 자세를 찾아 <strong>목표 값</strong>으로 삼아 QGC를 학습시키는 방식입니다. 이렇게 하면 QGC가 <strong>언어 의도에 부합하는</strong> 결과를 내도록 보장하면서, 동시에 타겟 파지를 모방하며 <strong>품질 향상</strong>을 배우게 됩니다. QGC의 네트워크는 <strong>트랜스포머 인코더-디코더 구조</strong> 등을 사용하여, <strong>물체와 손의 복합 특징을 고려</strong>하면서 관절 각도 등을 조정하는 것으로 보입니다. 특히 학습 시 <strong>손바닥의 위치나 방향(6-자유도 루트 포즈)</strong>는 크게 변경하지 않고 고정하거나 작은 범위에서만 수정하도록 함으로써, <strong>초기 거친 파지의 의도를 유지</strong>한 채 손가락 배치만 최적화하도록 설계되었습니다. QGC 단계의 손실 함수에는 <strong>물체 관통 페널티</strong>가 비로소 포함되며, 그 외에 목표 파지와의 회귀 손실 등이 사용됩니다. 관통 페널티는 손 모델(mesh)과 물체 점구름 간 <strong>최대 관통 깊이(P)</strong>를 줄이는 방향으로 작용하여, 출력 자세에서 <strong>손이 물체를 뚫고 들어가지 않도록</strong> 만듭니다. 이처럼 <strong>QGC는 품질만을 집중적으로 개선</strong>하기 때문에, 1단계와 대비하여 훨씬 <strong>좁은 탐색 공간</strong>(초기 파지 주변의 작은 조정)에서 효율적으로 학습될 수 있습니다.</p>
+<p>전체적으로 <strong>두 단계의 분리</strong> 덕분에, 1단계 IDGC는 <strong>의도와 다양성에 특화</strong>되어 학습하고 2단계 QGC는 <strong>물리적 타당성과 안정성 확보</strong>에 주력하게 됩니다. <strong>프로그레시브 학습 전략</strong>으로 각 단계의 <strong>최적화 목표가 단순화</strong>되어, 단일 모델로 한 번에 학습할 때 발생하던 <strong>의도-품질 상충 문제</strong>를 해소할 수 있었습니다. 저자들의 설명에 따르면, <strong>모든 손실을 한 단계에 동시에 최적화하려 하면</strong> 한 쪽을 충족하면 다른 쪽이 나빠지는 문제가 컸지만, <strong>단계를 나누고 적절한 손실을 배치</strong>한 덕분에 <strong>의도 정합성, 그립 품질, 다양성</strong> 모두에서 뛰어난 성능을 얻을 수 있었다고 합니다.</p>
+<p>한편, <strong>DexGYSNet 데이터셋</strong> 구축 과정의 <strong>기술적 요소</strong>도 눈여겨볼 만합니다. HOIR(Human-to-robot Hand-Object Interaction Retargeting) 전략을 통해 사람 손 동작을 로봇 손으로 옮길 때 <strong>접촉 지점과 포즈의 일관성</strong>을 유지하도록 했습니다. 이로써 로봇 손이 <strong>사람이 잡은 형태</strong>를 최대한 그대로 모사하는 고품질 파지 데이터를 얻었습니다. 그리고 언어 주석을 달기 위해 GPT 등의 <strong>대규모 언어 모델</strong>을 활용, 각 파지에 대해 <strong>유연하고 상세한 자연어 설명</strong>을 자동 생성했습니다. 예를 들어 한 손 자세에 대해 “검지로 스프레이의 방아쇠를 누르듯이 잡는다”와 같은 문장이 주어지는 식입니다. 이러한 LLM 기반 기법은 사람을 일일이 참여시키지 않고도 <strong>다양한 표현의 지시 문장</strong>을 붙일 수 있게 해, 결과적으로 <strong>풍부한 학습 데이터</strong>를 저비용으로 확보했습니다.</p>
+<p>마지막으로 모델의 <strong>학습 파이프라인</strong>을 보면, 1단계 확산 모델(IDGC)은 약 100 epoch 동안 학습하고, 2단계 QGC는 20 epoch 남짓 학습했다고 합니다. 확산 모델의 샘플링 특성상 <strong>여러 샘플을 생성</strong>할 수도 있는데, 실험에서는 하나의 조건에 대해 8개의 샘플을 뽑아 <strong>다양성</strong>을 평가에 활용하기도 했습니다. 학습에는 <strong>SGD</strong> 등의 최적화 방법이 쓰였으며, 구체적인 하이퍼파라미터(예: 관통 손실 가중치는 2단계에서 얼마를 사용 등)는 논문에 기술되어 있습니다. 종합하면, DexGYSGrasp의 아키텍처는 <strong>확산 모델 + 트랜스포머</strong>의 2단 구조, <strong>손실함수의 단계적 적용</strong>, <strong>데이터셋 기반 지도학습</strong>의 조합으로 이루어져 있습니다.</p>
+</section>
+<section id="실험-결과-분석-데이터셋-비교-대상-성능-지표-평가" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="실험-결과-분석-데이터셋-비교-대상-성능-지표-평가"><span class="header-section-number">2.4</span> <strong>실험 결과 분석 – 데이터셋, 비교 대상, 성능 지표 평가</strong></h2>
+<p><strong>DexGYSNet</strong> 데이터셋은 앞서 말한 대로 <strong>총 50,000개의 (언어 지시, 로봇 손 파지 자세) 페어</strong>로 이루어진 대규모 데이터셋입니다. 저자들은 이 데이터셋을 <strong>객체 인스턴스 수준</strong>에서 분리하여 실험했습니다. 즉, <strong>같은 카테고리</strong>의 물체라도 일부는 학습용, 나머지 20%는 평가용으로 하여, 모델이 <strong>보지 못한 새로운 물체</strong>에 대해서도 파지를 생성하도록 설정했습니다. 이는 <strong>일반화 성능</strong>을 보기 위함으로, 특정 물체 모양만 외우지 않고 <strong>새 물체에도 언어 지시 기반 파지 생성</strong>이 가능한지를 평가한 것입니다.</p>
+<p><strong>평가 지표</strong>는 <strong>의도 정합성</strong>, <strong>파지 품질(안정성)</strong>, <strong>파지 다양성</strong>의 세 측면에서 설정되었습니다. <strong>의도 정합성</strong>은 <strong>예측한 로봇 손의 형태가 목표 의도와 얼마나 일치하는가</strong>를 나타내며, <strong>Chamfer 거리</strong>와 <strong>Contact distance</strong> 두 가지를 사용했습니다. Chamfer 거리는 <strong>예측한 손 모델과 데이터셋 정답 손 모델 간 점구름 거리</strong>로, 값이 작을수록 손의 형태가 정답과 비슷함을 의미합니다. Contact distance는 <strong>예측 손과 정답 손이 물체를 접촉한 지점들의 분포 차이</strong>를 L2 거리로 측정한 것으로, 이것 역시 낮을수록 <strong>접촉 패턴</strong>이 유사함을 뜻합니다. 쉽게 말해 Chamfer와 Contact 지표가 작으면, <strong>“로봇 손이 잡은 모양과 위치가 사람이 의도한 그것에 가깝다”</strong>고 볼 수 있습니다. <strong>파지 품질</strong>은 <strong>안정적으로 물체를 잡았는지</strong>를 평가하며, <strong>Q1 지표</strong>와 <strong>관통 깊이(P)</strong>를 사용했습니다. Q1은 DexGraspNet 논문【15†】에서 정의된 지표로서, 일정 기준(충분한 접촉면적, 허용 관통범위 등)을 만족하는 <strong>성공 그립의 비율</strong>을 의미합니다. 값이 높을수록 파지가 성공적이라는 뜻인데, 0~1 범위가 아닌 <strong>평균 접촉수</strong> 등의 형태로 산출되어 상대 비교에 사용됩니다. <strong>관통 깊이(P)</strong>는 <strong>물체 표면과 손 모델 사이의 최대 겹침 깊이(cm)</strong>로, 값이 클수록 손이 물체를 많이 뚫고 들어갔음을 의미합니다. 이상적인 파지라면 P=0(관통 없음)이겠지만, 시뮬레이션/모델 한계상 약간의 겹침은 발생할 수 있으므로 작을수록 좋다고 봅니다. <strong>파지 다양성</strong>은 <strong>동일 조건에서 생성된 여러 파지 결과의 변동 폭</strong>을 나타냅니다. 하나의 언어 지시와 물체에 대해 모델이 여러 번 파지를 생성해보면 매번 조금씩 다른 자세가 나올 수 있는데, 이 <strong>자세 파라미터들(손의 위치, 회전, 각 관절각)</strong>의 <strong>표준편차</strong>를 계산하여 수치화했습니다. 값이 크면 다양한 자세가 나온다는 뜻이고, 0에 가까우면 매번 비슷한 자세만 생성한다는 의미입니다.</p>
+<p>저자들은 <strong>여러 최신 기법(SOTA)</strong>들을 <strong>비교 대상으로 선정</strong>하여, 제안한 방법의 성능을 평가했습니다. 테이블&nbsp;1에는 대표적인 비교 결과가 정리되어 있습니다. 비교 기법으로는 <strong>GraspCVAE</strong>【48†】(조건부 변분오토인코더 기반 생성), <strong>GraspTTA</strong>【41†】(기 학습된 모델을 테스트시 미세조정하는 기법), <strong>SceneDiffuser</strong>【4†】(3D 장면 확산모델 기반 파지 생성), <strong>DGTR</strong>【7†】(Dexterous Grasping Transformer, 트랜스포머 기반 생성) 등이 포함되었습니다. 공정한 비교를 위해, 이들 기존 기법에도 <strong>언어 조건을 입력</strong>으로 줄 수 있도록 약간의 구조 수정(예: 물체 점구름 특징과 언어 임베딩을 결합)하여 실험했다고 합니다.</p>
+<p><strong>결과를 살펴보면</strong>, <strong>DexGYSGrasp(ours)</strong>가 <strong>전반적으로 가장 우수한 성능</strong>을 달성한 것을 알 수 있습니다. <strong>의도 정합성</strong> 측면에서, Chamfer 거리와 Contact 거리 모두 우리 방법이 <strong>가장 낮았습니다</strong>. 구체적으로 Chamfer 거리의 경우 우리 방법은 <strong>1.198</strong>로, 두 번째로 낮은 SceneDiffuser의 <strong>1.679</strong>보다 훨씬 작고, 다른 방법들(대부분 2.0<del>3.1 이상)에 비해 크게 향상되었습니다. Contact 거리도 우리 방법은 <strong>0.036</strong>으로, 다른 방법들(0.045 이상) 대비 뚜렷하게 낮았습니다. 이는 <strong>예측한 손 자세가 정답 대비 매우 정확히 의도를 따라잡고 있음</strong>을 보여줍니다. <strong>파지 품질(안정성)</strong> 측면에서는, 관통 깊이(P)의 경우 우리 방법은 <strong>0.223&nbsp;cm</strong> 정도로, GraspTTA가 <strong>0.188&nbsp;cm</strong>로 가장 작긴 했지만 그 외 다수 기법들은 0.25</del>0.55&nbsp;cm 수준이어서, 우리 방법이 <strong>상당히 낮은 관통</strong>을 유지함을 알 수 있습니다. Q1 지표는 값이 높을수록 안정적인데, 우리 방법이 <strong>0.083</strong>으로 가장 높았고, 다른 기법들은 0.05<del>0.08 사이였습니다. 특히 GraspTTA는 관통이 적은 대신 Q1이 0.071로 우리보다 낮았고, SceneDiffuser 등은 관통이 약간 더 크면서 Q1은 비슷하거나 더 낮았습니다. 이를 종합하면 <strong>우리 방법은 품질 면에서도 타 기법들과 대등하거나 더 나은 안정성을 확보</strong>하고 있음을 의미합니다. <strong>파지 다양성</strong>은 우리 방법의 두드러진 강점으로 나타났습니다. 우리 방법은 <strong>동일 조건 8회 생성 시 손바닥 위치의 표준편차 약 6.118, 회전 각도 표준편차 55.68, 관절 각도 표준편차 6.118</strong> 등을 기록했는데, 다른 방법들은 회전 각도 변동이 많아야 14 정도(DGTR)이고 대부분 1</del>8 범위에 그쳐 현저히 낮았습니다. 이는 <strong>우리 방법이 하나의 지시에도 아주 다양한 손 모양으로 잡을 수 있음</strong>을 뜻하며, <strong>생성의 풍부함</strong> 측면에서 기존 방법들과 차별화되는 결과입니다. 결국 테이블&nbsp;1의 결과는 <strong>DexGYSGrasp가 의도 일치도와 다양성에서 월등하며, 품질도 희생하지 않는 균형 잡힌 성능</strong>을 보여주는 것을 입증합니다.</p>
+<p>논문에서는 이러한 정량 평가 외에도 다양한 <strong>분석 실험</strong>을 수행하여 제안 기법의 동작을 검증하였습니다. <strong>테이블&nbsp;2</strong>에서는 <strong>프레임워크 구성요소와 학습 전략에 대한 ablation(요소 제거) 실험</strong> 결과를 제시합니다. 여기서는 한 단계 모델로 모든 것을 학습하거나(IDGC만 사용), 1단계 학습 중간에 관통 페널티를 서서히 높이는 등 다양한 변형을 시험했습니다. 그 결과, <strong>두 단계로 나누지 않고 단일 모델로 학습하면 의도-품질-다양성의 균형을 이루지 못하고 한두 측면만 만족</strong>시키는 반쪽짜리 성능을 보였습니다. 또한 <strong>단계를 나누더라도 관통 페널티 사용 방식 등을 우리처럼 하지 않으면 성능이 개선되지 않았고</strong>, 2단계 없이 1단계로만 관통까지 모두 학습시키는 경우 역시 <strong>의도가 크게 어긋나는 문제</strong>가 생겼습니다. 반면 <strong>우리의 프로그레시브 설계(IDGC+QGC 둘 다 적용, 단계별 손실 할당)</strong>만이 <strong>의도 정합성, 품질, 다양성 세 마리 토끼를 동시에 잡는 결과</strong>를 냈습니다. 흥미롭게도, <strong>테스트 타임 적응 기법(TTA)</strong>을 활용해 품질을 높이면 관통은 줄었지만 <strong>의도 일관성이 심각하게 떨어지는</strong> 현상도 관찰되었는데, 이는 <strong>품질만 후처리로 높이는 기존 접근의 한계를 보여주는 예</strong>라 할 수 있습니다. 종합하면 ablation 실험은 <strong>제안한 2단계 구조의 필요성과 설계 선택의 타당성</strong>을 강력하게 뒷받침합니다.</p>
+<p><strong>HOIR 전략의 효과</strong>도 별도로 평가되었습니다. 저자들은 <strong>동일한 파지 데이터를 단순히 로봇 손으로 변경한 경우</strong>와 <strong>HOIR를 통해 접촉 일치시키며 변경한 경우</strong>를 비교하여 데이터 품질을 분석했습니다. 그 결과 HOIR를 사용했을 때 생성된 데이터의 <strong>손-물체 접촉 분포가 실제 사람 파지와 훨씬 유사</strong>해졌고, 모델 학습 시에도 <strong>더 안정적인 수렴과 성능 향상</strong>을 가져왔습니다 (세부 수치는 부록에 제시). 이는 HOIR가 없다면 데이터에 <strong>물체 표면을 스치지 못한 부실한 파지</strong>나 <strong>비현실적 손 모양</strong>이 생길 수 있지만, HOIR로 <strong>자연스러운 파지 예시</strong>들을 제공했기 때문에 모델이 <strong>현실성 높은 파지</strong>를 배울 수 있었음을 의미합니다.</p>
+<p>마지막으로, 저자들은 <strong>실물 로봇 실험</strong>을 통해 제안 기법의 <strong>현실 적용 가능성</strong>도 검증했습니다. <strong>알레그로(Allegro) 로봇 핸드</strong>와 <strong>Flexiv Rizon 4</strong> 로봇 팔, 그리고 <strong>Intel RealSense D415 카메라</strong>로 구성된 실제 환경에서, 여러 가지 물체를 놓고 <strong>자연어 지시대로 집어보는 실험</strong>을 수행했습니다. 현실에서는 물체의 <strong>완전한 3D 형태</strong>를 알 수 없으므로, 카메라로 촬영한 물체 영상을 처리하여 <strong>부분 점구름</strong>을 얻은 뒤, <strong>SAM(Segment Anything Model)</strong>을 활용한 시각적 그라운딩으로 물체만 분리하고 <strong>포인트 클라우드 보완 네트워크</strong>로 <strong>완전한 물체 점구름</strong>을 복원하는 파이프라인을 사용했습니다. 이렇게 얻은 추정 물체 형상을 이용해 우리 모델이 파지 자세를 예측하면, 로봇 팔을 해당 위치로 이동시키고 로봇 손의 관절 각도를 예측 값으로 설정하여 <strong>파지를 실행</strong>했습니다. 그 결과 여러 가지 <strong>다양한 모양의 물체</strong>에 대해 <strong>지시한 방식</strong>으로 로봇 손이 물체를 성공적으로 움켜쥐는 모습을 보여주었고 (예: 스프레이 병의 방아쇠 누르기, 머그컵 손잡이 잡기 등), 이는 <strong>본 논문의 기법이 시뮬레이션을 넘어 현실 로봇에서도 효과적</strong>임을 입증했습니다. 실제 동영상 예시는 논문 사이트를 통해 공개되었으며, 전반적으로 <strong>사람의 언어 지시에 따라 로봇이 물체를 잡는 데 성공하는</strong> 장면들을 확인할 수 있습니다. 다만 센서 오차나 점구름 보완의 한계로 인해 <strong>일부 파지에서 아주 미세한 관통이나 불완전 접촉</strong>이 발생하기도 했지만, 이는 추가적인 제어 보정으로 개선 가능할 것으로 보입니다. 저자들은 전반적인 실험을 통해 <strong>제안 기법이 현재까지 보고된 방법들보다 우수하며, 실제 환경에서도 유용</strong>하다는 것을 강조하고 있습니다.</p>
+</section>
+<section id="강점과-한계-향후-발전-가능성" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="강점과-한계-향후-발전-가능성"><span class="header-section-number">2.5</span> <strong>강점과 한계, 향후 발전 가능성</strong></h2>
+<p><strong>“Grasp as You Say”</strong> 논문의 강점은 명확합니다. <strong>첫째</strong>, <strong>문제 정의의 참신성</strong>입니다. 로봇 파지에 일반적인 자연어를 적용함으로써 <strong>인간-로봇 상호작용의 새로운 지평</strong>을 열었고, 기존 연구들이 다루지 못한 <strong>유연한 의도 반영 파지</strong>를 가능케 했습니다. <strong>둘째</strong>, 이를 뒷받침하는 <strong>데이터셋과 기법의 완성도</strong>입니다. DexGYSNet 데이터셋은 학계 최초로 <strong>자연어 설명이 포함된 대규모 다지 파지 데이터</strong>를 제공하여 향후 관련 연구의 기반이 될 수 있습니다. <strong>HOIR+LLM</strong>을 통한 데이터 구축은 <strong>효율성과 다양성</strong>을 모두 확보한 뛰어난 방법으로, 이후 다른 로봇 행동 데이터셋 구성에도 응용될 수 있을 것입니다. <strong>셋째</strong>, DexGYSGrasp 프레임워크의 <strong>독창적 설계와 효과성</strong>입니다. 관통 페널티에 기인한 학습 어려움을 <strong>2단계 프로그레시브 학습</strong>으로 풀어낸 것은 로봇 학습 분야에서 <strong>복잡한 다목적 최적화 문제를 해결하는 새로운 방법론</strong>으로 평가할 만합니다. 실험으로 입증되었듯, 이 접근법은 <strong>의도, 품질, 다양성이라는 상충하는 요소들을 모두 달성</strong>하여 이전까지 어려웠던 영역에서 성과를 냈습니다. <strong>넷째</strong>, <strong>시뮬레이션과 실제 실험을 아우르는 검증</strong>을 수행한 점도 강점입니다. 논문은 알고리즘 제안에 그치지 않고, <strong>실제 로봇 팔과 손으로 동작시켜 봄으로써 현실성</strong>을 검증했습니다. 이는 해당 기법이 <strong>이론적 성능뿐 아니라 실용적 가치</strong>도 있음을 보여주며, 연구의 완성도를 높입니다.</p>
+<p>그럼에도 불구하고 몇 가지 <strong>한계와 향후 과제</strong>도 존재합니다. 우선, <strong>데이터셋의 범위</strong>에 관한 한계입니다. DexGYSNet은 1,800개의 일상 물체를 포괄하지만, <strong>산업용 복잡한 부품</strong>이나 <strong>비정형 물체</strong> 등은 포함되지 않았을 수 있습니다. 또한 언어 지시도 <strong>파지 동작</strong>에 초점을 맞춘 문장들로 구성되어 있어, <strong>복합적 작업 시나리오</strong>(예: “잡아서 옮겨 놓아라”와 같이 파지 후 다른 행동을 수반하는 지시)에는 대응하지 못합니다. 향후에는 <strong>보다 다양한 객체 및 작업</strong>에 대해 데이터셋을 확장하고, <strong>연속적 조작</strong>까지 포함하는 방향으로 발전시킬 수 있을 것입니다. 둘째, <strong>모델의 복잡도와 실행 시간</strong>도 고려해야 합니다. 확산 모델을 사용한 1단계 생성은 본질적으로 <strong>샘플링에 다수의 확률적 단계</strong>를 거치기 때문에, 실시간 응용에는 속도 제약이 있습니다. 실제 로봇에 적용하려면 <strong>생성 시간 단축</strong>이나 <strong>경량화</strong>가 필요할 수 있습니다. 이를 위해 <strong>디퓨전 모델의 가속화 기법</strong>이나 <strong>단계 축소(예: DDIM)</strong>, 또는 학습된 <strong>픽스드 모션 라이브러리 활용</strong> 등이 연구될 수 있습니다. 셋째, <strong>일반화 능력</strong>에 대한 추가적인 검증이 필요합니다. 본 논문에서는 학습에 사용되지 않은 새 물체에 대해서도 실험했지만, <strong>전혀 보지 않은 새로운 유형의 물체</strong>나 <strong>아주 다른 문장 표현</strong>에 대해서는 성능이 어떻게 되는지 더 살펴봐야 합니다. 예컨대, “이 물체를 아주 느슨하게 쥐어봐”와 같은 <strong>미묘한 힘 조절</strong>이나 추상적인 지시도 처리하려면, 모델을 보완하거나 추가 학습이 필요할 것입니다. 넷째, <strong>물리기반 제한</strong>의 부족입니다. 2단계에서 관통을 줄였다고는 하나, 접촉 마찰이나 동적 안정성 등 <strong>정량화하기 어려운 물리적 요소</strong>는 고려되지 않았습니다. 향후에는 <strong>강화학습(RL)</strong>이나 <strong>물리 시뮬레이터 상의 fine-tuning</strong>으로 진짜 <strong>떨어뜨리지 않고 잡는 안정성</strong>까지 확보하면 더 완벽한 솔루션이 될 것입니다.</p>
+<p>그럼에도, 이러한 한계들은 <strong>현재 연구의 범위 밖</strong>의 것들이고, 본 논문의 기여를 폄하하지는 않습니다. 오히려 이 한계들은 <strong>향후 연구 기회</strong>를 제시합니다. <strong>향후 발전 가능성</strong>으로는, <strong>언어-로봇 상호작용</strong>을 더욱 확장하여 <strong>다단계 작업계획</strong>에 언어 지시를 연결하거나, <strong>시각 인지와 언어, 행위</strong>를 통합하는 종합적인 프레임워크로의 발전이 기대됩니다. 예를 들어, <strong>“컵을 집어 식탁 오른쪽 구석에 놓아둬”</strong> 같은 복합 지시를 수행하려면, 파지뿐 아니라 이동, 놓기까지 통합된 계획이 필요하며, 본 연구의 성과는 이러한 방향으로 나아가는 <strong>시발점</strong>이 될 수 있습니다. 또한 <strong>휴먼 피드백 강화학습(RLHF)</strong> 등을 통해 사용자로부터 파지에 대한 피드백을 받아 <strong>더 미세한 조정</strong>을 학습하는 방법도 고려해볼 수 있습니다.</p>
+<p>요약하면, <em>Grasp as You Say</em> 논문은 <strong>자연어로 로봇 손 파지를 제어하는 혁신적 아이디어</strong>를 제시하고, 이를 구현하기 위한 <strong>데이터셋, 모델, 학습기법의 정교한 조합</strong>을 통해 <strong>새로운 수준의 성능</strong>을 달성한 연구입니다. 로보틱스 전문가에게 본 논문의 접근법은 <strong>다지 로봇 핸드 활용과 인간-로봇 인터랙션</strong> 영역에서 많은 <strong>영감과 시사점</strong>을 줄 것으로 보입니다. 앞으로 이 개념을 바탕으로 한 다양한 응용과 연구의 전개가 기대됩니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

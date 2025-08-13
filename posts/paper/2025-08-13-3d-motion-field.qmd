@@ -63,16 +63,7 @@ description: Object-centric 3D Motion Field for Robot Learning from Human Videos
 # Detail Review
 
 
-좋습니다. "Object-centric 3D Motion Field for Robot Learning from Human Videos" 논문을 로봇공학 전공자를 위한 블로그 스타일로 분석하고, 다음 항목을 중심으로 심층 리뷰를 작성하겠습니다:
-
-* 주요 기술적 기여
-* 실험 설정 및 결과 해석
-* 장점과 한계
-
-조금만 기다려 주세요. 분석이 완료되면 바로 공유드리겠습니다.
-
-
-# 객체 중심 3D 모션 필드: 인간 비디오로 로봇 학습하기 (심층 리뷰)
+> 객체 중심 3D 모션 필드: 인간 비디오로 로봇 학습하기 (심층 리뷰)
 
 &#x20;인간 시연 영상(왼쪽)만으로 학습한 로봇이 유사한 작업을 수행하는 모습(오른쪽). 이 연구는 로봇이 사람 영상을 보고 **제로샷**으로 동작을 학습하도록 하는 새로운 프레임워크를 제안한다.
 
