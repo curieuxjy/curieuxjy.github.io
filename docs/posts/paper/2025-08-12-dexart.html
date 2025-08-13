@@ -343,8 +343,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
-  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a></li>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#배경-로봇-섬세-조작과-관절-객체의-도전" id="toc-배경-로봇-섬세-조작과-관절-객체의-도전" class="nav-link" data-scroll-target="#배경-로봇-섬세-조작과-관절-객체의-도전">배경: 로봇 섬세 조작과 관절 객체의 도전</a></li>
+  <li><a href="#기존-벤치마크의-한계" id="toc-기존-벤치마크의-한계" class="nav-link" data-scroll-target="#기존-벤치마크의-한계">기존 벤치마크의 한계</a></li>
+  <li><a href="#dexart-벤치마크-구성과-특징" id="toc-dexart-벤치마크-구성과-특징" class="nav-link" data-scroll-target="#dexart-벤치마크-구성과-특징">DexArt 벤치마크: 구성과 특징</a></li>
+  <li><a href="#성능-평가와-실험-설정" id="toc-성능-평가와-실험-설정" class="nav-link" data-scroll-target="#성능-평가와-실험-설정">성능 평가와 실험 설정</a></li>
+  <li><a href="#주요-결과와-통찰" id="toc-주요-결과와-통찰" class="nav-link" data-scroll-target="#주요-결과와-통찰">주요 결과와 통찰</a></li>
+  <li><a href="#한계점-및-향후-과제" id="toc-한계점-및-향후-과제" class="nav-link" data-scroll-target="#한계점-및-향후-과제">한계점 및 향후 과제</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -388,9 +396,7 @@ window.Quarto = {
 
 
 <ul>
-<li><a href="https://arxiv.org/abs/2204.12490">Paper Link</a></li>
-<li><a href="https://yzqin.github.io/dex-teleop-imitation/">Project Link</a></li>
-<li><a href="https://github.com/yzqin/dex-hand-teleop">Code Link</a></li>
+<li><a href="https://arxiv.org/abs/2305.05706">Paper Link</a></li>
 </ul>
 <ol type="1">
 <li>🕹️ 이 논문은 다지(multi-finger) 로봇 손을 사용하여 다양한 다관절 객체를 조작하는 능력을 벤치마킹하는 새로운 데이터셋 및 태스크 스위트인 DexArt를 제안합니다.</li>
@@ -398,58 +404,132 @@ window.Quarto = {
 <li>💡 연구 결과, 더 많은 객체로 훈련할수록 일반화 성능이 향상되고, 더 작은 PointNet 인코더가 효율적이며, 객체 부분 분할(part segmentation) 사전 학습이 조작 성능 및 카메라 시점 변화에 대한 강건성을 크게 개선함을 밝혀냈습니다.</li>
 </ol>
 <hr>
-<section id="brief-review" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
-<p>본 논문은 단일 카메라 기반 텔레오퍼레이션(teleoperation)을 통해 숙련된 조작(dexterous manipulation)을 위한 인간 시범 데이터(human demonstration data)를 수집하고, 이를 이용하여 다지(multi-finger) 로봇 핸드에 대한 Imitation Learning 정책을 학습하는 새로운 프레임워크를 제안합니다. 궁극적으로 학습된 정책을 실제 로봇에 성공적으로 전이(transfer)시키는 것을 목표로 합니다.</p>
-<p><strong>I. 소개</strong></p>
-<p>다지 로봇 핸드를 이용한 Dexterous Manipulation은 로봇공학에서 가장 도전적이고 중요한 문제 중 하나입니다. 로봇 핸드와 조작 대상 간의 복잡한 접촉 패턴은 모델링하기 어렵고, 구조화되지 않은 환경에서 접촉이 많은 작업을 해결하는 제어기를 수동으로 설계하는 것은 매우 어렵습니다. 최근 Reinforcement Learning (RL)이 유망한 결과를 보여주지만, 높은 Degree-of-Freedom (DoF)과 불연속적인 접촉은 RL 정책 훈련의 샘플 복잡성(sample complexity)을 증가시킵니다. 또한, RL 보상을 통한 블랙박스 최적화는 예상치 못하거나 안전하지 않은 행동으로 이어질 수 있습니다. 텔레오퍼레이션을 통해 수집된 인간 시범으로부터 학습하는 것은 Dexterous Manipulation을 위한 자연스러운 해결책입니다. 그러나 대부분의 기존 텔레오퍼레이션 시스템은 Virtual Reality (VR) 장치나 유선 글러브(wired gloves)를 필요로 하여 유연성과 확장성(scalability)이 제한됩니다. Vision-based 텔레오퍼레이션은 특수 장비 착용의 필요성을 없애 비용을 절감하고 확장성을 높이지만, 인간 손 움직임을 로봇 손 움직임으로 변환하는 모션 리타겟팅(Motion Retargeting)이라는 새로운 과제를 제시합니다. 이 과정이 직관적이지 않으면 인간 작업자가 로봇을 제어하기 어렵고, 특정 로봇 손으로 수집된 시범은 동일한 로봇에서만 Imitation Learning에 사용될 수 있다는 한계가 있습니다.</p>
-<p>본 논문은 이러한 도전 과제를 해결하기 위해 단일 카메라 텔레오퍼레이션 시스템을 도입합니다. 이 시스템은 iPad와 컴퓨터만으로 효율적으로 3D 시범을 수집할 수 있습니다. 핵심 기여 중 하나는 물리 시뮬레이터(physical simulator) 내에서 각 사용자에 대해 사용자 맞춤형 로봇 핸드(customized robot hand)를 생성한다는 점입니다. 이 핸드는 작업자 손과 동일한 구조를 모방하여 직관적인 인터페이스를 제공하고 데이터 수집 시 불안정한 인간-로봇 핸드 리타겟팅을 피하여 대규모의 고품질 데이터를 얻을 수 있게 합니다. 데이터 수집 후, 맞춤형 로봇 핸드의 궤적(trajectory)은 다양한 실제 로봇 핸드(예: Schunk Robot Hand, Adroit Robot Hand, Allegro Robot Hand)로 변환되어 훈련 시범으로 사용될 수 있습니다. 본 논문의 데이터와 Imitation Learning을 통해 여러 복잡한 조작 작업에서 기존 baseline 대비 큰 개선을 보였습니다. 특히, 학습된 정책이 실제 로봇으로 전이될 때 훨씬 더 강건함(robust)을 보여주었습니다.</p>
-<p><strong>II. 제안하는 시스템 개요</strong></p>
-<p>제안하는 프레임워크는 다음 세 단계로 구성됩니다 (그림 2 참조): 1. <strong>Customized Hand Teleoperation</strong>: iPad에서 RGB-D 비디오 스트리밍을 통해 작업자의 손 모양을 추정하고, 이를 기반으로 물리 시뮬레이터에 사용자 맞춤형 로봇 핸드를 실시간으로 구성합니다. 인간 작업자는 이 맞춤형 로봇 핸드를 제어하여 Dexterous Manipulation 작업을 수행합니다. 이 시스템을 통해 시간당 약 60개의 성공적인 시범을 효율적으로 수집할 수 있습니다. 2. <strong>Multi-Robots Demonstration Translation</strong>: 맞춤형 핸드로 수집된 시범 궤적을 오프라인에서 Motion Retargeting 최적화를 통해 실제 로봇 핸드(Schunk, Allegro, Adroit Robot Hand 등)의 상태-액션 궤적(joint position 및 motor command)으로 변환합니다. 이 변환은 손의 기하학적 구조, DoF, 심지어 손가락 개수가 다른 로봇에도 적용 가능합니다. 3. <strong>Demonstration-Augmented Policy Learning</strong>: 변환된 시범 데이터를 사용하여 Dexterous Manipulation 정책을 훈련합니다. 이는 RL 목적 함수에 시범을 사용하여 Behavior Cloning을 결합하는 방식입니다 (Demo Augmented Policy Gradient, DAPG). 이 프레임워크는 RL 단독으로는 잘 해결되지 않는 복잡한 작업에서 효율적으로 인간과 유사한 기술을 학습할 수 있게 합니다.</p>
-<p>학습된 정책은 XArm-6 로봇에 부착된 실제 Allegro Hand로 Sim2Real 전이 실험을 수행하였으며, 본 논문의 시범 데이터를 학습에 통합함으로써 Sim2Real 갭(gap)에 대한 정책의 강건함을 크게 향상시키는 것을 보여주었습니다.</p>
-<p><strong>III. Customized Hand Teleoperation</strong></p>
-<p>텔레오퍼레이션 시스템은 iPad와 노트북으로 구성됩니다 (그림 3 참조). iPad의 전면 카메라를 사용하여 25fps로 인간 작업자의 RGB-D 비디오를 스트리밍합니다. 시스템은 물리 시뮬레이터, 인간 동작을 포착하는 Hand Detector, 시뮬레이션 환경을 시각화하는 GUI로 이루어져 있습니다.</p>
-<p><strong>A. Task Description</strong></p>
-<p>시뮬레이션 환경은 SAPIEN [47]에서 구축되었으며, 세 가지 Dexterous Manipulation 작업이 설계되었습니다: * <strong>Relocate</strong>: 로봇이 물체(예: YCB dataset의 Tomato Soup Can, Potted Meat Can, Mustard Bottle)를 들어 목표 위치로 옮깁니다. 초기 및 목표 포즈가 무작위로 설정되는 목표-조건부(goal-conditioned) 작업입니다 (그림 1, 첫째 줄). * <strong>Flip</strong>: 로봇이 테이블 위의 머그컵을 뒤집습니다. 머그컵의 위치와 중력 방향을 따라 수평 회전이 무작위로 설정됩니다 (그림 1, 둘째 줄). * <strong>Open Door</strong>: 로봇이 문 손잡이를 돌려 문을 잠금 해제한 다음 당겨서 문을 엽니다. 문의 위치가 무작위로 설정됩니다 (그림 1, 셋째 줄).</p>
-<p><strong>B. Hand Detector</strong></p>
-<p>Hand Detector는 RGB-D 프레임을 입력받아 손목 포즈, 손 포즈 파라미터, 손 모양 파라미터를 출력합니다. MediaPipe [49]와 FrankMocap [50]을 기반으로 구현되었습니다. MediaPipe hand tracker로 손 영역의 바운딩 박스를 감지하고, 이를 FrankMocap 모델에 입력하여 SMPL-X [51] 모델 기반의 포즈 및 모양 파라미터를 추정합니다. SMPL-X 모델은 손의 기하학적 구조에 대한 모양 파라미터와 변형에 대한 포즈 파라미터로 손을 나타냅니다. 추정된 파라미터와 PnP (Perspective-n-Point) 알고리즘을 통해 손목의 카메라 변환을 계산합니다.</p>
-<p><strong>C. Customized Robot Hand</strong></p>
-<p>본 시스템은 각 사용자의 손 기하학적 구조를 기반으로 맞춤형 로봇 핸드를 구축합니다. 초기화 시 추정된 손 모양 파라미터로부터 인간 손의 관절 골격(joint skeleton)을 추출하고, 이를 기반으로 물리 시뮬레이터에 동일한 운동학적 구조(kinematics structure)를 가진 로봇 모델을 만듭니다 (그림 4 참조). 효율적인 충돌 감지 및 안정적인 시뮬레이션을 위해 손바닥은 상자, 손가락은 캡슐과 같은 기본 도형을 사용합니다. 맞춤형 핸드는 SMPL-X 모델과 일치하는 45 DoF (15 * 3)를 가지며, Motion Retargeting 없이 감지된 포즈 파라미터를 사용하여 직접 제어됩니다 (표 I 참조).</p>
-<p>Customized Robot Hand의 관절 각도는 PD controller로 제어됩니다. 추정된 포즈는 저역 통과 필터(low-pass filter)를 거쳐 위치 목표(position target)로 설정됩니다. 시각 텔레오퍼레이션의 지각 오류(perception error) 문제를 해결하기 위해, 손 모양 추정 결과를 신뢰도 점수(confidence score)로 활용합니다. 초기화 시 최적의 시야에서 추정된 모양 파라미터를 ground-truth로 사용하고, 현재 프레임의 모양 파라미터와의 오차를 통해 포즈 정확도의 신뢰도를 계산합니다. 신뢰도 기반 PD 제어는 다음 수식으로 표현됩니다:</p>
-<p><span class="math inline">u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}</span></p>
-<p>여기서 <span class="math inline">u(t)</span>는 관절 토크(joint torque), <span class="math inline">K_p</span>와 <span class="math inline">K_d</span>는 PD 파라미터이며, <span class="math inline">p(t)</span>는 정규화된 확률 밀도(normalized probability density)로 계산된 신뢰도 점수입니다. 지각 오류가 클 경우, 제어기의 강성(stiffness)을 줄여 원치 않는 갑작스러운 움직임을 제거합니다.</p>
-<p><strong>IV. Multi-Robots Demonstration Translation</strong></p>
-<p><strong>A. Hand Pose Retargeting</strong></p>
-<p>맞춤형 핸드에서 수집된 시범을 특정 로봇 핸드로 변환하기 위해 Hand Pose Retargeting을 수행합니다. 본 시스템은 이를 오프라인 최적화 문제로 정의합니다.</p>
-<p><span class="math inline">\min_{q_R}\sum_{i=0}^N|| f_C^i (q_C_t ) - f_R^i (q_R_t )||^2 + \alpha||q_R_t - q_R_{t-1}||^2</span> s.t. <span class="math inline">q_{R_{lower}} \le q_R_t \le q_{R_{upper}}</span></p>
-<p>여기서 <span class="math inline">q_C_t</span>는 맞춤형 로봇의 시간 <span class="math inline">t</span>에서의 관절 위치, <span class="math inline">q_R_t</span>는 특정 로봇(예: Schunk Robot Hand)의 해당 관절 위치입니다. <span class="math inline">f_C^i</span>와 <span class="math inline">f_R^i</span>는 두 로봇의 <span class="math inline">i</span>-번째 키포인트(예: 손가락 끝 위치)에 대한 전방 운동학(forward kinematics) 함수를 나타냅니다. 시간적 일관성(temporal consistency)을 개선하기 위해 관절 위치 변화를 패널티하는 정규화 항을 추가하고, <span class="math inline">q_R_t</span>를 <span class="math inline">q_R_{t-1}</span>의 값으로 초기화합니다. 이 최적화 문제를 해결하면 어떤 특정 로봇에 대해서도 관절 위치 궤적 <span class="math inline">q_R_t</span>를 계산할 수 있습니다 (그림 5 참조).</p>
-<p><strong>B. Action Computation</strong></p>
-<p>Joint Pose Trajectory 외에도 Demo-augmented Policy Learning을 위해 각 손가락 관절에 대한 액션(action), 즉 joint torque 또는 motor control command가 필요합니다. DexMV [54]의 절차를 따라, 먼저 joint pose trajectory를 1차 저역 통과 필터에 통과시킨 후, 로봇 역동학(inverse dynamics)의 조작기 방정식(manipulator equation) <span class="math inline">\tau = f_{inv}(q, q', q'')</span>를 통해 joint torque를 계산합니다.</p>
-<p><strong>V. Demonstration-Augmented Policy Learning</strong></p>
-<p>무작위로 초기화되거나 목표 포즈가 주어지는 작업에서는 단순한 Behavior Cloning만으로는 성공하기 어렵습니다. 따라서 본 논문은 시범을 RL에 통합하는 Imitation Learning 알고리즘인 Demo Augmented Policy Gradient (DAPG) [3]를 사용합니다. DAPG의 목적 함수는 다음과 같습니다:</p>
-<p><span class="math inline">g_{aug} = \sum_{(s,a)\in\rho^\pi}\nabla \ln \pi(a|s)A^\pi (s, a)+\sum_{(s,a)\in\rho^{\pi_{demo}}}\nabla \ln \pi_\theta (a|s)\lambda_0\frac{\lambda_1}{k} \max_{(s',a')\in\rho^\pi}A^\pi (s', a')</span></p>
-<p>여기서 첫 번째 항은 RL의 일반적인 정책 기울기(policy gradient) 목적 함수이고, 두 번째 항은 시범을 이용한 Imitation 목적 함수입니다. 이는 Behavior Cloning과 온라인 RL의 조합으로 볼 수 있습니다. <span class="math inline">\rho^\pi</span>는 정책 <span class="math inline">\pi</span> 하에서의 점유 측정(occupancy measure), <span class="math inline">\lambda_0</span>와 <span class="math inline">\lambda_1</span>은 하이퍼파라미터, <span class="math inline">k</span>는 훈련 반복 횟수입니다. <span class="math inline">A^\pi (s', a')</span>는 이점 함수(advantage function)입니다.</p>
-<p><strong>VI. 실험</strong></p>
-<p><strong>A. Teleoperation User Study</strong></p>
-<p>제안된 Customized Robot Hand의 이점을 입증하기 위해 17명의 인간 작업자를 대상으로 텔레오퍼레이션 사용자 연구를 수행했습니다. 작업자들은 Customized Robot Hand, Schunk SVH Hand, Adroit Hand, Allegro Hand의 네 가지 로봇 핸드 모델을 사용하여 Relocate 및 Open Door 작업을 수행했습니다. Customised Robot Hand의 경우 인간 포즈 파라미터를 각 관절의 PD 목표로 직접 사용했지만, 나머지 세 로봇의 경우 온라인 Motion Retargeting이 필요했습니다.</p>
-<p>결과는 표 II(Relocate)와 표 III(Open Door)에 나타나 있습니다. Customized Robot Hand는 다른 세 로봇 핸드의 온라인 Retargeting 방식에 비해 모든 작업에서 월등히 높은 성공률을 달성했습니다. 예를 들어, Relocate 작업의 경우 Customized Hand는 시간당 약 60개의 성공적인 데모를 수집할 수 있었지만, Allegro Hand를 직접 조작할 때는 10개에 불과했습니다. 사용자들은 Customized Hand가 다른 로봇 핸드보다 제어하기 쉽다고 보고했습니다. 이는 온라인 Motion Retargeting 단계에서 발생하는 제어 불가능한 시간 소모(평균 76 ± 65ms, 큰 편차) 때문인 것으로 분석되었습니다. 온라인 Retargeting을 제거함으로써 시스템은 더 부드럽고 즉각적인 피드백을 제공합니다.</p>
-<p><strong>B. Task Learning Comparison</strong></p>
-<p>Relocate (세 가지 다른 물체), Flip, Open Door 작업에서 처리된 시범 데이터를 사용하여 정책을 훈련하고 RL baseline과 비교했습니다. RL baseline으로는 Trust Region Policy Optimization (TRPO) [56]을 사용했습니다. 정책 및 가치 함수(value function)는 32 × 32의 2-layer Multi-Layer Perceptrons (MLPs)로 구성되었고, TRPO는 각 스텝마다 200개의 궤적을 사용했습니다. Imitation Learning 알고리즘은 DAPG를 사용했으며, 각 작업에 대해 50개의 시범 궤적을 수집하고 이를 특정 로봇으로 Retargeting했습니다.</p>
-<p>훈련 곡선은 그림 6에, 세 가지 특정 로봇 핸드의 성공률은 표 IV에 요약되어 있습니다. Imitation Learning 방식인 DAPG는 대부분의 작업과 로봇에서 RL baseline을 능가했습니다. 이는 Motion Retargeting을 통해 생성된 시범이 정책 훈련을 크게 개선할 수 있음을 보여줍니다. 유일한 예외는 Allegro Hand를 사용한 Open Door 작업이었는데, DAPG는 자연스러운 행동으로 손잡이를 잡고 문을 열려고 시도하는 반면, RL 정책은 큰 힘으로 손잡이를 누르며 마찰에 의존하여 문을 여는 경향을 보였습니다 (그림 8). 이는 시범이 정책의 행동을 예상된(인간과 같은) 안전한 방향으로 조절하는 데 중요한 가치를 제공함을 강조합니다.</p>
-<p><strong>C. Ablation Study</strong></p>
-<p>다양한 동적 조건과 시범 데이터 수의 영향을 조사하기 위해, 물체 마찰, 제어기 파라미터, 물체 밀도, 시범 데이터 수를 대상으로 Relocate (tomato soup can, Schunk Robot) 작업에서 Ablation Study를 수행했습니다 (그림 7). 학습 곡선은 마찰 변화에 강건함을 보였는데, 이는 다지 핸드가 여러 접촉점을 통해 힘 폐쇄(force closure)를 형성하여 마찰에 덜 민감하기 때문입니다. 물체 밀도에 대해서도 유사한 결과가 나타났습니다. 제어기 파라미터의 경우, 강성이 클수록 더 빨리 목표에 도달했지만, 작은 PD 값으로도 작업을 해결할 수 있었습니다. 더 많은 시범 데이터를 사용할수록 더 나은 성능을 달성했으며, 20-30개의 데모에서는 분산(variance)이 더 크게 나타났습니다.</p>
-<p><strong>D. Real-World Robot Experiments</strong></p>
-<p>실제 로봇 실험에서는 XArm-6 로봇 암 [58]에 Allegro Hand를 부착했습니다 (그림 9 참조). Relocate 및 Flip 작업을 평가했으며, Sim2Real 전이를 용이하게 하기 위해 훈련 중 물체 포즈에 가산 가우시안 노이즈(additive Gaussian noise)를 적용하고 마찰, 밀도, PD 제어 파라미터와 같은 동적 파라미터를 무작위화했습니다. 관측 공간은 로봇 고유 상태(proprioceptive state), 물체 포즈(초기 포즈는 RealSense D435 카메라로 캡처된 포인트 클라우드를 ICP 알고리즘으로 추정), 그리고 Relocate의 경우 목표 위치를 포함했습니다.</p>
-<p>Relocate 작업에서는 훈련에 사용된 물체(known object)와 훈련 중 보지 못한 새로운 물체(novel object) 그룹으로 나누어 정책을 평가했습니다 (그림 10). 정량적 결과(표 V)는 Imitation Learning (DAPG)이 순수 RL보다 실제 로봇 전이 시 훨씬 더 큰 성능 차이를 보임을 보여줍니다. 이는 인간과 유사한 조작 정책이 Sim2Real 갭에 더 강건하기 때문으로 추정됩니다. 더욱 흥미롭게도, 학습된 정책은 훈련 중 보지 못한 새로운 물체에도 일반화되었습니다. 이는 다지 핸드가 인간처럼 작동할 때 형상 변화에 대한 일정 수준의 강건함을 제공함을 시사합니다.</p>
-<p>정책 시각화(그림 11)는 Sim2Real 갭에 대한 Imitation Learning 정책의 강건함을 설명합니다. Relocate 작업에서 RL 정책은 불안정한 접촉(두 손가락만 사용)으로 물체를 잡는 경향이 있었지만, 시범으로 훈련된 정책은 네 손가락 모두를 사용하여 안정적으로 잡았습니다. 이로 인해 실제 로봇에서는 RL 정책의 물체가 손에서 미끄러지는 반면, Imitation Learning 정책은 안정적으로 물체를 잡았습니다. Flip 작업에서도 순수 RL 정책은 시뮬레이터에서 컵을 빠르게 밀어 해결했지만, Imitation Learning 정책은 한 손가락을 컵 안에 넣고 손목을 회전시키는 인간과 유사한 행동을 보였습니다. 이러한 RL 정책의 행동은 실제 로봇 핸드에서는 거의 성공하지 못했습니다. 두 가지 예시 모두에서 순수 RL은 시뮬레이터의 물리적 특성을 ’해킹’하여 부자연스러운 행동을 학습하는 경향이 있으며, 이는 실제 세계로 전이되기 어렵습니다. 반면, 본 논문의 시범을 사용하여 인간과 유사한 행동을 학습하는 Imitation Learning은 실제 세계 응용에 훨씬 더 강건하고 안정적인 정책을 가능하게 합니다.</p>
-<p><strong>VII. 결론</strong></p>
-<p>본 논문은 Imitation Learning을 위한 인간 손 조작 데이터를 수집하기 위해 새로운 단일 카메라 텔레오퍼레이션 시스템을 제안합니다. 특히, 다양한 인간 작업자가 데이터를 보다 직관적으로 수집할 수 있도록 맞춤형 로봇 핸드(customized robot hand) 개념을 도입했습니다. 수집된 시범 데이터가 여러 로봇에서의 Dexterous Manipulation 학습을 개선하고, 데이터 수집이 단 한 번만 필요함에도 불구하고 실제 세계에 배치될 때 강건성을 높임을 보여주었습니다.</p>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>이 논문은 로봇이 일상생활에서 인간처럼 다양한 가동형(articulated) 물체를 조작할 수 있도록 하기 위한 새로운 벤치마크인 DexArt를 제안합니다. 현재 로봇 조작은 주로 병렬 그리퍼에 의존하고 있어 제한된 물체에만 적용 가능합니다. 반면, 다중 손가락 로봇 손(multi-finger robot hand)은 인간의 행동에 더 가깝게 모방하고 다양한 가동형 물체 조작을 가능하게 합니다. 본 벤치마크는 물리 시뮬레이터에서 가동형 물체를 이용한 정교한(dexterous) 조작을 다루며, 여러 복잡한 조작 작업을 정의하고 각 작업 내에서 다양한 가동형 물체를 조작해야 합니다. 주요 목표는 학습된 정책의 미등록(unseen) 가동형 물체에 대한 일반화 능력(generalizability)을 평가하는 것입니다. 이는 로봇 손과 물체 모두의 높은 자유도(Degrees of Freedom, DoF) 때문에 매우 어려운 문제입니다.</p>
+<p>이 연구는 일반화를 달성하기 위해 3D 표현 학습(3D representation learning)과 Reinforcement Learning (RL)을 통합합니다. 3D 점군(point cloud)을 관측으로 사용하고 PointNet 인코더를 통해 시각적 표현을 추출하여 의사 결정을 수행합니다. 이 연구는 광범위한 실험을 통해 3D 표현 학습이 3D 점군 입력을 사용하는 RL의 의사 결정에 어떤 영향을 미치는지에 대한 새로운 통찰력을 제공합니다.</p>
+<p><strong>핵심 방법론 (Core Methodology)</strong></p>
+<ol type="1">
+<li><strong>DexArt 벤치마크 구성:</strong>
+<ul>
+<li><strong>작업(Task) 정의:</strong> Faucet (수도꼭지 돌리기), Bucket (양동이 들기), Laptop (노트북 열기), Toilet (변기 뚜껑 열기)의 네 가지 작업을 제시합니다. 각 작업은 로봇 손이 물체의 특정 가동 부분과 상호작용하도록 요구합니다. 예를 들어, Faucet 작업은 수도꼭지 손잡이를 잡고 약 90도 회전시키는 것을 목표로 하며, 이는 다중 손가락 손의 미세한 조작 능력을 평가합니다. Bucket 작업은 양동이 손잡이 아래로 손을 넣어 안정적인 형태 폐쇄(form closure)를 구성하여 들어 올리는 것을 목표로 합니다.</li>
+<li><strong>환경 설정:</strong> SAPIEN 물리 시뮬레이터에서 6자유도(DoF) XArm6 로봇 팔과 16자유도 Allegro Hand를 사용합니다.
+<ul>
+<li><strong>관측 공간(Observation Space):</strong> 두 부분으로 구성됩니다.
+<ul>
+<li><strong>고유 수용 데이터(Proprioceptive Data) <span class="math inline">S_r</span>:</strong> 로봇 전체의 현재 관절 위치, 선형 및 각속도, 그리고 말단 작업기(end-effector) 손바닥의 위치 및 자세를 포함합니다.</li>
+<li><strong>부분 점군(Partial Point Cloud) <span class="math inline">P_o</span>:</strong> 깊이 카메라로 촬영된 가동형 물체와 로봇의 점군을 포함합니다. 이 점군은 로봇 작업 공간 내에서 잘리고 균일하게 다운샘플링됩니다. 또한, 로봇 모델을 사용하여 생성된 가상 로봇 점군(imagined robot point cloud) <span class="math inline">P_i</span>를 <span class="math inline">P_o</span>에 연결하여 손가락과 같은 로봇의 세부 정보를 보완합니다.</li>
+</ul></li>
+<li><strong>행동 공간(Action Space):</strong> 22차원 벡터로 구성됩니다. 로봇 팔에는 목표 선형 및 각속도에 대한 6자유도 작동 공간 제어(operational space control)를 사용하고, Allegro Hand에는 16개 관절의 목표 위치를 제어하는 관절 위치 제어기(PD control)를 사용합니다.</li>
+</ul></li>
+<li><strong>보상 설계(Reward Design):</strong> 세 가지 원칙을 따릅니다: (i) 합리적인 시간 내 해결을 위한 밀집 보상(dense reward), (ii) 자연스럽고 안전한 행동 유도, (iii) 일반적이고 표준화된 구조. 작업은 기능적 부분에 도달, 손과 물체 간 접촉 형성, 작업별 행동 실행의 세 단계로 나뉩니다.
+<ul>
+<li><strong>도달 및 잡기 단계:</strong>
+<ul>
+<li>도달 보상: <span class="math inline">r_{\text{reach}} = \mathbf{1}(\text{stage} == 1) \min(-\|x_{\text{palm}} - x_{\text{object}}\|, \lambda)</span> 여기서 <span class="math inline">\mathbf{1}()</span>는 지시 함수(indicator function), <span class="math inline">x_{\text{palm}}</span>과 <span class="math inline">x_{\text{object}}</span>는 손바닥과 물체의 3D 위치, <span class="math inline">\lambda</span>는 보상 급증 방지를 위한 정규화 항입니다.</li>
+<li>접촉 보상: <span class="math inline">r_{\text{contact}} = \mathbf{1}(\text{stage} \geq 2) \text{IsContact}(\text{palm, object}) \land \left(\sum_{\text{finger}} \text{IsContact}(\text{finger, object}) \geq 2\right)</span> 여기서 <span class="math inline">\text{IsContact}</span>는 충돌 감지 부울 함수입니다. 손바닥과 최소 두 손가락이 물체에 접촉할 때 좋은 접촉이 형성된 것으로 간주합니다.</li>
+</ul></li>
+<li><strong>부분 조작 단계:</strong>
+<ul>
+<li>진행 보상: <span class="math inline">r_{\text{progress}} = \mathbf{1}(\text{stage} == 3)\text{Progress}(\text{task})</span> <span class="math inline">\text{Progress}</span>는 작업 진행도를 나타내는 작업별 평가 함수입니다.</li>
+</ul></li>
+<li><strong>패널티:</strong> 로봇 움직임의 불안정성을 줄이기 위해 행동의 <span class="math inline">L_2</span> norm과 작업별 항을 포함하는 패널티 <span class="math inline">r_{\text{penalty}}</span>를 추가합니다. 총 보상은 이 네 가지 보상 항의 가중 합입니다.</li>
+</ul></li>
+<li><strong>자산 선택 및 주석:</strong> PartNet-Mobility 데이터셋의 가동형 물체 모델을 사용하며, 각 작업에 적합하도록 수동으로 선택하고, 스케일 및 초기 위치를 주석 처리합니다. 로봇과의 초기 교차를 방지하고 목표 달성을 보장하기 위해 무작위성을 적용합니다.</li>
+</ul></li>
+<li><strong>정책 학습 아키텍처 및 시각적 사전 학습(Visual Pre-training):</strong>
+<ul>
+<li><strong>정책 학습:</strong> 카테고리 수준의 일반화를 위해 3D 점군을 관측으로 사용하고 PPO (Proximal Policy Optimization) 알고리즘을 RL 알고리즘으로 채택합니다. PointNet을 점군 특징 추출기(feature extractor)로 사용하며, 이 특징은 로봇 고유 수용 벡터 <span class="math inline">S_r</span>에서 추출된 특징과 결합되어 가치망(value network)과 정책망(policy network)으로 전달됩니다.</li>
+<li><strong>점군 상상(Point Cloud Imagination):</strong> 로봇-물체 상호작용 시 발생하는 폐색(occlusion)과 메모리 제약으로 인한 저해상도 점군 문제를 해결하기 위해, 순방향 운동학(forward kinematics)을 통해 로봇 손가락의 기하학적 형태를 계산하여 가상 점군 <span class="math inline">P_i</span>를 샘플링하고 관측 점군 <span class="math inline">P_o</span>와 함께 PointNet 입력으로 사용합니다. 이는 실제 로봇 환경에서도 접근 가능한 정보입니다.</li>
+<li><strong>사전 학습 데이터셋:</strong>
+<ul>
+<li><strong>DexArt Manipulation Dataset (DAM):</strong> 조작 작업과 동일한 설정으로 렌더링된 점군 관측 데이터를 포함합니다. 로봇과 가동형 물체의 상태를 무작위로 샘플링하여 관측 및 가상 점군을 생성합니다. 분할(segmentation) 사전 학습을 위해 점군을 기능 부분, 나머지 물체, 로봇 손, 로봇 팔의 4개 그룹으로 레이블링합니다.</li>
+<li><strong>PartNet-Mobility Manipulation Dataset (PMM):</strong> PartNet-Mobility에서 직접 렌더링되며, 46개의 물체 카테고리와 각 카테고리당 1,000개의 점군을 포함합니다. 물체 상태와 카메라 시점은 무작위로 샘플링됩니다. 분류(classification)를 위해 각 물체는 동일한 카테고리 레이블을 공유하며, 분할을 위해 가동형 물체의 기능 부분에 대한 정답 분할 마스크를 생성합니다.</li>
+</ul></li>
+<li><strong>사전 학습 방법:</strong> 시각적 특징 추출기(PointNet)의 초기화를 위해 다양한 3D 표현 학습 방법을 벤치마킹합니다.
+<ul>
+<li><strong>지도 학습(Supervised Pre-training):</strong>
+<ul>
+<li><strong>의미 분할(Semantic Segmentation):</strong> DAM 및 PMM 데이터셋에서 PointNet을 학습시켜 점군을 기능 부분, 나머지 물체, 로봇 손, 로봇 팔 등으로 분할합니다.</li>
+<li><strong>분류(Classification):</strong> PMM 데이터셋에서 PointNet을 학습시켜 46개 물체 카테고리 중 하나로 분류합니다.</li>
+</ul></li>
+<li><strong>자기 지도 학습(Self-supervised Pre-training):</strong>
+<ul>
+<li><strong>점군 재구성(Point Cloud Reconstruction):</strong> OcCo 연구를 따라 DAM 데이터셋에서 인코더-디코더(PointNet 인코더 + PCN 디코더) 아키텍처를 사용하여 원본 점군을 재구성합니다. 재구성 손실로는 Chamfer loss를 사용합니다.</li>
+<li><strong>SimSiam:</strong> DAM 데이터셋에서 PointNet을 사용하여 siamese 네트워크를 설계합니다. 동일한 점군의 두 가지 증강된 뷰를 입력으로 받아 PointNet 인코더를 통과시킨 후, 한쪽에서 유사성을 예측하고 다른 쪽에서는 기울기 전파를 중단하여 양쪽의 유사성을 최대화하도록 학습합니다.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol>
+<p><strong>실험 결과 및 주요 관찰 (Experiments and Key Observations)</strong></p>
+<ul>
+<li><strong>주요 결과:</strong> 적절한 시각적 사전 학습이 정책 학습에 이점을 제공하며, 특히 “부분 분할(part segmentation)” 사전 학습은 모든 작업에서 가장 좋은 성능을 보였습니다. 이는 PointNet이 기능적 부분을 더 잘 구별하고 위치를 파악하게 하여, 섬세한 조작 작업에 필수적임을 시사합니다.</li>
+<li><strong>어블레이션 연구(Ablation Study):</strong>
+<ul>
+<li><strong>훈련에 사용된 물체 수:</strong> 더 많은 미등록 물체를 사용한 훈련이 정책의 일반화 능력에 중요함을 보여주었습니다. 50%의 등록된 물체로 훈련한 경우보다 100%를 사용한 경우가 미등록 물체에 대해 일관되게 더 높은 성공률을 보였습니다.</li>
+<li><strong>시각 특징 추출기 크기:</strong> 가장 작은 PointNet(은닉 계층이 하나)이 가장 좋은 성능을 달성하고 샘플 효율성도 뛰어났습니다. 이는 일반적으로 시각 분야에서 더 큰 네트워크가 더 나은 성능을 보이는 것과 상반되는 결과로, RL 최적화에서 큰 인코더가 더 어려운 문제를 야기할 수 있음을 시사합니다.</li>
+<li><strong>비-3D 표현(Non-3D Representation):</strong> R3M의 ResNet-18과 같은 2D 기반 사전 학습 표현과 비교했을 때, PointNet을 사용한 3D 시각 표현 학습이 등록 및 미등록 물체 모두에서 더 나은 조작 성능을 달성했습니다.</li>
+</ul></li>
+<li><strong>시점 변화에 대한 견고성(Robustness to Viewpoint Change):</strong> PointNet 기반 정책은 카메라 시점 변화에 대해 뛰어난 견고성을 보였습니다. 훈련 시점과 크게 다른 시점에서도 성공률이 일관되게 유지되었습니다. 이는 PointNet 아키텍처와 점군 표현 학습에서 비롯된 것으로 분석됩니다.</li>
+</ul>
+<p><strong>결론 (Conclusion)</strong></p>
+<p>이 연구는 가동형 물체에 대한 정교한 조작을 위한 새로운 벤치마크 DexArt를 제안하고, RL 정책의 일반화 능력을 연구했습니다. 주요 통찰력은 다음과 같습니다.</p>
+<ol type="i">
+<li>더 다양한 물체로 RL을 훈련하면 더 나은 일반화 능력을 얻을 수 있습니다.</li>
+<li>RL 훈련에는 큰 인코더가 항상 필요한 것은 아니며, 가장 단순한 PointNet이 가장 좋은 샘플 효율성과 일반화 능력을 보였습니다.</li>
+<li>3D 시각 이해, 특히 부분 분할 사전 학습은 미세한 기능 부분 조작에 도움이 되며, 모든 시각 사전 학습 방법은 큰 기능 부분 조작에 도움이 됩니다.</li>
+<li>PointNet 특징 추출기를 사용한 기하학적 표현 학습은 카메라 시점 변화에 대한 정책의 강력한 견고성을 제공합니다. DexArt가 일반화 가능한 정교한 조작 기술 및 인지(perception)와 의사 결정 간의 공동 발전을 연구하는 플랫폼 역할을 할 수 있기를 기대합니다.</li>
+</ol>
 <hr>
 </section>
-<section id="detail-review" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>DexArt: 관절형 객체 섬세 조작을 위한 범용 벤치마크</p>
+</blockquote>
+<section id="배경-로봇-섬세-조작과-관절-객체의-도전" class="level2">
+<h2 class="anchored" data-anchor-id="배경-로봇-섬세-조작과-관절-객체의-도전">배경: 로봇 섬세 조작과 관절 객체의 도전</h2>
+<p>가정에서 인간이 다루는 일상 물체들의 상당수는 <strong>관절형 객체(articulated objects)</strong>입니다. 문손잡이, 수납장 도어, 수도꼭지, 뚜껑 등은 모두 하나 이상의 회전 또는 슬라이딩 관절을 지니고 있어, 물체 일부를 움직여야 전체 기능을 사용할 수 있습니다. 이러한 물체를 사람처럼 능숙하게 다루는 능력은 <strong>범용 가정용 로봇</strong>에게 필수적입니다. 그러나 로봇에게 인간 수준의 <strong>섬세 조작(dexterous manipulation)</strong> 기술을 학습시키는 일은 쉽지 않습니다. 기존 로봇 팔은 주로 두 손가락 집게 형태의 <strong>패러럴 그리퍼(parallel gripper)</strong>를 사용해왔는데, 이는 구조가 단순한 대신 취급할 수 있는 물체 형태에 제약이 크다는 한계가 있습니다. 예를 들어, 집게형 그리퍼로는 양동이의 손잡이를 들어올리거나 불규칙한 모양의 뚜껑을 여는 등 <strong>복잡한 형상의 물체</strong>를 다루기가 어렵습니다. 반면 <strong>다섯 손가락을 갖춘 인간형 로봇 손</strong>을 사용하면 인간의 손 동작을 보다 가깝게 모방할 수 있어 훨씬 다양한 물체를 조작할 수 있을 것으로 기대됩니다. 물론 다관절 로봇 손 자체가 갖는 높은 자유도(DoF) 때문에 제어가 복잡해지며, 거기에 더해 관절로 연결된 물체의 동적인 움직임까지 다뤄야 하므로 <strong>상태공간과 행동공간이 폭발적으로 늘어나</strong> 학습이 매우 어려운 문제가 됩니다. 사실 최근까지도 강화학습 등을 통해 로봇 손의 섬세 조작을 다루는 연구들은 주로 공 하나를 쥐고 흔들기, 손바닥 위에서 물체 돌리기 등의 <strong>단일 강체 물체</strong>에 국한되는 경우가 많았습니다. 다양한 <strong>관절형 도구</strong>들을 다루는 범용 스킬로 확장하려면, 시각적인 인식과 복잡한 제어 사이의 통합적 접근이 필요하며 이에 따른 새로운 연구 난제가 제기됩니다.</p>
+</section>
+<section id="기존-벤치마크의-한계" class="level2">
+<h2 class="anchored" data-anchor-id="기존-벤치마크의-한계">기존 벤치마크의 한계</h2>
+<p>강화학습 및 로봇 제어 연구의 발전을 위해 여러 <strong>로봇 조작 벤치마크</strong>가 제안되어 왔습니다. 예를 들어, MetaWorld 벤치마크는 50개가 넘는 다양한 작업(task) 환경을 제공하여 강화학습 알고리즘을 평가할 수 있도록 합니다. 그러나 MetaWorld의 각 작업은 하나의 특정 물체만을 대상으로 설계되어 있어, <strong>동일 작업에서 새로운 물체로의 일반화</strong>(generalization)를 측정하기 어렵다는 한계가 있습니다. 이러한 일반화 능력을 다루기 위해 나온 ManiSkill 벤치마크는 여러 유형의 조작 과제와 함께 과제당 다수의 객체 모델을 포함시켜, 한 정책이 <strong>여러 객체 인스턴스에 걸쳐 작동</strong>하도록 평가합니다. 이는 로봇의 범용성을 높이는 방향으로 고무적이었지만, ManiSkill이 취한 <strong>패러럴 그리퍼 사용</strong>이라는 전제에는 근본적인 제약이 있습니다. 두 손가락 그리퍼만으로는 로봇이 할 수 있는 조작의 종류와 방식이 제한되기 때문에, 양동이 손잡이를 드는 등 <strong>멀티핑거 손이 요구되는 섬세 작업</strong>을 다루지 못합니다. 요컨대 기존 벤치마크들은 일반화 문제를 충분히 고려하지 않거나, 로봇 손의 능력이 제한되어 실제 인간 수준의 다양한 작업을 포괄하지 못했습니다. 이로 인해 <strong>관절형 객체</strong>를 사람처럼 자유롭게 다루는 범용적이고 섬세한 조작 기술을 평가하고 향상시키는 데에는 여전히 적절한 평가 환경이 부족했습니다.</p>
+</section>
+<section id="dexart-벤치마크-구성과-특징" class="level2">
+<h2 class="anchored" data-anchor-id="dexart-벤치마크-구성과-특징">DexArt 벤치마크: 구성과 특징</h2>
+<p>이러한 한계를 해결하고자 2023년 CVPR에서 발표된 <strong>DexArt</strong> 벤치마크는, <strong>다관절 로봇 손을 이용해 다양한 관절형 물체를 조작</strong>하는 새로운 평가 표준을 제시했습니다. DexArt는 물리 시뮬레이터 상에서 정의된 여러 개의 조작 <strong>과제(task)</strong>들로 이루어져 있으며, 각 과제마다 <strong>훈련용으로 미리 본 객체(seen)</strong>와 <strong>테스트용으로 처음 보는 객체(unseen)</strong>의 구분을 통해 <strong>정책의 일반화 성능</strong>을 엄밀히 평가할 수 있게 합니다. 이번 벤치마크에서는 대표적인 4가지 조작 과제가 선정되었는데, 구체적인 내용은 다음과 같습니다:</p>
+<ul>
+<li><strong>수도꼭지 돌리기 (Faucet)</strong>: 로봇 손으로 수도꼭지의 손잡이를 잡고 약 90도 정도 회전시켜 <strong>물을 트는 동작</strong>입니다. 이 작업에서는 로봇 팔의 움직임과 다관절 손가락의 협응이 모두 필요하며, 성공 여부는 수도꼭지 손잡이를 돌린 각도로 평가합니다. (이 과제에는 18개의 수도꼭지 모델 중 11개를 훈련에 사용하고 7개로 일반화 성능을 평가합니다.)</li>
+<li><strong>양동이 들기 (Bucket)</strong>: 로봇 손을 양동이의 좁은 손잡이 밑으로 집어넣어 손잡이를 <strong>아래에서 들어올려 드는</strong> 작업입니다. 로봇 손가락을 펼쳐 손잡이를 아래에서 받치고 쥐는 <strong>형상 폐쇄(form closure)</strong>를 구현해야 안정적으로 들 수 있으며, 충분한 마찰 없이는 이 작업이 어렵습니다. 평가 기준은 양동이를 일정 높이 이상 들어올렸는지로 정의됩니다. (이 작업에는 총 19개 양동이 모델 중 11개를 훈련에, 8개를 테스트에 사용합니다.)</li>
+<li><strong>노트북 열기 (Laptop)</strong>: 닫힌 노트북의 화면을 중간 부분에서 손가락들로 집어들어 <strong>노트북을 여는</strong> 작업입니다. 로봇 손가락으로 화면 판을 잡고 젖혀 올리는 동작으로, 평행 그리퍼로도 시도할 수는 있으나 매우 정확한 위치로 파지를 해야 하고 큰 작업 공간이 필요해 어렵습니다. 다관절 손을 활용하면 보다 유연하게 화면을 파지하고 젖힐 수 있으며, 열림 각도의 변화를 가지고 성공을 측정합니다. (노트북 과제에는 17개 모델 중 11개 훈련, 6개 테스트로 사용됩니다.)</li>
+<li><strong>변기 뚜껑 열기 (Toilet)</strong>: 노트북 열기와 유사하게, 닫힌 양변기 뚜껑을 들어올려 여는 작업입니다. 변기 뚜껑은 모양이 크고 불규칙하여 화면이 평평한 노트북보다 <strong>파지가 까다롭고 무거운</strong> 경우가 많아 작업 난이도가 높습니다. 로봇이 뚜껑을 일정 각도 이상 열면 성공으로 간주하며, 이 작업을 통해 보다 <strong>복잡한 형상의 관절물체 조작</strong>에 대한 성능을 평가합니다. (변기 뚜껑은 28개 모델 중 17개 훈련, 11개가 테스트에 사용됩니다.)</li>
+</ul>
+<p>각 과제마다 17~28개의 다양한 객체 모델이 포함되어 있으며, 이 중 약 60%는 훈련에 사용되고 40%는 <strong>한 번도 본 적 없는 새로운 객체</strong>로 분리되어 성능 평가에 활용됩니다. 이러한 구성으로, 예를 들어 로봇이 수도꼭지 과제에서 11개의 수도꼭지 모델을 보고 학습한 후 <strong>처음 보는 7가지 새로운 디자인</strong>의 수도꼭지를 얼마나 성공적으로 틀 수 있는지를 시험함으로써, <strong>범주 수준(category-level)의 일반화 능력</strong>을 객관적으로 측정할 수 있습니다.</p>
+<p>DexArt의 모든 작업 환경은 <strong>SAPIEN</strong> 물리 시뮬레이터 상에 구현되었고, 로봇 플랫폼으로는 6자유도 산업용 로봇팔 <strong>XArm6</strong> 끝에 인간 손과 비슷한 4손가락 <strong>알레그로 로봇 손(Allegro Hand)</strong>(16자유도 손가락 관절)을 장착한 형태를 사용합니다. 로봇이 받는 <strong>관측(observation)</strong> 정보는 두 부분으로 구성되는데, 첫째는 로봇 자체의 관절 각도, 속도, 팔 끝단(손바닥)의 위치와 자세 등의 <strong>프리오프리셉션(proprioception)</strong>이고, 둘째는 장면을 보는 <strong>깊이 카메라로부터 획득한 부분적인 포인트클라우드</strong>입니다. 이 3차원 점군은 로봇 팔과 물체가 놓인 작업공간 주위로 한정하고 다운샘플링하여 사용하며, 거기에 로봇 자신의 모델에서 생성한 점군도 합쳐 입력으로 제공합니다. 이러한 3D 시각 정보는 <strong>PointNet</strong> 신경망으로 처리되어 중요한 물체의 형태와 부위 특성을 인코딩하고, 이를 기반으로 정책이 의사결정을 하게 됩니다. 한편 <strong>행동(action)</strong> 공간은 로봇 팔의 6-DoF 속도 제어 지령과 손가락 16개 관절의 목표 위치로 이루어진 <strong>22차원 연속 벡터</strong>로 정의됩니다. 구체적으로 팔은 Operational Space Control 방식으로 손바닥의 선속도 및 각속도를 명령하고, 손가락은 각 관절의 <strong>목표 각도(position control)</strong>를 PD 제어로 수행하는 형태입니다. 이러한 정의를 통해 로봇은 자유롭게 팔을 움직여 물체를 쥐고 힘을 줄 수 있으며, 다양한 손 모양을 만들어낼 수 있습니다.</p>
+<p>학습을 원활하게 하기 위해 <strong>보상 설계</strong>에도 신경을 썼습니다. DexArt의 모든 과제는 공통적으로 <strong>3단계의 세분화된 보상</strong> 구조를 갖는데, 이를 통해 에이전트가 <strong>접근 → 파지(grasp) → 조작 수행</strong>의 순차 단계를 밟도록 유도합니다. 첫 번째 단계에서는 로봇 손바닥이 해당 물체의 기능적 부위(예를 들어 수도꼭지 손잡이)에 충분히 가까이 접근하면 <strong>거리 기반의 보상</strong>을 줍니다. 둘째 단계에서는 손바닥과 <strong>여러 손가락이 물체와 접촉하여 안정적인 파지</strong>를 형성하면 추가 보상을 지급합니다. 논문에서는 손바닥(palm)과 <strong>최소 두 개 이상의 손가락이 물체와 접촉</strong>한 상태를 만족도 높은 파지로 간주하여 보상하도록 구현했습니다. 마지막 단계에서는 물체의 관절을 목표치까지 실제로 움직여 과제를 <strong>완수한 정도(진행율)</strong>에 따라 보상을 부여합니다. 예를 들어 수도꼭지라면 현재 밸브 손잡이를 얼마나 돌렸는지 각도 변화량을 계산하여, 90도에 가까워질수록 높은 보상을 주는 식입니다. 추가적으로, 불필요하게 과격하거나 불안정한 움직임을 피하도록 <strong>패널티 항</strong>도 포함되었는데, 이는 행동 벡터의 크기에 대한 L2 노름 제재와 과제별로 정의된 약간의 벌점 항으로 구성됩니다. 전체 보상은 이 세 단계 보상과 패널티를 가중합하여 계산되며, 각 작업에 <strong>거의 동일한 구조</strong>를 적용함으로써 학습 난이도와 보상의 일관성을 유지했습니다. 요약하면, DexArt는 다양한 관절형 물체 모델들을 활용한 네 가지 과제 세트와, 다관절 로봇 손을 활용한 표준화된 시뮬레이션 환경, 그리고 일반화 성능을 고려한 평가 프로토콜로 구성되어 있습니다. 객체 모델들은 <strong>PartNet-Mobility</strong> 데이터셋으로부터 선별되었으며, 일관된 물리 모델을 위해 부적절한 모델은 제외하고 크기나 초기 위치 등을 사람이 직접 조정했습니다. 훈련 중에도 에피소드마다 객체의 초기 배치 각도나 위치를 약간씩 랜덤하게 변화시켜, 정책이 보다 <strong>다양한 상황</strong>에 노출되도록 처리했습니다. 이러한 세심한 환경 구축으로, DexArt는 기존에 다루기 어려웠던 범용 <strong>섬세 조작</strong>의 학습을 체계적으로 연구할 수 있는 장을 제공합니다.</p>
+</section>
+<section id="성능-평가와-실험-설정" class="level2">
+<h2 class="anchored" data-anchor-id="성능-평가와-실험-설정">성능 평가와 실험 설정</h2>
+<p>DexArt에서는 학습된 정책의 성능을 판단하기 위해 각 에피소드가 <strong>성공적으로 완료</strong>되었는지의 비율인 <strong>성공률(success rate)</strong>을 주된 지표로 사용합니다. 성공 기준은 과제에 따라 앞서 언급한 관절 이동이 일정 임계치 이상 달성되었는지로 정의되며, 예를 들어 수도꼭지의 경우 제한 시간 내에 밸브를 90도 가까이 돌렸다면 성공으로 기록합니다. 특히 중요한 것은 <strong>일반화 평가</strong>로서, <strong>훈련에 사용된 물체들(Seen)</strong>에서의 성공률뿐 아니라 <strong>처음 접하는 새 물체(Unseen)</strong>들에서의 성공률을 별도로 측정한다는 점입니다. 이를 통해 정책이 훈련 때 본 적 없는 모양의 객체에도 얼마나 잘 대응하는지를 객관적으로 확인할 수 있습니다. 그 외 보조 지표로 에피소드당 누적 보상(<strong>return</strong>)의 평균도 보고하며, 학습 <strong>샘플 효율성</strong>을 비교하기 위해 학습이 진행됨에 따라 성공률이 상승하는 곡선의 기울기 등을 함께 분석합니다. 모든 실험은 동일한 PPO(Proximal Policy Optimization) 알고리즘과 파라미터 세팅 하에 과제별로 <strong>3개의 서로 다른 시드</strong>를 사용해 반복 학습하여 결과의 신뢰도를 높였습니다.</p>
+<p>본 논문에서는 <strong>여러 가지 학습 설정을 비교 평가</strong>하여 DexArt 과제에서의 성능 변화를 상세히 분석하였습니다. 먼저, <strong>시각 인코더 신경망</strong>(PointNet)에 대해 서로 다른 <strong>사전 학습(pre-training)</strong> 방법들을 적용한 후 강화학습을 진행한 경우들을 비교했습니다. 구체적으로, PointNet을 <strong>지도학습 방식</strong>으로 객체 <strong>분류</strong>(46개 범주의 객체 분류) 또는 <strong>부분 분할(segmentation)</strong> 과제를 수행하도록 미리 학습시키거나, <strong>자기지도학습 방식</strong>으로 <strong>포인트클라우드 복원(reconstruction)</strong>이나 <strong>SimSiam</strong> 방식으로 사전학습시킨 후, 이렇게 얻은 가중치를 초기화값으로 써서 RL을 진행하는 실험들이 수행되었습니다. 그리고 이들과 <strong>아무 사전학습 없이</strong> 처음부터 학습한 경우를 대비하여, <strong>시각 표현 학습의 효과</strong>를 정량적으로 평가했습니다. 다음으로, <strong>훈련에 사용된 객체의 수를 절반으로 줄였을 때와 모두 사용했을 때</strong>를 비교하여, 주어진 <strong>훈련 데이터의 다양성</strong>이 일반화 성능에 미치는 영향을 실험적으로 검증했습니다. 예를 들어 수도꼭지 작업에서 원래 11개의 훈련 객체 중 5~6개만 가지고 학습시킨 정책과 11개 모두 사용한 경우를 비교하는 식입니다. 세 번째로, PointNet <strong>시각 인코더의 모델 크기</strong>를 작게/중간/크게 세 가지로 변경하여, <strong>신경망 용량</strong>에 따른 학습 속도와 성능 차이를 살펴보았습니다. 마지막으로, 학습된 정책의 <strong>카메라 시점 변화에 대한 강인성</strong>을 평가했습니다. 이는 학습 당시 고정된 시점이 아니라, <strong>임의의 새로운 각도</strong>에서 촬영된 깊이 이미지로부터 얻은 포인트클라우드를 입력했을 때도 정책이 잘 동작하는지를 보는 실험입니다. 특히 이 실험에서는 <strong>3D 포인트넷 기반 정책</strong>과, 대비군으로 <strong>2D 이미지 기반 정책</strong>을 함께 시험하였습니다. 2D 정책은 RGB 카메라 영상을 입력으로 하고 ResNet-18 신경망을 시각 백본으로 사용하는데, 사전학습으로 <strong>R3M</strong> (대규모 인간 동작 영상으로 학습된 표현) 모델 가중치를 초기화한 후 DexArt 과제를 학습시킨 것입니다. 두 정책을 모두 다양한 시점의 입력에 놓아보며, <strong>3D 대 2D 시각 표현의 견고성 차이</strong>도 분석했습니다. 이러한 다양한 실험 설정은 DexArt 벤치마크의 포괄성을 잘 보여주며, 각각 정책의 <strong>표현 학습, 훈련 데이터 구성, 모델 설계, 일반화 및 강인성</strong> 측면에 대한 유의미한 정보를 제공합니다.</p>
+</section>
+<section id="주요-결과와-통찰" class="level2">
+<h2 class="anchored" data-anchor-id="주요-결과와-통찰">주요 결과와 통찰</h2>
+<p>위와 같은 벤치마크 실험을 통해 여러 흥미로운 결과가 도출되었으며, 특히 다음과 같은 <strong>핵심 통찰</strong>을 얻을 수 있었습니다:</p>
+<ul>
+<li><p><strong>훈련 데이터 다양성의 중요성:</strong> 한 작업에 대해 <strong>훈련에 사용한 객체 종류가 많을수록</strong> 새로운 객체에 대한 일반화 성능이 유의미하게 향상되었습니다. 각 과제에서 훈련에 투입된 객체 수를 절반으로 줄인 경우와 100% 모두 사용한 경우를 비교하면, 후자가 <strong>훈련 중 내내 테스트 객체에 대한 성공률이 더 높게 유지</strong>되는 양상을 보였습니다. 이는 다양한 형태의 물체들을 두루 경험하며 학습하는 것이 <strong>더 범용적인 시각 표현</strong>을 익히게 함을 의미합니다. 다만 객체 종류가 늘어나면 한꺼번에 학습해야 할 변수가 많아져 <strong>학습 속도는 오히려 느려질 수도 있다</strong>는 관찰도 있었는데, 실제 실험에서 훈련 초기 수렴 속도는 적은 객체로 학습한 쪽이 빠르지만 최종 성능은 다양한 객체를 사용한 쪽이 높았습니다. 결국 충분한 훈련 데이터 다양성이 <strong>정책의 일반화 능력을 높이는 열쇠</strong>임을 확인한 것입니다.</p></li>
+<li><p><strong>큰 신경망이 항상 유리한 것은 아님:</strong> 시각 특성을 뽑는 PointNet의 <strong>모델 크기</strong>를 달리한 실험에서 의외의 결과가 나왔습니다. 복잡한 구조의 대형 모델보다 <strong>간결한 소형 모델</strong>이 일관되게 <strong>더 나은 학습 성능</strong>을 보인 것입니다. 가장 작은 PointNet이 모든 환경에서 <strong>에피소드 성공률과 반환값 측면 모두 최고 성과</strong>를 냈고, 학습도 가장 효율적이었습니다. 이는 일반적인 컴퓨터 비전 관점에서 생각하면 다소 놀라운 결과인데, 논문 저자들은 <strong>대규모 신경망은 강화학습에서 최적화가 어려워지는 경향</strong>이 있으며 이전 연구들에서도 유사한 보고가 있었다고 언급합니다. 이번 결과는 <strong>파라미터 수를 줄여 모델을 단순화</strong>하는 것이 오히려 탐색을 용이하게 하고 과적합을 줄여, <strong>샘플 효율을 높이는 효과</strong>가 있을 수 있음을 시사합니다.</p></li>
+<li><p><strong>객체 부위 인식의 중요성:</strong> 멀티핑거 로봇 손으로 <strong>물체의 일부분(기능적 부위)을 조작</strong>해야 하는 과제의 특성상, 정책이 그 <strong>물체의 부위를 식별하고 파악</strong>하는 능력이 성능에 큰 영향을 미칩니다. 실험에서 <strong>부위 분할(segmentation)</strong> 과제로 PointNet을 사전학습한 경우, 네 가지 모든 작업에서 <strong>가장 높은 최종 성공률</strong>을 기록했고 학습 초기의 향상 속도도 빨랐습니다. 다른 사전학습 방법들도 노트북 열기 등의 일부 과제에서는 성능 향상에 도움을 주었지만, <strong>작은 손잡이와 같은 섬세한 부위</strong>가 중요한 작업들에서 분할 사전학습의 이점이 특히 두드러졌습니다. 연구진이 시각화한 바에 따르면, 분할 학습을 거친 모델은 수도꼭지의 작은 손잡이 부분을 포인트클라우드 상에서 정확히 구별해내지만, <strong>재구성</strong> 위주로 학습한 모델은 물체의 전체 형태만 파악할 뿐 세밀한 부분은 놓치는 경향이 있었습니다. 결국 <strong>부위 인지 능력</strong>을 기르는 사전학습(예: 기능성 부위에 라벨을 준 3D 분할 데이터로의 학습)이 <strong>관절 객체 조작에 특화된 시각 표현</strong>을 형성하여 정책 학습을 크게 도와준다는 결론을 얻을 수 있습니다.</p></li>
+<li><p><strong>3D 표현 학습의 강인성:</strong> 포인트클라우드 기반으로 학습한 정책은 <strong>카메라 시점이 달라져도 성능이 안정적</strong>으로 나타났습니다. 한 각도에서 학습한 정책을 전혀 다른 방향에서 본 입력으로 실행해도 성공률 저하가 미미했고, <strong>상당한 시점 변화에도 정확도가 유지</strong>되었습니다. 반면 동일한 작업을 <strong>2D 카메라 영상</strong>으로 학습한 ResNet-18 기반 정책은, 훈련 때와 다른 뷰포인트의 입력에 대해서 <strong>성공률이 급격히 떨어지는 현상</strong>을 보였습니다. 이는 3차원 포인트클라우드로 학습된 표현이 <strong>시각적 관점 변화에 본질적으로 불변</strong>(invariant)한 성질을 가지고 있는 반면, 평면 영상 기반 표현은 카메라 각도의 변화에 민감함을 보여줍니다. DexArt 결과는 이러한 3D 표현 학습의 이점을 정량적으로 증명해주었고, 특히 시뮬레이터와 현실 로봇 간 <strong>카메라 위치 불일치</strong> 문제 등에서 3D 기반 접근이 얼마나 유용한지 강조하고 있습니다. 실제 로봇에 정책을 이식할 때 카메라 캘리브레이션이나 시점 변화로 인한 성능 저하를 최소화할 수 있다는 점에서, <strong>기하학적 3D 표현의 활용</strong>은 큰 강점으로 작용할 것입니다.</p></li>
+</ul>
+<p>이 외에도 실험에서 <strong>2D 대 3D 입력의 절대 성능 비교</strong>를 보면, 동일한 강화학습 알고리즘과 비슷한 사전학습을 했을 때 <strong>PointNet(3D)</strong> 기반 정책이 <strong>ResNet-18(2D)</strong> 기반 정책보다 훈련이 잘 되고 최종 성공률도 높았습니다. 이는 관절 조작과 같이 <strong>정확한 형상 파악이 필요한 작업에는 3D 정보가 훨씬 유리함</strong>을 보여주는 결과입니다. 전반적으로 DexArt를 통해 얻은 통찰들은 향후 로봇 학습 연구에서 <strong>데이터 다양성</strong>, <strong>표현 학습 기법</strong>, <strong>모델 구조 선택</strong>, <strong>입력 형태 결정</strong> 등에 중요한 지침을 제시합니다.</p>
+</section>
+<section id="한계점-및-향후-과제" class="level2">
+<h2 class="anchored" data-anchor-id="한계점-및-향후-과제">한계점 및 향후 과제</h2>
+<p>DexArt 벤치마크와 연구는 <strong>범용 로봇 섬세 조작</strong>을 향해 나아가는 의미있는 진전을 이루었지만, 동시에 몇 가지 <strong>제약과 향후 과제</strong>를 남겨두고 있습니다. 첫째, 본 연구 결과들은 모두 <strong>시뮬레이터 환경</strong>에서 얻어진 것이므로, 이를 실제 로봇에 적용하기 위해 넘어야 할 <strong>시뮬레이션-현실 간 격차(sim-to-real gap)</strong>가 존재합니다. 현실에서는 센서 잡음, 정확한 물리 파라미터 차이, 마찰 등 여러 불확실성이 추가되며, 시뮬레이터에서처럼 카메라 시점을 이상적으로 맞추기도 어렵습니다. 따라서 학습된 정책을 <strong>실제 로봇에 이식하여 실험</strong>하고, 필요한 도메인 적응이나 보정 기법을 연구하는 것이 다음 단계로 필요합니다. 둘째, DexArt에서 다룬 작업 유형이 아직은 제한적입니다. 주로 <strong>회전 관절</strong>(힌지 형태)의 움직임을 다루는 과제들로 구성되어 있는데, 서랍을 여는 <strong>슬라이딩 관절</strong> 조작이나 가위 사용처럼 <strong>복합적인 다단계 작업</strong> 등은 포함되지 않았습니다. 향후 벤치마크를 확장하면서 이러한 다양한 형태의 <strong>일상 조작 시나리오</strong>를 추가한다면, 로봇의 범용 능력을 더욱 폭넓게 평가하고 향상시킬 수 있을 것입니다. 마지막으로, 본 논문에서는 각 과제마다 <strong>별도의 정책</strong>을 학습시켰지만, 실제로는 한 로봇이 여러 작업을 수행할 수 있어야 합니다. 따라서 <strong>멀티태스크 학습</strong>으로 여러 종류의 조작 기술을 단일 정책에 통합하거나, 혹은 사람의 시범 없이 스스로 학습하도록 하는 <strong>자율학습</strong> 기술 등으로 발전시킬 필요가 있습니다. 이를 통해 <strong>보상 설계의 부담을 줄이고</strong> 더욱 <strong>일반적인 학습 프레임워크</strong>로 나아가는 연구가 이어질 것으로 보입니다. DexArt가 제시한 환경과 평가 체계는 이러한 향후 연구를 촉진하는 <strong>발판</strong>이 될 것이며, 궁극적으로 가정용 로봇이 사람처럼 다양한 물건을 능숙하게 다루는 날을 앞당기는 데 기여할 것으로 기대됩니다.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

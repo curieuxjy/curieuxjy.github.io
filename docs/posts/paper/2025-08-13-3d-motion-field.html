@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-13">
+<meta name="description" content="Object-centric 3D Motion Field for Robot Learning from Human Videos">
+
+<title>📃3D Motion Field 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a></li>
+  <li><a href="#객체-중심-3d-모션-필드-인간-비디오로-로봇-학습하기-심층-리뷰" id="toc-객체-중심-3d-모션-필드-인간-비디오로-로봇-학습하기-심층-리뷰" class="nav-link" data-scroll-target="#객체-중심-3d-모션-필드-인간-비디오로-로봇-학습하기-심층-리뷰"><span class="header-section-number">3</span> 객체 중심 3D 모션 필드: 인간 비디오로 로봇 학습하기 (심층 리뷰)</a>
+  <ul class="collapse">
+  <li><a href="#기술적-기여" id="toc-기술적-기여" class="nav-link" data-scroll-target="#기술적-기여"><span class="header-section-number">3.1</span> 기술적 기여</a></li>
+  <li><a href="#실험-결과-해석" id="toc-실험-결과-해석" class="nav-link" data-scroll-target="#실험-결과-해석"><span class="header-section-number">3.2</span> 실험 결과 해석</a></li>
+  <li><a href="#장점과-한계" id="toc-장점과-한계" class="nav-link" data-scroll-target="#장점과-한계"><span class="header-section-number">3.3</span> 장점과 한계</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃3D Motion Field 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">diffusion</div>
+    <div class="quarto-category">motion</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Object-centric 3D Motion Field for Robot Learning from Human Videos
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 13, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2506.04227">Paper Link</a></li>
+<li><a href="https://zhaohengyin.github.io/3DMF/">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 로봇 학습에서 인간 영상을 활용하는 주요 과제는 액션 지식을 추출하는 것이며, 본 논문은 객체 중심 3D 모션 필드를 로봇 학습을 위한 새로운 액션 표현으로 제안합니다.</li>
+<li>⚙️ 제안된 프레임워크는 시뮬레이션 학습을 통해 노이즈가 심한 RGBD 영상에서 정밀한 객체 3D 모션을 강건하게 추출하는 ‘디노이징’ 3D 모션 필드 추정기를 구현합니다.</li>
+<li>📊 실제 실험 결과, 본 방법은 기존 방식 대비 3D 모션 추정 오류를 50% 이상 줄였고, 다양한 작업에서 이전 방식보다 월등히 높은 평균 약 55%의 제로샷 성공률을 달성하며 정밀 조작 능력까지 보여주었습니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>로봇 학습에서 데이터는 주된 병목 현상입니다. 대규모의 고품질 로봇 데이터를 실제 세계에서 수집하는 것은 비용이 많이 들고 복잡한 작업의 경우 정신적으로도 어렵습니다. 인간 객체 상호작용 비디오는 이러한 과제를 극복하기 위한 유망한 수단으로 떠오르고 있습니다. 이러한 비디오는 확장 가능하며 풍부하고 자연스러운 복잡한 작업 시연을 담고 있습니다. 그러나 비디오에서 액션 지식 (또는 액션 표현)을 추출하여 정책 학습에 사용하는 방법은 여전히 핵심 과제입니다. 기존의 액션 표현들(예: video frames, pixelflow, pointcloud flow)은 모델링 복잡성 또는 정보 손실과 같은 내재적 한계를 가집니다.</p>
+<p>본 논문은 인간 비디오에서 로봇 학습을 위한 액션 표현으로 object-centric 3D motion field를 사용할 것을 제안합니다. object-centric 3D motion field는 입력 이미지에서 객체 픽셀에 대한 밀집된 위치 및 모션 필드로, 객체의 관찰 가능한 각 지점이 각 작업에서 어떻게 움직여야 하는지를 나타냅니다. 이 표현은 로봇 제어를 위한 최소한의 충분한 3D 정보를 보존하고, 이미지 기반이며, 객체 중심적이어서 cross-embodiment transfer를 단순화하며, RGBD 비디오에만 의존합니다. 본 논문은 zero-shot control을 위해 이 표현을 비디오에서 추출하는 새로운 프레임워크를 제시합니다.</p>
+<p>이 프레임워크는 두 가지 주요 단계로 구성됩니다.</p>
+<p><strong>Phase I: Seeing 3D Motion Field in Noise (3D Motion Field 추출)</strong></p>
+<p>첫 번째 단계는 노이즈가 많은 RGBD 비디오에서 정확한 3D motion field를 추출하는 것입니다. 기존의 direct approach는 노이즈가 많은 depth 측정값과 pixel tracker 오류로 인해 부정확한 3D 모션을 초래합니다. 이를 해결하기 위해, 본 논문은 노이즈가 많은 센서 측정값으로부터 groundtruth 3D motion field를 재구성하는 “denoising” 3D motion field estimator를 학습하는 방법을 제안합니다. 깊이 노이즈는 시뮬레이션하기 쉬운 특성을 가지고 있으며, 이 태스크는 기하학적 데이터만 포함하므로 simulation으로 훈련된 estimator는 real world로 잘 전이됩니다.</p>
+<ul>
+<li><strong>데이터 생성:</strong> ShapeNet 데이터셋의 객체와 무작위로 생성된 강체를 사용하여 훈련 객체를 생성합니다. 무작위로 카메라와 객체 위치를 설정하고 무작위 twist motion(translation 및 rotation)을 적용하여 여러 스텝 동안 객체를 이동시킵니다. ray casting 및 projection을 통해 초기 프레임의 각 관찰된 픽셀에 대한 3D pixel movement와 groundtruth 3D motion을 계산하여 입력 및 레이블 데이터를 생성합니다 (Figure 3 좌측). 256x256 해상도의 8M 샘플을 생성합니다.</li>
+<li><strong>데이터 증강:</strong> 훈련 중 다양한 데이터 augmentation을 적용하여 센서 노이즈를 시뮬레이션합니다. depth에는 무작위 missing value, white noise, wrong value 효과를 적용합니다. pixel flow 입력에는 무작위 Gaussian noise를 적용하고 random dropout을 사용하여 부분적/희소한 pixel flow에서도 추론할 수 있도록 합니다 (Phase II-A 라벨링 속도 향상). subset masking도 적용하여 복잡한 객체 윤곽을 근사합니다. 이는 Denoising Autoencoder와 유사한 아이디어입니다.</li>
+<li><strong>모델 아키텍처:</strong> 3D motion field estimator f는 dual head UNet 모델을 사용합니다 (Figure 4). 이 모델은 Fdepth와 Fmotion을 별도의 저수준 디코더 브랜치(fdepth, fmotion)를 통해 예측합니다. 입력에 dense한 “intrinsic” map feature Imap <span class="math inline">\in R^{H \times W \times 4}</span>을 concatenated 합니다. Imap은 <span class="math inline">((y - c_y)/f_y, (x - c_x)/f_x, 1/f_y, 1/f_x)</span>로 정의되며 (식 1), 정확한 Fmotion 예측에 중요한 low-level 정보를 제공합니다.</li>
+<li><strong>훈련:</strong> weighted Huber loss를 사용하여 모델을 훈련합니다 (식 2): <span class="math display">L = E_{x,F,M \sim D_{sim}} \|M \odot (f_{depth}(x) - F_{depth})\| + \alpha\|M \odot (f_{motion}(x) - F_{motion})\|</span>. 여기서 Dsim은 시뮬레이션 데이터셋, M은 객체 마스크, <span class="math inline">\odot</span>는 요소별 곱이며, 손실은 객체 부분에만 적용됩니다. <span class="math inline">\alpha</span>는 가중치 하이퍼파라미터입니다. AdamW optimizer를 사용합니다.</li>
+</ul>
+<p><strong>Phase II: Predicting Object 3D Motion Field for Control (제어를 위한 3D Motion Field 예측)</strong></p>
+<p>정확한 3D motion field를 추출하는 estimator를 확보한 후, 인간 비디오를 사용하여 제어 정책을 훈련합니다.</p>
+<ul>
+<li><strong>데이터셋:</strong> 인간 객체 상호작용 비디오 데이터셋 Dhuman을 사용합니다. 이 데이터셋은 SAM2를 사용하여 각 프레임에서 작업 관련 객체의 segmentation을 추출하고, CoTracker3를 사용하여 각 객체 지점의 noisy 3D pixel flow를 추출한 다음, 미리 학습된 estimator를 통해 정확한 3D motion field로 변환하는 전처리 과정을 거칩니다. 객체가 비디오 세그먼트 전체에서 일관되게 보이는 (완전히 가려지지 않은) 경우에만 사용합니다.</li>
+<li><strong>모델 및 훈련:</strong> 정책 네트워크 <span class="math inline">\pi</span>는 segmented RGBD 이미지를 입력으로 사용하여 레이블된 3D motion field를 예측하도록 훈련됩니다. motion field가 이미지 형태이므로, Gaussian policy 또는 Diffusion policy를 사용할 수 있습니다 (Figure 4). dual-head UNet 아키텍처를 재사용합니다. 일반적인 회귀 손실 함수를 사용하여 훈련합니다 (식 3): <span class="math display">L_{\pi} = E_{o,F,M \sim D_{human}} \|M \odot (\pi_{depth}(o, \tilde{F}, t) - F_{depth})\| + \alpha\|M \odot (\pi_{motion}(o, \tilde{F}, t) - F_{motion})\|</span>. 여기서 o는 segmented RGBD 관찰, F는 groundtruth object 3D motion field (추정기가 레이블링), M은 객체 마스크입니다. <span class="math inline">(\tilde{F}, t)</span>는 Diffusion model의 noised motion field sample과 timestep입니다. 정책 네트워크는 작업 관련 객체 정보만 사용하므로 human domain과 robot domain 간의 차이가 최소화됩니다. random masking data augmentation을 적용하여 robustness를 향상시킵니다. Diffusion model의 경우 “masked noise sample”을 입력으로 사용합니다.</li>
+<li><strong>배포:</strong> 추론 시, 예측된 3D motion field F를 로봇 액션으로 변환해야 합니다. 로봇이 이미 객체를 단단히 잡고 있으므로 변환은 간단합니다. 객체 마스크의 각 픽셀에 대해 F를 사용하여 카메라 프레임에서의 현재 및 미래 3D 좌표를 계산하여 두 개의 point cloud <span class="math inline">P_0, P_1 \in R^{N \times 3}</span>를 얻습니다. 이 point cloud들은 점별 대응 관계가 있으므로 SE(3) transformation <span class="math inline">T_o = \{R, t\}</span>를 직접 해결하여 정렬할 수 있습니다. <span class="math inline">\|RP_0^T + t - P_1^T\|^2</span>를 최소화하며, Kabsch method를 통해 폐쇄형 해를 얻습니다. outlier 처리를 위해 RANSAC도 사용합니다. 카메라 포즈가 로봇 베이스 프레임 {b}에서 <span class="math inline">T_{bc}</span>라고 가정하면, 원하는 로봇 액션은 <span class="math inline">T_a = T_{bc}T_oT_{bc}^{-1}</span>로 계산됩니다.</li>
+</ul>
+<p><strong>실험:</strong> real world 실험을 통해 제안하는 방법의 효과를 입증합니다. Intel D435 RGBD 카메라와 XArm7 로봇 팔을 사용합니다.</p>
+<ul>
+<li><strong>3D Motion Field Estimator 평가:</strong> 로봇 팔로 객체를 잡고 카메라 앞에서 움직이는 RGBD 비디오를 촬영하여 ground truth transformation과 함께 test set으로 사용합니다. 제안하는 방법은 baseline인 “direct” method보다 50% 이상 낮은 SE(3) motion error를 달성합니다 (Figure 8 좌측). 입력 깊이에 노이즈가 많더라도 부드러운 깊이와 모션 필드를 성공적으로 재구성합니다 (Figure 6, 14). adversarial robustness 테스트에서 제안하는 방법은 노이즈에 더 강건함을 보여줍니다. Ablation studies에서는 intrinsic map의 두 요소 (좌표 및 inverse focal length) 모두 성공적인 학습에 중요함을 확인했습니다 (Figure 8 중앙).</li>
+<li><strong>로봇 학습 정책 평가:</strong> 인간 비디오 데이터셋으로 훈련된 정책을 사용하여 real world task에서 zero-shot success rate를 평가합니다. Task들은 Pick, Rotate, and Place, Line Tracking, Tool Use I: Pushing, Tool Use II: Wrench, Insertion입니다. 제안하는 방법은 기존 방법들(General Flow 등)보다 훨씬 높은 평균 성공률을 달성합니다 (약 55%, 기존 방법들은 10% 미만) (Figure 8 우측). fine-grained manipulation인 insertion 태스크에서도 높은 정밀도를 보여주며 성공합니다 (Figure 7). 객체 중심적 입력 표현 덕분에 배경 변화에 대한 robustness도 관찰됩니다.</li>
+<li><strong>정책 Ablation:</strong> Fine-grained task의 경우 Diffusion policy가 Gaussian policy보다 정확하고 고품질의 motion field를 생성하는 데 중요함을 확인했습니다. 또한 Diffusion model에서 객체 마스크 외부 영역의 노이즈를 마스킹하는 것이 훈련을 단순화하고 성능을 향상시키며, 훈련 중 object masking augmentation이 subtle한 domain gap을 줄이는 데 중요함을 발견했습니다 (Table 1).</li>
+</ul>
+<p><strong>결론:</strong> 본 논문은 object-centric 3D motion field 표현을 사용하여 인간 비디오로부터 로봇 제어 정책을 학습하는 새로운 프레임워크를 시연했습니다. 제안하는 방법은 강력한 3D motion estimator와 밀집된 flow prediction 아키텍처를 도입하여 기존 표현의 주요 한계를 극복하고 더 나은 cross-embodiment transfer 및 배경 일반화를 가능하게 합니다. 실험 결과는 모션 추정 및 다양한 real world task 전반에 걸쳐 기존 방법 대비 상당한 개선을 보여주며, 정밀 조작 태스크 처리에서 전례 없는 효과를 입증했습니다. 본 방법은 확장 가능한 인간 비디오 데이터셋을 활용하여 다재다능하고 일반화 가능한 로봇 에이전트를 훈련할 수 있는 새로운 가능성을 열어줍니다.</p>
+<p><strong>제한 사항:</strong> 완전한 occlusion 상황에서의 지식 추출 미고려, 그리퍼 외 로봇 손으로의 확장, 움직이는 카메라로의 확장, soft-body 처리에 대한 추가 연구 필요.</p>
+<p><strong>주요 기여:</strong> 1. 로봇 학습을 위해 object-centric 3D motion field를 사용하고 이를 비디오에서 추출하는 새로운 학습 프레임워크 제안. 2. real world에서 object-centric 3D motion field를 학습하고 예측하는 간단하고 새로운 아키텍처 제시 (인간 비디오만으로 로봇 기술 학습 가능). 3. 구성 요소의 real world 검증 (motion estimation 오류 50% 이상 감소, 기존 방법 능가, fine-grained manipulation 기술 획득).</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<p>좋습니다. “Object-centric 3D Motion Field for Robot Learning from Human Videos” 논문을 로봇공학 전공자를 위한 블로그 스타일로 분석하고, 다음 항목을 중심으로 심층 리뷰를 작성하겠습니다:</p>
+<ul>
+<li>주요 기술적 기여</li>
+<li>실험 설정 및 결과 해석</li>
+<li>장점과 한계</li>
+</ul>
+<p>조금만 기다려 주세요. 분석이 완료되면 바로 공유드리겠습니다.</p>
+</section>
+<section id="객체-중심-3d-모션-필드-인간-비디오로-로봇-학습하기-심층-리뷰" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 객체 중심 3D 모션 필드: 인간 비디오로 로봇 학습하기 (심층 리뷰)</h1>
+<p> 인간 시연 영상(왼쪽)만으로 학습한 로봇이 유사한 작업을 수행하는 모습(오른쪽). 이 연구는 로봇이 사람 영상을 보고 <strong>제로샷</strong>으로 동작을 학습하도록 하는 새로운 프레임워크를 제안한다.</p>
+<section id="기술적-기여" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="기술적-기여"><span class="header-section-number">3.1</span> 기술적 기여</h2>
+<p><strong>데이터 병목 문제와 기존 접근의 한계:</strong> 로봇 제어 정책 학습에는 대규모의 로봇 시연 데이터가 필요하지만, 실제 로봇으로 양질의 데이터를 모으는 일은 비용과 시간이 많이 드는 어려운 작업입니다. 이에 대한 대안으로 <strong>인간-객체 상호작용 비디오</strong>가 주목받고 있습니다. 하지만 사람이 등장하는 영상을 로봇 학습에 활용하려면, 영상으로부터 <strong>행동 표현</strong>(action representation)을 효과적으로 추출하는 것이 관건입니다. 기존에 제안된 다양한 표현 방식들이 있지만 각각 단점이 있었습니다. 예를 들어, 미래 <strong>비디오 프레임 자체를 행동으로 예측</strong>하는 접근은 영상이 불필요하게 복잡하고 흐릿해 학습을 어렵게 만들었고, <strong>2D 픽셀 흐름(Optical Flow)</strong> 기반 표현은 3차원 정보가 손실되는 문제가 있었습니다. <strong>3D 포인트클라우드 흐름</strong>은 센서 잡음에 민감해 부정확했고, <strong>SE(3) 객체 자세 변환</strong> 기반 방법은 미리 알고 있는 물체 3D 모델에 의존하며 강체(rigid) 물체로 한정되는 한계가 있었습니다. 요컨대, <strong>로봇 학습을 위한 이상적인 행동 표현이 무엇인지 명확하지 않은 상황</strong>이었고, 이에 대한 해답을 이 논문이 제시합니다.</p>
+<p><strong>객체 중심 3D 모션 필드(Object-centric 3D Motion Field)의 개념:</strong> 저자들은 <strong>객체의 3차원 움직임</strong> 자체에 초점을 맞춘 새로운 행동 표현을 제안합니다. 구체적으로, 연속된 두 영상 프레임 사이에서 <strong>화면에 보이는 각 지점(pixel)</strong>의 깊이 및 3D 이동값을 나타낸 <strong>4채널 밀집 이미지</strong> 형태의 정보를 정의합니다. 첫 번째 채널에는 현재 프레임 각 픽셀의 깊이값이, 나머지 세 채널에는 다음 프레임으로의 3D 이동 벡터(dx, dy, dz)가 저장됩니다. 이처럼 <strong>픽셀 단위로 해당 물체 표면의 이동</strong>을 표현함으로써, 카메라 <strong>내부 파라미터</strong>(intrinsics)와 함께하면 각 점의 3D 위치 변화까지 완전히 재구성할 수 있습니다. 중요한 것은 이 표현이 오직 <strong>관심 물체(object)</strong>에 국한되도록 <strong>객체 중심</strong>으로 설계되었다는 점입니다. 사람이 어떻게 손을 움직였는지 등의 정보는 배제하고, <strong>작업을 수행함에 있어 물체가 어떻게 이동해야 하는지만 캡처</strong>합니다. 이러한 설계는 인간과 로봇의 팔/손 구조 차이를 극복해 <strong>플랫폼 간(embodiment 간) 지식 전이</strong>를 쉽게 하고, 배경이나 사람 모습이 달라도 동일한 작업으로 학습할 수 있게 합니다. 요약하면 객체 중심 3D 모션 필드는 <strong>로봇 제어에 필요한 최소한의 3D 정보만 유지</strong>하고, 이미지 기반 표현으로서 <strong>강력한 비전 모델들과 결합</strong>할 수 있으며, <strong>구체적인 3D 모델 사전 지식 없이</strong> RGB-D 영상만으로 추출 가능하다는 장점이 있습니다.</p>
+<p><strong>핵심 아이디어 및 차별성:</strong> 객체 중심 3D 모션 필드를 활용함으로써 이 연구는 <strong>사람 시연 영상만으로 로봇을 가르치는</strong> 새로운 프레임워크를 구현했습니다. 기존 방법들과 달리, 이 접근법은 <strong>로봇 데이터를 전혀 사용하지 않는 제로샷 학습</strong>, <strong>물체 3D 모델이나 자세 추정 불필요</strong>, <strong>실행 중 피드백을 통한 폐루프 제어</strong>, <strong>깊이 센서 노이즈에 강인함</strong>, <strong>복잡한 배경이나 방해물에 대한 일반화</strong> 등의 측면에서 두드러진 이점을 보입니다. 이러한 특징들은 논문의 기법이 앞서 언급한 기존 연구들의 한계를 효과적으로 극복했음을 나타냅니다.</p>
+<p> <em>그림: 논문의 전체적인 학습 프레임워크 개요. (위) <strong>Phase I:</strong> 시뮬레이션에서 다양한 객체와 랜덤 3D 이동으로 구성된 데이터를 생성하여, <strong>3D 모션 필드 추정기</strong>를 학습시킵니다. 이 모델은 노이즈가 섞인 깊이/흐름 입력으로부터 부드럽고 정확한 3D 모션 필드를 복원하도록 훈련됩니다. (아래) <strong>Phase II-A:</strong> 학습된 추정기를 활용해 실제 인간 영상에서 객체의 3D 모션 필드를 추출합니다. <strong>SAM</strong>과 <strong>CoTracker</strong>로 물체를 분할 및 추적한 후, 추적 결과(노이즈 있는 3D 픽셀 흐름)를 추정기에 넣어 정확한 3D 모션 필드 레이블을 얻습니다. <strong>Phase II-B:</strong> 이렇게 레이블링된 인간 시연 데이터로 <strong>3D 모션 필드 예측 정책 모델</strong>을 학습합니다. 이 정책은 새로운 관측 이미지(분할된 RGB-D 입력)를 받아 해당 작업에서 물체가 어떻게 움직여야 하는지를 3D 모션 필드 형태로 예측합니다. 마지막으로 예측한 모션 필드를 로봇 제어 명령(SE(3) 이동)으로 변환하여 실제 로봇을 움직입니다.</em></p>
+<p><strong>Phase I: 노이즈 제거 3D 모션 필드 추정기</strong> – 깊이 노이즈 문제 해결: 일반적인 RGB-D 카메라는 조명이나 물체 움직임에 따라 <strong>심각한 깊이 노이즈</strong>를 발생시키며, 이는 3D 모션 추정에 큰 오차를 유발합니다. 논문에서는 이 문제를 해결하기 위해 <strong>대규모 시뮬레이션 데이터로 학습한 ‘디노이징(denoising) 3D 모션 필드 추정기’</strong>를 제안했습니다. 연구진은 ShapeNet 등에서 다양한 모양의 가상 객체를 가져와 무작위 크기와 위치로 배치하고, 임의의 3D 이동(병진+회전)을 발생시켜 다량의 <strong>합성 RGB-D 영상 쌍</strong>을 생성했습니다. 각 사례마다 노이즈 없는 <strong>정확한 3D 모션 필드</strong>를 레이블로 계산하고, 입력으로는 인위적으로 노이즈를 추가한 깊이 지도와 2D 추적 결과(픽셀 흐름)를 사용했습니다. 이렇게 <strong>8백만 개가 넘는 학습 샘플</strong>을 생성하여 추정기 신경망을 훈련했는데, 주로 <strong>U-Net</strong> 구조를 활용하였고 출력으로 깊이 보정값과 3D 이동값을 각각 예측하는 <strong>듀얼 헤드(decoder)</strong> 방식을 취했습니다. 또한 카메라 좌표계에서의 <strong>픽셀 위치좌표 및 초점거리 역수</strong>로 이루어진 <strong>내부파라미터 맵</strong>을 추가 입력 채널로 주어, 신경망이 투영 기하의 미분관계까지 학습하도록 설계했습니다. 이렇게 함으로써 픽셀 움직임을 정확한 3D 이동으로 환산하는 데 필요한 정보(예: 깊이에 따른 z축 이동 스케일 변화)를 네트워크가 효율적으로 활용할 수 있었습니다. 학습 손실은 객체 영역에 한해 적용되는 Huber 손실로 안정적으로 구성했고, 깊이 구멍(missing data)이나 오차에 robust하도록 입력에 <strong>마스크 및 부분 랜덤 결손</strong> 등의 노이즈 증강도 수행했습니다. 그 결과 이 모델은 <strong>노이즈가 있는 실제 RGB-D 영상에서도 정확한 3D 모션 필드를 복원</strong>해낼 수 있게 되었고, 시뮬레이터로 학습했음에도 내용이 순수 기하학적이라 <strong>실세계로의 sim-to-real 격차가 매우 작음</strong>을 확인했습니다. 실제 실험에서 이 기법은 기존의 직접 계산 방법 대비 <strong>3D 운동 추정 오차를 50% 이상 줄여주는 성과</strong>를 보였습니다.</p>
+<p><strong>Phase II: 객체 중심 3D 모션 필드 예측 정책</strong> – 영상에서 정책으로: Phase I이 3D 모션 필드를 <strong>“보는” 능력</strong>을 확보했다면, Phase II에서는 로봇이 실제로 동작할 수 있도록 <strong>“예측하고 따라하는” 능력</strong>을 학습합니다. 우선 다양한 <strong>인간 시연 RGB-D 영상 데이터셋</strong>을 수집하여, 앞서 학습한 추정기로 각 영상의 <strong>과제 관련 물체 움직임</strong>을 모두 3D 모션 필드로 변환하고 레이블로 삼았습니다. 이 때 <strong>SAM (Segment Anything Model)</strong>을 활용해 <strong>관심 객체를 매 프레임 자동 분할</strong>하고, <strong>CoTracker</strong>로 객체 픽셀들을 프레임 간 <strong>추적하여 픽셀 흐름</strong>을 얻은 뒤, 추정기를 통해 <strong>정밀한 3D 운동 레이블</strong>을 획득합니다. 이렇게 준비된 데이터로 <strong>정책 신경망(모션 필드 예측기)</strong>을 학습하는데, 입력은 <strong>분할된 객체의 RGB-D 영상</strong>이고 출력은 해당 장면에서 <strong>목표로 하는 물체의 3D 모션 필드</strong>입니다. 네트워크 구조는 Phase I의 U-Net 기반을 대부분 공유하며, 출력이 이미지 형태이므로 <strong>확률적 생성 모델</strong>인 <strong>확산 모델(diffusion model)</strong>을 도입해 정밀도를 높였습니다. diffusion 정책의 학습에는 출력 모션 필드에 노이즈를 추가한 샘플들을 단계별 복원하도록 하여, <strong>기존 회귀(gaussian) 접근보다 안정적이고 높은 해상도의 결과</strong>를 얻을 수 있었습니다. 학습 시 <strong>객체 마스크 영역 외의 부분은 무시</strong>하도록 하여 배경의 불필요한 노이즈 영향을 줄였으며, 인간 손 vs 로봇 그리퍼로 인한 <strong>물체 외형 차이</strong>에 대응하기 위해 <strong>랜덤 마스킹 증강</strong>을 실시하여 약간의 도메인 차이를 보완했습니다. 이렇게 준비된 정책은 <strong>사람이나 로봇의 형태 정보를 전혀 보지 않고 오직 물체와 작업 맥락만</strong> 활용하기 때문에, 사람 영상으로 학습했어도 로봇에 그대로 적용하는 데 격차가 매우 작습니다. 실제로 학습된 정책망은 <strong>카메라 영상만 보고도</strong> 인간 시연에서 추출한 것과 동일한 형식의 3D 모션 필드를 예측하며, 이를 최종 로봇 명령으로 변환해 <strong>즉각 실행에 옮길 수 있게</strong> 됩니다.</p>
+<p><strong>로봇 제어로의 변환:</strong> 정책이 출력한 <strong>3D 모션 필드</strong>는 곧 <strong>물체의 3차원 목표 이동</strong>을 의미하므로, 이를 로봇의 <strong>잡고 있는 물체 이동 명령(SE(3) 변환)</strong>으로 변환합니다. 방법은 간단합니다: 현재 프레임에서 물체 마스크 내 <strong>각 픽셀의 현재 3D 좌표</strong>를 깊이값과 카메라 투영으로 계산하고, 모션 필드의 (dx,dy,dz)를 더해 <strong>목표 3D 좌표</strong>를 얻습니다. 이렇게 얻은 현재-목표 점군(point cloud) 쌍은 픽셀 단위로 1:1 対응되므로, 이들을 가장 잘 맞춰주는 <strong>최적의 회전·병진 변환(SE(3))</strong>을 폐쇄해형 해법(Kabsch 알고리즘)으로 계산합니다. 노이즈나 외란에 강건하도록 RANSAC으로 이상치도 제거한 뒤 최종 변환을 얻으면, <strong>로봇 기준 좌표계</strong>로 변환하여 로봇 팔에 해당 이동을 실행시키면 됩니다. 이 변환 계산은 매우 빠르고 (300~1000Hz 수준) 로봇 제어 루프에 무리 없이 통합됩니다. 단, 이 논문에서는 <strong>로봇의 물체 잡기/놓기</strong> 동작은 별도의 모듈(사전에 확보된 그리퍼 제어 정책)에 맡기고 있으며, 학습된 정책은 <strong>물체를 잡은 이후의 움직임</strong>에 초점을 맞추고 있습니다. 이는 <strong>사람 손동작을 로봇에 그대로 모방하는 것이 어렵고 불필요</strong>하다는 저자들의 판단에 따른 것으로, 차후 <strong>어떤 부분을 잡아야 하는지</strong> 등의 <strong>접촉에 대한 암묵적 지식(affordance)</strong>은 추가 학습이 필요하지만 현재는 분리하여 고려한 것입니다.</p>
+<p>요약하면, <strong>이 논문의 기술적 기여</strong>는 다음과 같습니다:</p>
+<ul>
+<li>인간 시연 영상으로부터 로봇 행동을 학습하기 위한 <strong>새로운 행동 표현으로 객체 중심 3D 모션 필드를 도입</strong>하고, 이를 추출하고 활용하는 <strong>학습 프레임워크</strong>를 제시했습니다.</li>
+<li><strong>시뮬레이션 기반의 3D 모션 필드 추출 파이프라인</strong>과 <strong>현실 세계 영상에서의 예측 모델</strong>이라는 <strong>간단하면서도 효과적인 아키텍처</strong>를 고안하여, <strong>노이즈가 많은 RGB-D 영상에서도 정교한 객체 움직임 추출</strong>이 가능함을 보였습니다. 이를 통해 <strong>인간 영상만으로 새로운 로봇 기술을 가르칠 수 있는</strong> 길을 열었습니다.</li>
+<li>제안한 구성 요소들을 실제 로봇 실험으로 검증한 결과, <strong>모션 추정 오차 50% 이상 감소</strong>, <strong>다양한 작업에서 평균 55%의 성공률</strong>(이전 기법들은 10% 미만)이라는 뛰어난 성능을 보였고, <strong>순수 인간 손 시연으로 학습한 정책이 정밀 삽입 작업까지 구현</strong>하는 것을 최초로 시현해 보였습니다.</li>
+</ul>
+</section>
+<section id="실험-결과-해석" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="실험-결과-해석"><span class="header-section-number">3.2</span> 실험 결과 해석</h2>
+<p><strong>실험 환경:</strong> 저자들은 <strong>Intel RealSense D435</strong> RGB-D 카메라(정지된 상태)로 사람 시연 영상을 수집하고, <strong>UCT 교육용 로봇팔(XArm7)</strong>과 병렬 그리퍼로 실제 작업을 수행하는 실험을 구성했습니다. 카메라는 작업대로부터 약 40–50cm 거리에서 물체를 바라보도록 배치되었고, 로봇 손목 카메라는 사용하지 않았습니다. 학습시 입력 영상 해상도는 적절히 크롭 및 리사이즈하여 사용했습니다. 실험은 크게 두 부분으로 나뉩니다: (1) <strong>3D 모션 필드 추정기(Phase I)의 정밀도 평가</strong>, (2) <strong>학습된 정책(Phase II)의 로봇 작업 성공률 평가</strong>입니다.</p>
+<p><strong>1. 3D 모션 필드 추정 성능 평가:</strong> 합성 데이터로 학습된 <strong>추정기 모델</strong>이 실제 환경에서도 정확히 작동하는지 확인하기 위해, 저자들은 <strong>로봇이 물체를 임의로 움직이는 장면</strong>을 직접 만들어 <strong>정확한 기준 답</strong>과 함께 테스트했습니다. 로봇 그리퍼로 다양한 모양의 물체들을 쥔 채 무작위로 흔들어서 (병진+회전 운동) 카메라 앞에서 움직이고, 이 때 로봇의 실제 그리퍼 포즈 변화로부터 <strong>물체의 실제 3D 변환량(ground-truth)</strong>을 계산했습니다. 그런 다음 <strong>제안된 추정기</strong>와 <strong>기존의 직접 계산 방식(깊이값+추적 결과로 바로 3D 계싼)</strong>을 비교하여, 복원된 <strong>물체 이동 변환의 오차</strong>를 측정했습니다. 결과는 <strong>Figure 8 (왼쪽)</strong> 그래프로 제시되는데, 물체의 <strong>평행이동 MSE</strong>와 <strong>회전 행렬 오차(norm)</strong> 지표 모두에서 제안 방법이 <strong>기존 대비 현저히 낮은 오차</strong>를 기록했습니다. 특히 깊이 입력에 인위적으로 잡음(Gaussian noise)을 추가해 공격적인 <strong>강건성 테스트</strong>를 수행한 경우, 기존 방법은 오차가 급격히 커진 반면 제안 방법은 <strong>훈련시 노이즈에 대비한 덕분에</strong> 오차 수준이 거의 증가하지 않았습니다. 또한 네트워크 설계 요소의 유효성도 확인했는데, <strong>카메라 내부 파라미터 맵</strong>을 입력에 포함시킨 경우와 아닌 경우를 비교한 <strong>어블레이션(ablation)</strong>에서, <strong>픽셀 좌표와 초점거리 정보가 없을 때 성능이 크게 떨어지는</strong> 것이 입증되었습니다. 이는 본문의 유도대로 <strong>화면 좌표와 카메라 모델 정보가 3D 운동 예측에 필수적</strong>임을 보여주며, 작은 시야각 변화(±10도)에서조차 <strong>초점거리 값의 차이가 예측 정확도에 영향</strong>을 줌을 확인했습니다.</p>
+<p><strong>2. 인간 영상으로 학습한 정책의 로봇 작업 평가:</strong> 다음으로, 진짜 <strong>인간 시연만으로 학습된 정책</strong>이 실제 로봇 <strong>물체 조작 작업</strong>들을 성공적으로 수행할 수 있는지 시험했습니다. 저자들은 여러 가지 대표적인 물체 조작 과제를 선정하여 벤치마크로 사용했습니다. 평가한 <strong>실제 작업과 목표</strong>는 다음과 같습니다:</p>
+<ul>
+<li><strong>1. 잡아서 돌려 놓기 (Pick, Rotate, and Place):</strong> 로봇이 물체를 집어들고 특정 각도로 회전시킨 후 목표 위치에 내려놓는 작업. 최종적으로 <strong>정해진 자세</strong>로 정확히 물체를 배치해야 성공으로 간주됩니다.</li>
+<li><strong>2. 선 추적 (Line Tracking):</strong> 펜 모양의 손전등을 집어 들어 책상 위에 놓인 <strong>전선 모양 라인</strong>을 따라 이동시키는 작업. 손전등 불빛이 계속 선을 비추면서 <strong>정해진 경로를 끝까지 따라가면</strong> 성공이며, 중간에 크게 벗어나면 실패입니다.</li>
+<li><strong>3. 도구 사용 I - 밀어서 옮기기 (Tool Use I: Pushing):</strong> 막대기나 밀대 같은 <strong>도구</strong>를 집어 한 물체를 목표 위치까지 <strong>밀어서 이동</strong>시키는 작업.</li>
+<li><strong>4. 도구 사용 II - 렌치 조이기 (Tool Use II: Wrench):</strong> 렌치(스패너)로 너트를 한 바퀴 <strong>조이는 작업</strong>. 회전하여 끼우는 동작이라 1번 작업과 유사하지만, <strong>물체 간 기구적으로 연결</strong>되어 있어 회전 각도가 제약되고 <strong>정밀한 맞춤</strong>이 필요한 더 어려운 과제입니다.</li>
+<li><strong>5. 삽입 (Insertion):</strong> 물체를 집어서 회전시킨 후 작은 <strong>구멍이나 슬롯에 정확히 끼워넣는 작업</strong>. 허용 오차가 2.5mm에 불과하여, 몇 도의 각도나 몇 mm 위치 어긋남도 실패로 이어질 수 있는 <strong>아주 고난이도 정밀 작업</strong>입니다.</li>
+</ul>
+<p>각 작업마다 <strong>50~150개의 인간 시연 영상</strong>을 수집하여 학습에 사용했고, 과제 복잡도에 따라 데이터 수집에 약 2~15분 정도 소요되었다고 보고됩니다. (시연 영상은 일반인이 휴대폰 등으로 촬영한 <strong>짧은 3~5초 길이</strong>의 RGB-D 클립들로 구성되었습니다.) 학습 시에는 각 프레임의 <strong>물체 분할과 추적</strong>이 자동화되었지만, 평가 시에는 공정한 비교를 위해 <strong>모든 비교 방법들에 대해 물체 분할과 초기 파지(grasp)가 제대로 된 경우만</strong> 집계했습니다.</p>
+<p>평가 결과, <strong>Figure 8 (오른쪽)</strong>에 제시된 <strong>작업별 성공률</strong>에서 제안된 방법이 <strong>다른 모든 비교 방법 대비 월등히 높은 성공률</strong>을 기록했습니다. 특히 기존 최신 방법으로 알려진 <strong>General 3D Flow 기반 정책</strong>은 거의 모든 작업에서 <strong>한 자릿수 또는 0%에 가까운 성공률</strong>에 그친 반면 (정밀 작업에서는 전혀 성공하지 못함), 본 논문의 방법은 <strong>평균 55%</strong>의 성공률로 유의미하게 높은 성과를 보였습니다. 더욱이 로봇의 동작 궤적을 관찰한 결과, <strong>기존 방법은 초반부터 물체를 엉뚱한 방향으로 움직여 경로를 이탈</strong>하는 반면, 제안 방법은 <strong>끝까지 인간 시연 경로를 잘 따라가면서 과제를 완수</strong>하는 모습을 보였습니다. 이는 앞서 추출한 모션 필드가 <strong>정확하고 매끄럽게 연결된 움직임 정보</strong>이기에 가능한 일로, <strong>부드러운 추정이 곧 정확한 제어로 이어진 사례</strong>입니다. 배경이 학습 때와 달라져도, 입력으로 배경을 제외한 <strong>객체 중심 정보만 사용</strong>하기 때문에 성능에 문제가 없었음을 확인했습니다.</p>
+<p>가장 난이도가 높은 <strong>삽입</strong> 작업의 경우를 살펴보면, <strong>인간 영상만으로 학습한 정책이 이처럼 섬세한 작업을 해낸 것은 처음</strong>이라 의미가 큽니다. 성공률은 약 35% 정도로 완벽하다고 할 수는 없지만, 비교군들은 단 한 번도 성공하지 못했음을 감안하면 상당히 고무적인 결과입니다. 저자들은 삽입 작업 실행 영상을 면밀히 분석한 결과, 로봇이 한 번에 매끄럽게 꽂지는 못하고 <strong>“땅땅(bang-bang) 제어”에 가까운 미세 조정을 반복</strong>하며 간신히 성공하는 양상을 보였다고 합니다. 이는 사람은 손끝의 미세 감각으로 한 번에 꽂는 반면 로봇은 카메라 관찰만으로 움직이다 보니 약간씩 위치를 보정해가는 것으로, <strong>여전히 인간에 비해 부족한 부분</strong>이지만 <strong>최종적으로 목표를 달성한다는 점에서 학습 효과</strong>를 확인할 수 있습니다. 또한 이러한 추가 미세 조정 동작도 <strong>정책이 모션 필드 형태로 목표 이동을 지속 예측</strong>하며 마무리 방향을 제시했기에 가능한 것으로, 완전히 실패하는 기존 정책들과 비교됩니다.</p>
+<p><strong>정책 구성 요소에 대한 추가 분석:</strong> Table 1은 <strong>정밀 작업들에 대한 정책 설계 선택의 영향</strong>을 요약한 어블레이션 실험 결과입니다. diffusion 모델 대신 전통적 <strong>Gaussian 회귀 출력</strong>을 사용하거나, diffusion 단계에서 <strong>객체 마스크 적용을 생략</strong>한 경우 삽입과 렌치 작업에서 <strong>0% 성공</strong>으로 전혀 성공하지 못했습니다. 또한 학습 시 <strong>객체 마스크 증강을 하지 않은 경우</strong> 성공률이 5%로 매우 저조했으나, <strong>제안한 모든 기법을 포함</strong>한 완전한 모델은 35%까지 향상되었습니다. 이는 <strong>diffusion 기반의 고해상도 예측이 정밀 작업에 필수적</strong>이고, <strong>비객체 영역 노이즈 제거</strong>와 <strong>로봇-인간 물체 외형 차이에 대한 증강</strong>이 성능에 큰 영향을 미친다는 것을 입증합니다.</p>
+<p>정리하면, <strong>이 논문의 실험 결과</strong>는 제안한 객체 중심 3D 모션 필드 접근이 <strong>실제 현실의 다양한 물체 조작 작업에서 기존 기법들이 실패하던 것을 성공으로 바꿔놓을 만큼 효과적</strong>임을 보여줍니다. 인간 영상에서 추출한 <strong>정확한 3D 행동 표현을 토대로 학습된 로봇 정책</strong>은, <strong>별도의 로봇 데이터 수집 없이도</strong> 놀라울 정도의 일반화 성능을 발휘했습니다. 비록 성공률이 100%는 아니지만, 데이터 준비의 용이성과 학습 효율을 고려하면 향후 발전 가능성을 강력히 시사합니다.</p>
+</section>
+<section id="장점과-한계" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="장점과-한계"><span class="header-section-number">3.3</span> 장점과 한계</h2>
+<p><strong>장점 – 데이터 효율과 일반화의 새로운 지평:</strong> 이 논문의 가장 큰 성과는 <strong>로봇 학습의 데이터 문제를 인간 시연 영상으로 풀어낸 점</strong>입니다. 사람 손으로 시연한 짧은 영상 수십 개만으로도 로봇에게 새로운 기술을 가르칠 수 있다는 것은, 향후 로봇에게 필요한 방대한 데이터를 <strong>보다 쉽게 획득</strong>할 수 있음을 의미합니다. 또한 <strong>객체 중심 3D 모션 필드</strong>라는 표현은 <strong>로봇 제어에 필요한 핵심 정보만 담고 있어 효율적</strong>일 뿐 아니라, <strong>사람과 로봇의 형태 차이를 초월</strong>해 동작을 전달한다는 발상의 전환을 보여줍니다. 이 덕분에 하나의 정책으로 <strong>다양한 로봇 플랫폼에 적용</strong>하거나 새로운 물체나 배경 환경에도 비교적 <strong>강인한 일반화</strong>를 기대할 수 있습니다. 실제 실험에서도 배경이 바뀌거나 distractor가 있어도 문제없었고, 학습에 사용하지 않은 새로운 물체에 대해서도 제대로 동작하는 등 범용성을 확인했습니다. 또한 시뮬레이션을 활용한 <strong>노이즈 제거 추정기</strong>는 비교적 단순한 아이디어이지만, 기존에 센서 오차로 어려움을 겪던 3D 추적 문제에 큰 돌파구를 마련했습니다. 이 모델은 입력 깊이에 부분 결함이나 오류가 있어도 <strong>2D 추적 정보로 보완하여 3D 데이터를 복원</strong>해주므로, 값비싼 고성능 센서를 쓰지 않고도 저렴한 RGB-D 카메라로 정밀 제어를 할 수 있게 합니다. 더 나아가 정책망에 <strong>확산 모델</strong>을 도입한 것은 로봇 제어 분야에 최신 생성 모델 기법을 적용한 흥미로운 시도로서, 이를 통해 <strong>고해상도 연속 행동 출력</strong>이 가능함을 보였습니다. 전반적으로 이 연구는 <strong>사람 영상에서 로봇이 학습한다</strong>는 흥미로운 방향성에 대해, 구체적인 <strong>기술적 해법과 가능성</strong>을 증명해 보였다는 의의가 있습니다. 특히 <strong>삽입 작업 성공</strong>과 같은 성과는 이 방법의 실용적 잠재력을 보여주는 사례로, 향후 산업 현장이나 가정에서 사람 시연 한두 번으로 로봇에게 새로운 작업을 가르치는 모습도 상상해볼 수 있게 합니다.</p>
+<p><strong>한계 – 깊이 데이터 의존 및 다중 객체 등 현실적 과제:</strong> 그럼에도 불구하고, 현재 단계의 기법에는 분명한 한계와 향후 과제가 존재합니다. 먼저, <strong>RGB-D 영상 데이터에 대한 의존성</strong>입니다. 논문에서는 정확한 3D 모션 추정을 위해 깊이 채널이 필수적이라고 강조합니다. 이는 기술적으로 타당한 주장이나, 현실적으로 인터넷상의 방대한 <strong>기존 RGB 영상 데이터를 그대로 활용하지 못한다는 제한</strong>이 됩니다. 다행히 휴대폰 등 깊이 센서가 달린 기기가 늘어나고 있어 새로운 RGB-D 데이터 축적도 기대해볼 수 있지만, 어디까지나 추가로 데이터를 모아야 한다는 점은 고려해야 합니다. 둘째, <strong>물체가 카메라에 완전히 가려지는 경우</strong>에는 현재 방법이 통하지 않습니다. 학습 시 완전 가려진 구간의 영상은 제외했고, 실행 중에도 물체가 보이는 전제하에 제어가 이뤄집니다. 따라서 사람 시연이나 로봇 수행 중에 <strong>물체가 오랫동안 안 보이게 되는 작업 (예: 통 안에 넣었다 꺼내는 등)</strong>에는 대응하기 어렵습니다. 이는 추후 <strong>추적이 끊기더라도 재식별하거나 기억하는 기술</strong>로 보완해야 할 것입니다. 셋째, <strong>다중 객체</strong> 또는 <strong>복잡한 상호작용</strong>의 문제입니다. 본 논문은 한 번에 하나의 주된 작업 대상에 초점을 맞춥니다. 그런데 실제 시나리오에서는 로봇이 <strong>여러 개의 물체를 동시에 다루거나</strong>, <strong>여러 단계의 도구/대상 상호작용</strong>을 거치는 일이 많습니다. 현재 방법을 그대로 확장하면 각 객체마다 모션 필드를 따로 예측하고 순차 제어해야 할텐데, 이 경우 상호 의존성까지 고려하려면 더 발전된 표현과 정책이 필요할 것입니다 (예를 들어 끈으로 연결된 두 물체를 동시에 추적하는 등). 넷째, <strong>로봇 잡기 동작의 통합</strong>입니다. 앞서 가정한 대로 본 연구에서는 <strong>물체 잡는 정책은 별도</strong>로 가정했습니다. 하지만 사람 영상에는 물체를 어떻게 쥐는지까지 모두 나타나므로, 이를 활용하면 로봇이 <strong>적절한 파지 방법이나 도구 사용법</strong>까지 배울 가능성이 있습니다. 향후에는 <strong>어포던스 학습</strong>이나 <strong>임의 형태 그리퍼에의 일반화</strong> 등으로 이 부분까지 통합한다면 더욱 자연스러운 학습 프레임워크가 될 것입니다. 다섯째, <strong>로봇 구성과 환경에 따른 제약</strong>입니다. 현재 방법은 UC Berkeley의 XArm7 로봇으로 검증되었는데, 다른 로봇이라도 물체를 task-space에서 움직이는 기능만 있으면 적용 가능할 것으로 보입니다. 하지만 <strong>로봇마다 관절 구성이나 작업공간이 다르므로</strong>, 추후 다양한 로봇에 이식하며 미세 조정이 필요할 수 있습니다. 또한 환경적으로는 카메라가 고정되어 있고 비교적 단순한 탁상 환경이었는데, <strong>카메라가 이동하거나 작업 공간이 복잡한 경우</strong> 추가 모듈(SLAM 등)로 카메라 움직임을 보정하는 확장이 필요합니다. 마지막으로, <strong>성능 향상의 여지</strong>입니다. 성공률 55%는 기존 대비 크게 향상된 것이지만, <strong>실제 서비스 로봇에 적용하기엔 아직 실패 확률이 높습니다</strong>. 특히 정밀 작업은 3번 중 1번만 성공하는 수준이므로, 더욱 많은 데이터 축적이나 모델 개선으로 성공률을 높여야 합니다. 예컨대, 인간 시연을 단순히 따라하는 것을 넘어 <strong>실시간 피드백으로 오차를 보정하는 강화학습</strong>이나, <strong>멀티스텝 계획</strong>을 접목하면 성공률과 안정성이 향상될 것으로 예상됩니다. 또한 <strong>비디오 이해</strong> 측면에서, 사람의 의도나 행동 단위를 파악하여 <strong>더 고차원의 개념</strong>으로도 학습할 수 있을 것입니다.</p>
+<p><strong>향후 전망:</strong> 저자들은 이러한 한계를 인지하고 향후 연구 방향으로 <strong>여러 물체가 있는 복잡한 상호작용 상황</strong>, <strong>다른 형태의 로봇 적용</strong>, <strong>환경적 제약 처리</strong>, <strong>보지 못한 새로운 객체에 대한 일반화</strong> 등을 제시하고 있습니다. 결국 이 연구는 <strong>“사람처럼 보고 배우는 로봇”</strong>의 가능성을 한 단계 보여준 것으로서, 앞으로 남은 도전들은 이 개념을 더욱 일반적이고 강력하게 만드는 과정이라 할 수 있습니다. 로봇공학의 관점에서, 인간 영상으로부터 학習한다는 것은 로봇이 세상의 방대한 <strong>비디오 지식</strong>을 활용할 길을 열어줍니다. 이번 논문의 <strong>객체 중심 3D 모션 필드</strong>는 그 중요한 퍼즐 조각 중 하나로, 향후 다른 연구들과 합쳐져 우리가 흔히 보는 유튜브 영상만 보고도 척척 배우는 <strong>미래 로봇</strong>의 모습을 현실에 가까이 데려올 것으로 기대됩니다. </p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
