@@ -1,5 +1,5 @@
 ---
-title: "From One Hand to Multiple Hands 리뷰"
+title: "📃From One Hand to Multiple Hands 리뷰"
 date: 2025-08-11
 categories: [il, rl, vision]
 toc: true
@@ -33,6 +33,7 @@ description: Imitation Learning for Dexterous Manipulation from Single-Camera Te
 **II. 제안하는 시스템 개요**
 
 제안하는 프레임워크는 다음 세 단계로 구성됩니다 (그림 2 참조):
+
 1.  **Customized Hand Teleoperation**: iPad에서 RGB-D 비디오 스트리밍을 통해 작업자의 손 모양을 추정하고, 이를 기반으로 물리 시뮬레이터에 사용자 맞춤형 로봇 핸드를 실시간으로 구성합니다. 인간 작업자는 이 맞춤형 로봇 핸드를 제어하여 Dexterous Manipulation 작업을 수행합니다. 이 시스템을 통해 시간당 약 60개의 성공적인 시범을 효율적으로 수집할 수 있습니다.
 2.  **Multi-Robots Demonstration Translation**: 맞춤형 핸드로 수집된 시범 궤적을 오프라인에서 Motion Retargeting 최적화를 통해 실제 로봇 핸드(Schunk, Allegro, Adroit Robot Hand 등)의 상태-액션 궤적(joint position 및 motor command)으로 변환합니다. 이 변환은 손의 기하학적 구조, DoF, 심지어 손가락 개수가 다른 로봇에도 적용 가능합니다.
 3.  **Demonstration-Augmented Policy Learning**: 변환된 시범 데이터를 사용하여 Dexterous Manipulation 정책을 훈련합니다. 이는 RL 목적 함수에 시범을 사용하여 Behavior Cloning을 결합하는 방식입니다 (Demo Augmented Policy Gradient, DAPG). 이 프레임워크는 RL 단독으로는 잘 해결되지 않는 복잡한 작업에서 효율적으로 인간과 유사한 기술을 학습할 수 있게 합니다.
@@ -61,7 +62,7 @@ Hand Detector는 RGB-D 프레임을 입력받아 손목 포즈, 손 포즈 파�
 
 Customized Robot Hand의 관절 각도는 PD controller로 제어됩니다. 추정된 포즈는 저역 통과 필터(low-pass filter)를 거쳐 위치 목표(position target)로 설정됩니다. 시각 텔레오퍼레이션의 지각 오류(perception error) 문제를 해결하기 위해, 손 모양 추정 결과를 신뢰도 점수(confidence score)로 활용합니다. 초기화 시 최적의 시야에서 추정된 모양 파라미터를 ground-truth로 사용하고, 현재 프레임의 모양 파라미터와의 오차를 통해 포즈 정확도의 신뢰도를 계산합니다. 신뢰도 기반 PD 제어는 다음 수식으로 표현됩니다:
 
-$u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}$
+$$u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}$$
 
 여기서 $u(t)$는 관절 토크(joint torque), $K_p$와 $K_d$는 PD 파라미터이며, $p(t)$는 정규화된 확률 밀도(normalized probability density)로 계산된 신뢰도 점수입니다. 지각 오류가 클 경우, 제어기의 강성(stiffness)을 줄여 원치 않는 갑작스러운 움직임을 제거합니다.
 

@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2025-08-11">
 <meta name="description" content="Imitation Learning for Dexterous Manipulation from Single-Camera Teleoperation">
 
-<title>From One Hand to Multiple Hands 리뷰 – Curieux.JY</title>
+<title>📃From One Hand to Multiple Hands 리뷰 – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -371,7 +371,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">From One Hand to Multiple Hands 리뷰</h1>
+<h1 class="title">📃From One Hand to Multiple Hands 리뷰</h1>
   <div class="quarto-categories">
     <div class="quarto-category">il</div>
     <div class="quarto-category">rl</div>
@@ -422,7 +422,12 @@ window.Quarto = {
 <p>다지 로봇 핸드를 이용한 Dexterous Manipulation은 로봇공학에서 가장 도전적이고 중요한 문제 중 하나입니다. 로봇 핸드와 조작 대상 간의 복잡한 접촉 패턴은 모델링하기 어렵고, 구조화되지 않은 환경에서 접촉이 많은 작업을 해결하는 제어기를 수동으로 설계하는 것은 매우 어렵습니다. 최근 Reinforcement Learning (RL)이 유망한 결과를 보여주지만, 높은 Degree-of-Freedom (DoF)과 불연속적인 접촉은 RL 정책 훈련의 샘플 복잡성(sample complexity)을 증가시킵니다. 또한, RL 보상을 통한 블랙박스 최적화는 예상치 못하거나 안전하지 않은 행동으로 이어질 수 있습니다. 텔레오퍼레이션을 통해 수집된 인간 시범으로부터 학습하는 것은 Dexterous Manipulation을 위한 자연스러운 해결책입니다. 그러나 대부분의 기존 텔레오퍼레이션 시스템은 Virtual Reality (VR) 장치나 유선 글러브(wired gloves)를 필요로 하여 유연성과 확장성(scalability)이 제한됩니다. Vision-based 텔레오퍼레이션은 특수 장비 착용의 필요성을 없애 비용을 절감하고 확장성을 높이지만, 인간 손 움직임을 로봇 손 움직임으로 변환하는 모션 리타겟팅(Motion Retargeting)이라는 새로운 과제를 제시합니다. 이 과정이 직관적이지 않으면 인간 작업자가 로봇을 제어하기 어렵고, 특정 로봇 손으로 수집된 시범은 동일한 로봇에서만 Imitation Learning에 사용될 수 있다는 한계가 있습니다.</p>
 <p>본 논문은 이러한 도전 과제를 해결하기 위해 단일 카메라 텔레오퍼레이션 시스템을 도입합니다. 이 시스템은 iPad와 컴퓨터만으로 효율적으로 3D 시범을 수집할 수 있습니다. 핵심 기여 중 하나는 물리 시뮬레이터(physical simulator) 내에서 각 사용자에 대해 사용자 맞춤형 로봇 핸드(customized robot hand)를 생성한다는 점입니다. 이 핸드는 작업자 손과 동일한 구조를 모방하여 직관적인 인터페이스를 제공하고 데이터 수집 시 불안정한 인간-로봇 핸드 리타겟팅을 피하여 대규모의 고품질 데이터를 얻을 수 있게 합니다. 데이터 수집 후, 맞춤형 로봇 핸드의 궤적(trajectory)은 다양한 실제 로봇 핸드(예: Schunk Robot Hand, Adroit Robot Hand, Allegro Robot Hand)로 변환되어 훈련 시범으로 사용될 수 있습니다. 본 논문의 데이터와 Imitation Learning을 통해 여러 복잡한 조작 작업에서 기존 baseline 대비 큰 개선을 보였습니다. 특히, 학습된 정책이 실제 로봇으로 전이될 때 훨씬 더 강건함(robust)을 보여주었습니다.</p>
 <p><strong>II. 제안하는 시스템 개요</strong></p>
-<p>제안하는 프레임워크는 다음 세 단계로 구성됩니다 (그림 2 참조): 1. <strong>Customized Hand Teleoperation</strong>: iPad에서 RGB-D 비디오 스트리밍을 통해 작업자의 손 모양을 추정하고, 이를 기반으로 물리 시뮬레이터에 사용자 맞춤형 로봇 핸드를 실시간으로 구성합니다. 인간 작업자는 이 맞춤형 로봇 핸드를 제어하여 Dexterous Manipulation 작업을 수행합니다. 이 시스템을 통해 시간당 약 60개의 성공적인 시범을 효율적으로 수집할 수 있습니다. 2. <strong>Multi-Robots Demonstration Translation</strong>: 맞춤형 핸드로 수집된 시범 궤적을 오프라인에서 Motion Retargeting 최적화를 통해 실제 로봇 핸드(Schunk, Allegro, Adroit Robot Hand 등)의 상태-액션 궤적(joint position 및 motor command)으로 변환합니다. 이 변환은 손의 기하학적 구조, DoF, 심지어 손가락 개수가 다른 로봇에도 적용 가능합니다. 3. <strong>Demonstration-Augmented Policy Learning</strong>: 변환된 시범 데이터를 사용하여 Dexterous Manipulation 정책을 훈련합니다. 이는 RL 목적 함수에 시범을 사용하여 Behavior Cloning을 결합하는 방식입니다 (Demo Augmented Policy Gradient, DAPG). 이 프레임워크는 RL 단독으로는 잘 해결되지 않는 복잡한 작업에서 효율적으로 인간과 유사한 기술을 학습할 수 있게 합니다.</p>
+<p>제안하는 프레임워크는 다음 세 단계로 구성됩니다 (그림 2 참조):</p>
+<ol type="1">
+<li><strong>Customized Hand Teleoperation</strong>: iPad에서 RGB-D 비디오 스트리밍을 통해 작업자의 손 모양을 추정하고, 이를 기반으로 물리 시뮬레이터에 사용자 맞춤형 로봇 핸드를 실시간으로 구성합니다. 인간 작업자는 이 맞춤형 로봇 핸드를 제어하여 Dexterous Manipulation 작업을 수행합니다. 이 시스템을 통해 시간당 약 60개의 성공적인 시범을 효율적으로 수집할 수 있습니다.</li>
+<li><strong>Multi-Robots Demonstration Translation</strong>: 맞춤형 핸드로 수집된 시범 궤적을 오프라인에서 Motion Retargeting 최적화를 통해 실제 로봇 핸드(Schunk, Allegro, Adroit Robot Hand 등)의 상태-액션 궤적(joint position 및 motor command)으로 변환합니다. 이 변환은 손의 기하학적 구조, DoF, 심지어 손가락 개수가 다른 로봇에도 적용 가능합니다.</li>
+<li><strong>Demonstration-Augmented Policy Learning</strong>: 변환된 시범 데이터를 사용하여 Dexterous Manipulation 정책을 훈련합니다. 이는 RL 목적 함수에 시범을 사용하여 Behavior Cloning을 결합하는 방식입니다 (Demo Augmented Policy Gradient, DAPG). 이 프레임워크는 RL 단독으로는 잘 해결되지 않는 복잡한 작업에서 효율적으로 인간과 유사한 기술을 학습할 수 있게 합니다.</li>
+</ol>
 <p>학습된 정책은 XArm-6 로봇에 부착된 실제 Allegro Hand로 Sim2Real 전이 실험을 수행하였으며, 본 논문의 시범 데이터를 학습에 통합함으로써 Sim2Real 갭(gap)에 대한 정책의 강건함을 크게 향상시키는 것을 보여주었습니다.</p>
 <p><strong>III. Customized Hand Teleoperation</strong></p>
 <p>텔레오퍼레이션 시스템은 iPad와 노트북으로 구성됩니다 (그림 3 참조). iPad의 전면 카메라를 사용하여 25fps로 인간 작업자의 RGB-D 비디오를 스트리밍합니다. 시스템은 물리 시뮬레이터, 인간 동작을 포착하는 Hand Detector, 시뮬레이션 환경을 시각화하는 GUI로 이루어져 있습니다.</p>
@@ -438,7 +443,7 @@ window.Quarto = {
 <p><strong>C. Customized Robot Hand</strong></p>
 <p>본 시스템은 각 사용자의 손 기하학적 구조를 기반으로 맞춤형 로봇 핸드를 구축합니다. 초기화 시 추정된 손 모양 파라미터로부터 인간 손의 관절 골격(joint skeleton)을 추출하고, 이를 기반으로 물리 시뮬레이터에 동일한 운동학적 구조(kinematics structure)를 가진 로봇 모델을 만듭니다 (그림 4 참조). 효율적인 충돌 감지 및 안정적인 시뮬레이션을 위해 손바닥은 상자, 손가락은 캡슐과 같은 기본 도형을 사용합니다. 맞춤형 핸드는 SMPL-X 모델과 일치하는 45 DoF (15 * 3)를 가지며, Motion Retargeting 없이 감지된 포즈 파라미터를 사용하여 직접 제어됩니다 (표 I 참조).</p>
 <p>Customized Robot Hand의 관절 각도는 PD controller로 제어됩니다. 추정된 포즈는 저역 통과 필터(low-pass filter)를 거쳐 위치 목표(position target)로 설정됩니다. 시각 텔레오퍼레이션의 지각 오류(perception error) 문제를 해결하기 위해, 손 모양 추정 결과를 신뢰도 점수(confidence score)로 활용합니다. 초기화 시 최적의 시야에서 추정된 모양 파라미터를 ground-truth로 사용하고, 현재 프레임의 모양 파라미터와의 오차를 통해 포즈 정확도의 신뢰도를 계산합니다. 신뢰도 기반 PD 제어는 다음 수식으로 표현됩니다:</p>
-<p><span class="math inline">u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}</span></p>
+<p><span class="math display">u(t) = p(t)K_pe(t) + k_d\frac{de(t)}{dt}</span></p>
 <p>여기서 <span class="math inline">u(t)</span>는 관절 토크(joint torque), <span class="math inline">K_p</span>와 <span class="math inline">K_d</span>는 PD 파라미터이며, <span class="math inline">p(t)</span>는 정규화된 확률 밀도(normalized probability density)로 계산된 신뢰도 점수입니다. 지각 오류가 클 경우, 제어기의 강성(stiffness)을 줄여 원치 않는 갑작스러운 움직임을 제거합니다.</p>
 <p><strong>IV. Multi-Robots Demonstration Translation</strong></p>
 <p><strong>A. Hand Pose Retargeting</strong></p>
