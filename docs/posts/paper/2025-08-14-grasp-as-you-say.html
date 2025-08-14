@@ -427,9 +427,29 @@ window.Quarto = {
 <p><strong>DexGYSGrasp 프레임워크:</strong></p>
 <p>DexGYSNet 데이터셋을 기반으로 저자들은 의도 정렬, 고품질, 다양성을 보장하는 DexGYSGrasp 프레임워크를 제안합니다. 이 프레임워크는 복잡한 학습 과정을 두 가지 관리 가능한 점진적 목표로 분해하고 이를 실현하기 위한 두 가지 구성 요소를 도입합니다.</p>
 <p><strong>점진적 그립 목표 (Progressive Grasp Objectives):</strong></p>
-<p>단일 모델이 의도 정렬, 다양성, 고품질이라는 세 가지 요구사항을 동시에 충족하기 어렵다는 문제를 해결하기 위해, 특히 손-객체 침투를 방지하는 데 사용되는 침투 손실(<span class="math inline">L_{pen}</span>)이 다양성과 의도 정렬을 저해하는 문제에 주목합니다. 이를 해결하기 위해 학습 목표를 다음과 같이 분해합니다: 1. <strong>생성적 목표</strong>: 그립 분포 학습에 중점을 둡니다. 이 단계에서는 품질보다는 의도 정렬과 생성 다양성에 초점을 맞추며, 침투 손실의 제약 없이 최적화합니다. 2. <strong>회귀적 목표</strong>: 초기 거친 그립을 동일한 의도와 다양성을 유지하면서 고품질 그립으로 정제합니다. 이 단계에서는 침투 손실을 활용하여 객체 침투를 방지합니다.</p>
+<p>단일 모델이 의도 정렬, 다양성, 고품질이라는 세 가지 요구사항을 동시에 충족하기 어렵다는 문제를 해결하기 위해, 특히 손-객체 침투를 방지하는 데 사용되는 침투 손실(<span class="math inline">L_{pen}</span>)이 다양성과 의도 정렬을 저해하는 문제에 주목합니다. 이를 해결하기 위해 학습 목표를 다음과 같이 분해합니다:</p>
+<ol type="1">
+<li><strong>생성적 목표</strong>: 그립 분포 학습에 중점을 둡니다. 이 단계에서는 품질보다는 의도 정렬과 생성 다양성에 초점을 맞추며, 침투 손실의 제약 없이 최적화합니다.</li>
+<li><strong>회귀적 목표</strong>: 초기 거친 그립을 동일한 의도와 다양성을 유지하면서 고품질 그립으로 정제합니다. 이 단계에서는 침투 손실을 활용하여 객체 침투를 방지합니다.</li>
+</ol>
 <p><strong>점진적 그립 구성 요소 (Progressive Grasp Components):</strong></p>
-<p>이러한 점진적 목표를 달성하기 위해 두 가지 구성 요소를 설계합니다: 1. <strong>의도 및 다양성 그립 구성 요소 (Intention and Diversity Grasp Component, IDGC)</strong>: * 그립 분포를 효율적으로 학습하고 의도 정렬 및 다양한 생성을 달성하기 위해 조건부 확산 모델(conditional diffusion model)을 기반으로 합니다. * 입력으로 객체 포인트 클라우드(<span class="math inline">O</span>)는 PointNet++ [45]로 인코딩되고, 언어 안내(<span class="math inline">L</span>)는 사전 학습된 CLIP 모델 [46]로 인코딩되어 조건부 정보로 사용됩니다. * DDPM [47]을 샘플링 프로세스로 사용하며, 이는 다음과 같이 정형화됩니다: <span class="math display">p_{\theta}(G_{dex0} | O, L) = p(G_T) \prod_{t=1}^T p(G_{t-1} | G_t, O, L)</span> 여기서 <span class="math inline">G_{dex0}</span>는 원래의 그립 자세, <span class="math inline">G_T</span>는 노이즈가 추가된 자세, <span class="math inline">G_t</span>는 중간 시간 단계의 자세입니다. * 학습 시에는 회귀 손실만을 사용하며, 침투 손실은 의도 일관성과 그립 다양성을 향상시키기 위해 배제됩니다. 손실 함수는 다음과 같습니다: <span class="math display">L_{IDG} = \lambda_{2para}L_{para}(G_{dex0}, \hat{G}_{dex}) + \lambda_{2chamfer}L_{chamfer}(H(G_{dex0}), H(\hat{G}_{dex}))</span> 여기서 <span class="math inline">L_{para}</span>는 자세 파라미터에 대한 MSE 손실이며, <span class="math inline">L_{chamfer}</span>는 손 포인트 클라우드에 대한 Chamfer Distance 손실입니다. 2. <strong>품질 그립 구성 요소 (Quality Grasp Component, QGC)</strong>: * 첫 번째 구성 요소에서 생성된 거친 그립은 의도는 잘 정렬되고 다양하지만, 객체 침투가 심하여 품질이 좋지 않습니다. QGC는 이러한 거친 그립(<span class="math inline">\hat{G}_{dex}</span>)을 입력으로 받아 품질을 정제하는 역할을 합니다. * 입력으로 거친 자세 <span class="math inline">\hat{G}_{dex}</span>, 거친 손 포인트 클라우드 <span class="math inline">H(\hat{G}_{dex})</span> 및 객체 포인트 클라우드 <span class="math inline">O</span>를 받으며, <span class="math inline">\Delta G_{dex}</span>를 출력하여 정제된 그립 <span class="math inline">\tilde{G}_{dex} = \hat{G}_{dex} + \Delta G_{dex}</span>를 얻습니다. * 학습 쌍은 IDGC가 생성한 거친 그립과 가장 유사한 그라운드-트루스 그립으로 구성되어, 정제된 그립이 의도된 행동과 일관성을 유지하도록 보장합니다. * 이 구성 요소는 침투 손실을 포함한 손실 함수를 사용합니다: <span class="math display">L_{QG} = \lambda_{3para}L_{para} + \lambda_{3chamfer}L_{chamfer} + \lambda_{3pen}L_{pen} + \lambda_{3cmap}L_{cmap} + \lambda_{3spen}L_{spen}</span> 여기서 <span class="math inline">\lambda</span>는 각 손실 항의 가중치입니다.</p>
+<p>이러한 점진적 목표를 달성하기 위해 두 가지 구성 요소를 설계합니다:</p>
+<ol type="1">
+<li><strong>의도 및 다양성 그립 구성 요소 (Intention and Diversity Grasp Component, IDGC)</strong>:
+<ul>
+<li>그립 분포를 효율적으로 학습하고 의도 정렬 및 다양한 생성을 달성하기 위해 조건부 확산 모델(conditional diffusion model)을 기반으로 합니다.</li>
+<li>입력으로 객체 포인트 클라우드(<span class="math inline">O</span>)는 PointNet++ [45]로 인코딩되고, 언어 안내(<span class="math inline">L</span>)는 사전 학습된 CLIP 모델 [46]로 인코딩되어 조건부 정보로 사용됩니다.</li>
+<li>DDPM [47]을 샘플링 프로세스로 사용하며, 이는 다음과 같이 정형화됩니다: <span class="math display">p_{\theta}(G_{dex0} | O, L) = p(G_T) \prod_{t=1}^T p(G_{t-1} | G_t, O, L)</span> 여기서 <span class="math inline">G_{dex0}</span>는 원래의 그립 자세, <span class="math inline">G_T</span>는 노이즈가 추가된 자세, <span class="math inline">G_t</span>는 중간 시간 단계의 자세입니다.</li>
+<li>학습 시에는 회귀 손실만을 사용하며, 침투 손실은 의도 일관성과 그립 다양성을 향상시키기 위해 배제됩니다. 손실 함수는 다음과 같습니다: <span class="math display">L_{IDG} = \lambda_{2para}L_{para}(G_{dex0}, \hat{G}_{dex}) + \lambda_{2chamfer}L_{chamfer}(H(G_{dex0}), H(\hat{G}_{dex}))</span> 여기서 <span class="math inline">L_{para}</span>는 자세 파라미터에 대한 MSE 손실이며, <span class="math inline">L_{chamfer}</span>는 손 포인트 클라우드에 대한 Chamfer Distance 손실입니다.</li>
+</ul></li>
+<li><strong>품질 그립 구성 요소 (Quality Grasp Component, QGC)</strong>:
+<ul>
+<li>첫 번째 구성 요소에서 생성된 거친 그립은 의도는 잘 정렬되고 다양하지만, 객체 침투가 심하여 품질이 좋지 않습니다. QGC는 이러한 거친 그립(<span class="math inline">\hat{G}_{dex}</span>)을 입력으로 받아 품질을 정제하는 역할을 합니다.</li>
+<li>입력으로 거친 자세 <span class="math inline">\hat{G}_{dex}</span>, 거친 손 포인트 클라우드 <span class="math inline">H(\hat{G}_{dex})</span> 및 객체 포인트 클라우드 <span class="math inline">O</span>를 받으며, <span class="math inline">\Delta G_{dex}</span>를 출력하여 정제된 그립 <span class="math inline">\tilde{G}_{dex} = \hat{G}_{dex} + \Delta G_{dex}</span>를 얻습니다.</li>
+<li>학습 쌍은 IDGC가 생성한 거친 그립과 가장 유사한 그라운드-트루스 그립으로 구성되어, 정제된 그립이 의도된 행동과 일관성을 유지하도록 보장합니다.</li>
+<li>이 구성 요소는 침투 손실을 포함한 손실 함수를 사용합니다: <span class="math display">L_{QG} = \lambda_{3para}L_{para} + \lambda_{3chamfer}L_{chamfer} + \lambda_{3pen}L_{pen} + \lambda_{3cmap}L_{cmap} + \lambda_{3spen}L_{spen}</span> 여기서 <span class="math inline">\lambda</span>는 각 손실 항의 가중치입니다.</li>
+</ul></li>
+</ol>
 <p><strong>실험 결과:</strong></p>
 <p>DexGYSNet 데이터셋 및 실제 환경에서의 광범위한 실험을 통해 제안된 방법이 다양한 객체에 대해 의도 일관성, 높은 다양성, 그리고 고품질의 그립 자세를 생성할 수 있음을 입증합니다. 기존 최첨단(SOTA) 방법들과 비교하여 의도 일관성과 그립 다양성 측면에서 훨씬 뛰어난 성능을 보이며, 그립 품질 측면에서도 경쟁력 있는 성능을 달성합니다. 특히, 침투 손실의 영향에 대한 정량적 분석과 점진적 구성 요소 및 손실의 필요성을 검증하는 어블레이션 연구는 제안된 프레임워크의 핵심 통찰력을 뒷받침합니다. 또한, HOIR 전략의 효과성과 다른 SOTA 방법에 대한 플러그-앤-플레이(Plug-and-play) 가능성도 확인되었습니다. 실제 세계 실험에서는 Allegro hand, Flexiv Rizon 4 암, Intel Realsense D415 카메라를 사용하여 제안된 방법의 실용적 적용 가능성을 보여주었습니다.</p>
 <p>결론적으로, 이 논문은 로봇이 인간 언어에 맞춰 고품질의 정교한 그립을 수행할 수 있도록 하는 “Dexterous Grasp as You Say”라는 새로운 태스크를 탐구하고, 이를 달성하기 위한 비용 효율적인 데이터셋 DexGYSNet과 점진적 학습 프레임워크 DexGYSGrasp를 제안합니다. 이는 인간-로봇 상호작용을 촉진하고 로봇의 실제 환경 배포를 가속화하는 데 중요한 기여를 합니다.</p>

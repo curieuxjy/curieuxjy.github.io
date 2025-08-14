@@ -54,6 +54,7 @@ description: Object-centric 3D Motion Field for Robot Learning from Human Videos
 **제한 사항:** 완전한 occlusion 상황에서의 지식 추출 미고려, 그리퍼 외 로봇 손으로의 확장, 움직이는 카메라로의 확장, soft-body 처리에 대한 추가 연구 필요.
 
 **주요 기여:**
+
 1.  로봇 학습을 위해 object-centric 3D motion field를 사용하고 이를 비디오에서 추출하는 새로운 학습 프레임워크 제안.
 2.  real world에서 object-centric 3D motion field를 학습하고 예측하는 간단하고 새로운 아키텍처 제시 (인간 비디오만으로 로봇 기술 학습 가능).
 3.  구성 요소의 real world 검증 (motion estimation 오류 50% 이상 감소, 기존 방법 능가, fine-grained manipulation 기술 획득).
