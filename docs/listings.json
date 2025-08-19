@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-08-19-dexpilot.html",
       "/posts/paper/2025-08-16-kinematic-retargeting.html",
       "/posts/paper/2025-08-15-anyteleop.html",
       "/posts/paper/2025-08-14-grasp-as-you-say.html",
@@ -79,6 +80,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-08-19-dexpilot.html",
       "/posts/paper/2025-08-16-kinematic-retargeting.html",
       "/posts/paper/2025-08-15-anyteleop.html",
       "/posts/paper/2025-08-14-grasp-as-you-say.html",

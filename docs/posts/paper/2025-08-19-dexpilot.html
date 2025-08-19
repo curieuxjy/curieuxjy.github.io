@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-19">
+<meta name="description" content="Kinematic Motion Retargeting for Contact-Rich Anthropomorphic Manipulations">
+
+<title>📃DexPilot 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-23aef1c2a45953e85f3378e7ccfb1407.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-5a614c35f1f90bfd0a5b2992298a8538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-23aef1c2a45953e85f3378e7ccfb1407.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#연구-개요-및-기여" id="toc-연구-개요-및-기여" class="nav-link" data-scroll-target="#연구-개요-및-기여">1. 연구 개요 및 기여</a></li>
+  <li><a href="#시스템-구성-및-손-추적-방법" id="toc-시스템-구성-및-손-추적-방법" class="nav-link" data-scroll-target="#시스템-구성-및-손-추적-방법">2. 시스템 구성 및 손 추적 방법</a></li>
+  <li><a href="#인간-로봇-손-매핑-전략-및-수학적-모델링" id="toc-인간-로봇-손-매핑-전략-및-수학적-모델링" class="nav-link" data-scroll-target="#인간-로봇-손-매핑-전략-및-수학적-모델링">3. 인간-로봇 손 매핑 전략 및 수학적 모델링</a></li>
+  <li><a href="#손-리타겟팅-모듈-동작-원리와-제약조건" id="toc-손-리타겟팅-모듈-동작-원리와-제약조건" class="nav-link" data-scroll-target="#손-리타겟팅-모듈-동작-원리와-제약조건">4. 손 리타겟팅 모듈 동작 원리와 제약조건</a></li>
+  <li><a href="#실험-설정-및-성능-평가" id="toc-실험-설정-및-성능-평가" class="nav-link" data-scroll-target="#실험-설정-및-성능-평가">5. 실험 설정 및 성능 평가</a></li>
+  <li><a href="#기존-방법과-비교-및-기술적-한계" id="toc-기존-방법과-비교-및-기술적-한계" class="nav-link" data-scroll-target="#기존-방법과-비교-및-기술적-한계">6. 기존 방법과 비교 및 기술적 한계</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃DexPilot 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">retargeting</div>
+    <div class="quarto-category">vision</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Kinematic Motion Retargeting for Contact-Rich Anthropomorphic Manipulations
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 19, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/pdf/1910.03135">Paper Link</a></li>
+<li><a href="https://sites.google.com/view/dex-pilot">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>DexPilot은 저비용 비전 기반 원격 조작 시스템으로, 장갑이나 마커 없이 맨손 움직임을 사용하여 23 DoA의 로봇 팔/손 시스템을 완벽하게 제어합니다.</li>
+<li>시스템은 딥러닝과 모델 기반 추적(DART)을 결합하여 인간 손의 포즈와 관절 각도를 추정하고, 비선형 최적화 기반의 키네마틱 리타겟팅을 통해 Allegro hand의 동작으로 변환합니다.</li>
+<li>DexPilot은 다양한 복잡한 조작 작업에서 인간 시연자를 통해 높은 성공률을 달성하며, 이를 통해 숙련된 동작 데이터 수집 및 미래의 자율 정책 학습 가능성을 보여줍니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>본 논문은 고자유도(high degree-of-actuation, DoA) 로봇 손-팔 시스템(Allegro Hand가 장착된 KUKA LBR iiwa)을 위한 저비용, Vision Based Teleoperation 시스템인 DexPilot을 소개한다. DexPilot은 특별한 장비(markerless, glove-free) 없이 맨손(bare human hand)의 움직임을 관찰하여 로봇을 직접 모방 제어(direct imitation)한다. 이 시스템은 정교한 파지(precision grasp), 다지 조작(multi-fingered manipulation), 인-핸드 조작(in-hand manipulation) 등 다양한 복잡한 Task를 수행할 수 있게 하며, 이를 통해 학습을 위한 고차원 센서 데이터 및 행동 데이터(sensorimotor state-action data)를 수집하는 데 활용될 수 있다.</p>
+<p><strong>시스템 아키텍처 및 하드웨어:</strong> 시스템은 KUKA LBR iiwa7 R800 로봇 팔과 Wonik Robotics Allegro Hand로 구성된 로봇 시스템과, 조작자의 손을 관찰하는 4대의 Intel RealSense D415 RGB-D 카메라로 구성된 인간 조작자 영역으로 나뉜다. Allegro Hand에는 SynTouch BioTac 촉각 센서와 3M TB641 그립 테이프가 장착되어 촉각 피드백 신호(92개)와 마찰력을 제공한다. 시스템은 Vision Based Perception, Optimization, Motion Generation, Control 모듈로 구성되며, 약 1초의 Latency를 가진다.</p>
+<center>
+<img src="../../images/2025-08-19-dexpilot/image-20250819183738391.png" width="100%">
+</center>
+<p><strong>핵심 방법론:</strong></p>
+<ol type="1">
+<li><strong>핸드 트래킹 (Hand Tracking):</strong> 조작자의 손 추적은 DART 와 Deep Neural Networks의 조합으로 이루어진다.
+<ul>
+<li><strong>DART:</strong> articulated human hand model ([28, 29] 기반)을 입력 Point Cloud에 매칭하여 손의 Pose와 20개 Joint Angle을 연속적으로 추적하는 모델 기반(model-based) 추적기이다. Nonlinear Optimization 기반이므로 정확한 초기화가 필수적이며, Spurious Local Minima에 빠지는 것을 방지하기 위해 Neural Network로부터 Hand Pose Prior와 Hand Segmentation 정보를 활용한다.</li>
+<li><strong>Neural Networks:</strong> DART의 초기화 및 강건성(robustness) 확보를 위해 두 단계로 학습된 Neural Network가 사용된다.
+<ul>
+<li><strong>First Phase (with Glove for Annotation):</strong> 데이터 수집 초기에는 색상 블롭(coloured blobs)이 부착된 장갑을 착용하고 ResNet-50 with spatial-softmax 기반의 GloveNet을 훈련시켜 RGB 이미지에서 블롭의 2D 위치를 예측한다. 특히 손바닥 뒷면의 3개 블롭을 사용하여 Hand Pose를 추정한다. 4대 카메라의 예측 및 Depth 값을 이용하여 3D Hand Pose를 얻고 Hand Segmentation을 수행한다. DART는 이 Segmentation된 Point Cloud에 대해서만 최적화하여 Annotation 데이터를 생성한다.</li>
+<li><strong>Second Phase (Bare Hand Tracking):</strong> First Phase에서 생성된 Annotation을 사용하여 맨손(bare hand)의 Fused Point Cloud를 직접 처리한다. PointNet++ 기반 아키텍처가 사용되며, 테이블 Point 제거 후 Arm과 Body를 포함한 Point Cloud를 입력받아 Hand를 Localize하고 Hand Pose 및 Hand Segmentation(Auxiliary Segmentation Loss 사용)을 추정한다. 이 네트워크는 손의 23개 Keypoint(손가락별 4개 관절 + 손바닥 뒷면 3개)의 3D 좌표를 예측하도록 훈련된다. Uniform Sub-sampling으로 인한 손가락 Keypoint 예측 정확도 문제를 해결하기 위해, 첫 단계의 Pose와 Segmentation을 기반으로 손 위의 포인트를 다시 샘플링하여 두 번째 단계(second stage)에서 Keypoint 예측을 정밀화한다.</li>
+<li><strong>JointNet:</strong> 예측된 23개 Keypoint 위치(23x3 벡터)를 20개 Joint Angle(손가락 관절)로 매핑하는 2-layer fully connected network인 JointNet을 사용하여 DART의 Joint Prior를 제공한다.</li>
+</ul></li>
+</ul></li>
+<li><strong>운동학적 리타겟팅 (Kinematic Retargeting):</strong> 인간 손의 관절 움직임을 Allegro Hand의 관절 움직임으로 매핑하는 과정이다. 인간 손과 Allegro Hand는 운동학적으로 다르므로, Grasping과 Manipulation에 중요한 Fingertip Task-Space Metrics에 우선순위를 둔다.
+<ul>
+<li>비용 함수(Cost Function)는 다음과 같이 정의된다: <span class="math display">C(q_h, q_a) = \frac{1}{2N}\sum_{i=0} s(d_i)||r_i(q_a) - f(d_i)\hat{r}_i(q_h)||^2 + \gamma||q_a||^2</span> 여기서 <span class="math inline">q_h, q_a</span>는 각각 인간 손과 Allegro Hand의 관절 각도이며, <span class="math inline">r_i</span>는 한 좌표계(예: 손바닥)에서 다른 좌표계(예: 손가락 끝)까지의 벡터이다. <span class="math inline">d_i = ||r_i(q_h)||</span>, <span class="math inline">\hat{r}_i(q_h) = \frac{r_i(q_h)}{||r_i(q_h)||}</span>이다.</li>
+<li><span class="math inline">s(d_i)</span>는 스위칭 가중치 함수(switching weight function)로, 추적 오류가 있을 때 정밀 파지(precision grasp) 시 손가락 충돌을 방지하고 Thumb와의 접촉을 가깝게 하는 Projection Scheme에 사용된다. <span class="math inline">d_i</span>가 임계값 <span class="math inline">\epsilon</span>보다 작을 경우, Primary Finger-Thumb 벡터에는 0, Primary Finger-Primary Finger 벡터에는 400의 가중치를 부여한다 (Table I).</li>
+<li><span class="math inline">f(d_i)</span>는 거리 함수(distancing function)로, <span class="math inline">d_i</span>가 <span class="math inline">\epsilon</span>보다 클 경우 <span class="math inline">\beta d_i</span> (<span class="math inline">\beta=1.6</span>)로 비례 스케일링하고, 작을 경우 Primary Finger-Thumb 간의 거리는 <span class="math inline">\eta_1</span> (<span class="math inline">10^{-4}m</span>), Primary Finger 간의 거리는 <span class="math inline">\eta_2</span> (<span class="math inline">3 \times 10^{-2}m</span>)로 강제하여 최소/최대 거리를 유지한다.</li>
+<li><span class="math inline">\gamma||q_a||^2</span>는 정규화 항(regularization term)으로, <span class="math inline">\gamma=2.5 \times 10^{-3}</span>이며 Allegro 관절 각도를 0(완전히 열린 손)으로 정규화하여 해의 중복을 줄이고 비정상적인 자세를 방지한다.</li>
+<li>벡터 <span class="math inline">r_i</span>는 거리와 방향뿐만 아니라 좌표계의 Orientation 정보도 포함한다. Allegro Hand의 Primary Finger distal 관절은 medial 관절과 동일하게 제약된다.</li>
+<li>이 비용 함수는 NLopt 라이브러리의 Sequential Least-Squares Quadratic Programming (SLSQP) 알고리즘 [35, 36, 37]을 사용하여 실시간으로 최소화된다. Forward Kinematic 계산은 Orocos Kinematics and Dynamics library 를 사용한다. 결과는 First-Order Low-Pass Filter를 거친다.</li>
+</ul></li>
+<li><strong>모션 생성 및 제어 (Motion Generation and Control):</strong>
+<ul>
+<li>Allegro Palm의 Cartesian Pose는 Riemannian Motion Policies (RMPs) [39, 40]를 사용하여 제어된다. RMPs는 Arm의 Torque-Level Impedance Controller에 목표 Joint Trajectory를 200Hz로 보낸다.</li>
+<li>Kinematically Retargeting된 Allegro Angles는 Allegro Hand의 Torque-Level Joint Controller에 30Hz로 보낸다.</li>
+<li>로봇과 카메라 시스템 간의 공간 정렬은 초기 손 자세(테이블과 평행한 완전히 열린 손)를 기준으로 보정하여 조작자가 직관적으로 로봇을 제어할 수 있게 한다.</li>
+</ul></li>
+</ol>
+<center>
+<img src="../../images/2025-08-19-dexpilot/image-20250819183903568.png" width="100%">
+</center>
+<p><strong>실험 및 결과:</strong> DexPilot 시스템은 Pringles 캔 정렬, 컵 삽입, 두 개 큐브 파지, 지갑에서 돈 꺼내기 등 15가지 다양한 Task (Table II, Fig. 1)에 대해 두 명의 조작자를 대상으로 테스트되었다. 성능은 평균 완료 시간(Mean Completion Time, CT)과 성공률(Success Rate)로 측정되었다 (Fig. 14, 15). 결과는 촉각 피드백 부재에도 불구하고 다양한 Task에서 높은 성공률을 달성했음을 보여준다. 복잡한 Task 수행은 Bare Hand 관찰만으로도 정교한 Skill 전달이 가능함을 입증한다. Task 수행 중 수집된 풍부한 Sensorimotor 데이터(BioTac 신호 등)는 향후 로봇 학습에 활용될 수 있다.</p>
+<p><strong>논의 및 한계:</strong> DexPilot은 복잡한 Manipulation Task 해결을 위한 실행 가능하고 저렴한 Teleoperation 솔루션을 제공하며, 학습을 위한 고품질 데이터 수집을 가능하게 한다. 향후 개선 방향으로는 Deep Learning 발전을 통한 Hand Tracking 정확도 향상, RGB 데이터 활용, 자율적인 힘 조절 제어 기능 통합, 의도 인식 등이 제시된다. 한계점으로는 제한적인 작업 공간, Projection Scheme이 Finger Gaiting이나 작은 물체 놓기를 방해하는 문제, 촉각 피드백 부재로 인한 정밀 Task(예: NIST Peg-in-hole insertion)의 어려움, 시스템 Latency, 조작자 손 크기/모양에 대한 강건성 등이 언급된다. 특히 Peg-in-hole Insertion과 같은 고정밀 Task는 현재 시스템으로도 시도는 가능하나 성공률이 매우 낮아 추가적인 개선이 필요하다.</p>
+<p><strong>주요 Contribution:</strong></p>
+<ul>
+<li>Markerless, glove-free, 전적으로 Vision-based인 Teleoperation 시스템으로 고자유도 로봇 손-팔 시스템을 직접 모방 제어한다.</li>
+<li>Hand Joint 추적 오류 존재 시에도 손 기교와 Precision Grasp의 실현 가능성을 보존하는 Novel Cost Function 및 Projection Scheme for Kinematically Retargeting Human Hand Joints to Allegro Hand Joints.</li>
+<li>Fine Manipulation과 Dexterity를 포함하는 다양한 Task에서의 Teleoperation 시스템 시연 및 평가.</li>
+<li>촉각 피드백 부재에도 높은 Task 성공률 달성.</li>
+</ul>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<section id="연구-개요-및-기여" class="level2">
+<h2 class="anchored" data-anchor-id="연구-개요-및-기여">1. 연구 개요 및 기여</h2>
+<p>DexPilot은 고자유도(23 DoF)의 다지능 로봇 손–팔 시스템을 저비용·시각 기반으로 원격 조작하기 위한 시스템이다. 전통적인 텔레오퍼레이션 시스템은 고자유도 로봇 제어시 고가의 센서(글러브, 마커, 모션캡처 등)를 요구하지만, DexPilot은 실제 인간의 맨손 움직임만으로 23자유도의 Allegro 로봇 손과 로봇 팔을 직접 모사·제어한다. 주요 기여로는 (1) 마커나 장갑 없이 순수 RGB-D 카메라로 인간 손을 추적하여 로봇 손에 전사하는 시각 기반 글러브-프리 텔레오퍼레이션 구현, (2) 손 끝(fingertip) 위치 및 방향을 보존하면서 인간 손 관절 상태를 Allegro 손 관절로 매핑하는 새로운 비용 함수 및 투영(projection) 기법 제안, (3) 정밀한 집기(pinching)와 다중 단계 조작을 포함한 다양한 과제(지폐 추출, 서랍 열기, 약병 개봉 등)에서 23DoA 시스템 조작을 시연, (4) 두 명의 파일럿으로 진행한 실험에서 속도 및 성공률 지표로 시스템 성능을 평가이다. 이 결과 고자유도 로봇 조작용 대용량 상태·행동(상태/액션) 데이터 수집이 가능하며, 향후 머신러닝 기반 조작 정책 학습에 유용한 데이터셋을 제공할 수 있다.</p>
+</section>
+<section id="시스템-구성-및-손-추적-방법" class="level2">
+<h2 class="anchored" data-anchor-id="시스템-구성-및-손-추적-방법">2. 시스템 구성 및 손 추적 방법</h2>
+<p>DexPilot의 하드웨어는 KUKA LBR iiwa7 협동로봇 팔과 Wonik Allegro 손으로 구성되며, Allegro 손 끝에는 Biotac 촉각 센서를 장착하였다[9]. 사람 파일럿 영역에는 검은색 천으로 덮인 테이블 위에 4대의 Intel RealSense D415 RGB-D 카메라가 배치되어, 인간 손을 여러 시점에서 관찰한다. 시스템은 세 개의 처리 스레드로 병렬 실행된다. 학습 스레드는 4개 카메라의 융합된 포인트 클라우드로부터 손의 자세 및 관절각을 추정하는 신경망을 실행하며, 이를 통해 얻은 초기 추정값을 하위 모듈에 제공한다. 추적 스레드는 DART(Differentiable Articulated Rigid-body Tracker)를 사용하여 인간 손 모델의 6자유도 위치 및 20개 관절(각 손가락당 4개: 1 abduction, 3 flexion)의 자세를 지속적으로 최적화 추적한다[11]. 이때, 신경망이 제공한 손 위치/관절각 예측이 초기값(prior)으로 사용되어 로컬 미니마로 빠지는 것을 방지한다. 제어 스레드는 Riemannian Motion Policy(RMP) 기반의 제어 방정식을 계산하여 Allegro 손바닥의 목표 위치·자세와 팔 동작을 생성한다. 전체 시스템의 엔드-투-엔드 지연(latency)은 약 1초 정도로 보고되었다.</p>
+<p>시각 기반 손 추적을 위해 DexPilot은 두 단계의 딥러닝 모델과 DART 최적화를 결합하였다. 첫 번째 단계에서는 파일럿이 착용한 컬러 장갑(glove)을 활용하여 학습 데이터를 얻는다[15]. 장갑의 손가락 끝과 손바닥에 서로 다른 색의 점을 부착하고, 4대의 RGB 카메라로 관찰한 RGB 영상을 ResNet-50 기반의 회귀 네트워크(GloveNet)를 통해 색점의 2D 위치를 추정한다[16]. 이렇게 얻은 2D 좌표에 깊이(depth)를 결합해 3D 위치를 계산하고, 그로부터 손의 포즈(세 점의 위치)와 분할(segmentation)을 구한다[17]. 이 정보를 이용해 DART가 손 모델을 세분화(segmented point cloud)에 맞추어 최적화하도록 함으로써, 초기에는 장갑을 쓴 상태에서 정확한 손 관절각 어노테이션을 생성한다. 두 번째 단계에서는 장갑 없이 생 데이터를 사용한다. 4개 카메라의 깊이 영상을 융합하여 테이블 평면을 제거한 후, 남은 손·팔 포인트클라우드를 PointNet++ 기반 네트워크에 입력한다. 이 네트워크는 손 부분을 분리하고(손분할), 손뼈의 23개 주요 관절점(keypoints; 손가락당 4개, 손바닥 후면 3개)를 3D 좌표로 회귀한다. 첫 단계의 손바닥 컬러 장갑 방식으로 생성된 어노테이션을 학습에 사용하여, 실제 맨손 데이터에서도 손 관절 포즈를 예측한다. 또한, 23개 키포인트를 20차원 관절각으로 변환하기 위한 JointNet(2층 완전연결망)도 함께 학습시켰다. 이 딥 네트워크들 덕분에 DART 추적이 장기간 안정적으로 수행되며, 검증 셋에서 평균 키포인트 오차는 약 9.7mm, 관절각 오차는 약 1.33°로 보고되었다. 결과적으로, DexPilot은 카메라 포인트클라우드→키포인트→관절각 추정→DART 미세조정의 파이프라인을 통해 인간 손의 포즈와 관절 상태를 실시간으로 얻어낸다.</p>
+<center>
+<img src="../../images/2025-08-19-dexpilot/image-20250819185002274.png" width="100%">
+</center>
+<center>
+<img src="../../images/2025-08-19-dexpilot/image-20250819185052835.png" width="70%">
+</center>
+</section>
+<section id="인간-로봇-손-매핑-전략-및-수학적-모델링" class="level2">
+<h2 class="anchored" data-anchor-id="인간-로봇-손-매핑-전략-및-수학적-모델링">3. 인간-로봇 손 매핑 전략 및 수학적 모델링</h2>
+<p>인간 손과 Allegro 로봇 손은 관절 수, 관절축 배치, 손가락 길이 등이 크게 다르기 때문에 단순한 대응(mapping)이 불가능하다. DexPilot은 정밀 조작 관점에서 손끝(fingertip) 작업 공간(task-space) 을 최우선시하여 두 손의 동작을 연결한다.</p>
+<center>
+<img src="../../images/2025-08-19-dexpilot/image-20250819185434840.png" width="70%">
+</center>
+<p>손끝을 잇는 위치와 방향 정보가 인간·로봇 손의 주요 조작을 결정한다고 보고, 이들 사이 거리를 최소화하는 최적화 기반 매핑(cost function)을 설계하였다. 구체적으로, 인간 손 자세 <span class="math inline">q_h</span>와 Allegro 손 관절 <span class="math inline">q_a</span>에 대해 다음과 같은 비용 함수를 정의:</p>
+<p><span class="math display"> C(q_h, q_a) = \frac{1}{2}\sum_{i=1}^N s(d_i)\,|r_i(q_a) - f(d_i)\,\hat{r}_i(q_h)|^2 \;+\; \gamma|q_a|^2, </span></p>
+<ul>
+<li>여기서 <span class="math inline">r_i(q)</span>는 손바닥(origin)으로부터 <span class="math inline">i</span>번째 손끝까지의 벡터(또는 손가락 간 벡터)로, 각각 Allegro 손(<span class="math inline">r_i(q_a)</span>)과 인간 손 모델(<span class="math inline">\hat{r}_i(q_h)</span>)의 작업 공간에서 계산된다.</li>
+<li><span class="math inline">\hat{r}_i(q_h)=r_i(q_h)/d_i</span>는 정규화된 인간 손 벡터이며, $d_i=|r_i(q_h)|.</li>
+<li><span class="math inline">s(d_i)</span>는 가중치 함수로서 인간 손의 엄지가 <span class="math inline">i</span>번째 벡터(<span class="math inline">r_i(q_h)</span>)와 가깝게 접촉할 때 손끝 간 거리에 더 큰 중요도를 부여한다. 예를 들어, 임계거리 <span class="math inline">\epsilon</span> 이하로 가까워지면 엄지와 손끝이 대응되는 벡터 집합 S1일 때 <span class="math inline">s(d_i)=200</span>, 손끝 쌍(S2)에 대해서는 <span class="math inline">s(d_i)=400</span> 등으로 급격히 증가시킨다. 반면 거리가 <span class="math inline">\epsilon</span> 이상이면 <span class="math inline">s(d_i)=1</span>으로 작게 준다.</li>
+<li><span class="math inline">f(d_i)</span>는 거리 조절 함수로서, 보통 <span class="math inline">f(d_i)=\beta d_i</span> (증폭계수 <span class="math inline">\beta=1.6</span>)로 손끝 간 거리를 그대로 복사하지만, 임계거리 이하일 때 손가락끼리 겹치지 않도록 일정 거리(<span class="math inline">\eta_1,\eta_2</span>)를 강제한다. 예를 들어 엄지-주요 손가락 사이가 너무 가까워지면 <span class="math inline">\eta_1=0.1\;\mathrm{mm}</span>로 접촉 거리를 유지시켜 핀치 집기를 가능하게 하며, 주요 손가락 간에는 <span class="math inline">\eta_2=30\;\mathrm{mm}</span>로 일정 거리를 확보한다.</li>
+<li>마지막으로 <span class="math inline">\gamma|q_a|^2</span> 항(정규화 항)은 Allegro 손을 완전히 펼친 상태(<span class="math inline">q_a=0</span>)로 유도하여 중복성(redundancy)을 완화하고 기괴한 최소해(예: 손가락이 손바닥에 파고드는 현상)를 방지한다. 이때 사용하는 벡터 집합 S1, S2는 표 I에 정의된 것처럼 “엄지와 주요 손가락(검지·중지·약지) 사이 벡터”와 “엄지와 각각 매핑된 두 주요 손가락 사이 벡터”로 구성한다. 또한, 해 공간 크기를 줄이기 위해 Allegro 손의 검지·중지·약지 각각에 대해 원위관절(distal joint)의 각도를 중간관절(medial joint)과 같게 고정하는 제약을 두었다. 이와 같이 설계된 비용 함수를 매 프레임마다 최소화하면 인간 손의 손끝 배치와 유사한 Allegro 손 구성이 생성된다.</li>
+</ul>
+<p>최적화는 NLopt 라이브러리의 SLSQP(순차적 이차계획법) 알고리즘으로 실시간 수행된다. 초기 프레임에는 Allegro 각도를 모두 0(완전 펼침)으로 시작하고, 이후 매 프레임은 이전 프레임 해를 초기값으로 사용하여 연속성을 유지한다. 인간 손 모델과 Allegro 손의 순방향 기구학 계산에는 Orocos KDL 라이브러리를 사용하였다. 최적화 결과로 얻은 Allegro 관절각은 고주파 노이즈를 억제하기 위해 1차 저역 통과 필터를 거쳐 출력한다[34]. 결과적으로 이 리타겟팅 모듈은 인간 파일럿이 손을 구부리거나 엄지와 손가락 사이 거리를 조절할 때, 그 손끝 동작이 로봇 손에서도 자연스럽게 재현되도록 동[35].</p>
+</section>
+<section id="손-리타겟팅-모듈-동작-원리와-제약조건" class="level2">
+<h2 class="anchored" data-anchor-id="손-리타겟팅-모듈-동작-원리와-제약조건">4. 손 리타겟팅 모듈 동작 원리와 제약조건</h2>
+<p>DexPilot의 리타겟팅 모듈은 추적 스레드 내부에서 작동하며, 인간 손 추적 결과를 Allegro 손 제어 명령으로 변환하는 실시간 최적화 엔진이다. 매 주기마다 앞서 계산된 인간 손 관절각을 입력으로 하여 위의 비용 함수를 최소화하며, 이때 <span class="math inline">s(d_i)</span>나 <span class="math inline">f(d_i)</span> 등의 기법으로 엄지-검지 간 픽스쳐 동작을 강제한다. 예를 들어, 지폐를 핀치할 때와 같이 엄지와 검지 사이 거리가 작아져 <span class="math inline">d_i&lt;\epsilon</span>이 되면 손끝 간 거리를 유지하도록 <span class="math inline">f(d_i)</span>가 작아지며, 동시에 가중치 <span class="math inline">s(d_i)</span>가 커져 해당 손끝 벡터 항이 비용에 크게 반영된다. 이러한 투영(projection) 기법은 카메라 기반 추적의 오차에도 불구하고 정확한 핀치 자세를 유도할 수 있게 해주지만, 후술할 작은 물체 놓기 등의 상황에서는 손가락을 너무 오래 유지하게 만드는 부작용도 발생할 수 있다.</p>
+<p>리타겟팅 최적화는 실시간으로 실행되어야 하므로, 계산 복잡도를 줄이고 솔루션의 연속성을 보장하는 여러 제약조건도 적용된다. 먼저 <span class="math inline">\gamma|q_a|^2</span> 정규화 항을 통해 해 공간의 중복성을 억제하며, 동일한 효과로 앞서 언급한 검지·중지·약지의 distal=medial 고정 제약도 도입한다. 이와 함께, 최적화 초기값을 이전 결과로 설정하여 연산 비용과 진동을 완화한다. 마지막으로 로봇과 카메라 좌표계 정합(calibration)을 통해 원하는 초기 손 자세(펼친 손, 손바닥 평행)를 시스템에 맞추어 파일럿의 손과 로봇 손이 일치하도록 설정한다[39]. 종합하면, DexPilot의 리타겟팅 모듈은 비선형 최적화 기반이며, 손끝 위치·방향 작업 공간을 보존하기 위한 비용 함수에 의해 인간 손동작을 Allegro 관절값으로 변[40]. 추가적인 필터링과 제약을 통해 부드럽고 물리적으로 타당한 움직임을 보장하며, 이를 통해 인간 파일럿의 손 제스처는 정교하게 로봇 손으로 복제된다.</p>
+</section>
+<section id="실험-설정-및-성능-평가" class="level2">
+<h2 class="anchored" data-anchor-id="실험-설정-및-성능-평가">5. 실험 설정 및 성능 평가</h2>
+<p>DexPilot 시스템의 성능은 다양한 조작 과제(task)에서 측정되었다. 사용된 실험 장비는 앞서 설명한 KUKA iiwa7+Allegro 손, 4대의 Intel RealSense D415 카메라이다[9]. 실험에서 파일럿(조종사)은 테이블 위에서 정해진 물체를 조작해야 했으며, 실험 과제는 총 15가지가 제시되었다(표 II 참조). 여기에는 단순 물체 옮기기(pick-and-place)부터, 동전 내지 지폐를 지갑에서 꺼내기(그림 11), 서랍 열기 및 티백 꺼내기(그림 12), 땅콩통 뚜껑 풀기(그림 13) 같은 다단계 작업들이 포함.</p>
+<p>각 과제마다 파일럿 2명이 5회 연속 시도하며 성공률을 측정했고, 완료 시간(mean completion time)도 기록했다. 결과적으로, DexPilot은 대부분 과제에서 높은 성공률을 보였다(Fig. 15). 특히 단순 피킹/플레이스 작업이나 비교적 큰 물체 조작 작업들은 대부분 성공률 90–100%에 달했다. 평균 완료 시간은 과제 난이도와 복잡도에 따라 다양했는데, 멀티스텝 작업(예: 서랍 속 물건 꺼내기)일수록 수 분이 소요되었다[41]. 전반적으로 시스템은 정밀 집기·파지, 다지 간 조작, 비파지(non-prehensile) 동작 등을 모두 수행할 수 있는 충분한 유연성과 안정성을 보였다[42]. 정성적 평가에서도 DexPilot의 성능을 확인할 수 있다. 예를 들어 그림 11의 지갑 과제에서 파일럿은 지폐를 손가락 사이에 핀치한 채로 성공적으로 지갑 바깥으로 끄집어냈으며, 이때 로봇 손도 지폐를 놓치지 않고 유지했다[43]. 그림 12에서는 서랍을 열고 티백을 잡아 당기기 위한 손가락의 회전 및 접촉 동작이 명확히 구현되었으며, 그림 13의 땅콩통 뚜껑 과제에서는 뚜껑을 반복 회전시키는 동작이 로봇에도 그대로 전달되었다[44]. 이처럼 작은 물체를 집거나 돌리는 정밀 동작 뿐 아니라, 두 손가락으로 물체를 잡은 상태에서 남은 손가락을 이용해 추가 조작을 수행하는 복합 조작(compound manipulation)도 모두 사람이 행하듯 수행 가능함을 보였다[42].</p>
+<p>그러나 작은 물체를 다루는 작업에서는 한계도 관찰되었다. 예를 들어 크기가 작은 블록(pick blocks small)이나 컨테이너 속 물체 뽑기(Container) 등의 작업은 완료 시간이 길거나 성공률이 낮았다. 특히 작은 블록을 쥐었다가 놓는 과정에서, 앞서 설명한 투영 기법이 손가락 간 거리를 강하게 조절하여 물체를 늦게 놓게 만들거나 손가락이 간섭하는 현상이 발생했다. 결과적으로 작은 블록 옮기기 과제의 경우 성공률이 상대적으로 현저히 낮았고, 완료 시간이 매우 길어졌다. 이러한 현상은 장갑 기반 추적 데이터의 부정확성이나 투영 파라미터 조정에 기인한 것으로 분석된다.</p>
+</section>
+<section id="기존-방법과-비교-및-기술적-한계" class="level2">
+<h2 class="anchored" data-anchor-id="기존-방법과-비교-및-기술적-한계">6. 기존 방법과 비교 및 기술적 한계</h2>
+<p>DexPilot은 글러브·마커를 사용하지 않는 순수 시각 기반 시스템이라는 점에서 독창적이다. 기존 상용 시스템들(예: CyberGlove, HaptX)은 높은 정확도의 관절 추정과 촉각 피드백을 제공하지만, 장비 비용과 부피가 크고 사용자의 자유로운 움직임을 제한한다. 반면 DexPilot은 저렴한 RGB-D 카메라 네트워크만으로 23DoF 제어를 가능하게 하였고, 이는 종래의 글러브나 모션캡처 없이 복잡 조작을 수행한 사례로는 드물다. 기존 학술 연구와 비교해 보면, Li 등은 딥러닝으로 섀도우 핸드(Shadow Hand) 관절각을 추정하였으나 시스템 전체 적용과 정밀 집기에는 한계가 있었다. Antotsiou 등은 시뮬레이션 상의 간단한 조작 작업만 보였던 반면, DexPilot은 실제 물리적 환경에서 손끝 접촉과 연관된 복잡 작업을 수행했다[47][48]. 이처럼 DexPilot은 시각-모델 추적, 최적화 기반 리타겟팅, 임피던스 제어를 결합하여 현장작업에 필요한 수준의 조작 성능을 보여주었다는 점에서 새로운 패러다임을 제시했다.</p>
+<p>그럼에도 몇 가지 기술적 한계가 보고되었다. - 첫째, 관찰 영역(workspace)이 카메라 범위로 제한되어 있어 넓은 공간에서의 조작에는 부적합하다[49]. 실험에서는 카메라가 관절 거리 1m 이내에서 좋은 품질을 보였으나, 범위를 벗어나면 깊이 센싱 정확도가 급격히 떨어진다. - 둘째, 앞서 언급한 리타겟팅 투영 기법의 부작용이다. 엄지-검지 핀치 유지 시 잡은 물체를 늦게 놓거나 손가락끼리 간섭이 발생할 수 있으며, 이는 작은 물체 작업에서 효율을 떨어뜨린다. 현재는 이 기능을 옵션으로 끌 수 있도록 하였으나, 궁극적으로는 손 추적 정확도를 높여 이러한 보정이 필요 없도록 해야 한다. - 셋째, 촉각 피드백 부재로 인해 미세 조작이 어렵다. DexPilot에는 촉각 센서가 있어 데이터를 기록할 수 있으나, 파일럿에게는 힘/촉각 정보가 돌아가지 않는다. 이로 인해 물체가 미끄러질 때 직관적으로 감지하기 어려워 조작 실패율이 높아질 수 있다. 향후 촉각 피드백 전달이나 반자동 힘 제어(잡기 강도 자동 조절) 기술을 결합한다면 이 부담을 줄일 수 있을 것이다. - 넷째, 추적 및 제어 지연이다. 전체 시스템의 응답 지연은 약 1초이며, RMP 제어의 파라미터 튜닝과 네트워크 인퍼런스 지연을 최적화할 수 있다. 마지막으로 고정밀 삽입 작업(예: 페그-인-홀)은 아직 완벽히 수행되지 못했다. 실제로 NIST 삽입 과제를 시도했지만, 매우 협소한 간격(0.1mm)에서는 성공률이 10% 이하로 저조했다[52]. 이는 카메라 해상도, 손 추적 정밀도, 제어 응답 속도 등 다양한 요인이 복합적으로 작용한 결과로, 한계를 극복하기 위해 더 정밀한 추적과 자동 제어 보조 기능이 필요하다[52].</p>
+<p>종합하면, DexPilot은 저비용 시각 기반 방식으로 고자유도 로봇 손을 조작 가능하게 한 획기적인 시스템이지만, 카메라 관측 범위, 손 추적 정확도, 촉각 부재 등 실제 활용 시 고려해야 할 한계점들도 동시에 지니고 있다[53]. 이러한 한계들을 개선하면 앞으로 보다 정교한 텔레오퍼레이션과 로봇 학습 응용에 큰 기여를 할 수 있을 것이다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
