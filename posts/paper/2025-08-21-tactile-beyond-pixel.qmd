@@ -1,0 +1,49 @@
+---
+title: "📃Tactile Beyond Pixel 리뷰"
+date: 2025-08-19
+categories: [tactile, digit360, multlimodal]
+toc: true
+number-sections: false
+description: Multisensory Touch Representations for Robot Manipulation
+---
+
+- [Paper Link](https://arxiv.org/abs/2506.14754)
+
+1. 👉 이 논문은 로봇 조작을 위한 최초의 멀티모달 촉각 표현 학습 모델인 Sparsh-X를 제시하며, 이는 Digit 360 센서에서 얻은 이미지, 오디오, 모션, 압력 등 네 가지 촉각 양상을 자체 지도 학습을 통해 하나의 통합된 표현으로 융합합니다.
+2. 📚 약 100만 건의 접촉 상호작용 데이터로 학습된 Sparsh-X는 물체의 물리적 특성 및 접촉 역학을 효과적으로 포착하며, 다양한 작업에서 이러한 정보를 활용할 수 있음을 입증합니다.
+3. 🚀 실험 결과, Sparsh-X는 모방 학습 및 Sim-to-Real 촉각 적응을 통해 로봇 조작 성공률을 63% 향상시키고, 물리적 특성 추정 정확도를 기존 방식 대비 48% 개선하여 견고한 미세 조작 성능을 제공합니다.
+
+<center>
+<img src="../../images/2025-08-21-tactile-beyond-pixel/Screenshot 2025-08-21 at 11.27.55 AM.png" width="100%" />
+</center>
+
+---
+
+# Brief Review
+
+이 논문은 로봇 조작을 위한 일반 목적의 다중 감각 촉각 표현(multisensory touch representations) 모델인 Sparsh-X를 제안합니다. Sparsh-X는 Digit 360 센서에서 수집된 이미지, 오디오, 모션(IMU), 압력의 네 가지 촉각 모달리티를 활용하여 약 100만 건의 접촉 기반 상호작용 데이터로 자가 지도 학습(self-supervised learning)되었습니다. 이 모델은 다양한 시간적, 공간적 스케일의 상호 보완적인 촉각 신호들을 단일화된 표현으로 융합하여 물리적 특성을 포착합니다.
+
+Sparsh-X의 핵심 방법론은 transformer 기반의 백본 아키텍처에 있습니다(그림 2 참조). 입력 신호는 먼저 $L_f$개의 레이어($L_f = 8$)에서 각 모달리티별로 독립적인 self-attention을 통해 처리됩니다. 이후 $L_b$개의 블록($L_b = 4$)에서는 attention bottlenecks [35]를 사용하여 cross-modal 정보 흐름이 이루어집니다. 이를 위해 $B$개의 bottleneck fusion tokens($B = 4$)이 각 모달리티의 embedding에 연결되며, 각 cross-modal 업데이트 후 fusion tokens는 모달리티 전반에 걸쳐 평균화되어 정보 공유를 촉진합니다. 총 transformer 레이어 수는 $L = L_f + L_b = 12$로 설정되었습니다.
+
+입력 모달리티는 다음과 같이 전처리되고 토큰화됩니다:
+
+*   **Image**: 30fps로 샘플링된 촉각 이미지를 5의 temporal stride로 채널 차원에 따라 연결합니다. hyper-fisheye 이미지는 224x224x3 크기로 자르고 리사이즈되며, 16x16 크기의 패치(patch)로 분할된 후 linear projection layer를 통해 768차원의 embedding으로 토큰화됩니다.
+*   **Audio**: 48kHz로 샘플링된 두 개의 접촉 마이크에서 얻은 0.55초의 오디오 신호는 5ms Hamming window와 2.5ms의 hop length로 128채널의 log-mel spectogram으로 변환됩니다. 두 마이크의 spectogram이 연결되어 224x256 오디오 입력이 되며, 16 크기의 패치로 토큰화됩니다.
+*   **IMU (Accelerometer)**: 400Hz로 샘플링된 3축 가속도계 데이터는 0.55초 창으로 통합되어 224x3 temporal signal로 토큰화됩니다.
+*   **Pressure**: 200Hz로 샘플링된 압력 신호는 1.1초 창으로 통합되어 224x1 temporal signal로 토큰화됩니다.
+
+Sparsh-X는 자가 지도 학습을 위해 `teacher-student self-distillation` 접근 방식 [40, 11]을 사용합니다. 인코더와 예측 헤드로 구성된 두 브랜치에서, 학생 입력 토큰에 마스킹을 적용하고 (로컬 마스크의 경우 10-50%, 전역 마스크의 경우 50-100% 신호 유지), 교사 토큰을 pseudo-label로 사용하여 클러스터링 예측 작업을 수행합니다. 최적화 목표는 교사와 학생 네트워크의 softmax 출력 간 cross-entropy입니다.
+
+평가 실험은 세 가지 주요 영역에서 진행되었습니다:
+
+1.  **물리적 특성 추론 (Inferring physical properties)**: 객체-행동-표면 분류(object-action-surface classification), 재료-양 추정(material-quantity estimation), 법선력 추정(normal force estimation)과 같은 지도 학습(supervised learning) 작업을 통해 Sparsh-X 표현의 품질을 평가했습니다. Sparsh-X의 인코더 가중치는 고정된 상태로 task-specific attentive decoder를 훈련시켜 순수하게 표현의 품질을 측정했습니다. 그 결과, 다중 모달리티를 함께 사용했을 때 촉각 이미지 단독 사용 대비 분류 정확도가 현저히 향상되었으며, end-to-end 모델보다 데이터 효율성과 일반화 성능이 우수함을 보였습니다.
+2.  **정책 학습을 위한 Sparsh-X 통합 (Sparsh-X for Policy Learning)**:
+    *   **모방 학습(Imitation Learning)을 통한 플러그 삽입**: 로봇이 Allegro hand와 Digit 360 센서를 사용하여 플러그를 소켓에 삽입하는 작업에서, Sparsh-X를 활용한 다중 감각 촉각 피드백이 정책 성공률을 크게 향상시켰습니다. 외부 시각 정보만 사용했을 때보다 500%, 촉각 이미지만 사용한 end-to-end 정책보다 63%의 성공률 향상을 보였습니다.
+    *   **시뮬레이션에서 실제 세계로의 촉각 적응(Sim-to-Real Tactile Adaptation)을 통한 손안 객체 회전**: Hora [51]와 같은 시뮬레이션 훈련된 기본 정책 위에 ControlNet [52]을 활용하여 촉각 적응 모듈을 학습시켰습니다. 이는 객체의 물리적 특성(질량, 마찰 등) 변화에 대한 정책의 견고성을 높여 수직 표류(vertical drift)를 90% 감소시키고, 객체 슬립을 줄여 회전 안정성을 향상시켰습니다.
+
+Sparsh-X는 다중 감각 촉각 정보를 통합함으로써 로봇 조작의 정밀성과 견고성을 크게 향상시킬 수 있음을 입증하며, 촉각 센싱 분야의 foundation models 개발에 중요한 발걸음을 내디뎠습니다.
+
+---
+
+# Detail Review
+
