@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-25">
+<meta name="description" content="Multisensory Touch Representations for Robot Manipulation">
+
+<title>📃ManipTrans 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-23aef1c2a45953e85f3378e7ccfb1407.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-5a614c35f1f90bfd0a5b2992298a8538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-23aef1c2a45953e85f3378e7ccfb1407.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#배경과-문제-정의" id="toc-배경과-문제-정의" class="nav-link" data-scroll-target="#배경과-문제-정의">배경과 문제 정의</a></li>
+  <li><a href="#주요-기여-및-혁신점" id="toc-주요-기여-및-혁신점" class="nav-link" data-scroll-target="#주요-기여-및-혁신점">주요 기여 및 혁신점</a></li>
+  <li><a href="#기술적-구성-maniptrans-두-단계-방법론" id="toc-기술적-구성-maniptrans-두-단계-방법론" class="nav-link" data-scroll-target="#기술적-구성-maniptrans-두-단계-방법론">기술적 구성: ManipTrans 두 단계 방법론</a>
+  <ul class="collapse">
+  <li><a href="#단계-손-동작-모방-trajectory-imitation-pre-training" id="toc-단계-손-동작-모방-trajectory-imitation-pre-training" class="nav-link" data-scroll-target="#단계-손-동작-모방-trajectory-imitation-pre-training">1단계: 손 동작 모방 (Trajectory Imitation Pre-training)</a></li>
+  <li><a href="#단계-잔차-정책을-통한-상호작용-미세-조정-residual-learning-fine-tuning" id="toc-단계-잔차-정책을-통한-상호작용-미세-조정-residual-learning-fine-tuning" class="nav-link" data-scroll-target="#단계-잔차-정책을-통한-상호작용-미세-조정-residual-learning-fine-tuning">2단계: 잔차 정책을 통한 상호작용 미세 조정 (Residual Learning Fine-tuning)</a></li>
+  </ul></li>
+  <li><a href="#실험-결과-성능-평가-및-분석" id="toc-실험-결과-성능-평가-및-분석" class="nav-link" data-scroll-target="#실험-결과-성능-평가-및-분석">실험 결과: 성능 평가 및 분석</a></li>
+  <li><a href="#논의-및-한계점" id="toc-논의-및-한계점" class="nav-link" data-scroll-target="#논의-및-한계점">논의 및 한계점</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃ManipTrans 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">retargeting</div>
+    <div class="quarto-category">dexterous</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Multisensory Touch Representations for Robot Manipulation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 25, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2503.21860">Paper Link</a></li>
+<li><a href="https://maniptrans.github.io/">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>이 논문은 복잡한 양손 로봇 조작 기술을 효율적으로 전이하기 위한 MANIPTRANS라는 새로운 2단계 방법을 제안합니다.</li>
+<li>MANIPTRANS는 먼저 손 궤적 모방 모델을 사전 학습한 후, 물리적 상호작용 제약을 위한 잔여 학습을 통해 인간 동작을 정확하고 물리적으로 타당하게 모방합니다.</li>
+<li>이 방법은 기존 SOTA보다 성공률, 정확도, 효율성 면에서 뛰어나며, 대규모 양손 조작 데이터셋인 DEXMANIPNET을 구축하고 다양한 로봇 신체와 실제 환경으로의 일반화 가능성을 보여줍니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>Embodied AI 분야는 dexterous robotic manipulation 연구가 증가하며 빠르게 발전하고 있습니다. 데이터 중심 Embodied AI 알고리즘은 정밀하고 대규모의 인간과 유사한 조작 시퀀스를 필요로 하지만, 기존 강화 학습(RL)이나 실제 환경에서의 Teleoperation은 이러한 데이터를 얻는 데 어려움이 있습니다. RL은 task-specific reward function 설계가 필요하여 확장성과 작업 복잡성에 제한이 있고, Teleoperation은 노동 집약적이고 비용이 많이 들며 Embodiment-specific 데이터만 생성합니다.</p>
+<p>이러한 문제를 해결하기 위해 본 논문은 MANIPTRANS를 소개합니다. MANIPTRANS는 인간의 양손(bimanual) 조작 기술을 시뮬레이션 상의 dexterous robotic hand로 효율적으로 이전하기 위한 새로운 2단계 방법론입니다. MANIPTRANS는 먼저 손 동작을 모방하는 generalist trajectory imitator를 사전 학습하고, 그 다음 상호작용 제약 조건 하에서 특정 residual module을 미세 조정하여 복잡한 양손 작업의 효율적인 학습과 정확한 실행을 가능하게 합니다.</p>
+<p>MANIPTRANS의 핵심 아이디어는 이전 프로세스를 두 단계로 분리하는 것입니다. 첫 번째 단계는 손 동작 모방에 초점을 맞춘 사전 학습 단계이며, 두 번째 단계는 상호작용 제약 조건을 충족하기 위한 특정 action 미세 조정 단계입니다. 이를 통해 강력한 generalist model이 노이즈에도 강건하게 인간 손가락 동작을 정확하게 모방하도록 학습됩니다. 이 초기 모방을 기반으로 residual learning module을 도입하여 로봇의 actions을 점진적으로 개선합니다. 이 모듈은 1) 물리적 제약 하에서 객체 표면과의 안정적인 접촉을 보장하여 효과적인 객체 조작을 가능하게 하고, 2) 양손을 협력시켜 복잡한 양손 작업의 정밀하고 고화질(high-fidelity) 실행을 보장하는 두 가지 핵심 측면에 집중합니다.</p>
+<p>이 설계의 장점은 세 가지입니다.</p>
+<ol type="1">
+<li>첫 번째 단계에서는 대규모 사전 학습을 통한 동적 손 모방에 집중하여 형태학적 차이를 효과적으로 완화합니다.</li>
+<li>이를 기반으로 두 번째 단계는 양손 객체 상호작용 추적에 집중하여 미묘한 움직임을 정확하게 포착하고 자연스러운 고화질 조작을 가능하게 합니다.</li>
+<li>인간 손 동작 모방과 physics-based object interaction constraints를 분리하여 action space 복잡성을 크게 줄여 학습 효율성을 향상시킵니다.</li>
+</ol>
+<p>이 프레임워크를 기반으로 MANIPTRANS는 임의의, 노이즈가 포함된 손 MoCap 데이터를 물리적으로 그럴듯한 동작으로 수정합니다. 이는 미리 정의된 단계(예: “접근-잡기-조작”)나 task-specific reward engineering 없이 이루어집니다.</p>
+<p><strong>3. Method</strong></p>
+<p>MANIPTRANS는 주어진 인간 손-객체 상호작용 reference trajectories를 dexterous robotic hand가 시뮬레이션에서 정확하게 복제하고 task의 semantic manipulation constraints를 만족하도록 하는 정책을 학습하는 것을 목표로 합니다. 이를 위해 2단계 프레임워크를 제안합니다.</p>
+<p><strong>3.1. Preliminaries</strong></p>
+<p>복잡한 양손 환경에서 조작 이전 문제를 공식화합니다. 왼손과 오른손 dexterous hand <span class="math inline">d=\{d_l, d_r\}</span>는 두 개의 객체 <span class="math inline">o=\{o_l, o_r\}</span>와 협력적으로 상호작용하는 인간 손 <span class="math inline">h=\{h_l, h_r\}</span>의 행동을 복제합니다. 인간 demonstration의 reference trajectories는 <span class="math inline">T^h=\{\tau_t^h\}_{t=1}^T</span>와 <span class="math inline">T^o=\{\tau_t^o\}_{t=1}^T</span>로 정의됩니다. <span class="math inline">\tau_t^h</span>는 wrist의 6-DoF pose <span class="math inline">w^h \in SE(3)</span>, linear 및 angular velocities <span class="math inline">\dot{w}^h=\{v^h, u^h\}</span>, MANO [96]로 정의된 finger joint positions <span class="math inline">j^h \in R^{F \times 3}</span> 및 velocities <span class="math inline">\dot{j}^h=\{v^j, u^j\}</span>를 포함합니다. F는 손 keypoint 수입니다. <span class="math inline">\tau_t^o</span>는 각 객체의 6-DoF pose <span class="math inline">p_t^o \in SE(3)</span>와 velocities <span class="math inline">\dot{p}_t^o=\{v^o, u^o\}</span>를 포함합니다. 공간 복잡성 감소를 위해 모든 translation은 dexterous hand의 wrist position에 상대적으로 정규화됩니다.</p>
+<p>문제는 Implicit Markov Decision Process (MDP) <span class="math inline">M=\langle S, A, \mathcal{T}, R, \gamma \rangle</span>로 모델링됩니다. State space S, Action space A, Transition dynamics <span class="math inline">\mathcal{T}</span>, Reward function R, discount factor <span class="math inline">\gamma</span>. 각 dexterous hand의 시간 t에서의 action <span class="math inline">a_t \in A</span>는 PD control을 위한 각 joint의 target positions <span class="math inline">a_t^q \in R^K</span>와 robotic wrist에 가해지는 6-DoF force <span class="math inline">a_t^w \in R^6</span>로 구성됩니다. K는 robotic hand의 DoF입니다.</p>
+<p>이전 프로세스는 두 단계로 나뉩니다.</p>
+<ol type="1">
+<li>사전 학습된 hand-only trajectory imitation model I,</li>
+<li>coarse actions를 task-compliant actions로 fine-tuning하는 residual module R. 시간 t에서의 state는 각 단계별로 <span class="math inline">s_t^I \in S_I</span>와 <span class="math inline">s_t^R \in S_R</span>로 정의되며, 상응하는 reward functions는 <span class="math inline">r_t^I = R(s_t^I, a_t^I)</span> 및 <span class="math inline">r_t^R = R(s_t^R, a_t^R)</span>입니다.</li>
+</ol>
+<p>단계 모두 Proximal Policy Optimization (PPO) 를 사용하여 discounted reward <span class="math inline">E[\sum_{t=1}^T \gamma^{t-1} r_t^{stage}]</span>를 최대화합니다.</p>
+<p><strong>3.2. Hand Trajectory Imitating</strong></p>
+<p>이 단계의 목표는 상세한 인간 손가락 동작을 정확하게 복제하는 general hand trajectory imitation model I를 학습하는 것입니다. 각 dexterous hand의 시간 t에서의 state는 <span class="math inline">s_t^I = \{\tau_t^h, s_t^{prop}\}</span>로 정의되며, target hand trajectory <span class="math inline">\tau_t^h</span>와 현재 proprioception <span class="math inline">s_t^{prop} = \{q_t^d, \dot{q}_t^d, w_t^d, \dot{w}_t^d\}</span>를 포함합니다. <span class="math inline">q_t^d</span>, <span class="math inline">w_t^d</span>는 각각 joint angles와 wrist poses입니다. RL을 사용하여 policy <span class="math inline">\pi_I(a_t | s_t^I, a_{t-1})</span>를 학습하여 actions <span class="math inline">a_t^I</span>를 결정합니다.</p>
+<p>Reward Functions: <span class="math inline">r_t^I</span>는 dexterous hand가 reference hand trajectory <span class="math inline">\tau_t^h</span>를 추적하면서 안정성과 부드러움을 보장하도록 설계되었습니다.</p>
+<ol type="1">
+<li>Wrist tracking reward <span class="math inline">r_t^{wrist}</span>: <span class="math inline">w_t^d \ominus w_t^h</span>와 <span class="math inline">\dot{w}_t^d - \dot{w}_t^h</span>의 차이를 최소화합니다. ⊖는 SE(3) 공간에서의 차이입니다.</li>
+<li>Finger imitation reward <span class="math inline">r_t^{finger}</span>: Dexterous hand가 reference finger joint positions를 밀착 추적하도록 장려합니다. MANO model에 해당하는 F개의 손가락 keypoint <span class="math inline">j_t^d</span>를 dexterous hand에 manually selection 합니다. Weights <span class="math inline">w_f</span>와 decay rates <span class="math inline">\lambda_f</span>는 손가락 끝, 특히 엄지, 검지, 중지에 강조를 둡니다. 이는 인간과 로봇 손의 형태학적 차이 영향을 완화합니다. <span class="math inline">r_t^{finger} = \sum_{f=1}^F w_f \cdot \exp (-\lambda_f \|j_t^d - j_t^h\|_2^2)</span>.</li>
+<li>Smoothness Reward <span class="math inline">r_t^{smooth}</span>: 각 joint에 가해지는 power에 벌점을 줍니다.</li>
+</ol>
+<p>Total reward: <span class="math inline">r_t^I = w_{wrist} \cdot r_t^{wrist} + w_{finger} \cdot r_t^{finger} + w_{smooth} \cdot r_t^{smooth}</span>.</p>
+<p>Training Strategy: 손 모방을 객체 상호작용에서 분리하여, <span class="math inline">\pi_I</span>는 획득하기 어려운 조작 데이터를 필요로 하지 않습니다. 기존 hand motion datasets와 synthetic data를 포함한 hand-only datasets를 사용하여 policy를 학습합니다. 효율성을 위해 Reference State Initialization (RSI)와 early termination [88]을 사용합니다. Dexterous hand keypoint <span class="math inline">j_t^d</span>가 임계값 <span class="math inline">\epsilon_{finger}</span> 이상 벗어나면 에피소드가 조기 종료되고 무작위로 샘플링된 MoCap state로 재설정됩니다. Curriculum learning 을 사용하여 <span class="math inline">\epsilon_{finger}</span>를 점진적으로 줄여 초기 넓은 탐색 후 미세한 손가락 제어에 집중합니다.</p>
+<p><strong>3.3. Residual Learning for Interaction</strong></p>
+<p>사전 학습된 <span class="math inline">\pi_I</span>를 기반으로 residual module R을 사용하여 coarse actions를 fine-tune하고 task-specific constraints를 만족시킵니다.</p>
+<p>State Space Expansion for Interaction: Dexterous hand와 object 간 상호작용을 고려하여 hand-related state <span class="math inline">s_t^I</span> 외에 추가 interaction-related information을 통합하여 state space를 확장합니다.</p>
+<ul>
+<li>Object information: MoCap 데이터의 object meshes o의 convex hull ˆo를 simulation 환경에서 생성. Reference <span class="math inline">T^o</span> 따라 객체 조작 위해 객체의 position <span class="math inline">p_t^{\hat{o}}</span> (wrist position <span class="math inline">w_t^d</span> 기준), velocities <span class="math inline">\dot{p}_t^{\hat{o}}</span>, center of mass <span class="math inline">m_t^{\hat{o}}</span>, gravitational force vector <span class="math inline">G_t^{\hat{o}}</span> 포함. 객체 형상 인코딩 위해 BPS [91] 사용.</li>
+<li>Spatial relationship: 손과 객체 간 공간 관계를 distance metric <span class="math inline">D(j_t^d, p_t^{\hat{o}}) = \|j_t^d - p_t^{\hat{o}}\|_2^2</span>으로 인코딩.</li>
+<li>Contact force <span class="math inline">C_t</span>: Simulation에서 얻은 contact force를 명시적으로 포함. 안정적인 grasping과 manipulation에 중요.</li>
+</ul>
+<p>Expanded interaction state: <span class="math display">s_t^{interact} = \{\tau_t^o, p_t^{\hat{o}}, \dot{p}_t^{\hat{o}}, m_t^{\hat{o}}, G_t^{\hat{o}}, \text{BPS}(\hat{o}), D(j_t^d, p_t^{\hat{o}}), C_t\}</span> Combined state: <span class="math display">s_t^R = s_t^I \cup s_t^{interact}</span></p>
+<p>Residual Actions Combining Strategy: Goal은 initial imitation actions <span class="math inline">a_t^I</span>를 refine하는 residual actions <span class="math inline">\Delta a_t^R</span>를 학습하여 task compliance를 보장하는 것입니다. 최종 action은 <span class="math inline">a_t = a_t^I + \Delta a_t^R</span>로 계산되며, residual action은 element-wise로 더해집니다. 결과 action <span class="math inline">a_t</span>는 dexterous hand의 joint limit에 맞게 clipping됩니다. 학습 초기에는 dexterous hand 움직임이 이미 reference hand trajectory에 가깝기 때문에 residual actions은 0에 가깝도록 예상되며, 이는 model collapse를 방지하고 convergence를 가속화합니다. Residual module을 zero-mean Gaussian distribution으로 초기화하고 warm-up strategy를 사용하여 점진적으로 학습을 활성화합니다.</p>
+<p>Reward Functions: Task-agnostic하게 설계되어 task-specific reward engineering을 피합니다.</p>
+<ul>
+<li>Hand imitation reward <span class="math inline">r_t^I</span> (Sec 3.2) 포함.</li>
+<li>Object following reward <span class="math inline">r_t^{object}</span>: Simulated object와 reference trajectory 간 positional 및 velocity 차이 최소화 (<span class="math inline">p_t^{\hat{o}} \ominus p_t^o</span> and <span class="math inline">\dot{p}_t^{\hat{o}} - \dot{p}_t^o</span>).</li>
+<li>Contact force reward <span class="math inline">r_t^{contact}</span>: MoCap 데이터에서 hand-object distance가 임계값 <span class="math inline">\xi_c</span> 이하일 때 적절한 contact force 장려. <span class="math inline">r_t^{contact} = w_c \cdot \exp ( -\lambda_c \sum_{f=1}^F C_{t,f}^d \cdot \mathbf{1}_{D(j_{t,f}^h, p_t^o \cdot o) &lt; \xi_c} )</span>. 여기서 <span class="math inline">\mathbf{1}(\cdot)</span>은 indicator function, <span class="math inline">C_{t,f}^d</span>는 fingertip에서의 contact force입니다.</li>
+</ul>
+<p>Total reward: <span class="math display">r_t^R = r_t^I + w_{object} \cdot r_t^{object} + w_{contact} \cdot r_t^{contact}</span></p>
+<p>Training Strategy: QuasiSim 에서 영감을 받아 relaxation mechanism을 도입. Isaac Gym 환경에서 물리적 제약 조건을 직접 조정하여 학습 효율성 향상. 초기에는 gravitational constant G를 0으로, friction coefficient F를 높은 값으로 설정. 학습이 진행됨에 따라 G를 실제 값으로 복원하고 F를 적절한 값으로 감소. Imitation 단계와 유사하게 RSI, early termination(<span class="math inline">p_t^{\hat{o}}</span>가 <span class="math inline">\epsilon_{object}</span> 벗어날 시), curriculum learning 사용 (<span class="math inline">\epsilon_{object}</span> 점진적 감소). Contact termination 조건 추가: MoCap에서 인간 손이 단단히 잡고 있음을 나타낼 때(<span class="math inline">D(j_{t,f}^h, p_t^o \cdot o) &lt; \xi_t</span>) <span class="math inline">C_{t,f}^d</span>가 0이 아니어야 함. 이 조건을 충족하지 못하면 조기 종료.</p>
+<p><strong>3.4. DEXMANIPNET Dataset</strong></p>
+<p>MANIPTRANS를 사용하여 DEXMANIPNET 데이터셋을 생성합니다. FAVOR [62]와 OakInk-V2 [134] 두 대표적 대규모 hand-object interaction datasets에서 파생됩니다. OakInk-V2는 pen capping, bottle unscrewing 같은 복잡한 상호작용을, FAVOR는 object rearrangement 같은 기초 작업을 포함합니다. Dexterous robotic hand의 표준화 부족으로 Inspire Hand (simulated 12-DoF)를 주요 플랫폼으로 사용합니다.</p>
+<p>DEXMANIPNET은 61가지 다양하고 어려운 task [134]를 포함하며, 1.2K개 객체에 대한 3.3K episode의 robotic hand manipulation, 총 1.34 million frames으로 구성됩니다. 이 중 약 600 sequence는 복잡한 양손 task를 포함합니다. 각 episode는 Isaac Gym 시뮬레이션에서 정확하게 실행됩니다.</p>
+<p><strong>4. Experiments</strong></p>
+<p>MANIPTRANS를 manipulation precision, task compliance, transfer efficiency 측면에서 평가합니다. Metrics는 에서 adapted되었으나 양손 task 복잡성으로 인해 더 엄격합니다.</p>
+<ol type="1">
+<li>Per-frame Average Object Rotation and Translation Error: <span class="math inline">E_r = \frac{1}{TP} \sum_{t=1}^T (\text{prot}_t^{\hat{o}} \cdot (\text{prot}_t^o)^{-1})</span>, <span class="math inline">E_t = \frac{1}{TP} \sum_{t=1}^T \| \text{ptsl}_t^{\hat{o}} - \text{ptsl}_t^o \|_2^2</span>. Degree와 cm로 보고.</li>
+<li>Mean Per-Joint Position Error (cm): <span class="math inline">E_j = \frac{1}{T \cdot F} \sum_{t=1}^T \sum_{f=1}^F \| j_t^d - j_t^h \|_2^2</span>. Hand joint 위치 평균 오류.</li>
+<li>Mean Per-Fingertip Position Error (cm): <span class="math inline">E_{ft} = \frac{1}{T \cdot M} \sum_{t=1}^T \sum_{ft=1}^M \| t_t^{df t} - t_t^{hf t} \|_2^2</span>. Fingertip motion 모방 품질 평가. M은 단손 5, 양손 10.</li>
+<li>Success Rate (SR): <span class="math inline">E_r, E_t, E_j, E_{ft}</span>가 각각 30◦, 3 cm, 8 cm, 6 cm 이하일 때 성공. 양손 task는 어느 한 손이라도 조건을 만족 못하면 실패.</li>
+</ol>
+<p>Implementation Details: 각 dexterous robotic hand에 21개 keypoints (fingertips, palm, phalangeal positions) 수동 선택. Curriculum learning (<span class="math inline">\epsilon_{finger}</span>: 6cm to 4cm, <span class="math inline">\epsilon_{object}</span>: 90◦/6cm to 30◦/2cm). PPO 사용. Batch size 1024, <span class="math inline">\gamma=0.99</span>. Isaac Gym 환경, 4096 environments 병렬 실행 (RTX 4090, i9-13900KF).</p>
+<p><strong>4.3. Evaluations</strong></p>
+<p>RL-combined methods와 optimization-based methods 비교.</p>
+<ul>
+<li>RL-Combined: RL-Only, Retarget + Residual (human-robot keypoint alignment 후 residual action), Retarget-Only (naive baseline).</li>
+<li>Table 1: MANIPTRANS가 모든 baseline 대비 우수한 precision과 SR (특히 bimanual SR 39.5% vs 13.9%, 12.1%, 0.0%). Retarget-Only는 거의 불가능. RL-Only는 비최적. Retarget+Residual 대비 사전 학습 모델 활용으로 더 정확한 조작 가능. Retargeting 방식은 접촉이 많은 상황에서 불안정성 유발. Fig 3은 MANIPTRANS의 qualitative 결과.</li>
+<li>Optimization-Based (QuasiSim ): Qualitative 비교 (Fig 4). MANIPTRANS가 Shadow Hand에서 더 자연스럽고 안정적인 접촉, 부드러운 동작 생성. Efficientcy 측면에서 MANIPTRANS가 훨씬 빠름 (minutes vs hours).</li>
+</ul>
+<p><strong>4.4. Cross-Embodiments Validation</strong></p>
+<p>Shadow Hand , articulated MANO hand [27, 96], Inspire Hand , Allegro Hand (DoF: 22, 22, 12, 16) 등 다양한 embodiment에 대한 extensibility 시연 (Fig 4, 5, Appx A). 인간 손가락과 로봇 joint 간 correspondence에만 의존하여 embodiment-agnostic. Network hyperparameters나 reward weights 변경 없이 일관된, 부드럽고 정밀한 성능 달성. Allegro Hand (4 finger, 큼) 적응 위해 fingertip mapping 및 <span class="math inline">\epsilon_{finger}</span> (8cm로 완화) 조정. Appx A.3 (Table 3)는 확장 실험 설정 요약.</p>
+<p><strong>4.5. Real-World Deployment</strong></p>
+<p>두 대의 7-DoF Realman arm [95]과 upgraded Inspire Hands (tactile sensors 추가) 사용 (Fig 6). Simulation의 12-DoF 로봇 손과 실제 6-DoF 하드웨어 간 격차 해소를 위해 fitting-based method 사용: fingertip alignment를 위해 실제 로봇의 joint angles <span class="math inline">q̃d \in R^6</span> 최적화 <span class="math inline">argmin_{q̃d} \frac{1}{T \cdot M} \sum_{t=1}^T \sum_{ft=1}^M \|t_t^{df t} - t_t^{\tilde{d}f t}\|_2^2</span>. 추가 temporal smoothness loss <span class="math inline">L_{smooth} = \frac{1}{T-1}\sum_{t=1}^{T-1} \|q_{t+1}^{\tilde{d}} - q_t^{\tilde{d}}\|_2^2</span> 포함. Inverse kinematics로 arm 제어. Replay 시 strict temporal alignment는 강제하지 않음. “Opening the toothpaste” 등 복잡한 미세 양손 조작 성공 시연.</p>
+<p><strong>4.6. Ablation Studies</strong></p>
+<ul>
+<li>Tactile Information: Contact force C를 observation, reward, termination 조건으로 통합 효과 분석 (Fig 7a). Reward에 C 포함 시 SR 개선. Observation 시 수렴 가속. Termination 조건에서 C 제외 시 초기 성능 좋으나 수렴 느려짐.</li>
+<li>Training Strategy (Curriculum Learning): Gravity relaxation, friction 증가, thresholds relaxation 효과 분석 (Fig 7b). Gravity 무시, high friction 사용 시 수렴 가속 및 최종 SR 증가. Threshold constraints 초기 완화 없으면 수렴 실패 가능.</li>
+</ul>
+<p><strong>4.7. DEXMANIPNET for Policy Learning</strong></p>
+<p>DEXMANIPNET의 policy learning 잠재력 벤치마킹. Rearrangement task (bottle to goal)에 IBC , BET [101], Diffusion Policy [25] (UNet, Transformer 기반) 적용 (Table 2, Fig 11). 85% 학습, 15% 평가. SR은 객체 최종 위치가 목표 10cm 이내일 때 성공. Dexterous manipulation task의 어려움 강조. Regression-based methods는 error accumulation 문제.</p>
+<p><strong>5. Conclusion and Discussion</strong></p>
+<p>MANIPTRANS는 인간 조작 기술을 dexterous robotic hand에 효율적으로 이전하는 2단계 프레임워크입니다. 손 동작 모방과 객체 상호작용을 residual learning으로 분리하여 형태학적 차이와 복잡한 task 어려움을 극복하며 고화질 동작과 효율적 학습을 보장합니다. 실험 결과 MANIPTRANS가 SOTA methods를 motion precision 및 computational efficiency 면에서 능가하며, cross-embodiment 적응성 및 real-world deployment 가능성을 보여줍니다. 확장 가능한 DEXMANIPNET은 Embodied AI 발전을 위한 새로운 벤치마크를 구축합니다.</p>
+<p>Discussion and Limitations: MANIPTRANS는 대부분의 MoCap 데이터를 효과적으로 이전하지만, 일부 sequence는 그렇지 못합니다. 주요 이유는 1) 상호작용 poses의 과도한 noise, 2) simulation을 위한 객체 모델, 특히 articulated objects의 부정확성입니다. MANIPTRANS의 강건성 향상과 물리적으로 그럴듯한 객체 모델 생성은 향후 연구 방향입니다.</p>
+<p>Supplementary Material에서는 Extensibility (Articulated Object Manipulation - Appx A.1 Fig 8, Challenging Hand Embodiments like Allegro Hand - Appx A.2 Fig 9, Table 3), Robustness Evaluation (noisy hand trajectory input - Appx B Table 4), Time Cost Analysis (Appx C Fig 10), Settings Details (Hand/Dexterous Hand Correspondence, Training/Simulation Parameters - Appx D), DEXMANIPNET Statistics (Table 6), Rearrangement Policy Learning Details (Table 7, Fig 11)를 추가로 제공합니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<section id="배경과-문제-정의" class="level2">
+<h2 class="anchored" data-anchor-id="배경과-문제-정의">배경과 문제 정의</h2>
+<p>현대 다관절 로봇 손(dexterous robotic hand)은 인간 손처럼 정교한 조작을 목표로 개발되고 있으며, 특히 양손(bimanual) 협동 작업을 인간 수준으로 구현하는 것은 큰 도전입니다. 인간의 양손은 펜 뚜껑을 열고 닫거나 병 뚜껑을 비트는 등 복잡한 협조 동작을 수행할 수 있지만, 로봇에게 이러한 능력을 학습시키는 일은 쉽지 않습니다. 기존에 제시된 방법들은 강화학습(RL)을 통해 로봇 손 행동을 스스로 탐색하게 하거나, 사람 조작을 원격조작(teleoperation)으로 데이터 수집하는 방식을 사용해 왔습니다. 그러나 전통적 RL은 과제별로 정교한 보상 함수를 설계해야 해 확장성이 떨어지고 복잡한 과제에는 적용이 어렵습니다. 텔레오퍼레이션은 사람 운영자가 가상현실(VR) 기기를 활용해 로봇 손을 직접 조종하며 데이터를 모으는 방식인데, 비용·노력 면에서 비효율적이고 한정된 환경에 특화된 데이터셋만 얻는 한계가 있습니다.</p>
+<p>이러한 문제를 해결하기 위해, 최근에는 인간 시연 데이터(예: 모션 캡처 MoCap으로 기록한 사람 손 동작)를 로봇 손에 모방 전이하는 연구가 주목받고 있습니다. 사람의 조작 궤적을 모방하면 인간과 유사한 자연스러운 물체-손 상호작용을 얻을 수 있고, 대규모 MoCap 데이터셋과 손 추적 기술의 발전으로 양질의 인간 조작 시퀀스를 쉽게 확보할 수 있기 때문입니다. 시뮬레이션 환경에서 이런 모방 학습을 하면 현실에서 바로 실험하지 않고도 효과를 검증할 수 있다는 장점도 있습니다.</p>
+<p>모션 전이(motion transfer) 문제란, 인간 두 손의 조작 시연을 주어진 로봇 양손 시스템에 옮겨와 동일한 작업을 수행하도록 만드는 과제를 말합니다. 보다 공식적으로, 이 논문에서는 왼손과 오른손 두 개의 다관절 로봇 손이 주어진 인간의 왼손, 오른손 움직임을 모방해 두 물체를 협력 조작하도록 하는 시나리오로 문제를 정의합니다. 예를 들어 한쪽 손이 펜 뚜껑을 잡고 다른 손이 펜 몸체를 쥐는 펜 마개 닫기 작업을 생각해볼 수 있습니다. 입력으로는 인간 손 시연의 참조 궤적(프레임 시퀀스로 표현된 손목의 6자유도 자세, 손가락 관절 각도 및 각속도 등)과 물체들의 움직임 궤적이 주어지며, 목표는 로봇 손들이 물리 시뮬레이션 상에서 이 참조 동작을 정확히 따라하면서도 작업의 물리적 제약을 만족하는 정책을 학습하는 것입니다. 그러나 이와 같은 양손 조작 모션 전이는 몇 가지 어려움이 있습니다. 우선 인간 손과 로봇 손의 형태(morphology)가 다르기 때문에 단순히 관절 각도를 매칭시키는 직접 리타게팅은 부자연스러운 자세를 만들기 쉽습니다. 또, 모캡 데이터 자체가 정확하다 하더라도 프레임 단위의 작은 오차들이 누적되면 물체를 다루는 고정밀 작업에서는 실패로 이어질 수 있습니다. 마지막으로 한 손이 아닌 두 손을 동시에 제어하려면 동작 공간의 차원이 매우 높아져 학습 난이도가 폭증합니다. 이러한 이유로 선행 연구들 대부분은 단일 손의 grasp(쥐기)이나 물체 들어올리기 정도에서 멈추고, 병 뚜껑 돌려 열기나 펜 뚜껑 씌우기 같은 복잡한 양손 동작은 거의 다루지 못했습니다.</p>
+<p>이러한 배경에서 이번에 소개할 ManipTrans (CVPR 2025 채택 논문)는 인간의 양손 조작 시연을 로봇의 두 손에 효과적으로 전이하는 새로운 방법을 제안합니다. 특히 “모션 전이” 문제를 두 단계로 분할하여 생각한 독창적 접근이 돋보입니다. 전통적 리타게팅 방법이 모캡 데이터를 그대로 로봇 관절로 매핑하려다 물리적으로 불안정한 동작을 만들어내는 데 반해, ManipTrans는 시연 모션을 물리적으로 수행 가능한 로봇 행동으로 변환하는데 성공적입니다. 그림은 기존 리타게팅의 실패 사례(로봇이 모캡 궤적을 그대로 따르다 물체를 놓치는 모습)와 ManipTrans로 학습한 결과(펜 뚜껑 씌우기, 병 마개 열기 등 다양한 작업을 성공적으로 재현)의 비교입니다.</p>
+</section>
+<section id="주요-기여-및-혁신점" class="level2">
+<h2 class="anchored" data-anchor-id="주요-기여-및-혁신점">주요 기여 및 혁신점</h2>
+<p>논문의 핵심 기여는 다음과 같이 요약할 수 있습니다:</p>
+<ul>
+<li>이중 로봇 손 모션 전이를 위한 2단계 프레임워크 제안 – 인간의 양손 조작 기술을 로봇에 정밀하게 전이하기 위해, 먼저 손 움직임 자체를 모방하고 이후 물체 상호작용을 미세 조정하는 ManipTrans 프레임워크를 제시했습니다. 이로써 참조 손/물체 궤적을 둘 다 정확히 추적하며 과제 수행이 가능합니다.</li>
+<li>대규모 모사 데이터셋 DexManipNet 구축 – 제안된 방법을 활용하여 다양한 새로운 양손 조작 작업(펜 뚜껑 씌우기, 병뚜껑 돌려 열기, 실험용 플라스크 흔들기 등)까지 포함한 대규모 로봇 조작 데이터셋을 생성했습니다. DexManipNet은 3,300개 에피소드에서 약 134만 프레임의 로봇 손 조작 데이터를 담고 있으며, 61가지에 이르는 풍부한 작업들을 포괄합니다. 이는 이전에 공개된 유사 데이터셋들보다 규모나 다양성 면에서 훨씬 크며, 향후 로봇 정책 학습 연구에 귀중한 자원이 될 것입니다.</li>
+<li>탁월한 성능 및 일반화 – 제안 방법을 다양한 실험으로 검증한 결과, 기존 최신 기법 대비 동작 정밀도와 전이 성공률에서 크게 향상된 성능을 보였습니다. 특히 개인용 PC 환경에서조차 학습 효율이 우수하여 전이 속도가 빠르고, 여러 형태와 자유도를 가진 로봇 손(예: Shadow Hand, Allegro Hand 등)에도 최소한의 수정만으로 적용되어 일관된 성능을 발휘했습니다. 더 나아가 시뮬레이터에서 학습한 정책을 실제 로봇 장비로 재생하여, 기존 강화학습이나 텔레오퍼레이션으로는 달성하지 못했던 민첩하고 자연스러운 양손 조작을 현실에서도 구현해 보였습니다. 이처럼 ManipTrans는 단순하지만 효과적인 이중 로봇 손 모션 전이 프레임워크를 제시하고, 이를 통해 복잡한 인간 조작 시연을 로봇에서 정확히 재현하는 데 성공함으로써 학술적으로나 실용적으로 큰 의의를 지닙니다.</li>
+</ul>
+</section>
+<section id="기술적-구성-maniptrans-두-단계-방법론" class="level2">
+<h2 class="anchored" data-anchor-id="기술적-구성-maniptrans-두-단계-방법론">기술적 구성: ManipTrans 두 단계 방법론</h2>
+<p>ManipTrans의 핵심 아이디어는 모션 전이를 “둘로 나누어” 학습하는 것입니다. 첫 번째 단계에서는 손의 움직임 자체에 집중하고, 두 번째 단계에서 그 움직임을 기반으로 물체를 다루는 세부 조작을 보정합니다. 이러한 분리는 인간-로봇 손 구조 차이로 인한 문제를 완화하고, 높은 차원의 양손 제어를 효율적으로 다루기 위한 전략입니다.</p>
+<section id="단계-손-동작-모방-trajectory-imitation-pre-training" class="level3">
+<h3 class="anchored" data-anchor-id="단계-손-동작-모방-trajectory-imitation-pre-training">1단계: 손 동작 모방 (Trajectory Imitation Pre-training)</h3>
+<p>초기 단계에서는 물체와의 상호작용을 배제한 채 손의 고유한 움직임 궤적을 모방하는 정책을 학습합니다. 구체적으로, 인간 시연에서 얻은 양손의 손목 6자유도 자세 및 손가락 관절 각도 시퀀스를 목표로, 로봇 손이 이를 동일하게 따라가도록 학습합니다[19]. 이때 로봇 손은 물체를 잡거나 힘을 주는 등의 상호작용 없이 공중에서 손가락 모양과 움직임만 흉내 내도록 설정됩니다.</p>
+<p>학습에는 강화학습 기법(PPO 알고리즘)을 활용하며, 설계된 보상 함수는 다음과 같은 요소들로 구성됩니다:</p>
+<ul>
+<li>손목 위치/자세 추종 보상: 로봇 손목이 참조 궤적의 손목과 얼마나 일치하는지에 대한 보상입니다. 손목의 위치와 방향 오차를 줄이도록 유도합니다.</li>
+<li>손가락 자세 추종 보상: 로봇 손가락 관절 각도가 참조 인간 손가락 관절 값과 가까워지도록 합니다. 특히 손가락 끝 위치가 잘 맞는 것이 중요하므로, 사람 손 모델(MANO)과 대응되는 로봇 손의 핵심 키포인트(엄지, 검지, 중지 끝 마디 등)에 가중치를 두어 정밀 추종하도록 설계했습니다[22]. 이는 사람과 로봇 손의 형태 차이를 보정해주는 역할을 합니다.</li>
+<li>움직임 부드러움 보상: 갑작스럽게 튀는 동작을 피하기 위해, 로봇 손 관절의 각속도 변화나 토크 사용량이 과도하지 않도록 페널티를 줍니다. 이를 통해 시연과 유사한 자연스러운 움직임을 얻습니다.</li>
+</ul>
+<p>훈련 데이터로는 손 동작만 포함된 모캡 데이터셋들을 활용했습니다. 예를 들어 기존 공개 손 모션 컬렉션 및 합성 보간 데이터를 사용하고, 좌우 손 동작 빈도를 균형 맞추기 위해 좌우 대칭 변환을 적용했습니다[23]. 물체가 없는 손 단독 데이터로 학습함으로써, 복잡한 물리 상호작용 없이도 손가락 움직임을 정교하게 모방할 수 있었으며, 이는 인간-로봇 손 형태 차이로 인한 문제를 크게 줄여줍니다. 또한 학습 효율을 높이기 위해 초기 상태를 시연 궤적의 임의 지점에서 시작(reference state initialization)시키고, 궤적에서 크게 벗어나면 조기 종료하여 다시 시도하도록 하는 등의 커리큘럼 전략을 도입했습니다. 그 결과 1단계에서는 노이즈에 강인한(hand motion with resilience to noise) 범용 손 모션 모방 모델이 얻어졌습니다[25].</p>
+</section>
+<section id="단계-잔차-정책을-통한-상호작용-미세-조정-residual-learning-fine-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="단계-잔차-정책을-통한-상호작용-미세-조정-residual-learning-fine-tuning">2단계: 잔차 정책을 통한 상호작용 미세 조정 (Residual Learning Fine-tuning)</h3>
+<p>1단계에서 손가락 움직임을 잘 따라하게 된 정책을 바탕으로, 이제 실제 물체를 조작하는 제약을 반영하도록 Residual Learning 기법을 적용한 잔차(residual) 정책을 학습합니다. Residual Learning이란, 기존 정책의 행동에 작은 보정량(잔차)을 더해주는 형태로 정책을 학습시키는 방법으로, 복잡한 문제를 기존 솔루션 + α 방식으로 해결할 수 있어 효율적이고 안정적인 것으로 알려져 있습니다[27]. ManipTrans에서는 1단계 모방 정책이 내는 기본 동작에 대해, 2단계 잔차 정책이 필요한 추가 조작을 계산하여 합성된 최종 행동을 로봇에 실행시킵니다.</p>
+<p>이때 2단계에서는 로봇 손이 실제로 물체를 잡고 다루므로, 상태 공간(state)에도 물체와의 상호작용 정보가 추가됩니다. 구체적으로, 1단계의 손 관절 상태 등에 더해 물체의 상태(손목 기준 상대 위치 및 속도, 질량 중심, 중력 방향 등)를 포함시키고, 물체의 모양은 BPS(Basis Point Set) 표현으로 임베딩하여 제공했습니다. 또한 각 로봇 손가락 키포인트와 물체 표면 사이의 거리를 계산해 손-물체 공간적 관계를 피처로 넣고, 시뮬레이션으로부터 얻는 손가락-물체 접촉력도 명시적으로 포함시켰습니다[30]. 이를 통해 정책이 양손과 물체 사이의 물리적 상호작용을 인지하고 안정적으로 물체를 쥐거나 조작하는 데 필요한 정보를 충분히 얻도록 하였습니다.</p>
+<p>Residual 정책의 동작은 다음과 같습니다: 우선 매 시뮬레이션 스텝마다 1단계 모방 정책으로부터 현재 상태에서의 예상 동작 <span class="math inline">a_{\text{im}}</span>을 샘플링합니다. 이어서 Residual 정책은 확장된 상태 표현을 보고 보정 행동 <span class="math inline">a_{\text{res}}</span>을 산출합니다. 최종 로봇 제어 명령은 이 둘을 합친 <span class="math inline">a = a_{\text{im}} + a_{\text{res}}</span> 형태로 결정됩니다. (필요할 경우 로봇 관절 한계 등을 넘지 않도록 클리핑 처리함) 처음 학습을 시작할 때는 이미 1단계 동작만으로도 참조 궤적과 유사한 움직임이 나오기 때문에, Residual 출력은 0에 가깝게 시작하는 것이 바람직합니다. 실제로도 Residual 정책의 가중치는 처음 평균 0의 작은 값들로 초기화하고, 학습 초반에는 Residual의 기여를 서서히 늘려가는 워밍업 전략을 사용하여 기존 모방 동작을 해치지 않고 미세 조정만 학습하도록 유도했습니다.</p>
+<p>2단계의 보상 함수는, 1단계에서 쓰인 손동작 모방 보상에 더해 두 가지 요소를 추가합니다:</p>
+<ol type="1">
+<li>물체 경로 추종 보상은 시뮬레이터 상의 물체가 인간 시연의 물체 궤적을 잘 따라가도록 위치 및 속도 오차를 줄이는 보상입니다.</li>
+<li>접촉 힘 보상은 인간 시연에서 두 손가락이 물체를 잡고 있는 구간에 해당하면 로봇 손가락도 일정 수준 이상의 접촉력을 발생시키도록 장려하는 것입니다. 예를 들어 모캡 데이터에서 손가락이 물체를 쥐고 있는 프레임에서는, 로봇이 충분한 힘으로 물체를 잡지 않고 있으면 보상이 감소합니다. 이를 통해 로봇이 물체를 확실히 쥐고 놓치지 않도록 학습하게 됩니다. 전반적으로 ManipTrans는 특정 작업에 맞춘 특수한 보상 설계 없이도(task-agnostic 보상) 이러한 일반적 보상 구성만으로 다양한 작업에서 잘 동작하도록 설계되었습니다.</li>
+</ol>
+<p>학습 과정의 최적화를 위해 몇 가지 트릭을 활용했습니다. 잔차 정책 학습 초반에 흔히 발생하는 문제는, 물리 상호작용 제약 때문에 국소최적해에 빠지거나 학습이 불안정해질 수 있다는 것입니다. 이를 완화하기 위해 물리 파라미터 이완(relaxation) 기법을 도입했는데, 훈련 초기에는 중력을 0으로 줄이고 마찰 계수를 높이는 식으로 환경을 일시적으로 쉽게 만들어줍니다. 중력이 없고 마찰이 큰 상황에서는 로봇 손이 물체를 가볍게 붙잡고 참조 궤적에 맞추기가 수월해지므로, 초기에 빠르게 성공 궤적들을 찾아낼 수 있습니다. 학습이 진행됨에 따라 점차 중력을 실제값으로 복원하고 마찰 계수를 정상 수준으로 감소시켜, 최종적으로는 실제 물리 환경에 가깝게 만듭니다. 이 과정은 인위적인 별도 시뮬레이터를 쓴 선행연구(예: QuasiSim)와 달리, 표준 시뮬레이터(Isaac Gym)의 설정만 동적으로 바꾸는 방식이라 구현이 간단하면서도 효과적이었습니다. 이 밖에도 1단계와 마찬가지로 초기 상태를 시연 궤적 근처에서 샘플링하고, 물체가 일정 범위 이상 떨어지면 에피소드를 조기 종료하는 등의 규칙을 적용했습니다[39]. 특히 인간 시연에서 두 손으로 물체를 꽉 잡는 시점에 로봇이 제대로 힘을 주지 못하면 바로 종료해버리는 접촉력 조건도 두어, 반드시 물체를 놓치지 않도록 학습시키는 세밀한 장치를 마련했습니다. 위의 1단계 모방 정책과 2단계 잔차 정책은 NVIDIA Isaac Gym 시뮬레이터 환경에서 구동되는 수천 개의 병렬 에피소드를 통해 효율적으로 학습되었습니다. 논문에서는 4096개의 병렬 환경을 사용하여 PPO 기반 정책을 학습했고, GPU 한 대로도 원활히 훈련이 가능했음을 보고합니다. 이는 제안 방법의 학습 효율성이 높아 실용적이라는 점을 강조하는 부분입니다.</p>
+</section>
+</section>
+<section id="실험-결과-성능-평가-및-분석" class="level2">
+<h2 class="anchored" data-anchor-id="실험-결과-성능-평가-및-분석">실험 결과: 성능 평가 및 분석</h2>
+<p>ManipTrans의 성능은 다양한 지표에서 평가되었고, 여러 비교 방법을 크게 상회하는 것으로 나타났습니다. 실험에는 대표적인 양손 조작 데이터셋인 OakInk-V2의 검증 세트를 활용하였으며(약 절반이 양손 작업), 그 외에 GRAB, FAOVR, ARCTIC 등의 데이터도 정성 평가에 사용되었습니다. 평가 지표로는 물체의 위치/자세 오류, 로봇 손 관절 위치 오류, 손가락 끝 위치 오류 등이 평균적으로 얼마나 나타나는지 계산했고, 특히 성공률(success rate)은 로봇 두 손 모두가 참조 궤적을 일정 오차 이하로 추적하면 성공으로 간주하는 방식으로 정의했습니다. (양손 작업의 경우 어느 한 손이라도 기준을 못 만족하면 실패로 처리하여 성공 조건을 엄격하게 했습니다.)</p>
+<p>비교 대상 방법으로는</p>
+<ol type="a">
+<li>Retarget-Only: 아무 학습 없이 모캡 손동작을 로봇 관절로 단순 이식한 경우,</li>
+<li>RL-Only: 모방 보상만으로 처음부터 끝까지 강화학습한 경우,</li>
+<li>Retarget + Residual: 인간-로봇 손가락 대응을 맞춰 리타게팅한 궤적을 기본 동작으로 하고, 그 위에 Residual RL만 적용한 경우 등이 포함되었습니다.</li>
+</ol>
+<p>이들은 ManipTrans의 일부 구성요소만 사용하는 부분 결합 기법들이나 기존 문헌의 접근법을 재구현한 것으로, ManipTrans의 효과를 검증하기 위한 비교군입니다.</p>
+<p>결과를 살펴보면 ManipTrans가 모든 지표에서 가장 우수했습니다. 예를 들어 성공률의 경우, 단순 리타게팅은 양손 작업 성공률 0%에 불과했고 RL-Only도 약 12% 수준으로 매우 낮았지만, ManipTrans는 약 39.5%의 양손 작업 성공률을 달성하여 크게 앞섰습니다. 단일 손 작업에서도 다른 방법들이 30~47% 선에 머문 데 비해 ManipTrans는 58% 수준의 높은 성공률을 보였습니다. 또한 물체 자세 오차, 손가락 끝 위치 오차 등 정밀도 지표도 ManipTrans가 가장 낮아 참조 동작을 가장 정확하게 따라함을 증명했습니다. 이러한 향상은 두 단계 전이 프레임워크가 손가락 세부 움직임과 물체 상호작용을 모두 효과적으로 포착해내기 때문이라고 분석됩니다.</p>
+<p>흥미로운 점은, Retarget-Only 방식은 높은 자유도의 로봇 손 공간에서 오류 누적을 감당하지 못해 사실상 거의 실패한다는 것입니다. 한편 RL-Only는 처음부터 탐색하다 보니 학습 시간이 오래 걸리고 모션 정밀도가 떨어져 아쉬운 성능을 보였습니다. Retarget + Residual 기법도 ManipTrans보다는 낮은 성능을 나타냈는데, 이는 초기에 리타게팅한 동작 자체가 물체 접촉 상황에서 충돌을 일으키는 등 부자연스러워 Residual 학습을 방해했기 때문입니다. 반면 ManipTrans는 사전 학습된 손 모션 모방 모델을 활용함으로써 보다 안정적이고 정확한 기본 동작을 제공하고, Residual 단계에서도 추가 제약만 학습하면 되므로 제어 난이도가 감소하여 최종 성능이 높았습니다.</p>
+<p>정성적인 결과로도 ManipTrans의 우수성이 드러났습니다. 논문에서 제시된 시뮬레이션 동영상과 이미지에 따르면, 로봇 손이 가는 꽃줄기를 두 손가락으로 집어 꽃병에 꽂는다거나, 긴 스푼으로 병 안의 물체를 함께 긁어내는 작업, 얇은 펜으로 글씨 쓰기 등 매우 섬세한 동작들도 자연스럽게 수행하는 것을 확인할 수 있습니다. 그림 3에 일부 예시가 나타나 있는데, 상단 두 행은 단일 손 조작(플라스크 흔들기, 펜으로 쓰기) 장면들이고 하단 행은 양손 조작(꽃꽂이, 물 따르기, 스푼으로 긁어내기) 장면들입니다. 사람의 섬세한 손놀림이 필요한 이 작업들을 로봇이 큰 어색함 없이 재현했다는 점은, 제안한 모션 전이 방법의 현실성을 보여줍니다.</p>
+<p>다음으로 일반화 성능을 검증하기 위해, 학습된 정책을 다양한 로봇 손 플랫폼에 적용한 실험이 진행되었습니다. Shadow Hand (모터 24개), MANO hand 모형 (가상 관절 22개), Inspire Hand (12개), Allegro Hand (16개)처럼 구조와 자유도가 다른 로봇 손들에 대해 ManipTrans를 동일하게 적용해본 결과, 별도의 파라미터 튜닝 없이도 모든 경우에 유사한 성능과 자연스러운 동작이 나옴을 확인했습니다[53]. 즉, ManipTrans는 사람 손의 손가락-관절 대응만 정해주면 특정 손 구현체에 종속되지 않고 동작을 전이할 수 있어 플랫폼에 불가지론적인 범용성을 지녔습니다. 이는 1단계 모방 모델이 손가락 키포인트 트래킹에만 집중하고, 2단계에서 물리 상호작용을 다루는 구조 덕분입니다[54]. 심지어 손가락 4개짜리 Allegro Hand의 경우도 일부 손가락 대응만 설정하면 큰 문제 없이 동작했음을 보고하고 있습니다.</p>
+<p>마지막으로, 현실 세계 적용 가능성을 보여주기 위한 시도가 이뤄졌습니다. 연구진은 두 대의 7자유도 로봇 팔 끝에 실제 Inspire 로봇 손 두 개를 장착하고, 앞서 시뮬레이션에서 생성한 DexManipNet의 양손 조작 궤적들을 재생시키는 실험을 했습니다[55]. 다만 실제 하드웨어인 로봇 손은 시뮬레이터 모델보다 관절 자유도가 적기 때문에, 관절 각도를 피팅(fitting)하는 알고리즘을 추가로 사용하여 시뮬레이션 상 12-DoF 동작을 실제 6-DoF 기계손 움직임으로 근사했습니다[55]. 또한 로봇 팔은 역기구학(IK)을 풀어 로봇 손목이 시뮬레이션 손목 경로를 따라가도록 제어했습니다. 이렇게 해서 실험한 결과, 예를 들어 “치약 뚜껑 열기” 작업에서 한 손으로 튜브를 꽉 쥐고 다른 손의 엄지와 검지로 작은 뚜껑을 톡 눌러 여는 동작을 로봇이 수행해냈습니다. 사람도 세심한 힘 조절이 필요한 이 움직임을 원격조작으로는 구현하기 어려운데, 학습된 정책을 이용해 비교적 쉽게 실현한 사례라 할 수 있습니다. 논문은 이 밖에도 여러 실제 로봇 실험 영상을 웹사이트에 공개하며, 본 기법이 향후 현실 로봇 학습에 큰 잠재력을 지님을 강조했습니다.</p>
+</section>
+<section id="논의-및-한계점" class="level2">
+<h2 class="anchored" data-anchor-id="논의-및-한계점">논의 및 한계점</h2>
+<p>ManipTrans는 다양한 복잡한 인간 조작을 로봇 양손에 성공적으로 전이했지만, 저자들은 몇 가지 한계와 향후 과제도 논의합니다. 먼저, 입력 모캡 데이터의 품질에 따른 제약이 있습니다. 일부 인간 시연은 오차나 잡음이 많아서, 손과 물체의 상호작용이 정확히 기록되지 않은 경우가 있는데, 이런 노이즈가 큰 시연 데이터에서는 전이 성능이 떨어질 수 있음을 지적했습니다. 예를 들어 손가락이 물체를 살짝 관통하거나 불안정하게 잡은 채로 기록된 데이터라면 로봇이 그 움직임을 따라가다 실패할 수 있습니다. 두 번째로, 물체의 시뮬레이션 모델 정확도 문제가 있습니다. 현실의 물체는 모양이나 관절(예: 뚜껑의 나사산 등)이 정교하지만, 시뮬레이터에서 사용하는 물체 모델이 단순/부정확하면 로봇의 조작이 엉뚱하게 진행될 수 있습니다. 특히 복합 구조(articulated)를 가진 물체의 경우 시뮬레이션 모델링이 어렵기 때문에 전이가 잘 안 되는 사례가 있었다고 합니다. 이러한 한계들 때문에 일부 시연 시퀀스는 ManipTrans로도 완벽히 재현하지 못했다고 보고하고 있으며, 이를 해결하려면 더 강인한 학습 기법 개발, 물리적으로 타당한 데이터 전처리 및 증강, 정교한 물체 모델 확보 등이 필요하다고 제언합니다. 저자들은 앞으로 ManipTrans의 강건성 향상, 현실 물체 모델의 물리적 정합성 개선 등을 연구하여 남은 어려운 사례들도 풀어나가는 것이 의미있는 방향이라고 전망합니다.</p>
+<p>전체적으로, “ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning” 논문은 양손 로봇 손의 복잡한 조작 동작을 인간 시연을 통해 효과적으로 학습하는 혁신적 방법을 제시했습니다. 잔차 학습을 활용한 2단계 모션 전이 구조는 손가락 움직임 모방과 물체 조작 제약 적응을 분리함으로써, 기존 방법들이 넘지 못했던 정확도와 효율성의 한계를 극복했습니다. 그 결과 펜 뚜껑 씌우기, 병 뚜껑 돌리기 같은 새로운 난제 과제들까지 성공적으로 구현해 냈으며, 이를 대규모 데이터셋으로도 정리하여 공개함으로써 향후 연구에 기여하고 있습니다. ManipTrans를 통해 인간처럼 섬세한 양손 조작을 로봇이 수행할 수 있는 가능성이 한층 가까워졌으며, 추후 남은 과제들만 해결된다면 가정용 서비스 로봇이나 산업용 조작 작업 등에 폭넓게 활용될 수 있을 것으로 기대됩니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

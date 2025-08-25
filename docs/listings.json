@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-08-25-maniptrans.html",
       "/posts/paper/2025-08-19-dexpilot.html",
       "/posts/paper/2025-08-21-tactile-beyond-pixel.html",
       "/posts/paper/2025-08-16-kinematic-retargeting.html",
@@ -81,6 +82,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-08-25-maniptrans.html",
       "/posts/paper/2025-08-19-dexpilot.html",
       "/posts/paper/2025-08-21-tactile-beyond-pixel.html",
       "/posts/paper/2025-08-16-kinematic-retargeting.html",
