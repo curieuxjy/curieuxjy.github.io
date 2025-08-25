@@ -1,0 +1,139 @@
+---
+title: "📝Simluator Comparison"
+toc: true
+date: "2025-08-25"
+description: 자주쓰는 로봇 시뮬레이터 비교표
+categories: [simulator, 2025]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+# 한눈에 비교표
+
+| 시뮬레이터                      | 물리엔진 / 가속                                                                              | 렌더·센서                                                                   | 포맷/자산                                                                                                                    | ROS(2) 연동                                                                     | 강점                                                  | 유의점                                                                     |
+| -------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Isaac Sim**              | **PhysX 5**, GPU 가속 지원(옵션) ([isaac-sim.github.io][1])                                  | Omniverse 기반 PBR, 카메라/LiDAR/접촉 등 센서 풍부 ([docs.omniverse.nvidia.com][2]) | **USD(OpenUSD)** 중심, **URDF/MJCF** 가져오기(Importer 제공) ([docs.isaacsim.omniverse.nvidia.com][3], [isaac-sim.github.io][4]) | 공식 **ROS 2 Bridge** 제공(내장 라이브러리 포함) ([docs.isaacsim.omniverse.nvidia.com][5]) | 대규모/고충실도, 합성데이터·검증 워크플로우 강력 ([NVIDIA Developer][6]) | GPU/VRAM 요구 높음(특정 GPU 제약) ([docs.omniverse.nvidia.com][7])              |
+| **Isaac Gym**              | PhysX 기반 **완전 GPU 파이프라인**(Tensor API) ([docs.robotsfan.com][8], [NVIDIA Developer][9]) | (렌더 경량) 대규모 병렬 RL에 초점                                                   | **URDF/MJCF** 지원 ([NVIDIA Developer][9])                                                                                 | (직접 ROS 연동은 제한적)                                                              | 초고속 대량 병렬 RL                                        | 미리보기(Preview) 릴리스, **Isaac Lab로 마이그레이션 권장** ([isaac-sim.github.io][10]) |
+| **PyBullet**               | **Bullet**(CPU 중심) / 역·순동역학·IK 제공 ([GitHub][11])                                       | 경량 렌더러(egl/tiny)                                                        | **URDF/SDF/MJCF** 로딩 ([GitHub][11])                                                                                      | 커뮤니티 브리지/패키지로 ROS 연동 가능 ([GitHub][12], [ros-pybullet.github.io][13])          | 설치 간단·스크립팅 쉬움·학습/RL 빠른 반복                           | 고충실도 센서·대규모 장면 표현력은 제한                                                  |
+| **Gazebo (현행 Gazebo Sim)** | 기본 **DART**(런타임 교체 가능: 플러그인 아키텍처) ([gazebosim.org][14])                                | 전통적 렌더+센서 생태계                                                           | **SDF/URDF**                                                                                                             | **ROS 2 통합** 튜토리얼/패키지 완비 ([gazebosim.org][15], [docs.ros.org][16])            | ROS(2) 워크플로우 표준 격                                   | 물리·그래픽 충실도는 Omniverse/PhysX 5 대비 보수적                                    |
+| **SAPIEN**                 | **PhysX 백엔드**(GPU 지원), RL 친화 API/핀오치오 동역학 사용 옵션 ([sapien.ucsd.edu][17], [GitHub][18])  | **Vulkan** 렌더러, 스테레오 깊이 등 센서(일부 NVIDIA GPU 필요) ([sapien.ucsd.edu][17])  | **URDF** 등 로딩, RL/Gym 스타일 인터페이스 제공(ManiSkill 계열) ([sapien-sim.github.io][19])                                            | ROS 지원·연구 커뮤니티 활발(PartNet/Mobility 계보) ([CVF Open Access][20])                | 로보틱스·조작 연구(특히 파트 수준) 최적                             | GPU 메모리/드라이버와의 호환 고려 필요(Colab 이슈 등) ([GitHub][21])                      |
+
+> 참고: **Gazebo Classic**(구 버전)은 ODE/Bullet/DART/Simbody 등 다중 백엔드 인터페이스를 제공했습니다. 최신 **Gazebo Sim**은 기본 DART를 사용하고, 엔진 플러그인으로 확장 가능합니다. ([osrf-distributions.s3.amazonaws.com][22], [boschresearch.github.io][23], [gazebosim.org][14])
+
+---
+
+## 어떤 용도에 무엇을 쓰면 좋은가? 
+
+* **고충실도 디지털 트윈 / 대량 센서 합성 / 산업 검증**
+
+  * **Isaac Sim**: PhysX 5 + Omniverse/USD 생태계, ROS 2 Bridge·URDF/MJCF Importer 등 제품급 워크플로우 강점. 다만 GPU·VRAM 요구 확인 필수. ([isaac-sim.github.io][1], [docs.isaacsim.omniverse.nvidia.com][5], [docs.omniverse.nvidia.com][7])
+* **초대규모 병렬 RL**
+
+  * **Isaac Gym**(Preview): 전체 GPU 파이프라인·Tensor API로 수만 환경 병렬화. 단, 유지보수·API 최신성은 **Isaac Lab** 전환 흐름을 고려. ([docs.robotsfan.com][8], [isaac-sim.github.io][10])
+  * **SAPIEN/ManiSkill**: PhysX GPU 병렬 시뮬 + RL 친화 인터페이스. 손 조작/파츠 상호작용 벤치마크에 강함. ([maniskill.readthedocs.io][24], [sapien-sim.github.io][19])
+* **ROS(2) 기반 로보틱스 교육/프로토타이핑 표준**
+
+  * **Gazebo Sim**: ROS 2 튜토리얼·패키지 체계가 가장 완비. 센서/월드 자산 풍부. ([gazebosim.org][15], [docs.ros.org][16])
+* **가벼운 연구/수업/빠른 스크립팅**
+
+  * **PyBullet**: 설치·사용 간단, URDF/SDF/MJCF·IK/동역학 제공. 고충실·대규모 렌더/센서가 덜 중요하면 최적. ROS 연동은 커뮤니티 패키지로 보완. ([GitHub][11], [GitHub][12])
+* **정교한 접촉·최적화 중심 모델링 대안**
+
+  * **MuJoCo**(참고): 고속·정확 접촉모델, 오픈소스. 조작/최적화 연구에서 여전히 강자. ([mujoco.org][25], [mujoco.readthedocs.io][26], [Google DeepMind][27])
+
+---
+
+## 각 시뮬레이터 핵심 근거(요약)
+
+* **Isaac Sim**
+
+  * GPU 가속 가능한 **PhysX 5** 및 GPU 버퍼 사전할당 주의점(Isaac Lab 문서) ([isaac-sim.github.io][1])
+  * 카메라·LiDAR 등 센서 시뮬/Omniverse 기반 설명 ([docs.omniverse.nvidia.com][2])
+  * **URDF/MJCF Importer** 및 GUI/스크립트 경로 ([docs.isaacsim.omniverse.nvidia.com][3], [isaac-sim.github.io][4])
+  * **ROS 2 Bridge** 설치/내장 라이브러리 안내 ([docs.isaacsim.omniverse.nvidia.com][5])
+  * 시스템 요구(GPU 제약) ([docs.omniverse.nvidia.com][7])
+
+* **Isaac Gym**
+
+  * **Tensor API**로 GPU 상 상태 접근/제어, 완전 GPU 파이프라인 설명 ([docs.robotsfan.com][8])
+  * 피처 요약(URDF/MJCF, 도메인 랜덤화, Jacobian/IK 등) ([NVIDIA Developer][9])
+  * **Isaac Lab**로의 마이그레이션 가이드(후속 경로) ([isaac-sim.github.io][10])
+
+* **PyBullet**
+
+  * **URDF/SDF/MJCF** 지원, **역/순동역학·IK** 제공(Quickstart PDF) ([GitHub][11])
+  * ROS 연동 예: `pybullet_ros`/`ros_pybullet_interface` ([GitHub][12], [ros-pybullet.github.io][13])
+
+* **Gazebo**
+
+  * 최신 Gazebo Sim의 **기본 DART** 및 엔진 플러그인 구조 ([gazebosim.org][14])
+  * Classic의 다중 물리엔진 인터페이스(ODE/Bullet/DART/Simbody) ([osrf-distributions.s3.amazonaws.com][22], [boschresearch.github.io][23])
+  * **ROS 2 통합** 공식 튜토리얼들 ([gazebosim.org][15], [docs.ros.org][16])
+
+* **SAPIEN**
+
+  * **PhysX 백엔드** 명시, 한 프로세스당 엔진 1개 등 기본 구조 ([sapien.ucsd.edu][17])
+  * **Vulkan** 렌더 및 스테레오 깊이 센서(GPU 요구) ([sapien.ucsd.edu][17])
+  * RL/Gym 스타일 인터페이스(사피엔 3.x 문서) ([sapien-sim.github.io][19])
+  * 논문/공식 출처에서 PhysX 사용·ROS 지원 계보 정리 ([CVF Open Access][20])
+
+---
+
+## 상황별 추천(사용자 환경을 고려한 Tip)
+
+* **손(Allegro 등) 조작·RL 연구**를 많이 하신다면
+
+  1. **SAPIEN/ManiSkill**: PhysX 기반 GPU 병렬 시뮬 + 파트/접촉 상호작용 강점. 작은 커스텀 과제 반복이 빠릅니다. ([maniskill.readthedocs.io][24])
+  2. **Isaac Sim**: 합성데이터/고충실 센서·광학이 필요하거나, ROS 2 통합·검증 파이프라인까지 한 번에 가져가려면 좋습니다. ([docs.isaacsim.omniverse.nvidia.com][5])
+  3. **Isaac Gym → Isaac Lab**: 수천\~수만 개 환경 대량 학습이 핵심이면 후속 스택(Isaac Lab)로의 이전을 고려하세요. ([isaac-sim.github.io][10])
+
+* **ROS 2 패키지를 바로 연동해 통합 테스트**하려면
+  → **Gazebo Sim**이 가장 문서/패키지가 정돈되어 있고, 드론/모바일 등 예제가 풍부합니다. ([gazebosim.org][15], [docs.ros.org][16])
+
+* **스크립팅으로 빠르게 아이디어 검증**
+  → **PyBullet**이 설치/코딩 부담이 최소입니다(URDF/MJCF/SDF·IK/동역학 내장). ([GitHub][11])
+
+---
+
+## Others
+
+* **MuJoCo**: 오픈소스화 이후 로보틱스·최적화 연구 표준 중 하나. 접촉 모델·속도/정확도 균형이 강점. ([mujoco.org][25], [mujoco.readthedocs.io][26])
+* **Webots**: 교육·모바일 로봇 친화, **ROS 2 패키지** 제공. ([docs.ros.org][28], [GitHub][29])
+* **CoppeliaSim**: 풍부한 내장 기능과 스크립팅, **ROS 2 인터페이스** 공식 제공. ([CoppeliaSim 사용자 설명서][30])
+* **Drake**: **MultibodyPlant**를 통한 정확한 동역학/기하 파이프라인, 연구용 도구로 우수. ([Drake][31])
+
+---
+
+[1]: https://isaac-sim.github.io/IsaacLab/main/source/api/lab/isaaclab.sim.html?utm_source=chatgpt.com "isaaclab.sim — Isaac Lab Documentation"
+[2]: https://docs.omniverse.nvidia.com/isaacsim?utm_source=chatgpt.com "What Is Isaac Sim?"
+[3]: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/robot_setup/import_urdf.html?utm_source=chatgpt.com "Tutorial: Import URDF - Isaac Sim Documentation"
+[4]: https://isaac-sim.github.io/IsaacLab/main/source/how-to/import_new_asset.html?utm_source=chatgpt.com "Importing a New Asset — Isaac Lab Documentation"
+[5]: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_ros.html?utm_source=chatgpt.com "ROS and ROS 2 Installation - Isaac Sim Documentation"
+[6]: https://developer.nvidia.com/isaac/sim?utm_source=chatgpt.com "Isaac Sim - Robotics Simulation and Synthetic Data ..."
+[7]: https://docs.omniverse.nvidia.com/isaacsim/latest/requirements.html?utm_source=chatgpt.com "System Requirements - Isaac Sim Documentation"
+[8]: https://docs.robotsfan.com/isaacgym/programming/physics.html?utm_source=chatgpt.com "Physics Simulation — Isaac Gym documentation"
+[9]: https://developer.nvidia.com/isaac-gym?utm_source=chatgpt.com "Isaac Gym - Preview Release"
+[10]: https://isaac-sim.github.io/IsaacLab/main/source/migration/migrating_from_isaacgymenvs.html?utm_source=chatgpt.com "From IsaacGymEnvs — Isaac Lab Documentation"
+[11]: https://raw.githubusercontent.com/bulletphysics/bullet3/master/docs/pybullet_quickstartguide.pdf?utm_source=chatgpt.com "PyBullet Quickstart Guide - GitHub"
+[12]: https://github.com/oscar-lima/pybullet_ros?utm_source=chatgpt.com "oscar-lima/pybullet_ros: A bridge between ROS and PyBullet"
+[13]: https://ros-pybullet.github.io/ros_pybullet_interface/develop.html?utm_source=chatgpt.com "Development — ROS-PyBullet Interface documentation"
+[14]: https://gazebosim.org/api/sim/9/physics.html?utm_source=chatgpt.com "Gazebo Sim: Physics engines"
+[15]: https://gazebosim.org/docs/latest/ros2_overview/?utm_source=chatgpt.com "ROS 2 integration overview — Gazebo ionic documentation"
+[16]: https://docs.ros.org/en/rolling/Tutorials/Advanced/Simulators/Gazebo/Simulation-Gazebo.html?utm_source=chatgpt.com "Gazebo — ROS 2 Documentation: Rolling documentation"
+[17]: https://sapien.ucsd.edu/docs/latest/tutorial/basic/hello_world.html?utm_source=chatgpt.com "Hello World — sapien 2.2 documentation"
+[18]: https://github.com/haosulab/SAPIEN/discussions/159?utm_source=chatgpt.com "Question about the dynamics computation library #159"
+[19]: https://sapien-sim.github.io/docs/user_guide/rl/gym.html?utm_source=chatgpt.com "Build Gym-style Interface — sapien 3.0 documentation"
+[20]: https://openaccess.thecvf.com/content_CVPR_2020/papers/Xiang_SAPIEN_A_SimulAted_Part-Based_Interactive_ENvironment_CVPR_2020_paper.pdf?utm_source=chatgpt.com "SAPIEN: A SimulAted Part-Based Interactive ENvironment"
+[21]: https://github.com/haosulab/SAPIEN/issues/157?utm_source=chatgpt.com "GPU PhysX can only be enabled once before any other ..."
+[22]: https://osrf-distributions.s3.amazonaws.com/gazebo/api/7.0.0/classgazebo_1_1physics_1_1PhysicsEngine.html?utm_source=chatgpt.com "gazebo::physics::PhysicsEngine Class Reference"
+[23]: https://boschresearch.github.io/pcg_gazebo_pkgs/tutorials/simulation/physics_engines/?utm_source=chatgpt.com "Setting up different physics engines"
+[24]: https://maniskill.readthedocs.io/en/latest/user_guide/concepts/gpu_simulation.html?utm_source=chatgpt.com "GPU Simulation — ManiSkill 3.0.0b21 documentation"
+[25]: https://mujoco.org/?utm_source=chatgpt.com "MuJoCo — Advanced Physics Simulation"
+[26]: https://mujoco.readthedocs.io/?utm_source=chatgpt.com "MuJoCo Documentation: Overview"
+[27]: https://deepmind.google/discover/blog/opening-up-a-physics-simulator-for-robotics/?utm_source=chatgpt.com "Opening up a physics simulator for robotics"
+[28]: https://docs.ros.org/en/humble/Tutorials/Advanced/Simulators/Webots/Simulation-Webots.html?utm_source=chatgpt.com "Webots — ROS 2 Documentation: Humble documentation"
+[29]: https://github.com/cyberbotics/webots_ros2?utm_source=chatgpt.com "cyberbotics/webots_ros2: Webots ROS 2 packages"
+[30]: https://manual.coppeliarobotics.com/en/ros2Tutorial.htm?utm_source=chatgpt.com "ROS 2 tutorial"
+[31]: https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_multibody_plant.html?utm_source=chatgpt.com "MultibodyPlant< T > Class Template Reference"
