@@ -1,0 +1,222 @@
+---
+draft: false
+title: "🧩CoRL 2025"
+description: Plan & Search for meaningful insights
+date: "2025-08-26"
+categories: [corl, 2025, conference]
+toc: true
+---
+
+### [Programs](https://www.corl.org/program)
+
+> “손/촉각/러닝” 중심 코스에 맞춰 정리한 CoRL 2025 Schedule 정리
+
+# 📅 일정 요약
+
+* **9/27(토)**: 워크숍 집중 — *2nd Workshop on Dexterous Manipulation* (손·촉각 연구자 네트워킹/튜토리얼에 최적) ([Dexterous Manipulation Workshop][2])
+* **9/28(일)**: 메인컨퍼런스 오럴 위주 — **Oral 6 (Humanoid & Hardware)** → **Oral 3 (Manipulation II)**
+* **9/29(월)**: 포스터 스포트라이트 & 포스터 란 활용 — **Spotlight 5, 6** 중심(중간중간 데모/부스)
+* **9/30(화)**: 남은 포스터/데모 & 키노트/EC Keynote 체크(시간 맞춰 이동) ([CoRL][3])
+
+
+![](../../images/2025-08-26-corl-2025/corl.png)
+
+### 2025-09-27 (토) — 워크숍 데이
+
+- 09:00 – 09:30 : 행사 등록 및 오프닝 (예정)
+- 09:30 – 10:30 : *RemembeRL Workshop – Invited Talk 1* (워크숍 시작)  
+  (+ 중간 휴식: 10:30 – 11:00)
+- 11:00 – 12:30 : 워크숍 연사 발표 및 세션 (TBD)
+- 12:30 – 13:30 : 점심시간
+- 13:30 – 15:00 : 워크숍 후반 세션 및 Poster Session 2  
+  (+ 휴식: 15:00 – 15:30)
+- 15:30 – 16:30 : Poster Spotlights / 패널 토론  
+- 16:30 – 16:40 : 워크숍 종료 및 클로징 리마크
+
+### 2025-09-28 (일) — 메인 컨퍼런스 Day 1
+- 09:00 – 10:00 : 컨퍼런스 등록 및 오프닝
+- 10:00 – 12:00 : Oral Session 6 (DexUMI, DexSkin 참석)
+- 12:00 – 13:00 : 점심
+- 13:00 – 15:00 : Oral Session 3 (KineSoft, Tactile Beyond Pixels, Cross-Sensor Touch Generation 참석)
+- 15:00 – 15:30 : 휴식 / 네트워킹
+- 15:30 – 18:00 : Spotlight 5 Poster (Self-supervised perception, Sim-to-Real RL, Crossing the Gap)
+- 18:00 –           : 자유 시간 / 데모 부스 탐방
+
+### 2025-09-29 (월) — 메인 컨퍼런스 Day 2
+- 09:00 – 10:30 : Poster Spotlight 6 (VT-Refine, KineDex, LocoTouch, Text2Touch)
+- 10:30 – 11:30 : 추가 관심 포스터 탐방 / 휴식
+- 11:30 – 13:00 : Early Career Keynotes (Yuan, Fazeli, Pinto)
+- 13:00 – 14:00 : 점심
+- 14:00 – 15:30 : 관심 논문 세션 (재검토 및 부스 방문)
+- 15:30 – 16:00 : 휴식
+- 16:00 – 18:00 : Poster 스윕 또는 추가 네트워킹
+- 18:00 –           : 자유 시간 또는 저녁 세션 참여
+
+### 2025-09-30 (화) — 메인 컨퍼런스 Day 3 / 키노트 데이
+- 09:00 – 10:00 : 등록 / 마무리 준비
+- 10:00 – 10:30 : **Jun-Ho Oh 기조 강연** ("The Golden Age of Humanoid Robots")
+- 10:30 – 11:00 : **Kristen Grauman 기조 강연** ("Skill learning from video")
+- 11:00 – 12:00 : 남은 관심 Oral/Poster 세션 또는 데모 탐방
+- 12:00 – 13:00 : 점심
+- 13:00 – 15:00 : 부스 방문 / 네트워킹
+- 15:00 – 16:00 : 남은 발표 청취 또는 발표자 Q&A
+- 16:00 – 18:00 : 마무리 정리 / 네트워킹 마감
+
+---
+
+# 🎤 Oral 선택 세션
+
+## Oral 6 — Humanoid & Hardware (핵심 키워드: 손·촉각·Real World)
+
+* **DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation** — *arXiv*
+  - **한줄 핵심**: 손 착용 외골격+비전 인페인팅으로 인간 손 동작을 다양한 로봇 핸드로 전이, **Real World 평균 86%** 성공.
+  - **발표가치 예측**: 🔥 *Must-see* — 범용 핸드 전이/데이터 수집 파이프라인이 실전성 높음. ([arXiv][4])
+* **DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation** — *Project page*
+  - **한줄 핵심**: 유연한 고밀도 정전용량형 e-skin으로 손가락 전면/배면을 촉각으로 덮어 **접촉 풍부 과제의 학습/전달** 시연.
+  - **발표가치 예측**: 🔥 *Must-see* — 저가·대면적 촉각 하드웨어의 Real World 학습 적용이 매력적. (arXiv 예정) ([DexSkin][5])
+
+## Oral 3 — Manipulation II (핵심 키워드: 소프트핸드·촉각표현·Tactile 생성)
+
+* **KineSoft: Learning Proprioceptive Manipulation Policies with Soft Robot Hands** — *arXiv*
+  - **한줄 핵심**: 소프트핸드 내부 **변형/스트레인 기반 고유감각**으로 **키네스틱 티칭+형상조건 제어** 결합한 모사학습 프레임워크.
+  - **발표가치 예측**: 👍 *High* — 소프트핸드 실사용 데모/정확도 향상 근거 명확. ([arXiv][6])
+* **Tactile Beyond Pixels: Multisensory Touch Representations for Robot Manipulation** — *arXiv*
+  - **한줄 핵심**: 이미지·오디오·모션·압력 **4모달 촉각표현(Sparsh-X)** 사전학습으로 정책 **성공률 +63%**, 강건성 **+90%**.
+  - **발표가치 예측**: 🔥 *Must-see* — 멀티모달 촉각표현의 스케일·일반화 근거 제시. ([arXiv][7])
+* **Cross-Sensor Touch Generation** — (예정/정보 제한)
+  - **한줄 핵심**: **이기종 촉각센서 간 생성/번역**으로 데이터 증강·표현 정합을 겨냥한 작업.
+  - **발표가치 예측**: 👀 *Watch* — 세부 메트릭 공개 여부에 따라 가치 상향 가능. ([arXiv][8])
+
+---
+
+# 🧪 Poster Spotlights / Posters (우선순위 셀렉션)
+
+## Spotlight 5 & Poster 3 (촉각·휴머노이드 Dexterity 집중)
+
+* **Self-supervised perception for tactile skin covered dexterous hands** — *arXiv*
+  - **한줄 핵심**: **Self-supervised Sparsh-skin 인코더**로 손 전체의 자기자석식 스킨 신호를 잠재표현화, **성능 +41%**/표본효율 개선.
+  - **발표가치 예측**: 🔥 *Must-see* — 전면 스킨 활용 퍼셉션·정책 모두 개선. ([arXiv][9])
+* **Sim-to-Real Reinforcement Learning for Vision-Based Dexterous Manipulation on Humanoids** — *arXiv*
+  - **한줄 핵심**: 휴머노이드 양손 Dexterity에서 **실-시뮬 자동튜닝, Reward 설계 일반화, 분할증류**로 시연·일반화 확보.
+  - **발표가치 예측**: 👍 *High* — 데모 의존↓, RL 단독으로 접촉풍부 과제 달성. ([arXiv][10])
+* **Crossing the Human-Robot Embodiment Gap with Sim-to-Real RL using One Human Demonstration** — *arXiv*
+  - **한줄 핵심**: **단 1개 인간 RGB-D 데모**에서 **객체궤적 Reward+프리-그랩 포즈 초기화**로 휴먼-로봇 격차를 RL로 브리지.
+  - **발표가치 예측**: 🔥 *Must-see* — 데이터 비용 혁신·휴먼→로봇 전이 실효성 큼. ([arXiv][11])
+
+## Spotlight 6 & Poster 3 (Tactile·Reward·Teaching 파이프라인)
+
+* **VT-Refine: Learning Bimanual Assembly with Visuo-Tactile Feedback via Simulation Fine-Tuning** — *OpenReview*
+  - **한줄 핵심**: 실데모+고충실 Tactile 시뮬+RL 조합으로 **정밀 양팔 조립** 학습(시연/어블레이션 포함).
+  - **발표가치 예측**: 👍 *High* — 비주-촉각 통합의 정석 사례. ([OpenReview][12])
+* **KineDex: Learning Tactile-Informed Visuomotor Policies via Kinesthetic Teaching for Dexterous Manipulation** — *arXiv*
+  - **한줄 핵심**: **핸드-오버-핸드 키네스틱 티칭+비주-Tactile 정책+힘제어**로 접촉풍부 과제 **74.4%** 달성.
+  - **발표가치 예측**: 👍 *High* — 포스/촉각 결합 실성능 수치 제시. ([arXiv][13])
+* **Text2Touch: Tactile In-Hand Manipulation with LLM-Designed Reward Functions** — *Project page*
+  - **한줄 핵심**: **LLM 기반 Reward 설계**를 실제 **비전-기반 Tactile 인-핸드 회전**에 적용해 Reward공학 비용 절감.
+  - **발표가치 예측**: 👀 *Watch* — 실제 Tactile 하드웨어와 LLM Reward의 접점 확인 가치. ([efi robotics][14])
+
+## Spotlight 4 & Poster 2 
+
+> 이동 시간 여유 시 강추
+
+* **LocoTouch: Learning Dexterous Quadrupedal Transport with Tactile Sensing** — *arXiv*
+  - **한줄 핵심**: 등면 Tactile 어레이+시뮬-정합으로 **무고정 원통물 장거리 운반**을 4족 로봇이 **제로샷 실전** 수행.
+  - **발표가치 예측**: 👍 *High* — 촉각을 이동체(로코모션)에 접목한 참신 응용. ([arXiv][15])
+
+---
+
+# 🗝️ Keynotes / EC Keynotes(참고)
+
+* 메인 키노트 & EC Keynotes(예: Wenzhen Yuan, Nima Fazeli, Lerrel Pinto) 
+    — 촉각/조작 주제와 직접 연관된 관점 업데이트에 유익. 세션 시간대는 공식 페이지 수시 확인. ([CoRL][3])
+
+---
+
+## ✅ 이동/청취 팁
+
+* **우선순위 규칙**: (1) Oral 6·3 > (2) Spotlight 5·6 > (3) Spotlight 4 (충돌 시).
+* **포스터 전략**: 위 목록을 우선 라우팅하고, 같은 섹션대 **인접 포스터**(손/촉각 키워드)까지 빠르게 스윕.
+* **버퍼 확보**: 오럴→포스터 이동 전후 최소 10–15분 이동·대화 버퍼 확보(질문/네트워킹 포함).
+* **자료 회수**: arXiv/프로젝트 페이지를 미리 즐겨찾기(모바일)해 부스/데모에서 바로 레퍼런스 공유.
+
+
+[1]: https://www.corl.org/?utm_source=chatgpt.com "CoRL 2025"
+[2]: https://dex-manipulation.github.io/corl2025/?utm_source=chatgpt.com "2nd Workshop on Dexterous Manipulation: Learning and ..."
+[3]: https://www.corl.org/program/keynotes?utm_source=chatgpt.com "Keynotes"
+[4]: https://arxiv.org/html/2505.21864v2?utm_source=chatgpt.com "DexUMI: Using Human Hand as the Universal ..."
+[5]: https://dex-skin.github.io/ "DexSkin | High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation"
+[6]: https://arxiv.org/abs/2503.01078 "[2503.01078] KineSoft: Learning Proprioceptive Manipulation Policies with Soft Robot Hands"
+[7]: https://arxiv.org/abs/2506.14754 "[2506.14754] Tactile Beyond Pixels: Multisensory Touch Representations for Robot Manipulation"
+[8]: https://arxiv.org/abs/2504.06156?utm_source=chatgpt.com "Learning Contact-Rich Tasks Through Robot-Free Visuo ..."
+[9]: https://arxiv.org/abs/2505.11420 "[2505.11420] Self-supervised perception for tactile skin covered dexterous hands"
+[10]: https://arxiv.org/abs/2502.20396?utm_source=chatgpt.com "Sim-to-Real Reinforcement Learning for Vision-Based Dexterous Manipulation on Humanoids"
+[11]: https://arxiv.org/abs/2504.12609?utm_source=chatgpt.com "Crossing the Human-Robot Embodiment Gap with Sim-to-Real RL using One Human Demonstration"
+[12]: https://openreview.net/forum?id=mV3W5givYb&utm_source=chatgpt.com "VT-Refine: Learning Bimanual Assembly with Visuo-Tactile ..."
+[13]: https://arxiv.org/abs/2505.01974 "[2505.01974] KineDex: Learning Tactile-Informed Visuomotor Policies via Kinesthetic Teaching for Dexterous Manipulation"
+[14]: https://efi-robotics.github.io/?utm_source=chatgpt.com "efi robotics"
+[15]: https://arxiv.org/abs/2505.23175 "[2505.23175] LocoTouch: Learning Dexterous Quadrupedal Transport with Tactile Sensing"
+
+
+---
+
+# ✋ 질문 리스트
+
+| 세션 / 발표자                           | 질문 내용 (한국어)                                              | 질문 내용 (영어)                                                                                                |
+| ---------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **DexUMI (Oral 6)**                | 착용형 외골격 사용자 맞춤은 어떻게 이루어지나요?                              | How is user customization achieved in the wearable exoskeleton?                                           |
+|                                    | 비전 인페인팅 기술이 다양한 로봇 핸드에 어떻게 일반화되었나요?                      | How does the vision-based inpainting generalize across different robotic hands?                           |
+|                                    | 서로 다른 로봇 핸드 플랫폼 간의 성능 차이가 있었나요?                          | Were there performance differences among different robotic hand platforms?                                |
+| **KineSoft (Oral 3)**              | 내부 스트레인 센서의 해상도와 응답 속도는 어떻게 되나요?                         | What is the resolution and response time of the internal strain sensor array?                             |
+|                                    | 키네스틱 티칭 방식과 기존 IL 방식의 성능 차이는 무엇인가요?                      | What are the performance differences between kinesthetic teaching and traditional imitation learning?     |
+|                                    | 티칭 기반으로 수집된 데이터를 통한 재현성은 어떤 수준인가요?                       | How reproducible are the demonstrations collected via kinesthetic teaching across different object types? |
+| **Tactile Beyond Pixels (Oral 3)** | 네 가지 촉각 모달리티 중 가장 기여가 컸던 downstream task는 무엇인가요?         | Which downstream task benefited most from the four tactile modalities?                                    |
+|                                    | 각 모달리티의 중요도는 어떻게 평가하셨나요?                                 | How were the importance levels of each tactile modality assessed?                                         |
+|                                    | Self-supervised 사전학습 후, 실제 정책 학습에는 어떻게 통합되었나요?                      | After self-supervised pretraining, how was it integrated into actual policy learning?                     |
+| **Sparsh-skin (Poster)**           | tactile 스킨 Self-supervised 학습에서 사용한 주요 프리텍스트 작업은 무엇인가요?             | What were the main pretext tasks used in self-supervised learning for tactile skin?                       |
+|                                    | latent 표현에서 어떤 특징이 가장 중요하다고 보시나요?                        | Which features in the latent representation do you consider most crucial?                                 |
+|                                    | 이 표현을 활용한 downstream manipulation task의 성능 향상은 어느 정도인가요? | How much did manipulation task performance improve using these representations?                           |
+| **Sim-to-Real RL (Poster)**        | 시뮬레이터를 현실에 맞추기 위해 조정한 핵심 파라미터는 무엇인가요?                    | What were the key simulation parameters tuned for sim-to-real transfer?                                   |
+|                                    | 일반화 과정에서 가장 어려웠던 상황은 무엇이었나요?                             | What was the most challenging situation during the generalization phase?                                  |
+|                                    | 실제 환경에서 RL 정책의 안정성을 확보하기 위한 전략은 무엇인가요?                   | What strategies were used to ensure RL policy stability in real-world settings?                           |
+| **Crossing the Gap (Poster)**      | 단 1개의 RGB-D 데모만 사용하는 기법의 주요 의도는 무엇인가요?                   | What is the core intention behind using only one RGB-D demonstration?                                     |
+|                                    | 단일 데모가 과제 복잡도에 따라 어떻게 성능에 영향을 미쳤나요?                      | How did a single demonstration impact performance depending on task complexity?                           |
+|                                    | 이 방식이 시뮬 기반 학습과 결합될 경우 어떤 시너지가 있나요?                      | What synergies arise when combining this method with sim-based learning?                                  |
+| **VT-Refine (Poster)**             | 시각 및 촉각 정보는 어느 시점에서 융합되었나요?                              | At what point are visual and tactile inputs fused in the control loop?                                    |
+|                                    | 양손 조립 과제의 난이도는 어떻게 정의되었나요?                               | How was the difficulty level of the bimanual assembly task defined?                                       |
+|                                    | fine-tuning 전략과 반복 제어 구조를 어떻게 설계하셨나요?                    | How did you design the fine-tuning strategy and iterative control structure?                              |
+| **KineDex (Poster)**               | 시뮬 환경의 노이즈 및 오차에 대해 어떻게 강건성을 확보하셨나요?                     | How did you ensure policy robustness against noise/errors in simulation?                                  |
+|                                    | 포스/촉각 기반 접촉 조작의 실패율은 어느 정도였나요?                           | What was the failure rate for force/tactile-based contact manipulation?                                   |
+|                                    | 티칭 데이터에서 정책 학습 전이 시 오버헤드는 어떻게 관리하셨나요?                    | How did you manage overheads during the transfer from teaching data to policy learning?                   |
+| **LocoTouch (Poster)**             | 촉각 어레이의 형태와 위치는 어떻게 설계되었나요?                              | How were the shape and placement of the tactile array designed?                                           |
+|                                    | zero-shot 시뮬→실 전이에 포함된 도메인 랜덤화 요소는 무엇인가요?                | What domain randomization factors were included in the zero-shot sim-to-real transfer?                    |
+|                                    | 원통 운반 과제에서 실패 사례는 무엇이었고 어떻게 개선했나요?                       | What were the failure cases in the cylinder transport task, and how were they improved?                   |
+
+
+# +++
+
+- [FFHFlow: A Flow-based Variational Approach for Learning Diverse Dexterous Grasps with Shape-Aware Introspection](https://arxiv.org/abs/2407.15161)
+- [Sim-to-Real Reinforcement Learning for Vision-Based Dexterous Manipulation on Humanoids](https://arxiv.org/abs/2502.20396)
+- [RobustDexGrasp: Robust Dexterous Grasping of General Objects](https://arxiv.org/abs/2504.05287)
+- [LodeStar: Long-horizon Dexterity via Synthetic Data Augmentation from Human Demonstrations](https://lodestar-robot.github.io/)
+- [DexTrack: Towards Generalizable Neural Tracking Control for Dexterous Manipulation from Human References](https://arxiv.org/abs/2502.09614)
+- [Morphologically Symmetric Reinforcement Learning for Ambidextrous Bimanual Manipulation](https://arxiv.org/abs/2505.05287)
+- [Vision in Action: Learning Active Perception from Human Demonstrations](https://arxiv.org/abs/2506.15666)
+- [Point Policy: Unifying Observations and Actions with Key Points for Robot Manipulation](https://arxiv.org/abs/2502.20391)
+- [CDP: Towards Robust Autoregressive Visuomotor Policy Learning via Causal Diffusion](https://arxiv.org/abs/2506.14769)
+- [D-Cubed: Latent Diffusion Trajectory Optimisation for Dexterous Deformable Manipulation](https://arxiv.org/abs/2403.12861)
+- [Humanoid Policy ~ Human Policy](https://arxiv.org/abs/2503.13441)
+- [ClutterDexGrasp: A Sim-to-Real System for General Dexterous Grasping in Cluttered Scenes](https://arxiv.org/abs/2506.14317)
+- [RoboArena: Distributed Real-World Evaluation of Generalist Robot Policies](https://arxiv.org/abs/2506.18123)
+- [Training Strategies for Efficient Embodied Reasoning](https://arxiv.org/abs/2505.08243)
+- [π0.5: a Vision-Language-Action Model with Open-World Generalization](https://arxiv.org/abs/2504.16054)
+- [DemoSpeedup: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration](https://arxiv.org/abs/2506.05064)
+- [ImMimic: Cross-Domain Imitation from Human Videos via Mapping and Interpolation](https://sites.google.com/view/immimic)
+- [X-Sim: Cross-Embodiment Learning via Real-to-Sim-to-Real](https://arxiv.org/abs/2505.07096)
+- [SAIL: Faster-than-Demonstration Execution of Imitation Learning Policies](https://arxiv.org/abs/2506.11948)
+- [Streaming Flow Policy: Simplifying diffusion/flow-matching policies by treating action trajectories as flow trajectories](https://arxiv.org/abs/2505.21851)
+- [Steering Your Diffusion Policy with Latent Space Reinforcement Learning](https://arxiv.org/abs/2506.15799)
+- [Real2Render2Real: Scaling Robot Data Without Dynamics Simulation or Robot Hardware](https://arxiv.org/abs/2505.09601)
+- [DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation](https://dex-skin.github.io/)
+- [Learning Visuotactile Skills with Two Multifingered Hands](https://arxiv.org/abs/2404.16823)
+- [3D-ViTac: Learning Fine-Grained Manipulation with Visuo-Tactile Sensing](https://arxiv.org/abs/2410.24091)
+- [GELLO: A General, Low-Cost, and Intuitive Teleoperation Framework for Robot Manipulators](https://arxiv.org/abs/2309.13037)

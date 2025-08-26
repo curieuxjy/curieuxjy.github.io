@@ -1,7 +1,7 @@
 ---
 draft: false
 title: "🧩uSkin vs ReSkin"
-description: Comparison of
+description: Comparison of Tactile Sensors
 date: "2025-05-29"
 categories: [tactile, sensor, magneto]
 toc: true

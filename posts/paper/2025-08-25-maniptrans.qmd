@@ -1,14 +1,15 @@
 ---
 title: "📃ManipTrans 리뷰"
 date: 2025-08-25
-categories: [retargeting, dexterous]
+categories: [retargeting, imitation, residual]
 toc: true
 number-sections: false
-description: Multisensory Touch Representations for Robot Manipulation
+description: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning
 ---
 
 - [Paper Link](https://arxiv.org/abs/2503.21860)
 - [Project Link](https://maniptrans.github.io/)
+- [Code Link](https://github.com/ManipTrans/ManipTrans)
 
 1.  이 논문은 복잡한 양손 로봇 조작 기술을 효율적으로 전이하기 위한 MANIPTRANS라는 새로운 2단계 방법을 제안합니다.
 2.  MANIPTRANS는 먼저 손 궤적 모방 모델을 사전 학습한 후, 물리적 상호작용 제약을 위한 잔여 학습을 통해 인간 동작을 정확하고 물리적으로 타당하게 모방합니다.
@@ -16,13 +17,22 @@ description: Multisensory Touch Representations for Robot Manipulation
 
 ---
 
+
+<center>
+<img src="../../images/2025-08-25-maniptrans/1.gif" width="70%" />
+</center>
+
+![](../../images/2025-08-25-maniptrans/1.png)
+
 # Brief Review
 
 Embodied AI 분야는 dexterous robotic manipulation 연구가 증가하며 빠르게 발전하고 있습니다. 데이터 중심 Embodied AI 알고리즘은 정밀하고 대규모의 인간과 유사한 조작 시퀀스를 필요로 하지만, 기존 강화 학습(RL)이나 실제 환경에서의 Teleoperation은 이러한 데이터를 얻는 데 어려움이 있습니다. RL은 task-specific reward function 설계가 필요하여 확장성과 작업 복잡성에 제한이 있고, Teleoperation은 노동 집약적이고 비용이 많이 들며 Embodiment-specific 데이터만 생성합니다.
 
 이러한 문제를 해결하기 위해 본 논문은 MANIPTRANS를 소개합니다. MANIPTRANS는 인간의 양손(bimanual) 조작 기술을 시뮬레이션 상의 dexterous robotic hand로 효율적으로 이전하기 위한 새로운 2단계 방법론입니다. MANIPTRANS는 먼저 손 동작을 모방하는 generalist trajectory imitator를 사전 학습하고, 그 다음 상호작용 제약 조건 하에서 특정 residual module을 미세 조정하여 복잡한 양손 작업의 효율적인 학습과 정확한 실행을 가능하게 합니다.
 
-MANIPTRANS의 핵심 아이디어는 이전 프로세스를 두 단계로 분리하는 것입니다. 첫 번째 단계는 손 동작 모방에 초점을 맞춘 사전 학습 단계이며, 두 번째 단계는 상호작용 제약 조건을 충족하기 위한 특정 action 미세 조정 단계입니다. 이를 통해 강력한 generalist model이 노이즈에도 강건하게 인간 손가락 동작을 정확하게 모방하도록 학습됩니다. 이 초기 모방을 기반으로 residual learning module을 도입하여 로봇의 actions을 점진적으로 개선합니다. 이 모듈은 1) 물리적 제약 하에서 객체 표면과의 안정적인 접촉을 보장하여 효과적인 객체 조작을 가능하게 하고, 2) 양손을 협력시켜 복잡한 양손 작업의 정밀하고 고화질(high-fidelity) 실행을 보장하는 두 가지 핵심 측면에 집중합니다.
+MANIPTRANS의 핵심 아이디어는 이전 프로세스를 두 단계로 분리하는 것입니다. 
+
+첫 번째 단계는 손 동작 모방에 초점을 맞춘 사전 학습 단계이며, 두 번째 단계는 상호작용 제약 조건을 충족하기 위한 특정 action 미세 조정 단계입니다. 이를 통해 강력한 generalist model이 노이즈에도 강건하게 인간 손가락 동작을 정확하게 모방하도록 학습됩니다. 이 초기 모방을 기반으로 residual learning module을 도입하여 로봇의 actions을 점진적으로 개선합니다. 이 모듈은 1) 물리적 제약 하에서 객체 표면과의 안정적인 접촉을 보장하여 효과적인 객체 조작을 가능하게 하고, 2) 양손을 협력시켜 복잡한 양손 작업의 정밀하고 고화질(high-fidelity) 실행을 보장하는 두 가지 핵심 측면에 집중합니다.
 
 이 설계의 장점은 세 가지입니다. 
 
@@ -38,9 +48,11 @@ MANIPTRANS는 주어진 인간 손-객체 상호작용 reference trajectories를
 
 **3.1. Preliminaries**
 
-복잡한 양손 환경에서 조작 이전 문제를 공식화합니다. 왼손과 오른손 dexterous hand $d=\{d_l, d_r\}$는 두 개의 객체 $o=\{o_l, o_r\}$와 협력적으로 상호작용하는 인간 손 $h=\{h_l, h_r\}$의 행동을 복제합니다. 인간 demonstration의 reference trajectories는 $T^h=\{\tau_t^h\}_{t=1}^T$와 $T^o=\{\tau_t^o\}_{t=1}^T$로 정의됩니다. $\tau_t^h$는 wrist의 6-DoF pose $w^h \in SE(3)$, linear 및 angular velocities $\dot{w}^h=\{v^h, u^h\}$, MANO [96]로 정의된 finger joint positions $j^h \in R^{F \times 3}$ 및 velocities $\dot{j}^h=\{v^j, u^j\}$를 포함합니다. F는 손 keypoint 수입니다. $\tau_t^o$는 각 객체의 6-DoF pose $p_t^o \in SE(3)$와 velocities $\dot{p}_t^o=\{v^o, u^o\}$를 포함합니다. 공간 복잡성 감소를 위해 모든 translation은 dexterous hand의 wrist position에 상대적으로 정규화됩니다.
+복잡한 양손 환경에서 조작 이전 문제를 공식화합니다. 왼손과 오른손 dexterous hand $d=\{d_l, d_r\}$는 두 개의 객체 $o=\{o_l, o_r\}$와 협력적으로 상호작용하는 인간 손 $h=\{h_l, h_r\}$의 행동을 복제합니다. 인간 demonstration의 reference trajectories는 $T^h=\{\tau_t^h\}_{t=1}^T$와 $T^o=\{\tau_t^o\}_{t=1}^T$로 정의됩니다. 
 
-문제는 Implicit Markov Decision Process (MDP) $M=\langle S, A, \mathcal{T}, R, \gamma \rangle$로 모델링됩니다. State space S, Action space A, Transition dynamics $\mathcal{T}$, Reward function R, discount factor $\gamma$. 각 dexterous hand의 시간 t에서의 action $a_t \in A$는 PD control을 위한 각 joint의 target positions $a_t^q \in R^K$와 robotic wrist에 가해지는 6-DoF force $a_t^w \in R^6$로 구성됩니다. K는 robotic hand의 DoF입니다.
+$\tau_t^h$는 wrist의 6-DoF pose $w^h \in SE(3)$, linear 및 angular velocities $\dot{w}^h=\{v^h, u^h\}$, MANO [96]로 정의된 finger joint positions $j^h \in R^{F \times 3}$ 및 velocities $\dot{j}^h=\{v^j, u^j\}$를 포함합니다. F는 손 keypoint 수입니다. $\tau_t^o$는 각 객체의 6-DoF pose $p_t^o \in SE(3)$와 velocities $\dot{p}_t^o=\{v^o, u^o\}$를 포함합니다. 공간 복잡성 감소를 위해 모든 translation은 dexterous hand의 wrist position에 상대적으로 정규화됩니다.
+
+문제는 Implicit Markov Decision Process (MDP) $M=\langle S, A, \mathcal{T}, R, \gamma \rangle$로 모델링됩니다. (State space S, Action space A, Transition dynamics $\mathcal{T}$, Reward function R, discount factor $\gamma$) 각 dexterous hand의 시간 t에서의 action $a_t \in A$는 PD control을 위한 각 joint의 target positions $a_t^q \in R^K$와 robotic wrist에 가해지는 6-DoF force $a_t^w \in R^6$로 구성됩니다. K는 robotic hand의 DoF입니다.
 
 이전 프로세스는 두 단계로 나뉩니다. 
 
@@ -51,7 +63,7 @@ MANIPTRANS는 주어진 인간 손-객체 상호작용 reference trajectories를
 
 **3.2. Hand Trajectory Imitating**
 
-이 단계의 목표는 상세한 인간 손가락 동작을 정확하게 복제하는 general hand trajectory imitation model I를 학습하는 것입니다. 각 dexterous hand의 시간 t에서의 state는 $s_t^I = \{\tau_t^h, s_t^{prop}\}$로 정의되며, target hand trajectory $\tau_t^h$와 현재 proprioception $s_t^{prop} = \{q_t^d, \dot{q}_t^d, w_t^d, \dot{w}_t^d\}$를 포함합니다. $q_t^d$, $w_t^d$는 각각 joint angles와 wrist poses입니다. RL을 사용하여 policy $\pi_I(a_t | s_t^I, a_{t-1})$를 학습하여 actions $a_t^I$를 결정합니다.
+이 단계의 목표는 상세한 인간 손가락 동작을 정확하게 복제하는 general hand trajectory imitation model **I**를 학습하는 것입니다. 각 dexterous hand의 시간 t에서의 state는 $s_t^I = \{\tau_t^h, s_t^{prop}\}$로 정의되며, target hand trajectory $\tau_t^h$와 현재 proprioception $s_t^{prop} = \{q_t^d, \dot{q}_t^d, w_t^d, \dot{w}_t^d\}$를 포함합니다. $q_t^d$, $w_t^d$는 각각 joint angles와 wrist poses입니다. RL을 사용하여 policy $\pi_I(a_t | s_t^I, a_{t-1})$를 학습하여 actions $a_t^I$를 결정합니다.
 
 Reward Functions: $r_t^I$는 dexterous hand가 reference hand trajectory $\tau_t^h$를 추적하면서 안정성과 부드러움을 보장하도록 설계되었습니다.
 
@@ -59,51 +71,53 @@ Reward Functions: $r_t^I$는 dexterous hand가 reference hand trajectory $\tau_t
 2) Finger imitation reward $r_t^{finger}$: Dexterous hand가 reference finger joint positions를 밀착 추적하도록 장려합니다. MANO model에 해당하는 F개의 손가락 keypoint $j_t^d$를 dexterous hand에 manually selection 합니다. Weights $w_f$와 decay rates $\lambda_f$는 손가락 끝, 특히 엄지, 검지, 중지에 강조를 둡니다. 이는 인간과 로봇 손의 형태학적 차이 영향을 완화합니다. $r_t^{finger} = \sum_{f=1}^F w_f \cdot \exp (-\lambda_f \|j_t^d - j_t^h\|_2^2)$.
 3) Smoothness Reward $r_t^{smooth}$: 각 joint에 가해지는 power에 벌점을 줍니다.
 
-Total reward: $r_t^I = w_{wrist} \cdot r_t^{wrist} + w_{finger} \cdot r_t^{finger} + w_{smooth} \cdot r_t^{smooth}$.
+$$\text{Total reward:} r_t^I = w_{wrist} \cdot r_t^{wrist} + w_{finger} \cdot r_t^{finger} + w_{smooth} \cdot r_t^{smooth}$$
 
-Training Strategy: 손 모방을 객체 상호작용에서 분리하여, $\pi_I$는 획득하기 어려운 조작 데이터를 필요로 하지 않습니다. 기존 hand motion datasets와 synthetic data를 포함한 hand-only datasets를 사용하여 policy를 학습합니다. 효율성을 위해 Reference State Initialization (RSI)와 early termination [88]을 사용합니다. Dexterous hand keypoint $j_t^d$가 임계값 $\epsilon_{finger}$ 이상 벗어나면 에피소드가 조기 종료되고 무작위로 샘플링된 MoCap state로 재설정됩니다. Curriculum learning 을 사용하여 $\epsilon_{finger}$를 점진적으로 줄여 초기 넓은 탐색 후 미세한 손가락 제어에 집중합니다.
+**Training Strategy:**
+
+손 모방을 객체 상호작용에서 분리하여, $\pi_I$는 획득하기 어려운 조작 데이터를 필요로 하지 않습니다. 기존 hand motion datasets와 synthetic data를 포함한 hand-only datasets를 사용하여 policy를 학습합니다. 효율성을 위해 Reference State Initialization (RSI)와 early termination을 사용합니다. Dexterous hand keypoint $j_t^d$가 임계값 $\epsilon_{finger}$ 이상 벗어나면 에피소드가 조기 종료되고 무작위로 샘플링된 MoCap state로 재설정됩니다. Curriculum learning 을 사용하여 $\epsilon_{finger}$를 점진적으로 줄여 초기 넓은 탐색 후 미세한 손가락 제어에 집중합니다.
 
 **3.3. Residual Learning for Interaction**
 
 사전 학습된 $\pi_I$를 기반으로 residual module R을 사용하여 coarse actions를 fine-tune하고 task-specific constraints를 만족시킵니다.
 
-State Space Expansion for Interaction: Dexterous hand와 object 간 상호작용을 고려하여 hand-related state $s_t^I$ 외에 추가 interaction-related information을 통합하여 state space를 확장합니다.
+**State Space Expansion for Interaction:** Dexterous hand와 object 간 상호작용을 고려하여 hand-related state $s_t^I$ 외에 추가 interaction-related information을 통합하여 state space를 확장합니다.
 
 - Object information: MoCap 데이터의 object meshes o의 convex hull ˆo를 simulation 환경에서 생성. Reference $T^o$ 따라 객체 조작 위해 객체의 position $p_t^{\hat{o}}$ (wrist position $w_t^d$ 기준), velocities $\dot{p}_t^{\hat{o}}$, center of mass $m_t^{\hat{o}}$, gravitational force vector $G_t^{\hat{o}}$ 포함. 객체 형상 인코딩 위해 BPS [91] 사용.
 - Spatial relationship: 손과 객체 간 공간 관계를 distance metric $D(j_t^d, p_t^{\hat{o}}) = \|j_t^d - p_t^{\hat{o}}\|_2^2$으로 인코딩.
 - Contact force $C_t$: Simulation에서 얻은 contact force를 명시적으로 포함. 안정적인 grasping과 manipulation에 중요.
 
-Expanded interaction state: $$s_t^{interact} = \{\tau_t^o, p_t^{\hat{o}}, \dot{p}_t^{\hat{o}}, m_t^{\hat{o}}, G_t^{\hat{o}}, \text{BPS}(\hat{o}), D(j_t^d, p_t^{\hat{o}}), C_t\}$$
+**Expanded interaction state:** $$s_t^{interact} = \{\tau_t^o, p_t^{\hat{o}}, \dot{p}_t^{\hat{o}}, m_t^{\hat{o}}, G_t^{\hat{o}}, \text{BPS}(\hat{o}), D(j_t^d, p_t^{\hat{o}}), C_t\}$$
 Combined state: $$s_t^R = s_t^I \cup s_t^{interact}$$
 
-Residual Actions Combining Strategy: Goal은 initial imitation actions $a_t^I$를 refine하는 residual actions $\Delta a_t^R$를 학습하여 task compliance를 보장하는 것입니다. 최종 action은 $a_t = a_t^I + \Delta a_t^R$로 계산되며, residual action은 element-wise로 더해집니다. 결과 action $a_t$는 dexterous hand의 joint limit에 맞게 clipping됩니다. 학습 초기에는 dexterous hand 움직임이 이미 reference hand trajectory에 가깝기 때문에 residual actions은 0에 가깝도록 예상되며, 이는 model collapse를 방지하고 convergence를 가속화합니다. Residual module을 zero-mean Gaussian distribution으로 초기화하고 warm-up strategy를 사용하여 점진적으로 학습을 활성화합니다.
+**Residual Actions Combining Strategy:** Goal은 initial imitation actions $a_t^I$를 refine하는 residual actions $\Delta a_t^R$를 학습하여 task compliance를 보장하는 것입니다. 최종 action은 $a_t = a_t^I + \Delta a_t^R$로 계산되며, residual action은 element-wise로 더해집니다. 결과 action $a_t$는 dexterous hand의 joint limit에 맞게 clipping됩니다. 학습 초기에는 dexterous hand 움직임이 이미 reference hand trajectory에 가깝기 때문에 residual actions은 0에 가깝도록 예상되며, 이는 model collapse를 방지하고 convergence를 가속화합니다. Residual module을 zero-mean Gaussian distribution으로 초기화하고 warm-up strategy를 사용하여 점진적으로 학습을 활성화합니다.
 
-Reward Functions: Task-agnostic하게 설계되어 task-specific reward engineering을 피합니다.
+**Reward Functions:** Task-agnostic하게 설계되어 task-specific reward engineering을 피합니다.
 
 - Hand imitation reward $r_t^I$ (Sec 3.2) 포함.
 - Object following reward $r_t^{object}$: Simulated object와 reference trajectory 간 positional 및 velocity 차이 최소화 ($p_t^{\hat{o}} \ominus p_t^o$ and $\dot{p}_t^{\hat{o}} - \dot{p}_t^o$).
 - Contact force reward $r_t^{contact}$: MoCap 데이터에서 hand-object distance가 임계값 $\xi_c$ 이하일 때 적절한 contact force 장려. $r_t^{contact} = w_c \cdot \exp ( -\lambda_c \sum_{f=1}^F C_{t,f}^d \cdot \mathbf{1}_{D(j_{t,f}^h, p_t^o \cdot o) < \xi_c} )$. 여기서 $\mathbf{1}(\cdot)$은 indicator function, $C_{t,f}^d$는 fingertip에서의 contact force입니다.
 
-Total reward: $$r_t^R = r_t^I + w_{object} \cdot r_t^{object} + w_{contact} \cdot r_t^{contact}$$
+$$\text{Total reward: } r_t^R = r_t^I + w_{object} \cdot r_t^{object} + w_{contact} \cdot r_t^{contact}$$
 
 Training Strategy: QuasiSim 에서 영감을 받아 relaxation mechanism을 도입. Isaac Gym  환경에서 물리적 제약 조건을 직접 조정하여 학습 효율성 향상. 초기에는 gravitational constant G를 0으로, friction coefficient F를 높은 값으로 설정. 학습이 진행됨에 따라 G를 실제 값으로 복원하고 F를 적절한 값으로 감소. Imitation 단계와 유사하게 RSI, early termination($p_t^{\hat{o}}$가 $\epsilon_{object}$ 벗어날 시), curriculum learning 사용 ($\epsilon_{object}$ 점진적 감소). Contact termination 조건 추가: MoCap에서 인간 손이 단단히 잡고 있음을 나타낼 때($D(j_{t,f}^h, p_t^o \cdot o) < \xi_t$) $C_{t,f}^d$가 0이 아니어야 함. 이 조건을 충족하지 못하면 조기 종료.
 
 **3.4. DEXMANIPNET Dataset**
 
-MANIPTRANS를 사용하여 DEXMANIPNET 데이터셋을 생성합니다. FAVOR [62]와 OakInk-V2 [134] 두 대표적 대규모 hand-object interaction datasets에서 파생됩니다. OakInk-V2는 pen capping, bottle unscrewing 같은 복잡한 상호작용을, FAVOR는 object rearrangement 같은 기초 작업을 포함합니다. Dexterous robotic hand의 표준화 부족으로 Inspire Hand  (simulated 12-DoF)를 주요 플랫폼으로 사용합니다.
+MANIPTRANS를 사용하여 DEXMANIPNET 데이터셋을 생성합니다. FAVOR와 OakInk-V2 두 대표적 대규모 hand-object interaction datasets에서 파생됩니다. OakInk-V2는 pen capping, bottle unscrewing 같은 복잡한 상호작용을, FAVOR는 object rearrangement 같은 기초 작업을 포함합니다. Dexterous robotic hand의 표준화 부족으로 Inspire Hand  (simulated 12-DoF)를 주요 플랫폼으로 사용합니다.
 
-DEXMANIPNET은 61가지 다양하고 어려운 task [134]를 포함하며, 1.2K개 객체에 대한 3.3K episode의 robotic hand manipulation, 총 1.34 million frames으로 구성됩니다. 이 중 약 600 sequence는 복잡한 양손 task를 포함합니다. 각 episode는 Isaac Gym  시뮬레이션에서 정확하게 실행됩니다.
+DEXMANIPNET은 61가지 다양하고 어려운 task를 포함하며, 1.2K개 객체에 대한 3.3K episode의 robotic hand manipulation, 총 1.34 million frames으로 구성됩니다. 이 중 약 600 sequence는 복잡한 양손 task를 포함합니다. 각 episode는 Isaac Gym  시뮬레이션에서 정확하게 실행됩니다.
 
 **4. Experiments**
 
 MANIPTRANS를 manipulation precision, task compliance, transfer efficiency 측면에서 평가합니다. Metrics는 에서 adapted되었으나 양손 task 복잡성으로 인해 더 엄격합니다.
 
-1) Per-frame Average Object Rotation and Translation Error: $E_r = \frac{1}{TP} \sum_{t=1}^T (\text{prot}_t^{\hat{o}} \cdot (\text{prot}_t^o)^{-1})$, $E_t = \frac{1}{TP} \sum_{t=1}^T \| \text{ptsl}_t^{\hat{o}} - \text{ptsl}_t^o \|_2^2$. Degree와 cm로 보고.
-2) Mean Per-Joint Position Error (cm): $E_j = \frac{1}{T \cdot F} \sum_{t=1}^T \sum_{f=1}^F \| j_t^d - j_t^h \|_2^2$. Hand joint 위치 평균 오류.
-3) Mean Per-Fingertip Position Error (cm): $E_{ft} = \frac{1}{T \cdot M} \sum_{t=1}^T \sum_{ft=1}^M \| t_t^{df t} - t_t^{hf t} \|_2^2$. Fingertip motion 모방 품질 평가. M은 단손 5, 양손 10.
+1) Per-frame Average Object Rotation and Translation Error: $$E_r = \frac{1}{TP} \sum_{t=1}^T (\text{prot}_t^{\hat{o}} \cdot (\text{prot}_t^o)^{-1})$$ $$E_t = \frac{1}{TP} \sum_{t=1}^T \| \text{ptsl}_t^{\hat{o}} - \text{ptsl}_t^o \|_2^2$$ Degree와 cm로 보고.
+2) Mean Per-Joint Position Error (cm): $$E_j = \frac{1}{T \cdot F} \sum_{t=1}^T \sum_{f=1}^F \| j_t^d - j_t^h \|_2^2$$ Hand joint 위치 평균 오류.
+3) Mean Per-Fingertip Position Error (cm): $$E_{ft} = \frac{1}{T \cdot M} \sum_{t=1}^T \sum_{ft=1}^M \| t_t^{df t} - t_t^{hf t} \|_2^2$$ Fingertip motion 모방 품질 평가. M은 단손 5, 양손 10.
 4) Success Rate (SR): $E_r, E_t, E_j, E_{ft}$가 각각 30◦, 3 cm, 8 cm, 6 cm 이하일 때 성공. 양손 task는 어느 한 손이라도 조건을 만족 못하면 실패.
 
-Implementation Details: 각 dexterous robotic hand에 21개 keypoints (fingertips, palm, phalangeal positions) 수동 선택. Curriculum learning ($\epsilon_{finger}$: 6cm to 4cm, $\epsilon_{object}$: 90◦/6cm to 30◦/2cm). PPO 사용. Batch size 1024, $\gamma=0.99$. Isaac Gym  환경, 4096 environments 병렬 실행 (RTX 4090, i9-13900KF).
+**Implementation Details:** 각 dexterous robotic hand에 21개 keypoints (fingertips, palm, phalangeal positions) 수동 선택. Curriculum learning ($\epsilon_{finger}$: 6cm to 4cm, $\epsilon_{object}$: 90◦/6cm to 30◦/2cm). PPO 사용. Batch size 1024, $\gamma=0.99$. Isaac Gym  환경, 4096 environments 병렬 실행 (RTX 4090, i9-13900KF).
 
 **4.3. Evaluations**
 
@@ -163,7 +177,9 @@ Supplementary Material에서는 Extensibility (Articulated Object Manipulation -
 
 ## 기술적 구성: ManipTrans 두 단계 방법론
 
-ManipTrans의 핵심 아이디어는 모션 전이를 “둘로 나누어” 학습하는 것입니다. 첫 번째 단계에서는 손의 움직임 자체에 집중하고, 두 번째 단계에서 그 움직임을 기반으로 물체를 다루는 세부 조작을 보정합니다. 이러한 분리는 인간-로봇 손 구조 차이로 인한 문제를 완화하고, 높은 차원의 양손 제어를 효율적으로 다루기 위한 전략입니다.
+ManipTrans의 핵심 아이디어는 모션 전이를 “둘로 나누어” 학습하는 것입니다. 
+
+첫 번째 단계에서는 손의 움직임 자체에 집중하고, 두 번째 단계에서 그 움직임을 기반으로 물체를 다루는 세부 조작을 보정합니다. 이러한 분리는 인간-로봇 손 구조 차이로 인한 문제를 완화하고, 높은 차원의 양손 제어를 효율적으로 다루기 위한 전략입니다.
 
 ### 1단계: 손 동작 모방 (Trajectory Imitation Pre-training)
 
@@ -209,11 +225,31 @@ ManipTrans의 성능은 다양한 지표에서 평가되었고, 여러 비교 �
 
 흥미로운 점은, Retarget-Only 방식은 높은 자유도의 로봇 손 공간에서 오류 누적을 감당하지 못해 사실상 거의 실패한다는 것입니다. 한편 RL-Only는 처음부터 탐색하다 보니 학습 시간이 오래 걸리고 모션 정밀도가 떨어져 아쉬운 성능을 보였습니다. Retarget + Residual 기법도 ManipTrans보다는 낮은 성능을 나타냈는데, 이는 초기에 리타게팅한 동작 자체가 물체 접촉 상황에서 충돌을 일으키는 등 부자연스러워 Residual 학습을 방해했기 때문입니다. 반면 ManipTrans는 사전 학습된 손 모션 모방 모델을 활용함으로써 보다 안정적이고 정확한 기본 동작을 제공하고, Residual 단계에서도 추가 제약만 학습하면 되므로 제어 난이도가 감소하여 최종 성능이 높았습니다.
 
-정성적인 결과로도 ManipTrans의 우수성이 드러났습니다. 논문에서 제시된 시뮬레이션 동영상과 이미지에 따르면, 로봇 손이 가는 꽃줄기를 두 손가락으로 집어 꽃병에 꽂는다거나, 긴 스푼으로 병 안의 물체를 함께 긁어내는 작업, 얇은 펜으로 글씨 쓰기 등 매우 섬세한 동작들도 자연스럽게 수행하는 것을 확인할 수 있습니다. 그림 3에 일부 예시가 나타나 있는데, 상단 두 행은 단일 손 조작(플라스크 흔들기, 펜으로 쓰기) 장면들이고 하단 행은 양손 조작(꽃꽂이, 물 따르기, 스푼으로 긁어내기) 장면들입니다. 사람의 섬세한 손놀림이 필요한 이 작업들을 로봇이 큰 어색함 없이 재현했다는 점은, 제안한 모션 전이 방법의 현실성을 보여줍니다.
+정성적인 결과로도 ManipTrans의 우수성이 드러났습니다. 논문에서 제시된 시뮬레이션 동영상과 이미지에 따르면, 로봇 손이 가는 꽃줄기를 두 손가락으로 집어 꽃병에 꽂는다거나, 긴 스푼으로 병 안의 물체를 함께 긁어내는 작업, 얇은 펜으로 글씨 쓰기 등 매우 섬세한 동작들도 자연스럽게 수행하는 것을 확인할 수 있습니다. 
 
-다음으로 일반화 성능을 검증하기 위해, 학습된 정책을 다양한 로봇 손 플랫폼에 적용한 실험이 진행되었습니다. Shadow Hand (모터 24개), MANO hand 모형 (가상 관절 22개), Inspire Hand (12개), Allegro Hand (16개)처럼 구조와 자유도가 다른 로봇 손들에 대해 ManipTrans를 동일하게 적용해본 결과, 별도의 파라미터 튜닝 없이도 모든 경우에 유사한 성능과 자연스러운 동작이 나옴을 확인했습니다[53]. 즉, ManipTrans는 사람 손의 손가락-관절 대응만 정해주면 특정 손 구현체에 종속되지 않고 동작을 전이할 수 있어 플랫폼에 불가지론적인 범용성을 지녔습니다. 이는 1단계 모방 모델이 손가락 키포인트 트래킹에만 집중하고, 2단계에서 물리 상호작용을 다루는 구조 덕분입니다[54]. 심지어 손가락 4개짜리 Allegro Hand의 경우도 일부 손가락 대응만 설정하면 큰 문제 없이 동작했음을 보고하고 있습니다.
 
-마지막으로, 현실 세계 적용 가능성을 보여주기 위한 시도가 이뤄졌습니다. 연구진은 두 대의 7자유도 로봇 팔 끝에 실제 Inspire 로봇 손 두 개를 장착하고, 앞서 시뮬레이션에서 생성한 DexManipNet의 양손 조작 궤적들을 재생시키는 실험을 했습니다[55]. 다만 실제 하드웨어인 로봇 손은 시뮬레이터 모델보다 관절 자유도가 적기 때문에, 관절 각도를 피팅(fitting)하는 알고리즘을 추가로 사용하여 시뮬레이션 상 12-DoF 동작을 실제 6-DoF 기계손 움직임으로 근사했습니다[55]. 또한 로봇 팔은 역기구학(IK)을 풀어 로봇 손목이 시뮬레이션 손목 경로를 따라가도록 제어했습니다. 이렇게 해서 실험한 결과, 예를 들어 “치약 뚜껑 열기” 작업에서 한 손으로 튜브를 꽉 쥐고 다른 손의 엄지와 검지로 작은 뚜껑을 톡 눌러 여는 동작을 로봇이 수행해냈습니다. 사람도 세심한 힘 조절이 필요한 이 움직임을 원격조작으로는 구현하기 어려운데, 학습된 정책을 이용해 비교적 쉽게 실현한 사례라 할 수 있습니다. 논문은 이 밖에도 여러 실제 로봇 실험 영상을 웹사이트에 공개하며, 본 기법이 향후 현실 로봇 학습에 큰 잠재력을 지님을 강조했습니다.
+<center>
+<img src="../../images/2025-08-25-maniptrans/2.png" width="100%" />
+</center>
+
+그림 3에 일부 예시가 나타나 있는데, 상단 두 행은 단일 손 조작(플라스크 흔들기, 펜으로 쓰기) 장면들이고 하단 행은 양손 조작(꽃꽂이, 물 따르기, 스푼으로 긁어내기) 장면들입니다. 사람의 섬세한 손놀림이 필요한 이 작업들을 로봇이 큰 어색함 없이 재현했다는 점은, 제안한 모션 전이 방법의 현실성을 보여줍니다.
+
+다음으로 일반화 성능을 검증하기 위해, 학습된 정책을 다양한 로봇 손 플랫폼에 적용한 실험이 진행되었습니다. Shadow Hand (모터 24개), MANO hand 모형 (가상 관절 22개), Inspire Hand (12개), Allegro Hand (16개)처럼 구조와 자유도가 다른 로봇 손들에 대해 ManipTrans를 동일하게 적용해본 결과, 별도의 파라미터 튜닝 없이도 모든 경우에 유사한 성능과 자연스러운 동작이 나옴을 확인했습니다. 
+
+<center>
+<img src="../../images/2025-08-25-maniptrans/3.png" width="70%" />
+</center>
+
+
+<center>
+<img src="../../images/2025-08-25-maniptrans/4.png" width="70%" />
+</center>
+
+
+
+즉, ManipTrans는 사람 손의 손가락-관절 대응만 정해주면 특정 손 구현체에 종속되지 않고 동작을 전이할 수 있어 플랫폼에 불가지론적인 범용성을 지녔습니다. 이는 1단계 모방 모델이 손가락 키포인트 트래킹에만 집중하고, 2단계에서 물리 상호작용을 다루는 구조 덕분입니다. 심지어 손가락 4개짜리 Allegro Hand의 경우도 일부 손가락 대응만 설정하면 큰 문제 없이 동작했음을 보고하고 있습니다.
+
+마지막으로, 현실 세계 적용 가능성을 보여주기 위한 시도가 이뤄졌습니다. 연구진은 두 대의 7자유도 로봇 팔 끝에 실제 Inspire 로봇 손 두 개를 장착하고, 앞서 시뮬레이션에서 생성한 DexManipNet의 양손 조작 궤적들을 재생시키는 실험을 했습니다. 다만 실제 하드웨어인 로봇 손은 시뮬레이터 모델보다 관절 자유도가 적기 때문에, 관절 각도를 피팅(fitting)하는 알고리즘을 추가로 사용하여 시뮬레이션 상 12-DoF 동작을 실제 6-DoF 기계손 움직임으로 근사했습니다. 또한 로봇 팔은 역기구학(IK)을 풀어 로봇 손목이 시뮬레이션 손목 경로를 따라가도록 제어했습니다. 이렇게 해서 실험한 결과, 예를 들어 “치약 뚜껑 열기” 작업에서 한 손으로 튜브를 꽉 쥐고 다른 손의 엄지와 검지로 작은 뚜껑을 톡 눌러 여는 동작을 로봇이 수행해냈습니다. 사람도 세심한 힘 조절이 필요한 이 움직임을 원격조작으로는 구현하기 어려운데, 학습된 정책을 이용해 비교적 쉽게 실현한 사례라 할 수 있습니다. 논문은 이 밖에도 여러 실제 로봇 실험 영상을 웹사이트에 공개하며, 본 기법이 향후 현실 로봇 학습에 큰 잠재력을 지님을 강조했습니다.
 
 ## 논의 및 한계점
 

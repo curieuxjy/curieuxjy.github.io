@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-24">
+<meta name="description" content="Cross-Domain Imitation from Human Videos via Mapping and Interpolation">
+
+<title>📃ImMimic 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-23aef1c2a45953e85f3378e7ccfb1407.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-5a614c35f1f90bfd0a5b2992298a8538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-23aef1c2a45953e85f3378e7ccfb1407.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2.1</span> Summary</a></li>
+  <li><a href="#contributions" id="toc-contributions" class="nav-link" data-scroll-target="#contributions"><span class="header-section-number">2.2</span> Contributions</a></li>
+  <li><a href="#methodology-analysis" id="toc-methodology-analysis" class="nav-link" data-scroll-target="#methodology-analysis"><span class="header-section-number">2.3</span> Methodology Analysis</a></li>
+  <li><a href="#experimental-results-and-analysis" id="toc-experimental-results-and-analysis" class="nav-link" data-scroll-target="#experimental-results-and-analysis"><span class="header-section-number">2.4</span> Experimental Results and Analysis</a></li>
+  <li><a href="#limitations-and-discussion" id="toc-limitations-and-discussion" class="nav-link" data-scroll-target="#limitations-and-discussion"><span class="header-section-number">2.5</span> Limitations and Discussion</a></li>
+  <li><a href="#conclusion-and-future-work" id="toc-conclusion-and-future-work" class="nav-link" data-scroll-target="#conclusion-and-future-work"><span class="header-section-number">2.6</span> Conclusion and Future Work</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃ImMimic 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">co-training</div>
+    <div class="quarto-category">dtw</div>
+    <div class="quarto-category">mimic</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Cross-Domain Imitation from Human Videos via Mapping and Interpolation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 24, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://openreview.net/pdf?id=lujxPiu99k">Paper Link</a></li>
+<li><a href="https://sites.google.com/view/immimic">Project Link</a></li>
+</ul>
+<ol type="1">
+<li>ImMimic은 방대한 인간 영상과 소량의 로봇 시연 데이터 간의 시각적, 형태적, 물리적 도메인 간극을 해소하여 로봇 조작 학습을 위한 새로운 공동 훈련 프레임워크를 제안합니다.</li>
+<li>이 프레임워크는 Dynamic Time Warping(DTW)을 통해 retargeting된 인간 동작 궤적과 로봇 궤적을 매핑하고, MixUp 보간을 적용하여 중간 도메인을 생성함으로써 로봇이 인간 시연으로부터 효율적으로 학습하도록 돕습니다.</li>
+<li>네 가지 조작 작업과 로봇 형태에 대한 평가에서 ImMimic은 작업 성공률과 실행 부드러움을 크게 향상시켰으며, 특히 retargeting된 인간 동작 정보가 시각 정보보다 로봇 학습에 더 효과적임을 입증했습니다.</li>
+</ol>
+<p><img src="../../images/2025-08-24-immimic/1.png" class="img-fluid"></p>
+<p><img src="../../images/2025-08-24-immimic/2.png" class="img-fluid"></p>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>ImMimic은 풍부한 인간 비디오와 소량의 원격 조작(teleoperated) 로봇 시연 데이터를 활용하여 로봇 조작(robot manipulation)을 학습하는 새로운 embodiment-agnostic co-training 프레임워크입니다. 이 프레임워크는 시각적(visual), 형태학적(morphological), 물리적 측면에서 발생하는 인간-로봇 간의 상당한 도메인 간극(domain gap)을 효과적으로 연결하는 데 중점을 둡니다.</p>
+<p><strong>핵심 방법론 (Core Methodology)</strong></p>
+<p>ImMimic의 핵심은 다음 세 가지 통찰력에 기반합니다:</p>
+<ol type="1">
+<li><strong>Retargeted Human Hand Trajectories의 액션 레이블 활용:</strong> 시각적 컨텍스트(visual contexts) 외에도, 재설정된(retargeted) 인간 손 궤적(hand trajectories)이 인간 시연에 대한 풍부한 액션 레이블(action labels)로 기능할 수 있습니다.</li>
+<li><strong>보간(Interpolation)을 통한 중간 도메인(Intermediate Domains) 생성:</strong> 매핑된(mapped) 데이터에 대한 MixUp 기반 보간은 견고한 적응(robust adaptation)으로 이어지는 중간 도메인을 생성합니다.</li>
+<li><strong>효과적인 매핑(Mapping)의 중요성:</strong> 공동 훈련(co-training)을 위해 인간 및 로봇 데이터 간의 효과적인 매핑을 설정하는 것이 필수적입니다.</li>
+</ol>
+<p>ImMimic은 Diffusion Policy 를 기반으로 하며, 다음과 같은 단계로 구성됩니다:</p>
+<ol type="1">
+<li><strong>Hand Pose Retargeting System (인간 손 포즈 재설정):</strong>
+<ul>
+<li><strong>Hand and Wrist Pose Estimation:</strong> MediaPipe [36]를 사용하여 각 프레임에서 인간 손을 감지하고 자릅니다. FrankMocap [45]의 SMPL-X regressor는 손목(wrist) 로컬 프레임에서 21개 손 관절(hand joints)의 정밀한 3D 위치를 생성합니다. 이를 통해 손목의 6D 포즈를 복구합니다.</li>
+<li><strong>Retargeting:</strong> AnyTeleop [44]을 따라, 인간 키포인트 <span class="math inline">\mathbf{p}_t^i</span>를 로봇 관절 각도 <span class="math inline">\mathbf{q}_t</span>로 다음 최적화 문제를 통해 매핑합니다: <span class="math display"> \min_{\mathbf{q}_t} \sum_{i=1}^{N} \alpha \left\| \mathbf{p}_t^i - f_i(\mathbf{q}_t) \right\|^2 + \beta \left\| \mathbf{q}_t - \mathbf{q}_{t-1} \right\|^2, \quad \text{s.t.} \quad \mathbf{q}_l \le \mathbf{q}_t \le \mathbf{q}_u </span> 여기서 <span class="math inline">f_i</span>는 로봇의 정기구학(forward-kinematics), <span class="math inline">\alpha, \beta</span>는 스케일 및 시간적 부드러움(temporal smoothness) 균형을 조절하는 계수입니다.</li>
+</ul></li>
+<li><strong>Co-Training (공동 훈련):</strong>
+<ul>
+<li>ImMimic은 인간 비디오와 로봇 시연을 모두 활용하여 정책(policy)을 공동으로 훈련합니다. 각 배치(batch)는 로봇 및 인간 데이터를 동등한 비율로 포함합니다.</li>
+<li><strong>Robot Prediction Loss:</strong> 로봇 데이터에 대해 에이전트 뷰(agent-view) 이미지 <span class="math inline">I_{a,t}^r</span>, 손목 뷰(wrist-view) 이미지 <span class="math inline">I_{w,t}^r</span>, 그리고 고유수용성(proprioception) <span class="math inline">r_t</span>를 조건 입력(condition input)으로 사용하여 미래 액션 시퀀스 <span class="math inline">\mathbf{a}_t^{r}</span>를 예측합니다. 손실은 <span class="math inline">\ell_2</span> 손실로 최소화됩니다: <span class="math display"> \mathcal{L}_{\text{robot}}(\phi) = \sum_{i=1}^{k} \left\| \mathbf{a}_{t+i}^{r} - \hat{\mathbf{a}}_{t+i}^{r} \right\|^2_2 </span> 여기서 <span class="math inline">\hat{\mathbf{a}}_{t:t+k}^{r} = P_{\phi}(\tilde{\mathbf{a}}_{t:t+k}^{r} | \mathbf{z}_t^{r})</span>이며, <span class="math inline">\mathbf{z}_t^{r}</span>는 인코더로 추출된 시각적 특징과 고유수용성을 포함하는 로봇의 조건입니다.</li>
+<li><strong>Human Prediction Loss:</strong> 인간 비디오 <span class="math inline">I_{a,t}^h</span>에 대해, 조건 입력은 이미지 특징과 재설정된 액션(retargeted actions) <span class="math inline">a_{t}^{h \to r}</span>을 포함합니다. 이는 로봇 데이터와 동일한 정책 백본(policy backbone)을 사용하여 훈련됩니다. 손실은 다음과 같습니다: <span class="math display"> \mathcal{L}_{\text{human}}(\phi) = \sum_{i=1}^{k} \left\| \mathbf{a}_{t+i}^{h \to r} - \hat{\mathbf{a}}_{t+i}^{h \to r} \right\|^2_2 </span></li>
+<li><strong>Co-training Loss:</strong> 총 손실은 두 손실의 합입니다: <span class="math inline">\mathcal{L}_{\text{total}}(\phi) = \mathcal{L}_{\text{robot}}(\phi) + \mathcal{L}_{\text{human}}(\phi)</span>.</li>
+</ul></li>
+<li><strong>Mapping-guided MixUp (매핑 유도 MixUp):</strong>
+<ul>
+<li><strong>Mapping:</strong> 인간 시연 <span class="math inline">D_h</span>와 로봇 시연 <span class="math inline">D_r</span> 간의 시퀀스 수준 매핑 <span class="math inline">M^{h \to r}</span>은 Dynamic Time Warping (DTW) [38]을 사용하여 계산됩니다. DTW는 시각적 거리(visual distance) 또는 액션 거리(action distance)에 기반할 수 있습니다.
+<ul>
+<li><strong>Action-based Mapping:</strong> 재설정된 인간 시연과 로봇 시연 간의 액션 거리는 다음과 같이 정의됩니다: <span class="math display"> d_{\text{act}} = \left\| \mathbf{t}^{h \to r} - \mathbf{t}^r \right\|_1 + \lambda_1 \left\| \mathbf{p}^{h \to r} - \mathbf{p}^r \right\|_1 + \lambda_2 d_{\text{rot}}(\mathbf{o}^{h \to r}, \mathbf{o}^r) </span> 여기서 <span class="math inline">\mathbf{t}</span>는 변환(translation), <span class="math inline">\mathbf{p}</span>는 손 포즈(hand pose), <span class="math inline">\mathbf{o}</span>는 방향(orientation), <span class="math inline">d_{\text{rot}}</span>는 각도 거리(angular distance)를 나타냅니다.</li>
+<li><strong>Visual-based Mapping:</strong> 프레임별(frame-wise) 거리는 사전 훈련된 인코더에서 추출된 시각적 특징 <span class="math inline">f</span>를 사용하여 계산됩니다: <span class="math display">d_{\text{vis}} = \left\| f^{h \to r} - f^r \right\|_2</span></li>
+</ul></li>
+<li><strong>MixUp-based Interpolation:</strong> 매핑이 설정되면, MixUp [62]을 적용하여 원본 인간 및 로봇 데이터를 보간하여 보간된(interpolated) 인간 데이터를 생성합니다. 훈련 중, 각 인간 타임스텝 <span class="math inline">t</span>에 대해 무작위로 로봇 타임스텝 <span class="math inline">t' \in M^{h \to r}(t)</span>를 샘플링하고 혼합된 조건 입력 및 예측 액션을 다음과 같이 구성합니다: <span class="math display"> \mathbf{z}_t^{\text{mix}} = \alpha \cdot \mathbf{z}_t^{h} + (1-\alpha) \cdot \mathbf{z}_{t'}^{r} </span> <span class="math display"> \mathbf{a}_{t:t+k}^{\text{mix}} = \alpha \cdot \mathbf{a}_{t:t+k}^{h \to r} + (1-\alpha) \cdot \mathbf{a}_{t':t'+k}^{r} </span> 여기서 <span class="math inline">\alpha</span>는 MixUp 계수이며, 훈련 중에 점진적으로 감소시켜 부드러운 도메인 적응을 가능하게 합니다.</li>
+</ul></li>
+</ol>
+<p><strong>실험 설정 및 결과</strong></p>
+<ul>
+<li><strong>하드웨어:</strong> Franka Emika Panda 로봇 팔에 Robotiq 2F-85 Gripper, Fin Ray Gripper, Allegro Hand, Ability Hand의 네 가지 엔드 이펙터(end-effectors)를 장착하여 다양한 dexterity 수준을 평가합니다.</li>
+<li><strong>작업:</strong> Pick and Place, Push (기본 객체 조작), Hammer, Flip (도구 기반 조작)의 네 가지 조작 작업을 수행합니다.</li>
+<li><strong>기준선(Baselines):</strong> Robot-only, Two-stage Fine-Tuning, Vanilla Co-Training, Random Mapping, Visual Mapping (ImMimic-V), Action Mapping (ImMimic-A)과 비교합니다.</li>
+<li><strong>평가 지표:</strong> 성공률(Success Rate, SR), 궤적 부드러움(Trajectory Smoothness, SPARC), 액션 거리(Action Distance, AD)를 사용합니다.</li>
+</ul>
+<p><strong>핵심 결과 (Core Results):</strong></p>
+<ul>
+<li><strong>인간 비디오의 정책 견고성 및 부드러움 향상:</strong> ImMimic-A는 모든 작업 및 엔드 이펙터에서 Robot-only, Two-stage Fine-Tuning, Co-Training 기준선에 비해 일관되게 높은 성공률을 달성했습니다. 또한, 더 높은 SPARC 점수를 달성하여 궤적의 부드러움을 향상시켰습니다. 이는 보간된 인간 데이터가 제한된 로봇 데이터에 대한 효과적인 데이터 증강(data augmentation) 역할을 하여 로봇 롤아웃(rollouts)의 견고성을 개선함을 시사합니다.</li>
+<li><strong>액션 기반 매핑의 우월성:</strong> 액션 기반 매핑(ImMimic-A)이 시각 기반 매핑(ImMimic-V) 및 무작위 매핑(Random Mapping)보다 일관되게 우수한 성능을 보였습니다. 이는 재설정된 인간 액션이 시각적 특징보다 로봇 액션에 구조적으로 더 유사하여 공동 훈련에 더 유익하다는 것을 나타냅니다. 특히 미묘한 액션 전환이 있는 작업에서 시각적 매핑의 품질이 낮으면 성능이 저하됨을 확인했습니다.</li>
+<li><strong>다양한 Embodiment 전반의 일관된 개선:</strong> ImMimic-A는 인간 손과의 형태학적 유사성에 관계없이 모든 엔드 이펙터에서 정책 성능을 향상시켰습니다. 그러나 일부 특정 embodiment-task 조합에서는 여전히 낮은 성공률을 보였는데, 이는 하드웨어 구조적 한계(예: Ability Hand의 짧은 엄지, Allegro Hand의 큰 크기)가 정책 성능에 미치는 영향을 강조합니다.</li>
+<li><strong>인간 모방적인 Embodiment가 반드시 더 나은 전이를 가져오지 않음:</strong> 직관과 달리, 더 인간 모방적인 엔드 이펙터(Allegro, Ability)가 그리퍼(Robotiq, FR)에 비해 평균 액션 거리(AD)가 더 크게 나타났습니다. 이는 엔드 이펙터 디자인 외에도 마운팅(mounting) 조건 및 암 키네마틱스(arm kinematics)가 액션 재설정 및 로봇의 작업 수행 방식에 영향을 미친다는 것을 시사합니다.</li>
+<li><strong>인간 시연의 규모와 다양성이 학습 성능 향상:</strong> 인간 비디오는 로봇 데이터보다 더 큰 다양성을 보였으며, 이는 더 높은 데이터셋 내 액션 거리(intra-dataset Action Distance)로 반영되었습니다. 인간 데이터의 추가는 로봇 데이터의 양이 적을 때에도 샘플 효율성을 크게 향상시켰습니다.</li>
+</ul>
+<p><strong>한계 및 향후 연구</strong></p>
+<p>ImMimic은 큰 도메인 간극(예: 현저한 평균 액션 거리 차이, 주요 시각적 외관 차이)에서는 여전히 성능 저하를 보입니다. 미래 연구 방향으로는 더 큰 도메인 간극에서도 특징 정렬(feature alignment)을 개선하는 표현 학습(representation learning) 방법이 포함될 수 있습니다. 또한, embodiment 설계가 인간 시연으로부터 학습할 때 정책 성능에 미치는 영향을 경험적으로 조사하여 로봇이 인간 기술을 보다 효과적으로 습득하고 적응할 수 있는 통합 시스템을 개발하는 것을 목표로 합니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<section id="summary" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.1</span> Summary</h2>
+<p>ImMimic은 인간 시연 비디오와 소량의 로봇 시연 데이터를 함께 활용하여 로봇 조작 학습의 효율을 높이는 새로운 모방학습 프레임워크입니다. 인간과 로봇 사이에는 시각적, 형태적(모르포LOGY), 물리적 도메인 차이(domain gap)가 존재하여, 인간 비디오만으로 로봇이 직접 행동을 모방하기 어려웠습니다. 이 논문에서는 이러한 갭을 효과적으로 메꾸기 위해 Embodiment(embodiment)에 구애받지 않는 공동 학습(co-training) 방법을 제안합니다. 핵심 아이디어는 인간 손의 시연 경로를 로봇 관절 공간으로 retargeting(retargeting)하고, 동적 시간 왜곡 알고리즘(Dynamic Time Warping, DTW)을 이용해 인간과 로봇 시연의 시계열 정렬을 수행한 뒤, 정렬된 쌍을 MixUp 보간 기법으로 섞어 중간 도메인 데이터를 생성하는 것입니다. 이렇게 생성된 중간 분포의 시연 데이터들을 원래 로봇 데이터와 함께 동시에 학습함으로써, 인간 비디오로부터 획득한 지식을 로봇 정책에 원활히 이전합니다. 실제 4가지 조작 과제(집어서 놓기, 밀기, 망치질, 뒤집기)에 대해 4종의 로봇 손/그리퍼(Robotiq 그리퍼, Fin Ray 그리퍼, Allegro 다지 손, Ability 다지 손)에서 실험한 결과, ImMimic을 적용하면 작업 성공률이 향상되고 로봇 동작이 한층 매끄럽게 실행됨이 확인되었습니다. 이는 소량의 로봇 데이터(예: 5개)와 대량의 인간 비디오(예: 100개)만으로도, 기존 방법보다 도메인 차이를 효과적으로 극복할 수 있음을 보여줍니다[4].</p>
+</section>
+<section id="contributions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="contributions"><span class="header-section-number">2.2</span> Contributions</h2>
+<ul>
+<li><p>인간-로봇 시演 정렬을 통한 교차 도메인 모방학습: 인간 비디오로부터 얻은 시연을 로봇 시연과 정렬(mapping)하여 함께 학습할 수 있는 공동 학습 프레임워크를 제시하였습니다. 동적 시간 왜곡(DTW)을 활용해 인간과 로봇의 시계열 데이터를 정밀하게 맞춤으로써, 인간 시연을 로봇 정책 학습에 직접 활용할 수 있는 공통 표현 공간으로 가져옵니다. 특히 행동 기반과 시각 기반 두 가지 매핑 전략(DTW-A, DTW-V)을 제시하여, 행동 시퀀스 또는 시각 피처 유사도를 기준으로 정렬하는 방법을 탐구했습니다.</p></li>
+<li><p>MixUp 보간을 이용한 중간 도메인 데이터 생성: 정렬된 인간-로봇 시연 쌍을 MixUp 기법으로 보간하여, 인간 도메인과 로봇 도메인 사이의 중간 형태의 데이터를 다수 생성했습니다. 구체적으로, 잠재 공간(latent space)에서의 관찰 표현과 행동 공간(action space)에서의 제어 신호를 각각 선형 혼합함으로써, 인간 시연이 점진적으로 로봇 시연의 특성을 띠는 연속적인 도메인 스펙트럼을 구축했습니다. 이러한 중간 도메인 데이터들은 공동 학습 시 인간 도메인 데이터가 로봇 도메인으로 부드럽게 적응하도록 도와주며, 결과적으로 도메인 갭을 완화**하는 데 핵심적인 역할을 합니다.</p></li>
+<li><p>Embodiment에 불문한 정책 공동학습 및 확산 모델 활용: 인간과 로봇의 데이터를 단일 정책 모델에 통합하여 학습하는 embodiment-agnostic co-training을 구현했습니다. 이를 위해 비전 관찰(카메라 영상)과 로봇 고유감각(proprioception) 정보를 조건으로 받아 미래 행동을 예측하는 정책 신경망을 설계하였고, 특히 확산 모델 기반 정책(diffusion policy) 구조를 활용하여 시퀀스 형태의 행동 생성에 안정성을 더했습니다. 인간 비디오의 경우, 손 포즈 추적 모듈로부터 얻은 로봇 관절형태로 retargeting된 손동작을 행동 라벨로 사용하여, 마치 로봇이 해당 상황에서 취했을 행동인 것처럼 학습시켰습니다. 로봇 시연 데이터와 인간 비디오로부터 얻은 (실제+보간) 데이터에 대해 동일한 모델을 공동 최적화하며, 두 도메인의 학습 손실을 합산한 목표 함수를 최소화하는 방식으로 훈련을 진행했습니다. 이러한 접근으로 별도 도메인 구분 없이 하나의 통합 정책이 학습되며, 다양한 로봇 플랫폼에도 동일한 알고리즘을 적용할 수 있는 일반성을 확보했습니다.</p></li>
+<li><p>실험을 통한 성능 향상 및 특성 분석: 실제 로봇을 사용한 다양한 실험을 통해 제안 기법의 효과를 입증했습니다. 4개의 과제와 4개의 서로 다른 로봇 매니퓰레이터 조합에서, ImMimic은 기존 대비 성공률 향상과 동작 원활성 개선을 일관되게 보여주었습니다. 또한 대조 실험을 통해, 아무 보정 없이 인간+로봇 데이터를 함께 학습한 경우(naive co-training)나 인간-로봇 시연을 무작위로 짝지어 보간한 경우(random mapping) 대비 제안 방법의 우수성을 정량적으로 확인했습니다. 특히 시계열 매핑의 중요성(random mapping 대비)과 중간 도메인 보간의 기여(vanilla co-training 대비)를 분리하여 검증하였고, 동작 공간 기반 매핑(ImMimic-A)이 시각 피처 기반 매핑(ImMimic-V)보다 좋은 성능을 내는 것도 실험적으로 밝혔다. 마지막으로, t-SNE 시각화를 통해 ImMimic 적용 시 인간 데이터의 표현 공간이 로봇 데이터 공간과 연속적으로 겹쳐짐을 보였는데, 이는 특별한 보정이 없었던 경우 두 도메인 데이터가 분리된 클러스터로 남는 것과 대조적입니다. 이로써 ImMimic의 도메인 적응 효과를 직관적으로 확인할 수 있습니다.</p></li>
+</ul>
+</section>
+<section id="methodology-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="methodology-analysis"><span class="header-section-number">2.3</span> Methodology Analysis</h2>
+<p>ImMimic이 제안하는 교차 도메인 모방학습 방법은 크게 다섯 단계로 구성됩니다:</p>
+<ul>
+<li>로봇 시연 데이터 수집: 우선 각 작업(task)에 대해 소수의 로봇 시연을 수집합니다. 여기서는 원격 조작(teleoperation)을 사용하여 사람 운영자가 로봇을 직접 조작, 시각 관찰과 로봇 상태-행동 데이터를 기록하였습니다. 예를 들어 카메라 영상(외부 시점 + 손목부 카메라)과 로봇 관절각/그리퍼 상태 등의 프로프리오셉션이 시간에 따라 기록됩니다.</li>
+<li>인간 시연 데이터 수집 및 retargeting: 동시에 각 작업에 대해 다수의 인간 시연 비디오를 녹화하여 확보합니다. 인간 시연은 로봇과 유사한 환경(예: 동일한 작업대와 물체 배치)에서 에이전트 시점 카메라(agent-view)로 촬영하여, 로봇이 보게 될 시각 정보와 최대한 유사하게 하였습니다. 이렇게 얻은 인간 비디오로부터는 손 움직임을 추적 및 추출하여, 로봇의 제어 신호로 변환(retargeting)합니다. 이는 인간 손가락/팔의 움직임을 로봇의 관절각 혹은 그리퍼 움직임 등에 매핑하는 과정으로, 예컨대 인간 손가락으로 공을 잡는 동작을 로봇 그리퍼의 폐쇄 동작에 대응시키는 식입니다. 이 손 포즈 retargeting 모듈의 출력을 통해, 인간 비디오 각 시점마다 해당 시점에 로봇이 취했을 법한 행동(action label)을 라벨로 할당할 수 있게 됩니다. 이렇게 함으로써 인간 시연에는 원래 존재하지 않던 로봇 행동 라벨이 부여되어, 지도학습 형태의 모방학습이 가능해집니다.</li>
+<li>동적 시간 왜곡(DTW)을 통한 시퀀스 정렬: 다음으로 각 인간 시연 시퀀스와 유사한 로봇 시연 시퀀스를 짝지어, 동적 시간 왜곡 알고리즘을 적용합니다. DTW는 두 시계열 <span class="math inline">X=(x_1,…,x_m)</span> 와 <span class="math inline">Y=(y_1,…,y_n)</span> 사이의 유사도에 기반한 정렬을 찾는 알고리즘입니다. 예를 들어 여기서는 인간 시연의 특징과 로봇 시연의 특징 간 거리를 정의하고, DTW를 사용해 시간 축을 비선형적으로 조정함으로써 두 시퀀스 간 최적 매칭을 구합니다. 이때 정렬 기준이 되는 특징에 따라 두 가지 방식을 제안하였습니다:</li>
+<li>행동 기반 매핑(ImMimic-A): retargeting된 로봇 관절 행동 시퀀스를 비교 기준으로 사용합니다. 즉 인간 시연(로봇 공간으로 투영된)의 관절 움직임 벡터와 실제 로봇 시연의 관절 움직임 벡터 간의 차이를 거리 함수로 정의하여 DTW 정렬을 수행합니다. 이를 통해 동일하거나 유사한 동작 순간들이 시간 축을 넘어 매칭됩니다.</li>
+<li>시각 기반 매핑(ImMimic-V): 시각 피처를 정렬 기준으로 사용합니다. 인간 비디오 프레임과 로봇 시연 영상 프레임을 각각 인코더(예: ResNet)로 변환해 얻은 잠재 표현(latent feature) 간 거리를 계산하여 DTW를 수행합니다. 이 방법은 두 시퀀스가 시각적으로 비슷한 상태(예: 물체와 손의 상대 위치 등)에 있을 때를 정렬시켜 줍니다.</li>
+</ul>
+<p>DTW 정렬 결과, 인간 시연의 각 시간 단계 <span class="math inline">t_h</span> 가 로봇 시연의 한 시간 단계 <span class="math inline">t_r</span> 와 연결되어 시점 매칭 쌍들의 집합 {(<span class="math inline">t_h</span>,<span class="math inline">t_r</span>)} 이 얻어집니다. 이 연결을 통해 인간 시연 관찰 o_h (<span class="math inline">t_h</span>) 와 해당 시점의 행동 라벨 a_h (<span class="math inline">t_h</span>) (retargeting된 것) 그리고 매칭된 로봇 관찰 <span class="math inline">o_r</span> (<span class="math inline">t_r</span>) 와 로봇 행동 a_r (<span class="math inline">t_r</span>) 가 하나의 정렬된 시퀀스 쌍으로 묶입니다.</p>
+<ul>
+<li>MixUp 보간을 통한 중간 도메인 데이터 생성: 이렇게 정렬된 인간-로봇 시연 쌍에 대해, MixUp 데이터 보강 기법을 적용하여 다수의 새로운 가상 시연 데이터를 만들어냅니다. MixUp이란 두 샘플을 선형 결합하여 새로운 샘플을 만드는 기법으로, 여기서는 인간 시연과 로봇 시연의 특성을 부분적으로 섞은 중간 시연을 생성하는 데 활용되었습니다. 구체적으로, 정렬된 쌍에서 동일한 상대 시점에 있는 인간 관찰의 잠재표현 <span class="math inline">z_h</span> 와 로봇 관찰의 잠재표현 <span class="math inline">z_r</span> 을 섞고, 인간 행동 a_h 와 로봇 행동 a_r 도 섞습니다. 예를 들어 한 정렬된 시점 쌍에 대해 임의의 보간 계수 λ∈[0,1] 를 선택하고 다음과 같이 생성합니다:</li>
+</ul>
+<p><span class="math display">\begin{align*}
+z_{mixt} = \alpha \cdot z_{h t} + (1−\alpha) \cdot z_{r t′} ,     a_{mixt:t+k} = \alpha \cdot a^{h→r}_{t:t+k} + (1−\alpha) \cdot a_{r t′:t′+k}
+\end{align*}</span></p>
+<p>이 z_“mix” 와 a_“mix” 는 인간-로봇 중간 특성을 갖는 하나의 새로운 학습 데이터 포인트를 나타냅니다. 전체 시퀀스에 대해 이런 식의 보간을 수행하면, 인간 시연의 연속된 프레임들이 점차 로봇 시연의 특성으로 변모하는 가상 시퀀스가 생성됩니다. 논문에서는 관찰의 잠재공간과 행동공간 모두에서 보간을 수행하여 일관성 있는 새로운 시퀀스를 얻었다고 보고합니다. 이 중간 도메인 데이터들은 겉보기에는 완전한 로봇 시연도, 완전한 인간 시연도 아니지만 두 도메인의 특징을 모두 조금씩 갖고 있어, 학습 시에 인간 도메인 데이터가 자연스럽게 로봇 도메인으로 이어지도록 만들어주는 다리 역할을 합니다. 이 과정은 여러 정렬된 시연 쌍들에 대해 반복하여 적용되며, 결과적으로 인간 비디오로부터 추출된 다량의 보간 시퀀스 데이터가 추가로 확보됩니다.</p>
+<ul>
+<li>공동 학습(co-training)으로 정책 훈련: 마지막으로, 위에서 얻어진 보간된 인간 데이터 + 원본 인간 데이터 + 소량의 로봇 데이터를 모두 함께 사용하여 하나의 정책 모델을 학습시킵니다[20]. 정책 모델은 종단간 비전-모터 정책으로서, 주어진 현재 관찰에 대해 다음 시간 스텝의 로봇 행동을 예측하도록 훈련됩니다. 로봇 관찰의 경우 로봇의 카메라 영상(Agent-view 및 Wrist-view 두 시점)과 로봇 관절 상태(프로프리오셉션)를 함께 신경망 인코더를 통해 잠재 상태로 변환하고, 이를 기반으로 출력 분포에서 다음 행동을 샘플링하거나 추론합니다. 인간 관찰의 경우 인간 비디오 프레임을 동일한 정책 네트워크에 통과시키되, 이때 현재 로봇 상태에 해당하는 입력이 필요합니다. 이를 위해 앞서 retargeting된 인간 손동작을 해당 시점의 로봇 프레임에서의 관절 상태(가상의 프로프리오셉션)로 간주하여 입력에 포함시킵니다. 다시 말해, 인간 비디오에 대응하는 정책 입력에는 “만약 이 시점에 로봇이 이 동작을 수행하고 있다면”이라는 가정 하에 로봇의 상태로 치환된 정보가 제공됩니다. 정책 출력으로는 로봇의 다음 행동(관절 명령)이 예측되는데, 로봇 데이터의 경우는 실제 로봇 시연의 다음 행동과 비교하고, 인간 데이터의 경우는 retargeting된 다음 행동(인간→로봇 변환된)과 비교하여 손실을 계산합니다. 모든 데이터에 대해 동일한 정책 네트워크의 파라미터를 공유하며, 인간 데이터와 로봇 데이터에서 오는 재구성 손실(모방 학습 오차)을 합산하여 모델을 최적화합니다. 이러한 공동 학습을 통해, 모델은 로봇 시연의 정확한 패턴을 학습함과 동시에 인간 시연으로부터 일반화에 유용한 다양성을 흡수합니다. 특히 보간된 중간 데이터 덕분에, 학습 과정에서 인간 도메인 분포 → 중간 분포 → 로봇 분포로 점진적인 도메인 이동이 유도되어, 학습 안정성과 도메인 적응 능력이 향상됩니다. 실제 저자들은 t-SNE 시각화를 통해, ImMimic으로 학습할 경우 훈련 중 인간 데이터의 잠재 표현들이 로봇 데이터 쪽으로 연속적으로 분포함을 보여주었습니다 (Vanilla 공동학습의 경우 인간/로봇 데이터가 분리된 군집을 형성함). 이는 중간 도메인 보간이 표현 공간 상에서 두 도메인의 간극을 메우는 역할을 수행함을 뒷받침합니다.</li>
+</ul>
+<p>정책 모델의 학습은 Diffusion Policy 방식을 차용하였다고 언급되는데, 이는 확산 확률모델(denoising diffusion)을 이용해 미래 행동 시퀀스를 생성하도록 한 것으로 해석됩니다. 확산 정책의 장점은 다중 모달 행동 분포를 잘 표현하고 안정적으로 시퀀스를 예측할 수 있다는 점인데, 논문에서는 이러한 기법을 도입하여 행동 예측을 시계열 생성 문제로 다룬 것으로 보입니다. 훈련 목표는 각 시점에서 모델이 데모 행동을 재구성하도록 하는 것으로, 인간 및 로봇 데이터 모두에 대해 행동 예측 오류(예: MSE 혹은 음의 로그우도)를 최소화합니다. 이렇게 학습된 정책은 추후 로봇에 주어졌을 때, 새로운 관찰(카메라 영상)을 입력받아 인간 시연에서 학습한 풍부한 동작을 바탕으로도, 실제 로봇에 유효한 제어 신호를 출력할 수 있게 됩니다.</p>
+<p>요약하면, ImMimic의 방법론적 참신성은 “인간→로봇 데이터의 사상(mapping)과 분포 보간(interpolation)”이라는 두 가지 기술로 도메인 차이를 극복한 점입니다. 복잡한 도메인 적응 알고리즘 대신, 시연 데이터를 직접 조작하여 도메인 간 격차를 줄이는 접근을 취했기에 구현이 비교적 간단하면서도 효과적입니다. 또한 여러 로봇 형태에 동일하게 적용 가능한 일반 프레임워크로 설계되어 다양한 플랫폼에 확장 가능하다는 장점이 있습니다.</p>
+</section>
+<section id="experimental-results-and-analysis" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="experimental-results-and-analysis"><span class="header-section-number">2.4</span> Experimental Results and Analysis</h2>
+<p>논문에서는 네 가지 실제 조작 작업에 대해 제안한 ImMimic의 성능을 평가하였습니다:</p>
+<ul>
+<li>집어서 놓기 (Pick and Place): 테이블 위의 작은 물체를 집어서 다른 위치에 정확히 내려놓는 작업.</li>
+<li>밀기 (Push): 물체를 원하는 방향으로 밀어서 이동시키는 작업.</li>
+<li>망치질 (Hammer): 망치나 망치형 도구를 사용해 목표 지점을 내리치는 작업 (예: 못 박기 등 유사 동작).</li>
+<li>뒤집기 (Flip): 물체를 들어올려서 뒤집거나, 또는 지렛대를 젖혀서 방향을 바꾸는 작업.</li>
+</ul>
+<p>이들 작업은 정밀한 그립부터 동적 타격 동작까지 다양한 조작 스펙트럼을 포함하여, 알고리즘의 범용성을 시험합니다. 각 작업에 대해 서로 다른 4종의 로봇 손/그리퍼를 사용했는데, 두 종류는 평행 그리퍼(Robotiq 2F-85 그리퍼, 그리고 Fin Ray 소프트 그리퍼)이고, 두 종류는 다지(多指) 로봇 핸드(Shadow Allegro Hand V4, PSYONIC Ability Hand)입니다. 이는 단순 집게형부터 인간형 손까지 다양한 형태적 Embodiment 차이를 포괄함으로써, ImMimic이 형태에 구애받지 않고 동작학습에 도움이 되는지 검증하기 위함입니다. 각 로봇에는 공통적으로 7자유도 로봇 팔(예: Franka Emika Panda)이 붙어 있어 작업을 수행하며, 그 끝단에 위의 그리퍼/핸드가 장착된 형태로 실험이 이루어진 것으로 추정됩니다.</p>
+<p>데이터 구성: 실험에서 사용된 데모 데이터의 규모는 인간 시연이 작업당 약 100개, 로봇 시연이 작업당 5개 수준으로 명시되어 있습니다[4]. 이 20:1 정도의 비율은 인간 비디오가 매우 풍부하지만 로봇 데모는 극도로 제한적인 상황을 가정한 것으로, ImMimic의 목표인 “대규모 인간 시연 + 소규모 로봇 시연” 상황을 잘 반영합니다. 각 작업마다 5개의 로봇 시연은 다양한 초기조건과 전략을 담도록 어느 정도 다양성을 가지게 수집되었고, 인간 시연 100개 역시 가능한 다양한 사람의 동작으로 구성되어 데이터 폭을 넓게 가져갔을 것입니다.</p>
+<p>학습 및 평가: ImMimic 모델은 앞서 기술된 방식대로 모든 데이터(원본 로봇 5개, 원본 인간 100개, 그리고 보간 생성된 가상 시연 다수)를 함께 사용하여 훈련됩니다. 학습 후 각 작업-로봇 조합에 대해 10회 이상의 반복 실험을 통해 성공률(task success rate)을 측정하였을 것으로 보입니다. 또한 학습된 정책으로 작업을 수행할 때 로봇 동작의 매끄러움(smoothness)을 정성적/정량적으로 분석하였습니다. 매끄러움은 예컨대 경로의 연속성, 속도 프로파일의 부드러움(가속도의 변화), 불필요한 멈춤/진동의 감소 등을 통해 평가되었을 가능성이 높습니다. 이외에도 도메인 적응 효과를 확인하기 위해 학습 과정 중 임베딩 분포(t-SNE)나 샘플 효율성 분석(데모 개수에 따른 성능 곡선) 등이 수행되었습니다.</p>
+<p>비교 기법 (Baselines): 성능 평가를 위해 몇 가지 비교 대상이 설정되었습니다:</p>
+<ul>
+<li>Robot-Only: 인간 비디오 데이터를 전혀 사용하지 않고 소량의 로봇 데모(5개)만으로 정책을 학습한 경우입니다. 이는 ImMimic을 사용하지 않았을 때 데이터 부족 상황에서의 기본 성능을 나타냅니다. 일반적으로 이런 극소량 데이터로 학습한 정책은 성공률이 낮을 것으로 예상되며, 이를 기준선으로 삼습니다.</li>
+<li>Vanilla Co-Training: ImMimic의 핵심 기법(DTW 정렬 및 MixUp 보간)을 적용하지 않고, 인간 비디오에서 추출한 행동 라벨과 로봇 데모를 그냥 통합하여 한꺼번에 학습한 경우입니다. 즉, 별다른 도메인 적응 처리 없이 공동학습만 수행한 방법으로 볼 수 있습니다. 이 방법은 인간 데이터가 추가되긴 하지만 도메인 차이를 제대로 다루지 않아, 성능이 Robot-Only보다 나아지지 않거나 오히려 교란 효과로 악화될 수 있습니다. 이를 통해 도메인 갭을 다루는 기법의 중요성을 평가합니다.</li>
+<li>Random Mapping: ImMimic과 동일하게 인간+로봇 데이터를 함께 학습하되, 인간-로봇 시퀀스 간 의미 있는 정렬 없이 임의로 짝지어 MixUp 보간을 수행한 경우입니다. 이는 DTW 기반 정렬의 효과를 검증하기 위한 실험으로, 정렬 없이 보간하면 비합리적 데이터(예: 전혀 다른 맥락의 인간/로봇 동작을 섞은 데이터)가 생성되어 학습에 악영향을 줄 것으로 예상됩니다. 실제 이 baseline과의 비교는 “올바른 매핑”의 중요성을 부각합니다.</li>
+<li>ImMimic-V: 제안 기법 중 시각 기반 매핑만을 사용한 변형입니다. 즉 DTW 정렬 시 로봇/인간 시각피처 유사도로 정렬하고 MixUp 보간하는 방식으로, 행동 기반 매핑(ImMimic-A)과의 성능 차이를 비교합니다. 이를 통해 어떤 매핑 기준이 더 유효한지 확인하였습니다.</li>
+</ul>
+<p>성과 (Results): 전반적으로 ImMimic은 모든 작업과 로봇에 걸쳐 기존 방법들을 능가하는 성공률을 달성했습니다. 논문 프로젝트 페이지에 공개된 결과에 따르면, Robot-Only 대비 ImMimic 적용시 성공률이 현저히 향상되었으며, Vanilla 공동학습 대비로도 큰 개선이 있었습니다. 예를 들어, Pick and Place 작업에서 5개 로봇 데모만으로 학습한 경우 성공률이 매우 낮았으나(ImMimic 미사용), ImMimic을 통해 100개의 인간 비디오를 활용하면 성공률이 의미 있게 상승하는 것으로 보고되었습니다. Push, Hammer, Flip 등 다른 작업들에서도 일관되게 향상된 성능을 보였는데, 특히 복잡한 조작일수록 인간 데이터 활용의 이득이 컸다고 유추할 수 있습니다. Hammer나 Flip은 난이도가 높아 로봇 데모 5개만으로 학습하기 어려운 반면, 인간 비디오로 다양한 사례를 학습한 ImMimic 정책은 이러한 작업에서도 상당한 성공률 개선을 이뤘을 가능성이 높습니다.</p>
+<p>비교 기법 간 결과를 살펴보면:</p>
+<ul>
+<li>Vanilla Co-Training: 인간 데이터 추가에도 불구하고 도메인 차이로 인해 Robot-Only 대비 뚜렷한 개선을 못 내는 경우가 있었습니다. 일부 작업에서는 약간의 향상이 있었지만, 다른 작업에서는 인간 데이터가 제대로 활용되지 못해 성공률 정체 혹은 불안정한 학습을 보였습니다. 이는 도메인 갭을 해소하지 않고는 인간 비디오의 잠재력이 발휘되지 않음을 보여줍니다.</li>
+<li>Random Mapping: 이 방법은 대체로 Vanilla 공동학습보다도 성능이 낮게 나왔습니다. 인간-로봇 대응이 엉뚱하게 이루어져 의미 없는 보간 데이터가 다수 생성되었고, 이로 인해 정책 학습이 혼란을 겪었을 것입니다. 결과적으로 Robot-Only보다도 못한 성공률을 보인 경우도 있을 것으로 예상됩니다. 이 비교를 통해, 인간-로봇 시연 간 올바른 시계열 정렬(DTW)의 중요성이 실증되었습니다 – 잘못 연결된 데이터는 오히려 독이 됨을 확인한 것입니다.</li>
+<li>ImMimic-V vs ImMimic-A: 두 매핑 전략을 비교한 결과, 행동 기반 매핑(ImMimic-A)이 시각 기반 매핑(ImMimic-V)보다 일관되게 우수한 성능을 보였습니다. 논문에 따르면 ImMimic-A가 ImMimic-V보다 나은 성능을 발휘했는데, 이는 로봇 손/그리퍼의 구체적인 관절 행동 정보가 도메인 정렬에 더 효과적이었다는 뜻입니다. 시각 피처 기반 정렬도 어느 정도 효과는 있었지만, 완전히 다른 형태의 손/그리퍼 사이에서는 시각적 유사성이 곧 행동의 유사성으로 이어지지 않을 수 있습니다. 반면, retargeting을 통해 인간 손동작을 로봇 관절 공간으로 변환한 뒤 이를 직접 비교하면 보다 물리적으로 타당한 매칭을 얻을 수 있어 보입니다. 이 결과는 정밀한 행동 레벨의 대응이 도메인 갭 해소에 중요함을 시사합니다. (시각 기반 정렬은 환경 배경 등이 동일한 통제된 상황에서는 그럭저럭 동작했지만, 일반적으로는 행동 기반 정렬이 바람직하다는 결론입니다.)</li>
+</ul>
+<p>성공률 이외의 지표: 저자들은 정성적인 결과로서 ImMimic으로 학습한 로봇이 보다 인간과 유사한 동작 패턴을 보이며, 실행이 매끄럽다(smoother)고 언급합니다. 예를 들어, Robot-Only 정책의 경우 동작이 불안정하여 물체를 놓칠 수 있었던 반면, ImMimic 정책은 연속적이고 안정적인 제스처로 작업을 수행함을 확인했습니다. 이는 아마 모델의 행동 출력에 가해진 인간 시演의 영향으로, 세밀한 조절이나 힘 조절 면에서 향상된 결과일 것입니다. 실행의 매끄러움은 또 다른 관점에서는 정량화된 지표로도 측정했을 수 있는데, 예컨대 모션의 가속도 변화율(jerk)의 분산, 엔드-이펙터 궤적의 평탄함, 충격 없이 임무 완수 등을 평가했을 가능성이 있습니다. 이 부분에 대한 수치는 논문에 명확히 제시되진 않았지만, 전반적인 과제 성공 과정에서의 품질 개선으로 해석할 수 있습니다.</p>
+<p>또 다른 흥미로운 분석으로, 데모 데이터의 양과 다양성에 따른 성능 변화를 평가한 결과가 있습니다. 인간 시연의 수를 0, 50, 100, 200개로 달리해가며 ImMimic-A의 성능을 측정한 결과, 인간 데이터가 많을수록 성능이 향상되는 상향 곡선을 보였습니다. 이는 대규모 인간 데이터의 가치를 실증한 것으로, 충분한 다양한 시연을 확보하면 로봇 데모 몇 개만으로도 정책 성능을 크게 끌어올릴 수 있음을 의미합니다. 반대로 로봇 데모의 수를 1, 5, 20개로 변화시킨 실험에서도, 로봇 데모가 늘수록 성능 향상은 있지만 ImMimic을 적용한 경우 적은 로봇 데모로도 동일 수준을 달성하거나 더 높은 성능을 발휘함을 보였습니다. 예를 들어, ImMimic-A를 사용하면 로봇 데모 5개로 달성한 성능을 Robot-Only는 20개를 써야 겨우 달성하는 식의 결과가 나타난 것으로 추측됩니다. 이러한 샘플 효율성 개선은 ImMimic의 주된 목표 중 하나로서, 실제로 적은 로봇 데이터로도 높은 성능을 얻도록 해준다는 점이 확인되었습니다.</p>
+<p>요약하면, 실험 결과는 다음을 보여줍니다:</p>
+<ul>
+<li>ImMimic이 도메인 갭을 효과적으로 완화하여 성공률 향상과 동작 품질 개선을 달성했다.</li>
+<li>정렬(DTW)과 보간(MixUp)이라는 두 구성 요소가 모두 중요하며, 하나라도 결여되면 성능이 크게 감소함을 밝혔다 (Random Mapping이나 Vanilla와 비교).</li>
+<li>행동 수준의 매핑이 시각적 매핑보다 현재 시나리오에서는 더 효과적이었다.</li>
+<li>인간 데이터는 많을수록 좋고, 로봇 데이터 의존도는 줄일 수 있다는 것을 증명하여, 향후 대규모 인간 시연 활용의 가능성을 보여주었다.</li>
+</ul>
+<p>이러한 결과들은, 인간 비디오로부터 로봇 학습을 끌어올리는 데 있어 ImMimic 접근법의 유용성을 뒷받침합니다. 특히 물리적으로 복잡한 조작이나 데이터 수집이 어려운 시나리오에서, 사람이 맨손으로 시연한 영상 몇 백 개와 로봇 데모 몇 개만 있으면 충분한 학습이 가능하다는 것은 매우 고무적입니다. 이는 실제 산업 또는 가정용 로봇 학습에 큰 잠재적 의미를 가집니다.</p>
+</section>
+<section id="limitations-and-discussion" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="limitations-and-discussion"><span class="header-section-number">2.5</span> Limitations and Discussion</h2>
+<p>ImMimic은 혁신적인 접근법을 보여주지만, 한편으로 몇 가지 한계와 향후 보완점도 존재합니다:</p>
+<ul>
+<li><p>소량이나마 로봇 시연이 필요함: 본 방법은 완전한 zero-shot 학습은 아닙니다. 여전히 몇 개의 로봇 시연 데이터가 필요하며, 이는 실제 로봇을 조작해 수집해야 하는 부담이 있습니다. 논문에서는 5개의 로봇 데모로 충분하다고 주장하지만, 작업 난이도나 다양성에 따라 더 많은 로봇 데모가 필요할 수 있습니다. 만약 로봇 데모가 아예 0이라면(ImMimic에서 인간 데이터만으로 학습), retargeting된 인간 행동만으로 과연 로봇에 제대로 동작할 정책을 배울 수 있을지 미지수입니다. (일부 선행 연구에서는 로봇 데이터 없이 인간 비디오만으로도 학습하려는 시도가 있으나, 안정적 성능을 보장하기는 어려웠습니다.) 따라서 ImMimic은 few-shot 환경에서는 뛰어나지만, true one-shot/zero-shot 환경은 추가 연구가 필요합니다.</p></li>
+<li><p>retargeting 품질과 휴먼 demonstration의 한계: ImMimic의 전제는 인간 손 동작을 정확히 로봇 행동으로 변환할 수 있다는 것입니다. 그러나 영상에서 인간 손의 3D 자세를 추정하거나 이를 로봇 관절 움직임으로 옮기는 것은 오차 가능성이 있는 복잡한 과정입니다. 추적 오류나 매핑 오류가 있다면, 잘못된 행동 라벨이 인간 시연에 달리게 되고 이는 학습에 노이즈로 작용합니다. 특히 다섯 손가락을 가진 인간 손 → 두 손가락 그리퍼로 매핑할 때 정보 손실이 발생합니다. 인간의 섬세한 손놀림을 투핑거 그리퍼의 열고 닫는 값 하나로 축소해야 하는데, 이때 어떤 세부 동작은 표현되지 못하고 버려집니다. 이러한 경우 ImMimic이 인간 데이터로부터 충분한 정보를 얻지 못할 수 있습니다. 마찬가지로 다관절 로봇 손의 경우도 인간 손과 형태 차이가 있어, 관절 각도 매핑에 보정이 필요합니다. 논문에서 이 부분을 어떻게 처리했는지 구체적 언급은 없지만, 손가락 길이/비율 차이 등을 고려한 보정이 필요했을 것입니다. retargeting 모듈의 신뢰성이 전체 성능에 직접 영향을 주므로, 이 부분은 향후 더 개선된 휴먼-로봇 매핑 알고리즘(예: 최적 제어 방식으로 인간 동작을 로봇 모션으로 계산)이나 학습 기반 매핑으로 대체될 여지가 있습니다.</p></li>
+<li><p>시각적 도메인 차이: 본 실험은 인간 비디오와 로봇 시연이 동일한 환경(배경, 물체 등)에서 촬영되었기 때문에, 시각적 도메인 갭이 비교적 작았습니다. 그러나 일반적으로 인터넷에서 수집한 인간 시연 영상이나 다른 장소에서 찍은 영상은 배경, 조명, 물체 형태 등이 로봇 환경과 크게 다를 수 있습니다. ImMimic은 이러한 시각적 차이 자체를 적극적으로 다루지는 않았습니다 (예: 이미지 스타일 전환이나 도메인 랜덤화 등의 기법을 사용하지 않음). 대신 latent MixUp으로 어느 정도 중간 표현을 얻었지만, 시각 차이가 극심하면 인코더가 충분히 공통 특징을 뽑아내기 어려울 수 있습니다. 따라서 환경이 다른 인간 영상에도 본 기법이 효과적인지는 추가 검증이 필요합니다. 향후에는 시각 도메인 적응(visual domain adaptation)을 위한 모듈을 결합하거나, 합성 데이터로 로봇 시점으로 변환하는 기법과의 접목도 고려해볼 수 있습니다.</p></li>
+<li><p>정렬 가정의 한계: Dynamic Time Warping을 통해 인간과 로봇 시퀀스를 정렬하려면, 양쪽 시퀀스가 유사한 단계들의 연속으로 이루어져 있음을 전제로 합니다. 즉, 인간과 로봇이 같은 작업을 수행하며 시작과 끝 상태도 비슷해야 효과적으로 정렬될 수 있습니다. 논문에서도 인간/로봇 데모가 페어로 수집된 것은 아니지만, “유사한 상태에서는 유사한 동작을 할 것”이라는 가정을 두고 있습니다. 이 때문에 한 작업 내에서는 인간이든 로봇이든 비슷한 해결 전략을 따를 것을 암묵적으로 요구합니다. 만약 인간 시연 중 어떤 것은 로봇 데모와는 전혀 다른 순서나 방식으로 작업을 수행했다면, DTW가 엉뚱한 매칭을 만들거나 해당 데이터는 활용하기 어려웠을 것입니다. 그러므로 ImMimic은 현재 단일 작업 내에서 비교적 동질적인 시연들을 전제로 동작하며, 다양한 전략이 존재하는 작업이나 여러 작업이 섞인 시연에는 적용하기 힘든 한계가 있습니다. 또한 DTW 알고리즘은 쌍(pair) 단위 정렬이므로, 다수의 인간 시연과 다수의 로봇 시연을 사용할 때 어느 것을 어느 것과 정렬할지 짝짓기 문제가 발생합니다. 논문에서는 아마도 각 로봇 데모마다 몇 개의 인간 데모를 선택하여 정렬한 듯하며, 5개의 로봇 데모에 대해 100개의 인간 데모를 분배해 사용하는 식으로 처리했을 것입니다. 이러한 데모 매칭은 현재는 수작업 혹은 heuristic에 의존하지만, 규모가 더 커지면 자동으로 유사한 시연을 군집화/매칭하는 기법이 필요할 수 있습니다.</p></li>
+<li><p>정책의 일반화 범위: ImMimic으로 학습한 정책은 훈련된 작업들 내에서는 좋은 성능을 보이지만, 훈련되지 않은 새로운 작업에 바로 적용할 수는 없습니다. 즉 작업 간 일반화는 고려 대상이 아니었습니다. 만약 미래에 여러 작업의 인간 비디오와 로봇 데모를 모두 모아 한꺼번에 학습한다면, 이는 멀티태스크 학습 문제가 되어 새로운 도전이 필요합니다. 또한 ImMimic 정책은 오프라인 시연 데이터를 모방하는 것이므로, 만약 새로운 상황이 주어지거나 작업 도중 예기치 않은 변화(물체 미끄러짐 등)가 발생하면 대처가 어려울 수 있습니다. 이는 모방학습 전반의 한계로, 필요하면 추가적 강화학습 파인튜닝이나 휴먼 피드백 등을 결합해 극복해야 할 것입니다.</p></li>
+<li><p>실시간성 및 계산 비용: ImMimic은 학습 시 모든 인간-로봇 데이터 쌍에 대한 DTW 계산과 대량의 MixUp 샘플 생성이 필요하므로, 전처리 비용이 다소 큽니다. 그러나 이는 오프라인 단계이므로 큰 문제는 아니지만, 향후 데이터 양이 매우 늘어나면 DTW의 계산 복잡도가 병목이 될 수 있습니다. 또한 정책 자체가 Diffusion 모델을 활용했다면, 추론에 시간이 오래 걸릴 가능성이 있습니다. Diffusion 기반 정책은 보통 다수의 샘플링 스텝을 거쳐 행동을 생성하므로, 실시간 로봇 제어에 사용하려면 속도 최적화나 모델 경량화가 필요할 수 있습니다. (물론 짧은 horizon의 행동만 예측하거나 네트워크 최적화로 일정 수준 속도를 확보할 수는 있지만, 일반적인 피드포워드 네트워크보다는 무거울 수 있습니다.) 따라서 실시간 로봇제어 적용 측면에서의 검토도 추후 보완점입니다.</p></li>
+</ul>
+<p>요약하면, ImMimic은 현재 단일 작업, 제한된 환경에서 탁월한 성능을 보이지만, retargeting 정확도, 다양한 전략 존재 시 정렬, 시각 도메인 큰 차이, 새 작업 일반화, 실시간성 등의 면에서 추가 연구의 여지가 있습니다. 이러한 한계들은 이 방법의 적용 범위를 결정짓는 요소이며, 향후 연구 커뮤니티가 해결해야 할 도전과제로 남아 있습니다.</p>
+</section>
+<section id="conclusion-and-future-work" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="conclusion-and-future-work"><span class="header-section-number">2.6</span> Conclusion and Future Work</h2>
+<p>이 논문은 “인간 영상으로부터 배우는 로봇”이라는 오랜 과제에 대해 새로운 관점을 제시했습니다. 핵심은 인간과 로봇의 간극을 데이터 차원에서 메꾸는 것으로, Dynamic Time Warping 기반 정렬과 MixUp 보간이라는 비교적 간단하지만 효과적인 도구를 조합해 부드러운 도메인 전이를 구현한 점이 돋보입니다. ImMimic 프레임워크를 통해, 소수의 로봇 데모만으로도 대량의 인간 시연에서 배운 풍부한 정보를 로봇 정책에 이식할 수 있었고, 이를 실제 로봇 실험으로 입증하였습니다. 특히 다양한 로봇 Embodiment(그리퍼부터 다지 손까지)에 적용하여 모두 성능 개선을 얻음으로써, 이 방법의 일반성과 실용적 가치를 보여주었습니다.</p>
+<p>이 연구의 이론적/기술적 기여는 인간-로봇 시연 사이의 공통 표현(action label)을 찾고자 한 점과, 두 도메인을 잇는 연속적 데이터 스펙트럼을 형성했다는 점입니다. 이는 기존에 주로 시도되던 표현 학습 + 도메인 적응 모델(예: 도메인 분류자나 adversarial training)과는 다른 방향으로, 데이터 보강을 통해 문제를 푼 접근이라 할 수 있습니다. 이러한 관점의 전환은 향후 다른 모방학습 문제, 예컨대 시뮬레이션→실세계 도메인 전이나 로봇 간 교차학습 등에도 응용될 수 있을 것입니다.</p>
+<p>앞으로의 연구 방향으로는 다음과 같은 확장이 가능해 보입니다:</p>
+<ul>
+<li><p>완전한 인간 데이터 학습으로의 확장: 궁극적으로는 로봇 시연이 전혀 없어도 인간 영상만으로 로봇이 학습하는 것을 목표로 할 수 있습니다. ImMimic은 소량이나마 로봇 데이터를 필요로 했는데, 이를 없애기 위해서는 시뮬레이터 활용이나 자가기반 학습 등이 필요할 수 있습니다. 예컨대, 초기에는 인간 비디오로 학습하고 시뮬레이터에서 검증/보정하거나, 현실에서 안전한 한도 내에서 로봇이 자체 시행착오를 통해 인간 동작을 보정하는 방식을 생각해볼 수 있습니다. 이러한 방향은 추가적인 강화학습이나 도메인 랜덤화 기법과의 융합으로 이어질 수 있습니다.</p></li>
+<li><p>자동화된 시퀀스 매핑 기법: 현재 DTW를 사용한 정렬은 두 시퀀스 간 국소적 피처 거리 합을 최소화하는 방식입니다. 향후에는 배우-비주얼 트랜스포머나 시퀀스-to-시퀀스 매핑 신경망을 훈련시켜, 인간 시연을 입력하면 해당 로봇 시연(또는 그 경로)을 직접 예측하도록 하는 방법도 고려할 수 있습니다. 즉, 지도 학습으로 인간→로봇 시퀀스 매핑을 학습시켜 DTW를 대체하는 것입니다. 이렇게 하면 다수의 시연을 동시에 정렬하거나, 부분적으로 겹치는 시연도 처리할 수 있을 것입니다. 다만 이를 위해서는 일정량의 매칭된 데이터가 필요하므로, 초기에는 ImMimic처럼 DTW로 생성한 쌍을 학습시키고 점차 정교화하는 식의 접근이 생각됩니다.</p></li>
+<li><p>다중작업 및 일반화: 본 연구를 여러 작업 및 환경으로 확대하면, 진정한 범용 학습 프레임워크로 발전시킬 수 있습니다. 예를 들어 가정 내 여러 가지 작업(요리, 청소, 정리 등)에 대한 인간 영상과 몇 가지 로봇 데모를 모아 통합 학습한다면, 로봇이 다양한 작업을 인간처럼 배울 수 있을 것입니다. 이를 위해서는 작업 구분 없이 학습할 수 있는 거대 모델이나, 맥락에 따른 행동 생성을 위한 추가 입력(예: 작업 명령이나 목표 정보) 등이 필요할 것입니다. 또한 멀티태스크 환경에서는 작업 간 간섭 문제가 생길 수 있으므로, 모델 아키텍처의 개선(예: 모듈식 정책)도 연구해야 합니다.</p></li>
+<li><p>시각적 도메인 적응 통합: ImMimic이 latent MixUp으로 간접적으로 시각 도메인 차이를 완화했지만, 보다 직접적으로 영상 간 변환을 하는 방안도 고안할 수 있습니다. 예컨대 영상-to-영상 변환 모델을 사용해 인간 영상 속 장면을 로봇 시점의 장면으로 스타일 변환하거나, 생성 모델을 활용해 인간 시연 영상을 입력하면 로봇이 등장하는 모사 영상으로 변환하는 것도 한 방향입니다. 최근에는 영상 조건 생성이나 NeRF 기반 시각변환 기술도 발전했으므로, 이러한 것을 ImMimic과 결합하면 시각+행동 양측의 도메인 갭을 모두 줄일 수 있을 것입니다.</p></li>
+<li><p>retargeting 및 센서 융합 고도화: 손동작 retargeting을 더 정확히 하기 위해, 웨어러블 센서나 모션 캡처 데이터를 영상과 함께 사용하는 것도 고려됩니다. 예를 들어 인간이 장갑형 센서를 끼고 시연하여 손가락 관절각을 직접 측정하면, 영상 추정보다 훨씬 정확한 retargeting이 가능합니다. 물론 데이터 수집 비용은 올라가지만, 만약 양질의 매핑이 가능하다면 소량의 데이터로도 큰 효과를 볼 수 있습니다. 또한 힘/촉각 정보 등도 로봇 데모에서는 얻을 수 있으므로, 인간 시연에서는 힘 동작을 추정하여 로봇의 힘 제어 라벨로 활용하는 등 다중모달 확장이 가능할 것입니다.</p></li>
+<li><p>실제 응용 및 검증: 끝으로, 이 알고리즘을 현실의 새로운 작업 시나리오에 적용해보는 연구가 필요합니다. 예컨대 산업현장에서 인간 작업자들의 영상으로부터 조립 작업을 학습하거나, 재활 치료 로봇이 치료사의 시연으로부터 동작을 배우는 식의 응용을 상정해볼 수 있습니다. 이러한 도메인에서는 환경 변화나 안전 제약 등이 있을 수 있으므로, ImMimic에 안전장치(safety layer)나 적응 제어를 부가하는 연구도 뒤따라야 할 것입니다.</p></li>
+</ul>
+<p>결론적으로, ImMimic: Cross-Domain Imitation from Human Videos via Mapping and Interpolation은 인간 비디오를 로봇 학습에 활용하는 분야에서 의미 있는 성능 향상과 새로운 방향성을 제시한 작품입니다. 간단한 아이디어 조합으로도 큰 효과를 거둘 수 있음을 보여주었고, 향후 이를 토대로 다양한 발전형 연구가 이루어질 것으로 기대됩니다. 인간과 로봇의 격차를 좁혀 “로봇이 인간처럼 배운다”는 목표에 한 걸음 다가서게 한 본 논문의 기여는, 로봇 학습 커뮤니티에서 주목할 만한 이정표로 평가될 만합니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
