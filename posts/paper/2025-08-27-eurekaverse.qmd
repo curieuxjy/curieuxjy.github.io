@@ -1,0 +1,29 @@
+---
+title: "📃Eurekaverse 리뷰"
+date: 2025-08-27
+categories: [eureka, llm]
+toc: true
+number-sections: false
+description:
+---
+
+- [Paper Link](https://arxiv.org/abs/2503.21860)
+- [Project Link](https://maniptrans.github.io/)
+- [Code Link](https://github.com/ManipTrans/ManipTrans)
+
+
+
+---
+
+
+
+# Brief Review
+
+---
+
+# Detail Review
+
+
+# Reference
+
+- [Eureka 논문 리뷰](https://curieuxjy.github.io/posts/paper/2025-07-20-eureka.html)
