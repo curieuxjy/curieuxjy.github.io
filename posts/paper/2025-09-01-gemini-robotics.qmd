@@ -9,7 +9,6 @@ description: Bringing AI into the Physical World
 
 - [Paper Link](https://arxiv.org/abs/2503.20020)
 - [Homepage](https://deepmind.google/models/gemini-robotics/)
-- [Code Link](https://github.com/ManipTrans/ManipTrans)
 
 
 1. 🤖 Google DeepMind는 Gemini 2.0을 기반으로 범용 AI 역량을 로봇 제어와 같은 물리적 세계로 확장하는 Gemini Robotics 모델 제품군을 공개했습니다.

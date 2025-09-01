@@ -364,6 +364,7 @@ window.Quarto = {
   <div class="quarto-categories">
     <div class="quarto-category">il</div>
     <div class="quarto-category">rl</div>
+    <div class="quarto-category">isaacgym</div>
   </div>
   </div>
 
@@ -394,17 +395,24 @@ window.Quarto = {
 
 <ul>
 <li><a href="https://arxiv.org/abs/2502.09614">Paper Link</a></li>
-<li><a href="https://zhaohengyin.github.io/3DMF/">Project Link</a></li>
+<li><a href="https://meowuu7.github.io/DexTrack/">Project Link</a></li>
+<li><a href="https://github.com/Meowuu7/DexTrack">Code Link</a></li>
 </ul>
 <ol type="1">
 <li>🤖 이 연구는 복잡한 접촉 역학과 높은 일반화 능력이 요구되는 인간 레퍼런스로부터 로봇의 능숙한 조작을 위한 일반화 가능한 신경 추적 컨트롤러를 개발하는 문제를 다룹니다.</li>
 <li>🛠️ DexTrack은 인간의 조작 레퍼런스를 통해 신경 추적 컨트롤러를 학습하며, 강화 학습과 모방 학습을 통합하고 호모토피 최적화를 활용하여 고품질의 로봇 추적 데모를 반복적으로 생성 및 활용합니다.</li>
 <li>✨ 제안된 컨트롤러는 시뮬레이션 및 실제 환경에서 기존 최고 성능 베이스라인 대비 10% 이상 높은 성공률을 달성했으며, 복잡하고 새로운 조작과 큰 노이즈에도 강건한 일반화 능력을 보였습니다.</li>
 </ol>
+<center>
+<img src="../../images/2025-08-10-dextrack/01.png" width="60%">
+</center>
+<center>
+<img src="../../images/2025-08-10-dextrack/02.png" width="100%">
+</center>
 <hr>
 <section id="brief-review" class="level1">
 <h1>Brief Review</h1>
-<p>DexTrack은 인간 참조(human references)를 활용하여 정교한 조작(dexterous manipulation)을 위한 일반화 가능한 신경망 추적 컨트롤러(neural tracking controller)를 개발하는 도전 과제를 다룹니다. 이 컨트롤러는 다양한 객체를 조작하도록 정교한 로봇 핸드를 제어하여, 인간-객체 상호작용의 운동학적 궤적(kinematic human-object interaction trajectories)에 의해 정의된 다양한 목적을 달성하는 것을 목표로 합니다. 정교한 조작의 복잡한 접촉 역학(intricate contact dynamics)과 적응성(adaptivity), 일반화 가능성(generalizability), 강건성(robustness)의 필요성 때문에 이러한 컨트롤러를 개발하는 것은 어렵습니다.</p>
+<p>DexTrack은 human references를 활용하여 정교한 조작(dexterous manipulation)을 위한 일반화 가능한 신경망 추적 컨트롤러(neural tracking controller)를 개발하는 도전 과제를 다룹니다. 이 컨트롤러는 다양한 객체를 조작하도록 정교한 로봇 핸드를 제어하여, 인간-객체 상호작용의 운동학적 궤적(kinematic human-object interaction trajectories)에 의해 정의된 다양한 목적을 달성하는 것을 목표로 합니다. 정교한 조작의 복잡한 접촉 역학(intricate contact dynamics)과 적응성(adaptivity), 일반화 가능성(generalizability), 강건성(robustness)의 필요성 때문에 이러한 컨트롤러를 개발하는 것은 어렵습니다.</p>
 <p>기존의 강화 학습(reinforcement learning, RL) 및 궤적 최적화(trajectory optimization, TO) 방법은 태스크별 보상(task-specific rewards)이나 정밀한 시스템 모델에 의존하기 때문에 한계가 있습니다. DexTrack은 인간 참조와 로봇 액션 쌍으로 구성된 대규모의 성공적인 로봇 추적 데몬스트레이션(robot tracking demonstrations)을 큐레이션하여 신경망 컨트롤러를 훈련시키는 새로운 접근 방식을 제안합니다. 이 방법은 데이터 플라이휠(data flywheel)을 활용하여 컨트롤러의 성능과 성공적인 추적 데몬스트레이션의 수 및 품질을 반복적으로 향상시킵니다.</p>
 <p><strong>핵심 방법론:</strong></p>
 <p>DexTrack은 로봇 추적 데몬스트레이션으로부터 신경망 추적 컨트롤러를 학습하는 과정과 고품질 데몬스트레이션을 채굴하는 과정을 번갈아 수행합니다.</p>
