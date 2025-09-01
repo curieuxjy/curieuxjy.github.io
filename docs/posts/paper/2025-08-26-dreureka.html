@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-26">
+<meta name="description" content="Language Model Guided Sim-To-Real Transfer">
+
+<title>📃DrEureka 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#논문의-핵심-아이디어와-주요-기여" id="toc-논문의-핵심-아이디어와-주요-기여" class="nav-link" data-scroll-target="#논문의-핵심-아이디어와-주요-기여">1. 논문의 핵심 아이디어와 주요 기여</a>
+  <ul class="collapse">
+  <li><a href="#주요-기여" id="toc-주요-기여" class="nav-link" data-scroll-target="#주요-기여">주요 기여</a></li>
+  </ul></li>
+  <li><a href="#사용된-방법론과-기술적-접근-분석" id="toc-사용된-방법론과-기술적-접근-분석" class="nav-link" data-scroll-target="#사용된-방법론과-기술적-접근-분석">2. 사용된 방법론과 기술적 접근 분석</a></li>
+  <li><a href="#실험-설계-및-결과-평가" id="toc-실험-설계-및-결과-평가" class="nav-link" data-scroll-target="#실험-설계-및-결과-평가">3. 실험 설계 및 결과 평가</a></li>
+  <li><a href="#기존-연구와의-차별점-및-기여" id="toc-기존-연구와의-차별점-및-기여" class="nav-link" data-scroll-target="#기존-연구와의-차별점-및-기여">4. 기존 연구와의 차별점 및 기여</a></li>
+  <li><a href="#한계점-및-향후-연구-과제에-대한-비판적-고찰" id="toc-한계점-및-향후-연구-과제에-대한-비판적-고찰" class="nav-link" data-scroll-target="#한계점-및-향후-연구-과제에-대한-비판적-고찰">5. 한계점 및 향후 연구 과제에 대한 비판적 고찰</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  </ul></li>
+  <li><a href="#related-works" id="toc-related-works" class="nav-link" data-scroll-target="#related-works">Related Works</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃DrEureka 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">eureka</div>
+    <div class="quarto-category">llm</div>
+    <div class="quarto-category">domain randomization</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Language Model Guided Sim-To-Real Transfer
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 26, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/pdf/2406.01967">Paper Link</a></li>
+<li><a href="https://eureka-research.github.io/dr-eureka/">Project Link</a></li>
+<li><a href="https://github.com/eureka-research/DrEureka">Code Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 이 논문은 시뮬레이션에서 학습된 로봇 정책을 실제 환경으로 전이시키는 과정에서 보상 함수와 시뮬레이션 물리 파라미터의 수동 설계 및 튜닝으로 인한 비효율성을 해결하기 위해 LLM 기반의 DrEureka를 제안합니다.</li>
+<li>⚙️ DrEureka는 LLM을 활용하여 안전 지침이 포함된 보상 함수를 자동 생성하고, 초기 정책을 통해 환경 물리 파라미터의 Reward-Aware Physics Prior (RAPP)를 구축한 뒤, 이 사전 정보를 바탕으로 Domain Randomization 구성을 최적화합니다.</li>
+<li>🚀 제안된 DrEureka는 사족 보행 및 정교한 조작 작업에서 기존의 수동 설계 방식과 대등하거나 더 나은 성능을 보였으며, 요가 볼 위에서 로봇 균형 잡기와 같은 새로운 도전적인 작업도 수동 개입 없이 성공적으로 해결하여 sim-to-real 전이를 가속화하는 잠재력을 입증했습니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>이 논문은 로봇 기술 습득을 가속화하기 위해 시뮬레이션에서 학습된 정책을 실제 환경으로 전이시키는 Sim-to-Real(시뮬레이션-실제 환경 전이) 과정에서 발생하는 수동 설계 및 튜닝의 문제점을 해결하고자 합니다. 특히, 보상 함수(reward function) 설계와 시뮬레이션 물리 파라미터의 도메인 랜덤화(Domain Randomization, DR) 분포 설정에 필요한 상당한 인적 노력과 시간을 줄이는 데 중점을 둡니다.</p>
+<p>본 논문은 대규모 언어 모델(Large Language Models, LLMs)의 물리적 상식(physical common sense) 및 가설 생성 능력을 활용하여 이러한 Sim-to-Real 설계 과정을 자동화하는 DrEureka라는 새로운 접근 방식을 제안합니다. DrEureka는 대상 작업에 대한 물리 시뮬레이션만 주어지면, 실제 환경 전이를 지원하기에 적합한 보상 함수와 도메인 랜덤화 분포를 자동으로 구성합니다.</p>
+<center>
+<img src="../../images/2025-08-26-dreureka/1.png" width="100%">
+</center>
+<p>DrEureka의 핵심 방법론은 세 가지 주요 단계로 구성됩니다:</p>
+<ol type="1">
+<li><strong>LLM 기반 보상 함수 합성 (LLM-Guided Reward Function Synthesis):</strong>
+<ul>
+<li>이 단계는 Eureka [9]의 보상 함수 설계 원칙을 기반으로 하되, Sim-to-Real 설정에 맞게 개선되었습니다.</li>
+<li>LLM은 태스크 설명(<span class="math inline">l_{\text{task}}</span>)과 환경 코드(<span class="math inline">M</span>)에서 제공되는 환경 상태 및 액션 공간 요약을 입력으로 받습니다.</li>
+<li>특히, DrEureka는 프롬프트에 안정성(safety), 부드러움(smoothness), 바람직한 태스크별 속성 등을 명시적으로 고려하도록 “안전 지침(safety instruction)”(<span class="math inline">l_{\text{safety}}</span>)을 추가합니다. 이는 LLM이 실제 환경 전이에 더 적합한 안전 보장형(safety-regularized) 보상 함수를 생성하도록 유도합니다.</li>
+<li>LLM은 여러 보상 함수 후보를 코드로 생성하고, 각 후보는 강화 학습(Reinforcement Learning, RL)을 통해 정책을 학습하고 태스크 점수(<span class="math inline">F</span>)를 계산하여 평가됩니다.</li>
+<li>이러한 점수와 학습 통계(예: 학습 중 보상 구성 요소의 값)는 LLM에 피드백으로 제공되어 더 나은 보상 함수를 반복적으로 발전시킵니다.</li>
+<li>최종적으로, 이 단계에서는 최적의 보상 함수(<span class="math inline">R_{\text{DrEureka}}</span>)와 이에 상응하는 초기 정책(<span class="math inline">\pi_{\text{initial}}</span>)을 얻습니다: <span class="math inline">R_{\text{DrEureka}}, \pi_{\text{initial}} := \text{Eureka}(M, l_{\text{task}} + l_{\text{safety}})</span></li>
+</ul></li>
+<li><strong>보상 인지 물리 사전 생성 (Reward-Aware Physics Prior, RAPP):</strong>
+<ul>
+<li>안전한 보상 함수는 정책 행동을 규제하지만, Sim-to-Real 전이에는 충분하지 않습니다.</li>
+<li>DrEureka는 학습된 초기 정책(<span class="math inline">\pi_{\text{initial}}</span>)을 사용하여 도메인 랜덤화 파라미터에 대한 “보상 인지 물리 사전”(RAPP)을 구축합니다.</li>
+<li>RAPP의 목적은 <span class="math inline">\pi_{\text{initial}}</span>이 여전히 성능을 발휘할 수 있는 환경 파라미터의 최대 다양성 범위를 찾는 것입니다. 이는 도메인 랜덤화가 태스크 보상 함수에 따라 달라져야 하며, 도메인 랜덤화 없이 학습된 정책 행동에 맞게 커스터마이징되어야 한다는 통찰에서 출발합니다.</li>
+<li>구체적으로, RAPP는 각 도메인 랜덤화 파라미터에 대해 “실행 가능한(feasible)” 값의 하한 및 상한을 계산합니다. 이는 광범위한 잠재적 값들을 탐색하고, 각 값을 시뮬레이션에 설정한 후(<span class="math inline">S.p = r</span>), <span class="math inline">\pi_{\text{initial}}</span>을 이 수정된 시뮬레이션에서 실행합니다. 정책의 성능이 미리 정의된 성공 기준을 만족하면 해당 값은 해당 파라미터에 대해 실행 가능한 것으로 간주됩니다.</li>
+<li>각 파라미터에 대한 실행 가능한 모든 값 집합이 주어지면, 파라미터의 하한 및 상한은 최소 및 최대 실행 가능한 값으로 설정됩니다. 이 과정은 계산적으로 가볍고 병렬적으로 효율적으로 수행될 수 있습니다.</li>
+</ul></li>
+<li><strong>LLM 기반 도메인 랜덤화 구성 생성 (LLM for Domain Randomization):</strong>
+<ul>
+<li>이 최종 단계에서는 RAPP가 계산한 각 DR 파라미터에 대한 범위 정보를 LLM에 컨텍스트로 제공합니다.</li>
+<li>LLM은 이 컨텍스트를 바탕으로 (1) 랜덤화할 물리 파라미터의 부분집합을 선택하고, (2) 선택된 각 파라미터에 대한 랜덤화 범위를 결정하도록 지시받습니다.</li>
+<li>이는 LLM의 제로샷(zero-shot) 가설 생성 능력을 활용하여 여러 독립적인 DR 구성 후보(<span class="math inline">\mathcal{T}_1, \ldots, \mathcal{T}_m</span>)를 생성합니다.</li>
+<li>마지막으로, 생성된 보상 함수(<span class="math inline">R_{\text{DrEureka}}</span>)와 각 DR 구성(<span class="math inline">\mathcal{T}_i</span>)을 사용하여 RL을 통해 최종 정책(<span class="math inline">\pi_{\text{final},i} = \text{A}(M, \mathcal{T}_i, R_{\text{DrEureka}})</span>)을 학습하고 실제 환경에 배포합니다.</li>
+</ul></li>
+</ol>
+<p>DrEureka는 quadrupedal locomotion 및 dexterous manipulation 태스크에 대한 평가에서 기존의 수동 설계 구성과 비교하여 경쟁력 있는 성능을 보였습니다. 예를 들어, quadruped locomotion 태스크에서 DrEureka로 학습된 정책은 인간 설계 보상 함수 및 DR 파라미터로 학습된 정책보다 전진 속도에서 34%, 이동 거리에서 20% 더 우수한 성능을 나타냈습니다. 또한, 요가 볼 위에서 균형을 잡고 걷는 것과 같은 새로운 로봇 태스크를 수동 설계 없이 해결할 수 있음을 입증했습니다. 이는 DrEureka가 로봇 기술 발견을 가속화할 잠재력을 가지고 있음을 시사합니다.</p>
+<center>
+<img src="../../images/2025-08-26-dreureka/4.png" width="70%">
+</center>
+<p>요약하면, DrEureka는 LLM을 활용하여 Sim-to-Real 전이의 핵심 병목인 보상 설계와 도메인 랜덤화 파라미터 구성을 자동화함으로써, 인간의 개입 없이도 효과적이고 실제 환경에 강건한 로봇 정책을 학습할 수 있게 하는 혁신적인 프레임워크입니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>DrEureka: LLM 활용 <strong>Sim-to-Real</strong> 전이 – 논문 리뷰 (RSS 2024)</p>
+</blockquote>
+<p><strong>시뮬레이션에서 학습한 정책을 현실의 로봇에 그대로 이식(Sim-to-Real)</strong> 하는 것은 로봇 기술 확장에 매우 유망한 접근입니다. 그러나 기존 <strong>Sim-to-Real 전이</strong> 기법들은 작업 <strong>보상 함수</strong> 설계와 시뮬레이터의 물리 <strong>파라미터 튜닝</strong>을 사람 손으로 반복 조정해야 했기에, 많은 시간과 노력이 들었습니다 . 이번 리뷰에서는 이러한 과정을 <strong>대규모 언어 모델(LLM)</strong>로 자동화하여 <strong>시뮬레이션-현실 전이 설계</strong>를 가속화한 연구 <strong>“DrEureka: Language Model Guided Sim-To-Real Transfer”</strong>를 살펴보겠습니다 . 이 논문은 2024년 Robotics: Science and Systems (RSS)에 발표되었으며, UPenn·UT Austin·NVIDIA 연구진이 협업한 결과물입니다. DrEureka는 <strong>물리 시뮬레이터만으로</strong> 인간 전문가 수준의 보상 함수와 도메인 랜덤화 구성요소를 자동 생성해, 별도 수작업 없이도 현실 로봇에 적용 가능한 정책을 학습시켰습니다 . 아래에서는 논문의 핵심 아이디어와 기여, 기술적 접근 방법, 실험 및 결과, 기존 대비 차별점, 한계와 향후 과제를 차례로 정리합니다.</p>
+<section id="논문의-핵심-아이디어와-주요-기여" class="level2">
+<h2 class="anchored" data-anchor-id="논문의-핵심-아이디어와-주요-기여">1. 논문의 핵심 아이디어와 주요 기여</h2>
+<p>DrEureka의 핵심 아이디어는 <strong>LLM을 활용해 Sim-to-Real 과정의 난점을 자동화</strong>하는 것입니다. 구체적으로, 사람이 일일이 짜던 <strong>보상 함수 설계</strong>와 <strong>도메인 랜덤화</strong>(Domain Randomization) 파라미터 설정을 LLM이 대신 수행합니다 . 이를 통해 시뮬레이션에서 현실로 지식이나 정책을 옮길 때 필요한 까다로운 설계 작업을 대폭 줄이고, <strong>자동화된 파이프라인</strong>으로 신속하게 최적 구성을 찾아냅니다 .</p>
+<section id="주요-기여" class="level3">
+<h3 class="anchored" data-anchor-id="주요-기여">주요 기여</h3>
+<ul>
+<li><strong>LLM 기반 Sim-to-Real 자동화 기법 제안</strong> – 보상 함수 설계와 물리 파라미터 <strong>도메인 랜덤화</strong>를 동시에 자동 구성하는 <strong>DrEureka 알고리즘</strong>을 제시 .</li>
+<li><strong>다양한 로봇 과제에 대한 실세계 검증</strong> – 사족보행 로봇 <em>Unitree Go1</em>의 고속 전진 보행, 로봇 손(LEAP Hand)의 큐브 조작 등에서 <strong>인간 전문가 설계보다 우수한 정책</strong>을 달성 .</li>
+<li><strong>새로운 난제 과제에서의 성공적 전이</strong> – <em>요가 공 위 걷기</em>라는 완전히 새로운 과제를 시뮬레이션 기반 자동 커리큘럼으로 학습하고, <strong>현실 로봇에 곧장 적용</strong>해 수 분간 균형을 유지하는 결과를 달성 .</li>
+</ul>
+</section>
+</section>
+<section id="사용된-방법론과-기술적-접근-분석" class="level2">
+<h2 class="anchored" data-anchor-id="사용된-방법론과-기술적-접근-분석">2. 사용된 방법론과 기술적 접근 분석</h2>
+<p>DrEureka는 <strong>세 단계 파이프라인</strong>을 통해 환경과 보상 설계를 자동화합니다 .</p>
+<ol type="1">
+<li><strong>보상 함수 생성</strong>
+<ul>
+<li>과제 설명과 안전 지침을 LLM(GPT-4 등)에 제공.</li>
+<li>LLM이 보상 함수 코드(예: 파이썬+NumPy)를 작성.</li>
+<li>“안전 프롬프트”를 통해 <strong>무리한 가속, 관절 손상</strong>을 유발하는 보상을 피하고, <strong>안전성과 효율성을 동시에 고려</strong>하도록 유도 .</li>
+<li>여러 후보를 시뮬레이션에서 평가 후 성능이 가장 좋은 보상 함수를 선택 .</li>
+</ul></li>
+<li><strong>RAPP (Reward-Aware Physics Prior)</strong>
+<ul>
+<li>선택된 정책을 시뮬레이터에 넣고, <strong>물리 파라미터(마찰, 질량, 감쇠, 관성 등)를 하나씩 변화</strong>시켜 정책 성능이 유지되는 범위를 찾음 .</li>
+<li>정책이 실패하지 않는 <strong>최소–최대 허용 범위</strong>를 기록하여, 이후 LLM에게 전달할 <strong>물리 prior</strong>로 활용 .</li>
+<li>이 단계는 <strong>정책이 견딜 수 있는 물리적 한계</strong>를 탐색하는 과정으로, 과도하게 넓은 랜덤화를 방지 .</li>
+</ul></li>
+<li><strong>LLM 기반 도메인 랜덤화 생성</strong>
+<ul>
+<li>LLM에 <strong>랜덤화 가능한 파라미터와 RAPP 범위</strong>를 제공 .</li>
+<li>LLM이 어떤 파라미터를 어떤 분포로 샘플링할지 제안(예: 마찰 0.6–1.0 범위에서 균일 분포) .</li>
+<li>LLM이 동시에 여러 후보안을 생성, 각각을 시뮬레이터에서 RL 훈련하여 최종적으로 <strong>현실에서 가장 성능 좋은 정책</strong> 선택 .</li>
+</ul></li>
+</ol>
+<p>이 과정을 반복함으로써 DrEureka는 <strong>LLM–시뮬레이터 공진화 루프</strong>를 형성하고, <strong>보상 설계 + 랜덤화 설계</strong>를 인간 개입 없이 자동으로 최적화할 수 있습니다 .</p>
+</section>
+<section id="실험-설계-및-결과-평가" class="level2">
+<h2 class="anchored" data-anchor-id="실험-설계-및-결과-평가">3. 실험 설계 및 결과 평가</h2>
+<p>DrEureka는 두 가지 대표 과제와 하나의 도전적 과제를 통해 검증되었습니다.</p>
+<ul>
+<li><strong>사족보행 전진 (Go1 로봇)</strong>
+<ul>
+<li>목표: 2 m/s 속도로 빠르게 전진.</li>
+<li>비교: 인간 설계 보상+DR vs DrEureka 자동 설계.</li>
+<li>결과: DrEureka 정책이 <strong>평균 속도 34%↑, 이동 거리 20%↑</strong> 성능 향상 .</li>
+<li><strong>지형 일반화</strong> 평가(실내 바닥, 잔디, 보도블록, 양말 신긴 발)에서도 안정적 성능 유지 .</li>
+</ul></li>
+<li><strong>Dexterous Manipulation (LEAP Hand, 큐브 돌리기)</strong>
+<ul>
+<li>목표: 손바닥 위 큐브를 최대한 많이 회전시키기.</li>
+<li>결과: DrEureka 정책이 <strong>인간 설계 대비 약 3배 더 많은 회전</strong> 성공 .</li>
+<li>정책의 안정성이 높아 실제 로봇에서도 일관된 성능을 보임 .</li>
+</ul></li>
+<li><strong>요가 공 위 걷기 (Ball Balancing)</strong>
+<ul>
+<li>완전히 새로운 과제: 큰 요가 공 위에서 균형 잡으며 전진.</li>
+<li>결과: <strong>시뮬레이션 학습 정책을 곧장 현실 적용</strong>, 수 분간 균형 유지하며 걷기 성공 .</li>
+<li>교란(발로 공을 차거나 공의 공기압을 줄임)에도 로봇이 <strong>스스로 균형을 회복</strong> .</li>
+</ul></li>
+</ul>
+<p>이 실험들은 DrEureka가 <strong>다양한 환경에서 학습한 정책이 시뮬레이션을 넘어 현실에서도 강건하게 동작</strong>함을 보여주며, 기존의 수작업 기반 접근보다 뛰어난 성능과 일반화 능력을 입증했습니다 .</p>
+<center>
+<img src="../../images/2025-08-26-dreureka/2.png" width="65%">
+</center>
+<center>
+<img src="../../images/2025-08-26-dreureka/3.png" width="65%">
+</center>
+<blockquote class="blockquote">
+<p><em>Unitree Go1이 다양한 실제 지면 위에서 DrEureka로 학습한 정책을 실행하는 모습. 기존 방법보다 <strong>안정성과 속도 모두 우수</strong>함을 보여줌 .</em></p>
+</blockquote>
+<center>
+<img src="../../images/2025-08-26-dreureka/5.png" width="100%">
+</center>
+</section>
+<section id="기존-연구와의-차별점-및-기여" class="level2">
+<h2 class="anchored" data-anchor-id="기존-연구와의-차별점-및-기여">4. 기존 연구와의 차별점 및 기여</h2>
+<ul>
+<li><strong>LLM in Sim-to-Real 설계</strong>: 기존 LLM 기반 로봇 연구는 주로 <strong>자연어를 고수준 계획으로 변환</strong>하거나, 단순한 <strong>환경 샘플링</strong> 수준에 그쳤습니다 . DrEureka는 처음으로 <strong>보상 함수와 도메인 랜덤화까지 포함한 Sim-to-Real 설계 전체</strong>를 LLM이 주도할 수 있음을 보여주었습니다 .</li>
+<li><strong>인간 개입 최소화</strong>: 기존 커리큘럼 설계나 도메인 랜덤화 연구는 대부분 <strong>전문가가 파라미터 범위</strong>를 손으로 지정해야 했습니다 . DrEureka는 <strong>RAPP + LLM 조합</strong>으로 이를 자동화하여 <strong>효율성과 재현성</strong>을 동시에 확보했습니다 .</li>
+<li><strong>실세계 성능 검증</strong>: 많은 선행연구가 시뮬레이션에서만 결과를 보고한 것과 달리, DrEureka는 <strong>실제 로봇 실험을 통해 직접 성능을 입증</strong>했습니다 . 특히 <strong>요가 공 위 걷기</strong>와 같은 <strong>새로운 과제</strong>를 자동 설계하고 성공적으로 전이한 사례는 <strong>최초의 결과</strong>로 평가됩니다 .</li>
+<li><strong>물리 기반 LLM 활용</strong>: LLM이 <strong>물리적 상식(마찰, 중력, 관성 등)</strong>을 활용하여 파라미터 범위를 합리적으로 설정하고, 그 근거까지 설명할 수 있다는 점은 <strong>AI-로봇 공학 융합 연구</strong>에서 중요한 전환점입니다 .</li>
+</ul>
+</section>
+<section id="한계점-및-향후-연구-과제에-대한-비판적-고찰" class="level2">
+<h2 class="anchored" data-anchor-id="한계점-및-향후-연구-과제에-대한-비판적-고찰">5. 한계점 및 향후 연구 과제에 대한 비판적 고찰</h2>
+<p>DrEureka는 강력한 결과를 보여주었지만, 몇 가지 <strong>한계점</strong>이 존재합니다 .</p>
+<ul>
+<li><p><strong>현실 피드백 부족</strong>: 현재 DrEureka는 시뮬레이터만 사용하여 학습 후 현실에 곧장 이식하는 <strong>Zero-Shot Sim-to-Real</strong>을 목표로 합니다. 하지만 현실의 <strong>노이즈·마찰·센서 오차</strong>는 시뮬레이터에 완벽히 반영되지 않기 때문에, 일부 환경에서는 여전히 실패할 수 있습니다 . → <strong>향후 과제</strong>: 현실 실행 데이터를 LLM 프롬프트로 되먹임하는 <strong>Sim-Real co-adaptation 루프</strong> 필요.</p></li>
+<li><p><strong>감각 통합 한계</strong>: 본 연구는 <strong>proprioception 기반 제어</strong>만 다루었고, <strong>시각·촉각 정보</strong>를 사용하지 않았습니다 . → <strong>향후 과제</strong>: <strong>비전/멀티모달 정보</strong>까지 통합해 더 복잡한 환경과 상호작용하는 정책 학습으로 확장해야 함.</p></li>
+<li><p><strong>시뮬레이터 품질 의존성</strong>: DrEureka는 시뮬레이터의 물리 충실도가 낮으면 효과가 떨어질 수 있습니다 . → <strong>향후 과제</strong>: <strong>시뮬레이터 신뢰성 개선</strong> 또는 LLM이 <strong>시뮬레이터 한계 자체를 인지/보완</strong>할 수 있는 구조 필요.</p></li>
+<li><p><strong>LLM 비용 및 안정성</strong>: GPT-4와 같은 LLM 사용에는 <strong>비용(논문에서는 약 15달러/24시간)</strong>과 <strong>출력 품질 편차</strong> 문제가 있습니다 . → <strong>향후 과제</strong>: <strong>경량화된 LLM</strong>이나 <strong>프롬프트 최적화</strong>, <strong>출력 검증 체계</strong>가 필요합니다.</p></li>
+</ul>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">결론</h2>
+<p>DrEureka는 <strong>LLM의 코드 생성 및 물리 상식 활용 능력</strong>을 Sim-to-Real 파이프라인에 접목하여, <strong>보상 함수와 도메인 랜덤화 설계를 자동화</strong>하는 최초의 프레임워크를 제시했습니다. 이를 통해 사족보행, 로봇 손 조작, 요가 공 걷기와 같은 <strong>다양하고 난이도 높은 과제에서 실제 로봇 전이 성공</strong>을 입증했으며, 기존 전문가 설계 기반 접근보다 <strong>더 높은 성능과 일반화 능력</strong>을 보여주었습니다 .</p>
+<p>물론 아직 <strong>현실 피드백의 부족</strong>, <strong>시뮬레이터 의존성</strong>, <strong>LLM 사용 비용</strong> 등의 한계가 존재하지만, DrEureka는 <strong>로봇 제어 학습 자동화</strong>와 <strong>LLM 기반 물리 시뮬레이션 디자인</strong>의 가능성을 제시하며, 향후 로봇 연구의 <strong>패러다임 전환</strong>을 이끌 잠재력을 보여주고 있습니다.</p>
+</section>
+</section>
+<section id="related-works" class="level1">
+<h1>Related Works</h1>
+<ul>
+<li><a href="https://curieuxjy.github.io/posts/paper/2025-07-20-eureka.html">Eureka 논문 리뷰</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

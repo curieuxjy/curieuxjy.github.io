@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-01">
+<meta name="description" content="Bringing AI into the Physical World">
+
+<title>📃Gemini Robotics 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#서론" id="toc-서론" class="nav-link" data-scroll-target="#서론">서론</a></li>
+  <li><a href="#시스템-아키텍처-구성-요소와-설계-철학" id="toc-시스템-아키텍처-구성-요소와-설계-철학" class="nav-link" data-scroll-target="#시스템-아키텍처-구성-요소와-설계-철학">시스템 아키텍처: 구성 요소와 설계 철학</a></li>
+  <li><a href="#학습-방식-단계별-훈련과-데이터-전략" id="toc-학습-방식-단계별-훈련과-데이터-전략" class="nav-link" data-scroll-target="#학습-방식-단계별-훈련과-데이터-전략">학습 방식: 단계별 훈련과 데이터 전략</a></li>
+  <li><a href="#멀티모달-통합-비전언어제어의-융합" id="toc-멀티모달-통합-비전언어제어의-융합" class="nav-link" data-scroll-target="#멀티모달-통합-비전언어제어의-융합">멀티모달 통합: 비전·언어·제어의 융합</a></li>
+  <li><a href="#실제-로봇-응용-사례-시연-및-실험-결과-분석" id="toc-실제-로봇-응용-사례-시연-및-실험-결과-분석" class="nav-link" data-scroll-target="#실제-로봇-응용-사례-시연-및-실험-결과-분석">실제 로봇 응용 사례: 시연 및 실험 결과 분석</a></li>
+  <li><a href="#기존-로봇-시스템과의-비교-palm-e-rt-2-robocat-등" id="toc-기존-로봇-시스템과의-비교-palm-e-rt-2-robocat-등" class="nav-link" data-scroll-target="#기존-로봇-시스템과의-비교-palm-e-rt-2-robocat-등">기존 로봇 시스템과의 비교: PaLM-E, RT-2, RoboCat 등</a></li>
+  <li><a href="#비판적-논의-한계와-향후-과제" id="toc-비판적-논의-한계와-향후-과제" class="nav-link" data-scroll-target="#비판적-논의-한계와-향후-과제">비판적 논의: 한계와 향후 과제</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Gemini Robotics 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">gemini</div>
+    <div class="quarto-category">vla</div>
+    <div class="quarto-category">google</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Bringing AI into the Physical World
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 1, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2503.20020">Paper Link</a></li>
+<li><a href="https://deepmind.google/models/gemini-robotics/">Homepage</a></li>
+<li><a href="https://github.com/ManipTrans/ManipTrans">Code Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 Google DeepMind는 Gemini 2.0을 기반으로 범용 AI 역량을 로봇 제어와 같은 물리적 세계로 확장하는 Gemini Robotics 모델 제품군을 공개했습니다.</li>
+<li>🧠 Gemini Robotics-ER은 향상된 시공간 이해를 통해 Vision-Language 모델의 물리적 추론 능력을 강화하며, Gemini Robotics는 다양한 조작 작업을 처리하고 환경 변화에 강인한 Vision-Language-Action 일반 모델입니다.</li>
+<li>🛠️ 이 모델은 미세 조정을 통해 고난이도 장기 작업을 학습하고 새로운 로봇 형태에 빠르게 적응할 수 있으며, ASIMOV-datasets을 활용하여 책임감 있는 개발과 안전 기준 준수에 중점을 두었습니다.</li>
+</ol>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>이 보고서는 Gemini Robotics라는 새로운 AI 모델 제품군을 소개하며, 이는 로봇을 직접 제어하기 위해 설계된 Vision-Language-Action (VLA) 모델입니다. 이 모델은 Gemini 2.0을 기반으로 구축되었으며, 물리적 세계에서 AI의 잠재력을 실현하는 것을 목표로 합니다.</p>
+<p><strong>1. 도입 및 배경:</strong></p>
+<p>최근 대규모 멀티모달 모델(LMMs)의 발전은 디지털 영역에서 뛰어난 범용 능력을 보여주었지만, 로봇과 같은 물리적 에이전트에 이를 적용하는 것은 여전히 큰 과제입니다. 범용 로봇은 물리적 세계를 이해하고 유능하며 안전하게 상호작용해야 합니다. 이 논문은 Gemini 2.0을 기반으로 로봇 제어에 특화된 새로운 VLA 일반화 모델인 Gemini Robotics를 제안합니다. 이 모델은 다양한 종류의 물체와 위치 변화에 강건하며, 새로운 환경과 다양한 개방형 어휘 지시를 따르면서 복잡한 조작 작업을 부드럽고 반응적으로 수행합니다.</p>
+<p><strong>2. 핵심 구성 요소:</strong></p>
+<p>Gemini Robotics는 두 가지 주요 모델을 중심으로 합니다.</p>
+<ul>
+<li><strong>Gemini Robotics-ER (Embodied Reasoning):</strong>
+<ul>
+<li>Gemini 2.0의 멀티모달 추론 능력을 물리적 세계로 확장한 모델입니다.</li>
+<li>향상된 공간 및 시간 이해(spatial and temporal understanding)를 통해 로봇에 필수적인 객체 감지(object detection), 포인팅(pointing), 궤적 및 파지 예측(trajectory and grasp prediction), 다중 시점 대응(multi-view correspondence) 및 3D 바운딩 박스 예측(3D bounding box predictions)과 같은 3D 이해 능력을 가능하게 합니다.</li>
+<li>이 모델의 성능을 평가하기 위해 새로운 오픈 소스 벤치마크인 <strong>ERQA (Embodied Reasoning Question Answering)</strong>를 제안합니다. ERQA는 시각적 이해 및 언어 처리 이상의 임베디드 추론 능력을 평가하며, 400개의 다양한 범주의 (공간, 궤적, 행동 추론 등) 시각 질문 답변(VQA) 스타일 질문으로 구성됩니다.</li>
+<li>Gemini 2.0 모델은 ERQA, RealworldQA, BLINK 벤치마크에서 CoT(Chain-of-Thought) 프롬프팅과 함께 SOTA(State-of-the-Art) 성능을 달성하여, 이미지 내 공간 이해를 정밀하게 파악하고 복잡한 단계별 추론을 수행하는 능력을 입증합니다.</li>
+<li>Gemini Robotics-ER은 Paco-LVIS, Pixmo-Point, Where2place 벤치마크에서 2D 포인팅 능력을 평가했을 때, GPT 및 Claude와 같은 최첨단 VLM들을 능가합니다. 특히 3D 객체 감지(SUN-RGBD 벤치마크)에서도 새로운 SOTA 성능을 달성합니다.</li>
+<li>로봇 액션 데이터로 훈련되지 않고도 제로샷(zero-shot) 및 퓨샷(few-shot) 방식으로 로봇을 제어할 수 있습니다.
+<ul>
+<li><strong>제로샷 제어 (Zero-shot Control via Code Generation):</strong> Gemini 2.0의 코드 생성 능력과 ER 능력을 결합하여 ALOHA 2 로봇 시뮬레이션 및 실제 로봇에서 다양한 조작 작업을 수행합니다. Gemini Robotics-ER은 Gemini 2.0 Flash보다 약 2배 높은 성공률을 보이며, 하위 로봇 작업에 ER 능력 강화가 긍정적인 영향을 미침을 입증합니다.</li>
+<li><strong>퓨샷 제어 (Few-shot Control via In-context Learning):</strong> 몇 개의 시연(demonstrations)을 통해 모델이 새로운 행동을 모방하도록 조건을 부여합니다. 이는 기존 Keypoint Action Tokens (Di Palo and Johns, 2024) 방식을 확장하여 시각 키포인트 추출에 외부 모델 없이 Gemini Robotics-ER 자체의 ER 능력을 활용합니다. 이를 통해 보다 섬세한 (dexterous) 양손 조작 작업에서 성능이 크게 향상됩니다.</li>
+</ul></li>
+</ul></li>
+<li><strong>Gemini Robotics:</strong>
+<ul>
+<li>Gemini Robotics-ER을 기반으로 로봇 액션을 직접 예측하도록 미세 조정된 (fine-tuned) VLA 모델입니다.</li>
+<li>클라우드 기반의 VLA 백본(Gemini Robotics backbone)과 로봇 온보드 컴퓨터에서 실행되는 로컬 액션 디코더(Gemini Robotics decoder)로 구성됩니다. 백본은 Gemini Robotics-ER의 경량화된(distilled) 버전이며, 엔드투엔드 지연 시간(latency)을 250ms로 단축하여 효과적인 제어 주파수 50Hz를 달성합니다.</li>
+<li>수천 시간의 실제 전문가 로봇 시연을 포함하는 대규모의 다양한 원격 조작 로봇 액션 데이터셋으로 훈련되었습니다. 또한 웹 문서, 코드, 멀티모달 콘텐츠(이미지, 오디오, 비디오) 및 ERQA와 같은 시각 질문 답변 데이터도 포함합니다.</li>
+<li><strong>다양한 섬세한 조작 작업 수행:</strong> 20가지 단기 섬세한 작업(short-horizon dexterous tasks)에 대한 평가에서 𝜋0 re-implement 및 multi-task diffusion policy와 같은 SOTA 베이스라인을 뛰어넘는 성능을 보여줍니다. 특히 변형 가능한 물체(deformable objects) 조작과 같은 도전적인 작업에서 뛰어납니다.</li>
+<li><strong>언어 지시 추종:</strong> 25개의 언어 지시를 평가한 결과, 훈련에서 보지 못한 새로운 환경, 물체, 수용기(receptacles)에서도 정교한 언어 명령을 정확히 따르는 능력을 보였습니다.</li>
+<li><strong>일반화 능력:</strong> 시각적(visual), 지시(instruction), 행동(action)의 세 가지 측면에서 변화에 대한 강건성을 평가했습니다.
+<ul>
+<li><strong>Visual Generalization:</strong> 배경, 조명 조건, 방해물, 질감 변화에 불변합니다.</li>
+<li><strong>Instruction Generalization:</strong> 지시의 재구성, 오타, 다른 언어, 세부 수준의 변화에 강건합니다.</li>
+<li><strong>Action Generalization:</strong> 초기 조건(예: 물체 배치) 또는 물체 인스턴스(예: 모양 또는 물리적 속성)에 대한 학습된 움직임을 적응하거나 새로운 움직임을 합성할 수 있습니다.</li>
+</ul></li>
+<li>Gemini Robotics는 모든 유형의 일반화 작업에서 베이스라인을 일관되게 능가하며, 베이스라인이 치명적인 실패를 겪는 경우(예: 새로운 언어 지시)에도 0이 아닌 성능을 달성합니다.</li>
+</ul></li>
+</ul>
+<p><strong>3. Gemini Robotics의 특화 및 적응 (Specialization and Adaptation):</strong></p>
+<p>Gemini Robotics는 추가 미세 조정을 통해 능력을 더욱 확장할 수 있습니다.</p>
+<ul>
+<li><strong>장기-고난이도 섬세한 작업 (Long-horizon dexterity):</strong>
+<ul>
+<li>“종이접기 여우 만들기”, “도시락 싸기”, “철자 맞추기 보드 게임”, “카드 게임 하기”, “집게로 깍지콩 샐러드에 넣기”, “견과류 샐러드에 넣기”와 같은 6가지 매우 도전적인 장기-고난이도 작업에 특화될 수 있습니다.</li>
+<li>각 작업에 대해 2000~5000개의 고품질 시연 데이터셋으로 미세 조정한 결과, 평균 79%의 성공률을 달성했습니다. 특히 “도시락 싸기”에서는 100% 성공률을 보였습니다.</li>
+<li>이는 강력한 VLM 백본과 다양한 로봇 액션 데이터셋에서 학습된 표현 및 물리적 상식(physical common sense)이 도전적인 장기 작업을 해결하는 데 핵심임을 시사합니다.</li>
+</ul></li>
+<li><strong>향상된 추론 및 일반화 (Enhanced Reasoning and Generalization):</strong>
+<ul>
+<li>Gemini Robotics-ER의 공간 및 물리적 이해, 세계 지식과 같은 추론 능력을 활용하여 저수준 로봇 액션을 유도하는 미세 조정 프로세스를 탐구합니다.</li>
+<li>새롭게 라벨링된 로봇 액션 데이터셋을 사용하여 액션 예측을 궤적 이해 및 생성과 같은 ER 능력에 연결합니다.</li>
+<li>이를 통해 “가장 작은 콜라를 도시락에 넣어라”와 같은 1단계 추론, 의미론적 일반화, 공간 이해가 필요한 새로운 시나리오에서 성공률이 크게 향상됩니다. 모델은 내부적인 사고 과정(chain of thought)의 일부로 키포인트 궤적을 시각화하여 더 나은 해석 가능성(interpretability)을 제공합니다.</li>
+</ul></li>
+<li><strong>새로운 작업에 대한 빠른 적응 (Fast adaptation to new tasks):</strong>
+<ul>
+<li>8가지 단기 작업에 대해 제한된 수의 시연(최대 100개)으로 미세 조정을 수행했습니다.</li>
+<li>8개 중 7개 작업에서 100개 이하의 시연으로 70% 이상의 성공률을 달성했으며, 두 가지 작업에서는 100% 성공률을 보였습니다.</li>
+<li>이는 강력한 VLM 백본이 새로운 작업을 빠르게 학습하는 데 핵심임을 입증합니다.</li>
+</ul></li>
+<li><strong>새로운 로봇 플랫폼에 대한 적응 (Adaptation to new embodiments):</strong>
+<ul>
+<li>ALOHA 2에서 수집된 액션 데이터로 훈련된 Gemini Robotics 모델이 양팔 Franka 로봇 및 Apptronik의 Apollo 휴머노이드 로봇과 같은 새로운 로봇 플랫폼에 효율적으로 적응될 수 있음을 보여주는 예비 실험입니다.</li>
+<li>미세 조정을 통해 Gemini Robotics는 새로운 플랫폼에서 SOTA 단일 작업 diffusion policy와 동등하거나 약간 더 나은 성능을 달성합니다. 특히 시각적 및 행동 일반화 테스트에서 Gemini Robotics는 단일 작업 diffusion baseline을 크게 능가하며, 이는 모델이 다른 로봇 플랫폼 간에도 강건성과 일반화 능력을 이전할 수 있음을 시사합니다.</li>
+</ul></li>
+</ul>
+<p><strong>4. 책임 있는 개발 및 안전 (Responsible Development and Safety):</strong></p>
+<p>보고서는 Google AI 원칙에 따라 모델을 개발했음을 강조합니다. 특히 로봇 모델의 물리적이고 구체화된(embodied) 특성 때문에 새로운 안전 고려사항이 필요합니다.</p>
+<ul>
+<li><strong>콘텐츠 안전 (Content Safety):</strong> Gemini 모델은 Gemini 체크포인트를 기반으로 하므로 유해한 대화형 콘텐츠 생성 방지 훈련을 상속합니다. 포인팅과 같은 새로운 출력 양식을 위해 추가적인 콘텐츠 안전 계층이 필요하며, 편향을 유발하는 포인팅 쿼리에 대한 96%의 거부율을 달성했습니다.</li>
+<li><strong>의미론적 액션 안전 (Semantic Action Safety):</strong> 개방형 비구조화 환경에서 물리적 안전 제약을 준수하는 것이 중요합니다. 이 보고서와 동시에 공개된 ASIMOV-datasets (Sermanet et al., 2025a,b)는 시각 및 텍스트 기반 안전 질문 답변 인스턴스를 통해 의미론적 액션 안전을 평가하고 개선하는 데 사용됩니다.</li>
+<li>헌법적 AI(Constitutional AI) 방법을 사용하여 안전 성능을 향상시키고, 적대적 프롬프트(adversarial prompts) 하에서의 성능 저하를 완화할 수 있음을 보여줍니다.</li>
+</ul>
+<p><strong>5. 결론 및 향후 과제:</strong></p>
+<p>Gemini Robotics-ER은 공간 이해, 궤적 예측, 다중 시점 대응, 정밀 포인팅 등 임베디드 추론 분야에서 SOTA를 발전시켰습니다. Gemini Robotics는 이러한 ER 능력을 활용하여 실제 로봇 응용 분야에서 효율적인 제로샷 및 퓨샷 적응을 가능하게 합니다. 가장 섬세한 일반화 모델로서, Gemini Robotics는 복잡한 천 조작부터 관절형 물체의 정밀한 처리까지 다양한 조작 작업에서 뛰어난 능력을 발휘합니다. 향후 과제로는 장기 비디오에 걸친 공간 관계 접지 능력 개선, 정밀한 로봇 제어를 위한 수치 예측의 정확도 향상, 다단계 추론과 정밀한 실행이 모두 필요한 복잡한 시나리오 처리 능력 강화, 시뮬레이션 데이터를 통한 시각적 다양성 및 접촉 풍부 데이터 생성, 그리고 다중 로봇 플랫폼에 대한 적응 데이터 요구량 감소 및 궁극적으로 제로샷 교차 플랫폼 전이(zero-shot cross-embodiment transfer) 달성이 있습니다.</p>
+<p>Gemini Robotics는 로봇 시스템이 세계를 이해하고, 학습하며, 지시를 받는 방식에 패러다임 변화를 가져올 중요한 진전을 나타냅니다. 이는 로봇 기술의 잠재력이 안전하고 책임감 있게 활용될 수 있도록 지속적인 노력이 필요함을 강조합니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>Gemini Robotics: AI의 물리 세계 진출을 향한 심층 리뷰</p>
+</blockquote>
+<section id="서론" class="level2">
+<h2 class="anchored" data-anchor-id="서론">서론</h2>
+<p>최근 거대 멀티모달 모델의 발전으로 <strong>디지털 환경</strong>에서 뛰어난 범용 AI 능력이 나타났지만, 이를 <strong>물리적 로봇</strong>에 적용하는 데에는 아직 큰 도전이 있습니다. Google DeepMind의 최신 연구 <em>“Gemini Robotics: Bringing AI into the Physical World”</em>는 이 격차를 해소하기 위해 <strong>Gemini 2.0</strong> 기반의 새로운 로봇용 AI 모델 군을 제시합니다. 여기에는 직접 로봇을 제어하는 <strong>비전-언어-액션(VLA)</strong> 모델인 <strong>Gemini Robotics</strong>와, 공간 이해 능력을 강화한 <strong>Gemini Robotics-ER</strong>(Embodied Reasoning)이 포함됩니다. 본 리뷰에서는 해당 논문을 바탕으로 시스템 구조, 학습 방식, 멀티모달 통합, 실제 로봇 실험, 기존 시스템과의 비교, 그리고 한계점을 <strong>전문가적 관점</strong>에서 깊이 있게 분석합니다. 이는 범용 로봇을 개발하려는 최근 흐름 속에서 Gemini Robotics가 어떤 역할을 하는지 조망하는 데에 도움이 될 것입니다.</p>
+</section>
+<section id="시스템-아키텍처-구성-요소와-설계-철학" class="level2">
+<h2 class="anchored" data-anchor-id="시스템-아키텍처-구성-요소와-설계-철학">시스템 아키텍처: 구성 요소와 설계 철학</h2>
+<p><strong>Gemini Robotics</strong>의 시스템은 거대 <strong>트랜스포머</strong> 기반의 <strong>Vision-Language-Action 통합 아키텍처</strong>로 설계되었습니다. 이 아키텍처의 핵심 구성 요소는 다음과 같습니다:</p>
+<ul>
+<li><strong>비전 인코더</strong>: 로봇의 카메라나 센서로부터 들어오는 <strong>시각 데이터</strong>를 처리하여 객체 인식과 위치 파악, 주변 환경의 맥락 정보를 추출합니다. 동적 환경에서도 물체의 상태와 위치를 인지하고 2D/3D 특징을 파악하는 역할을 합니다.</li>
+<li><strong>언어 인코더</strong>: 사람의 <strong>자연어 명령</strong>을 해석하는 <strong>언어 모델</strong>입니다. 사용자의 일상적이고 모호할 수 있는 지시를 내부 표현으로 변환하여, 이후 로봇 동작으로 옮길 수 있게 합니다. Gemini 2.0에서 물려받은 강력한 언어 이해력 덕분에 일상어로 phrased 된 지시나 불완전한 정보도 맥락에 따라 이해할 수 있습니다.</li>
+<li><strong>액션 디코더</strong>: 앞서 통합된 비전+언어 이해를 토대로, 로봇의 <strong>구체적인 행동 시퀀스</strong>를 출력합니다. 예를 들어 <strong>팔 이동, 그립 동작, 내비게이션</strong> 등의 명령을 생성하여 로봇이 실제 물체를 잡거나 이동시키는 등 <strong>행동을 수행</strong>하게 합니다. Gemini Robotics에서는 이 <strong>물리적 행동</strong> 자체가 하나의 출력 모달리티로 추가되어, 모델이 자연어 답변이나 이미지 생성 대신 곧바로 <strong>로봇 제어 명령</strong>을 생성하도록 설계되었습니다.</li>
+</ul>
+<p>이러한 모듈들은 모두 하나의 트랜스포머 안에서 <strong>멀티모달 통합</strong>이 이루어지도록 구성되어 있습니다. 즉, 카메라 영상과 텍스트 명령이 공통의 표현 공간에서 결합되고, 그에 따라 로봇 동작 토큰이 생성됩니다. 이 설계 철학은 <strong>“행동까지 이해하는 AI”</strong>를 지향합니다. 단순히 시각 장면을 인지하고 언어로 설명하는 데 그치지 않고, <strong>상황을 이해한 다음 물리적으로 대응</strong>하도록 하는 것입니다. Google DeepMind 로보틱스팀은 로봇용 AI에 필요한 세 가지 핵심 자질로 <strong>범용성</strong>, <strong>상황 대응성</strong>, <strong>섬세한 조작 능력</strong>을 강조하는데, Gemini Robotics는 이 세 축 모두에서 이전보다 비약적으로 향상된 성능을 보이며 <strong>진정한 범용 로봇</strong>에 한 걸음 다가선 결과라고 합니다.</p>
+<p>특히 <strong>설계 철학</strong> 측면에서, Gemini Robotics는 <strong>범용성(generality)</strong>을 최우선 목표로 합니다. 하나의 거대한 모델이 여러 환경과 작업에 두루 통할 수 있도록, <strong>특정 작업에 특화된 모듈들을 따로 두지 않고도</strong> 학습된 지식을 새로운 상황에 적용할 수 있게 만들었습니다. 또한 <strong>대화형 상호작용성(interactivity)</strong>을 추구하여, 사람의 지시에 실시간으로 대응하고 환경 변화에 재빠르게 적응합니다. 마지막으로 <strong>섬세한 조작성(dexterity)</strong>을 갖춰 사람 손과 비슷한 수준으로 정교한 물체 조작이 가능하도록 했습니다. 이러한 원칙 하에, Gemini Robotics는 <strong>듀얼 암 로봇 플랫폼 ALOHA 2</strong>를 주로 활용해 학습되었지만, 애초부터 다양한 로봇 형태로 <strong>손쉽게 적응</strong>할 수 있게 설계되었습니다. 실제로 모델의 출력 인터페이스나 입력 형태를 범용적으로 만들어, <strong>다양한 매니퓰레이터</strong>(예: 실험실에서 널리 쓰이는 Franka 암, 또는 인간형 로봇 <strong>Apptronik Apollo</strong>의 팔 등)에 대해 추가 학습만으로 적용될 수 있었습니다. 이는 로봇의 <strong>역학 모델이나 관절 구성</strong>이 달라도, Gemini의 내부 표현만 잘 활용하면 동일한 고차원 정책을 이식할 수 있음을 보여줍니다.</p>
+<p>요약하면, Gemini Robotics의 아키텍처는 <strong>시각-언어 인지 능력과 로봇 제어 능력의 유기적 결합</strong>이 핵심입니다. 거대 멀티모달 <strong>기반모델(foundation model)</strong>인 Gemini 2.0의 세계 지식을 물려받아, 물리 세계의 다양한 작업을 하나의 모델이 <strong>“바로 실행”</strong>해내도록 설계된 점이 혁신적입니다. 다음으로 이 모델이 어떻게 학습되었는지 살펴보겠습니다.</p>
+</section>
+<section id="학습-방식-단계별-훈련과-데이터-전략" class="level2">
+<h2 class="anchored" data-anchor-id="학습-방식-단계별-훈련과-데이터-전략">학습 방식: 단계별 훈련과 데이터 전략</h2>
+<p><strong>Gemini Robotics의 학습 파이프라인</strong>은 크게 <strong>사전 학습(pre-training)</strong>과 <strong>로봇 특화 미세조정(fine-tuning)</strong>의 2단계로 구성되며, 각 단계에서 다종다양한 <strong>데이터 소스</strong>와 <strong>학습 기법</strong>이 활용되었습니다. 전체적인 목표는 모델이 <strong>일반적인 지식</strong>을 먼저 습득하고, 이후 <strong>로봇 제어 맥락에 특화</strong>되도록 하는 것입니다.</p>
+<ul>
+<li><p><strong>데이터 수집 및 전처리</strong>: 첫 단계로, DeepMind 팀은 방대한 멀티모달 데이터를 수집했습니다. 시뮬레이션 환경과 실제 로봇 실험에서 얻은 <strong>다양한 영상, 깊이 센서, 로봇 상태</strong> 데이터와 그에 대응하는 <strong>자연어 설명 및 명령</strong>을 모았습니다. 예컨대, 로봇 팔로 물체를 집는 동작이 찍힌 비디오 클립에 “초록색 공을 집어서 상자에 넣어라” 같은 텍스트 설명을 붙이는 식입니다. <strong>시뮬레이션</strong>으로부터 <strong>합성 데이터</strong>도 다량 생성했는데, 이는 현실에서는 수집 어려운 상황(조명 변화, 희귀 사물 배치 등)을 다양하게 커버하여 <strong>데이터 다양성</strong>을 확보하기 위함입니다. 이렇게 구축된 <strong>광범위한 멀티모달 코퍼스</strong>는 모델이 물체 인식, 경로 계획, 조작 동작 등에 대한 <strong>기본 개념</strong>을 배우는 토대가 됩니다.</p></li>
+<li><p><strong>사전 학습 (Pre-training)</strong>: 수집된 멀티모달 데이터를 활용하여 <strong>대규모 사전 학습</strong>이 이뤄졌습니다. 이 단계에서는 주로 <strong>자기지도학습</strong> 및 <strong>대규모 지도학습</strong>을 통해, 모델이 <strong>시각-언어 패턴과 행동 사이의 일반적인 상관관계</strong>를 학습합니다. 이를테면 다양한 이미지와 그 설명을 보면서 물체와 단어의 연결을 배우고, 간단한 시뮬레이션 작업들을 통해 “어떤 상황에서 어떤 행동이 유효한지” 감을 익히게 합니다. 이 과정은 기존 Gemini 2.0 모델의 파라미터를 초기값으로 활용하여 진행되었을 가능성이 높은데, 덕분에 모델은 <strong>기본적인 언어이해와 시각인지 능력</strong>을 이미 갖춘 상태에서 출발합니다. 사전 학습의 목표는 <strong>범용적 표현 학습</strong>으로, 새로운 환경이나 과제가 주어져도 일일이 처음부터 배우지 않아도 되도록 <strong>강인한 특성 표현</strong>을 모델 안에 심어주는 것입니다. 이는 일종의 <strong>모델의 세계지식 습득 단계</strong>로 볼 수 있으며, 별도의 로봇 제어 훈련 없이도 물체 종류나 물리 개념 등에 대한 이해도를 높이는 효과가 있습니다.</p></li>
+<li><p><strong>미세조정 (Fine-tuning) 및 강화학습</strong>: 다음으로, 이렇게 <strong>사전훈련된 모델</strong>을 실제 로봇 제어 작업들에 맞게 <strong>미세조정</strong>합니다. 이 단계에서는 실제 로봇 팔이 테이블에서 물건을 집어 옮기는 등 <strong>현실 세계의 조작 데이터</strong>를 모델이 직접 모사하고 학습합니다. 수십~수백 가지에 이르는 <strong>다양한 작업</strong>(단순 물체 포착부터 도구 사용, 복잡한 다단계 조작까지)을 모델에 경험시켜, 특정 작업에 대한 <strong>성능과 안정성</strong>을 끌어올립니다. 미세조정에는 <strong>지도학습</strong>과 <strong>강화학습</strong>이 조합되어 사용되었습니다. 우선 인간이 시범을 보인 데이터에 대해 <strong>교사학습(모방학습)</strong> 방식으로 모델이 올바른 행동 시퀀스를 출력하도록 학습시키고, 동시에 <strong>환경 상호작용을 통한 강화학습(RL)</strong>을 도입하여 모델 스스로 행동을 실행하고 <strong>성공/실패 보상</strong>을 받으면서 정책을 개선하게 했습니다. 예를 들어, 모델이 문을 여는 행동을 연습할 때, 처음에는 열리는 확률이 낮더라도 시도하고 피드백을 받아 점진적으로 <strong>보상 극대화 정책</strong>을 배우는 식입니다. 강화학습을 접목함으로써, 단순 주입된 데이터에 의존하는 것을 넘어 <strong>스스로 시행착오를 겪으며</strong> 더욱 견고한 제어 능력을 얻습니다【10†L220-L227】. 이는 모델이 새로운 환경으로 일반화하는 능력도 향상시키는데, 미세조정 과정에서 다양한 변주 상황을 겪으며 <strong>로봇 행동의 민감도를 조절</strong>하는 법을 배우기 때문입니다【10†L220-L227】.</p></li>
+<li><p><strong>체화된 추론(Embodied Reasoning) 확장</strong>: 논문에서는 기본 모델 외에 <strong>Gemini Robotics-ER</strong>이라는 별도의 확장 모델도 소개합니다. 이는 Gemini 2.0의 멀티모달 추론 능력에 <strong>공간적/물리적 추론</strong> 기능을 강화한 버전으로, 별도 학습 절차를 거쳤습니다. 구체적으로, <strong>Gemini-ER</strong> 모델은 물체 감지, 3차원 공간이해, 물체 간 관계 파악 등 로봇에게 필요한 시각지능 태스크들에 대해 추가 훈련되어, Gemini의 언어/코드 추론 능력을 물리세계에 연결해 주는 역할을 합니다. 이 모델은 단독으로 <strong>“어떻게 움직일까”</strong>를 생각해내는 두뇌처럼 동작할 수 있는데, 예를 들어 이미지로 컵을 보여주면 “손잡이가 옆에 있으니 저 부분을 잡아야겠다”는 식으로 <strong>적절한 그립 지점</strong>이나 <strong>움직임 경로</strong>를 자체적으로 계획할 수 있습니다. Gemini-ER은 <strong>포인팅, 2D/3D 물체 탐지, 경로 예측, 그립 지점 산출, 멀티뷰 정합</strong> 등의 능력을 기존 Gemini보다 크게 향상시켰으며, 이 결과를 Gemini Robotics 본 모델이 활용하여 실제 로봇 제어의 성공률을 높이도록 했습니다. 저자들에 따르면, 이러한 <strong>두 단계 모델 구성</strong>은 복잡한 장면에서 <strong>실시간 인식과 계획</strong>을 가능하게 하여 최종 행동 명령의 신뢰도를 높였다고 합니다.</p></li>
+<li><p><strong>시뮬레이션에서 실제로 (Sim-to-Real Transfer)</strong>: Gemini Robotics 학습에서 주목할 점은 <strong>시뮬레이션 데이터의 적극적 활용</strong>과 <strong>현실 도메인 적응</strong>입니다. 앞서 언급한 것처럼 합성 데이터로 사전 학습을 하고, 이후 현실 데이터를 섞어 미세조정함으로써, 모델이 시뮬레이터에서 학습한 지식을 실제 로봇에도 이식할 수 있게 했습니다. 또한 학습 과정에서 <strong>도메인 랜덤라이제이션</strong>(조명, 텍스처, 물리 파라미터의 다양화)을 적용해 현실 갭을 줄였고, 중요한 경우 실제 로봇으로 <strong>검증 및 재학습</strong>을 수행함으로써 <strong>Sim2Real</strong> 전이를 달성했습니다. 그 결과 최종 모델은 <strong>현실에서 보지 못한 환경이나 물체에도 강인한 일반화 성능</strong>을 보였다고 보고됩니다. 예컨대, 훈련 중 보지 못했던 새로운 가구 배치나 조명 조건에서도 로봇이 임무를 수행하는 데 성공하는 비율이 높았습니다.</p></li>
+<li><p><strong>휴먼 피드백 및 상호작용 학습</strong>: 해당 논문에서 <strong>인간 피드백(RLHF)</strong>이 직접 언급되진 않았으나, Gemini Robotics는 <strong>인간의 데모</strong>를 통한 학습과 <strong>인컨텍스트 러닝</strong> 등의 방식으로 인간 지식을 흡수합니다. 모델이 기본적으로 거대 언어모델의 속성을 가지므로, <strong>사람의 지시를 몇 개 예시로 보여주면 거기에 맞춰 작업 방법을 학습</strong>하는 능력이 보고되었습니다. 특히 Gemini-ER의 경우, <strong>코드 생성</strong> 능력까지 활용하여 기존에 학습되지 않은 새로운 작업도 <strong>몇 차례의 시범</strong>만 보고 <strong>맥락적으로 파악해 해결책</strong>(예: 새로운 경로 계획 알고리즘 코드) <strong>을 제시</strong>할 수 있다고 합니다. 이는 모델이 내재적으로 인간의 피드백 패턴을 반영하여 <strong>추가 학습 없이도</strong> 적응력을 보이는 흥미로운 현상입니다. 다만, 논문에서 별도의 <strong>보상 모델</strong>이나 <strong>선호도 학습</strong> 같은 RLHF 기법을 적용했다는 언급은 없으므로, 이러한 휴먼 피드백 활용은 주로 <strong>데모 시퀀스 제공</strong>이나 <strong>프롬프트 설계</strong> 수준에서 이루어진 것으로 보입니다.</p></li>
+</ul>
+<p>요약하면, Gemini Robotics의 학습은 <strong>“광범위한 멀티모달 사전학습 → 로봇 작업별 미세조정 → (필요시) 추가적 상호학습”</strong>의 단계로 진행되었습니다. 이러한 <strong>단계별 훈련 전략</strong> 덕분에, 모델은 방대한 지식을 흡수함과 동시에 로봇 제어에 특화된 <strong>세밀한 조정 능력</strong>을 갖추게 되었습니다. 또한 시뮬레이션과 현실 데이터를 혼합함으로써 <strong>가상-현실 간 갭을 극복</strong>하였고, 강화학습을 접목해 <strong>실제 환경 적응력</strong>을 높였습니다. 결과적으로 Gemini Robotics는 <strong>대량의 데이터에 의존해 하나의 작업만 익히는 기존 방식</strong>에서 벗어나, <strong>적은 추가 데이터만으로도 새로운 작업이나 로봇에 빠르게 적응</strong>할 수 있는 범용 로봇 모델의 가능성을 보여주었습니다.</p>
+</section>
+<section id="멀티모달-통합-비전언어제어의-융합" class="level2">
+<h2 class="anchored" data-anchor-id="멀티모달-통합-비전언어제어의-융합">멀티모달 통합: 비전·언어·제어의 융합</h2>
+<p>Gemini Robotics의 큰 특징 중 하나는 <strong>멀티모달 AI</strong>(시각, 언어, 행동)의 <strong>긴밀한 통합</strong>입니다. 과거에는 로봇 시스템에서 <strong>컴퓨터비전 모듈</strong>이 환경을 인식하고 <strong>언어처리 모듈</strong>이 명령을 해석한 뒤, 이를 <strong>제어 알고리즘</strong>이 받아 실행하는 <strong>파이프라인 구조</strong>가 일반적이었습니다. 반면 Gemini Robotics는 이러한 단계를 <strong>단일 거대 모델</strong> 안에서 모두 다룹니다. 이 접근의 장점과 한계를 살펴보겠습니다.</p>
+<p><strong>통합 방식과 장점:</strong> Gemini Robotics에서는 앞서 설명한 비전 인코더와 언어 인코더의 출력이 <strong>공동의 임베딩 공간</strong>에서 결합됩니다. 예를 들어, 사용자가 “오른쪽에 있는 빨간 공을 집어서 바구니에 넣어”라고 말하면, 언어 인코더는 이를 <strong>목표 동작</strong>으로 해석하고, 비전 인코더는 카메라 영상에서 <strong>“오른쪽에 있는 빨간 공”</strong>의 위치를 찾아 특성으로 추출합니다. 이 정보들은 트랜스포머의 어텐션 메커니즘을 통해 상호작용하며, 결국 액션 디코더는 <strong>적절한 로봇 팔 움직임 시퀀스</strong>를 토큰 형태로 산출합니다. 이러한 <strong>비전-언어-액션 결합</strong>은 모델이 풍부한 <strong>상황 이해력</strong>을 갖추게 합니다. 언어를 통해 <strong>추상적 개념</strong>이나 <strong>목표 의도</strong>를 파악하고, 시각을 통해 <strong>구체적 실시간 상황</strong>을 파악하여, 둘을 맞물린 채 행동을 결정하므로, <strong>맥락적이고 유연한 행동 결정</strong>이 가능합니다. 실제 실험에서 Gemini Robotics는 훈련 중 보지 못한 새로운 지시도 <strong>대화 수준으로 이해</strong>하여 수행했는데, 이는 언어 통합 덕분입니다. 예를 들어 연구진이 <strong>“농구공을 슬램덩크 해봐”</strong>라고 장난 섞인 지시를 내렸을 때, 로봇은 농구대를 처음 보았음에도 불구하고 이 말을 이해하여 공을 쥐고 링에 넣는 동작을 <strong>첫 시도에 성공</strong>했습니다. 이전에 농구와 관련된 어떤 시연도 본 적 없음에도, <strong>“슬램덩크”</strong>라는 개념을 언어로 이해하고 시각적으로 상황을 판단해 실행한 것으로, 멀티모달 통합이 가져온 <strong>범용 추론+행동 능력</strong>을 보여주는 사례입니다.</p>
+<p>또한 멀티모달 통합은 <strong>로봇의 상호작용성</strong>을 높여줍니다. 사람과 <strong>대화하듯</strong> 명령을 주고받을 수 있기 때문에, 로봇에게 여러 단계를 <strong>연달아 설명하거나, 중간에 수정 지시</strong>를 내리는 것도 가능합니다. Gemini Robotics는 Gemini 2.0의 뛰어난 자연어 처리 능력을 이어받아 <strong>일상 언어, 여러 언어</strong>로 지시해도 이해하고 반응할 수 있고【8†L61-L69】【8†L99-L107】, 작업 도중 사람이 개입해 “잠깐 그건 내려놔”처럼 말을 걸면 바로 <strong>플랜을 재조정</strong>하여 새로운 상황에 적응합니다. 이러한 <strong>대화형 로봇</strong>의 모습은 멀티모달 통합 없이는 어려운 목표였습니다. 특히 Vision+Language를 함께 쓰면, <strong>웹으로부터 학습한 거대한 지식</strong>을 로봇이 활용할 수 있다는 이점도 있습니다. 예컨대, RT-2와 같은 선행 연구에서 거대 VLM으로 학습된 로봇 모델이 <strong>“테이블에서 떨어지기 직전인 가방을 집어라”</strong> 같은 명령을 이해하고 수행했는데, 이처럼 <strong>시각적 상황</strong>(떨어질 것 같은 가방)과 <strong>언어적 개념</strong>(수학 문제 같은 추론까지)을 결합함으로써, 로봇이 <strong>훈련 데이터에 없던 새로운 개념의 작업</strong>도 해낼 수 있는 <strong>추론적 일반화</strong>가 나타납니다. Gemini Robotics 역시 거대 언어-시각 모델의 지식을 활용하여, 단순 반복 학습으로 얻은 능력이 아닌 <strong>“웹 지식+현실 감각”</strong>의 조합으로 새로운 상황을 풀어내는 <strong>에머전트 스킬(emergent skill)</strong>을 보여줍니다.</p>
+<p>멀티모달 통합은 또한 <strong>다중 센서 정보의 융합</strong>을 가능케 합니다. Gemini Robotics-ER의 구조를 보면, 카메라 영상 외에도 <strong>깊이 카메라, LiDAR</strong> 같은 다양한 센서 데이터를 함께 처리하도록 되어 있습니다. 로봇의 <strong>자기 자세나 관절 상태</strong> 같은 <strong>프로프리오셉션</strong> 정보도 토큰화하여 입력되는 것으로 추정됩니다(유사한 로봇 모델인 NVIDIA의 GR00T에서는 관절각 등 로봇 상태를 토큰으로 넣어 Transformer에 결합시켰다고 보고됨). 이를 통해 로봇은 <strong>시각+언어+자기 상태</strong>를 종합적으로 고려한 <strong>상황 인식</strong>을 합니다. 가령, 물체를 집으려 할 때 단순히 카메라에 보이는 이미지뿐 아니라, 손끝 힘 센서나 관절 각도 정보를 함께 활용해 <strong>미끄러짐을 감지</strong>하거나 <strong>충돌을 예방</strong>하는 의사결정을 내릴 수 있습니다. 이처럼 다양한 modality를 단일 모델에 통합하면, 개별 모달리티의 약점을 서로 보완하고 <strong>고차원적 판단</strong>을 할 수 있게 됩니다. 인간도 눈으로 보고 손의 감각을 느끼며 두뇌로 판단하듯, Gemini Robotics는 트랜스포머 내부에 이러한 <strong>멀티센서 융합 회로</strong>를 갖춘 셈입니다.</p>
+<p><strong>한계와 도전:</strong> 물론 이러한 밀착된 멀티모달 통합에는 몇 가지 <strong>단점이나 한계</strong>도 존재합니다. 첫째, <strong>모델의 복잡도와 자원 요구량</strong>이 매우 크다는 점입니다. 시각, 언어, 행동까지 하나로 합친 거대 모델을 학습하려면 막대한 데이터와 연산량이 필요하며, 실행 시에도 메모리와 연산 부담이 큽니다. 실제로 Gemini Robotics의 풀사이즈 모델은 <strong>로봇 자체에 탑재하기 힘들 정도로 크고 느렸던 것</strong>으로 보이며, 이를 해결하기 위해 DeepMind는 경량화된 <strong>Gemini Robotics On-Device</strong> 버전을 별도로 개발했습니다. On-Device 모델은 파라미터를 줄이고 최적화를 거쳐 <strong>로봇 내 장치에서도 실시간 동작</strong>할 수 있을 만큼 경량화한 것으로, 인터넷 연결 없이 <strong>로컬 추론</strong>이 가능하고 지연을 최소화한 것이 특징입니다. 이는 멀티모달 대형 모델을 실제 현장에 투입하려면 <strong>경량화 및 최적화</strong>가 필수임을 보여주는 사례입니다. 둘째, <strong>디버깅과 해석의 어려움</strong>입니다. 비전/언어/제어 기능이 분리 모듈이 아니라 하나로 합쳐져 있으므로, 만약 로봇이 잘못된 행동을 했을 때 그 원인이 <strong>인지 오류인지, 명령 이해 오류인지, 제어 오류인지</strong>를 구분하기가 어렵습니다. 블랙박스 거대 모델 내부에서 모든 처리가 이루어지기 때문에, 로봇 공학자가 특정 오작동을 수정하려 해도 내부 가중치를 건드리는 수밖에 없고, 이는 곧 <strong>모델 신뢰성</strong> 문제와 연결됩니다. 이러한 이유로 DeepMind 팀도 Gemini 모델에 별도의 <strong>안전 장치</strong>와 <strong>품질 검증 루틴</strong>을 추가했습니다. 예를 들어 <strong>외부 안전 컨트롤러</strong>를 병렬로 두어 충돌이나 과도한 힘 작용을 <strong>즉시 차단</strong>하게 하고, <strong>Asimov의 로봇 3원칙</strong> 등에 영감을 얻은 <strong>규칙 기반 프레임워크</strong>로 모델의 행동 제약 조건을 설계했으며, 로봇공학 도메인 전문가들과 함께 면밀한 평가를 수행했다고 합니다. 이는 현재의 멀티모달 거대 모델이 완벽히 신뢰할 수준은 아니며, <strong>추가적인 안전장치와 인간의 감시</strong>가 필요함을 의미합니다.</p>
+<p>또 다른 한계로는, <strong>연속 제어의 안정성</strong> 문제가 있습니다. 일반적인 로봇 제어 알고리즘은 제어이론에 기반하여 <strong>안정도 보장</strong>을 하거나, 적어도 물리적으로 <strong>진동이나 발산이 없도록</strong> 설계됩니다. 그러나 거대 신경망 모델은 이러한 보장이 없고, 학습 데이터 분포를 벗어난 입력이 들어오면 예기치 못한 출력을 낼 수 있습니다. 예컨대, Gemini Robotics가 학습하지 않은 극단 상황(갑작스런 센서 오류나 비정형적 물체)에 직면하면 엉뚱한 동작을 산출할 위험이 있습니다. 논문에서도 이러한 <strong>안정성</strong>을 위해 Gemini-ER 모델이 <strong>자체적으로 현재 액션의 안전 여부를 판단</strong>하여 위험하면 다른 응답을 생성하도록 하는 메커니즘을 포함했다고 언급합니다. 그럼에도 불구하고 완전한 안전을 위해서는 향후 <strong>모델의 출력에 대한 검증 알고리즘</strong>이나, 모델이 <strong>신뢰도 판단</strong>을 할 수 있는 자체 평가 모듈 등이 추가로 필요할 것입니다.</p>
+<p><strong>확장성과 범용성의 과제:</strong> Gemini Robotics는 두 팔을 가진 고정식 로봇(ALOHA 2)으로 주로 개발되었고, 이후 실험적으로 사람 형태의 Apollo 로봇까지 적용되었지만, <strong>여전히 검증되지 않은 영역</strong>들이 남아 있습니다. 예를 들어, <strong>다족보행 로봇</strong>이나 <strong>드론</strong>처럼 <strong>동적으로 균형을 잡아야 하는 시스템</strong>에 이 모델을 적용할 수 있을지, 적용한다면 별도 모듈(예: 보행 제어기)과 어떻게 통합할지 등은 향후 연구과제입니다. 다행히 현재 Gemini Robotics-ER 모델은 Boston Dynamics, Agility Robotics 등 <strong>여러 로봇 업체 파트너들과 시험 중</strong>이라고 하니, 추후 다양한 로봇 플랫폼에의 확장 가능성에 대한 결과가 나올 것으로 기대됩니다. 또한 <strong>작업 범위의 확장</strong>도 과제입니다. 논문과 데모에서 다룬 작업들은 주로 <strong>실내 조작 업무</strong>(요리 보조, 물건 정리, 장난감 게임 등)였는데, 이를 <strong>산업 현장(예: 제조 조립)</strong>이나 <strong>옥외 환경</strong>으로 넓힐 때 성능이 유지될지 미지수입니다. <strong>대규모 물류창고나 복잡한 공장 환경</strong>에서는 여전히 전문 특화 로봇이 유리할 수 있고, Gemini와 같은 범용 모델은 섬세한 튜닝이 필요할 것입니다. 마지막으로, <strong>데이터 종속성</strong>의 문제가 남습니다. Gemini Robotics는 기존 로봇보다 새로운 작업을 훨씬 적은 데이터로 배울 수 있다지만, <strong>그 “기존에 학습된 방대한 능력” 자체를 얻기까지 들어간 데이터</strong>는 천문학적입니다. 일반 연구자나 중소 연구팀이 이와 같은 모델을 처음부터 학습시키기는 현실적으로 어려우므로, 향후에는 이러한 거대 모델을 <strong>어떻게 공개하고 활용</strong>할지 (예: API 형태로 사용, 또는 지식 증류를 통한 축약 모델 제공 등) <strong>생태계 전략</strong>도 중요해 보입니다.</p>
+<p>요약하자면, Gemini Robotics의 멀티모달 통합은 로봇의 이해와 행동 능력을 비약적으로 향상시켰지만, 동시에 <strong>모델 크기와 복잡성, 안정성, 신뢰성</strong> 측면의 새로운 도전을 가져옵니다. 이러한 한계들을 인지하고 보완해나가는 것이 다음 단계 연구의 방향일 것입니다.</p>
+</section>
+<section id="실제-로봇-응용-사례-시연-및-실험-결과-분석" class="level2">
+<h2 class="anchored" data-anchor-id="실제-로봇-응용-사례-시연-및-실험-결과-분석">실제 로봇 응용 사례: 시연 및 실험 결과 분석</h2>
+<p>논문과 발표에서 공개된 Gemini Robotics의 <strong>데모 시연</strong>과 <strong>실험 결과</strong>는 이 모델의 능력을 잘 보여줍니다. 이 절에서는 몇 가지 대표적인 응용 사례와 그 의미를 살펴보겠습니다.</p>
+<p><strong>1. 범용 조작 작업 데모</strong>: 연구팀은 Gemini Robotics의 <strong>범용성</strong>을 검증하기 위해, 훈련 시에 없던 새로운 작업들을 즉석에서 로봇에게 시켰습니다. 예를 들어, 앞서 언급한 <strong>농구공 슬램덩크</strong> 시연이나, <strong>신발 속에 펜 넣기</strong> 같은 창의적인 지시가 그것입니다. ALOHA 2 로봇은 처음 대하는 사물(농구 세트, 연구원의 신발 등)임에도 불구하고, 사람의 명령어만 듣고 상황을 파악해 행동을 성공적으로 수행했습니다. 이는 Gemini Robotics의 내부 지식과 추론 능력이 얼마나 풍부한지 보여줍니다. 로봇은 “신발에 펜 넣기”라는 말을 듣고 신발 개념, 펜의 크기와 들어가는 방법 등을 <strong>추론</strong>했고, 이내 로봇팔로 신발을 집고 공간을 확보한 뒤 펜을 집어넣는 동작을 <strong>매우 부드럽게</strong> 실행했습니다. 이러한 <strong>한 번에 새로운 작업 해결</strong> 능력은 기존 특화 로봇들과 구별되는 놀라운 점입니다 (대부분의 로봇은 새로운 작업을 수행하려면 별도 프로그래밍이나 학습이 필요했습니다).</p>
+<p><strong>2. 다양한 물체 조작 및 섬세한 작업</strong>: Gemini Robotics의 <strong>섬세한 조작 능력</strong>은 여러 시연을 통해 부각되었습니다. 예를 들어, <strong>종이 접기(origami)</strong> 데모에서 로봇은 복잡한 종이접기 동작을 순서대로 따라 하여 여우 모양을 접어냈습니다. 사람 손처럼 정교하게 종이의 모서리를 잡고 접는 동작을 오류 없이 수행한 것은, 모델이 이러한 <strong>장기간의 섬세한 작업 순서</strong>까지 이해하고 실행했음을 의미합니다. 또 다른 데모로, <strong>짐 싸기/정리 작업</strong>이 소개되었습니다: 주방에서 로봇이 <strong>도시락 통에 물건을 차곡차곡 채워 넣는 장면</strong>이나, 여러 가지 물품을 <strong>상자에 정렬해서 포장</strong>하는 장면 등입니다. 로봇은 각 물체의 크기와 무게를 고려해 어떤 순서로 넣어야 공간이 효율적으로 쓰일지 판단하고, 물건들을 <strong>부드럽고 정확하게 다뤘습니다</strong>. 심지어 깨지기 쉬운 물건도 안정적으로 옮기는 등 <strong>힘 조절</strong>까지 능숙했습니다. 이러한 결과는 모델이 단순히 “잡고 놓기” 수준을 넘어, <strong>힘/경로 최적화까지 내재화</strong>했음을 보여줍니다. 연구진은 <em>“정교한 종이 접기부터 물건 꾸려 담기까지, 세밀한 물리 조작을 해내는 능력이 Gemini Robotics의 혁신”</em>이라고 강조합니다.</p>
+<p><strong>3. 복잡한 다단계 작업</strong>: Gemini Robotics는 <strong>장기 계획(long-horizon)</strong>이 필요한 작업에도 도전했습니다. 예컨대 <strong>샐러드 준비</strong> 시연에서, 로봇은 냉장고에서 야채를 꺼내 씻고, 도마 위에서 썰고, 그릇에 담는 일련의 과정을 수행했습니다. 이 과정에는 여러 하위 작업(열기-잡기-이동-도구사용-담기 등)이 포함되며, 각 단계에서 상황에 따른 판단이 필요합니다. 로봇은 사람의 상위 지시 (“샐러드 좀 준비해줘”)만 받고도, <strong>스스로 다음에 무엇을 해야 할지</strong> 결정하며 순서를 진행했습니다. 이때 만약 중간에 예상 밖 상황이 발생하면 (예: 도마 위 재료가 미끄러짐) 실시간으로 재계획하여 정상 진행했습니다. 이러한 <strong>반복없는 멀티스텝 작업 완수율</strong>은 Gemini Robotics의 큰 성과로, 기술 보고서에 따르면 <strong>긴 계획을 요하는 작업에서 Gemini Robotics는 기존 모델 대비 성공률을 크게 향상</strong>시켰습니다. 특히 Gemini-ER 모델과 결합된 경우, <strong>환경에 대한 상태 추론</strong>을 병행하여, 각 단계마다 <strong>최적의 행동</strong>을 결정하는 능력이 뛰어났다고 합니다. 이는 과거의 “계획-실행” 이분화된 시스템과 달리, <strong>계획과 실행을 한 모델이 연속적으로 해나가면서</strong> 가능한 적응형 전략으로 볼 수 있습니다.</p>
+<p><strong>4. 로봇 간 범용성 실험</strong>: 앞서 언급했듯 Gemini Robotics는 한 종류 로봇(ALOHA 2)으로 주로 학습되었지만, <strong>새로운 로봇</strong>으로의 전이가 시험되었습니다. 연구팀은 <strong>Franka Emika의 FR3 암</strong>(일반 연구용 7자유도 로봇팔)과 <strong>Apptronik의 Apollo 휴머노이드</strong>로 모델을 이식하여 테스트했습니다. 이때 추가로 사용된 데이터는 많지 않았는데, 불과 <strong>50~100개의 시연</strong> 혹은 몇 시간 분량의 추가 학습으로도 각 로봇에서 성능이 크게 향상됐습니다. 예를 들어, Franka 암으로는 <strong>처음 보는 새로운 물체</strong>들을 다루는 실험이 진행됐는데, ALOHA로 학습된 모델을 약간 미세조정하니 곧바로 <strong>이질적인 물체와 장면에서도 명령 수행</strong>을 해냈습니다. 옷을 개키거나 드릴로 나사를 조이는 등 <strong>산업용 조립 작업</strong>까지 성공적으로 수행하여, <strong>정밀 작업 능력</strong>이 특정 하드웨어에 국한되지 않음을 증명했습니다. Apollo 휴머노이드에 대한 적용도 흥미로운데, 이 로봇은 이동형 플랫폼 위에 인간 팔 모양의 매니퓰레이터를 가진 형태입니다. Gemini Robotics 모델을 Apollo의 팔에 맞게 조금 튜닝한 결과, <strong>사람과 유사한 높이와 범위</strong>에서 다양한 객체를 조작하고, <strong>이동하면서 물체 운반</strong> 등의 과제를 수행했습니다. 특히 Apollo에게 이전에 없던 물건을 주고 <strong>“이걸 들어서 옆 테이블에 올려놔”</strong> 같은 지시를 했을 때, 모델이 당황하지 않고 주변 환경을 스캔하여 안전하게 임무를 완수한 사례가 보고되었습니다. 이는 Gemini Robotics의 <strong>모델 내 지식</strong>이 구체적인 로봇 구조에 상당히 <strong>중립적(embodiment-agnostic)</strong>임을 보여줍니다. 결국 이러한 실험들은 <strong>하나의 거대 모델이 여러 로봇의 뇌로 활용될 수 있다</strong>는 “로봇계의 GPT” 같은 비전을 뒷받침한다고 볼 수 있습니다.</p>
+<p><strong>5. 성능 지표 및 비교</strong>: 논문에서는 다양한 벤치마크 평가 결과도 제시합니다. 그 중 눈에 띄는 것은 <strong>일반화 성능 종합 벤치마크</strong>에서 Gemini Robotics가 다른 최신 VLA(비전-언어-액션) 모델들 대비 <strong>2배 이상의 성공률 향상</strong>을 보였다는 점입니다. 이 벤치마크는 새로운 물체, 새로운 지시어, 새로운 환경 조합 등에 로봇이 얼마나 잘 대응하는지를 종합 측정한 것인데, Gemini가 탁월한 점수를 기록했습니다. 이는 PaLM-E, RT-2 등 이전 세대 모델들이 한계가 있었던 <strong>보지 못한 조합에 대한 대응</strong>에서 큰 진전을 이뤘음을 뜻합니다. 또한 <strong>Dexterity(섬세 조작)</strong> 부문 평가에서도, 작은 물체를 다루거나 정밀한 힘 조절이 필요한 작업에서 SOTA 대비 월등한 성공률을 보였습니다. 한편, Gemini Robotics-ER 모델 자체의 성능도 흥미로운데, 2D/3D 물체 탐지, 포인팅 정확도 등 순수 인지능력 관련 태스크들에서 기본 Gemini 2.0 대비 <strong>크게 향상된 정답률</strong>을 보고합니다. 예컨대, “이 장면에서 파란 머그잔의 손잡이를 가리켜라” 같은 질문에 Gemini-ER은 정확히 머그잔 손잡이 위치를 픽셀 단위로 지목해내는 식입니다. 이러한 <strong>인지 향상</strong>이 뒷받침되었기 때문에 실제 로봇 행동의 성공률도 높아진 것으로 해석됩니다. 마지막으로, 실험 결과 부분에서 강조되는 것은 <strong>안전성 평가</strong>입니다. 모델에게 일부러 위험한 지시(“사람을 칼로 찔러” 등)를 내리거나 충돌 위험이 있는 상황을 제시하여 모델의 반응을 본 결과, Gemini Robotics는 <strong>훈련된 안전 규칙에 따라 이를 거부하거나 우회하는 답변/행동</strong>을 생성했습니다. 물론 이러한 안전 테스트는 초기 단계지만, 최소한 <strong>명백한 위험 행동은 억제</strong>하도록 설계되었음을 확인시켜줍니다.</p>
+<p>전체적으로, 실제 응용 및 실험을 통해 드러난 Gemini Robotics의 능력은 다음과 같이 요약할 수 있습니다:</p>
+<ul>
+<li><strong>새로운 과제에 대한 즉각 대응</strong>: 훈련되지 않은 임기응변 작업도 높은 성공률로 수행 (예: 슬램덩크, 새로운 물건 다루기 등).</li>
+<li><strong>복잡하고 긴 조작 시퀀스 완수</strong>: 요리, 접기, 조립 등 여러 단계를 거치는 작업을 계획부터 실행까지 일관되게 성공.</li>
+<li><strong>정밀한 조작과 힘 제어</strong>: 종이 접기, 섬세한 물건 포장, 옷 개기 등 인간 수준의 섬세함 요구 작업 가능.</li>
+<li><strong>다양한 로봇에의 일반화</strong>: 하나의 모델로 여러 형태의 로봇팔/humanoid를 구동, 소량의 데이터로 신속 적응.</li>
+<li><strong>대화형 상호작용 및 다언어</strong>: 자연스런 언어로 지시하고 피드백하며 작업 진행, 영어 외 다른 언어 명령도 이해 (보고서에 따르면 다국어 평가에서도 양호한 성능).</li>
+<li><strong>안전하고 유연한 대응</strong>: 환경 변화나 돌발상황에 실시간 replanning, 위험한 명령은 거부 또는 수정.</li>
+</ul>
+<p>이러한 시연 결과는 로봇공학 전문가들에게 상당히 고무적인데, 이는 그동안 개별적으로 발전해온 <strong>시각 인지, 자연어 이해, 로봇 제어</strong> 기술이 하나로 융합될 때 얻을 수 있는 <strong>시너지 효과</strong>를 잘 보여주기 때문입니다. 물론 데모들은 최적의 시나리오를 부각한 면이 있으므로, 실제 평균적인 성능은 더 지켜봐야 하지만, <em>“한층 범용적이고 똑똑한 로봇 비서”</em>의 가능성을 엿볼 수 있었다는 점에서 의미가 큽니다.</p>
+</section>
+<section id="기존-로봇-시스템과의-비교-palm-e-rt-2-robocat-등" class="level2">
+<h2 class="anchored" data-anchor-id="기존-로봇-시스템과의-비교-palm-e-rt-2-robocat-등">기존 로봇 시스템과의 비교: PaLM-E, RT-2, RoboCat 등</h2>
+<p>Gemini Robotics를 제대로 이해하기 위해서는, 최근 등장했던 <strong>유사한 개념의 로봇 AI 시스템들</strong>과 비교해보는 것이 유익합니다. 대표적으로 Google의 <strong>PaLM-E</strong>, DeepMind의 <strong>RT-2 (Robotics Transformer 2)</strong>, 그리고 DeepMind의 또다른 연구인 <strong>RoboCat</strong>을 들 수 있습니다. 이들 각각은 로봇에 <strong>거대 모델</strong>을 적용하려는 선구적 시도였으며, Gemini Robotics는 이러한 흐름의 연장선이자 집대성이라 볼 수 있습니다. 각 시스템과 Gemini의 <strong>유사점과 차이점</strong>을 간략히 살펴보겠습니다.</p>
+<ul>
+<li><p><strong>PaLM-E (Google, 2023)</strong>: PaLM-E는 대형 언어모델 <strong>PaLM</strong>에 <strong>시각 입력</strong>을 추가하여, 로봇 환경의 정보를 언어모델에 직접 연결한 초기 시도였습니다. 예컨대 카메라 이미지가 들어오면 이를 묘사하는 문장이 LLM에 입력되고, LLM은 그 맥락에서 다음 행동을 <strong>텍스트 형태</strong>로 출력하는 방식입니다. PaLM-E의 특징은 <strong>멀티모달 거대 언어모델</strong>이 곧 로봇의 두뇌 역할을 한 것으로, 로봇 팔 제어를 포함해 <strong>이미지 캡셔닝, 질문답변, 심지어 시적 문구 생성</strong>까지 해낼 수 있는 <strong>올인원 모델</strong>이었습니다. 이는 로봇에게 <strong>인터넷 지식과 추론 능력</strong>을 부여했다는 의의가 있지만, 실제 로봇 제어는 LLM 출력 텍스트를 별도 정책으로 변환해야 했기에 <strong>간접적</strong>이었습니다. 즉, PaLM-E는 <strong>“생각을 잘하는 로봇 뇌”</strong>로서, 직접 모터 명령을 내리기보다는 <strong>고수준 플랜</strong>(예: “앞에 보이는 사과를 집어 컵에 넣어야 해”)을 말해주고, 저수준 제어는 다른 모듈이 맡는 구조였습니다. 이에 비해 <strong>Gemini Robotics</strong>는 애초에 <strong>물리 행동까지 직접 출력</strong>하도록 학습되었다는 큰 차이가 있습니다. Gemini는 PaLM-E와 동일하게 거대 언어/시각 지식을 활용하지만, 최종 출력이 <strong>연속적인 로봇 동작 명령</strong>이므로 <strong>엔드투엔드 제어</strong>가 가능합니다. 또한 성능 면에서도, Gemini는 PaLM-E 대비 훨씬 다양한 조작 임무에서 <strong>성공률이 높고 일반화 범위가 넓은 것</strong>으로 보고되었습니다. 다만 PaLM-E처럼 Gemini도 <strong>범용 언어능력</strong>을 갖추고 있어, 필요하면 로봇에게 관찰 결과를 <strong>설명하게 하거나</strong> 인간과 질의응답을 하게 할 수도 있습니다. 요컨대, PaLM-E가 <strong>“거대 언어모델을 로봇에 접목”</strong>한 첫 단계였다면, Gemini는 <strong>“거대 언어모델+비전 모델을 완전히 로봇 액션에 통합”</strong>한 진화된 형태로 볼 수 있습니다.</p></li>
+<li><p><strong>RT-2 (Robotics Transformer 2, DeepMind, 2023)</strong>: RT-2는 <strong>비전-언어 액션(VLA)</strong> 개념을 최초로 선보인 로봇 정책 모델입니다. 이 모델은 PaLM-E와 <strong>PaLI-X</strong> 등 거대 멀티모달 모델을 백본으로 활용하고, 그 출력 공간을 <strong>로봇 행동 토큰</strong>으로 재설계했습니다. 구체적으로, RT-2는 카메라 이미지를 입력으로 받아 텍스트 대신 <strong>미리 정의된 행동 시퀀스 토큰 문자열</strong>을 출력합니다. 예를 들어 “1 128 91 5 …”처럼 숫자열을 내보내면, 이를 해석하는 별도 tokenizer가 <strong>엔드 이펙터의 위치 이동과 그리퍼 여닫음</strong>을 실행하는 식입니다. 이러한 <strong>디스크리트 토큰</strong> 표현 덕에, 기존 VLM을 건드리지 않고도 <strong>행동 데이터로 파인튜닝</strong>이 가능했으며, 그 결과 RT-2는 <strong>웹으로 학습된 시각언어 지식</strong>을 로봇 행동에 상당 부분 이식하는 데 성공했습니다. RT-2는 특히 <strong>훈련에서 보지 못한 객체나 상황</strong>에 대한 일반화 능력이 향상되어, 예전 RT-1 기반 모델의 <strong>32% 성공률을 62%까지</strong> 높였다고 보고됩니다. 또한 사칙연산 개념 등 <strong>추론을 요구하는 명령</strong>(“바나나를 2+1의 합 위치로 옮겨”)도 웹에서 배운 지식을 활용해 수행하는 등, <strong>에머전트 스킬</strong>을 보여주었습니다. <strong>Gemini Robotics vs.&nbsp;RT-2</strong>를 비교하면, 둘 다 <strong>VLA 모델</strong>이라는 점에서 개념상 유사하지만 <strong>스케일과 범용성 면에서 차이</strong>가 있습니다. RT-2는 주로 <strong>단일 팔 로봇</strong>(이터널들러)과 제한된 조작 세트에 집중했고, 파라미터 규모도 백본 12억~50억 수준이었습니다. 반면 Gemini는 <strong>듀얼 암, 인간형 등 다양한 로봇</strong>을 다루며, 기반 Gemini 2.0 자체가 거대(수백억~수천억)인 것으로 알려져 보다 <strong>고차원의 추론 및 계획</strong>까지 가능합니다. 또, RT-2는 행동을 토큰화하면서 <strong>일정한 프리미티브 집합</strong> 내에서만 동작할 수 있었지만, Gemini는 필요한 경우 <strong>코드 생성</strong>이나 <strong>언어 계획</strong>까지 활용하여 <strong>행동 표현의 유연성</strong>을 확보했습니다. 예를 들어 RT-2가 표현하지 못하는 새로운 행동이 필요하면, Gemini-ER은 <strong>파이썬 코드를 생성</strong>해 그 행동을 구현하거나, 몇 가지 데모를 참고해 즉석에서 해결책을 찾아냅니다. 이는 <strong>고정된 토큰 정책 vs.&nbsp;가변적 정책</strong>의 차이로 볼 수 있습니다. 성능적으로도, Gemini Robotics는 자체 평가에서 <strong>RT-2 등 기존 VLA 대비 2배 이상의 성공률</strong>을 보였다고 하니, 한 세대 발전한 VLA 모델이라 할 수 있습니다. 다만 RT-2의 <strong>간결함</strong>(단일 Transformer로 실시간 제어)과 <strong>경량성</strong>은 Gemini보다 나은 점이었는데, DeepMind가 Gemini On-Device 버전을 내놓은 것도 아마 RT-2 수준으로 경량화하여 보급하려는 의도로 풀이됩니다.</p></li>
+<li><p><strong>RoboCat (DeepMind, 2023)</strong>: RoboCat은 성격이 조금 다르지만, <strong>범용 로봇 조작</strong>을 목표로 한 또다른 접근입니다. RoboCat은 거대 언어모델이 아닌 <strong>멀티태스킹 비전-행동 모델</strong>로, 앞선 <strong>Gato</strong> 모델을 기반으로 여러 로봇 팔의 데이터를 모아 학습되었습니다. 특징은 <strong>“Self-Improving”</strong>, 즉 자기 스스로 새로운 시연 데이터를 생성하며 능력을 확장한다는 점입니다. RoboCat은 초기 학습 후 새로운 작업이나 새로운 로봇이 주어지면 <strong>100~1000개 수준의 인간 데모</strong>를 보고 해당 작업에 맞게 <strong>파인튜닝</strong>되어 <strong>스핀오프 에이전트</strong>를 만들고, 이 에이전트로 <strong>1만 회 가량 자율 연습</strong>을 해 데이터를 모은 뒤, 그 데이터를 본체 모델에 다시 합치는 <strong>사이클</strong>로 동작했습니다. 이러한 <strong>순환적 학습</strong>으로 RoboCat은 점점 데이터셋을 불려가며 <strong>수백만 건의 다중 경로 경험</strong>을 축적했고, 그 결과 4종 이상의 로봇에서 수백 가지 작업을 익히며, <strong>100개의 데모로도 새로운 작업을 습득</strong>할 만큼 <strong>데이터 효율</strong>을 달성했습니다. RoboCat과 Gemini의 <strong>차이점</strong>은 우선 <strong>언어 활용 여부</strong>입니다. RoboCat은 <strong>언어 입력이 없고</strong>, 주어진 목표를 <strong>이미지나 좌표</strong> 등으로 명세하며, 모델이 이를 달성하는 <strong>행동 시퀀스</strong>를 내는 형태였습니다. 반면 Gemini는 앞서 본 대로 <strong>언어지시를 직접 이해</strong>하므로 사용 편의성이 높습니다. 둘 다 <strong>다중 로봇, 다중 작업</strong> 지향이지만, 접근 방식이 다릅니다: RoboCat은 <strong>모델+데이터 자체를 점진 확장</strong>하여 <strong>“스스로 학습하는 일반 에이전트”</strong> 느낌이라면, Gemini는 <strong>애초에 거대 지식을 장착하고 시작</strong>하여 <strong>필요시 조금의 파인튜닝으로 적응</strong>하는 <strong>“거대 기반모델”</strong> 접근입니다. RoboCat이 <strong>자기생성 데이터</strong>로 성능을 끌어올렸다면, Gemini는 <strong>인터넷 수준의 지식을 내장</strong>함으로써 별도의 self-play 없이도 높은 성능을 보이는 셈입니다. 결과적으로 Gemini가 보여준 <strong>다양한 새 작업에서의 성공</strong>은 RoboCat과 목표는 같지만 방법론이 <strong>Top-Down (지식장착)</strong>으로 달랐음을 알 수 있습니다. 또한 RoboCat은 주로 <strong>픽앤플레이스</strong>나 <strong>간단한 도구 사용</strong> 등의 <strong>짧은 호라이즌 작업</strong>에 집중했고, <strong>장기간 계획이나 언어적 추론</strong>은 다루지 않았습니다. Gemini는 그 부분에서 훨씬 범용적이라, RoboCat 대비 <strong>적용 분야가 넓다</strong>고 할 수 있습니다. 다만 RoboCat의 <strong>self-improvement 사이클</strong>은 일종의 <strong>자동 데이터 증강</strong>으로, 향후 Gemini에도 접목 가능성이 있습니다. 예를 들어 Gemini도 자체 시뮬레이터에서 모의 실험들을 수행해 경험을 늘린다면 더욱 강력해질 것입니다.</p></li>
+</ul>
+<p>비교를 표로 정리하면 다음과 같습니다:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 48%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>시스템명</th>
+<th>접근 방식 및 특징</th>
+<th>한계점 및 비교</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>PaLM-E</strong> (2023)</td>
+<td>- 거대 언어모델(LLM)에 비전 입력 추가<br>- 로봇 환경을 텍스트로 기술, LLM이 추론/계획<br>- 이미지 캡션, Q&amp;A 등 멀티모달 임무도 수행 가능</td>
+<td>- LLM 출력이 텍스트라 최종 로봇제어엔 별도 모듈 필요 (간접 제어)<br>- 직접 행동 출력 X; Gemini에 비해 엔드투엔드성 낮음<br>- 범용 지식은 있으나 실시간 상호작용성 제한</td>
+</tr>
+<tr class="even">
+<td><strong>RT-2</strong> (2023)</td>
+<td>- 사전학습 VLM을 로봇 데이터로 공동 미세조정<br>- <strong>행동을 토큰열로 표현</strong>하여 Transformer가 직접 예측<br>- 웹 학습 지식을 활용, <strong>본적 없는 상황</strong> 처리 향상</td>
+<td>- 행동 어휘가 한정됨 (정의된 토큰 조합만 가능)<br>- 주로 단일 로봇/작업에 초점, 파라미터 규모 Gemini보다 작음<br>- 장기 계획 위해 체인-of-thought 등 별도 기법 필요 (일부 적용함)</td>
+</tr>
+<tr class="odd">
+<td><strong>RoboCat</strong> (2023)</td>
+<td>- 멀티태스크 비전-액션 모델 (Gato 기반)<br>- 다종 로봇 다작업 데이터를 통합 학습<br>- <strong>자기훈련 사이클</strong>: 새로운 작업에 파인튜닝 → 자율시행 데이터 축적 → 재훈련<br>- 적은 데모(100개)로 신속 적응, 자체 데이터 생성으로 성능 향상</td>
+<td>- 언어 이해 없음 (목표를 이미지/좌표로만 명세)<br>- 긴 계획/추론 작업 미포함 (주로 짧은 조작)<br>- self-play 사이클이 복잡하고 리소스 많이 요구<br>- Gemini처럼 범용 지식 탑재 X (학습데이터 내 영역에 한정된 범용성)</td>
+</tr>
+<tr class="even">
+<td><strong>Gemini Robotics</strong> (2025)</td>
+<td>- 거대 멀티모달(언어+비전) 기반 <strong>VLA 모델</strong>, 행동을 직접 연속 명령으로 출력<br>- Gemini 2.0 지식 계승: <strong>광범위 언어 이해+추론</strong> 겸비<br>- 실세계 조작에 특화 미세조정, <strong>범용성·상황대응·섬세조작</strong> 모두 향상<br>- 듀얼암, 휴머노이드 등 <strong>다양한 로봇</strong>에 소량 데이터로 이식 성공<br>- SOTA 대비 <strong>2배 이상</strong> 일반화 성능, 고난이도 작업 데모 (접기, 조립 등) 성공</td>
+<td>- 모델 규모 매우 큼: 기본 모델 온보드 구동 어려워 별도 On-Device 버전 필요<br>- end-to-end 모델로 디버깅 어려움, 안전성 위한 외부 장치 필요<br>- 훈련 데이터량 방대, 일반 연구자가 재현 어려움<br>- 현재는 주로 팔 기반 조작에 한정; locomotion 등 확장은 추후 과제</td>
+</tr>
+</tbody>
+</table>
+<p><em>(주: 위 비교는 각 시스템의 1차 발표 기준 특징을 요약한 것이며, 이후 개선된 버전이나 추가 연구는 반영되지 않았습니다.)</em></p>
+<p>위 비교에서 볼 수 있듯, <strong>Gemini Robotics</strong>는 이전 세대들의 아이디어를 흡수·확장하여 <strong>언어+시각+행동의 완전 통합</strong>과 <strong>범용 로봇 제어</strong>라는 목표에 가장 근접한 사례로 평가됩니다. PaLM-E의 지식, RT-2의 엔드투엔드 제어, RoboCat의 다로봇 적응을 모두 한 시스템에 녹여낸 셈이며, 그 결과물은 곧잘 <strong>“로봇용 GPT”</strong>에 비유되곤 합니다. 특히 <strong>Gemini 2.0</strong>이라는 초거대 모델 기반이라는 점에서, 경쟁사인 OpenAI의 GPT-4 기반 로봇연구나, 다른 학계의 OpenVLA 연구들보다도 <strong>스케일과 완성도 측면에서 앞서 있다</strong>는 평을 받았습니다. 물론 현실은 여러 제약으로 완벽히 이상적이지 않지만, <strong>일반 지능을 지닌 로봇</strong>이라는 오랜 꿈에 한 걸음 다가간 성취임은 분명합니다.</p>
+</section>
+<section id="비판적-논의-한계와-향후-과제" class="level2">
+<h2 class="anchored" data-anchor-id="비판적-논의-한계와-향후-과제">비판적 논의: 한계와 향후 과제</h2>
+<p>마지막으로, Gemini Robotics 시스템에 대한 <strong>한계점과 개선 필요 분야</strong>를 전문가 시각에서 논의해보겠습니다. 혁신적인 시스템일수록 냉철한 평가가 필요한 법이기에, 이 모델의 약점이나 리스크를 짚어보고 미래 방향을 생각해봅니다.</p>
+<p><strong>1. 방대한 데이터와 모델 규모에 대한 의존성</strong>: Gemini Robotics의 성능은 결국 <strong>대규모 사전학습</strong>에 기댄 바가 큽니다. 인간의 개입 없이 새로운 작업도 해낼 수 있었던 비결은, 이미 모델 내부에 <strong>세상의 온갖 지식과 시나리오에 대한 통계</strong>가 학습되어 있었기 때문입니다. 이를 얻기 위해 투입된 데이터(시뮬레이터 생성 데이터+전이학습 코퍼스 등)는 일반 연구 단위에서는 감당하기 어려운 양일 것입니다. 이러한 <strong>데이터 의존성</strong>은 범용 로봇 모델 연구의 양날의 검인데, 데이터가 많을수록 강력한 모델을 얻지만, 동시에 <strong>데이터 편향</strong>이나 <strong>품질 문제</strong>도 내재할 수 있습니다. 예를 들어, 웹에서 수집한 언어 데이터에는 잘못된 상식이나 편견이 섞여 있을 수 있고, 시뮬레이터 데이터는 현실 물리의 복잡함을 완전히 담지 못할 수 있습니다. Gemini Robotics가 현재까지는 주로 <strong>탁상형 조작작업</strong>에 대한 학습을 했기 때문에, 자연이나 사람과의 물리적 상호작용 같은 영역은 데이터가 부족하여 약할 가능성이 있습니다. 그러므로 모델이 <strong>학습하지 못한 distribution</strong>에 놓이면 어떤 거동을 할지 미지수입니다. 이 문제를 풀기 위해서는 앞으로 <strong>데이터 다양성</strong>을 더욱 늘리고, 부족한 영역은 <strong>모델이 직접 실험하며 채우게(self-play)</strong> 하는 방법도 고려해야 합니다. 또한 거대 모델을 조금 더 <strong>작게 분해하거나 모듈화</strong>하여, 부분적으로 데이터를 추가 학습시킬 수 있게 하면 효율이 올라갈 것입니다. 예컨대, 시각 모듈은 지속 업그레이드하고 언어 모듈은 동결한다든지 하는 방식으로 데이터 의존성을 분산시키는 연구가 필요합니다.</p>
+<p><strong>2. 제어 안정성과 안전성</strong>: 앞서도 다뤘듯, 이렇게 <strong>신경망이 모든 것을 결정</strong>하는 로봇은 <strong>전통적인 제어 시스템</strong>과 비교했을 때 신뢰성 면에서 걱정이 있습니다. 로봇공학에서 <strong>안정성(stability)</strong>이란 물리적으로 시스템이 예측 불가능하게 폭주하지 않고 안정된 궤적을 유지하는 것을 뜻하는데, 학습된 정책이 항상 그걸 보장하리란 법이 없습니다. 특히 산업 환경에서는 작은 오판도 큰 사고로 이어질 수 있으므로, Gemini Robotics 같은 시스템을 바로 적용하기는 어려울 수 있습니다. 이를 위해 논문 저자들도 <strong>안전장치</strong>를 병렬로 운용했지만, 이는 완전한 해결책이라기보다 임시방편입니다. 예컨대, 모델이 사람을 인지 못하고 충돌하려 하면 외부 센서가 멈추게 한다지만, 모델 자체가 사람을 잘 인지하도록 하는 편이 바람직할 겁니다. 또 하나, <strong>신뢰도 추정</strong>의 부재도 문제입니다. 현재 모델은 모든 판단을 <strong>확률적</strong>으로 하지만, 자신이 얼마나 확신없는지를 출력하지는 않습니다. 이상적인 시스템이라면 “지금 상황을 잘 모르겠어”라고 <strong>스스로 인지</strong>하고 인간에게 도움을 청하거나 안전모드로 들어가야 할 텐데, 이런 메타인지 기능은 아직 구현되지 않았습니다. 미래에는 거대 모델에 <strong>불확실성 추정 모듈</strong>을 내장하거나, 외부에서 <strong>모델 판별기</strong>를 두어 출력의 신뢰도를 모니터링하는 것이 필요해 보입니다.</p>
+<p><strong>3. 모델 해석 가능성과 디버깅 이슈</strong>: Gemini Robotics 같은 <strong>엔드투엔드 딥러닝 로봇</strong>은 그 내부 의사결정 과정을 사람이 따라가기 어렵습니다. 왜 이 행동을 했는지, 어디서 오류가 났는지를 알기 힘들기 때문에, <strong>원인 분석과 개선</strong>이 난감합니다. 전통적 로봇 프로그램이라면 로그나 규칙을 보고 수정하면 되지만, 이 경우 <strong>학습 데이터</strong>나 <strong>가중치</strong>를 바꾸는 수밖에 없습니다. 이는 곧 <strong>개발 사이클이 느려지고</strong> 버그 수정이 불확실해짐을 의미합니다. 실제로 거대 모델이 잘못된 판단을 할 때, 그것이 언어 이해의 오류인지 비전 인식의 오류인지도 판단하기 어렵고, 결국 <strong>전부 다 재훈련</strong>해야 할 수도 있습니다. 이러한 문제를 완화하려면, <strong>모델의 판단근거를 설명</strong>하는 기술(XAI)이나, <strong>모듈별 책임 분담</strong>을 부분적으로라도 도입하는 것이 고려됩니다. 예컨대, Gemini-ER처럼 <strong>인지 전처리 모듈</strong>을 별도로 두는 것은 한 방안입니다. 또는 행동 출력 전에 <strong>내부 언어 추론 과정을 토큰으로 표출</strong>하게 하여, 인간이 개입할 여지를 만드는 연구도 가능합니다 (실제로 RT-2에서는 체인-of-thought을 활용해 중간 플랜을 언어로 생성하도록 하기도 했습니다【21†L588-L596】【21†L600-L607】). 궁극적으로, 인간 전문가와 모델이 <strong>공동으로 작업 계획을 수립</strong>하고 모델은 세부를 실행하는 <strong>반자동</strong> 방식으로 가는 것이 안전하고 해석가능성을 높이는 방향일 수 있습니다.</p>
+<p><strong>4. 확장성(Scalability)</strong>: 여기서 말하는 확장성이란, <strong>과연 이 접근이 로봇 전반으로 확장될 수 있는가</strong> 하는 문제입니다. Gemini Robotics는 단일 연구기관(DeepMind)의 자원으로 개발되었고, 현재 <strong>Trusted Tester</strong> 프로그램을 통해 일부 파트너들에게만 제공되고 있습니다. 모든 연구자가 이 모델을 활용해 실험할 수 있는 건 아니며, 또 각자 새로운 데이터를 추가하여 개선판을 만들 수도 없는 상태입니다. 이는 연구 커뮤니티의 <strong>재현성과 협업</strong> 측면에서 한계입니다. 또한 산업 적용을 위해서는 맞춤 수정이 필요할 텐데, 폐쇄된 거대 모델을 수정하기는 어렵습니다. 이런 측면에서 <strong>오픈소스 로봇 foundation 모델</strong>의 필요성이 대두됩니다. 만약 Gemini Robotics 같은 모델이 공개되고 쉽게 fine-tune 가능해진다면, 다양한 특수 환경(예: 수술 로봇, 농업 로봇 등)에도 이 아이디어를 이식할 수 있을 것입니다. 그러나 현재로서는 <strong>상용화와 관련된 전략</strong>이 명확하지 않아 보입니다. 구글 내부에서는 아마 <strong>Gemini 로봇 플랫폼</strong>을 구축해 로봇 제조사들과 협력하려 할 것으로 추측되지만, 외부에서 볼 때에는 <strong>초거대 모델의 폐쇄성</strong>이 확장의 걸림돌일 수 있습니다. 이에 대한 해결은 기술보다는 <strong>정책과 전략</strong>의 문제일 수 있겠습니다.</p>
+<p>또 다른 측면의 확장성으로, <strong>하드웨어 제약</strong>과 <strong>실시간성</strong> 이슈가 있습니다. 로봇은 실시간으로 움직여야 하며, 센서 피드백에 수십 Hz~100Hz 이상으로 반응해야 할 때가 많습니다. 하지만 거대 트랜스포머 모델이 그러한 <strong>고속 실시간 제어 loop</strong>에 직접 들어오는 것은 어려운 일입니다. 논문에서는 이 문제를 부분적으로 피하기 위해, 카메라 프레임당 한두 개 정도의 고수준 명령을 생성하고, 세부 모션은 내장된 로우레벨 컨트롤러(PID 등)가 수행하게 했을 가능성이 있습니다. 그러나 진정한 의미의 <strong>end-to-end</strong>라면 서브-millisecond 단위 토크제어까지 학습으로 대체해야 하는데, 이는 현재 기술로는 비현실적입니다. 결국 <strong>하이브리드 제어</strong>(학습된 고수준 계획 + 전통 저수준 제어)가 불가피하며, 이 경계를 어디까지 확장할지가 과제입니다. 추후 <strong>모델 경량화</strong>(예: 2B~10B 수준 파라미터로 양질의 성능을 내는)와 <strong>전용 가속 하드웨어</strong> 발전이 이루어지면, 더 고속의 피드백 루프에 딥러닝 정책을 넣을 수 있을지도 모릅니다. 실제 DeepMind도 On-Device 버전을 통해 이 방향을 모색하고 있습니다.</p>
+<p><strong>5. 윤리 및 책임 문제</strong>: 마지막으로, <strong>AI의 물리 세계 진출</strong>에 따라 불거지는 윤리적 문제와 사회적 영향도 짚어야 합니다. Gemini Robotics 같은 범용 로봇이 상용화된다면, <strong>인간 노동</strong>을 대체하거나, <strong>인간과 직접 상호작용</strong>할 가능성이 있습니다. 이는 일자리나 안전, 프라이버시 이슈와 직결됩니다. 또한 거대 모델 특유의 <strong>할루시네이션</strong>이나 오류가 물리적으로 구현될 경우, 그 피해는 디지털 영역의 실수보다 훨씬 클 수 있습니다. 예를 들어, 모델이 잘못된 판단으로 위험한 약품을 엉뚱한 곳에 놓는다든지 하는 일이 생기면 심각한 사고로 이어질 수 있습니다. 따라서 기술 개발과 더불어, <strong>법적 규제</strong>와 <strong>안전 표준</strong> 마련이 병행되어야 합니다. 논문에서도 Asimov의 로봇 3원칙을 언급하며 <strong>윤리적 프레임워크</strong>를 구축하려는 노력을 언급했지만, 이는 개념적인 수준이고 실제 현장에서 검증된 규범은 아닙니다. 결국 사람과 함께 일하는 로봇이라면 <strong>인증 체계</strong>와 <strong>책임 소재</strong> 규명이 중요한데, 현 단계의 AI 로봇은 그 경계가 모호합니다. 예컨대, 거대 모델의 잘못으로 사고가 났을 때, 그것을 개발한 기업의 책임인지, 사용하는 쪽의 책임인지 등이 불명확합니다. 이러한 문제를 선제적으로 해결하기 위해, 개발 단계부터 <strong>안전제어기+모델</strong> 식의 <strong>이중화 구조</strong>를 권고한다거나, 중요한 의사결정에는 <strong>인간 승인</strong>을 받도록 설계한다거나 하는 <strong>휴먼-인-더-룹</strong> 메커니즘이 필요할 수 있습니다. 결국 기술적 완성도뿐만 아니라 <strong>사회적 수용성</strong>까지 고려해야 Gemini Robotics와 같은 시스템이 실질적으로 쓰이고 발전할 수 있을 것입니다.</p>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">결론</h2>
+<p>“Gemini Robotics: Bringing AI into the Physical World”는 로봇 공학 분야에서 하나의 <strong>중대한 이정표</strong>로 평가됩니다. 이 시스템은 거대 멀티모달 AI의 능력을 물리 세계에 접목함으로써, 로봇이 <strong>시각적으로 보고, 언어로 이해하고, 스스로 행동</strong>할 수 있는 새로운 경지를 선보였습니다. <strong>시스템 아키텍처</strong> 측면에서는 비전-언어-액션을 하나로 융합한 혁신적인 구조를 채택하여 범용성과 상호작용성을 극대화했고, <strong>학습 방법론</strong> 면에서는 막대한 사전학습 지식을 로봇 제어에 녹여내는 단계적 훈련 전략을 활용하였습니다. 이를 통해 <strong>다양한 실제 작업 데모</strong>에서 입증되었듯, Gemini Robotics는 이전 로봇들과 비교해 훨씬 폭넓은 능력을 발휘하며, <strong>한계를 뛰어넘는 범용 로봇</strong>의 가능성을 엿보게 합니다.</p>
+<p>물론, 이러한 성과와 동시에 <strong>극복해야 할 한계</strong>들도 분명히 존재합니다. 모델의 거대함에 따른 실용성 문제, 블랙박스 모델의 안전성·신뢰성 이슈, 그리고 데이터 및 윤리적 측면의 도전들은 앞으로 풀어야 할 숙제입니다. 그러나 과거 <strong>좁은 범위</strong>의 작업에 갇혀있던 로봇 공학에 <strong>AI 혁명의 숨결</strong>을 불어넣었다는 점에서, Gemini Robotics의 등장은 매우 고무적입니다. 이 연구는 PaLM-E, RT-2, RoboCat 등으로 이어진 <strong>로봇을 위한 Foundation Model</strong> 연구 흐름의 <strong>정점</strong>을 찍은 것으로, “생각하고 행동하는 로봇”이라는 오랜 꿈이 이제 손에 잡힐 듯한 현실감으로 다가오고 있습니다.</p>
+<p>향후 몇 년간 우리는 Gemini Robotics의 발전형이나 유사한 시스템들이 <strong>더 다양한 로봇 플랫폼</strong>에 적용되어 나오는 것을 보게 될 것입니다. 예컨대 가정용 서비스 로봇, 의료 보조 로봇, 제조 현장 로봇 등이 이러한 <strong>범용 지능 모듈</strong>을 탑재함으로써, 복잡한 환경에서도 유연하게 작업을 수행하게 될 것입니다. 또한, 학계와 산업계에서 Gemini Robotics의 접근법을 <strong>개방</strong>하고 <strong>표준화</strong>하려는 움직임이 나타나, 더 많은 연구자들이 이 기술을 개선하고 변형해나갈 것으로 기대됩니다.</p>
+<p>결론적으로, <strong>Gemini Robotics</strong>는 <em>“AI를 물리 세계로 가져온”</em> 선구적 사례로서, 로봇 공학의 지평을 한층 넓혔습니다. 그 기술적 세부와 의의를 조망하여 요약하자면 다음과 같습니다:</p>
+<ul>
+<li>Gemini Robotics는 <strong>Gemini 2.0</strong> 기반의 <strong>비전-언어-행동 통합 모델</strong>로, 로봇이 카메라로 보고(Look), 사람의 말을 이해하고(Listen), 곧바로 행동(Act)하는 <strong>엔드투엔드 지능</strong>을 구현했다.</li>
+<li><strong>시스템 구조</strong>는 트랜스포머로 구현된 <strong>비전 인코더 + 언어 인코더 + 액션 디코더</strong>로 이루어지며, 일반적 상황 이해와 물체 조작까지 하나의 거대 모델이 처리한다. 추가적으로 공간추론 특화 <strong>Gemini-ER</strong> 모듈이 결합되어 3D이해를 돕는다.</li>
+<li><strong>학습 면에서</strong>, 거대 멀티모달 사전학습으로 <strong>범용지식</strong>을 획득한 후, 실제 로봇 데이터로 <strong>미세조정과 강화학습</strong>을 시행하여 현실 적응력을 키웠다. 이를 통해 <strong>시뮬레이션-현실 간 갭</strong>을 줄이고, <strong>100개 수준 데모로 새로운 작업</strong>도 습득 가능한 데이터 효율을 달성했다.</li>
+<li><strong>멀티모달 통합</strong>의 힘으로, Gemini Robotics는 <strong>일상 언어 명령</strong>을 이해하고 맥락에 맞게 행동을 계획하며, <strong>시각 피드백</strong>에 따라 행동을 즉흥 조정하는 능력을 보였다. 이는 로봇과의 <strong>자연스러운 상호작용</strong>과 <strong>에머전트한 문제 해결</strong>을 가능케 했다.</li>
+<li>실제 실험에서 로봇은 <strong>샐러드 만들기, 종이접기, 바구니에 물건 채우기, 지퍼 열고 닫기, 옷 개기, 장난감게임</strong> 등 다양한 과업을 성공적으로 수행했고, <strong>새로운 물체/명령에 첫 시도 성공</strong>하는 등 범용성을 입증했다. 또한 Franka 팔, Apollo 휴머노이드 등에 모델을 이식하여 <strong>로봇 구조적 범용성</strong>도 확인했다.</li>
+<li><strong>PaLM-E, RT-2, RoboCat</strong> 등과 비교할 때, Gemini Robotics는 이들의 장점을 통합한 상위 개념으로, <strong>LLM의 지식+VLM의 일반화+다로봇 지원</strong>을 모두 구현했다. 그 결과 기존 모델들보다 <strong>종합 성능에서 우월</strong>하며 더 광범위한 적용이 가능하다.</li>
+<li><strong>한계</strong>로는 모델이 크고 데이터에 크게 의존하여 <strong>재현 비용</strong>이 높다는 점, 결정 과정을 해석하기 어려워 <strong>안전성과 디버깅</strong>에 새로운 문제가 생긴 점, 그리고 다양한 실세계 모든 분야로 가기까지 <strong>남은 영역</strong>(예: 이동 로봇, 인간 사회적 상호작용 등)이 있다는 점이 지적된다. 이를 위해 <strong>경량화, 모듈화, 안전장치, 표준화</strong> 등의 보완이 논의되고 있다.</li>
+</ul>
+<p>끝으로, Gemini Robotics는 <strong>AI와 로봇의 융합</strong>이 만들어낼 혁신을 선명히 보여주었습니다. 이 기술이 완전히 실용화되고 나면, 로봇은 더 이상 공장이나 실험실의 특정 임무 장치가 아니라, <strong>우리 생활공간에서 사람과 협업하고 배우는 동반자</strong>로 발전할 가능성이 큽니다. 물론 거기에는 넘어야 할 과제들이 있지만, 이번 연구를 계기로 학계와 업계 모두가 <strong>“생각하고 행동하는 로봇”</strong>이라는 목표에 한층 집중하게 되었다는 점은 분명합니다. 앞으로 Gemini Robotics를 비롯한 차세대 로봇 AI가 어떻게 진화해갈지 지켜보며, 로봇 공학자가 가져야 할 역할—기술적인 통찰 뿐 아니라 윤리적 고찰과 사회적 준비—에 대해서도 깊이 고민해봐야 할 시점입니다. <strong>AI의 물리 세계 진출</strong>은 이제 막 시작되었으며, 그 <strong>가능성과 책임</strong>은 모두 우리의 몫으로 다가오고 있습니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
