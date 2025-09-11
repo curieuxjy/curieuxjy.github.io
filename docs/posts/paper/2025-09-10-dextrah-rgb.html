@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-10">
+<meta name="description" content="Visuomotor Policies to Grasp Anything with Dexterous Hands">
+
+<title>📃DextrAH-RGB 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#논문의-핵심-요약" id="toc-논문의-핵심-요약" class="nav-link" data-scroll-target="#논문의-핵심-요약"><span class="header-section-number">2.1</span> 논문의 핵심 요약</a></li>
+  <li><a href="#연구의-배경-및-필요성" id="toc-연구의-배경-및-필요성" class="nav-link" data-scroll-target="#연구의-배경-및-필요성"><span class="header-section-number">2.2</span> 연구의 배경 및 필요성</a></li>
+  <li><a href="#사용된-방법론-및-기술적-접근" id="toc-사용된-방법론-및-기술적-접근" class="nav-link" data-scroll-target="#사용된-방법론-및-기술적-접근"><span class="header-section-number">2.3</span> 사용된 방법론 및 기술적 접근</a>
+  <ul class="collapse">
+  <li><a href="#지오메트릭-패브릭-기반-동작-공간" id="toc-지오메트릭-패브릭-기반-동작-공간" class="nav-link" data-scroll-target="#지오메트릭-패브릭-기반-동작-공간"><span class="header-section-number">2.3.1</span> 지오메트릭 패브릭 기반 동작 공간</a></li>
+  <li><a href="#교사-정책-시뮬레이션-강화학습" id="toc-교사-정책-시뮬레이션-강화학습" class="nav-link" data-scroll-target="#교사-정책-시뮬레이션-강화학습"><span class="header-section-number">2.3.2</span> 교사 정책: 시뮬레이션 강화학습</a></li>
+  <li><a href="#학생-정책-rgb-모방학습" id="toc-학생-정책-rgb-모방학습" class="nav-link" data-scroll-target="#학생-정책-rgb-모방학습"><span class="header-section-number">2.3.3</span> 학생 정책: RGB 모방학습</a></li>
+  </ul></li>
+  <li><a href="#주요-실험-및-결과-분석" id="toc-주요-실험-및-결과-분석" class="nav-link" data-scroll-target="#주요-실험-및-결과-분석"><span class="header-section-number">2.4</span> 주요 실험 및 결과 분석</a></li>
+  <li><a href="#장단점-평가" id="toc-장단점-평가" class="nav-link" data-scroll-target="#장단점-평가"><span class="header-section-number">2.5</span> 장단점 평가</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃DextrAH-RGB 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">fabric-guided</div>
+    <div class="quarto-category">rgb</div>
+    <div class="quarto-category">dextrah</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Visuomotor Policies to Grasp Anything with Dexterous Hands
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2412.01791">Paper Link</a></li>
+<li><a href="https://dextrah-rgb.github.io/">Homepage</a></li>
+</ul>
+<ol type="1">
+<li>RGB 이미지 입력만을 사용하여 다양한 물체를 정교하게 파지하는 로봇 시스템인 DextrAH-RGB를 소개하며, 시뮬레이션에서 강화 학습을 통해 Teacher policy를 훈련한 후 이를 RGB 기반 Student policy로 증류(distill)하는 방식을 제안합니다.</li>
+<li>DextrAH-RGB는 기하학적 패브릭 컨트롤러를 활용하여 안전하고 반응적인 동작을 보장하며, 포토리얼리스틱 렌더링 및 광범위한 도메인 랜덤화로 시뮬레이션에서 훈련된 정책이 실제 환경으로 성공적으로 전이될 수 있도록 합니다.</li>
+<li>DextrAH-RGB는 깊이 기반 파지 정책과 비교하여 경쟁력 있는 성능을 보이며, 실제 세계에서 이전에 보지 못한 객체 형상, 질감, 조명 조건에 대한 일반화 능력을 입증하여 RGB 기반 엔드투엔드 덱스터러스 파지 분야의 새로운 기준점을 제시합니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-09-10-dextrah-rgb/training_video_v3_3fast.gif" width="70%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>이 논문은 다양하고 복잡한 물체에 대해 민첩한 로봇 핸드가 신속하고 일반적인 파지(grasping)를 수행할 수 있도록 하는 Visuomotor Policy인 DextrAH-RGB를 소개합니다. 기존 연구들이 속도, 일반성, 혹은 Depth Map 및 Object Pose에 의존한다는 한계를 지적하며, 본 연구는 RGB 이미지 입력만을 사용하여 End-to-End 민첩한 암-핸드(Arm-Hand) 파지 시스템을 제안합니다. DextrAH-RGB는 시뮬레이션 환경에서 Privileged Fabric-Guided Policy(FGP)를 학습시킨 후, 이를 Photorealistic Tiled Rendering을 사용하여 RGB 기반 FGP로 Distillation하는 방법론을 채택합니다. 이는 복잡하고 접촉이 많은 작업인 민첩한 파지를 위한 End-to-End RGB 기반 Policy의 Sim2Real Transfer를 성공적으로 시연한 최초의 연구입니다.</p>
+<p>핵심 방법론은 두 단계로 이루어집니다.</p>
+<ol type="1">
+<li><strong>Teacher FGP 훈련</strong>:
+<ul>
+<li>안전하고 반응성이 뛰어나며 민첩한 파지에 적합한 액션 공간(6-DoF Palm Pose와 5차원 PCA Hand 액션 공간)을 제공하는 Geometric Fabric Controller를 사용합니다.</li>
+<li>시뮬레이션에서 PPO(Proximal Policy Optimization)를 통해 상태 기반(State-based) Teacher FGP를 훈련합니다.</li>
+<li>Actor-Critic 프레임워크는 Asymmetric하게 구성되어, Actor는 노이즈가 포함된 상태 관측(Noisy State Observation)을 받고 Critic은 모든 Privileged Observation을 받아, 정책이 정확한 상태 추정치에 과도하게 의존하는 것을 방지합니다.</li>
+<li>정책 네트워크는 512개 유닛의 LSTM 레이어와 두 개의 512개 유닛 MLP 레이어로 구성되며, Critic은 2048개 유닛 LSTM과 [1024, 512] 유닛 MLP를 사용합니다. 성능 향상을 위해 LSTM 주변에 Dense Skip Connection을 추가합니다.</li>
+<li>보상 함수는 물체에 손을 가까이 가져가는 보상 (<span class="math inline">r_{hand\_obj} = \exp(-10 d_{hand\_obj})</span>), 물체를 목표 위치로 이동시키는 보상 (<span class="math inline">r_{obj\_goal} = \exp(-\beta_{obj\_goal} \|x_{obj} - x_{goal}\|)</span>), 물체를 테이블에서 들어 올리는 보상 (<span class="math inline">r_{lift} = \exp(-\beta_{lift} (x_{obj_z} - x_{goal_z})^2)</span>), 그리고 손가락이 너무 많이 말리지 않도록 하는 정규화 페널티 (<span class="math inline">r_{curl} = -\beta_{curl} \|q_{hand} - q_{curl}\|^2</span>)의 가중 합으로 구성됩니다.</li>
+<li>ADR(Automatic Domain Randomization)을 사용하여 물리학 매개변수(마찰, 반발 계수, 질량 등)와 센서 노이즈 및 바이어스, 보상 가중치, 패브릭 댐핑(Fabric Damping) 등 다양한 파라미터의 범위를 점진적으로 확장하여 정책의 강건성(Robustness)을 향상시킵니다.</li>
+<li>훈련 시 PD Controller의 속도 목표(Velocity Target)와 FGP의 속도 및 가속도 입력(Velocity and Acceleration Input)을 0으로 스케일링하고, 더 빠른 움직임을 위해 패브릭 미분 방정식(Fabric Differential Equation)을 시뮬레이션 스텝 당 두 타임 스텝씩 통합하며, 물체 교란 토크(Disturbance Wrench) 활성화 조건을 변경하여 더욱 반응적인 정책을 유도합니다.</li>
+</ul></li>
+<li><strong>RGB Student FGP Distillation</strong>:
+<ul>
+<li>Online DAgger를 사용하여 훈련된 Teacher FGP를 RGB 기반 Student FGP로 Distillation합니다.</li>
+<li>Student는 로봇의 고유수용성(Proprioceptive) 데이터와 스테레오 카메라에서 촬영된 두 장의 RGB 이미지를 입력으로 받습니다.</li>
+<li>Isaac Lab의 Ray-Traced Tiled Rendering 기능을 활용하여 빠르고 사실적인 렌더링을 구현합니다. HDRI 배경, 로봇, 테이블, 물체의 재질(알베도, 거칠기, 금속성, 반사도) 및 텍스처를 무작위화하고, Random Background, Color Jitter, Motion Blur와 같은 데이터 증강(Data Augmentation)을 적용하여 현실적인 장면을 만듭니다.</li>
+<li>Student 네트워크 아키텍처는 Fig. 7a에 자세히 설명되어 있습니다. 두 장의 RGB 이미지는 ResNet-18 Encoder (사전 훈련된 후 마지막 두 레이어 제거)를 통해 Siamese 방식으로 Feature Vector로 인코딩됩니다. 이 벡터는 MLP를 거쳐 각각 128개의 128차원 토큰(Token)으로 변환됩니다. 이 토큰들은 학습 가능한 <code>[embed]</code> 토큰과 함께 Transformer로 전달됩니다. Transformer는 Cross-Attention 메커니즘을 사용하여 한 이미지의 토큰이 다른 이미지의 토큰 또는 <code>[embed]</code> 토큰에만 Attending하도록 하여, 이미지 간의 암묵적인 스테레오 매칭(Implicit Stereo Matching)을 통해 Depth 정보를 유추할 수 있도록 합니다. <code>[embed]</code> 토큰의 출력은 MLP를 통해 64차원 Stereo Embedding Vector로 변환됩니다.</li>
+<li>이 Stereo Embedding Vector는 고유수용성 입력과 연결되어 512개 유닛의 LSTM에 입력되고, 그 출력은 다시 입력과 연결되어 [512, 512, 256] 유닛의 MLP를 거칩니다. 또한, 보조 손실(Auxiliary Loss)을 위해 물체의 3D 위치를 예측하는 헤드가 추가됩니다.</li>
+<li>손실 함수는 모방 손실(Imitation Loss)과 보조 손실(<span class="math inline">L = L_{action} + L_{aux}</span>)의 합으로 정의됩니다. <span class="math inline">L_{action} = D_{KL}(\pi_{student}\|\pi_{teacher})</span>이며, <span class="math inline">L_{aux} = \|\hat{x}_{obj} - x_{obj}\|^2</span>입니다. KL divergence는 L2 Loss보다 분산이 낮은 차원에서 오차를 0으로 만드는데 우선순위를 두어 더 효과적입니다.</li>
+<li>ResNet Encoder의 Finetuning이 정책 성능에 가장 중요하며, 메모리 제약으로 인해 모든 ResNet 가중치는 bf16으로 캐스팅됩니다.</li>
+<li>Student 훈련 시, 물체가 2초 동안 공중에 들려 있으면 에피소드를 조기에 종료시켜 초기 파지 시도의 중요성을 강조합니다.</li>
+</ul></li>
+</ol>
+<p>실험 결과, DextrAH-RGB는 Sim2Real Transfer에서 우수한 성능을 보이며, 새로운 물체, 보지 못한 형상, 텍스처, 조명 조건(HDR 포함)에서도 일반화됩니다. 특히, 스테레오 RGB 설정은 단안(Monocular) RGB보다 시뮬레이션에서 더 나은 성능을 보였고 (위치 오차 약 1cm 감소), Transformer 모듈의 추가는 성능을 더욱 향상시켰습니다. 실제 로봇 실험에서 DextrAH-RGB (스테레오)는 DextrAH-G (Depth 기반)와 비교하여 Cycle Time이 1~2초 더 빨라 인간 파지 시간(3.63초)에 근접하는 빠른 속도를 달성했지만, 연속 성공률(CS)과 성공률(SR)은 다소 낮았습니다. 하지만 HDR 조건에서도 성능 저하가 크지 않아 조명 조건에 강건함을 입증했습니다.</p>
+<p>결론적으로 DextrAH-RGB는 시뮬레이션에서 훈련된 End-to-End RGB 기반 민첩한 파지 정책의 실제 세계 적용 가능성을 보여주며, 향후 더 복잡한 기술 개발 및 대규모 픽셀-액션(Pixels-to-Action) 기초 정책(Foundational Policies)을 위한 데이터 소스로 활용될 잠재력을 제시합니다. 한계점으로는 PCA 액션 공간으로 인한 민첩성 제한, 테이블과의 충돌 회피 동작의 정책 학습 불가능, 두 단계 훈련 파이프라인의 복잡성, 기능적이지 않은 파지(Non-functional Grasping), 그리고 단일 물체 시나리오에 한정된다는 점 등이 언급됩니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>DextrAH-RGB: Visuomotor Policies to Grasp Anything with Dexterous Hands (논문 리뷰)</p>
+</blockquote>
+<section id="논문의-핵심-요약" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="논문의-핵심-요약"><span class="header-section-number">2.1</span> 논문의 핵심 요약</h2>
+<p><strong>DextrAH-RGB</strong>는 다지(多指) 로봇 손을 이용해 다양한 물체를 잡는(dexterous grasping) 문제를 오로지 <strong>RGB 카메라 영상만으로</strong> 해결한 최신 연구입니다. 이 시스템은 스테레오 카메라로부터 얻은 두 장의 RGB 영상 입력만으로 로봇 팔-손 시스템(7자유도 로봇 팔 + 16자유도 다지 로봇 손)을 <strong>엔드투엔드(end-to-end)</strong>로 제어하여 물체를 파지할 수 있습니다. 핵심 아이디어는 시뮬레이션에서 <strong>강화학습</strong>으로 학습된 <strong>교사(teacher) 정책</strong>을 활용해, 카메라 입력 기반의 <strong>학생(student) 정책</strong>을 모방 학습으로 훈련시키는 <strong>이단계 학습 절차</strong>입니다. 먼저 물체의 상태정보 등을 직접 관측할 수 있는 교사 정책을 안전한 동작 공간에서 강화학습으로 훈련하고, 이후 이 교사 정책을 통해 RGB 영상만 보는 학생 정책을 시뮬레이션에서 <strong>DAgger 알고리즘</strong>으로 학습시킵니다. 이를 통해 얻은 최종 <strong>시각-운동 정책(visual-motor policy)</strong>은 복잡하고 동적인 다지 손 파지 작업을 RGB 입력만으로 수행하며, 시뮬레이션에서 학습한 그대로 <strong>제로샷으로 실제 로봇에 이식(sim-to-real)</strong>될 수 있음을 보여주었습니다. 저자들의 주장에 따르면, <strong>DextrAH-RGB는 세계 최초로 순수 RGB 카메라 입력 기반 다지 손 파지 정책의 견고한 시뮬레이션-현실 전이를 달성</strong>한 사례입니다. 또한 이 정책은 훈련 중 보지 못한 새로운 형태의 물체나 다양한 재질·텍스처, 조명 조건 변화에도 일반화하여 높은 파지 성공률을 보였다고 보고됩니다. 요약하면, 이 논문은 <strong>시뮬레이션만으로 학습된 RGB 기반 정책을 실제 로봇에 적용하여 안전하고 신뢰성 있게 다양한 물체를 파지</strong>하는 방법을 제시했으며, 이는 향후 복잡한 조작 기술이나 거시적인 <strong>픽셀-투-액션(pixels-to-action)</strong> 모델 개발을 위한 모듈이자 데이터 소스로 활용될 수 있는 잠재력이 있습니다.</p>
+</section>
+<section id="연구의-배경-및-필요성" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="연구의-배경-및-필요성"><span class="header-section-number">2.2</span> 연구의 배경 및 필요성</h2>
+<p>로봇 분야에서 사람 손처럼 <strong>다양한 물체를 쥐는 능력</strong>은 가장 중요하면서도 오랫동안 해결이 어려웠던 도전 과제입니다. 다지 로봇 손의 잠재력을 충분히 활용하려면, 보지 못한 새로운 물체에도 일반화할 수 있고 주변 환경 변화에도 강인하며, 가정이나 작업장에서 마주치는 <strong>광범위한 물체들에 모두 적용 가능한 센서</strong>로 동작해야 합니다. 기존의 여러 연구와 솔루션이 제시되었지만, 아직까지 <strong>일반적인 해법</strong>을 만들기는 어려웠습니다.</p>
+<p>특히 최근에는 시뮬레이션 환경에서의 <strong>강화학습</strong>과 <strong>도메인 랜덤화(domain randomization)</strong> 기법 등의 발전으로, 시뮬레이터에서 학습한 정책을 현실 로봇에 성공적으로 이전(simtoreal)하는 사례들이 늘고 있습니다. 시뮬레이션을 활용하면 대량의 학습 데이터를 안전하게 생성할 수 있고, 시각 센서와 로봇 자체센서(proprioception) 정보를 모두 활용하는 <strong>반응적 정책</strong> 훈련이 용이해졌습니다. 그러나 이러한 도구를 사용한 현재의 접근법들에도 한계가 존재합니다. <strong>대부분의 기존 시스템은 시각 입력부터 제어까지 직접 연결하는 엔드투엔드 정책 학습을 피하고</strong>, 문제를 단계로 분리(factorize)하는 방식을 택했습니다. 예를 들어, 복잡한 파지 문제를 <strong>정적인 파지 자세를 찾는 키네마틱 문제</strong>로 환원하여 접근하는 것이 일반적이었습니다. 이러한 <strong>계획 기반 방법</strong>들은 평균적인 물체에는 효과적이지만, <strong>실시간으로 연속적 대응</strong>이 어렵기 때문에 예기치 않은 외란이나 처음 보는 특이한 형상의 물체에는 대응하지 못하는 문제가 있었습니다.</p>
+<p>한편, <strong>연속적인 시각 피드백 기반의 파지 제어</strong> 연구들도 존재하지만, <strong>고화질 RGB 영상</strong>을 대량으로 시뮬레이션하기엔 제약이 있기 때문에 주로 <strong>깊이(depth) 센서나 점군(point cloud)</strong> 데이터를 활용해 왔습니다. <strong>깊이지도(depth map)</strong>는 물체의 기하학적 형태 파악에 유리하고 시뮬레이터에서도 비교적 구현이 쉬워 많이 사용되었지만, <strong>반투명하거나 투명한 물체</strong>에는 취약하고 실제 IR 기반 깊이카메라의 <strong>노이즈 문제</strong>도 있습니다. 요컨대, <strong>기존 방법들은 속도나 다지 손의 섬세함, 혹은 깊이지도 의존성 등에서 한계를 보여왔으며</strong>, 완전히 <strong>RGB 카메라만으로 동작하는 범용적인 다지 손 파지 정책</strong>은 개발되지 못했습니다. 이러한 빈틈을 메우기 위해 본 연구에서는 <strong>RGB 기반의 연속적이고 반응적인 파지 정책</strong>을 제안한 것입니다.</p>
+<p>또한 관련 연구들을 살펴보면, 전통적인 방법들은 물체-손 간 <strong>접촉 안정성 분석</strong> 등을 통한 그립 품질 지표를 최적화하였으나 정밀한 집게질(pinch grip) 등에 국한되거나 정확한 물체 3D 모델이 필요하다는 한계가 있었습니다. 데이터 기반 접근으로 방대한 <strong>그립 데이터셋</strong>을 활용한 학습도 시도되었지만, 대부분 <strong>깊이/점군 정보</strong>에 의존하여 학습하거나 결과 검증도 시뮬레이션 내에 머무르는 경우가 많았습니다. 몇몇 최신 연구에서는 시뮬레이션 정책의 실제 이전을 보고하기도 했지만, <strong>물체 CAD 모델을 이용한 포즈 추정</strong>을 전제한다든지, 손가락의 가려짐으로 인한 점군 결손을 메우기 위해 로봇 모델 정보를 활용하는 특수 기법을 쓰는 등 <strong>범용성이 제한</strong>되는 경우가 많았습니다. 가장 유사한 선행연구로 언급된 <strong>DextrAH-G</strong>는 본 논문의 직전 버전 격으로, 인간 그립 동작을 PCA로 저차원화한 손동작 공간과 <strong>지오메트릭 패브릭(geometric fabric)</strong> 기반 안전 제어를 활용하여 <strong>교사-학생 구조</strong>로 학습한 뒤 <strong>깊이 카메라 기반 학생 정책</strong>을 시현한 바 있습니다. DextrAH-G는 시뮬레이션에서 학습한 깊이 기반 정책을 실제로도 견고하게 이전하여 <strong>훈련에 쓰지 않은 새로운 물체들도 잡아내는</strong> 놀라운 결과를 보였지만, 여전히 <strong>깊이 센서</strong>에 의존하고 있었습니다. <strong>DextrAH-RGB</strong>는 바로 이 지점을 발전시켜, <strong>깊이 대신 카메라 RGB 정보만으로 동작하는 정책</strong>을 제시함으로써 더욱 <strong>광범위한 물체와 환경에서도 적용될 수 있는 가능성</strong>을 연 것입니다.</p>
+</section>
+<section id="사용된-방법론-및-기술적-접근" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="사용된-방법론-및-기술적-접근"><span class="header-section-number">2.3</span> 사용된 방법론 및 기술적 접근</h2>
+<p><strong>DextrAH-RGB</strong>의 학습은 크게 <strong>교사(policy)와 학생(policy)의 두 단계</strong>로 이루어집니다. 먼저 시뮬레이션 상에서 <strong>상태 정보</strong>를 모두 활용하는 <strong>교사 정책</strong>을 강화학습(PPO 알고리즘)으로 학습시키고, 이후 해당 정책을 <strong>DAgger</strong> 기반의 모방학습으로 <strong>학생 정책</strong>에 증류(distillation)합니다. 학생 정책은 <strong>시뮬레이터에서 생성한 데이터만으로 학습</strong>되며, <strong>두 대의 RGB 카메라 영상</strong>만을 입력으로 받아 동작하도록 훈련됩니다. 최종적으로 이 학생 정책이 실제 로봇에 이식되어 동작하게 됩니다.</p>
+<section id="지오메트릭-패브릭-기반-동작-공간" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="지오메트릭-패브릭-기반-동작-공간"><span class="header-section-number">2.3.1</span> 지오메트릭 패브릭 기반 동작 공간</h3>
+<p>본 연구의 중요한 기술 요소 중 하나는 <strong>지오메트릭 패브릭(geometric fabric)</strong>이라 불리는 프레임워크를 활용한 <strong>패브릭 유도 정책(Fabric-Guided Policy, FGP)</strong>입니다. 지오메트릭 패브릭은 고전 역학 시스템을 일반화하여 <strong>안전하면서도 반응적인 정책</strong>을 설계하기 위한 방식으로, 로봇의 동작을 <strong>2차 동역학 시스템</strong> 형태로 정의한 뒤 토크 제어 등을 통해 실제 로봇에 구현하는 개념입니다. 정책의 원하는 거동(행동 양상)을 <strong>기하학적 항(geometric term)</strong>과 <strong>강제 항(forcing term)</strong>의 조합으로 표현하는데, 기하학적 항은 로봇이 <strong>속도와 무관하게 동일한 경로</strong>를 따라가게 함으로써 기본 움직임 궤적을 결정하고, 강제 항은 필요에 따라 로봇의 궤적을 교란하여 <strong>안전 확보(예: 관절 한계 회피)</strong> 또는 <strong>과제 수행 보조</strong>에 사용됩니다. 여러 강제 항이 동시에 작용하면 상충될 수 있으므로, 가능한 한 정책의 목표 동작을 기하학적 항으로 녹여내고 강제 항은 안전 등 보조적 역할만 하도록 설계합니다. DextrAH-RGB에서는 이전 연구인 DextrAH-G와 <strong>동일한 패브릭 및 동작 공간 설계</strong>를 사용했으며, 그 주요 내용을 요약하면 다음과 같습니다. <strong>로봇과 주변 물체 간 충돌 회피 행동</strong>은 저차원 기하학적 항에 내재화하여 로봇이 기본적으로 장애물과 안전거리를 유지하도록 하되, 근접 시에만 강제 항으로 밀어내는 보조 제어를 넣었습니다. 7자유도 팔의 관절 여유도를 활용하여 로봇 팔꿈치가 자연스럽게 바깥으로 빠지고 손가락은 기본적으로 오므린 자세를 취하도록 <strong>끌어당기는 힘</strong>을 기하학적 항으로 추가하여, RL 정책의 출력이 이 기본 자세와 충돌하지 않도록 유도했습니다. 또한 <strong>로봇 관절 각도 한계</strong>를 넘지 않도록 강제 항을 부여하여 안전성을 보장했습니다. <strong>강화학습 정책의 액션 공간</strong>은 이러한 패브릭 상에서 정의되는데, <strong>로봇 손바닥(palm)의 6자유도 자세(3차원 위치 + 3자유도 회전)</strong>와 <strong>손가락 동작의 PCA 기반 5차원 좌표</strong>로 구성됩니다. 즉, 16자유도의 손가락 움직임을 사전에 인간 파지 동작들을 PCA로 분석해 추출한 5개의 주성분(eigengrasp) 축으로 표현함으로써, <strong>그립 동작에 적합하면서도 차원이 감소된 손 동작 공간</strong>을 사용한 것입니다. RL 알고리즘은 이 6+5차원의 공간에서 목표 가속도 명령을 출력하고, 실시간 제어 단계에서는 이 가상 패브릭 동역학의 가속도에 로봇의 실제 가속도를 최대한 맞추도록 <strong>2차 제어(Quadratic Program)</strong>를 풀어 토크 제어를 수행합니다. 이러한 패브릭 기반 액션 공간을 활용함으로써, 로봇이 <strong>동작 속도와 관계없이 안정적인 궤적</strong>을 따르고 안전 제약을 지키면서도, 다지 손 파지에 <strong>유리한 유도 편향(inductive bias)</strong>을 정책에 제공합니다.</p>
+</section>
+<section id="교사-정책-시뮬레이션-강화학습" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="교사-정책-시뮬레이션-강화학습"><span class="header-section-number">2.3.2</span> 교사 정책: 시뮬레이션 강화학습</h3>
+<p><strong>교사 정책(Teacher FGP)</strong>은 시뮬레이터에서 강화학습(PPO 알고리즘)을 통해 학습됩니다. NVIDIA Isaac Lab 플랫폼을 이용하여 대규모 병렬 환경에서 다양한 물체들을 대상으로 학습함으로써, 샘플 효율이 낮은 강화학습 문제를 극복하고자 했습니다. 교사 정책은 <strong>시뮬레이터 내부 상태정보를 완전히 활용하는 전략</strong>으로 설계되었습니다. 예를 들어, 신경망 정책의 입력으로 <strong>로봇 각 관절의 위치·속도, 손가락 끝과 손바닥의 위치/속도, 물체의 6DoF 자세(pose), 목표로 하는 물체 위치(예: 들어올릴 목표 높이)</strong>, 그리고 <strong>어떤 종류의 물체인지에 대한 원-핫(one-hot) 벡터</strong>, 직전 시간의 패브릭-액션, 그리고 패브릭 동역학의 현재 상태(위치, 속도, 가속도)까지 모두 제공합니다. 이러한 <strong>프리빌리지드(privileged) 정보</strong>를 통합해, 교사 정책은 학생 정책보다 훨씬 풍부한 환경 정보를 바탕으로 동작하게 됩니다. 교사 정책의 신경망 구조는 이전 연구인 DextrAH-G와 유사하게 <strong>2개의 512차원 완전연결층 + 512차원 LSTM 층</strong>으로 구성되며, LSTM 주변에 skip-connection을 추가해 장기 의존성 학습을 도왔습니다.</p>
+<center>
+<img src="../../images/2025-09-10-dextrah-rgb/stage_1.png" width="80%">
+</center>
+<p><strong>보상 함수(reward)</strong>는 DextrAH-G에서 사용한 것보다 단순화하여 네 가지 항으로 구성했습니다: (1) <strong>접근 보상</strong> – 로봇 손가락 및 손바닥 지점들이 물체에 최대한 가깝게 접근하도록 장려, (2) <strong>이동 보상</strong> – 집은 물체를 목표 위치(공중의 일정 높이 등)까지 이동시키도록 장려, (3) <strong>들어올리기 보상</strong> – 물체를 테이블에서 떼어 들어올린 경우의 보상, (4) <strong>손가락 펼침 규제</strong> – 평소에 손가락을 지나치게 오므리지 않도록 벌점. 이 네 가지 요소를 가중합하여 최종 보상으로 사용함으로써, <strong>물체에 손을 뻗어 집고 들어올려 안정적으로 들고 있게 하는 행동</strong>을 강화학습으로 학습시켰습니다. 학습 초반에는 과제를 쉽게 하고, 점차 어려워지도록 <strong>자동 도메인 랜덤화(Automatic Domain Randomization, ADR)</strong> 기법을 적용했습니다. 예를 들어 물체의 초기 배치나 물체/로봇 물리 속성, 마찰계수, 조명 등 여러 환경 파라미터들의 범위를 초기에는 좁게 설정하여 시작하고, 정책 성능이 향상됨에 따라 이 범위들을 선형적으로 최대치까지 넓혀갑니다. 모든 랜덤화 파라미터들을 <strong>정해진 최대 난이도</strong>까지 동시에 조금씩 높여가는 방식으로 커리큘럼을 형성하여, 최종적으로는 상당히 어려운 조건에서도 동작 가능한 정책을 얻도록 유도했습니다 (자세한 파라미터 범위는 논문 Table II에 명시).</p>
+</section>
+<section id="학생-정책-rgb-모방학습" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="학생-정책-rgb-모방학습"><span class="header-section-number">2.3.3</span> 학생 정책: RGB 모방학습</h3>
+<p>교사 정책이 시뮬레이션에서 안정적으로 물체를 집을 수 있게 되면, 이제 <strong>학생 정책(Student FGP)</strong>을 훈련합니다. 학생 정책은 <strong>카메라 영상</strong>만으로 동작해야 하므로, 교사-학생 정책 사이에 <strong>관찰공간 차이(reality gap)</strong>가 존재합니다. 이를 해소하기 위해 <strong>온라인 DAgger</strong> 기반의 <strong>모방 학습(distillation)</strong>을 수행합니다. 구체적으로, 시뮬레이터에서 교사 정책을 실행하면서 동시에 학생 정책이 같은 상황을 관찰하게 하고, 교사의 행동을 모방하도록 학생을 학습시킵니다. 학생은 학습 과정 동안에도 점진적으로 자기 정책에 따라 행동해 보면서 (교사 정책으로부터 벗어나는 시도가 발생하고) 그때마다 교사 정책의 조언을 받아 잘못된 상태 분포를 교정하는 <strong>DAgger 알고리즘</strong>을 적용합니다. <strong>학생 정책의 입력</strong>은 로봇 관절 상태(각도 및 속도)와 <strong>좌우 두 대의 RGB 카메라 이미지</strong>입니다. 스테레오 카메라 구성을 사용한 이유는 <strong>듀얼 카메라로부터 깊이 정보를 유추</strong>할 수 있기 때문입니다. 깊이 센서를 쓰지 않고 RGB만 쓰면서도, 두 시점 이미지를 보면 물체까지의 거리나 입체감을 어느 정도 추정할 수 있어 정책 성능이 향상되었습니다 (실험적으로 단안 카메라보다는 스테레오 입력이 성능이 우수했음).</p>
+<center>
+<img src="../../images/2025-09-10-dextrah-rgb/stage_2_flipped.png" width="80%">
+</center>
+<p><strong>시뮬레이션에서 학생 정책 학습을 위해 도메인 랜덤화 및 증강</strong>을 광범위하게 활용했습니다. NVIDIA의 Isaac Lab 시뮬레이터의 <strong>광선추적 기반 타일드 렌더링</strong> 기능을 이용하여, 현실감 높고 해상도 좋은 영상을 빠르게 다량 생성했습니다. 학습 중 에피소드마다 주변 환경을 무작위로 변화시켰는데, 예를 들어 <strong>배경 조명</strong>으로 HDRI 환경맵을 30% 확률로 랜덤 교체하고, 매 에피소드 시작 시 <strong>로봇, 테이블, 물체의 재질 속성</strong>(색조, 반사율, 거칠기 등)을 임의로 변경했습니다. 또한 물체 3D 모델들이 원래 텍스처가 없는 경우가 많아, Omniverse 자산 라이브러리의 일상 사물 텍스처를 무작위로 입혀 시각적 다양성을 높였습니다. 비록 임의로 입힌 텍스처가 물체 형상에 어울리지 않더라도(<strong>UV 매핑 불일치</strong>로 엉뚱하게 발라질 수 있지만), <strong>시각적으로 다양한 데이터</strong>를 확보하는 데에 의의를 두었습니다. 이처럼 <strong>조명, 재질, 배경</strong>을 계속 바꾸는 랜덤화 외에도, 최종 학생 정책에 입력되기 전 <strong>데이터 증강(data augmentation)</strong>도 적용했습니다. 예를 들어 배경을 다른 이미지로 치환하거나, <strong>컬러 지터(color jitter)</strong>로 색감을 흔들고, 움직임 <strong>모션 블러</strong> 효과를 가하는 등 다양한 증강을 통해 카메라 영상의 분포 폭을 넓혔습니다. (논문 Fig. 2에서는 이러한 랜덤화된 환경에서 얻은 원본 카메라 영상들(위쪽)과 여기에 증강을 적용한 최종 학습 입력 영상들(아래쪽)을 비교하여 보여줍니다.) 학생 정책 학습 시에는 이미 교사 정책이 충분히 학습된 상태이므로, <strong>ADR 난이도를 곧바로 최대치로 설정</strong>하여 가장 어려운 조건들에서도 학생이 학습되도록 하였습니다. 이는 학생이 현실 환경과 유사한 조건을 폭넓게 접하도록 해 <strong>시뮬레이션-현실 차이를 최소화</strong>하려는 전략입니다.</p>
+<p><strong>학생 정책의 신경망 구조</strong>는 경량화된 커스텀 모델로 구성되었습니다. 이미지 입력 처리를 위해 <strong>작은 합성곱 신경망(CNN) 인코더</strong> 두 개(좌/우 카메라별로)로 시작하는데, 각 CNN은 출력 채널 수가 <code>[16, 32, 64, 128]</code>인 컨볼루션 계층들을 거치며 활성함수로 ReLU를 사용합니다. 입력 해상도는 비교적 낮은 편인 320×240이며, CNN 마지막 출력은 <strong>평균 풀링</strong>을 거쳐 평탄화된 후 32차원 임베딩 벡터로 압축됩니다. 이렇게 얻은 좌우 이미지 임베딩(각 32차원)을 로봇 자체 상태(proprioception) 벡터와 결합하여 하나의 상태 표현으로 만든 뒤, 512차원의 <strong>LSTM 층</strong>에 입력합니다. LSTM의 출력을 다시 입력과 연결(skip connection)하여 <strong>다층 퍼셉트론(MLP)</strong>에 통과시키고, 그 결과를 다시 LSTM 출력 등과 결합하여 <strong>보조 출력 헤드</strong>에 전달합니다. 이러한 <strong>DenseNet 스타일의 밀집 연결 구조</strong>를 취함으로써, 단순 순차형보다 정책 학습 성능이 향상되었음을 참고 연구를 통해 확인했다고 합니다. 최종적으로 학생 정책 신경망은 <strong>주 출력</strong>으로 교사와 동일한 형태의 행동 값을 내고, 추가로 <strong>보조 출력</strong>으로 현재 물체의 예상 위치를 회귀 예측하도록 구성되었습니다. 모든 계층의 활성화함수로는 ELU를 사용했습니다. 한편, 이미지 인코더로 요즘 각광받는 <strong>대규모 사전학습 비전 모델</strong>(예: ResNet-18, ViT 등)을 사용하지 않고 직접 경량 모델을 설계한 이유는, 거대한 모델의 경우 학습 시 <strong>동결된 특성 추출기</strong>로 쓰면 과제 특화 표현 학습이 어려워 성능이 떨어지고, 반대로 <strong>파인튜닝</strong>하려면 파라미터가 너무 많아 병렬 시뮬레이션 환경 개수를 크게 줄여야 하므로 <strong>학습 효율이 저하</strong>되기 때문이라고 설명합니다. 즉, 다수의 환경에서 병렬로 학생 정책을 훈련해야 하므로, <strong>경량 모델을 끝까지 직접 학습</strong>하는 편이 전체 성능 및 효율에 유리하다고 판단한 것입니다.</p>
+<p>학생 정책 학습에서는 <strong>손실 함수</strong>로 <strong>모방 손실 + 보조(물체 위치) 손실</strong>을 함께 최적화했습니다. 모방 손실은 교사 정책과 학생 정책이 출력하는 행동 확률분포 간의 <strong>KL 발산(Kullback-Leibler divergence)</strong>으로 정의하였습니다. 교사-학생 정책 모두 가우시안 출력 분포(평균 및 분산)로 행동을 샘플링하는데, 분산 항은 고정하고 학습하지 않도록 설정하여 KL 손실이 사실상 <strong>평균값 차이</strong>를 줄이는 역할을 하도록 했습니다. 이는 단순 평균 제곱 오차 손실보다 안정적이었다고 합니다. 특히 교사 정책이 <strong>확신(confident)</strong>하는 차원(분산이 작은 차원)에서 오류를 더 강하게 줄여주는 효과가 있어, 모든 차원을 균일하게 학습하는 L2 손실 대비 학습이 잘 되었습니다. 보조 손실은 학생 신경망의 물체 위치 예측과 시뮬레이터 상 실제 물체 위치와의 L2 오차로 계산하여, 학생 정책이 시각적 피쳐로부터 물체의 공간적 정보를 추출하도록 유도했습니다.</p>
+<p>마지막으로, <strong>교사 정책과 학생 정책 간 에피소드 시간 구성</strong>을 다르게 설계했습니다. 교사 정책은 하나의 에피소드가 최대 10초간 지속되도록 했는데, 이는 물체를 들어올린 후에도 충분히 유지하여 <strong>안정적으로 파지</strong>하도록 탐색하는 시간을 주기 위함이었습니다. 그러나 학생 정책까지 동일하게 긴 에피소드로 학습시키면, 이미 물체를 잡고 난 후 공중에 들고 있는 지루한 구간이 학습 데이터에 많이 포함되어 <strong>초반 파지 동작 학습 비중이 상대적으로 낮아지는</strong> 문제가 있습니다. 학생 정책이 교사를 벗어나 <strong>오차가 누적되는 부분은 주로 초반 물체를 잡는 단계</strong>이므로, 이 구간의 학습을 강화하기 위해 <strong>에피소드를 조기 종료</strong>하는 기준을 두었습니다. 즉, 학생 정책 학습 시에는 <strong>물체를 들어올려 2초간 성공적으로 들고 있으면 바로 에피소드를 끝내고</strong> 다음 시뮬레이션 에피소드로 넘어가도록 하였습니다. 다만 너무 짧게 자르면 첫 시도 실패 후 재시도 학습이 어려울 수 있으므로, 2초 정도 유예를 두어 <strong>한번 놓쳤을 때 다시 쥐는 회복 동작</strong>도 학습할 수 있도록 균형을 맞추었습니다.</p>
+</section>
+</section>
+<section id="주요-실험-및-결과-분석" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="주요-실험-및-결과-분석"><span class="header-section-number">2.4</span> 주요 실험 및 결과 분석</h2>
+<p><strong>하드웨어 구성:</strong> 학습된 DextrAH-RGB 학생 정책은 <strong>실제 로봇 플랫폼</strong>에 이식되어 검증되었습니다. 로봇은 7자유도 KUKA LBR iiwa 산업용 팔에 16자유도 Allegro 다지 로봇 손이 결합된 형태이며, 테이블 위에 두 대의 Intel RealSense D415 카메라를 좌우 스테레오로 고정 배치하여 RGB 영상을 수집했습니다. (D415는 RGB-D 카메라이지만, 본 연구에서는 <strong>깊이 정보는 사용하지 않고 RGB 채널만</strong> 활용했습니다.) 로봇 제어기는 KUKA 팔 관절 제어에 1kHz, Allegro 손가락 제어에 333Hz의 내부 제어 주기로 동작하며, 카메라는 60Hz로 영상을 송신합니다. 학습된 정책의 추론 속도도 실시간성을 충족해야 하므로, Jetson Orin 장치 상에서 전체 정책 신경망을 60Hz로 실행했고, NVIDIA CUDA 그래프 캡처 기술 등을 활용해 지연을 최소화했습니다. 실험 결과 <strong>정책 주기를 30Hz에서 60Hz로 높였을 때 로봇의 파지 성능이 크게 향상</strong>되었는데, 이는 고속의 반복 제어가 실세계 상호작용에서 매우 중요함을 보여줍니다.</p>
+<center>
+<img src="../../images/2025-09-10-dextrah-rgb/stage_3_flipped_arrows.png" width="80%">
+</center>
+<p><strong>평가 방법:</strong> 논문에서는 다지 손 파지 능력을 평가하기 위해 <strong>단일 물체 파지 성공률</strong> 지표를 사용했습니다. 로봇이 한 가지 물체를 들어올릴 수 있는지를 여러 번 시도해보고 그 <strong>성공 확률</strong>을 측정하는 방식입니다. 구체적으로, 야일/CMU/버클리(YCB) 등 공개 물체 데이터셋에 속하는 <strong>11개의 다양한 물체</strong>를 선정하여 각각에 대해 평가를 진행했습니다. 예를 들어 컵, 음료수 캔, 과자 상자, 세제 병, 벽돌, 스팸 통조림, 냄비, 장난감 비행기 등 <strong>형태와 크기가 다양한 물체들</strong>이 포함되었습니다. 각 물체마다 <strong>5가지 서로 다른 초기 자세</strong>(방향 및 위치)로 테이블 위에 놓고, 로봇이 해당 물체를 집어 들어올리도록 정책을 구동합니다. 한 번의 시도에서 성공 여부를 기록하며, <strong>각 물체당 5회씩</strong> 시도해 <strong>5회 중 성공 횟수의 비율</strong>을 그 물체의 성공률로 정의했습니다. 만약 로봇이 첫 시도에 물체를 제대로 잡지 못하더라도, 물체가 완전히 넘어져 집기 불가능한 상태가 되지 않는 한 <strong>정책이 연속적으로 재시도</strong>하도록 했습니다. 이는 앞서 언급한대로 DextrAH-RGB 정책이 <strong>순차적인 단일 스텝 제어가 아닌 연속적인 센서피드백 기반 정책</strong>이기 때문에 가능한 일로, 한 에피소드 내에서도 <strong>실패를 감지하면 자세를 고쳐 재도전하는 동작</strong>이 나타날 수 있습니다. 이러한 <strong>연속 수행 능력과 LSTM 기반의 적응력</strong>은 로봇이 물체를 잡을 때 작은 미끄러짐이나 오차가 발생해도 곧바로 교정하여 결국 성공으로 이어질 확률을 높여줍니다.</p>
+<p><strong>실험 결과:</strong> DextrAH-RGB의 성능을 <strong>이전 연구들의 결과와 정량적으로 비교</strong>하기 위해, 여러 기준 물체에 대한 성공률을 <strong>Table I</strong>에 요약하였습니다. 주요 비교 대상은 앞서 언급된 <strong>DextrAH-G</strong> (깊이 센서 기반 교사-학생 정책)과, <strong>DexDiffuser</strong>, <strong>ISAGrasp</strong>, <strong>Matak</strong> 등의 최신 방법들입니다. 전반적으로 DextrAH-RGB는 <strong>여러 물체에서 기존 최첨단 성능과 유사한 성공률</strong>을 달성하여, 깊이 센서를 사용하지 않고도 견줄만한 파지 성능을 보임을 확인했습니다. 예를 들어 Pringles 통, 컵, 벽돌 등의 물체에 대해서는 100%에 가까운 성공률을 기록하여, Depth 기반인 DextrAH-G와 동등한 수준의 성능을 냈습니다. 일부 물체에 대해서는 <strong>깊이 기반 방법보다 성공률이 다소 낮았는데</strong>, 예컨대 주전자(Pitcher)의 경우 DextrAH-RGB는 5회 중 1회(20%) 성공한 반면 DextrAH-G는 80%를 달성했고, 장난감 비행기는 DextrAH-RGB가 한 번도 성공하지 못한 데 반해 DextrAH-G는 60% 성공했습니다. 전반적으로 <strong>깊이 정보를 사용하지 않는 RGB 기반이라는 도전적인 설정</strong> 때문에 완벽히 동일한 성능을 내긴 어렵지만, <strong>대부분의 물체에서 깊이 기반 대비 큰 손실 없이 높은 성공률</strong>을 보였다는 점이 고무적입니다. 특히 투명한 유리잔이나 광택이 있는 금속 물체 등 <strong>깊이 카메라로는 취약한 대상</strong>에 대해서도 RGB 정책이 제 성능을 발휘함을 보여, <strong>RGB 입력의 실용성</strong>을 입증했습니다 (해당 사례에 대한 구체적 수치는 논문에서 직접 언급되지 않았으나, 깊이 센서의 약점을 고려한 저자들의 주장입니다). 또한 DextrAH-RGB는 <strong>훈련 시 보지 못한 새로운 물체들</strong>에 대해서도 높은 성공률을 나타냈는데, 이는 앞서 시뮬레이션 단계에서 다양한 도메인 랜덤화와 시각적 변이를 학습한 덕분으로 볼 수 있습니다. 요컨대, 이 연구는 <strong>깊이 센서 없이도 다지 로봇 손의 파지가 가능하며</strong>, 충분한 시뮬레이션 훈련과 적절한 정책 구조를 통해 <strong>실세계에서도 거의 즉시 활용 가능한 수준</strong>에 도달할 수 있음을 실험적으로 보여주었습니다.</p>
+</section>
+<section id="장단점-평가" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="장단점-평가"><span class="header-section-number">2.5</span> 장단점 평가</h2>
+<p><strong>장점:</strong> DextrAH-RGB의 가장 큰 성과는 <strong>세계 최초로 RGB 카메라만을 이용한 엔드투엔드 다지 손 파지 정책을 현실에 구현</strong>했다는 점입니다. 깊이 센서를 배제함으로써, IR 기반 깊이 카메라의 한계(투명체 인식 불가 등)를 극복하고 <strong>일반 카메라로 얻는 풍부한 시각 정보</strong>만으로도 로봇 파지가 가능함을 증명했습니다. 또한 <strong>교사-학생 모방학습 구조</strong>를 통해 <strong>전적으로 시뮬레이션 데이터만으로 학습</strong>을 완료하고도 현실 로봇에서 <strong>제로샷 동작</strong>을 이끌어냈다는 점에서 실용성이 큽니다. 이는 위험하고 비용이 큰 실제 로봇 실험 없이도 복잡한 조작 정책을 배양할 수 있다는 뜻이므로, 향후 유사한 문제들에 적용될 수 있는 <strong>효율적 연구 개발 프로세스</strong>를 제시했다고 볼 수 있습니다. 정책이 <strong>연속적인 LSTM 기반 제어</strong>를 하기 때문에, <strong>실시간 반응성과 적응성</strong>이 뛰어난 것도 장점입니다. 기존의 단발적(grasp pose) 계획에 의존하는 방법들과 달리, DextrAH-RGB는 실행 중에 새로운 센서 정보에 따라 <strong>즉각적으로 경로를 수정</strong>하며 실패 시 재시도도 가능한 <strong>로버스트 제어</strong>를 구현했습니다. 아울러 <strong>지오메트릭 패브릭</strong>을 활용한 덕분에 로봇의 <strong>충돌 회피나 관절 한계 준수 등의 안전성</strong>이 정책 수준에서 보장되었고, 이는 실제 로봇 운용에서 대단히 중요한 요소입니다. 이러한 안전 제약이 있음에도 불구하고 정책이 물체를 잘 잡을 수 있었던 것은, 패브릭 프레임워크가 <strong>안전과 성능을 양립</strong>하도록 설계되었기 때문입니다. 실제 로봇 구현 측면에서도, Jetson Orin 상에서 60Hz로 구동되며 단일 보드로 전체 제어를 수행해 <strong>시스템 구성의 단순성</strong>과 <strong>실시간성</strong>을 모두 확보했습니다. 마지막으로, 저자들은 본 방법론이 향후 <strong>복잡한 조작 기술의 구성 요소</strong>로 활용되거나, 대규모 <strong>로봇 행동 모델</strong>(일종의 Foundational policy) 학습을 위한 <strong>데이터 생성 모듈</strong>로도 이용될 수 있음을 언급하며 본 연구의 확장 가능성을 강조했습니다. 이는 DextrAH-RGB가 단일 논문 결과에 그치는 것이 아니라, 로봇 파지 문제 전반에 기여할 수 있는 <strong>범용성</strong>을 지닌다는 의미입니다.</p>
+<p><strong>단점:</strong> 한편, 제한사항도 분명히 존재합니다. 먼저, <strong>손가락 제어를 PCA 기반 저차원 공간에서 수행</strong>한 것은 파지 동작에 집중하기 위한 설계였지만, 그만큼 <strong>손의 섬세한 조작 범위가 제한</strong>됩니다. 주성분 손동작 공간은 인간의 그립 동작 데이터를 반영하지만, 이러한 <strong>이젠그립(eigengrasp)</strong> 방식은 물체를 쥐는 동작 이외의 <strong>복잡한 손동작</strong> (예를 들면 도구 사용이나 손가락 개별적 움직임을 요구하는 작업)에는 부적합합니다. 따라서 본 연구에서는 <strong>파지 성공률은 높였지만, 손의 완전한 다용도성은 희생</strong>한 측면이 있습니다. 또한 안전을 위해 패브릭에 포함시킨 <strong>테이블 충돌회피 동작</strong>은 작은 물체를 잡는 경우 오히려 방해가 되는 것으로 지적되었습니다. 테이블 표면과 가까운 낮은 물체를 집으려 할 때 로봇이 충돌을 두려워해 충분히 손을 내려보내지 못하는 상황이 발생할 수 있다는 것입니다. 이는 현재 해당 회피 로직이 정책이 아닌 <strong>고정된 제약</strong>으로 적용되기 때문이며, 향후에는 이를 <strong>센서 입력을 통해 학습된 정책이 판단</strong>하도록 개선하는 편이 더 유연할 것이라고 제안되었습니다.</p>
+<p><strong>학습 면에서</strong>, 두 단계로 나누어진 교사-학생 훈련 파이프라인은 구현과 튜닝이 다소 복잡하고 많은 시간과 자원이 필요하다는 단점이 있습니다. 교사 정책을 충분히 학습시킨 후 다시 학생 정책을 학습해야 하므로, 단일 단계로 끝나는 강화학습에 비해 절차가 번거롭습니다. 저자들 역시 이를 인정하며, <strong>향후 더 효율적인 탐색 전략이 개발되면 단일 단계의 end-to-end RL로도 학습이 가능할 것</strong>으로 전망했습니다. 결과 측면에서도 한계를 꼽을 수 있습니다. <strong>파지의 기능적 의미</strong>를 고려하지 않았기 때문에, 잡기만 하면 되는 평가에서는 성공이지만 일상적인 사용 방법으로는 적절치 않은 파지 사례가 있었습니다. 예를 들어 냄비를 들 때 손잡이가 아닌 냄비 본체를 통째로 움켜쥐는 식의 그립이 나타났는데, 인간이라면 손잡이를 사용하는 것이 일반적이라는 점에서 <strong>비기능적(non-functional) 파지</strong>라는 한계가 있습니다. 이는 향후 로봇에게 <strong>물체의 쓰임새</strong>까지 이해시켜 잡도록 하는 과제로 남아 있습니다. 또한 현재 정책은 <strong>단일 물체 파지</strong>에만 초점을 두고 있어, <strong>복잡한 환경이나 다중 물체가 있는 상황</strong>에서는 적용되지 못합니다. 작업 공간에 여러 물건이 있거나 잡고자 하는 물체 주위에 장애물이 많은 <strong>잡동사니(clutter) 환경</strong>에서는 인식과 계획이 훨씬 어려운데, DextrAH-RGB는 이런 상황을 다루지 못하므로 실용화를 위해서는 해당 한계를 넘어야 합니다. 마지막으로, <strong>깊이 기반 접근에 비해 성능 격차</strong>가 일부 존재한다는 점도 단점입니다. 앞서 언급했듯 몇몇 물체에서는 성공률이 낮았고, 이는 RGB 영상만으로 3D 정보를 완벽히 얻는 데 한계가 있기 때문입니다. stereo 설정으로 보완했지만 정확한 거리 추정이나 미세한 물체 형상 파악에는 여전히 깊이센서보다 불리합니다. 따라서 완전한 범용 로봇 파지 시스템으로 발전하려면, RGB 기반의 한계를 줄이기 위한 추가 기법(예: 더 나은 심층 학습 모델, 멀티뷰 카메라 확충, 영상으로부터의 3D 복원 등)이 필요할 것입니다. 이밖에도 본 논문에서는 명시적으로 다루지 않았지만, <strong>시뮬레이션 학습에 드는 막대한 계산 자원</strong> 역시 현실적인 제한입니다. 광학적 렌더링을 수행하는 수백 개의 병렬 환경에서 교사-학생을 학습하려면 상당한 GPU 자원과 시간이 필요하며, 이는 일반 연구자가 모방하기에 진입장벽이 될 수 있습니다. 또한 정책을 새로운 로봇이나 환경에 적용하려면 다시 시뮬레이션 학습을 거쳐야 하는데, 이 과정의 <strong>재현 비용</strong>도 고려해야 합니다.</p>
+<p>그럼에도 불구하고, DextrAH-RGB는 <strong>로봇 다지 손 파지 분야의 중요한 진전을 이루어낸 연구</strong>입니다. RGB 카메라 입력만으로도 현실에서 복잡한 다지 조작을 달성할 수 있음을 처음으로 증명했고, 여러 기술적 통찰(교사-학생 학습, 패브릭 기반 제어, 도메인 랜덤화 등)을 효과적으로 결합했습니다. 저자들은 향후 본 연구를 발전시켜 성능을 더욱 향상하고, <strong>빈 패킹(bin-packing)</strong>과 같이 <strong>다수 물체를 다루는 작업으로 확장</strong>할 계획을 밝혔습니다. 이러한 후속 연구가 진행된다면, DextrAH-RGB의 단점으로 지적된 부분들도 점차 해결되며 <strong>보다 범용적이고 실용적인 로봇 파지 시스템</strong>에 가까워질 것으로 기대됩니다.</p>
+<p><strong>Reference</strong></p>
+<ul>
+<li><a href="https://curieuxjy.github.io/posts/paper/2025-07-23-dextrah-g.html">DextrAH-G 리뷰(CoRL2024)</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

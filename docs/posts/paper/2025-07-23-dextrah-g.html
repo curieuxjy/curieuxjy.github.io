@@ -414,7 +414,13 @@ window.Quarto = {
 <section id="brief-review" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
 <p>DextrAH-G는 강화 학습(RL), Geometric Fabrics, 그리고 교사-학생 증류(teacher-student distillation)를 결합하여 시뮬레이션 환경에서만 학습하고 실제 세계에 제로-샷(zero-shot)으로 전이될 수 있는 깊이(depth) 기반의 능숙한 팔-손 로봇 조작(arm-hand grasping) 정책입니다. 이 연구는 고차원 관측 및 행동 공간, sim2real gap, 충돌 회피, 하드웨어 제약 등 관절형 팔-손 정책 학습의 주요 난제를 해결합니다. DextrAH-G는 23개의 모터를 가진 로봇이 스트리밍 깊이 이미지(streaming depth images)를 사용하여 다양한 물체를 고속으로 안전하게 연속적으로 잡고 운반할 수 있게 합니다.</p>
-<p>이 연구의 주요 기여는 다음과 같습니다: 1. 정책 학습을 위한 귀납적 편향(inductive bias)을 생성하고, 충돌을 피하며, 관절 제약을 유지하고, 행동을 형성하는 벡터화된 Geometric Fabric controller. 2. 벡터화된 Geometric Fabrics 위에서 여러 다른 물체에 대한 고성능 조작을 가능하게 하는 시뮬레이션 전용 RL 훈련의 privileged FGP(Fabric-Guided Policy). 3. 원래 행동을 복제하고 물체 위치 예측을 가능하게 하는 깊이(depth) 기반, 다중 모달(multi-modal) FGP의 privileged FGP 증류(distillation). 4. 실제 세계의 다양한 새로운 물체에 대한 최신 능숙한 로봇 조작 성능을 달성한 DextrAH-G의 제로-샷 sim2real 전이(transfer).</p>
+<p>이 연구의 주요 기여는 다음과 같습니다:</p>
+<ol type="1">
+<li>정책 학습을 위한 귀납적 편향(inductive bias)을 생성하고, 충돌을 피하며, 관절 제약을 유지하고, 행동을 형성하는 벡터화된 Geometric Fabric controller.</li>
+<li>벡터화된 Geometric Fabrics 위에서 여러 다른 물체에 대한 고성능 조작을 가능하게 하는 시뮬레이션 전용 RL 훈련의 privileged FGP(Fabric-Guided Policy).</li>
+<li>원래 행동을 복제하고 물체 위치 예측을 가능하게 하는 깊이(depth) 기반, 다중 모달(multi-modal) FGP의 privileged FGP 증류(distillation).</li>
+<li>실제 세계의 다양한 새로운 물체에 대한 최신 능숙한 로봇 조작 성능을 달성한 DextrAH-G의 제로-샷 sim2real 전이(transfer).</li>
+</ol>
 <p><strong>1. Geometric Fabrics 및 Fabric-Guided Policies (FGPs)</strong></p>
 <p>Geometric Fabrics는 고전 역학 시스템의 행동을 일반화하여 설계 유연성, 조합성 및 안정성을 갖춘 제어기를 모델링할 수 있게 합니다. Geometric Fabric은 다음 형태의 방정식을 따릅니다: <span class="math display">M_f (q_f , \dot{q}_f )\ddot{q}_f + f_f (q_f , \dot{q}_f ) + f_\pi (a) = 0</span> 여기서 <span class="math inline">M_f \in \mathbb{R}^{n \times n}</span>는 시스템의 우선순위를 포착하는 양의 정부호 시스템 메트릭(mass), <span class="math inline">f_f \in \mathbb{R}^n</span>는 명목 경로 생성 Geometric Force, <span class="math inline">f_\pi (a) \in \mathbb{R}^n</span>는 행동 <span class="math inline">a \in \mathbb{R}^m</span>에 대한 추가 구동력입니다. <span class="math inline">q_f, \dot{q}_f, \ddot{q}_f \in \mathbb{R}^n</span>는 Fabric의 위치, 속도, 가속도입니다. 이 방정식은 Fabric 상태 <span class="math inline">q_f</span>와 <span class="math inline">\dot{q}_f</span>를 시간에 따라 진화시키는 가속도 <span class="math inline">\ddot{q}_f</span>를 생성합니다. <span class="math inline">f_\pi</span>는 <span class="math inline">\ddot{q}_f</span>에 영향을 미치므로 Fabric 상태에 영향을 줍니다.</p>
 <p>Geometric Fabric controller는 네 가지 주요 이유로 사용됩니다:</p>

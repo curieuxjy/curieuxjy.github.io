@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-02">
+<meta name="description" content="Closed-Loop Visual Grasping via Value-Guided Model Predictive Control">
+
+<title>📃GraspMPC 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#논문의-주요-기여-및-기술적-혁신-분석" id="toc-논문의-주요-기여-및-기술적-혁신-분석" class="nav-link" data-scroll-target="#논문의-주요-기여-및-기술적-혁신-분석"><span class="header-section-number">2.1</span> 1. 논문의 주요 기여 및 기술적 혁신 분석</a></li>
+  <li><a href="#실험-설정-및-결과-평가" id="toc-실험-설정-및-결과-평가" class="nav-link" data-scroll-target="#실험-설정-및-결과-평가"><span class="header-section-number">2.2</span> 2. 실험 설정 및 결과 평가</a></li>
+  <li><a href="#기존-연구와의-비교-분석" id="toc-기존-연구와의-비교-분석" class="nav-link" data-scroll-target="#기존-연구와의-비교-분석"><span class="header-section-number">2.3</span> 3. 기존 연구와의 비교 분석</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃GraspMPC 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">mpc</div>
+    <div class="quarto-category">grasp</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Closed-Loop Visual Grasping via Value-Guided Model Predictive Control
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 2, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2509.06201">Paper Link</a></li>
+<li><a href="https://grasp-mpc.github.io/">Homepage</a></li>
+</ul>
+<ol type="1">
+<li>Grasp-MPC는 복잡한 환경에서 새로운 물체를 견고하게 파지하기 위해 가치 함수(value function) 기반의 모델 예측 제어(MPC)를 활용하는 폐쇄 루프 6-DoF 시각 파지 정책을 제안합니다.</li>
+<li>이 가치 함수는 8천 개 이상의 Objaverse 객체에 대한 2백만 개 이상의 성공 및 실패 파지 궤적을 포함하는 대규모 합성 데이터셋으로 학습되어, 파지 성공 가능성을 예측하고 MPC 프레임워크 내에서 로봇을 안내합니다.</li>
+<li>Grasp-MPC는 시뮬레이션 및 실제 환경에서 기존 개방 루프(open-loop) 및 폐쇄 루프(closed-loop) 방식을 최대 33.3% 능가하며, 예측 오류와 물체 자세 변화에 대한 견고성과 다양한 환경에서의 일반화 능력을 입증했습니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-09-02-grasp-mpc/overview.png" width="100%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>Grasp-MPC는 복잡한 환경에서 새로운 객체를 견고하고 반응적으로 파악하기 위해 설계된 폐쇄 루프 6-DoF 비전 기반 그립 정책입니다. 이 논문은 모델 예측 제어(MPC)와 데이터에서 학습된 가치 함수를 결합하여 개방 루프 및 폐쇄 루프 그립 방식의 장점을 통합합니다.</p>
+<p><strong>핵심 방법론:</strong></p>
+<ol type="1">
+<li><strong>대규모 합성 데이터셋 생성 (Data Generation):</strong>
+<ul>
+<li>8,515개의 Objaverse 객체를 사용하여 시뮬레이션 환경에서 2백만 개 이상의 그립 궤적(trajectory) 데이터셋을 생성합니다.</li>
+<li>궤적은 상용 그립 예측 모델에서 얻은 noisy한 pre-grasp 자세부터 ground-truth grasp 자세까지 모션 플래닝(CuRobo 사용)을 통해 생성됩니다.</li>
+<li>Pre-grasp 자세는 annotated grasp 자세에서 15cm의 고정 오프셋을 적용하고, <span class="math inline">U(-0.04cm, 0.04cm)</span>의 병진 노이즈와 <span class="math inline">U(-0.04\pi, 0.04\pi)</span>의 회전 노이즈를 추가하여 다양성을 확보합니다.</li>
+<li>생성된 궤적 중 물리적으로 그립 가능한 경우는 성공(successful)으로, 그 외는 실패(failed)로 레이블링되어 가치 함수 학습에 활용됩니다. 이 데이터셋은 총 1억 1,500만 개의 상태를 포함하며, 성공 궤적은 70.2%를 차지합니다.</li>
+</ul></li>
+<li><strong>가치 함수 학습 (Value Function Training):</strong>
+<ul>
+<li>가치 함수 <span class="math inline">V(x_t)</span>는 주어진 상태에서 예상되는 잔여 비용(cost-to-go)을 근사하도록 학습됩니다. 여기서 상태 <span class="math inline">x</span>는 분할된 객체 포인트 클라우드(segmented object point cloud)와 포인트 클라우드 중심에 대한 end-effector의 상대적인 포즈 <span class="math inline">T_{\text{obj}}^{\text{EE}}</span>를 포함합니다. 포인트 클라우드는 입력을 표준화하기 위해 중심화됩니다.</li>
+<li>학습은 Bellman 에러 목적 함수를 사용하여 수행됩니다. 비용 <span class="math inline">c_t</span>는 그립 목표 자세에 도달하고 물리적으로 가능한 경우 0으로, 그 외에는 1로 정의되는 sparse cost label입니다. <span class="math display">c_t = \begin{cases} 0 &amp; \text{if } |q_{\text{goal},i} - q_{t,i}| \le 5e^{-3}, \forall i, \text{ and } \mathbf{1}_{\text{feasible}} = 1 \\ 1 &amp; \text{Otherwise} \end{cases}</span> 여기서 <span class="math inline">q_{t,i}</span>는 시간 <span class="math inline">t</span>에서의 <span class="math inline">i</span>-번째 joint position, <span class="math inline">q_{\text{goal},i}</span>는 목표 joint position, <span class="math inline">\mathbf{1}_{\text{feasible}}</span>은 궤적이 가능한 그립에 해당하는지 여부를 나타냅니다.</li>
+<li>가치 함수는 다음 식을 최소화하도록 학습됩니다: <span class="math display">\ell(\phi; x_t, c, x_{t+1}) = y_t - V_{\phi}(x_t)^2</span> 여기서 <span class="math inline">y_t = c_t + \gamma V_{\phi'}(x_{t+1})</span>는 1-step target이며, <span class="math inline">\gamma = 0.99</span>는 할인율(discount factor)입니다.</li>
+<li>가치 함수 네트워크는 PointNet++ 인코더(포인트 클라우드 처리)와 MLP(고유수용성, end-effector 포즈 처리)로 구성되며, 이들의 출력을 연결하여 최종 MLP 헤드로 값을 예측합니다. softplus 활성화 함수를 사용하여 항상 양의 값을 예측하도록 합니다.</li>
+</ul></li>
+<li><strong>MPC 내 가치 함수 통합 (Integrating a Value Function as a Grasp Cost within MPC):</strong>
+<ul>
+<li>학습된 가치 함수는 MPC의 비용 함수로 통합되어 온라인 배포 시 그립 비용을 최소화하도록 로봇을 안내합니다.</li>
+<li>MPC의 그립 비용은 예측 궤적의 각 상태에 대한 가치 함수의 할인된 합으로 정의됩니다: <span class="math display">C_{\text{grasp}}(x_{h \in H}) = \sum_{t'=t}^{t+H} \gamma^{t'-t} V_{\theta}(x_{t'})</span></li>
+<li>최종 MPC 목적 함수는 CuRobo의 기본 비용(최소 jerk, 충돌 회피 등)에 가치 기반 그립 비용을 더한 것입니다: <span class="math display">C_{\text{Grasp-MPC}} = C_{\text{curobo}} + \omega C_{\text{grasp}}</span> 여기서 <span class="math inline">C_{\text{curobo}}</span>는 CuRobo의 기본 비용(world collision, self-collision, bounds cost), <span class="math inline">\omega = 1000</span>은 가치 함수 비용의 가중치입니다.</li>
+<li>MPC는 GPU 가속 프레임워크인 CuRobo에 구현된 Model Predictive Path Integral (MPPI) 옵티마이저를 사용합니다.</li>
+</ul></li>
+</ol>
+<p><strong>배포 (Deployment):</strong></p>
+<p>Grasp-MPC는 상용 그립 예측 모델(M2T2) 및 모션 플래너와 결합하여 작동합니다. 로봇은 먼저 모션 플래너를 사용하여 pre-grasp 자세로 이동한 다음, Grasp-MPC를 통해 객체를 파악합니다. 이 과정에서 로봇 상태, 분할된 객체 포인트 클라우드, 그리고 환경의 Signed Distance Field(SDF, NVBlox로 표현) 피드백을 활용하여 충돌을 피하면서 그립 작업을 수행합니다.</p>
+<p><strong>실험 결과:</strong></p>
+<p>시뮬레이션(FetchBench) 및 실제 환경에서 광범위한 평가를 통해 Grasp-MPC는 개방 루프, Diffusion Policy, Transformer Policy, IQL과 같은 최첨단 방법론보다 우수한 성능을 보여줍니다. 특히, 시뮬레이션에서 최대 32.6%, 실제 환경의 노이즈가 많은 조건에서 최대 33.3%의 그립 성공률 향상을 달성했습니다. Grasp-MPC는 noisy한 그립 자세나 동적인 객체 교란에도 견고하게 작동하며, 학습 데이터셋이 빈 장면에서만 생성되었음에도 불구하고 복잡한 실제 환경(테이블 위, 선반 위 혼잡한 장면)에서 효과적인 그립 능력을 입증했습니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+<blockquote class="blockquote">
+<p>Grasp-MPC 논문 심층 리뷰 분석</p>
+</blockquote>
+<section id="논문의-주요-기여-및-기술적-혁신-분석" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="논문의-주요-기여-및-기술적-혁신-분석"><span class="header-section-number">2.1</span> 1. 논문의 주요 기여 및 기술적 혁신 분석</h2>
+<p><em>Grasp-MPC 프레임워크 개요: 다양한 객체 데이터셋(Objaverse의 8천여 개 객체)으로부터 파지(그립) 자세를 생성하고, 모션 플래닝을 통해 <strong>200만 개 이상의 파지 궤적</strong> 데이터를 시뮬레이션에서 수집한다. 이 궤적 데이터에는 성공한 시도와 실패한 시도가 모두 포함되며, 이를 활용해 <strong>포인트 클라우드 관측</strong> 기반의 <strong>가치 함수</strong>(value function)를 학습한다. 학습된 가치 함수는 파지 성공 확률을 예측하며 MPC의 비용 함수로 활용되어, 충돌 회피 등의 제약 조건 하에 로봇의 파지 동작을 실시간 생성한다. 오른쪽 그림은 Grasp-MPC를 사용하여 복잡한 환경의 새로운 물체를 안전하게 파지하는 UR10 로봇의 예시를 보여준다.</em></p>
+<p><strong>Grasp-MPC</strong>는 복잡한 환경에서 새로운 물체들을 다룰 수 있는 <strong>폐루프(closed-loop) 6-자유도 비전 기반 파지</strong> 기법으로, 기존 접근법들의 한계를 극복하기 위해 제안되었다. 이 방법은 <strong>open-loop 방식</strong>(사전에 예측된 파지 자세로 이동)과 <strong>closed-loop 제어</strong>(실시간 피드백을 통한 조정)의 강점을 결합한 것이 핵심이다. 구체적으로, Grasp-MPC는 최신 <strong>그립 포즈 예측 모델</strong>을 이용해 로봇을 대략적인 <strong>pre-grasp 자세</strong>까지 먼저 이동시킨 후, 그 지점부터 <strong>모델 예측 제어(MPC)</strong>를 사용하여 폐루프 방식으로 파지를 완료한다. 이를 통해 기존 open-loop 기법이 겪는 <strong>그립 위치 예측 오차</strong>나 <strong>물체 위치 변화</strong>에 실시간으로 대응할 수 있으며, 로봇이 목표를 동적으로 조정하면서 파지를 성공시킬 수 있게 된다.</p>
+<p>Grasp-MPC의 가장 큰 기술적 혁신은 <strong>MPC의 비용 함수</strong>로 <strong>학습된 가치 함수</strong>를 도입한 점이다. 전통적인 방법에서는 예측된 파지 자세까지의 거리 등의 <strong>기하학적 비용함수</strong>를 사용했지만, 이는 오차에 취약하고 MPC의 폐루프 잠재력을 충분히 활용하지 못했다. 반면 Grasp-MPC에서는 시뮬레이션을 통해 대규모로 수집된 <strong>파지 궤적 데이터</strong>(성공과 실패 사례 모두 포함)로부터 <strong>비전 기반 가치 함수</strong>를 학습하고 이를 <strong>과제 비용(task cost)</strong>으로 사용한다. 이 <strong>가치 함수</strong>는 주어진 물체의 포인트 클라우드와 로봇 말단Effector 자세를 입력으로 <strong>파지 성공 가능성</strong>을 예측하며, MPC 내부에서 <strong>과제 성공도를 나타내는 비용 항</strong>으로 작용한다. 결과적으로 로봇은 이 비용을 최소화하는 방향으로 상태 공간을 탐색하면서 파지 행동을 생성하게 되며, 이는 곧 파지 성공 확률을 최대화하도록 유도한다. 추가적으로, MPC의 최적화 과정에는 <strong>충돌 회피(collision avoidance)</strong>와 <strong>동작의 부드러움(minimum jerk)</strong>을 위한 비용 항도 포함되어 있어 복잡한 환경에서 <strong>안전한 파지 경로</strong>를 생성할 수 있다. 이러한 <strong>학습된 가치 함수 기반 폐루프 제어</strong>는 <strong>동적이고 협소한 공간</strong>에서도 파지를 <strong>안정적</strong>이고 <strong>신뢰성 있게</strong> 수행할 수 있게 해주는 본 논문의 핵심 기술적 기여이다.</p>
+<p>논문에서 저자들이 강조한 Grasp-MPC의 <strong>주요 기여</strong>는 다음과 같이 정리된다:</p>
+<ul>
+<li><p><strong>안전한 폐루프 비전 기반 파지 정책 제안:</strong> Grasp-MPC는 복잡한(cluttered) 환경에서 새로운 물체들을 다룰 수 있는 <strong>안전한 폐루프 시각 파지 정책</strong>을 제시한다. 즉, 실시간 센서 피드백을 통해 동적으로 조정하면서도, 충돌을 피하고 안정적으로 물체를 잡을 수 있는 정책이다.</p></li>
+<li><p><strong>모델 기반 제어와 데이터 기반 학습의 통합:</strong> Grasp-MPC는 <strong>모델 기반 제어 (MPC)</strong>와 <strong>데이터 기반 접근</strong>을 통합하여, <strong>학습된 그립 가치 함수</strong>를 MPC 프레임워크에 결합한 새로운 구조를 구현했다. 이를 통해 <strong>반응적이고 제약을 준수하는(grasping with reactive, constraint-aware)</strong> 파지 실행이 가능해졌으며, 동적인 환경에서도 실시간 적응이 가능하다.</p></li>
+<li><p><strong>대규모 합성 파지 궤적 데이터셋 구축:</strong> 저자들은 <strong>대규모 시뮬레이션 파지 궤적 데이터셋</strong>을 구축하였는데, <strong>수백만 건(M=2,000,000+)의 파지 경로</strong>와 상태, 그리고 <strong>수천 개에 이르는 다양한 객체</strong>를 포함한다. 이렇게 방대한 <strong>Objaverse 객체</strong>를 활용한 데이터셋은 일반화 가능한 가치 함수를 학습하는 데 기여하였으며, 이전 방법들보다 <strong>훨씬 다양한 시나리오</strong>를 포괄한다.</p></li>
+<li><p><strong>폭넓은 실험을 통한 성능 검증:</strong> 시뮬레이션(FetchBench 벤치마크)과 실제 로봇 실험 모두에서 <strong>광범위한 평가</strong>를 수행한 결과, Grasp-MPC는 기존 최신 open-loop 및 closed-loop 방법들을 <strong>의미 있게 능가하는 성능 향상</strong>을 보여주었다. 특히 <strong>시뮬레이션 환경에서 최대 32.6%</strong>, <strong>실제 복잡한 환경에서 33.3%</strong>까지 파지 성공률을 개선하여, diffusion 정책, Transformer 기반 정책, IQL 등 다양한 기존 접근법 대비 <strong>두 자릿수 이상의 향상</strong>을 달성하였다. 이러한 결과는 본 기법의 <strong>실용성</strong>과 <strong>일반화 성능</strong>을 잘 뒷받침해준다.</p></li>
+</ul>
+<p>요약하면, Grasp-MPC는 <strong>대규모 학습된 가치 함수</strong>를 <strong>MPC 제어 루프</strong>에 통합함으로써, 이전의 파지 방법들이 지니던 <strong>실시간 피드백 부족 문제</strong>, <strong>일반화 한계</strong>, <strong>안전성 문제</strong>를 모두 아우르는 <strong>새로운 솔루션</strong>을 제공한 것이다. 이러한 기술적 혁신은 향후 복잡한 로봇 조작 분야에서 <strong>피드백 기반의 안전한 제어</strong>와 <strong>데이터 활용</strong>을 접목시키는 데에 중요한 방향을 제시한다.</p>
+</section>
+<section id="실험-설정-및-결과-평가" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="실험-설정-및-결과-평가"><span class="header-section-number">2.2</span> 2. 실험 설정 및 결과 평가</h2>
+<p>논문에서는 <strong>시뮬레이션</strong>과 <strong>실제 로봇</strong> 환경에서 Grasp-MPC의 성능을 평가하여 그 <strong>유효성</strong>과 <strong>우수성</strong>을 입증했다. 실험은 다음과 같은 핵심 질문들을 중심으로 설계되었다:</p>
+<ol type="1">
+<li><strong>Ground Truth 파지 자세</strong>가 주어졌을 때, Grasp-MPC는 새로운 물체를 얼마나 잘 파지하는가? (이론적으로 최적의 파지 위치가 주어진 경우 성능 평가)</li>
+<li><strong>파지 자세에 오차/노이즈</strong>가 있는 경우(예: 예측 오류로 인한 위치 편차), Grasp-MPC는 얼마나 견고하게 파지를 수행하는가?</li>
+<li><strong>학습된 그립 포즈 예측 모델</strong>을 사용하여 파지할 때(즉, 실제로는 이상적인 파지 자세가 아닌 <strong>예측된 목표</strong>로 파지 시도), Grasp-MPC의 성능은 어떠한가?</li>
+</ol>
+<p><strong>시뮬레이션 환경 설정:</strong> 저자들은 시뮬레이션 평가를 위해 FetchBench라는 표준 환경을 활용하였고, 로봇으로 <strong>UR10 팔과 Robotiq 2F-140 그리퍼</strong>를 사용했다. 평가 장면은 다양한 <strong>복잡한(cluttered) 환경</strong>으로 구성되었으며, 실험에 사용된 물체들은 모두 <strong>새로운 객체</strong>(학습 시 사용되지 않은 객체)로 채워졌다. 3개의 카메라로부터 <strong>포인트 클라우드</strong>를 수집하여 정책에 입력으로 사용하였고, 각 실험 장면마다 여러 가지 파지 시나리오를 구성하여 총 수천 회 이상의 시험을 진행했다. 성능 평가 척도로는 <strong>파지 성공률</strong>을 사용했는데, 이는 로봇이 물체를 집은 후 <strong>일정 높이 이상 들어올리는지</strong>로 정의된다. (모션 플래닝으로 pre-grasp 지점까지 이동하는 과정에서 실패한 경우는 파지 시도가 이루어지지 않았으므로 별도로 제외하여 성공률을 계산).</p>
+<p><strong>비교 방법(베이스라인):</strong> Grasp-MPC의 성능을 검증하기 위해 여러 기존 방법들과 비교 실험을 수행했다. <strong>Open-loop</strong> 접근의 대표로는 <strong>OSC</strong>(Operational Space Control) 기반 직선 이동 파지 방법을 사용하여, 이는 FetchBench에서도 oracle에 가까운 baseline으로 쓰이는 방식이다. 또한 <strong>모방학습 기반</strong> 폐루프 정책인 <strong>Transformer Policy</strong>도 포함되었는데, 이는 FetchBench 벤치마크에 사용된 Transformer 아키텍처의 정책이다. 더불어, <strong>Diffusion Policy (확산 정책)</strong> 방식의 폐루프 IL 정책도 평가에 포함되었다 – 이 방법은 포인트 클라우드를 입력으로 사용하는 <strong>최신 상태의 모방학습 기반</strong> 파지 정책 중 하나이다. 마지막으로, <strong>오프라인 강화학습</strong> 기반의 정책인 <strong>IQL (Implicit Q-Learning)</strong>을 비교에 포함시켰다. 모든 방법들은 Grasp-MPC와 동일하게 사전에 <strong>모션 플래너(CuRobo)</strong>를 이용해 로봇을 지정된 pre-grasp 위치까지 움직인 뒤, 그 지점부터 각자의 방법으로 파지를 수행하도록 설정되었다. (참고로 IL 기반 정책들은 학습 시 <strong>성공한 파지 사례만</strong>으로 훈련되었다고 명시되어 있다.)</p>
+<p><strong>시뮬레이션 실험 결과:</strong> 우선 <strong>이상적인 파지 자세(ground-truth annotation)</strong>가 주어지는 실험에서, Grasp-MPC는 <strong>사전계획(open-loop) 기반의 Oracle 성능에 근접하는 높은 성공률</strong>을 보였다. 구체적으로, Grasp-MPC의 파지 성공률은 약 73.6%에 달해, oracle에 해당하는 open-loop 방식(OSC)의 성능과 거의 유사한 수준을 달성했다. 더욱이 Grasp-MPC는 <strong>다른 폐루프 기반 방법들보다 현저히 높은 성공률</strong>을 기록했는데, 예를 들어 <strong>IQL</strong>의 경우 Grasp-MPC보다 훨씬 낮은 성공률(약 60%대)에 그쳤다. Transformer 기반 IL 정책과 Diffusion 정책 역시 Grasp-MPC보다 성능이 떨어졌으며, 이는 <strong>모션 플래닝으로 수집된 제한적인 시演 데이터</strong>로 학습한 데 따른 한계와, <strong>훈련 환경과 평가 환경 간의 차이(domain mismatch)</strong>로 인한 성능 저하 때문이라고 분석된다. (IL 모델들은 주로 빈 테이블 환경에서 데이터 수집이 이루어졌는데, 정작 평가 시에는 물체가 많은 복잡한 환경이라 <strong>MDP 불일치</strong>가 발생했고, 이로 인해 일반화 성능이 낮았다는 설명이다.)</p>
+<p>다음으로 <strong>파지 자세에 노이즈가 추가</strong>된 실험(두 번째 질문)에서는 Grasp-MPC의 <strong>강인함(robustness)</strong>이 두드러졌다. Ground truth 파지 위치에 <strong>무작위 위치 오차(수 센티미터 변위와 회전 노이즈)</strong>를 섞어서 실행한 경우, <strong>open-loop 방식(OSC)은 성능이 약 40%p 급락</strong>하여 제대로 파지에 실패하는 반면, Grasp-MPC는 <strong>약 14%p 정도의 경미한 성능 감소</strong>만을 보이며 대부분의 시나리오에서 여전히 성공적으로 물체를 잡아냈다. 이는 폐루프 제어를 통해 피드백을 활용한 Grasp-MPC가 초기 목표 위치의 부정확함을 <strong>실시간 보정</strong>하며 대응하는 반면, open-loop은 한번 계획된 경로를 수정하지 못해 실패하기 때문이다. Grasp-MPC는 이 경우에도 다른 폐루프 baselines들보다 높은 성공률을 유지하여, <strong>오프라인 RL이나 IL 기반 정책들보다 오차에 대한 내성이 높음</strong>을 보여주었다.</p>
+<p>세 번째로, <strong>학습된 그립 포즈 예측 모델</strong>을 실제로 활용하는 시나리오에서도 Grasp-MPC의 성능 우수성이 입증되었다. 저자들은 <strong>M2T2</strong>라는 최신 grasp pose 예측 모델을 사용하여 물체의 파지 목표 자세를 예측하고, 이를 각 방법들의 입력으로 사용했다. 예측된 파지 자세에는 필연적으로 오차와 노이즈가 존재하기 때문에, 이 설정은 실제 로봇 적용에 가까운 시나리오다. 그 결과 <strong>IL 기반 방법들은 성공률 36.5% 수준에 그쳐 거의 파지에 실패</strong>하였고, <strong>open-loop 방식(OSC)은 약 63.6%</strong>의 성공률을 보였다 (이 값은 ground truth 사용 시보다 약 <strong>15%p 감소</strong>한 수치이다). 반면 <strong>Grasp-MPC는 67.2%의 성공률</strong>로 가장 좋은 성능을 기록했으며, ground truth 대비 성능 감소폭도 <strong>불과 8%p</strong>에 그쳐 <strong>예측 오차에 대한 견고함</strong>을 뚜렷이 보여주었다. 즉, 학습된 그립 예측 모델의 출력이 완벽하지 않음에도 불구하고, Grasp-MPC는 폐루프 보정과 가치 함수 기반의 안정적인 제어를 통해 <strong>최고의 파지 성공률</strong>을 달성한 것이다. 이러한 결과는 Grasp-MPC가 <strong>실제 로봇 현장에 투입</strong>될 경우를 고려할 때, <strong>예측 모델의 불확실성에 강인한 솔루션</strong>임을 시사한다.</p>
+<p><strong>실세계(real-world) 실험 설정:</strong> 시뮬레이션에서 유의미한 성능을 보인 Grasp-MPC를 실제 로봇 환경에서도 검증하였다. 실제 실험에는 <strong>UR10 로봇 팔</strong>과 <strong>Robotiq 2F-140 그리퍼</strong>를 사용했고, <strong>이질적인 3가지 환경</strong>에서 평가가 이뤄졌다: (1) 물체가 거의 없는 <strong>빈 테이블</strong> 위, (2) 여러 새로운 물체들이 놓인 <strong>복잡한 테이블 위(cluttered tabletop)</strong>, (3) 물체들이 선반에 놓인 <strong>복잡한 선반 환경(shelf clutter)</strong>. 각 환경마다 서로 다른 객체 세트를 배치하여 다양성을 높였고, 각 물체에 대해 <strong>세 가지 서로 다른 초기 자세</strong>를 설정하여 반복 시험했다. 환경별로 수십 회 이상의 파지 시도를 통해 일관성과 신뢰성을 평가하였다. 로봇의 시각 센서는 <strong>RealSense L515 깊이 카메라 2대</strong>를 사용하여 실시간 <strong>포인트 클라우드</strong>를 생성했고, 목표 물체는 <strong>SAM-Track</strong> 기법으로 분리(segment)하여 인식했다. (SAM-Track은 Grounding DINO를 통한 객체 검출과 SAM(Segment Anything)으로 분할을 결합한 방법으로, 목표 물체의 포인트 클라우드를 추출해준다.) 또 주변 장애물을 다루기 위해 <strong>NVBlox</strong>를 이용해 환경의 장애물 맵을 생성하고, 이를 모션 플래닝과 MPC 모듈에서 고려하도록 설정하여 <strong>충돌을 사전에 회피</strong>하도록 했다. 파지 성공 기준은 시뮬레이션과 유사하게 <strong>물체를 집어 올린 뒤 로봇의 홈 포지션까지 이동시키면서 한 번도 떨어뜨리지 않는 것</strong>으로 정의되었다.</p>
+<p><strong>실세계 비교 및 안전성:</strong> 실제 환경에서는 폐루프 정책들의 안전성 문제가 있기 때문에, <strong>비교 대상</strong>으로는 <strong>오픈 루프 기반</strong>의 <strong>CuRobo-GraspAPI</strong> 방법만을 사용했다. 이 방법은 모션 플래닝으로 지정된 파지 자세까지 이동한 후 그대로 집는 <strong>기존의 open-loop 파지 파이프라인</strong>으로, 현실에서 비교적 안전하고 신뢰할 만한 기준으로 간주된다. 반면 앞서 시뮬레이션에 포함됐던 다른 폐루프 방식들(IL 기반 정책들 등)은 <strong>충돌 회피 메커니즘이 없어 안전 문제</strong>가 예상되므로 실제 로봇에는 적용하지 않았다. (예를 들어 선반이나 테이블에 로봇팔이 부딪칠 위험이 있어 제외했다는 설명이다.) 이에 비해 Grasp-MPC는 <strong>MPC 최적화 자체에 충돌 회피 비용을 포함</strong>하고 있어 주변 장애물이 있는 상황에서도 <strong>안전하게 동작</strong>할 수 있기 때문에, <strong>실제 로봇 실험에 적합</strong>하다는 점도 강조되었다.</p>
+<p><strong>실세계 실험 결과:</strong> 빈 테이블부터 복잡한 선반까지 <strong>점진적으로 난이도가 증가하는 3가지 환경</strong> 모두에서 Grasp-MPC는 <strong>일관되게 open-loop 기준보다 높은 파지 성공률</strong>을 거두었다. 구체적으로 Figure 8의 결과에 따르면, <strong>어느 환경에서든 Grasp-MPC가 CuRobo(open-loop) 방법보다 성공률이 높았으며 복잡한 환경일수록 그 격차가 커졌다</strong>고 보고된다. Open-loop 방식은 예측된 파지 자세가 이상적 위치에서 조금만 벗어나도 실행 중 경로를 수정하지 못해 <strong>파지에 실패하는 사례가 잦았지만</strong>, Grasp-MPC는 실행 도중 지속적으로 <strong>그리퍼의 자세를 조정</strong>하면서 <strong>가치 함수 상의 비용을 최소화</strong>하도록 동작하기 때문에, 장애물(예: 선반 가장자리 등)을 피하면서도 최종적으로 물체를 잡는 비율이 훨씬 높았다. 요약하면, <strong>정적인 물체 파지 작업에서 조차도 Grasp-MPC가 open-loop 대비 뛰어난 적응력을 보여준</strong> 것이다. 실제 예시로, Grasp-MPC는 선반 구석에 있거나 여러 물체 사이에 낀 목표 물체를 집을 때도 <strong>중간에 그립 자세를 미세 조정</strong>하여 성공적으로 파지하는 모습을 보였는데, 이러한 능력은 <strong>기존 개방형 제어로는 불가능한 부분</strong>이다.</p>
+<p>한편, <strong>동적인 변화에 대한 적응</strong> 실험도 진행되었다. 이는 실제 로봇 환경에서 <strong>폐루프 제어의 장점을 극대화</strong>하는 시나리오로서, 로봇이 목표 파지 지점(pre-grasp)에 도달한 <strong>후</strong>에 의도적으로 물체의 위치를 이동(교란)시켜 보는 테스트이다. 이러한 돌발 상황은 일반적인 open-loop 접근으로는 대응이 불가능하므로, 해당 실험은 Grasp-MPC 단독으로 수행되었다. 실험에서는 여러 물체에 대해 각각 수 차례씩 큰 폭의 위치 교란을 주었는데, <strong>Grasp-MPC는 물체가 갑자기 움직여도 즉각적으로 경로를 보정하여 끝내 파지에 성공</strong>하는 높은 적응력을 보여주었다. 심지어 학습된 가치 함수는 주로 <strong>5cm 이내의 비교적 작은 움직임</strong>만 경험했음에도, <strong>그 이상의 큰 물체 이동에도 전역적으로 파지를 재계획</strong>하여 상당한 성공률을 달성했다는 점이 고무적이다. (정량적인 성공률 수치가 제시되지는 않았지만, 실행 예시를 통해 <strong>Grasp-MPC가 실시간으로 움직이는 표적을 추적</strong>하여 잡는 모습이 확인되었다고 한다.) 이는 Grasp-MPC의 폐루프 제어가 가지는 <strong>실시간 적응성</strong>을 잘 보여주는 대목으로, 실제 응용에서 물체가 떨어지거나 움직일 때도 <strong>회복(graceful recovery)</strong> 가능한 파지 시스템의 가능성을 시사한다.</p>
+<p>결론적으로, 실험 결과들은 <strong>시뮬레이션에서나 실제에서나</strong> Grasp-MPC의 우수한 성능과 견고함을 입증한다. Grasp-MPC는 <strong>대규모 데이터로 학습된 가치 함수</strong> 덕분에 <strong>새로운 물체에 대한 일반화 능력</strong>이 뛰어나고, <strong>MPC 기반 피드백 제어</strong>를 통해 <strong>환경 변화나 예측 오차에도 흔들리지 않는 파지 성공률</strong>을 보여주었다. 특히 복잡한 실제 환경 (테이블, 선반 등)에서도 <strong>추가 학습 없이</strong> 곧바로 높은 성공률을 낸 점은, 이 접근법의 <strong>실용적 가치</strong>를 뒷받침하는 중요한 성과라 할 수 있다. Grasp-MPC는 센서 노이즈, 물리적 접촉 등의 현실 요인을 잘 견디며, 이는 <strong>물리 기반 시뮬레이션 데이터에 의존하지 않고도</strong> 달성된 것이라 더욱 주목된다.</p>
+</section>
+<section id="기존-연구와의-비교-분석" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="기존-연구와의-비교-분석"><span class="header-section-number">2.3</span> 3. 기존 연구와의 비교 분석</h2>
+<p>로봇 파지(grasping) 분야의 기존 연구들은 크게 <strong>open-loop 방식</strong>과 <strong>closed-loop 방식</strong>으로 양분된다. <strong>Open-loop 파지 기법</strong>들은 딥러닝으로 <strong>그립 포즈(파지 자세)</strong>를 예측한 후, 로봇팔을 해당 위치로 <strong>모션 플래닝</strong>해 이동시켜 파지하는 접근법을 사용해왔다. 대표적으로 물체의 3D 데이터베이스를 활용한 대규모 학습(예: Dex-Net 등)이나, 시뮬레이터에서 생성한 파지 annotation 데이터를 통한 학습 방법들이 이에 속한다. 이러한 open-loop 방법들은 비교적 <strong>새로운 물체에 대한 파지 성공률이 높게 보고</strong>되었으나, <strong>실시간 피드백 부족</strong>으로 인해 한 번 계획이 시작되면 경로를 유연하게 수정하지 못한다는 한계가 있다. 그 결과, <strong>그립 포즈 예측 오류</strong>나 실행 중 <strong>물체의 움직임 변화</strong>에 매우 취약하며, 복잡한 환경에서 물체가 서로 상호작용하거나 예측과 다른 위치에 있을 때 <strong>실패율이 높아지는 문제</strong>가 있었다.</p>
+<p><strong>폐루프(closed-loop) 파지 기법</strong>들은 이러한 문제를 극복하고자 <strong>실시간 센서 피드백</strong>을 제어에 도입한 방법들이다. <strong>강화학습(RL)</strong> 기반 접근과 <strong>모방학습(IL)</strong> 기반 정책학습이 이에 해당하며, 로봇이 카메라 등으로부터 주기적으로 관측을 받아 매 시점 행동을 결정하는 <strong>정책(policy)</strong>을 학습한다. 이러한 폐루프 방법들은 오픈 루프에 비해 <strong>피드백으로 오차를 수정</strong>할 수 있어 성공률 향상의 여지가 있지만, 현실적으로 <strong>학습을 위한 데이터 수집이 어렵고 비싼</strong> 문제가 있다. 많은 기존 연구들이 단순한 <strong>테이블 위 단일 물체</strong> 환경에서만 학습/평가되었고, 주어진 제한된 데이터로 학습된 정책은 <strong>새로운 물체나 복잡한 장면으로 일반화</strong>하기 어려웠다. 특히 다양한 물체에 대한 <strong>대규모 파지 데이터셋 부족</strong>이 병목이 되어, 폐루프 정책들의 성능은 제한적이었다. 또한 학습된 정책이 <strong>충돌 회피</strong>와 같은 <strong>안전성</strong>을 내재적으로 보장하지 못해, 복잡한 환경에 로봇을 투입하기에는 위험 요소가 많았다. 예컨대, 기존의 여러 RL/IL 기반 파지 논문들은 로봇과 주변 물체 간 충돌을 고려하지 않아서 실제 응용시 안전 문제가 지적되어 왔다.</p>
+<p>이 논문의 Grasp-MPC 접근법은 <strong>기존 대비 몇 가지 중요한 차별점</strong>을 지닌다. 우선, <strong>Open-loop와 Closed-loop의 장점 결합</strong>이라는 관점에서, Grasp-MPC는 <strong>사전 학습된 그립 예측 모델</strong>과 <strong>모션 플래닝</strong>을 사용해 초기 파지 자세까지 접근하는 <strong>모델 기반 단계</strong>를 활용하면서도, 최종 파지 동작은 <strong>MPC 폐루프 제어</strong>로 수행함으로써 <strong>두 접근법의 이점을 모두 취했다</strong>. 이처럼 <strong>모델 기반 + 데이터 기반</strong>을 통합한 설계는 기존에 없던 새로운 틀로, open-loop 방식의 <strong>빠른 초기 경로 설정</strong> 능력과 closed-loop 방식의 <strong>실시간 적응</strong> 능력을 결합한 것이다. 특히 <strong>MPC를 정책 실행기</strong>로 사용한 점이 독특한데, 일반적인 RL과 달리 <strong>정책 네트워크를 명시적으로 학습하지 않고</strong> 가치 함수만으로도 MPC가 최적 행위를 찾아낼 수 있도록 했다. 이는 <strong>오프라인 RL</strong>의 철학과도 맞닿아 있는데, 기존 오프라인 RL 기법들은 대용량의 오프라인 데이터를 활용하면서도 <strong>학습된 Q함수나 가치함수로부터 정책을 추출하는 과정</strong>에서 어려움이 있었다. Grasp-MPC는 애초에 <strong>MPC가 곧 정책</strong>이므로 이러한 추출 과정이 불필요하며, <strong>값 함수 학습 자체에 집중</strong>할 수 있었다. 이러한 구조 덕분에 IQL과 같은 오프라인 RL 방법에 비해 <strong>학습된 가치 함수를 효율적으로 활용</strong>하여 더 높은 성능을 발휘한 것으로 보인다.</p>
+<p>또한 <strong>비용 함수 설계의 측면</strong>에서, Grasp-MPC는 <strong>학습 기반의 비용 함수(가치 함수)</strong>를 도입하여 기존 방법들의 단점을 극복했다. 앞서 언급한 바와 같이, 기존에 Chen 등의 연구에서는 <strong>예측된 그립 포즈와의 거리</strong>를 기반으로 하는 값 함수를 MPC의 cost로 사용하려 했으나, 이러한 <strong>단순 거리 기반 척도는 파지 성공에 중요한 여러 요인</strong>(예: 손가락과 물체의 구체적인 접촉 관계나 물체의 무게 중심 등)을 반영하지 못해 결과적으로 <strong>최적이 아닌 동작</strong>을 유도하는 문제가 있었다. 또한 다른 시도 중 하나인 <strong>CV-MPC</strong>에서는 <strong>소량의 데모</strong>만으로 가치 함수 앙상블을 학습하였는데, 이는 <strong>저차원 상태</strong>(예: 로봇 joint 값 등)만 사용하여 학습하였기 때문에 <strong>시각적 다양성</strong>이나 <strong>새로운 상황</strong>에 적응하기 어려웠다. 반면 Grasp-MPC의 경우 <strong>고차원 시각정보(포인트 클라우드)</strong>와 <strong>수백만 건의 다양한 시뮬레이션 궤적</strong>으로부터 학습한 가치 함수를 사용함으로써, <strong>파지 성공에 영향을 주는 미세한 요소들까지 비용에 반영</strong>할 수 있었고 결과적으로 <strong>일반화 성능</strong>과 <strong>성공률</strong> 모두 향상시켰다. 이는 Grasp-MPC가 <strong>MPC를 활용한 폐루프 제어</strong> 분야에서 <strong>처음으로 대규모 비전 기반 학습</strong>을 결합한 사례로 평가할 수 있다.</p>
+<p><strong>데이터셋 규모와 일반화</strong> 측면에서도 Grasp-MPC는 기존 연구보다 앞선다. FetchBench 등 이전 연구들에서는 파지 데이터의 <strong>양과 다양성의 한계</strong>로 인해 성능이 제약되었는데, Grasp-MPC는 <strong>Objaverse 기반으로 훨씬 큰 규모의 합성 데이터</strong>를 생성하여 학습함으로써 이러한 한계를 돌파했다. 특히 FetchBench에서 사용된 Transformer IL 정책의 경우 제한된 시연 데이터로 학습돼 <strong>복잡한 장애물 환경에서는 성능이 떨어졌으나</strong>, Grasp-MPC는 더 <strong>대규모·다양한 데이터</strong>로 학습된 덕분에 <strong>이질적인 환경에서도 견고한 성능</strong>을 보였다. 실제 실험에서 Grasp-MPC가 <strong>학습 때는 빈 환경만 경험했음에도 불구하고</strong>, <strong>복잡한 테이블이나 선반 환경</strong>에서 별도 튜닝 없이 높은 성공률을 낸 점은 이러한 <strong>일반화 능력 향상</strong>을 잘 보여준다.</p>
+<p><strong>안전성과 시스템 통합</strong> 관점에서 보더라도, Grasp-MPC는 실용적인 우위를 갖는다. 기존의 폐루프 학습 정책들은 주로 <strong>충돌 회피나 안전 제약을 고려하지 않고</strong> 학습되었기 때문에, 실제 환경에서 로봇이 장애물과 충돌할 위험이 있었다. 하지만 Grasp-MPC는 <strong>MPC 최적화 문제에 안전을 위한 제약(충돌 회피, 최소 jerk 등)</strong>을 명시적으로 포함시켰기 때문에, <strong>협소한 공간이나 장애물이 많은 상황에서도 안정적으로 동작</strong>할 수 있었다. 이는 본 논문 실험에서도 입증되어, 다른 폐루프 방법들은 현실 환경에서 위험해 적용하지 못한 데 비해 Grasp-MPC는 선반 같은 복잡한 환경에서도 <strong>무사고로 임무를 수행</strong>했다. 나아가 이러한 모듈식 설계 덕분에, Grasp-MPC는 <strong>새로운 제약 조건이나 환경 변화에 유연하게 대응</strong>할 수 있다. 예를 들어 로봇의 작업 공간에 특정 <strong>금지 영역</strong>이나 <strong>동역학적 제한</strong>이 추가되더라도, MPC 문제에 해당 비용이나 제약을 넣으면 재학습 없이도 시스템에 반영될 수 있다. 이는 학습된 정책을 바꾸지 않고도 제어 단계에서 해결할 수 있기 때문에 <strong>실제 응용에서의 편의성</strong>을 높여준다.</p>
+<p>마지막으로, <strong>성능 측면에서의 비교</strong>를 요약하면 다음과 같다. Grasp-MPC는 시뮬레이션 상에서 <strong>5,400여 개의 다양한 파지 시나리오</strong>를 실험한 결과, <strong>모방학습(IL) 기반 방법들을 크게 앞서는 성공률</strong>을 보였고, 기존 <strong>계획 기반 방법(planning-based)</strong>이 예측 오차나 센서 노이즈로 성능이 떨어지는 상황에서도 우수한 결과를 냈다. 오프라인 RL인 IQL과 비교해서도, IQL이 <strong>정책 추출의 비효율</strong>로 성능이 제한된 반면 Grasp-MPC는 더 높은 성공률로 그 격차를 보여주었다. 실제 로봇 실험에서도, <strong>기존의 계획 기반 파지 파이프라인</strong> 대비 Grasp-MPC가 <strong>복잡한 테이블 및 선반 환경에서 더 높은 성공률</strong>을 기록했으며, 이는 <strong>학습 당시 접하지 않은 환경</strong>에서도 통하는 일반화 능력을 입증한 것이다. 요컨대 Grasp-MPC는 현 시점에서 <strong>개방형·폐루프 파지 접근법들 모두를 뛰어넘는 새로운 state-of-the-art 성능</strong>을 달성한 것으로 평가된다.</p>
+<p>한편, 저자들은 이러한 공헌에도 불구하고 남아있는 한계점도 언급한다. 예를 들어 <strong>절대적인 성공률을 더 높이기 위해</strong>서는 향후 <strong>물리 시뮬레이션을 통한 더 정확한 성공/실패 레이블링</strong>이나, <strong>현실 데이터로의 파인튜닝</strong> 등이 유효할 수 있다고 제안한다. 또한 현재 Grasp-MPC의 검증은 <strong>파지(grasping)</strong> 작업에 국한되어 있는데, 유사한 접근을 다른 조작(manipulation) 작업 (예: 도구 사용이나 비전 기반 위치 미세조정 등)에도 확장할 수 있을 것으로 기대하며, 이는 추후 연구과제로 남겨두었다고 밝혔다. 그럼에도 불구하고, Grasp-MPC는 기존 연구 대비 <strong>데이터 규모, 알고리즘 구조, 실험 검증 면에서 새로운 기준을 세운 연구</strong>로서 의의가 크다. 이는 로봇 파지 및 일반적인 <strong>로봇 제어</strong> 커뮤니티에서 <strong>모델 예측 제어와 딥러닝 가치 함수의 융합</strong> 가능성을 보여준 사례이며, 향후 더욱 <strong>복잡한 조작 임무</strong>에 폐루프 학습기반 제어를 적용하는 데에 밑거름이 될 것으로 전망된다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
