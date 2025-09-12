@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-12">
+<meta name="description" content="Cross-Embodiment Dexterous Grasping with Reinforcement Learning">
+
+<title>📃CrossDex 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review"><span class="header-section-number">1</span> Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review"><span class="header-section-number">2</span> Detail Review</a></li>
+  <li><a href="#다양한-로봇-손을-위한-범용-파지-정책-crossdex-논문-심층-리뷰" id="toc-다양한-로봇-손을-위한-범용-파지-정책-crossdex-논문-심층-리뷰" class="nav-link" data-scroll-target="#다양한-로봇-손을-위한-범용-파지-정책-crossdex-논문-심층-리뷰"><span class="header-section-number">3</span> 다양한 로봇 손을 위한 범용 파지 정책: CrossDex 논문 심층 리뷰</a>
+  <ul class="collapse">
+  <li><a href="#배경과-문제-정의" id="toc-배경과-문제-정의" class="nav-link" data-scroll-target="#배경과-문제-정의"><span class="header-section-number">3.1</span> 1. 배경과 문제 정의</a></li>
+  <li><a href="#제안-방법의-핵심-기술-내용" id="toc-제안-방법의-핵심-기술-내용" class="nav-link" data-scroll-target="#제안-방법의-핵심-기술-내용"><span class="header-section-number">3.2</span> 2. 제안 방법의 핵심 기술 내용</a></li>
+  <li><a href="#기존-연구-대비-주요-기여점" id="toc-기존-연구-대비-주요-기여점" class="nav-link" data-scroll-target="#기존-연구-대비-주요-기여점"><span class="header-section-number">3.3</span> 3. 기존 연구 대비 주요 기여점</a></li>
+  <li><a href="#실험-설계-및-구성-평가" id="toc-실험-설계-및-구성-평가" class="nav-link" data-scroll-target="#실험-설계-및-구성-평가"><span class="header-section-number">3.4</span> 4. 실험 설계 및 구성 평가</a></li>
+  <li><a href="#주요-결과-및-한계점-논의" id="toc-주요-결과-및-한계점-논의" class="nav-link" data-scroll-target="#주요-결과-및-한계점-논의"><span class="header-section-number">3.5</span> 5. 주요 결과 및 한계점 논의</a></li>
+  <li><a href="#향후-연구-방향-제언" id="toc-향후-연구-방향-제언" class="nav-link" data-scroll-target="#향후-연구-방향-제언"><span class="header-section-number">3.6</span> 6. 향후 연구 방향 제언</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃CrossDex 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">isaacgym</div>
+    <div class="quarto-category">grasp</div>
+    <div class="quarto-category">il</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Cross-Embodiment Dexterous Grasping with Reinforcement Learning
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 12, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2410.02479">Paper Link</a></li>
+<li><a href="https://sites.google.com/view/crossdex">Homepage</a></li>
+<li><a href="https://github.com/PKU-RL/CrossDex/">Code Link</a></li>
+</ul>
+<ol type="1">
+<li>🤖 기존 로봇 dexterous grasping 정책들이 특정 로봇 핸드에만 적용되어 다양한 핸드에 대한 일반화가 어렵다는 문제점을 해결하기 위해, 본 연구는 강화 학습(RL)을 이용한 cross-embodiment dexterous grasping 정책 학습을 제안합니다.</li>
+<li>✋ 본 연구는 인간 손의 eigengrasps 기반 통합 액션 공간과 손가락 끝 및 손바닥 위치만을 포함하는 통일된 관찰 공간을 설계하여, 단일 정책으로 다양한 로봇 핸드를 제어할 수 있도록 하며, 훈련 효율성을 위해 신경망으로 가속화된 리타겟팅 매핑을 활용합니다.</li>
+<li>📈 제안된 CrossDex 정책은 단일 비전 기반 정책으로 네 가지 훈련 핸드와 YCB 데이터셋 객체에 대해 80%의 성공률을 달성했으며, 이전에 본 적 없는 두 가지 핸드에 대한 zero-shot generalization과 효율적인 finetuning 성능 향상을 보여줍니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-09-12-crossdex/crossdex.png" width="100%">
+</center>
+<hr>
+<section id="brief-review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Brief Review</h1>
+<p>본 연구는 다양한 로봇 손에 적용 가능한 범용적인 쥐기(grasping) 정책을 개발하기 위한 교차-신체(cross-embodiment) 강 학습(reinforcement learning, RL) 방법을 제안한다. 기존 연구들이 특정 로봇 손에 특화된 정책 학습에 집중했던 것과 달리, 이 논문은 여러 형태의 정교한 로봇 손(dexterous hand)을 제어할 수 있는 단일 정책을 목표로 한다.</p>
+<p>핵심 방법론은 인간이 다양한 로봇 손을 원격 조작(teleoperation)할 수 있다는 점에서 영감을 받았다. 이를 위해 논문은 <code>eigengrasps</code>라고 불리는 인간 손의 본질적인 동작 특징을 기반으로 범용적인 행동 공간(universal action space)을 제안한다. <code>MANO</code> 손 모델의 <code>eigengrasps</code>는 45차원의 인간 손 자세(hand pose)를 저차원의 고유 벡터(eigenvector)로 압축하여, 정책(policy)이 출력하는 <code>eigengrasp</code> 행동 <span class="math inline">w = \sum_{i=1}^{k} w_i e_i</span>는 인간 손 자세 <span class="math inline">\theta</span>를 나타낸다. 이 <span class="math inline">\theta</span>는 각 로봇 손의 특정 관절 행동(joint action) <span class="math inline">\hat{J}_h</span>으로 변환되는데, 이 변환은 손가락 끝(fingertips)과 손바닥(palm)의 위치 관계를 최적화하는 리타겟팅(retargeting) 매핑(mapping) <span class="math inline">P^h_{\xi}</span>을 통해 이루어진다. 기존의 <span class="math inline">DexPilot</span>과 같은 최적화 기반 리타겟팅 과정은 느리기 때문에, 본 연구에서는 신경망(neural network)을 학습시켜 이 매핑 과정을 가속화한다. 이 신경망은 인간 손 자세 데이터셋 <span class="math inline">D</span>와 <span class="math inline">DexPilot</span>으로 라벨링된 로봇 관절 위치 <span class="math inline">D' = \{(\theta_i, J_h_i)\}_{\theta_i \in D}</span>를 사용하여 평균 제곱 오차(MSE) 손실을 최소화하도록 학습된다.</p>
+<p>또한, 로봇 손의 고유 수용 감각(proprioception) 정보를 단순화하여 범용적인 관찰 공간(unified observation space)을 구성한다. 각 로봇 손의 고유한 관절 위치(<span class="math inline">J_h</span>) 대신, 쥐기 작업에 중요하며 다양한 신체에서 일관된 <code>fingertips</code>와 <code>palm</code>의 3D 위치(<span class="math inline">x_h</span>)만을 관찰 정보로 사용한다. 이를 통해 정책이 새로운 신체 형태에 더 잘 적응하도록 돕는다.</p>
+<p>정책 학습은 <code>IsaacGym</code> 시뮬레이션 환경에서 <span class="math inline">teacher-student</span> 프레임워크를 따른다. 먼저, <span class="math inline">PPO</span>(Proximal Policy Optimization) 알고리즘을 사용하여 각 물체(<span class="math inline">\omega \in \Omega</span>)에 대해 모든 훈련 손(<span class="math inline">h \in \mathcal{H}</span>)에 걸쳐 상태 기반(state-based) 정책(<span class="math inline">\pi_S</span>)을 병렬로 훈련시킨다. 이 정책은 로봇 팔 관절 위치(<span class="math inline">J_a^t</span>), <span class="math inline">fingertips</span> 및 <span class="math inline">palm</span> 위치(<span class="math inline">x_h^t</span>), 물체 자세(<span class="math inline">b_t</span>), 물체 시각 코드(<span class="math inline">v_\omega</span>), 그리고 이전 행동(<span class="math inline">\hat{J}_a^{t-1}, w_{t-1}</span>)을 관찰로 받는다. 이어서, <span class="math inline">DAgger</span>(Dataset Aggregation) 알고리즘을 사용하여 이들 상태 기반 정책을 단일 시각 기반(vision-based) 정책(<span class="math inline">\pi_V</span>)으로 증류(distillation)한다. 시각 기반 정책은 물체 정보로 <code>point cloud</code> (<span class="math inline">p_t</span>)를 사용하며, 신체 고유 정보를 제거하여 일반화 성능을 높인다. 훈련 중에는 로봇 팔과 손의 연결 부분에 가우시안 노이즈(Gaussian noise)를 추가하여 신체 공간을 풍부하게 하고 정책의 견고성(robustness)과 전이성(transferability)을 향상시킨다.</p>
+<p>실험 결과, 제안된 <code>CrossDex</code> 정책은 4개의 훈련 손에 대해 YCB dataset$의 물체들을 80%의 성공률로 쥐는 데 성공했다. 특히, 훈련 과정에서 보지 못한 2개의 새로운 로봇 손에 대해서도 단일 정책으로 <code>zero-shot generalization</code> 능력을 보여주었다. 또한, 새로운 로봇 손이나 물체에 대한 미세 조정(finetuning) 시 학습 효율성을 크게 개선하는 것으로 나타났다. <span class="math inline">eigengrasps</span> 행동 공간의 중요성, 범용적인 관찰 공간의 효과, 그리고 신체 무작위화(embodiment randomization)의 영향에 대한 제거 연구(ablation study)도 수행되어 각 구성 요소의 기여를 확인했다.</p>
+<p>본 연구의 한계점으로는 훈련에 사용된 로봇 손 모델의 수가 적다는 점과 쥐기 작업에만 초점을 맞췄다는 점이 있다. 향후 연구에서는 더 다양한 로봇 손 모델과 손 내부 조작(in-hand reorientation)과 같은 복잡한 작업으로 확장이 가능할 것으로 보인다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Detail Review</h1>
+</section>
+<section id="다양한-로봇-손을-위한-범용-파지-정책-crossdex-논문-심층-리뷰" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 다양한 로봇 손을 위한 범용 파지 정책: CrossDex 논문 심층 리뷰</h1>
+<section id="배경과-문제-정의" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="배경과-문제-정의"><span class="header-section-number">3.1</span> 1. 배경과 문제 정의</h2>
+<p>다지(多指) 로봇 손을 이용한 물체 파지(grasping)는 로봇이 현실 세계의 물체와 상호작용하기 위한 핵심 기술로 오래전부터 연구되어 왔습니다. 기존 연구들은 주로 특정 로봇 손에 한정된 파지 정책 학습에 집중해 왔지만, <strong>서로 다른 형태의 로봇 손들에 공통적으로 적용될 수 있는 범용 정책</strong>에 대한 연구는 거의 이루어지지 않았습니다. 예를 들어, 5손가락에 22자유도를 가진 ShadowHand와 4손가락에 16자유도인 LEAP Hand를 생각해 보면, 두 손의 형태 차이로 인해 한 손의 동작 제어 명령을 다른 손에 직접 적용하기가 매우 어렵습니다. 손가락 수와 관절구조, 가동 범위가 다르기 때문에 <strong>행동 공간</strong>(제어 명령의 형태)을 통일하기가 어렵고, 물체와 접촉하는 방식도 달라 단일 정책으로 다양한 손을 제어하는 것은 큰 도전 과제입니다.</p>
+<p>이러한 문제의식 아래, <strong>Cross-Embodiment Dexterous Grasping</strong>(이하 CrossDex) 논문은 <strong>다양한 로봇 손 체형에 통용되는 단일 강화학습 정책</strong>을 개발하고자 합니다. 각 로봇 손마다 별도의 정책을 학습하는 대신, <strong>공유되는 구조적 특징</strong>을 활용해 여러 손에 걸쳐 일반화할 수 있는 파지 기술을 학습시키는 것이 목표입니다. 이는 새로운 로봇 손이 투입될 때 일일이 초기부터 학습해야 하는 비용을 줄이고, 이미 학습된 정책을 빠르게 이전하거나 <code>제로샷(Zero-shot)</code>으로 적용하는 기반을 마련한다는 점에서 실용적인 의미가 큽니다. 요약하면, 이 논문은 <em>“다양한 로봇 손에 대해 하나의 뇌(정책)로 물체 잡기를 잘 해보자”</em>라는 문제를 정의하고 있습니다.</p>
+</section>
+<section id="제안-방법의-핵심-기술-내용" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="제안-방법의-핵심-기술-내용"><span class="header-section-number">3.2</span> 2. 제안 방법의 핵심 기술 내용</h2>
+<p>CrossDex의 핵심 아이디어는 <strong>인간 손 동작 공간을 매개체로 로봇 손들의 행동과 관측 공간을 통일</strong>하는 것입니다. 저자들은 사람이 여러 로봇 손을 원격 조작(teleoperation)할 때, <strong>자신의 손 동작</strong>을 통해 직관적으로 로봇 손을 제어할 수 있다는 점에 주목했습니다. 이를 본뜬 <code>“휴먼-라이크 (human-like) 정책”</code>을 도입하여, 정책의 행동 출력이 곧 <strong>인간 손의 자세</strong>로 표현되도록 만들었습니다. 구체적으로, 인간 손의 다양한 자세를 주성분분석(PCA)을 통해 얻은 <strong>eigengrasp</strong>(고유 그립 모드)를 <strong>통합 행동 공간</strong>으로 채택합니다. MANO라는 인간 손 모델의 45차원 관절 각도 표현을 저차원(e.g.&nbsp;수 개에서 수십 개 차원) eigengrasp 벡터로 압축하여 사용하며, 하나의 정책이 출력하는 이 <strong>eigengrasp 벡터</strong>가 어떤 로봇 손을 제어할 때든 공통된 의미를 갖도록 합니다.</p>
+<p>다음 단계는 이렇게 나온 인간 손 형태의 동작 명령을 <strong>각 로봇 손의 개별 관절 명령으로 변환</strong>하는 것입니다. 이를 <code>리타게팅(retargeting)</code>이라고 하며, 본 연구에서는 주로 DexPilot 알고리즘을 기반으로 하되, 초기에는 최적화 기반의 리타게팅을 활용하고 이후엔 이를 대신할 <strong>신경망 매핑</strong>을 학습시켰습니다. 리타게팅은 인간 손 모드의 움직임을 개별 로봇 손의 관절값(각 손의 PD 제어기에 넘겨줄 목표 각도)으로 변환하는 역할을 합니다. 예를 들어, 정책이 “손을 쥐는” 방향의 eigengrasp 값을 출력하면, 5손가락 ShadowHand든 4손가락 Allegro Hand든 해당 손가락들이 모두 오므려져 물체를 잡는 방향으로 관절이 움직이도록 매핑됩니다. 저자들은 이 매핑을 빠르게 수행하기 위해 각 로봇 손별로 <strong>4층 MLP 신경망</strong>을 학습시켜 최적화 과정을 대체하였고, 이를 통해 대량의 병렬 강화학습 환경에서도 속도 병목 없이 동작 변환을 할 수 있게 했습니다.</p>
+<p>한편, <strong>관측 공간의 통합</strong>도 중요한 요소입니다. 서로 다른 로봇 손의 <strong>자기 수용감각(proprioception)</strong> 정보, 즉 관절 각도들은 종류마다 차원이 다르고 의미도 달라 직접 비교하거나 하나의 정책 입력으로 합치는 데 무리가 있습니다. CrossDex에서는 <strong>손바닥과 손가락 끝 포인트의 3차원 위치 정보만</strong> 관측에 사용함으로써 이 문제를 풀었습니다. 로봇 손의 구체적인 관절각 대신, 각 손의 손바닥 중심과 다섯 손가락(또는 네 손가락) 끝점들의 위치를 취하면, 비록 손마다 구조가 달라도 “손가락 끝이 어디 있는가”라는 공통 표현으로 정규화할 수 있다는 것입니다. 이는 해당 위치들이 파지에서 물체와의 접촉 및 배치에 핵심적인 역할을 하기 때문이며, Handa 등(2020)의 연구에서도 인간 손가락 끝 위치의 중요성이 강조된 바 있습니다. 요약하면, <strong>행동 공간</strong>은 “인간 손 고유 동작 모드”로, <strong>관측 공간</strong>은 “손바닥과 손가락 끝의 위치”로 통합하여 <strong>로봇 손 종류에 구애받지 않는 정책 입력/출력 구조</strong>를 설계한 것이 CrossDex 방법의 핵심입니다.</p>
+<p>이렇게 통합된 관측·행동 표현을 가지고, <strong>강화학습 정책 학습</strong>은 크게 두 단계로 진행되었습니다. (i) 우선 <em>teacher-student</em> 전략을 활용하여, <strong>상태기반(state-based) 교사 정책</strong>들을 개별 물체 대상 파지에 대해 학습시킵니다. 여기서 상태기반이란 물체의 정확한 위치와 형상, 로봇 손의 상태 등을 완전 관측한 조건에서 학습한다는 뜻입니다. 각 물체마다 PPO 알고리즘으로 최적 정책을 찾고, 이를 각 물체의 파지 전문가(교사)로 간주합니다. (ii) 이후 이러한 다수의 교사들을 이용해 <strong>비전기반(vision-based) 학생 정책</strong>을 학습시키는데, 여기에는 <em>DAgger</em>(Dataset Aggregation) 알고리즘을 사용했습니다. 비전 정책은 물체의 3D 포인트클라우드(시뮬레이션 상의 depth sensor 데이터)를 입력으로 받아 동작을 결정하며, 초기에는 교사 정책들의 시연을 모방하고 점진적으로 자기 정책으로 데이터를 확장해가는 방식으로 학습됩니다. 이 비전 정책이 최종적으로 <strong>모든 물체</strong>와 <strong>모든 로봇 손</strong>을 한꺼번에 다루는 <strong>범용 파지 정책</strong>이 됩니다. 학습에는 NVIDIA Isaac Gym 시뮬레이터를 활용하여 총 8192개의 병렬 환경에서 대량의 경험을 모았고, 이후 시뮬레이션에 16,384개 환경을 활용하여 비전 정책으로 지식을 이행(distill)했습니다. 이러한 대규모 병렬 학습 세팅 덕분에 수십 가지 물체와 여러 손에 대한 복잡한 정책을 현실적인 시간 안에 얻을 수 있었습니다. (참고로 정책 신경망 구조는 상태기반의 경우 5개 레이어 MLP, 비전 정책의 경우 PointNet 기반의 간소화된 구조로 물체 점군을 처리한 후 MLP로 액터/크리틱을 구성하였습니다.)</p>
+<p>마지막으로, 저자들은 이렇게 학습된 정책을 새로운 손이나 새로운 객체에 빠르게 적응시키는 <strong>파인튜닝(fine-tuning)</strong> 기법도 제안합니다. 사전학습된 CrossDex 정책을 초기화 값으로 활용하여 PPO 재학습을 할 때, 기존 정책과의 <strong>KL 발산 페널티</strong>를 추가로 줘서 급격한 변화(포겟팅)를 막는 형태로 미세조정을 수행하였습니다. 이를 통해 <strong>학습되지 않은 새로운 손이나 새로운 물체 세트에 대한 추가 학습 효율을 높일 수 있음</strong>을 보였습니다.</p>
+</section>
+<section id="기존-연구-대비-주요-기여점" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="기존-연구-대비-주요-기여점"><span class="header-section-number">3.3</span> 3. 기존 연구 대비 주요 기여점</h2>
+<p>CrossDex는 앞서의 기술적 설계를 통해 <strong>기존 연구 대비 몇 가지 두드러진 기여</strong>를 제공합니다. 첫째, <strong>범용 다지 손 파지 정책의 구현</strong>입니다. 기존에는 로봇 손마다 별도의 정책을 만들어야 했고, 심지어 유사한 형태의 손 사이에서도 정책을 재학습해야 했습니다. Patel &amp; Song (2024)의 GET-Zero 연구가 동일한 LEAP Hand의 변형들 사이에서 정책 일반화를 시도했지만, <strong>서로 다른 종류의 로봇 손 간 일반화에는 실패</strong>했다고 보고합니다. 반면 CrossDex는 ShadowHand, Allegro Hand, Schunk SVH, Ability Hand처럼 <strong>구조가 제각각인 손 네 종류</strong>를 한 번에 학습시키고, 학습에 포함되지 않은 LEAP Hand와 Inspire Hand까지 <strong>단일 정책으로 제어 가능함</strong>을 처음으로 보여주었습니다. 이는 <strong>로봇 손 분야 최초의 범용 정책</strong> 시도로서 의의가 있습니다.</p>
+<p>둘째, <strong>인간 손 기반의 행동 공간 통합과 손가락 끝 관측을 통한 일반화 전략</strong> 자체가 기여점입니다. 앞서 설명한 인간 <strong>eigengrasp</strong> 공간을 활용한 행동 통합은 인간 조작의 <strong>공통 분모</strong>를 활용하는 창의적인 접근으로서, <strong>서로 다른 손의 움직임을 일관된 방식으로 표현</strong>할 수 있게 해주었습니다. 이를 통해 저자들은 기존에 복잡한 그래프 신경망이나 트랜스포머 등을 사용해 각 로봇 형태를 인코딩해야 했던 접근들과 달리, 훨씬 명시적이고 해석적인 <strong>공용 인터페이스</strong>로 문제를 단순화했습니다. 특히 <strong>teleoperation (원격 조작)</strong> 분야의 지식을 정책 학습에 접목하여, 인간-로봇 사이의 제어 맵핑을 로봇-로봇 사이에도 적용한 점이 흥미로운 혁신입니다. 또한 손가락 끝 위치만으로 관측을 구성한 것은 단순히 차원을 줄이는 효과뿐만 아니라, <strong>손 크기나 관절 구성 차이에도 불구하고 파지의 핵심인 손-물체 관계를 공통되게 파악</strong>할 수 있다는 장점이 있습니다.</p>
+<p>셋째, <strong>실험적으로 높은 성능과 일반화 능력</strong>을 입증했습니다. CrossDex 정책은 <strong>YCB 벤치마크 객체</strong>들을 대상으로 4가지 훈련 손에서 평균 약 <strong>80%의 그립 성공률</strong>을 기록했으며, 학습에 전혀 포함되지 않았던 두 가지 새로운 손에 대해서도 <strong>제로샷으로 35% 이상의 성공률</strong>을 보였습니다. 이는 단순히 하나의 손에 특화된 정책을 새로운 손에 적용했을 때 기대되는 성능 (거의 0에 수렴)과 비교하면 크게 뛰어난 일반화 결과입니다. 특히 <strong>CrossDex는 동시 학습한 손들에 대해서도 각 손별 전용 정책과 비슷한 성능을 유지</strong>하면서, <strong>새로운 손에 대해서는 월등히 우수한 성공률</strong>을 나타냈습니다. 이러한 성능 우위는 저자들이 고안한 통합 관측/동작 공간의 효과와, 교사-학생 학습 프레임워크의 효용을 함께 보여주는 증거입니다.</p>
+<p>마지막으로, <strong>학습 효율 및 전이 학습 측면의 개선</strong>도 중요한 기여입니다. 다중 손을 한꺼번에 학습하는 크로스-임바디먼트 훈련은 <strong>개별 손별로 따로 학습할 때에 비해 약간 더 안정적이고 효율적인 학습곡선</strong>을 보였습니다. 즉, 공통 정책으로 묶어서 학습하면 오히려 훈련이 수렴하는 데 도움이 되고 각 손에 대한 성능 저하도 없었다는 것입니다. 뿐만 아니라, 학습된 정책을 활용한 <strong>파인튜닝</strong> 실험에서는, 사전 학습 없이 처음부터 새 손에 대해 학습하는 경우보다 <strong>훨씬 빠르게 성능을 끌어올릴 수 있음</strong>이 확인되었습니다. 예컨대 LEAP Hand에 대해 처음부터 학습한 정책의 다중 물체 성공률이 43.6%였다면, CrossDex 사전학습 정책을 미세조정한 경우 64.3%까지 달성하였습니다. 새로운 객체들에 대한 학습에서도 사전학습의 이점이 나타나, 범용 파지 정책이 <strong>프리트레인 모델</strong>로서 유용함을 보여주었습니다.</p>
+</section>
+<section id="실험-설계-및-구성-평가" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="실험-설계-및-구성-평가"><span class="header-section-number">3.4</span> 4. 실험 설계 및 구성 평가</h2>
+<p>논문의 실험은 주로 <strong>시뮬레이션 환경에서의 다수 객체 파지 평가</strong>로 이루어졌으며, 설계 면에서 비교적 철저하고 신중하게 구성되었습니다. 실험에 사용된 <strong>로봇 손 플랫폼</strong>은 앞서 언급한 4가지 훈련용 손(ShadowHand, Allegro Hand, Schunk SVH Hand, Ability Hand)과 2가지 테스트용 손(LEAP Hand, Inspire Hand)입니다. 이들은 손가락 개수(4<del>5개)와 자유도(10</del>22 DoF)가 상이하여, CrossDex의 일반화 성능을 검증하기에 충분히 다양한 사례를 포함합니다. 모든 손은 <strong>RealMan RM65 6자유도 로봇팔</strong> 끝단에 장착되어 있고, 로봇팔의 베이스는 책상 옆면에 고정되어 있습니다. 이는 실제 로봇 실험을 염두에 둔 구성으로, 시뮬레이션에서의 설정이 현실의 하드웨어 배치와 일치하도록 했습니다.</p>
+<p><strong>학습 환경</strong>으로는 NVIDIA의 물리 시뮬레이터인 <strong>Isaac Gym</strong>을 사용하였고, 한 번에 수천 개의 병렬 환경을 돌려 데이터 효율을 극대화했습니다. 예를 들어 PPO 기반 상태정책 학습 시 <strong>8192개 환경</strong>을 병렬 실행하여 4만 iteration을 수행했고, 비전 정책 학습 시는 <strong>16,384개 환경</strong>까지 활용하여 대용량의 데이터로 학습을 진행했습니다. 이렇게 대규모 환경을 사용하면서도, 한 대의 GPU에서 학습이 가능하도록(8192 환경의 경우 RTX 4090 한 장으로 가능) 시뮬레이션을 최적화했다고 합니다. 이는 <strong>실험 결과의 신뢰성</strong> 측면에서 중요합니다. 강화학습 결과는 보통 무작위성에 민감한데, 병렬 환경을 많이 사용하면 운에 따른 편차를 줄이고 더 안정적인 성능 추정을 할 수 있습니다. 또한 논문에서는 표와 그래프에 성공률의 평균과 표준편차(또는 표준오차)를 함께 제시하여 성능 차이가 통계적으로 유의미함을 보여주고 있습니다.</p>
+<p><strong>평가 방식</strong>은 YCB Object Set에 속한 <strong>45개의 다양한 물체</strong>에 대해 로봇 손이 물체를 들어올릴 수 있는지(성공/실패)를 측정하는 형태였습니다. 물체는 책상 위에 무작위로 놓여 있고, 로봇 손은 초기 자세로부터 물체를 파지해 들어올리는 <strong>에피소드</strong>를 반복하게 됩니다. 각 손-물체 조합에 대해 여러 시도를 수행해 성공률을 계산하며, 이를 모든 손에 대해 평균내어 종합 성능으로 사용했습니다.</p>
+<p>Baseline(비교 방법)으로는 <strong>다중작업(Multi-task) RL 방식</strong>들을 설정하여 CrossDex의 설계 요소들을 하나씩 제거해본 변형들을 사용했습니다. 예를 들어, <strong>MT-Raw-OA</strong>라는 베이스라인은 <strong>관측과 행동을 그대로(raw) 사용</strong>하는 대신 손 종류를 구분하는 원-핫 임베딩을 추가하여 여러 손을 함께 학습시키는 방법입니다. 이때 손별 관절 상태 차원을 맞추기 위해 남는 부분을 0으로 패딩하고, 관절 증가 방향도 통일시키는 등의 정규화를 적용했다고 합니다. 또한 <strong>MT-Raw-A</strong>는 관측은 CrossDex처럼 통합하되 행동은 원래 각 손의 관절 명령을 쓰는 경우, <strong>MT-Raw-O</strong>는 그 반대로 행동은 eigengrasp로 통일하되 관측은 각 손의 원래 관절각을 모두 포함한 경우로 설정하여 비교했습니다. 이렇게 baseline을 구성함으로써, <strong>공용 관측/행동 공간이 성능에 미치는 영향</strong>을 정량적으로 분석하려는 의도가 엿보입니다.</p>
+<p>전체적으로 실험 설계는 <strong>적절한 대조군</strong>을 갖추고 있고, <strong>훈련에 사용되지 않은 새로운 손과 새로운 물체로의 일반화 평가</strong>까지 포함하여 제안 방법의 효과를 다각도로 검증했습니다. 다만 아쉬운 부분을 꼽자면, 본 논문에서는 주된 결과가 시뮬레이션 상의 성공률에 집중되어 있어 <strong>실제 로봇에의 적용 검증이 제한적</strong>이었다는 점입니다. 저자들이 프로젝트 페이지를 통해 LEAP Hand 실물과 RealSense 카메라를 사용한 <strong>Sim-to-Real 실험 영상</strong>을 공개하긴 했지만, 논문 본문에서는 이 부분이 정량적인 평가로 다루어지진 않았습니다. 따라서 현실 세계에서 다양한 손으로 범용 정책을 적용할 때 발생할 수 있는 미지의 변수들(센서 노이즈, 모델링 오차 등)에 대한 검증은 향후 과제로 남아 있습니다. 그럼에도 불구하고 시뮬레이터 내에서 충분한 다양한 상황을 실험했고, 코드와 환경 설정을 공개(PKU-RL/CrossDex 깃허브)하여 <strong>재현성</strong>도 높인 점은 긍정적으로 평가할 수 있습니다.</p>
+</section>
+<section id="주요-결과-및-한계점-논의" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="주요-결과-및-한계점-논의"><span class="header-section-number">3.5</span> 5. 주요 결과 및 한계점 논의</h2>
+<p>CrossDex의 실험 결과는 <strong>범용 정책의 가능성</strong>을 뒷받침하는 인상적인 수치를 보여줍니다. 우선, 하나의 비전 기반 정책이 <strong>훈련에 사용된 4가지 손</strong>에 대해 평균 <strong>약 80%의 파지 성공률</strong>을 달성했습니다. 개별 객체별로 보면 45개 YCB 물체 중 42개에서 성공률이 거의 100%에 가깝게 나왔으며, 이는 여러 손을 동시에 제어하도록 학습했음에도 <strong>각 손에 대한 성능 희생이 크지 않았다</strong>는 뜻입니다. 또한 <strong>동시학습의 이점</strong>으로, 저자들은 동일 조건에서 손별로 따로 학습시킨 정책들과 비교해볼 때 <strong>크게 뒤지지 않거나 오히려 학습 안정성이 높았다</strong>고 보고합니다. Figure 3의 학습 곡선 비교를 보면 CrossDex와 개별 학습의 수렴 속도 및 최종 성능이 유사하거나 약간 더 나은데, 이는 서로 다른 손 간에 경험이 일부 공유되면서 학습 신호의 다양성이 증가한 덕분으로 해석할 수 있습니다.</p>
+<p><strong>Baseline 대비 성능</strong>을 살펴보면, CrossDex의 통합 관측/행동 공간 전략이 기존 방식들을 확연히 능가함을 알 수 있습니다. Table 1의 결과에 따르면, <strong>CrossDex 정책은 훈련에 사용된 손들은 물론 보지 못한 새로운 손들에 대해서도 모든 baseline보다 높은 성공률</strong>을 보였습니다. 흥미로운 점은, raw 관측/행동을 사용한 다중학습도 어느 정도 일반화 능력을 갖긴 했다는 것입니다. 예를 들어 MT-Raw-A (관측 통일/행동 원래값) 방법은 새로운 손에 대해 21% 정도의 성공률을 보였는데, 이는 개발자들이 <strong>URDF 정렬</strong> 등을 통해 손들 간 관절 정의를 신중히 맞춰준 덕분입니다. 즉, 손가락 순서나 관절 증감 방향 등을 수작업으로 통일한 결과 어느 정도 제로샷 일반화가 가능했지만, <strong>인간 손 eigengrasp를 활용한 CrossDex의 성능(35% 이상 성공률)에는 크게 못 미쳤습니다</strong>. 더욱이 다른 baseline인 MT-Raw-O나 MT-Raw-OA의 경우, 상태기반 학습 시 로봇 종류 원-핫벡터를 활용한 탓에 비전 정책으로 지식을 증류할 때 관측 정보가 감소하여 성능 하락이 두드러졌습니다. 이러한 분석은 <strong>CrossDex의 설계 선택이 단순히 편의성뿐만 아니라 성능 면에서도 최적</strong>임을 뒷받침합니다. 한편, CrossDex가 <strong>새로운 손에 대해 달성한 제로샷 성공률 ~35% 수준</strong>은 절대적으로 보면 낮게 느껴질 수 있습니다. 하지만 앞서 언급했듯 전혀 보지 못한 손의 경우 일반적인 정책은 거의 실패하는 반면, 3번 중 1번 이상 성공하게 만든 것만으로도 고무적인 결과입니다. 이는 <strong>추가 학습(finetuning)을 통해 쉽게 끌어올릴 수 있는 출발점</strong>으로 볼 수 있습니다.</p>
+<p>CrossDex의 <strong>한계점</strong>도 짚고 넘어갈 필요가 있습니다. 우선, 현재의 범용 정책은 <strong>파지(grasp) 동작</strong>에 초점을 맞추고 있습니다. 즉, 테이블 위의 정적(static)인 물체를 집어 드는 과제에 특화되어 있으며, <code>물체를 쥔 후 섬세한 조작(in-hand manipulation)</code>이나 연속적인 작업으로의 일반화는 다루지 않습니다. 이는 연구 범위를 넘는 부분이지만, 결국 궁극적인 로봇 손 활용을 위해서는 파지 이후의 단계(예: 물체 회전시키기, 도구 사용 등)도 범용 정책으로 다룰 수 있어야 할 것입니다. 또한 <strong>시뮬레이터 기반의 학습과 평가</strong>라는 한계 때문에, 현실 세계에서 발생하는 마찰 모델 차이나 센서 오차, 카메라 인식 문제 등이 고려되지 않았습니다. 프로젝트 페이지에서 시도된 <strong>Sim-to-Real 적용</strong>에서는 어느 정도 성공을 거두었지만, 실제 실험에서는 <strong>카메라에 손이 가려 물체가 보이지 않게 된다거나</strong>, <strong>로봇팔이 테이블과 충돌</strong>하는 등의 <strong>실패 사례</strong>도 확인되었습니다. 이는 향후 <strong>센서 융합이나 모션 플래닝을 결합</strong>하여 개선할 부분입니다.</p>
+<p>또 다른 한계로, <strong>행동 공간을 인간 손 모드로 제한</strong>한 것이 복잡한 손 동작을 표현하는 데 제약이 될 가능성이 있습니다. 저자들은 MANO 기반 eigengrasp를 6개, 12개 등 여러 개수로 시도한 결과 큰 성능 차이는 없었다고 보고하고 있어 현재 설정이 충분함을 시사하지만, 이 공간이 표현하지 못하는 특이한 손 자세가 필요한 작업이 있을 수 있습니다. 마찬가지로 손가락 끝 위치만으로 관측을 구성한 것도 파지에는 충분했으나, <strong>손가락의 세부 굽힘 정도나 관절 토크 등의 정보가 배제</strong>되었다는 점에서 향후 더 복잡한 상호작용에는 보완이 필요할 수 있습니다.</p>
+<p>요약하면, CrossDex의 결과는 현재 수준에서 <code>범용 다지 손 파지의 개념 증명(proof of concept)</code>을 성공적으로 보여줬다고 평가할 수 있습니다. 동일한 정책으로 여러 형태의 로봇 손에 일관되게 물체 파지 동작을 수행하고, 새로운 손에도 일부 일반화가 가능함을 입증한 것은 큰 진전입니다. 동시에, 현실 적용까지 넘어서기 위해서는 몇 가지 난제들 – 예를 들어 <strong>더 복잡한 작업으로의 확장</strong>, <strong>현실 세계의 불확실성 대응</strong>, <strong>더욱 다양한 손 구조 (예: 두 손가락 집게 그리퍼 등 극단적으로 형태가 다른 손)</strong> – 이 남아 있음을 확인하게 해줍니다.</p>
+</section>
+<section id="향후-연구-방향-제언" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="향후-연구-방향-제언"><span class="header-section-number">3.6</span> 6. 향후 연구 방향 제언</h2>
+<p>이번 연구를 바탕으로 생각해볼 수 있는 향후 연구 방향은 여러 가지가 있습니다:</p>
+<ul>
+<li><p><strong>실세계 적용 및 검증 확대:</strong> 시뮬레이션에서 입증된 CrossDex 정책을 실제 로봇 플랫폼에서 더욱 광범위하게 시험하는 것이 필요합니다. 다양한 센서 피드백(예: 촉각센서)과 카메라 환경에서 정책이 얼마나 강인한지 평가하고, Sim-to-Real 간 갭을 줄이기 위한 도구(도메인 랜덤화, 적대적 학습 등)를 결합하는 연구가 유망합니다.</p></li>
+<li><p><strong>다양한 작업과 목표로의 일반화:</strong> 파지 외에 <strong>조작(manipulation)</strong> 작업에도 범용 정책을 확장하는 방향입니다. 예를 들어 하나의 정책이 여러 손으로 병뚜껑 열기, 공 돌리기, 도구 사용하기 등의 <strong>다양한 조작 과제</strong>까지 수행하도록 학습시킬 수 있다면 진정한 범용 손 사용 로봇에 가까워질 것입니다. 이를 위해 고차원 행동을 효율적으로 탐색할 수 있는 계층적 RL이나 모방학습 결합 기법 등을 고려해볼 수 있습니다.</p></li>
+<li><p><strong>정책 아키텍처의 진화:</strong> 현재 CrossDex는 인간 손이라는 <strong>정적 인터페이스</strong>를 통해 손들을 묶었지만, 향후에는 <strong>모든 형태의 로봇 손을 포괄할 수 있는 학습 기반 표현</strong>을 탐색할 수 있습니다. 예컨대 그래프 신경망으로 로봇 손의 형태를 인코딩하고, 거기에 정책을 조건부 생성(condition)하는 방법이나, 트랜스포머를 이용해 <strong>손 구조를 토큰화하여 in-context</strong>로 제어 명령을 생성하는 방법 등이 대안이 될 수 있습니다. 이러한 접근은 새로운 손이 투입되었을 때 인간 손 공간에 맞추기 어려운 경우에도 적용할 수 있다는 장점이 있습니다.</p></li>
+<li><p><strong>휴먼 데몬스트레이션과의 결합:</strong> CrossDex는 인간 손 공간을 활용했지만 정작 인간 시演(시연) 데이터는 강화학습 교사로 직접 쓰지 않았습니다. 향후에는 <strong>인간 시연 데이터를 활용한 오프라인 RL</strong>이나 <strong>IL(모방학습)</strong> 기법을 결합하여 학습 효율을 높이고, 정책이 더욱 인간스러운 동작을 하도록 유도할 수 있을 것입니다. 특히 teleoperation 시스템에서 얻은 <strong>인간-로봇 손 동작 짝(pair)</strong> 데이터를 활용하면 리타게팅 학습이나 초기 정책 구성에 도움이 될 것입니다.</p></li>
+<li><p><strong>추가적인 안전 및 제약 요소 통합:</strong> 로봇 손이 다양한 환경에서 동작하려면, 단순 성공률뿐 아니라 <strong>안전성</strong>도 중요합니다. 향후 연구에서는 정책 학습 시 <strong>로봇 손의 충돌 회피</strong>나 <strong>힘 제어 안정성</strong> 등의 제약을 모델에 통합하는 방향도 고려될 수 있습니다. 예를 들어 손가락 끝에 과도한 힘이 가해지면 감지하여 놓아주도록 하거나, 테이블과 부딪히지 않도록 학습에 페널티를 주는 등 현실적인 제약을 넣으면, 실제 적용에 한층 가까워질 것입니다.</p></li>
+</ul>
+<p>결론적으로, <em>Cross-Embodiment Dexterous Grasping with RL</em> 논문은 <strong>다양한 로봇 손에 걸쳐 통합적으로 동작하는 강화학습 정책</strong>의 가능성을 보여준 선구적인 연구입니다. 배경의 난제부터 제안 기법, 실험 검증까지 논리적이고 명확하게 전개되었으며, 로봇공학 및 강화학습 연구자들에게 새로운 관점을 제공하고 있습니다. 앞으로 이 방향의 연구가 지속되어, 사람 손처럼 유연하고 범용적인 로봇 손 조작 정책이 실현되기를 기대해봅니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
