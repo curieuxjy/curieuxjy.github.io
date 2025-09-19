@@ -1,0 +1,60 @@
+---
+title: "📃Text2Touch 리뷰"
+date: 2025-09-19
+categories: [touch, llm, rl]
+toc: true
+number-sections: False
+description:  Tactile In-Hand Manipulation with LLM-Designed Reward Functions
+---
+
+- [Paper Link](https://openreview.net/pdf?id=U9zcbQVDGa)
+- [Homepage](https://hpfield.github.io/text2touch-website/)
+
+1. 이 연구는 LLM(Large Language Model)이 촉각 센싱을 활용하여 실제 로봇의 복잡한 손 안 물체 조작을 위한 보상 함수를 설계하는 Text2Touch 프레임워크를 제시합니다.
+2. Text2Touch는 70개 이상의 환경 변수를 처리하는 향상된 프롬프트 엔지니어링 전략과 시뮬레이션에서 실제 로봇으로 정책을 성공적으로 이전하는 sim-to-real 증류 파이프라인을 활용합니다.
+3. 실제 촉각 Allegro Hand에서 Text2Touch는 사람이 설계한 기존 기준선보다 뛰어난 회전 속도와 안정성을 보였으며, LLM 설계 보상이 로봇 학습 배포 시간을 크게 단축할 수 있음을 입증했습니다.
+
+
+<center>
+<img src="../../images/2025-09-19-text2touch/0.png" width="100%" />
+</center>
+
+---
+
+# Brief Review
+
+이 논문은 대규모 언어 모델(LLM)이 햅틱(tactile) 센싱을 활용하는 복잡한 로봇 작업의 Reward Function 설계를 자동화할 수 있음을 입증한 Text2Touch 프레임워크를 제안합니다. 기존 LLM 기반 Reward 설계 연구는 주로 시각 및 고유 수용성 감각(proprioception)에 초점을 맞췄으며, 사람과 같은 정교한 조작(dexterous manipulation)에 필수적인 촉각 센싱은 다루지 않았습니다. Text2Touch는 LLM이 real-world에서 촉각 정보를 활용하여 물체를 다축(multi-axis)으로 회전시키는 In-Hand Manipulation 작업을 성공적으로 수행하도록 Reward Function을 생성하는 방법을 보여줍니다.
+
+이 연구의 핵심 방법론은 다음과 같습니다.
+
+1.  **반복적 LLM Reward Design**: Eureka 프레임워크를 기반으로, LLM이 PPO (Proximal Policy Optimization) 학습 에이전트와 함께 Reward Function을 반복적으로 생성하고 개선합니다.
+    *   **Initialization**: LLM은 자연어 작업 설명 $l$과 환경 Context $M$을 기반으로 초기 Reward Function 후보군 $\{R^{(0)}\}$을 생성합니다.
+    *   **Iteration**: 각 반복 $k$에서, 생성된 Reward Function $\{R^{(k)}\}$으로 정책(policies) $\{\pi^{(k)}\}$을 학습시키고, Fitness Function $F$를 사용하여 작업 점수 $\{s^{(k)}\}$를 평가합니다. 가장 우수한 Reward Function $R^{(k)}_{best}$가 선택되고, 이 Reward Function과 해당 정책의 피드백을 활용하여 LLM이 다음 반복을 위한 Reward Function $\{R^{(k+1)}\}$을 생성합니다. 이는 다음 공식으로 표현됩니다:
+        $\text{Initialization: } \{R^{(0)}\} \sim \text{LLM}(l, M)$
+        $\text{For each iteration } k \ge 0 :$
+        $\quad \{\pi^{(k)}\} \leftarrow \{\text{RL}(\{R^{(k)}\})\},$
+        $\quad \{s^{(k)}\} \leftarrow \{F(\{\pi^{(k)}\})\},$
+        $\quad R^{(k)}_{best} = \text{SelectBest}(\{R^{(k)}, s^{(k)}\}),$
+        $\quad \{R^{(k+1)}\} \sim \text{LLM}(l, M, \text{Feedback}(s^{(k)}_{best}, R^{(k)}_{best}).$
+    *   **Fitness Function**: 물체의 목표 회전이 달성될 때마다 증가하는 "성공 횟수(running successes count)"를 사용합니다. 에피소드는 시간이 만료되거나 에이전트가 크게 이탈하면 재설정됩니다.
+
+2.  **고복잡도 환경을 위한 Prompt Engineering 강화**:
+    *   **확장 가능한 Bonus 및 Penalty**: 기존 Eureka 프레임워크는 고정된 Success Bonus $B$를 사용했지만, Text2Touch는 LLM이 최종 Reward 표현 내에서 Success Bonus $B$와 Early-Termination Penalty $P$를 적절하게 조정할 수 있도록 확장 가능한 변수로 LLM Context에 포함시킵니다.
+    *   **수정된 Prompt 구조**: 70개 이상의 환경 변수를 다루기 위해, LLM에 모든 변수 이름과 Type이 포함된 명시적인 Reward Function Signature $S_{detailed}$를 제공합니다. 이는 `M_{modified} = {E, S_{detailed}}$와 같이 환경 Context를 확장하여 코드 오류를 크게 줄이고 정책 성능을 향상시킵니다.
+
+3.  **Sim-to-Real Distillation을 통한 Real-World 검증**:
+    *   **Reward Discovery Training**: Reward 후보군을 효율적으로 평가하기 위해 각 반복마다 1억 5천만 Step의 짧은 시뮬레이션 훈련을 수행하고, 최적의 Reward $R^*$에 대해서는 80억 Step의 전체 훈련을 진행합니다.
+    *   **정책 전이 (Teacher-Student Pipeline)**: 시뮬레이션에서 privileged information (물체 Pose 및 Velocity)을 사용하여 Teacher Policy를 훈련시킨 후, 이 정책을 촉각 및 고유 수용성 관측값만을 사용하는 Student Policy로 Distillation합니다. Student Policy는 Teacher의 Action과 평균 제곱 거리(Mean Squared Distance)를 최소화하도록 학습됩니다. 이렇게 훈련된 Student Policy는 추가 튜닝 없이 real-world Allegro Hand에 배포됩니다.
+
+**주요 성과**:
+
+*   **LLM 기반 촉각 조작 Reward Design**: LLM이 촉각 센싱 데이터를 통합하여 Real-World에서 효과적인 Reward Function을 설계할 수 있음을 처음으로 시연했습니다.
+*   **향상된 Prompting 전략**: 70개 이상의 환경 변수를 포함하는 복잡한 환경에서 확장 가능한 Bonus 및 Penalty, 그리고 명시적인 Reward Function Signature를 통해 LLM의 Reward 생성 능력을 크게 개선했습니다.
+*   **Sim-to-Real 전이의 Real-World 검증**: LLM이 설계한 정책은 real-world의 tactile Allegro Hand에서 중력 불변(gravity-invariant) 다축 In-Hand Object Rotation 작업을 성공적으로 수행하며, Palm-Up 및 Palm-Down configuration 모두에서 작동합니다.
+*   **Human-Engineered Baseline 능가**: Text2Touch는 기존에 신중하게 튜닝된 Human-Engineered Baseline보다 우수한 회전 속도와 안정성을 보여주며, LLM이 생성한 Reward Function은 Baseline에 비해 훨씬 짧고 간결합니다. LLM이 생성한 Reward Function은 Baseline의 약 1/10의 변수, 1/4의 코드 라인(LoC), 1/8의 Halstead Volume (HV)을 사용했습니다.
+
+이 연구 결과는 LLM이 Reward Design에 크게 기여하여 복잡한 multimodal 로봇 학습의 Concept부터 배포 가능한 정교한 촉각 기술까지의 시간을 단축할 수 있음을 입증합니다.
+
+---
+
+# Detail Review
