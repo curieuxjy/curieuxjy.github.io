@@ -1,17 +1,5 @@
 [
   {
-    "listing": "/projects.html",
-    "items": [
-      "/posts/project/pick-gpt.html",
-      "/posts/project/quad_recovery.html",
-      "/posts/project/get_off_prediction.html",
-      "/posts/project/pulse_rl.html",
-      "/posts/project/active_learning.html",
-      "/posts/project/kompanion.html",
-      "/posts/project/traffic_signal_od.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
       "/posts/paper/2025-09-19-text2touch.html",
@@ -193,6 +181,18 @@
       "/posts/code/2020-07-20-import-custom-module.html",
       "/posts/storage/2020-07-17-rl-study-roadmap.html",
       "/posts/code/2020-07-13-install-mujoco-win10.html"
+    ]
+  },
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/posts/project/pick-gpt.html",
+      "/posts/project/quad_recovery.html",
+      "/posts/project/get_off_prediction.html",
+      "/posts/project/pulse_rl.html",
+      "/posts/project/active_learning.html",
+      "/posts/project/kompanion.html",
+      "/posts/project/traffic_signal_od.html"
     ]
   },
   {
