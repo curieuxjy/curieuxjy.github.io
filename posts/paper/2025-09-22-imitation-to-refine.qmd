@@ -1,0 +1,65 @@
+---
+title: "📃From Imitation to Refinement 리뷰"
+date: 2025-09-22
+categories: [residual, manipulation]
+toc: true
+number-sections: False
+description: Residual RL for Precise Assembly
+
+---
+
+- [Paper Link](https://arxiv.org/abs/2407.16677)
+- [Homepage](https://residual-assembly.github.io/)
+
+1. 기존 Behavior Cloning (BC) 방식은 오프라인 데이터의 분포 변화와 액션 청킹으로 인한 폐루프 제어 부족 때문에 정밀한 로봇 조립 작업에서 성능이 포화되고 신뢰성이 떨어진다는 한계를 보였습니다.
+2. 본 논문은 미리 학습된 BC 모델에 강화 학습(RL)으로 훈련된 폐루프 잔여 정책(residual policy)을 결합하는 ResiP(Residual for Precise Manipulation)를 제안하여, BC가 궤적 "계획자" 역할을 하고 잔여 정책이 실시간으로 미세한 교정을 수행하게 합니다.
+3. ResiP는 50개의 시연 데이터만으로도 정밀 조립 작업에서 기존 BC보다 훨씬 높은 성공률(예: peg-in-hole에서 5%→99%)을 달성하며, 분포 변화와 동적 교란에 대한 로봇의 견고성을 크게 향상시켰습니다.
+
+
+<center>
+<img src="../../images/2025-09-22-imitation-to-refine/residual_see_through.gif" width="70%" />
+</center>
+
+---
+
+# Brief Review
+
+이 논문은 정밀 조립과 같은 로봇 조작 작업에서 Behavior Cloning (BC) 정책의 신뢰성 부족과 성능 포화 문제를 다룹니다. 이러한 한계는 주로 오프라인 데이터 사용으로 인한 분포 변화(distribution shift)와 행동 덩어리(action chunking)를 통한 개방 루프(open-loop) 실행으로 인한 폐쇄 루프(closed-loop) 보정 제어의 부재에서 기인합니다.
+
+저자들은 행동 덩어리를 예측하는 BC 정책이 반응형 컨트롤러보다는 궤적 "플래너(trajectory planner)"에 가깝다고 분석합니다. 이러한 문제를 해결하기 위해, ResiP(Residual for Precise Manipulation)이라는 간단하면서도 효과적인 방법을 제안합니다. ResiP는 고정된(frozen) 청크(chunked) BC 모델에 RL(Reinforcement Learning)로 훈련된 완전히 폐쇄 루프 방식의 잔여(residual) 정책을 추가합니다. 이 잔여 정책은 분포 변화를 해결하고 BC 궤적 플래너가 예측한 행동 청크의 개방 루프 실행에 대한 폐쇄 루프 보정을 도입합니다.
+
+ResiP의 핵심 방법론은 다음과 같습니다:
+
+1.  **Base Policy Learning via Behavior Cloning:**
+    *   50개의 시뮬레이션 데모 데이터를 사용하여 기본 정책 $\pi_{base}$를 훈련합니다. Diffusion Policy (DP) 아키텍처를 사용하며, 이는 최신 BC 훈련 기법에 따라 여러 미래 행동을 예측하는 행동 청크(action chunks)를 활용합니다.
+    *   정책은 $T_a$ 길이의 미래 행동 시퀀스를 예측하고, 그 중 $T_{exec}$ 길이의 부분 집합($[a^{base}_t, \dots, a^{base}_{t+T_{exec}-1}]$)만 실행합니다. 이 논문에서는 $T_a=32$, $T_{exec}=8$을 사용합니다.
+
+2.  **Reactive Control via ResiP:**
+    *   BC로 얻은 초기 청크 기본 정책 $\pi_{base}$를 사용하여 분포 변화 및 반응성 부족 문제를 개선합니다.
+    *   잔여 정책 $\pi_{res}$는 PPO(Proximal Policy Optimization)로 훈련된 작은 단일 스텝 Gaussian Multi-Layer Perceptron (MLP)입니다.
+    *   각 타임스텝 $i = 0, \dots, T_{exec}-1$에 대해 잔여 정책은 현재 시뮬레이션 상태(로봇 고유 정보 및 객체 자세)와 기본 정책이 예측한 행동 $a^{base}_{t+i}$를 연결한 $s^{res}_{t+i} = [s_{t+i}, a^{base}_{t+i}]$를 관측합니다.
+    *   잔여 정책은 이 관측을 바탕으로 보정 행동 $a^{res}_{t+i} \sim \pi_{res}(\cdot|s^{res}_{t+i})$을 생성하여 기본 행동을 수정합니다. 최종 실행 행동은 $a_{t+i} = a^{base}_{t+i} + a^{res}_{t+i}$입니다. 이 per-timestep 보정 기능은 정밀 작업에 필수적입니다.
+    *   훈련 중에는 탐색 노이즈를 조정하여 새로운 행동을 발견하고 작업 성공을 위한 충분한 정밀도를 유지합니다. 잔여 정책은 orthogonal initialization을 사용하여 초기 보정이 0 주변에 집중되도록 합니다.
+
+3.  **Sim-to-Real Transfer:**
+    *   시뮬레이션에서 훈련된 상태 기반 $\pi_{res}$ 정책을 교사(teacher) 정책 $\pi_{teacher}$로 활용하여 시각 기반(vision-based) 학생(student) 정책 $\pi_{student}$로 지식 증류(distillation)합니다.
+    *   $\pi_{teacher}$로부터 성공적인 궤적 데이터셋 $D_{synth}$를 수집하고, 이를 실제와 같은 이미지 관측 $D_{synth-render}$로 다시 렌더링하여 시각적 다양성을 도입합니다.
+    *   소량의 실제 데모 $D_{real}$와 합성 렌더링된 데이터셋 $D_{synth-render}$를 결합하여 $\pi_{student}$를 훈련합니다. $\pi_{student}$는 ResNet18 시각 인코더가 있는 Diffusion Policy 아키텍처를 사용합니다.
+
+주요 결과는 다음과 같습니다:
+
+*   ResiP는 "one leg" 작업에서 50개의 데모만으로 98%의 성공률을 달성하여, 100K 데모를 사용한 순수 BC 방식(54%)보다 18% 포인트 향상된 성능을 보입니다. "peg-in-hole"과 같은 정밀 작업에서는 5%에서 99%로 성공률이 크게 향상되었습니다.
+*   BC 정책의 실패 원인이 작은 부정확성(small imprecision)임을 분석하고, ResiP가 이러한 오류를 미세한 조정으로 안정적으로 수정하며 새로운 그립 전략과 같은 질적으로 다른 행동을 발견하기도 합니다.
+*   ResiP는 청크 기반 메서드(DP, DP-DAgger, ResiP-C)보다 동적 교란(dynamic disturbances)에 대해 더 강력한 로버스트니스(robustness)를 보여줍니다(성능 하락 12% vs. 19-26%).
+*   잔여 정책의 아키텍처는 깊은 RL 훈련을 불안정하게 만드는 큰 정책 업데이트를 방지하여 안정적인 훈련과 높은 샘플 효율성을 제공합니다.
+*   시뮬레이션 데이터와 실제 데모를 공동 훈련(co-training)하면 실제 배포 시 성능이 크게 향상되고, 부품 색상 변화와 같은 시각적 변화에 대한 로버스트니스를 제공합니다.
+
+제한 사항으로는, ResiP의 지역적 특성으로 인해 초기 장면 무작위성이 매우 높은 경우에는 어려움을 겪을 수 있으며, 시각 기반 정책의 sim-to-real 전이 및 지식 증류 과정에서 여전히 성능 격차가 존재한다는 점이 언급되었습니다.
+
+---
+
+# Detail Review
+
+# Reference
+
+- [Residual Off-Policy RL for Finetuning Behavior Cloning Policies](https://residual-offpolicy-rl.github.io/)
