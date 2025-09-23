@@ -1,7 +1,8 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-09-20-dexop.html",
       "/posts/paper/2025-09-19-text2touch.html",
       "/posts/paper/2025-09-12-crossdex.html",
       "/posts/paper/2025-09-11-human2sim2robot.html",
@@ -45,8 +46,8 @@
       "/posts/paper/2025-07-18-touch-wild.html",
       "/posts/paper/2025-07-17-curobo.html",
       "/posts/paper/2025-07-16-dexctrl.html",
-      "/posts/code/2025-07-11-poe.html",
       "/posts/paper/2025-07-11-mag-fs.html",
+      "/posts/code/2025-07-11-poe.html",
       "/posts/paper/2025-07-09-tacEx.html",
       "/posts/paper/2025-07-04-sparsh-skin.html",
       "/posts/paper/2025-07-03-physics-rl.html",
@@ -54,9 +55,9 @@
       "/posts/paper/2025-06-12-batch-online-rl.html",
       "/posts/paper/2025-06-13-contact-rich-mpc.html",
       "/posts/paper/2025-06-11-dex-il-review.html",
+      "/posts/paper/2025-06-09-geort.html",
       "/posts/code/2025-06-09-ros2-joint-state-trajectory.html",
       "/posts/code/2025-06-09-ros2-pub-tip.html",
-      "/posts/paper/2025-06-09-geort.html",
       "/posts/paper/2025-06-04-neural-feels.html",
       "/posts/paper/2025-06-03-digit360.html",
       "/posts/paper/2025-06-02-sparsh.html",
@@ -92,8 +93,9 @@
     ]
   },
   {
-    "listing": "/post.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-09-20-dexop.html",
       "/posts/paper/2025-09-19-text2touch.html",
       "/posts/paper/2025-09-12-crossdex.html",
       "/posts/paper/2025-09-11-human2sim2robot.html",
@@ -137,8 +139,8 @@
       "/posts/paper/2025-07-18-touch-wild.html",
       "/posts/paper/2025-07-17-curobo.html",
       "/posts/paper/2025-07-16-dexctrl.html",
-      "/posts/paper/2025-07-11-mag-fs.html",
       "/posts/code/2025-07-11-poe.html",
+      "/posts/paper/2025-07-11-mag-fs.html",
       "/posts/paper/2025-07-09-tacEx.html",
       "/posts/paper/2025-07-04-sparsh-skin.html",
       "/posts/paper/2025-07-03-physics-rl.html",
@@ -146,9 +148,9 @@
       "/posts/paper/2025-06-12-batch-online-rl.html",
       "/posts/paper/2025-06-13-contact-rich-mpc.html",
       "/posts/paper/2025-06-11-dex-il-review.html",
-      "/posts/paper/2025-06-09-geort.html",
       "/posts/code/2025-06-09-ros2-joint-state-trajectory.html",
       "/posts/code/2025-06-09-ros2-pub-tip.html",
+      "/posts/paper/2025-06-09-geort.html",
       "/posts/paper/2025-06-04-neural-feels.html",
       "/posts/paper/2025-06-03-digit360.html",
       "/posts/paper/2025-06-02-sparsh.html",
