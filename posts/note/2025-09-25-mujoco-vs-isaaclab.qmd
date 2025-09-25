@@ -12,6 +12,49 @@ format:
 
 - [Original Link](https://www.linkedin.com/pulse/comparative-analysis-robotic-simulation-environments-fs-studio-cpjic/)
 
+시뮬레이션에서 물리의 역할과, 전반적인 시뮬레이션/게임 엔진에서 현재 널리 쓰이는 물리 엔진의 지형도를 조금 더 깊이 파고들고자 했습니다. 또한 이번 주의 Newton 발표와 이것을 연결 지어 보고자 했습니다.
+
+로보틱스 시뮬레이터는 가상 환경에서 제어 알고리즘을 개발·테스트하는 데 필수적입니다. 여러 대표적인 물리 엔진과 시뮬레이션 프레임워크—MuJoCo, NVIDIA Isaac Lab(PhysX 기반), 그리고 기타 관련 엔진들(Bullet, Brax 등)—을 성능, 사용 용이성, 호환성, 적용 범위 관점에서 비교합니다. 각 시뮬레이터는 서로 다른 강점을 지니고 있으며, Nvidia Newton은 이러한 환경들 중 최선의 것들과 통합되도록 설계되었습니다.
+
+# MuJoCo (Multi-Joint dynamics with Contact)
+
+* **성능**: MuJoCo는 효율적인 물리 시뮬레이션으로 유명하며, 종종 CPU만으로도 실시간보다 빠르게 실행됩니다.
+* **사용 용이성**: MuJoCo는 잘 설계된 C API를 제공하고 MJCF 또는 URDF 형태의 모델 기술을 지원하여 로봇과 환경을 비교적 직관적으로 정의할 수 있습니다.
+* **호환성**: MuJoCo는 크로스 플랫폼이며 이제 오픈소스로 공개되어 호환성이 넓어졌습니다. 강화학습 프레임워크와도 잘 통합되며—예를 들어 OpenAI Gym/Gymnasium과 DeepMind Control Suite는 벤치마킹을 위한 표준화된 MuJoCo 환경을 제공합니다. MuJoCo 엔진 자체는 순수하게 물리에 집중하며, 렌더링을 위해 기본 OpenGL 시각화를 제공하지만 포토리얼리즘 수준은 아닙니다. 로보틱스 연구에 필요한 다양한 로봇 구성요소(조인트, 액추에이터, 센서)를 지원합니다. DeepMind의 오픈소싱으로 MuJoCo 코드는 확장하거나 다른 도구(예: JAX 기반 가속기나 Warp GPU 백엔드)와 결합할 수 있습니다.
+* **적용 범위**: MuJoCo는 학계와 산업에서 로봇 학습, 운동 제어, 생체역학 분야에 폭넓게 사용되어 왔습니다. 복잡한 접촉과 다관절 구조(예: 보행 로봇, 매니퓰레이터)를 높은 물리적 충실도로 시뮬레이션하는 강점 덕분에 많은 RL 환경의 기본 선택지가 되었습니다.
+
+# NVIDIA Isaac Lab (PhysX 기반 시뮬레이션)
+
+* **성능**: Isaac Lab은 NVIDIA의 PhysX 엔진과 Omniverse 시뮬레이션 도구 위에 구축되어 있습니다. PhysX는 (많은 게임에서 사용되는) 성숙하고 고도로 최적화된 물리 엔진으로, 대규모 시뮬레이션을 처리할 수 있으며 특정 기능에서 GPU 가속을 지원합니다. Isaac Lab/Sim에서는 로보틱스를 위해 PhysX가 구성되어 있어 정확한 관절(articulation) 솔버와 다수의 에이전트 지원을 제공합니다. PhysX의 CPU 실행은 멀티스레드로 상당히 빠르지만, Isaac의 강점 중 하나는 NVIDIA GPU를 적극 활용한다는 점입니다. 예를 들어 Isaac Sim은 강체 연산을 오프로딩하고 RTX GPU 레이 트레이싱을 센서 렌더링에 사용하여, 높은 충실도를 유지하면서도 성능 좋은 시뮬레이션을 가능하게 합니다.
+* **사용 용이성**: MuJoCo 같은 경량 엔진과 비교하면 Isaac Lab/Sim은 설정이 더 복잡할 수 있습니다—일반적으로 강력한 NVIDIA GPU와(상당히 큰 소프트웨어 스택인) Isaac Sim 설치가 필요합니다. 다만, NVIDIA는 편의 도구들을 제공하고 있으며, Isaac Lab 자체는 많은 저수준 디테일을 추상화한 Python API를 갖춘 오픈소스 프레임워크입니다.
+* **호환성**: Isaac Lab은 NVIDIA 로보틱스 생태계와 완전히 호환됩니다. 환경과 로봇 표현에 USD(Universal Scene Description) 포맷을 사용하므로 상호 운용성이 좋습니다—USD를 지원하는 CAD나 다른 시뮬레이터에서 모델을 가져올 수 있습니다.
+* **적용 범위**: Isaac Lab/Sim은 엔드 투 엔드 로보틱스 개발을 목표로 합니다. 여기에는 로봇 학습(강화학습과 모방학습)뿐 아니라 로봇 설계, 내비게이션/조작 알고리즘 테스트, 지각 모델 학습용 합성 데이터 생성 등이 포함됩니다. 카메라(RGB, 깊이, LiDAR)를 사실적으로 시뮬레이션하는 능력은 로봇의 센서가 루프에 포함되는 작업(예: 비전 기반 정책 학습, 가상 세계에서 자율주행차 테스트)에서 핵심 장점입니다. Isaac은 창고 로봇 시뮬레이션부터 휴머노이드 제어, 실제 환경의 디지털 트윈에 이르기까지 다양한 응용에 사용되어 왔습니다. 뉴턴의 역할: Nvidia Newton은 차세대 물리 옵션으로 Isaac Lab과 통합될 예정입니다.
+
+# 기타 관련 물리 엔진(Bullet, ODE, Brax 등)
+
+MuJoCo와 Isaac/PhysX 외에도 로보틱스 시뮬레이션에서 흔히 사용되는 여러 물리 엔진이 있으며, 각자 장단점이 있습니다:
+
+* **Bullet Physics(및 PyBullet)**: Bullet은 게임과 로보틱스에서 널리 쓰이는 오픈소스 물리 엔진입니다. 강체와 연체 시뮬레이션을 지원하며, 빠른 로봇 시뮬레이션 프로토타이핑에 인기 있는 편리한 Python 인터페이스(PyBullet)를 제공합니다. Bullet은 무료이면서 기능이 꽤 충실(충돌, 조인트 등)하다는 점이 장점이고, ROS/Gazebo(옵션 물리 엔진)나 V-REP/CoppeliaSim 같은 도구에도 통합되어 왔습니다.
+* **ODE(Open Dynamics Engine)**: ODE는 오래된 오픈소스 물리 엔진 중 하나로, 과거 많은 로보틱스 시뮬레이터에서 사용되었습니다(Gazebo의 오랜 기본 엔진). 기본적인 강체 동역학과 조인트 물리를 제공합니다. ODE는 매우 가볍고 단순하지만, 접촉이 많거나 복잡한 조인트가 포함되는 경우 시뮬레이션 안정성이 떨어질 수 있어, 합리적인 동작을 위해 종종 매개변수(예: ERP/CFM) 튜닝이 필요합니다. 성능도 일반적으로 최신 엔진들에 비해 느리고 최적화가 덜 되어 있습니다.
+* **Brax(및 기타 미분 가능한 엔진)**: Brax는 Google이 개발한 JAX(및 GPU/TPU) 위에서 구동되는 최신 물리 시뮬레이션 라이브러리로, 완전 미분 가능(differentiable)합니다. 하드웨어 가속을 통해 강화학습 에이전트의 매우 빠른 훈련을 목표로 합니다. Brax는 물리를 단순화함으로써 속도를 얻습니다—주로 구형/캡슐형 충돌과 패널티 기반 접촉 모델을 사용하며, 이는 제약 기반 솔버에 비해 정확성은 낮지만 병렬화가 매우 용이합니다. 사용성도 높아(Python 노트북과 Google Colab에서 사용 가능), 그래디언트 기반 제어 연구에 매우 적합합니다. 다만 이러한 단순화된 물리로 인해 적용 범위는 제한적이며(정밀 접촉 동역학이나 복잡한 형상에는 적합하지 않음), Dojo나 Tiny Differentiable Simulator 같은 다른 미분 가능 시뮬레이터들도 개발 중입니다. 뉴턴과의 관계: Newton 역시 GPU 성능을 강조하지만 Brax보다 더 범용성을 지향합니다. Newton의 미분 가능한 물리는 현실적인 접촉 동역학을 통해 그래디언트를 계산할 수 있어, Brax(속도, 미분 가능성)의 장점과 MuJoCo 같은 엔진의 풍부한 물리를 결합합니다.
+* **PhysX 및 기타**: NVIDIA의 PhysX(Isaac을 통해 논의함)는 Isaac 외부에서도 사용됩니다—예를 들어 Unity와 Unreal 같은 게임 엔진은 PhysX 또는 그 변형을 물리에 사용합니다. 또 다른 엔진인 Havok은 업계에서 흔하지만, 맞춤형 로보틱스 용도로 쉽게 사용할 수 있는 것은 아닙니다. DART/Drake는 로보틱스 중심 프레임워크로 물리를 포함하고 있으며(DART는 ODE/Bullet을, Drake는 자체 솔버를 사용), 정밀성 및 로봇 모델 통합을 강조합니다. 이들은 계획 및 제어 연구에 강력하지만 더 느리고 대규모 병렬화를 지향하지 않습니다. Newton의 도입은 이러한 엔진들과 직접 통합되는 것은 아니지만, USD를 공통 장면 포맷으로 확립하고 오픈소스로 제공함으로써 다양한 커뮤니티가 Newton을 대안 백엔드로 채택할 수 있는 기반을 마련합니다. 예를 들어 현재 Bullet이나 DART를 사용하는 로보틱스 연구실은 USD 파이프라인으로 모델을 이전하여, Newton의 성숙도가 올라가면 더 나은 성능을 위해 Newton으로 전환할 수 있습니다.
+
+# Newton의 통합과 고유한 이점
+
+Nvidia Newton은 MuJoCo와 Isaac Lab 같은 기존 시뮬레이션 환경과 **원활하게 통합**되도록 설계된 고성능 물리 백엔드입니다. 이를 통해 각 환경에 다음과 같은 고유한 이점을 제공합니다:
+
+* **프레임워크를 가로지르는 통합 엔진**: Newton은 서로 다른 시뮬레이터 내부에서 실행될 수 있는 공통 물리 엔진을 제공합니다. 개발자는 MuJoCo Playground나 Isaac Lab 같은 프런트엔드를 사용하면서도 동일한 Newton 물리 코어에 의존할 수 있습니다.
+* **GPU 가속 성능**: Newton의 주요 이점은 GPU 우선(GPU-first) 설계입니다. NVIDIA Warp 위에 구축됨으로써 Newton은 다수의 로봇이나 복잡한 상호작용을 병렬로 시뮬레이션하여 실험 시간을 대폭 줄일 수 있습니다.
+* **미분 가능 및 고급 물리**: Newton은 표준 엔진과 달리 미분 가능한 시뮬레이션을 기본 제공하며, 입력 매개변수나 행동에 대한 물리 결과의 그래디언트를 계산할 수 있습니다.
+* **현실감과 충실도 향상**: 협업과 전문화를 통해 Newton은 현실성을 개선할 준비가 되어 있습니다. 디즈니의 참여는 Newton이 아나트로닉 캐릭터의 복잡한 메커니즘(기어드 링크, 조인트의 컴플라이언스 등)을 충실히 시뮬레이션할 수 있음을 보장하며, 이는 유사한 복잡성을 가진 로봇을 시뮬레이션하는 모두에게 이득이 됩니다. Google DeepMind의 영향은 Newton이 과학적 엄밀성을 유지하도록 보장합니다(예: 적절한 동역학 방정식, 학습 에이전트가 악용할 수 있는 임의의 편법 없음).
+* **확장성과 커뮤니티 주도 개발**: 오픈소스 프로젝트로서 Newton은 로보틱스 커뮤니티의 기여를 환영합니다. 이는 OpenAI의 Gym이나 DeepMind가 오픈소스화한 MuJoCo 주위에 커뮤니티가 형성된 것과 유사합니다. 따라서 사용자들이 새로운 기능, 버그 수정, 성능 개선을 기여하면서 엔진은 빠르게 진화할 수 있습니다. 오픈 특성과 모듈식 설계는 장기적으로 유지 보수를 쉽게 하고, 새로운 하드웨어(차세대 GPU 등)나 연구 니즈에 적응하기 쉽게 만듭니다. 현재 서로 다른 시뮬레이터를 사용하는 조직에 대해, Newton은 노력을 통합할 경로를 제공합니다: 각 연구실이 제각각 물리 트윅을 작성하거나 시뮬레이터별로 별도의 물리 코어를 갖는 대신, Newton이 표준화된 백본이 될 수 있습니다. 이러한 수렴은(많은 이들이 테스트하고 개선하기 때문에) 더 잘 검증된 물리와 더 풍부한 도구 세트(공통 파일 포맷, 뷰어, Newton 출력과 함께 작동하는 분석 스크립트 등)로 이어질 수 있습니다. NVIDIA, DeepMind, Disney가 초기 추진력을 제공하고 있지만, 목표는 지속 가능한 커뮤니티 주도 엔진입니다.
+
+**Nvidia Newton**은 로보틱스 시뮬레이션에서 의미 있는 한 걸음입니다. 각 파트너 조직은 이 프로젝트에 고유한 강점을 불어넣었습니다—NVIDIA는 GPU 역량과 통합을, DeepMind는 빠르고 정확한 접촉 물리를, Disney는 까다로운 실세계 로봇 응용을 제공했습니다—그 결과 광범위한 니즈를 충족할 준비가 된 엔진이 탄생했습니다. 시뮬레이션 환경을 비교할 때 Newton은 MuJoCo나 Isaac을 대체하지 않습니다; 대신 이를 강화하고 통합합니다. MuJoCo는 전례 없는 속도와 그래디언트를 얻고, Isaac Lab은 개방성과 고급 물리를 얻으며, 더 넓은 분야는 현실성과 성능을 결합한 플랫폼을 얻게 됩니다. Newton이 공개됨에 따라(첫 버전은 2025년 중 출시가 예상됨) 시뮬레이션과 현실 사이의 간극은 더욱 좁혀질 것이며, 테마파크의 애니마트로닉 캐릭터부터 산업 현장의 범용 휴머노이드에 이르기까지 로봇 개발의 속도가 가속화될 것입니다.
+
+
+::: {.callout-tip icon="false" collapse="true"}
+
+
 We wanted to dive a little deeper into the role of physics in simulation and the landscape of physics engines currently popular within simulation and game engines in general. We also wanted put this in relation to the big Newton announcement this week.
 
 Robotic simulators are crucial for developing and testing control algorithms in a virtual setting. We compare several prominent physics engines and simulation frameworks – MuJoCo, NVIDIA Isaac Lab (PhysX-based), and other relevant engines (like Bullet and Brax) – in terms of performance, ease of use, compatibility, and application scope. Each simulator has different strengths, and Nvidia Newton is designed to integrate with the best of these environments.
@@ -41,12 +84,14 @@ Aside from MuJoCo and Isaac/PhysX, several other physics engines are commonly us
 
 # Newton’s Integration and Unique Advantages
 
-Nvidia Newton is designed to seamlessly integrate with existing simulation environments like MuJoCo and Isaac Lab, effectively serving as a high-performance physics backend. By doing so, it brings a set of unique advantages to each:
+Nvidia Newton is designed to **seamlessly integrate with existing simulation environments** like MuJoCo and Isaac Lab, effectively serving as a high-performance physics backend. By doing so, it brings a set of unique advantages to each:
 
-- Unified Engine Across Frameworks: Newton provides a common physics engine that can run within different simulators. Developers can use MuJoCo Playground or Isaac Lab front-ends, yet rely on the same Newton physics core
-- GPU-Accelerated Performance: A primary benefit of Newton is its GPU-first design. By building on NVIDIA Warp, Newton can simulate many robots or complex interactions in parallel, drastically reducing experiment time
-- Differentiable and Advanced Physics: Newton offers built-in differentiable simulation, unlike standard engines. It can compute gradients of the physics outcomes with respect to input parameters or actions
-- Improved Realism and Fidelity: Through collaboration and specialization, Newton is poised to improve realism. Disney’s input ensures that Newton can faithfully simulate the complex mechanisms of animatronic characters (geared linkages, compliance in joints, etc.), which in turn benefits anyone simulating robots with similar complexity. Google DeepMind’s influence ensures Newton maintains scientific rigor (e.g., proper dynamic equations, no arbitrary hacks that learning agents could exploit
-- Scalability and Community-Driven Development: As an open-source project, Newton invites contributions from the robotics community, much like OpenAI’s Gym or DeepMind’s open-sourced MuJoCo have communities around them. This means the engine can evolve quickly with new features, bug fixes, and performance improvements contributed by users. Its open nature and modular design make it easier to maintain in the long run and adapt to new hardware (future GPUs, etc.) or new research needs. For organizations using different simulators today, Newton offers a path to consolidate efforts: instead of each lab writing their own physics tweaks or each simulator having a separate physics core, Newton can become a standardized backbone. This convergence can lead to better validated physics (since many will test and improve it) and a richer set of tools (common file formats, viewers, analysis scripts that work with Newton outputs, etc.). NVIDIA, DeepMind, and Disney are providing the initial momentum, but the intent is a sustainable, community-driven engine
+- **Unified Engine Across Frameworks**: Newton provides a common physics engine that can run within different simulators. Developers can use MuJoCo Playground or Isaac Lab front-ends, yet rely on the same Newton physics core
+- **GPU-Accelerated Performance**: A primary benefit of Newton is its GPU-first design. By building on NVIDIA Warp, Newton can simulate many robots or complex interactions in parallel, drastically reducing experiment time
+- **Differentiable and Advanced Physics**: Newton offers built-in differentiable simulation, unlike standard engines. It can compute gradients of the physics outcomes with respect to input parameters or actions
+- **Improved Realism and Fidelity**: Through collaboration and specialization, Newton is poised to improve realism. Disney’s input ensures that Newton can faithfully simulate the complex mechanisms of animatronic characters (geared linkages, compliance in joints, etc.), which in turn benefits anyone simulating robots with similar complexity. Google DeepMind’s influence ensures Newton maintains scientific rigor (e.g., proper dynamic equations, no arbitrary hacks that learning agents could exploit
+- **Scalability and Community-Driven Development**: As an open-source project, Newton invites contributions from the robotics community, much like OpenAI’s Gym or DeepMind’s open-sourced MuJoCo have communities around them. This means the engine can evolve quickly with new features, bug fixes, and performance improvements contributed by users. Its open nature and modular design make it easier to maintain in the long run and adapt to new hardware (future GPUs, etc.) or new research needs. For organizations using different simulators today, Newton offers a path to consolidate efforts: instead of each lab writing their own physics tweaks or each simulator having a separate physics core, Newton can become a standardized backbone. This convergence can lead to better validated physics (since many will test and improve it) and a richer set of tools (common file formats, viewers, analysis scripts that work with Newton outputs, etc.). NVIDIA, DeepMind, and Disney are providing the initial momentum, but the intent is a sustainable, community-driven engine
 
 **Nvidia Newton** represents a significant step forward in robotics simulation. Each partner organization has infused the project with unique strengths – NVIDIA with GPU prowess and integration, DeepMind with fast and accurate contact physics, Disney with demanding real-world robot applications – resulting in an engine poised to serve a wide range of needs. When comparing simulation environments, Newton doesn’t replace MuJoCo or Isaac; instead, it enhances and unifies them. MuJoCo gains unprecedented speed and gradients, Isaac Lab gains openness and advanced physics, and the broader field gains a platform that marries realism with performance. As Newton becomes available (the first version is expected sometime in 2025), we can expect the gap between simulation and reality to narrow, accelerating the development of robots from animated characters in theme parks to general-purpose humanoids in industry.
+
+:::
