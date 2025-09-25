@@ -1,0 +1,298 @@
+---
+draft: false
+title: "🧩CoRL 2025 Workshop"
+description: 2nd Workshop on Dexterous Manipulation - Learning and Control with Diverse Modalities
+date: "2025-09-25"
+categories: [corl, 2025, workshop]
+toc: true
+number-sections: true
+---
+
+
+- [Hompage](https://dex-manipulation.github.io/corl2025/)
+
+# Reordered list
+
+> Ranked by relevance to **dexterous hands** and **tactile sensing**
+
+1. [DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation]()
+2. [Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention]()
+3. [Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks]()
+4. [ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation]()
+5. [TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback]()
+6. [Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist]()
+7. [DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation]()
+8. [Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation]()
+9. [mimic-one: A Scalable Model Recipe for General Purpose Robot Dexterity]()
+10. [FunGrasp: Functional Grasping for Diverse Dexterous Hands]()
+11. [Latent Action Diffusion for Cross-Embodiment Manipulation]()
+12. [Scaling Cross-Embodiment World Models for Dexterous Manipulation]()
+13. [EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks]()
+14. [FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands]()
+15. [Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations]()
+16. [HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation]()
+
+# All 16 Accept-Spotlight papers
+
+## ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation
+
+  Short summary: Proposes a cross-modal transformer that fuses vision + tactile using cross-attention and an autoregressive tactile prediction head; training uses a curriculum from ground-truth to predicted tactile inputs to stabilize representation learning for contact-rich manipulation. ([OpenReview][1])
+
+  Questions:
+
+  * How sensitive is performance to the tactile sensor quality/noise distribution used at training time?
+  * Which cross-attention design choices (layers, heads) mattered most in ablations?
+  * Can the model operate when tactile and vision are intermittently unavailable (e.g., occlusion / sensor dropout)? Any experiments?
+  * Do you freeze visual backbone or fine-tune it jointly — which worked better?
+  * How does the learned representation transfer to new tasks/objects not seen in training?
+  * What’s the compute/latency at inference — suitable for real-time control?
+
+---
+
+## Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations
+
+  Short summary: Introduces a waypoint-based representation and pipeline for selecting and manipulating tools — combining learned waypoint predictors with motion optimization to perform tool use tasks robustly. ([OpenReview][2])
+
+  Questions:
+
+  * How are waypoints represented (Cartesian, relative frames, keyframes) and why that choice?
+  * How robust is tool selection when the perceived affordance is noisy or partially occluded?
+  * Did you compare direct end-to-end policy vs waypoint + optimizer — tradeoffs in sample efficiency & robustness?
+  * How do you handle tool dynamics (e.g., flexible tools) in planning?
+  * Can the same waypoint representation generalize across different robot embodiments?
+  * What failure cases are common — poor grasp, imprecise waypoint timing, optimizer convergence?
+
+---
+
+## HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation
+
+  Short summary: HERMES provides a unified RL + sim2real pipeline to convert heterogeneous human motion sources into physically plausible mobile bimanual robot behaviors — includes depth image based sim2real transfer and closed-loop localization for mobile dextrous tasks. ([OpenReview][3])
+
+  Questions:
+
+  * How do you align heterogeneous human motion data (different capture setups) before training?
+  * What components most reduce the sim2real gap (depth transfer, domain randomization, etc.)? Any ablations?
+  * How do you integrate navigation and manipulation timing reliably in mobile setups?
+  * Does the policy exploit human kinematic priors or learn purely from RL?
+  * How sample-efficient is the approach and how much human data is needed?
+  * Any limits when transferring to different robot hand kinematics / DoF?
+
+---
+
+## Scaling Cross-Embodiment World Models for Dexterous Manipulation
+
+  Short summary: Proposes particle-based world models that represent both human and robot embodiments as particle sets and define actions as particle displacements — enabling unified world models that scale to multiple embodiments and support cross-embodiment control. ([OpenReview][4])
+
+  Questions:
+
+  * How do you choose particle resolution and object/hand particle assignment for efficiency vs fidelity?
+  * Does the particle representation keep crucial contact details for high-precision tasks?
+  * How well does policy transfer when the robot and human have very different actuation constraints?
+  * Any emergent failure modes when scaling to deformable objects?
+  * How does the approach compare with kinematic retargeting + robot dynamics modeling?
+  * What are memory/computation requirements for inference on real robots?
+
+---
+
+## DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation
+
+  Short summary: DexUMI is a hardware+software pipeline using the human hand as an interface (via wearable exoskeleton + software retargeting/inpainting) to collect dexterous demonstrations and transfer them to different robot hands with good real-world success. ([OpenReview][5])
+
+  Questions:
+
+  * What kinematic limits of the exoskeleton limit the range of demonstrable motions?
+  * How do you handle embodiment gaps for very different robot hands (finger count, joint limits)?
+  * What are privacy / safety considerations for wearables during long teleop sessions?
+  * How much post-processing (retargeting correction) is required before policy training?
+  * Is inpainting of the human hand in video robust to occlusions / lighting?
+  * How does performance degrade when switching to an unseen robot hand type?
+
+---
+
+## mimic-one: a Scalable Model Recipe for General-Purpose Robot Dexterity
+
+  Short summary: A practical recipe combining a new 16-DoF tendon-driven hand, curated teleoperation data (with self-correction), and a large generative policy (diffusion) to achieve robust, real-world dexterous control and emergent self-correction behaviors. ([OpenReview][6])
+
+  Questions:
+
+  * Which element of the recipe (hardware, data protocol, model) contributes most to out-of-distribution success?
+  * How is “self-correction” measured and how do you encourage it in training?
+  * What are the tradeoffs in using diffusion models vs autoregressive controllers for high-frequency control?
+  * How expensive is data collection and what teleop interfaces were most effective?
+  * Any examples where the model fails to self-correct or produces unsafe motions?
+  * How reproducible is the hardware design and codebase for other labs?
+
+---
+
+## Latent Action Diffusion for Cross-Embodiment Manipulation
+
+  Short summary: Learns a contrastive latent action space and uses diffusion modeling in that latent space to produce cross-embodiment manipulation policies that can imitate and transfer between different hand embodiments. ([OpenReview][7])
+
+  Questions:
+
+  * How is the latent action space structured and what prevents mode collapse?
+  * How much action retargeting is needed when moving between embodiments?
+  * How sample-efficient is diffusion in latent action space compared to direct action diffusion?
+  * Are there latency constraints for diffusion sampling in closed-loop control?
+  * How do you evaluate safety / constraint satisfaction when sampling actions in new embodiments?
+  * Did you compare with non-diffusion generative models (VAE, normalizing flows)?
+
+---
+
+## Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention
+
+  Short summary: Presents a vision-free haptic attention estimator that fuses kinesthetic, contact, and proprioceptive signals and their temporal dynamics to estimate in-hand object 6D pose — demonstrated to support reliable reorientation without vision. ([OpenReview][8])
+
+  Questions:
+
+  * What temporal window / filtering is required for robust haptic pose estimates?
+  * How sensitive is estimation to slippage and changing contact modes?
+  * What's the runtime and can it be used in closed-loop control at manipulation frequencies?
+  * How does accuracy compare to vision-based 6D pose estimators under occlusion?
+  * Can the haptic model generalize to new object shapes or materials?
+  * How do you handle ambiguous haptic signals that map to multiple pose hypotheses?
+
+---
+
+## DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation
+
+  Short summary: Introduces *DexSkin*, a soft, conformable capacitive electronic skin that provides dense, localizable tactile sensing across complex finger geometries; demonstrates its use for learning contact-rich manipulation on gripper fingers. ([OpenReview][9])
+
+  Questions:
+
+  * What is the spatial and force resolution of the DexSkin sensors and how are they calibrated?
+  * How robust is DexSkin to wear, contamination, and repeated contact cycles?
+  * Does the skin change fingertip geometry or add compliance that affects grasp dynamics?
+  * How easy is integration across different robot hand designs (curved surfaces, joints)?
+  * Which downstream learning tasks showed the largest improvement using DexSkin?
+  * Is latency / sampling rate sufficient for high-bandwidth tactile control?
+
+---
+
+## Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks
+
+  Short summary: Proposes a technique to sim2real transfer magnet-based tactile sensing for insertion tasks with zero real training — likely via physics-aware simulation, sensor modeling and domain randomization to generalize to real sensors. ([OpenReview][10])
+
+  Questions:
+
+  * What aspects of the tactile sensor model were most critical for zero-shot transfer?
+  * How is magnetic field noise and manufacturing variation handled in simulation?
+  * Do you observe any failure modes on unusual object geometries or adhesives?
+  * How does the method generalize to non-insertion contact tasks?
+  * What metrics and baselines did you compare for zero-shot success?
+  * Would small amounts of real fine-tuning drastically improve performance?
+
+---
+
+## EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks
+
+  Short summary: Presents a hierarchical policy architecture that enforces SE(3) equivariance (spatial symmetries) and maps vision to force/interaction behaviors — designed to generalize spatially (e.g., peg-in-hole) from few demonstrations. ([OpenReview][11])
+
+  Questions:
+
+  * Which parts are enforced analytically equivariant, and which are learned?
+  * How does equivariance affect sample efficiency and generalization empirically?
+  * Does equivariance hurt expressivity for asymmetric tasks?
+  * How do you integrate force control at the low level with vision-level equivariant policies?
+  * Any limits observed when task geometry or object frames change drastically?
+  * How sensitive to calibration and coordinate frame misalignments?
+
+---
+
+## TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback
+
+  Short summary: Uses tactile feedback with a quadratic programming (QP) controller to distribute contact forces and prevent rotational/translational slip for multi-fingered hands — a compliant tactile control approach without explicit torque models. ([OpenReview][12])
+
+  Questions:
+
+  * How are tactile signals mapped into QP constraints/objective — linearization choices?
+  * How fast is the QP solved and is it real-time at control loop rates?
+  * How robust is the method to unexpected external disturbances (bumps, pushes)?
+  * How do you estimate friction coefficients or do you avoid explicit friction estimates?
+  * How do you switch between manipulation vs hold/grasp modes?
+  * Any stability guarantees under contact switching?
+
+---
+
+## FunGrasp: Functional Grasping for Diverse Dexterous Hands
+
+  Short summary: FunGrasp focuses on task-oriented / functional grasping (e.g., grasping scissors by holes) by retargeting single RGBD human functional grasp demonstrations to different robot hands and training RL policies with sim-to-real techniques and privileged information. ([OpenReview][13])
+
+  Questions:
+
+  * How do you define & evaluate “functional correctness” vs geometric/grasp metrics?
+  * How robust is one-shot transfer from a single RGBD human image to unseen objects?
+  * What retargeting errors are typical and how are they corrected during policy training?
+  * Which sim2real tricks mattered most for real deployment?
+  * Does the method work for safety-critical tools (blades, needles)? Any constraints?
+  * How is the dataset of human functional grasps curated / annotated?
+
+---
+
+## Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation
+
+  Short summary: Describes a practical hardware add-on: mounting suction cups on fingertips/palm of a three-fingered dexterous hand, enabling new manipulation capabilities (adhesive in-hand manipulations) and improved teleoperation for challenging in-hand tasks. ([OpenReview][14])
+
+  Questions:
+
+  * How do suction cups change the control strategy (grasp forces, rolling/sliding actions)?
+  * What materials/porosities of objects break suction assumptions?
+  * Any tradeoffs in using suction vs frictional finger pads (speed, robustness)?
+  * How is suction controlled (binary vs continuous vacuum) and integrated with finger force control?
+  * How safe is teleoperation when using suction for delicate tasks?
+  * Were there tasks humans couldn't do but suction enabled for robots (or vice versa)?
+
+---
+
+## Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist
+
+  Short summary: Introduces a tactile retrieval/memory system for contact-rich manipulation leveraging a soft wrist; uses stored tactile patterns to retrieve similar contact episodes to guide control in new situations. ([OpenReview][15])
+
+  Questions:
+
+  * How are tactile episodes indexed and retrieved (embedding, similarity metric)?
+  * How does the soft wrist affect contact patterns compared to rigid wrists?
+  * Does retrieval generalize across different objects or only similar contacts?
+  * How is timeliness handled — retrieving past episodes quickly enough for closed-loop correction?
+  * How much memory/storage is required for the tactile database as it scales?
+  * What are failure modes when retrieval returns poor matches?
+
+---
+
+## FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands
+
+  Short summary: FLASH is a flow-matching model that generates language-conditioned, physically plausible dexterous grasps conditioned on hand & object point clouds and a text instruction; trained on a curated, language-annotated grasp dataset and shows generalization to novel prompts. ([OpenReview][16])
+
+  Questions:
+
+  * How do you ensure generated grasps are physically admissible (no interpenetration, stable contact forces)?
+  * How is language embedded and aligned with geometric affordances? Any failure examples with ambiguous language?
+  * How large / diverse is FLASH-drive dataset and what annotation quality controls exist?
+  * How does flow-matching compare to diffusion for grasp generation here?
+  * Can the model propose alternative grasps ranked by task suitability?
+  * How does this integrate with downstream control for closing the loop (grasp execution)?
+
+---
+
+
+[1]: https://openreview.net/forum?id=YiIqzkYRhj&referrer=%5Bthe+profile+of+Pieter+Abbeel%5D%28%2Fprofile%3Fid%3D~Pieter_Abbeel2%29&utm_source=chatgpt.com "Learning Cross-Modal Representation for Visuo-Tactile ..."
+[2]: https://openreview.net/forum?id=1yzolKowBG&noteId=8PuolLywtr&utm_source=chatgpt.com "Way-Tu: A Framework for Tool Selection and Manipulation ..."
+[3]: https://openreview.net/forum?id=ZEuY3asL71&referrer=%5Bthe+profile+of+Zhecheng+Yuan%5D%28%2Fprofile%3Fid%3D~Zhecheng_Yuan1%29&utm_source=chatgpt.com "HERMES: Human-to-Robot Embodied Learning from Multi- ..."
+[4]: https://openreview.net/forum?id=KvFGpgHmIA&referrer=%5Bthe+profile+of+Weikang+Wan%5D%28%2Fprofile%3Fid%3D~Weikang_Wan1%29&utm_source=chatgpt.com "Cross-Embodiment Dexterous Manipulation through World ..."
+[5]: https://openreview.net/forum?id=EkigXMH9Ik&noteId=bFBq3FVckZ&utm_source=chatgpt.com "Using Human Hand as the Universal Manipulation Interface..."
+[6]: https://openreview.net/forum?id=u3jtcyKl1j&noteId=xTOxv3qOho&utm_source=chatgpt.com "mimic-one: a Scalable Model Recipe for General Purpose ..."
+[7]: https://openreview.net/forum?id=XtvV0dFtCd&noteId=MeMgYViLZO&utm_source=chatgpt.com "Latent Action Diffusion for Cross-Embodiment Manipulation"
+[8]: https://openreview.net/forum?id=Wf2usHADW2&noteId=eYPQh1yw7x&utm_source=chatgpt.com "Vision-Free Pose Estimation for In-Hand Manipulation via..."
+[9]: https://openreview.net/forum?id=DhjvVzPHiP&referrer=%5Bthe+profile+of+Jiajun+Wu%5D%28%2Fprofile%3Fid%3D~Jiajun_Wu1%29&utm_source=chatgpt.com "DexSkin: High-Coverage Conformable Robotic Skin ..."
+[10]: https://openreview.net/forum?id=Ka8jk0NSeb&noteId=ogct0mZRUi&utm_source=chatgpt.com "Zero-shot Sim2Real Transfer for Magnet-Based Tactile ..."
+[11]: https://openreview.net/forum?id=xju1YYNsO0&noteId=RXEdUsJxS1&utm_source=chatgpt.com "A Hierarchical SE(3) Vision-to-Force Equivariant Policy for ..."
+[12]: https://openreview.net/forum?id=TaGbEK5zhq&noteId=GeM3jdPYiP&utm_source=chatgpt.com "Compliant and Robust Dexterous Grasping with QP ..."
+[13]: https://openreview.net/forum?id=gYQPuUdw45&noteId=AWr30yXx6m&utm_source=chatgpt.com "FunGrasp: Functional Grasping for Diverse Dexterous Hands"
+[14]: https://openreview.net/forum?id=XX9fv8Zx4a&noteId=f9355flvvd&utm_source=chatgpt.com "Suction Cups on a Multi-fingered Hand Enables..."
+[15]: https://openreview.net/forum?id=uLE44csBAT&noteId=vIx72bqaVS&utm_source=chatgpt.com "Tactile Memory with Soft Robot: Tactile Retrieval-based..."
+[16]: https://openreview.net/forum?id=ZUX7i3xEmX&noteId=MCdo7CHR3A&utm_source=chatgpt.com "FLASH: Flow-Based Language-Annotated Grasp Synthesis ..."
+
+
+# Reference
+
+- [Dexterous Manipulation: Learning and Control with Diverse Modalities](https://openreview.net/group?id=robot-learning.org/CoRL/2025/Workshop/Dexterous_Manipulation#tab-accept-spotlight)

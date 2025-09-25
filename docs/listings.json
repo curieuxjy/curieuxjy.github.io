@@ -14,6 +14,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/storage/2025-09-25-corl-workshop.html",
       "/posts/paper/2025-09-22-imitation-to-refine.html",
       "/posts/paper/2025-09-20-dexop.html",
       "/posts/paper/2025-09-19-text2touch.html",
@@ -108,6 +109,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/storage/2025-09-25-corl-workshop.html",
       "/posts/paper/2025-09-22-imitation-to-refine.html",
       "/posts/paper/2025-09-20-dexop.html",
       "/posts/paper/2025-09-19-text2touch.html",
@@ -202,6 +204,7 @@
   {
     "listing": "/note.html",
     "items": [
+      "/posts/note/2025-09-25-mujoco-vs-isaaclab.html",
       "/posts/note/2025-08-25-simulators.html",
       "/posts/note/2025-07-31-linux-cheetsheet.html",
       "/posts/note/2025-07-08-git-lfs.html",

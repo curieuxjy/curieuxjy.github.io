@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-25">
+<meta name="description" content="2nd Workshop on Dexterous Manipulation - Learning and Control with Diverse Modalities">
+
+<title>🧩CoRL 2025 Workshop – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reordered-list" id="toc-reordered-list" class="nav-link active" data-scroll-target="#reordered-list"><span class="header-section-number">1</span> Reordered list</a></li>
+  <li><a href="#all-16-accept-spotlight-papers" id="toc-all-16-accept-spotlight-papers" class="nav-link" data-scroll-target="#all-16-accept-spotlight-papers"><span class="header-section-number">2</span> All 16 Accept-Spotlight papers</a>
+  <ul class="collapse">
+  <li><a href="#vitacformer-learning-cross-modal-representation-for-visuo-tactile-dexterous-manipulation" id="toc-vitacformer-learning-cross-modal-representation-for-visuo-tactile-dexterous-manipulation" class="nav-link" data-scroll-target="#vitacformer-learning-cross-modal-representation-for-visuo-tactile-dexterous-manipulation"><span class="header-section-number">2.1</span> ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation</a></li>
+  <li><a href="#way-tu-a-framework-for-tool-selection-and-manipulation-using-waypoint-representations" id="toc-way-tu-a-framework-for-tool-selection-and-manipulation-using-waypoint-representations" class="nav-link" data-scroll-target="#way-tu-a-framework-for-tool-selection-and-manipulation-using-waypoint-representations"><span class="header-section-number">2.2</span> Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations</a></li>
+  <li><a href="#hermes-human-to-robot-embodied-learning-from-multi-source-motion-data-for-mobile-bimanual-dexterous-manipulation" id="toc-hermes-human-to-robot-embodied-learning-from-multi-source-motion-data-for-mobile-bimanual-dexterous-manipulation" class="nav-link" data-scroll-target="#hermes-human-to-robot-embodied-learning-from-multi-source-motion-data-for-mobile-bimanual-dexterous-manipulation"><span class="header-section-number">2.3</span> HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation</a></li>
+  <li><a href="#scaling-cross-embodiment-world-models-for-dexterous-manipulation" id="toc-scaling-cross-embodiment-world-models-for-dexterous-manipulation" class="nav-link" data-scroll-target="#scaling-cross-embodiment-world-models-for-dexterous-manipulation"><span class="header-section-number">2.4</span> Scaling Cross-Embodiment World Models for Dexterous Manipulation</a></li>
+  <li><a href="#dexumi-using-human-hand-as-the-universal-manipulation-interface-for-dexterous-manipulation" id="toc-dexumi-using-human-hand-as-the-universal-manipulation-interface-for-dexterous-manipulation" class="nav-link" data-scroll-target="#dexumi-using-human-hand-as-the-universal-manipulation-interface-for-dexterous-manipulation"><span class="header-section-number">2.5</span> DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation</a></li>
+  <li><a href="#mimic-one-a-scalable-model-recipe-for-general-purpose-robot-dexterity" id="toc-mimic-one-a-scalable-model-recipe-for-general-purpose-robot-dexterity" class="nav-link" data-scroll-target="#mimic-one-a-scalable-model-recipe-for-general-purpose-robot-dexterity"><span class="header-section-number">2.6</span> mimic-one: a Scalable Model Recipe for General-Purpose Robot Dexterity</a></li>
+  <li><a href="#latent-action-diffusion-for-cross-embodiment-manipulation" id="toc-latent-action-diffusion-for-cross-embodiment-manipulation" class="nav-link" data-scroll-target="#latent-action-diffusion-for-cross-embodiment-manipulation"><span class="header-section-number">2.7</span> Latent Action Diffusion for Cross-Embodiment Manipulation</a></li>
+  <li><a href="#vision-free-object-6d-pose-estimation-for-in-hand-manipulation-via-multi-modal-haptic-attention" id="toc-vision-free-object-6d-pose-estimation-for-in-hand-manipulation-via-multi-modal-haptic-attention" class="nav-link" data-scroll-target="#vision-free-object-6d-pose-estimation-for-in-hand-manipulation-via-multi-modal-haptic-attention"><span class="header-section-number">2.8</span> Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention</a></li>
+  <li><a href="#dexskin-high-coverage-conformable-robotic-skin-for-learning-contact-rich-manipulation" id="toc-dexskin-high-coverage-conformable-robotic-skin-for-learning-contact-rich-manipulation" class="nav-link" data-scroll-target="#dexskin-high-coverage-conformable-robotic-skin-for-learning-contact-rich-manipulation"><span class="header-section-number">2.9</span> DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation</a></li>
+  <li><a href="#zero-shot-sim2real-transfer-for-magnet-based-tactile-sensor-on-insertion-tasks" id="toc-zero-shot-sim2real-transfer-for-magnet-based-tactile-sensor-on-insertion-tasks" class="nav-link" data-scroll-target="#zero-shot-sim2real-transfer-for-magnet-based-tactile-sensor-on-insertion-tasks"><span class="header-section-number">2.10</span> Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks</a></li>
+  <li><a href="#equicontact-a-hierarchical-se3-vision-to-force-equivariant-policy-for-spatially-generalizable-contact-rich-tasks" id="toc-equicontact-a-hierarchical-se3-vision-to-force-equivariant-policy-for-spatially-generalizable-contact-rich-tasks" class="nav-link" data-scroll-target="#equicontact-a-hierarchical-se3-vision-to-force-equivariant-policy-for-spatially-generalizable-contact-rich-tasks"><span class="header-section-number">2.11</span> EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks</a></li>
+  <li><a href="#tacdexgrasp-compliant-and-robust-dexterous-grasping-with-qp-and-tactile-feedback" id="toc-tacdexgrasp-compliant-and-robust-dexterous-grasping-with-qp-and-tactile-feedback" class="nav-link" data-scroll-target="#tacdexgrasp-compliant-and-robust-dexterous-grasping-with-qp-and-tactile-feedback"><span class="header-section-number">2.12</span> TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback</a></li>
+  <li><a href="#fungrasp-functional-grasping-for-diverse-dexterous-hands" id="toc-fungrasp-functional-grasping-for-diverse-dexterous-hands" class="nav-link" data-scroll-target="#fungrasp-functional-grasping-for-diverse-dexterous-hands"><span class="header-section-number">2.13</span> FunGrasp: Functional Grasping for Diverse Dexterous Hands</a></li>
+  <li><a href="#suction-leap-hand-suction-cups-on-a-multi-fingered-hand-enables-embodied-dexterity-and-in-hand-teleoperation" id="toc-suction-leap-hand-suction-cups-on-a-multi-fingered-hand-enables-embodied-dexterity-and-in-hand-teleoperation" class="nav-link" data-scroll-target="#suction-leap-hand-suction-cups-on-a-multi-fingered-hand-enables-embodied-dexterity-and-in-hand-teleoperation"><span class="header-section-number">2.14</span> Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation</a></li>
+  <li><a href="#tactile-memory-with-soft-robot-tactile-retrieval-based-contact-rich-manipulation-with-a-soft-wrist" id="toc-tactile-memory-with-soft-robot-tactile-retrieval-based-contact-rich-manipulation-with-a-soft-wrist" class="nav-link" data-scroll-target="#tactile-memory-with-soft-robot-tactile-retrieval-based-contact-rich-manipulation-with-a-soft-wrist"><span class="header-section-number">2.15</span> Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist</a></li>
+  <li><a href="#flash-flow-based-language-annotated-grasp-synthesis-for-dexterous-hands" id="toc-flash-flow-based-language-annotated-grasp-synthesis-for-dexterous-hands" class="nav-link" data-scroll-target="#flash-flow-based-language-annotated-grasp-synthesis-for-dexterous-hands"><span class="header-section-number">2.16</span> FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands</a></li>
+  </ul></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">3</span> Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">🧩CoRL 2025 Workshop</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">corl</div>
+    <div class="quarto-category">2025</div>
+    <div class="quarto-category">workshop</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    2nd Workshop on Dexterous Manipulation - Learning and Control with Diverse Modalities
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 25, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://dex-manipulation.github.io/corl2025/">Hompage</a></li>
+</ul>
+<section id="reordered-list" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Reordered list</h1>
+<blockquote class="blockquote">
+<p>Ranked by relevance to <strong>dexterous hands</strong> and <strong>tactile sensing</strong></p>
+</blockquote>
+<ol type="1">
+<li><a href="">DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation</a></li>
+<li><a href="">Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention</a></li>
+<li><a href="">Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks</a></li>
+<li><a href="">ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation</a></li>
+<li><a href="">TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback</a></li>
+<li><a href="">Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist</a></li>
+<li><a href="">DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation</a></li>
+<li><a href="">Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation</a></li>
+<li><a href="">mimic-one: A Scalable Model Recipe for General Purpose Robot Dexterity</a></li>
+<li><a href="">FunGrasp: Functional Grasping for Diverse Dexterous Hands</a></li>
+<li><a href="">Latent Action Diffusion for Cross-Embodiment Manipulation</a></li>
+<li><a href="">Scaling Cross-Embodiment World Models for Dexterous Manipulation</a></li>
+<li><a href="">EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks</a></li>
+<li><a href="">FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands</a></li>
+<li><a href="">Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations</a></li>
+<li><a href="">HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation</a></li>
+</ol>
+</section>
+<section id="all-16-accept-spotlight-papers" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> All 16 Accept-Spotlight papers</h1>
+<section id="vitacformer-learning-cross-modal-representation-for-visuo-tactile-dexterous-manipulation" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="vitacformer-learning-cross-modal-representation-for-visuo-tactile-dexterous-manipulation"><span class="header-section-number">2.1</span> ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation</h2>
+<p>Short summary: Proposes a cross-modal transformer that fuses vision + tactile using cross-attention and an autoregressive tactile prediction head; training uses a curriculum from ground-truth to predicted tactile inputs to stabilize representation learning for contact-rich manipulation. (<a href="https://openreview.net/forum?id=YiIqzkYRhj&amp;referrer=%5Bthe+profile+of+Pieter+Abbeel%5D%28%2Fprofile%3Fid%3D~Pieter_Abbeel2%29&amp;utm_source=chatgpt.com" title="Learning Cross-Modal Representation for Visuo-Tactile ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How sensitive is performance to the tactile sensor quality/noise distribution used at training time?</li>
+<li>Which cross-attention design choices (layers, heads) mattered most in ablations?</li>
+<li>Can the model operate when tactile and vision are intermittently unavailable (e.g., occlusion / sensor dropout)? Any experiments?</li>
+<li>Do you freeze visual backbone or fine-tune it jointly — which worked better?</li>
+<li>How does the learned representation transfer to new tasks/objects not seen in training?</li>
+<li>What’s the compute/latency at inference — suitable for real-time control?</li>
+</ul>
+<hr>
+</section>
+<section id="way-tu-a-framework-for-tool-selection-and-manipulation-using-waypoint-representations" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="way-tu-a-framework-for-tool-selection-and-manipulation-using-waypoint-representations"><span class="header-section-number">2.2</span> Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations</h2>
+<p>Short summary: Introduces a waypoint-based representation and pipeline for selecting and manipulating tools — combining learned waypoint predictors with motion optimization to perform tool use tasks robustly. (<a href="https://openreview.net/forum?id=1yzolKowBG&amp;noteId=8PuolLywtr&amp;utm_source=chatgpt.com" title="Way-Tu: A Framework for Tool Selection and Manipulation ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How are waypoints represented (Cartesian, relative frames, keyframes) and why that choice?</li>
+<li>How robust is tool selection when the perceived affordance is noisy or partially occluded?</li>
+<li>Did you compare direct end-to-end policy vs waypoint + optimizer — tradeoffs in sample efficiency &amp; robustness?</li>
+<li>How do you handle tool dynamics (e.g., flexible tools) in planning?</li>
+<li>Can the same waypoint representation generalize across different robot embodiments?</li>
+<li>What failure cases are common — poor grasp, imprecise waypoint timing, optimizer convergence?</li>
+</ul>
+<hr>
+</section>
+<section id="hermes-human-to-robot-embodied-learning-from-multi-source-motion-data-for-mobile-bimanual-dexterous-manipulation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="hermes-human-to-robot-embodied-learning-from-multi-source-motion-data-for-mobile-bimanual-dexterous-manipulation"><span class="header-section-number">2.3</span> HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation</h2>
+<p>Short summary: HERMES provides a unified RL + sim2real pipeline to convert heterogeneous human motion sources into physically plausible mobile bimanual robot behaviors — includes depth image based sim2real transfer and closed-loop localization for mobile dextrous tasks. (<a href="https://openreview.net/forum?id=ZEuY3asL71&amp;referrer=%5Bthe+profile+of+Zhecheng+Yuan%5D%28%2Fprofile%3Fid%3D~Zhecheng_Yuan1%29&amp;utm_source=chatgpt.com" title="HERMES: Human-to-Robot Embodied Learning from Multi- ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How do you align heterogeneous human motion data (different capture setups) before training?</li>
+<li>What components most reduce the sim2real gap (depth transfer, domain randomization, etc.)? Any ablations?</li>
+<li>How do you integrate navigation and manipulation timing reliably in mobile setups?</li>
+<li>Does the policy exploit human kinematic priors or learn purely from RL?</li>
+<li>How sample-efficient is the approach and how much human data is needed?</li>
+<li>Any limits when transferring to different robot hand kinematics / DoF?</li>
+</ul>
+<hr>
+</section>
+<section id="scaling-cross-embodiment-world-models-for-dexterous-manipulation" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="scaling-cross-embodiment-world-models-for-dexterous-manipulation"><span class="header-section-number">2.4</span> Scaling Cross-Embodiment World Models for Dexterous Manipulation</h2>
+<p>Short summary: Proposes particle-based world models that represent both human and robot embodiments as particle sets and define actions as particle displacements — enabling unified world models that scale to multiple embodiments and support cross-embodiment control. (<a href="https://openreview.net/forum?id=KvFGpgHmIA&amp;referrer=%5Bthe+profile+of+Weikang+Wan%5D%28%2Fprofile%3Fid%3D~Weikang_Wan1%29&amp;utm_source=chatgpt.com" title="Cross-Embodiment Dexterous Manipulation through World ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How do you choose particle resolution and object/hand particle assignment for efficiency vs fidelity?</li>
+<li>Does the particle representation keep crucial contact details for high-precision tasks?</li>
+<li>How well does policy transfer when the robot and human have very different actuation constraints?</li>
+<li>Any emergent failure modes when scaling to deformable objects?</li>
+<li>How does the approach compare with kinematic retargeting + robot dynamics modeling?</li>
+<li>What are memory/computation requirements for inference on real robots?</li>
+</ul>
+<hr>
+</section>
+<section id="dexumi-using-human-hand-as-the-universal-manipulation-interface-for-dexterous-manipulation" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="dexumi-using-human-hand-as-the-universal-manipulation-interface-for-dexterous-manipulation"><span class="header-section-number">2.5</span> DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation</h2>
+<p>Short summary: DexUMI is a hardware+software pipeline using the human hand as an interface (via wearable exoskeleton + software retargeting/inpainting) to collect dexterous demonstrations and transfer them to different robot hands with good real-world success. (<a href="https://openreview.net/forum?id=EkigXMH9Ik&amp;noteId=bFBq3FVckZ&amp;utm_source=chatgpt.com" title="Using Human Hand as the Universal Manipulation Interface...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>What kinematic limits of the exoskeleton limit the range of demonstrable motions?</li>
+<li>How do you handle embodiment gaps for very different robot hands (finger count, joint limits)?</li>
+<li>What are privacy / safety considerations for wearables during long teleop sessions?</li>
+<li>How much post-processing (retargeting correction) is required before policy training?</li>
+<li>Is inpainting of the human hand in video robust to occlusions / lighting?</li>
+<li>How does performance degrade when switching to an unseen robot hand type?</li>
+</ul>
+<hr>
+</section>
+<section id="mimic-one-a-scalable-model-recipe-for-general-purpose-robot-dexterity" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="mimic-one-a-scalable-model-recipe-for-general-purpose-robot-dexterity"><span class="header-section-number">2.6</span> mimic-one: a Scalable Model Recipe for General-Purpose Robot Dexterity</h2>
+<p>Short summary: A practical recipe combining a new 16-DoF tendon-driven hand, curated teleoperation data (with self-correction), and a large generative policy (diffusion) to achieve robust, real-world dexterous control and emergent self-correction behaviors. (<a href="https://openreview.net/forum?id=u3jtcyKl1j&amp;noteId=xTOxv3qOho&amp;utm_source=chatgpt.com" title="mimic-one: a Scalable Model Recipe for General Purpose ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>Which element of the recipe (hardware, data protocol, model) contributes most to out-of-distribution success?</li>
+<li>How is “self-correction” measured and how do you encourage it in training?</li>
+<li>What are the tradeoffs in using diffusion models vs autoregressive controllers for high-frequency control?</li>
+<li>How expensive is data collection and what teleop interfaces were most effective?</li>
+<li>Any examples where the model fails to self-correct or produces unsafe motions?</li>
+<li>How reproducible is the hardware design and codebase for other labs?</li>
+</ul>
+<hr>
+</section>
+<section id="latent-action-diffusion-for-cross-embodiment-manipulation" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="latent-action-diffusion-for-cross-embodiment-manipulation"><span class="header-section-number">2.7</span> Latent Action Diffusion for Cross-Embodiment Manipulation</h2>
+<p>Short summary: Learns a contrastive latent action space and uses diffusion modeling in that latent space to produce cross-embodiment manipulation policies that can imitate and transfer between different hand embodiments. (<a href="https://openreview.net/forum?id=XtvV0dFtCd&amp;noteId=MeMgYViLZO&amp;utm_source=chatgpt.com" title="Latent Action Diffusion for Cross-Embodiment Manipulation">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How is the latent action space structured and what prevents mode collapse?</li>
+<li>How much action retargeting is needed when moving between embodiments?</li>
+<li>How sample-efficient is diffusion in latent action space compared to direct action diffusion?</li>
+<li>Are there latency constraints for diffusion sampling in closed-loop control?</li>
+<li>How do you evaluate safety / constraint satisfaction when sampling actions in new embodiments?</li>
+<li>Did you compare with non-diffusion generative models (VAE, normalizing flows)?</li>
+</ul>
+<hr>
+</section>
+<section id="vision-free-object-6d-pose-estimation-for-in-hand-manipulation-via-multi-modal-haptic-attention" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="vision-free-object-6d-pose-estimation-for-in-hand-manipulation-via-multi-modal-haptic-attention"><span class="header-section-number">2.8</span> Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention</h2>
+<p>Short summary: Presents a vision-free haptic attention estimator that fuses kinesthetic, contact, and proprioceptive signals and their temporal dynamics to estimate in-hand object 6D pose — demonstrated to support reliable reorientation without vision. (<a href="https://openreview.net/forum?id=Wf2usHADW2&amp;noteId=eYPQh1yw7x&amp;utm_source=chatgpt.com" title="Vision-Free Pose Estimation for In-Hand Manipulation via...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>What temporal window / filtering is required for robust haptic pose estimates?</li>
+<li>How sensitive is estimation to slippage and changing contact modes?</li>
+<li>What’s the runtime and can it be used in closed-loop control at manipulation frequencies?</li>
+<li>How does accuracy compare to vision-based 6D pose estimators under occlusion?</li>
+<li>Can the haptic model generalize to new object shapes or materials?</li>
+<li>How do you handle ambiguous haptic signals that map to multiple pose hypotheses?</li>
+</ul>
+<hr>
+</section>
+<section id="dexskin-high-coverage-conformable-robotic-skin-for-learning-contact-rich-manipulation" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="dexskin-high-coverage-conformable-robotic-skin-for-learning-contact-rich-manipulation"><span class="header-section-number">2.9</span> DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation</h2>
+<p>Short summary: Introduces <em>DexSkin</em>, a soft, conformable capacitive electronic skin that provides dense, localizable tactile sensing across complex finger geometries; demonstrates its use for learning contact-rich manipulation on gripper fingers. (<a href="https://openreview.net/forum?id=DhjvVzPHiP&amp;referrer=%5Bthe+profile+of+Jiajun+Wu%5D%28%2Fprofile%3Fid%3D~Jiajun_Wu1%29&amp;utm_source=chatgpt.com" title="DexSkin: High-Coverage Conformable Robotic Skin ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>What is the spatial and force resolution of the DexSkin sensors and how are they calibrated?</li>
+<li>How robust is DexSkin to wear, contamination, and repeated contact cycles?</li>
+<li>Does the skin change fingertip geometry or add compliance that affects grasp dynamics?</li>
+<li>How easy is integration across different robot hand designs (curved surfaces, joints)?</li>
+<li>Which downstream learning tasks showed the largest improvement using DexSkin?</li>
+<li>Is latency / sampling rate sufficient for high-bandwidth tactile control?</li>
+</ul>
+<hr>
+</section>
+<section id="zero-shot-sim2real-transfer-for-magnet-based-tactile-sensor-on-insertion-tasks" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="zero-shot-sim2real-transfer-for-magnet-based-tactile-sensor-on-insertion-tasks"><span class="header-section-number">2.10</span> Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks</h2>
+<p>Short summary: Proposes a technique to sim2real transfer magnet-based tactile sensing for insertion tasks with zero real training — likely via physics-aware simulation, sensor modeling and domain randomization to generalize to real sensors. (<a href="https://openreview.net/forum?id=Ka8jk0NSeb&amp;noteId=ogct0mZRUi&amp;utm_source=chatgpt.com" title="Zero-shot Sim2Real Transfer for Magnet-Based Tactile ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>What aspects of the tactile sensor model were most critical for zero-shot transfer?</li>
+<li>How is magnetic field noise and manufacturing variation handled in simulation?</li>
+<li>Do you observe any failure modes on unusual object geometries or adhesives?</li>
+<li>How does the method generalize to non-insertion contact tasks?</li>
+<li>What metrics and baselines did you compare for zero-shot success?</li>
+<li>Would small amounts of real fine-tuning drastically improve performance?</li>
+</ul>
+<hr>
+</section>
+<section id="equicontact-a-hierarchical-se3-vision-to-force-equivariant-policy-for-spatially-generalizable-contact-rich-tasks" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="equicontact-a-hierarchical-se3-vision-to-force-equivariant-policy-for-spatially-generalizable-contact-rich-tasks"><span class="header-section-number">2.11</span> EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks</h2>
+<p>Short summary: Presents a hierarchical policy architecture that enforces SE(3) equivariance (spatial symmetries) and maps vision to force/interaction behaviors — designed to generalize spatially (e.g., peg-in-hole) from few demonstrations. (<a href="https://openreview.net/forum?id=xju1YYNsO0&amp;noteId=RXEdUsJxS1&amp;utm_source=chatgpt.com" title="A Hierarchical SE(3) Vision-to-Force Equivariant Policy for ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>Which parts are enforced analytically equivariant, and which are learned?</li>
+<li>How does equivariance affect sample efficiency and generalization empirically?</li>
+<li>Does equivariance hurt expressivity for asymmetric tasks?</li>
+<li>How do you integrate force control at the low level with vision-level equivariant policies?</li>
+<li>Any limits observed when task geometry or object frames change drastically?</li>
+<li>How sensitive to calibration and coordinate frame misalignments?</li>
+</ul>
+<hr>
+</section>
+<section id="tacdexgrasp-compliant-and-robust-dexterous-grasping-with-qp-and-tactile-feedback" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="tacdexgrasp-compliant-and-robust-dexterous-grasping-with-qp-and-tactile-feedback"><span class="header-section-number">2.12</span> TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback</h2>
+<p>Short summary: Uses tactile feedback with a quadratic programming (QP) controller to distribute contact forces and prevent rotational/translational slip for multi-fingered hands — a compliant tactile control approach without explicit torque models. (<a href="https://openreview.net/forum?id=TaGbEK5zhq&amp;noteId=GeM3jdPYiP&amp;utm_source=chatgpt.com" title="Compliant and Robust Dexterous Grasping with QP ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How are tactile signals mapped into QP constraints/objective — linearization choices?</li>
+<li>How fast is the QP solved and is it real-time at control loop rates?</li>
+<li>How robust is the method to unexpected external disturbances (bumps, pushes)?</li>
+<li>How do you estimate friction coefficients or do you avoid explicit friction estimates?</li>
+<li>How do you switch between manipulation vs hold/grasp modes?</li>
+<li>Any stability guarantees under contact switching?</li>
+</ul>
+<hr>
+</section>
+<section id="fungrasp-functional-grasping-for-diverse-dexterous-hands" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="fungrasp-functional-grasping-for-diverse-dexterous-hands"><span class="header-section-number">2.13</span> FunGrasp: Functional Grasping for Diverse Dexterous Hands</h2>
+<p>Short summary: FunGrasp focuses on task-oriented / functional grasping (e.g., grasping scissors by holes) by retargeting single RGBD human functional grasp demonstrations to different robot hands and training RL policies with sim-to-real techniques and privileged information. (<a href="https://openreview.net/forum?id=gYQPuUdw45&amp;noteId=AWr30yXx6m&amp;utm_source=chatgpt.com" title="FunGrasp: Functional Grasping for Diverse Dexterous Hands">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How do you define &amp; evaluate “functional correctness” vs geometric/grasp metrics?</li>
+<li>How robust is one-shot transfer from a single RGBD human image to unseen objects?</li>
+<li>What retargeting errors are typical and how are they corrected during policy training?</li>
+<li>Which sim2real tricks mattered most for real deployment?</li>
+<li>Does the method work for safety-critical tools (blades, needles)? Any constraints?</li>
+<li>How is the dataset of human functional grasps curated / annotated?</li>
+</ul>
+<hr>
+</section>
+<section id="suction-leap-hand-suction-cups-on-a-multi-fingered-hand-enables-embodied-dexterity-and-in-hand-teleoperation" class="level2" data-number="2.14">
+<h2 data-number="2.14" class="anchored" data-anchor-id="suction-leap-hand-suction-cups-on-a-multi-fingered-hand-enables-embodied-dexterity-and-in-hand-teleoperation"><span class="header-section-number">2.14</span> Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation</h2>
+<p>Short summary: Describes a practical hardware add-on: mounting suction cups on fingertips/palm of a three-fingered dexterous hand, enabling new manipulation capabilities (adhesive in-hand manipulations) and improved teleoperation for challenging in-hand tasks. (<a href="https://openreview.net/forum?id=XX9fv8Zx4a&amp;noteId=f9355flvvd&amp;utm_source=chatgpt.com" title="Suction Cups on a Multi-fingered Hand Enables...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How do suction cups change the control strategy (grasp forces, rolling/sliding actions)?</li>
+<li>What materials/porosities of objects break suction assumptions?</li>
+<li>Any tradeoffs in using suction vs frictional finger pads (speed, robustness)?</li>
+<li>How is suction controlled (binary vs continuous vacuum) and integrated with finger force control?</li>
+<li>How safe is teleoperation when using suction for delicate tasks?</li>
+<li>Were there tasks humans couldn’t do but suction enabled for robots (or vice versa)?</li>
+</ul>
+<hr>
+</section>
+<section id="tactile-memory-with-soft-robot-tactile-retrieval-based-contact-rich-manipulation-with-a-soft-wrist" class="level2" data-number="2.15">
+<h2 data-number="2.15" class="anchored" data-anchor-id="tactile-memory-with-soft-robot-tactile-retrieval-based-contact-rich-manipulation-with-a-soft-wrist"><span class="header-section-number">2.15</span> Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist</h2>
+<p>Short summary: Introduces a tactile retrieval/memory system for contact-rich manipulation leveraging a soft wrist; uses stored tactile patterns to retrieve similar contact episodes to guide control in new situations. (<a href="https://openreview.net/forum?id=uLE44csBAT&amp;noteId=vIx72bqaVS&amp;utm_source=chatgpt.com" title="Tactile Memory with Soft Robot: Tactile Retrieval-based...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How are tactile episodes indexed and retrieved (embedding, similarity metric)?</li>
+<li>How does the soft wrist affect contact patterns compared to rigid wrists?</li>
+<li>Does retrieval generalize across different objects or only similar contacts?</li>
+<li>How is timeliness handled — retrieving past episodes quickly enough for closed-loop correction?</li>
+<li>How much memory/storage is required for the tactile database as it scales?</li>
+<li>What are failure modes when retrieval returns poor matches?</li>
+</ul>
+<hr>
+</section>
+<section id="flash-flow-based-language-annotated-grasp-synthesis-for-dexterous-hands" class="level2" data-number="2.16">
+<h2 data-number="2.16" class="anchored" data-anchor-id="flash-flow-based-language-annotated-grasp-synthesis-for-dexterous-hands"><span class="header-section-number">2.16</span> FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands</h2>
+<p>Short summary: FLASH is a flow-matching model that generates language-conditioned, physically plausible dexterous grasps conditioned on hand &amp; object point clouds and a text instruction; trained on a curated, language-annotated grasp dataset and shows generalization to novel prompts. (<a href="https://openreview.net/forum?id=ZUX7i3xEmX&amp;noteId=MCdo7CHR3A&amp;utm_source=chatgpt.com" title="FLASH: Flow-Based Language-Annotated Grasp Synthesis ...">OpenReview</a>)</p>
+<p>Questions:</p>
+<ul>
+<li>How do you ensure generated grasps are physically admissible (no interpenetration, stable contact forces)?</li>
+<li>How is language embedded and aligned with geometric affordances? Any failure examples with ambiguous language?</li>
+<li>How large / diverse is FLASH-drive dataset and what annotation quality controls exist?</li>
+<li>How does flow-matching compare to diffusion for grasp generation here?</li>
+<li>Can the model propose alternative grasps ranked by task suitability?</li>
+<li>How does this integrate with downstream control for closing the loop (grasp execution)?</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="reference" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Reference</h1>
+<ul>
+<li><a href="https://openreview.net/group?id=robot-learning.org/CoRL/2025/Workshop/Dexterous_Manipulation#tab-accept-spotlight">Dexterous Manipulation: Learning and Control with Diverse Modalities</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
