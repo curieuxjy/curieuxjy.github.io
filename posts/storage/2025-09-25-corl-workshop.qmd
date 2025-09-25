@@ -15,22 +15,22 @@ number-sections: true
 
 > Ranked by relevance to **dexterous hands** and **tactile sensing**
 
-1. [DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation]()
-2. [Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention]()
-3. [Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks]()
-4. [ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation]()
-5. [TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback]()
-6. [Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist]()
-7. [DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation]()
-8. [Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation]()
-9. [mimic-one: A Scalable Model Recipe for General Purpose Robot Dexterity]()
-10. [FunGrasp: Functional Grasping for Diverse Dexterous Hands]()
-11. [Latent Action Diffusion for Cross-Embodiment Manipulation]()
-12. [Scaling Cross-Embodiment World Models for Dexterous Manipulation]()
-13. [EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks]()
-14. [FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands]()
-15. [Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations]()
-16. [HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation]()
+1. [DexSkin: High-Coverage Conformable Robotic Skin for Learning Contact-Rich Manipulation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#dexskin-high-coverage-conformable-robotic-skin-for-learning-contact-rich-manipulation)
+2. [Vision-Free Object 6D Pose Estimation for In-Hand Manipulation via Multi-Modal Haptic Attention](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#vision-free-object-6d-pose-estimation-for-in-hand-manipulation-via-multi-modal-haptic-attention)
+3. [Zero-shot Sim2Real Transfer for Magnet-Based Tactile Sensor on Insertion Tasks](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#zero-shot-sim2real-transfer-for-magnet-based-tactile-sensor-on-insertion-tasks)
+4. [ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#vitacformer-learning-cross-modal-representation-for-visuo-tactile-dexterous-manipulation)
+5. [TacDexGrasp: Compliant and Robust Dexterous Grasping with QP and Tactile Feedback](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#tacdexgrasp-compliant-and-robust-dexterous-grasping-with-qp-and-tactile-feedback)
+6. [Tactile Memory with Soft Robot: Tactile Retrieval-based Contact-rich Manipulation with a Soft Wrist](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#tactile-memory-with-soft-robot-tactile-retrieval-based-contact-rich-manipulation-with-a-soft-wrist)
+7. [DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#dexumi-using-human-hand-as-the-universal-manipulation-interface-for-dexterous-manipulation)
+8. [Suction Leap-Hand: Suction Cups on a Multi-fingered Hand Enables Embodied Dexterity and In-Hand Teleoperation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#suction-leap-hand-suction-cups-on-a-multi-fingered-hand-enables-embodied-dexterity-and-in-hand-teleoperation)
+9. [mimic-one: A Scalable Model Recipe for General Purpose Robot Dexterity](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#mimic-one-a-scalable-model-recipe-for-general-purpose-robot-dexterity)
+10. [FunGrasp: Functional Grasping for Diverse Dexterous Hands](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#fungrasp-functional-grasping-for-diverse-dexterous-hands)
+11. [Latent Action Diffusion for Cross-Embodiment Manipulation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#latent-action-diffusion-for-cross-embodiment-manipulation)
+12. [Scaling Cross-Embodiment World Models for Dexterous Manipulation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#scaling-cross-embodiment-world-models-for-dexterous-manipulation)
+13. [EquiContact: A Hierarchical SE(3) Vision-to-Force Equivariant Policy for Spatially Generalizable Contact-Rich Tasks](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#equicontact-a-hierarchical-se3-vision-to-force-equivariant-policy-for-spatially-generalizable-contact-rich-tasks)
+14. [FLASH: Flow-Based Language-Annotated Grasp Synthesis for Dexterous Hands](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#flash-flow-based-language-annotated-grasp-synthesis-for-dexterous-hands)
+15. [Way-Tu: A Framework for Tool Selection and Manipulation Using Waypoint Representations](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#way-tu-a-framework-for-tool-selection-and-manipulation-using-waypoint-representations)
+16. [HERMES: Human-to-Robot Embodied Learning from Multi-Source Motion Data for Mobile Bimanual Dexterous Manipulation](https://curieuxjy.github.io/posts/storage/2025-09-25-corl-workshop.html#hermes-human-to-robot-embodied-learning-from-multi-source-motion-data-for-mobile-bimanual-dexterous-manipulation)
 
 # All 16 Accept-Spotlight papers
 
