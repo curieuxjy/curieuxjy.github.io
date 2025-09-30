@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-30">
+<meta name="description" content="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton">
+
+<title>🧩Newton – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#nvidia-isaac-lab-및-newton으로-quadruped-보행-정책을-학습하고-천옷감-조작을-시뮬레이션하기" id="toc-nvidia-isaac-lab-및-newton으로-quadruped-보행-정책을-학습하고-천옷감-조작을-시뮬레이션하기" class="nav-link active" data-scroll-target="#nvidia-isaac-lab-및-newton으로-quadruped-보행-정책을-학습하고-천옷감-조작을-시뮬레이션하기"><span class="header-section-number">1</span> NVIDIA Isaac Lab 및 Newton으로 Quadruped 보행 정책을 학습하고 천(옷감) 조작을 시뮬레이션하기</a>
+  <ul class="collapse">
+  <li><a href="#newton이란-무엇인가" id="toc-newton이란-무엇인가" class="nav-link" data-scroll-target="#newton이란-무엇인가"><span class="header-section-number">1.1</span> Newton이란 무엇인가?</a></li>
+  <li><a href="#newton-베타β-릴리스의-하이라이트" id="toc-newton-베타β-릴리스의-하이라이트" class="nav-link" data-scroll-target="#newton-베타β-릴리스의-하이라이트"><span class="header-section-number">1.2</span> Newton 베타(β) 릴리스의 하이라이트</a></li>
+  <li><a href="#isaac-lab에서-newton을-사용해-쿼드러페드-보행-정책을-학습하는-방법개요" id="toc-isaac-lab에서-newton을-사용해-쿼드러페드-보행-정책을-학습하는-방법개요" class="nav-link" data-scroll-target="#isaac-lab에서-newton을-사용해-쿼드러페드-보행-정책을-학습하는-방법개요"><span class="header-section-number">1.3</span> Isaac Lab에서 Newton을 사용해 쿼드러페드 보행 정책을 학습하는 방법(개요)</a>
+  <ul class="collapse">
+  <li><a href="#step-1-newton으로-보행-정책-학습하기" id="toc-step-1-newton으로-보행-정책-학습하기" class="nav-link" data-scroll-target="#step-1-newton으로-보행-정책-학습하기"><span class="header-section-number">1.3.1</span> Step 1 — Newton으로 보행 정책 학습하기</a></li>
+  <li><a href="#step-2-sim2sim-전이-검증validation-with-sim2sim-transfer" id="toc-step-2-sim2sim-전이-검증validation-with-sim2sim-transfer" class="nav-link" data-scroll-target="#step-2-sim2sim-전이-검증validation-with-sim2sim-transfer"><span class="header-section-number">1.3.2</span> Step 2 — Sim2Sim 전이 검증(Validation with Sim2Sim transfer)</a></li>
+  <li><a href="#step-3-sim2real-배포-준비prepare-for-sim2real" id="toc-step-3-sim2real-배포-준비prepare-for-sim2real" class="nav-link" data-scroll-target="#step-3-sim2real-배포-준비prepare-for-sim2real"><span class="header-section-number">1.3.3</span> Step 3 — Sim2Real 배포 준비(Prepare for Sim2Real)</a></li>
+  </ul></li>
+  <li><a href="#newton-독립standalone-엔진을-이용한-멀티피직스multiphysics" id="toc-newton-독립standalone-엔진을-이용한-멀티피직스multiphysics" class="nav-link" data-scroll-target="#newton-독립standalone-엔진을-이용한-멀티피직스multiphysics"><span class="header-section-number">1.4</span> Newton 독립(standalone) 엔진을 이용한 멀티피직스(Multiphysics)</a>
+  <ul class="collapse">
+  <li><a href="#franka-암로봇-팔-cloth천-데모-실행-예제" id="toc-franka-암로봇-팔-cloth천-데모-실행-예제" class="nav-link" data-scroll-target="#franka-암로봇-팔-cloth천-데모-실행-예제"><span class="header-section-number">1.4.1</span> Franka 암(로봇 팔) + Cloth(천) 데모 실행 예제</a></li>
+  <li><a href="#멀티피직스-결합-이해하기" id="toc-멀티피직스-결합-이해하기" class="nav-link" data-scroll-target="#멀티피직스-결합-이해하기"><span class="header-section-number">1.4.2</span> 멀티피직스 결합 이해하기</a></li>
+  </ul></li>
+  <li><a href="#newton을-생태계에코시스템이-어떻게-채택하고-있나" id="toc-newton을-생태계에코시스템이-어떻게-채택하고-있나" class="nav-link" data-scroll-target="#newton을-생태계에코시스템이-어떻게-채택하고-있나"><span class="header-section-number">1.5</span> Newton을 생태계(에코시스템)이 어떻게 채택하고 있나?</a></li>
+  <li><a href="#newton-시작하기get-started" id="toc-newton-시작하기get-started" class="nav-link" data-scroll-target="#newton-시작하기get-started"><span class="header-section-number">1.6</span> Newton 시작하기(Get started)</a></li>
+  <li><a href="#행사-및-챌린지-관련-정보" id="toc-행사-및-챌린지-관련-정보" class="nav-link" data-scroll-target="#행사-및-챌린지-관련-정보"><span class="header-section-number">1.7</span> 행사 및 챌린지 관련 정보</a>
+  <ul class="collapse">
+  <li><a href="#원문-참조" id="toc-원문-참조" class="nav-link" data-scroll-target="#원문-참조"><span class="header-section-number">1.7.1</span> 원문 참조</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sim2sim-전이-원문-섹션-step-2-validate-the-policy-with-sim2sim-transfer" id="toc-sim2sim-전이-원문-섹션-step-2-validate-the-policy-with-sim2sim-transfer" class="nav-link" data-scroll-target="#sim2sim-전이-원문-섹션-step-2-validate-the-policy-with-sim2sim-transfer"><span class="header-section-number">2</span> Sim2Sim 전이 (원문 섹션: <em>Step 2: Validate the policy with Sim2Sim transfer</em>)</a>
+  <ul class="collapse">
+  <li><a href="#직역-상세" id="toc-직역-상세" class="nav-link" data-scroll-target="#직역-상세"><span class="header-section-number">2.1</span> 직역 (상세)</a></li>
+  </ul></li>
+  <li><a href="#cloth-예제-example_cloth_franka.py-관련-기술-설명-및-코드-스니펫-직역" id="toc-cloth-예제-example_cloth_franka.py-관련-기술-설명-및-코드-스니펫-직역" class="nav-link" data-scroll-target="#cloth-예제-example_cloth_franka.py-관련-기술-설명-및-코드-스니펫-직역"><span class="header-section-number">3</span> cloth 예제 (<code>example_cloth_franka.py</code>) 관련 기술 설명 및 코드 스니펫 직역</a>
+  <ul class="collapse">
+  <li><a href="#직역-상세-1" id="toc-직역-상세-1" class="nav-link" data-scroll-target="#직역-상세-1"><span class="header-section-number">3.1</span> 직역 (상세)</a></li>
+  <li><a href="#실행-방법원문에서-안내한-명령어-보존" id="toc-실행-방법원문에서-안내한-명령어-보존" class="nav-link" data-scroll-target="#실행-방법원문에서-안내한-명령어-보존"><span class="header-section-number">3.2</span> 실행 방법(원문에서 안내한 명령어 보존)</a></li>
+  </ul></li>
+  <li><a href="#참고원문-링크들-원문에서-그대로-보존" id="toc-참고원문-링크들-원문에서-그대로-보존" class="nav-link" data-scroll-target="#참고원문-링크들-원문에서-그대로-보존"><span class="header-section-number">4</span> 참고(원문 링크들 — 원문에서 그대로 보존)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">🧩Newton</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">newton</div>
+    <div class="quarto-category">isaacsim</div>
+    <div class="quarto-category">2025</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 30, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/">News</a></p>
+<p>This post is a translated article of the original news.</p>
+</blockquote>
+<section id="nvidia-isaac-lab-및-newton으로-quadruped-보행-정책을-학습하고-천옷감-조작을-시뮬레이션하기" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> NVIDIA Isaac Lab 및 Newton으로 Quadruped 보행 정책을 학습하고 천(옷감) 조작을 시뮬레이션하기</h1>
+<p><em>(원문: “Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton”)</em> (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<p><strong>게시일:</strong> 2025년 9월 29일 <strong>저자:</strong> Mohammad Mohajerani, Aravindh Shanmuganathan, Eric Heiden, Anka Chen, Gilles Daviet, Milad Rakhsha, Antoine Richard. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<p>물리(Physics)는 로봇 시뮬레이션에서 매우 중요한 역할을 하며, 로봇 동작과 현실적인 환경 내 상호작용을 정확하게 가상으로 표현하는 기초를 제공합니다. 이러한 시뮬레이터를 통해 연구자와 엔지니어는 로봇 제어 알고리즘을 학습·개발·테스트·검증하고, 프로토타입을 안전하고 가속화된 방식으로 실험할 수 있습니다. 그러나 시뮬레이션은 종종 현실과 완전히 일치하지 않는데, 이를 <strong>sim-to-real gap</strong>(시뮬레이션→현실 차이)이라고 합니다. 로보틱스 개발자들은 다양한 솔버를 지원하는 통합 가능하고, 확장 가능하며, 커스터마이즈 가능한 물리 모델링 솔루션을 필요로 합니다. 이 글에서는 <strong>NVIDIA Isaac Lab</strong> 내에서 <strong>Newton</strong>을 사용해 쿼드러페드 로봇을 한 지점에서 다른 지점으로 이동시키는 보행(Locomotion) 정책을 학습하는 방법과 산업용 매니퓰레이터(Franka)로 천(Cloth)을 접는 등 다중 물리(multi-physics) 시뮬레이션을 설정하는 방법을 안내합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<section id="newton이란-무엇인가" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="newton이란-무엇인가"><span class="header-section-number">1.1</span> Newton이란 무엇인가?</h2>
+<p>Newton은 NVIDIA, Google DeepMind, Disney Research가 공동 개발하고 Linux Foundation에서 관리하는 <strong>오픈 소스, 확장 가능한 물리 엔진</strong>으로 로봇 학습 및 개발을 진전시키기 위해 설계되었습니다. Newton은 <strong>NVIDIA Warp</strong> 및 <strong>OpenUSD</strong> 기반으로 구축되었으며, MuJoCo Playground나 Isaac Lab 같은 로봇 학습 프레임워크와 호환됩니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<p>Newton의 핵심은 수치적 적분과 제약(constraint) 해결을 위한 여러 <strong>솔버 모듈(solver modules)</strong> 입니다. 이 솔버들은 제약 기반이거나 힘(force) 기반일 수 있고, 직접법(direct) 또는 반복법(iterative)을 사용하며, 최대좌표(maximal) 또는 축소좌표(reduced) 표현을 사용할 수 있습니다. 공통 인터페이스와 공유 데이터 모델을 사용하면 MuJoCo Warp, Disney Research의 Kamino 솔버 또는 커스텀 솔버 등 어느 것을 사용하든 Newton을 동일한 방식으로 다룰 수 있어 충돌 처리, 역기구학, 상태 관리, 타임스텝 로직을 재작성할 필요 없이 재사용할 수 있습니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<p>학습(Training)을 위해 Newton은 물리 상태를 PyTorch 및 NumPy 호환 배열로 노출하는 텐서 기반 API를 제공해 배칭(batch) 처리와 Isaac Lab 같은 로봇 학습 프레임워크와의 통합을 효율적으로 지원합니다. Newton Selection API를 통해 학습 스크립트는 관절 상태를 질의하고(action) 적용하며 결과를 학습 알고리즘에 피드백할 수 있습니다. MuJoCo Warp(구글 딥마인드 개발)는 Newton 솔버로 완전 통합되어 있으며, MJX 및 Playground에서도 사용됩니다. Newton 및 연관 솔버들은 Apache 2.0 라이선스로 공개됩니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</section>
+<section id="newton-베타β-릴리스의-하이라이트" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="newton-베타β-릴리스의-하이라이트"><span class="header-section-number">1.2</span> Newton 베타(β) 릴리스의 하이라이트</h2>
+<ul>
+<li>MuJoCo Warp(주요 Newton 솔버)는 GeForce RTX 4090에서 <strong>로코모션(보행)</strong>에 대해 최대 <strong>152배</strong>, <strong>조작(manipulation)</strong>에 대해 최대 <strong>313배</strong> 빠른 성능을 보입니다. (NVIDIA RTX PRO 6000 Blackwell Series는 MuJoCo Warp에 대해 최대 44% 추가 속도, MJX에 대해 75% 추가 속도 제공) (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Newton 베타는 차세대 Isaac Lab 백엔드로 사용될 때, MuJoCo Warp 대비 PhysX보다 <strong>인핸드(dexterous) 조작에서 최대 65% 빠른 성능</strong>을 달성합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>얇은 변형체(예: 의복)용 Vortex Block Descent(VBD) 솔버와, 입자 기반 재료(예: 흙·자갈)용 암시적 Material Point Method(MPM) 솔버의 성능 및 안정성 확장이 포함됩니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+</section>
+<section id="isaac-lab에서-newton을-사용해-쿼드러페드-보행-정책을-학습하는-방법개요" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="isaac-lab에서-newton을-사용해-쿼드러페드-보행-정책을-학습하는-방법개요"><span class="header-section-number">1.3</span> Isaac Lab에서 Newton을 사용해 쿼드러페드 보행 정책을 학습하는 방법(개요)</h2>
+<p>Isaac Lab에 통합된 Newton 물리 엔진은 로봇 연구 개발을 위한 더 빠르고 강건한 워크플로를 제공합니다. 아래는 쿼드러페드(ANYmal-D 로봇 사용 예)를 대상으로 한 엔드 투 엔드(train → validate → deploy) 예시입니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<section id="step-1-newton으로-보행-정책-학습하기" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="step-1-newton으로-보행-정책-학습하기"><span class="header-section-number">1.3.1</span> Step 1 — Newton으로 보행 정책 학습하기</h3>
+<ol type="1">
+<li><strong>레포지토리 설정</strong>: Isaac Lab 저장소를 설정합니다(레포지토리 셋업 링크: <code>https://isaac-sim.github.io</code> 참조).</li>
+<li><strong>학습 스크립트 실행</strong>: Isaac Lab의 RL 스크립트(예: <code>rsl_rl</code>)를 사용해 ANYmal-D를 평지에서 걷도록 학습합니다. GPU 병렬화를 통해 수천 개의 병렬 환경에서 빠르게 수렴시킬 수 있습니다.</li>
+<li><strong>헤드리스(headless) 모드에서 학습(최대 성능 권장)</strong> — 예시 커맨드(그대로 사용):</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/reinforcement_learning/rsl_rl/train.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="at">--task</span> Isaac-Velocity-Flat-Anymal-D-v0 <span class="at">--num_envs</span> 4096 <span class="at">--headless</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>Newton Visualizer(경량 모니터링 도구)</strong>: 전체 Omniverse GUI 오버헤드 없이 학습 진행을 시각적으로 모니터링하려면 <code>--newton_visualizer</code> 플래그를 추가합니다:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/reinforcement_learning/rsl_rl/train.py <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="at">--task</span> Isaac-Velocity-Flat-Anymal-D-v0 <span class="at">--num_envs</span> 4096 <span class="at">--headless</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="at">--newton_visualizer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>학습이 완료되면 <code>.pt</code> 형식의 정책 체크포인트가 생성됩니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</section>
+<section id="step-2-sim2sim-전이-검증validation-with-sim2sim-transfer" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="step-2-sim2sim-전이-검증validation-with-sim2sim-transfer"><span class="header-section-number">1.3.2</span> Step 2 — Sim2Sim 전이 검증(Validation with Sim2Sim transfer)</h3>
+<ul>
+<li>Sim2Sim 전이는 정책이 특정 물리 엔진 특성에 과적합(overfit)되지 않았는지 확인하는 필수 검증입니다. 서로 다른 시뮬레이터(예: PhysX ↔︎ Newton) 간 전이가 성공하면 실제 로봇에서도 동작할 가능성이 높아집니다.</li>
+<li>서로 다른 물리 엔진은 USD를 파싱하는 방식이나 관절 순서가 다를 수 있으므로, 관찰(observation)과 행동(action)을 재매핑하는 간단한 <strong>YAML 매핑 파일</strong>로 이를 해결합니다.</li>
+<li>Newton에서 학습한 정책을 PhysX 기반 Isaac Lab에서 실행하려면 제공되는 전이 스크립트를 사용하세요:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/newton_sim2sim/rsl_rl_transfer.py <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="at">--task</span><span class="op">=</span>Isaac-Velocity-Flat-Anymal-D-v0 <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="at">--num_envs</span><span class="op">=</span>32 <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">--checkpoint</span> <span class="op">&lt;</span>PATH_TO_POLICY_CHECKPOINT<span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="at">--policy_transfer_file</span> scripts/sim2sim_transfer/config/newton_to_physx_anymal_d.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>해당 전이 스크립트는 Isaac Sim / IsaacLab GitHub 레포지토리에서 확인 가능합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</section>
+<section id="step-3-sim2real-배포-준비prepare-for-sim2real" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="step-3-sim2real-배포-준비prepare-for-sim2real"><span class="header-section-number">1.3.3</span> Step 3 — Sim2Real 배포 준비(Prepare for Sim2Real)</h3>
+<ul>
+<li>시뮬레이션에서 학습한 정책을 실제 로봇으로 이전하는 마지막 단계입니다. 이 예시에서는 정책 학습 시 IMU, 관절 인코더와 같은 실제 로봇에서 사용 가능한 관찰값만 사용하도록 제한하여 <strong>특권 정보(privileged info)를 사용하지 않았음</strong>을 명시합니다.</li>
+<li>ETH Zurich Robotic Systems Lab(RSL)의 협력으로 해당 정책은 물리적 ANYmal 로봇에 직접 배포되어 걷는 동작을 성공적으로 수행했습니다(하드웨어 테스트 비디오 참조). 이는 Isaac Lab에서의 학습이 실세계 테스트로 이어지는 직접적인 경로를 보여줍니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="newton-독립standalone-엔진을-이용한-멀티피직스multiphysics" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="newton-독립standalone-엔진을-이용한-멀티피직스multiphysics"><span class="header-section-number">1.4</span> Newton 독립(standalone) 엔진을 이용한 멀티피직스(Multiphysics)</h2>
+<p>멀티피직스 시뮬레이션은 강체(예: 로봇 손)와 변형체(예: 천/옷감) 간의 결합된 상호작용을 하나의 프레임워크에서 캡처하여, 로봇 설계·제어·태스크 성능을 보다 현실적으로 평가하고 데이터 기반 최적화를 가능하게 합니다. Newton은 Isaac Lab과 함께 동작할 뿐 아니라, <strong>독립 Python 모드</strong>로도 사용하여 복잡한 물리 시스템을 실험할 수 있습니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<section id="franka-암로봇-팔-cloth천-데모-실행-예제" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="franka-암로봇-팔-cloth천-데모-실행-예제"><span class="header-section-number">1.4.1</span> Franka 암(로봇 팔) + Cloth(천) 데모 실행 예제</h3>
+<ol type="1">
+<li>Newton 저장소 루트에서 데모를 한 명령으로 실행할 수 있습니다.</li>
+<li>환경 설정:</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Newton 예제 실행을 위한 uv 환경 설정</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">uv</span> sync <span class="at">--extra</span> examples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Franka 암과 천 데모 실행:</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Franka arm + cloth 데모 실행</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">uv</span> run <span class="at">-m</span> newton.examples cloth_franka</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>데모는 실시간 GPU 가속 시뮬레이션을 보여주는 인터랙티브 뷰어를 열며, Franka-cloth 데모는 GPU 기반 VBD Cloth 솔버를 사용합니다. RTX 4090에서 약 30 FPS로 실행되며 시뮬레이션 내 침투(penetration) 없는 접촉을 보장합니다. 다른 GPU 기반 침투-제거 시뮬레이터(예: GPU-IPC)와 비교해 <strong>300배 이상의 성능 우위</strong>를 달성하는 등, 현재 사용 가능한 완전 침투-프리(fully penetration-free) 천 조작 데모 중 매우 빠른 편입니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</section>
+<section id="멀티피직스-결합-이해하기" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="멀티피직스-결합-이해하기"><span class="header-section-number">1.4.2</span> 멀티피직스 결합 이해하기</h3>
+<ul>
+<li>이 데모는 서로 다른 동역학적 거동을 가진 시스템을 결합하는 멀티피직스 예시입니다. 각 구성요소에 전문화된 솔버를 할당함으로써 구현됩니다. 예제 스크립트(<code>example_cloth_franka.py</code>)에서 솔버 초기화 코드는 다음과 같습니다:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 로봇용 Featherstone 솔버 초기화</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="va">self</span>.robot_solver <span class="op">=</span> SolverFeatherstone(<span class="va">self</span>.model, ...)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># 천용 Vertex-Block Descent (VBD) 솔버 초기화</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="va">self</span>.cloth_solver <span class="op">=</span> SolverVBD(<span class="va">self</span>.model, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>로봇 솔버를 <code>SolverFeatherstone</code> 대신 <code>SolverMuJoCo</code>처럼 강체 시뮬레이션을 지원하는 다른 솔버로 쉽게 바꿀 수 있습니다.</li>
+<li>예제는 <strong>단방향(one-way) 결합</strong>을 사용합니다(강체가 변형체에 영향을 미치지만, 반대 방향 영향은 무시). 천 조작과 같은 경우 천이 로봇 동역학에 미치는 영향이 무시될 수 있어 이 접근이 허용됩니다. 시뮬레이션 루프(단순화된 형태)는 다음과 같습니다:</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> simulate(<span class="va">self</span>):</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="cf">for</span> _step <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.sim_substeps):</span>
+<span id="cb7-3"><a href="#cb7-3"></a>        <span class="co"># 1. 로봇 솔버를 한 스텝 진행</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>        <span class="va">self</span>.robot_solver.step(<span class="va">self</span>.state_0, <span class="va">self</span>.state_1, ...)</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>        <span class="co"># 2. 로봇과 천 입자 간 충돌 체크</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>        <span class="va">self</span>.contacts <span class="op">=</span> <span class="va">self</span>.model.collide(<span class="va">self</span>.state_0, ...)</span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a>        <span class="co"># 3. 로봇의 충돌 정보를 전달하여 천 솔버 한 스텝 진행</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>        <span class="va">self</span>.cloth_solver.step(<span class="va">self</span>.state_0, <span class="va">self</span>.state_1, ..., <span class="va">self</span>.contacts, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>이처럼 사용자가 제어하는 루프는 서로 다른 물리 시스템이 어떻게 결합되는지를 세밀하게 제어할 수 있게 해 줍니다. 팀은 향후 <strong>양방향(two-way) 결합</strong>(예: 흙·진흙과 같은 변형성 지면 위에서의 보행 시 지면이 강체에 역으로 힘을 가하는 경우) 및 일부 솔버 조합에 대한 <strong>암시적(implicit) 결합</strong>을 탐색해 더 자동화된 힘 교환 관리를 구현할 계획입니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+</section>
+</section>
+<section id="newton을-생태계에코시스템이-어떻게-채택하고-있나" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="newton을-생태계에코시스템이-어떻게-채택하고-있나"><span class="header-section-number">1.5</span> Newton을 생태계(에코시스템)이 어떻게 채택하고 있나?</h2>
+<p>Newton 오픈 생태계는 빠르게 확장 중이며, 여러 대학 및 기업들이 특화된 솔버와 워크플로우를 통합하고 있습니다. 촉각 센싱(tactile sensing)에서 천 시뮬레이션, 섬세한 조작(dexterous manipulation)에서 거친 지형(locomotion over rough terrain)에 이르기까지 다양한 협업이 진행되고 있습니다. 주요 사례:</p>
+<ul>
+<li><strong>ETH Zurich Robotic Systems Lab (RSL)</strong>: 대형 장비 자동화(earthmoving) 관련 멀티피직스 시뮬레이션에 Newton을 적극 활용. 암시적 MPM 솔버를 사용해 토양·자갈·돌 같은 입자 상호작용을 캡처. 또한 Warp를 로보틱스·그래픽스 연구 전반에 활용(미분 가능한 시뮬레이션, 궤적 최적화, 대규모 3D 의류 모델링 등). (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li><strong>Lightwheel</strong>: SimReady 에셋 개발 및 변형체(soil, cables 등) 솔버 최적화에 기여. ANYmal 쿼드러페드가 다중 재질로 구성된 비강체(non-rigid) 지형(모래·자갈 등) 위를 이동하는 데 MPM 솔버를 적용하는 데모를 제작. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li><strong>Peking University (PKU)</strong>: IPC 기반 솔버(Taccel)를 Newton에 통합해 비전 기반 촉각 센싱 시뮬레이션을 확장. Newton의 GPU 가속·미분 가능한 구조를 활용해 섬세한 접촉 상호작용을 모델링. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li><strong>Style3D</strong>: 의류·연성체 시뮬레이션 기술을 Newton으로 통합, 수백만 정점 수준의 대규모 시뮬레이션을 지원하기 위한 API 노출 계획. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li><strong>TUM (Technical University of Munich)</strong>: 실제 로봇에서 검증된 숙련된 조작 정책을 시뮬레이션에서 다시 재생(시뮬레이션 검증)하는 작업 등을 진행 중이며, MuJoCo Warp에서 4,000 병렬 환경으로 학습하는 것도 이미 가능하다고 보고. 향후 하드웨어로의 전송 및 공간 분해 촉각(Spatially resolved tactile skin)을 이용한 미세 조작(fine manipulation)으로 확장 예정. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+</section>
+<section id="newton-시작하기get-started" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="newton-시작하기get-started"><span class="header-section-number">1.6</span> Newton 시작하기(Get started)</h2>
+<ul>
+<li>Newton 물리 엔진은 모듈형·확장형·시뮬레이터 무관한(simulator-agnostic) 설계를 통해 로봇 학습을 위한 다양한 솔버 결합을 간단히 만듭니다.</li>
+<li>오픈 소스 커뮤니티 주도 프로젝트로서 개발자들은 Newton을 사용·배포·확장하고, 커스텀 솔버를 추가해 생태계에 기여할 수 있습니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+<p><strong>참고(주요 레포지토리/자료)</strong></p>
+<ul>
+<li>Newton standalone Beta 시작: GitHub 레포지토리 <code>newton-physics/newton</code> — <a href="https://github.com/newton-physics/newton">https://github.com/newton-physics/newton</a>. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Isaac Lab에서 Newton 사용해보기: Isaac Lab GitHub — <a href="https://github.com/isaac-sim/IsaacLab">https://github.com/isaac-sim/IsaacLab</a>. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Newton Developer(추가 자료): (원문 내 링크: Newton Developer). (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+</section>
+<section id="행사-및-챌린지-관련-정보" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="행사-및-챌린지-관련-정보"><span class="header-section-number">1.7</span> 행사 및 챌린지 관련 정보</h2>
+<ul>
+<li>본 글에 소개된 연구는 2025년 9월 27일~10월 2일 서울에서 열리는 <strong>CoRL 및 Humanoids</strong>에서 전시됩니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>또한 <strong>2025 BEHAVIOR Challenge</strong>(가정용 작업 50개 및 10,000개 원격조작 데모 포함)에 참여해 볼 것을 권장합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+<section id="원문-참조" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="원문-참조"><span class="header-section-number">1.7.1</span> 원문 참조</h3>
+<ul>
+<li>원문 기사: <a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/">https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/</a> (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Newton GitHub: <a href="https://github.com/newton-physics/newton">https://github.com/newton-physics/newton</a> (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Isaac Lab (GitHub / 문서): <a href="https://github.com/isaac-sim/IsaacLab">https://github.com/isaac-sim/IsaacLab</a> 및 <a href="https://isaac-sim.github.io">https://isaac-sim.github.io</a> (문서 페이지) (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Newton Visualizer: (원문에 언급된 Newton Visualizer 링크) — <a href="https://isaac-sim.github.io">https://isaac-sim.github.io</a> (관련 페이지). (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+<hr>
+<blockquote class="blockquote">
+<p>아래는 NVIDIA 개발자 블로그 기사 중 <strong>Sim2Sim 전이(transfer)</strong> 관련 섹션과 <strong>cloth 예제(<code>example_cloth_franka.py</code>)</strong>에 나오는 코드/설명 부분을 상세하게 직역(코드 주석 포함)한 것입니다.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="sim2sim-전이-원문-섹션-step-2-validate-the-policy-with-sim2sim-transfer" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Sim2Sim 전이 (원문 섹션: <em>Step 2: Validate the policy with Sim2Sim transfer</em>)</h1>
+<blockquote class="blockquote">
+<p><strong>원문 요지(한 문장 요약)</strong> Sim2Sim 전이는 정책이 특정 물리 엔진 특성에 과적합(overfit)되지 않았는지 확인하는 중요한 검증 단계입니다. 서로 다른 시뮬레이터(예: PhysX와 Newton) 사이에서 잘 전이되는 정책은 실제 로봇에서도 성공할 가능성이 큽니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</blockquote>
+<section id="직역-상세" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="직역-상세"><span class="header-section-number">2.1</span> 직역 (상세)</h2>
+<p>Sim2Sim 전이는 단일 물리 엔진의 특정 특성에 정책이 과적합되지 않았는지 확인하기 위한 중요한 정합 검증(sanity check)입니다. PhysX와 Newton과 같은 서로 다른 시뮬레이터 사이에서 성공적으로 전이되는 정책은 실제 로봇에서 동작할 가능성이 훨씬 높습니다.</p>
+<p>한 가지 핵심적인 문제는 서로 다른 물리 엔진이 로봇의 USD를 파싱(parsing)할 때 관절(joint)의 순서를 다르게 정렬할 수 있다는 점입니다. 우리는 간단한 YAML 매핑 파일을 사용하여 정책의 관측(observations)과 액션(actions)을 재매핑(remap)함으로써 이 문제를 해결합니다.</p>
+<p>PhysX 기반 Isaac Lab에서 Newton으로 학습된(또는 반대 방향의) 정책을 실행하려면 제공된 전이 스크립트를 사용하십시오. 예(원문 명령어 형식):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Newton에서 학습한 정책을 PhysX 기반 Isaac Lab에서 실행 (예시)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">./isaaclab.sh</span> <span class="at">-p</span> scripts/newton_sim2sim/rsl_rl_transfer.py <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="at">--task</span><span class="op">=</span>Isaac-Velocity-Flat-Anymal-D-v0 <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>    <span class="at">--num_envs</span><span class="op">=</span>32 <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="at">--checkpoint</span> <span class="op">&lt;</span>PATH_TO_POLICY_CHECKPOINT<span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>    <span class="at">--policy_transfer_file</span> scripts/sim2sim_transfer/config/newton_to_physx_anymal_d.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>이 전이 스크립트는 <code>isaac-sim/IsaacLab</code> GitHub 저장소에서 제공됩니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</blockquote>
+<p><strong>참고 및 제한 사항 (원문 내용의 직역)</strong></p>
+<ul>
+<li>이 전이 방법은 Unitree G1, Unitree Go2, Unitree H1, 및 ANYmal-D 로봇으로 테스트되었습니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>PhysX→Newton 전이는 <code>physx_to_newton_*.yaml</code> 매핑 파일을 사용합니다. Newton→PhysX 전이는 <code>newton_to_physx_*.yaml</code> 매핑 파일을 사용합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>관측 재매핑(observation remapping)은 기본(base) 관측 다음에 관절 관측이 오는(locomotion layout) 형태를 가정합니다. 다른 관측 레이아웃을 사용하는 경우 <code>scripts/sim2sim_transfer/rsl_rl_transfer.py</code> 파일의 <code>get_joint_mappings</code> 함수를 수정해야 합니다. (<a href="https://isaac-sim.github.io/IsaacLab/main/source/experimental-features/newton-physics-integration/sim-to-sim.html?utm_source=chatgpt.com" title="Sim-to-Sim Policy Transfer — Isaac Lab Documentation">아이작 심</a>)</li>
+<li>새 로봇이나 백엔드를 추가할 때는 소스와 타깃(예: PhysX vs Newton)에서 동일한 관절 이름을 가지며 YAML 목록이 각 백엔드가 관절을 정렬하는 방식과 일치해야 합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="cloth-예제-example_cloth_franka.py-관련-기술-설명-및-코드-스니펫-직역" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> cloth 예제 (<code>example_cloth_franka.py</code>) 관련 기술 설명 및 코드 스니펫 직역</h1>
+<blockquote class="blockquote">
+<p><strong>원문 요지(한 문장 요약)</strong> Newton의 standalone 예제에는 Franka 로봇이 천(cloth)을 조작하는 데모가 포함되어 있으며, 서로 다른 솔버(예: 로봇용 Featherstone, 천용 VBD)를 조합해 멀티피직스(multiphyics) 시뮬레이션을 구성합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</blockquote>
+<section id="직역-상세-1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="직역-상세-1"><span class="header-section-number">3.1</span> 직역 (상세)</h2>
+<p>Newton은 서로 다른 물리 특성을 가진 시스템(예: 강체 로봇과 변형체인 천)이 상호작용하도록 멀티피직스 시뮬레이션을 지원합니다. 이 데모는 각 컴포넌트에 특화된 솔버를 할당(assign)함으로써 이를 달성합니다. <code>example_cloth_franka.py</code> 파일을 보면 솔버가 다음과 같이 초기화되는 것을 확인할 수 있습니다:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># 로봇용 Featherstone 솔버 초기화</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="va">self</span>.robot_solver <span class="op">=</span> SolverFeatherstone(<span class="va">self</span>.model, ...)</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># 천용 Vertex-Block Descent (VBD) 솔버 초기화</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="va">self</span>.cloth_solver <span class="op">=</span> SolverVBD(<span class="va">self</span>.model, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>원문 설명에 따르면, 로봇 솔버를 <code>SolverFeatherstone</code> 대신 <code>SolverMuJoCo</code> 같은 다른 강체 시뮬레이션을 지원하는 솔버로 쉽게 바꿀 수 있습니다. 핵심은 시뮬레이션 루프에서 이들 솔버를 어떻게 조정하는지입니다. 이 예제는 일방향 결합(one-way coupling)을 사용합니다 — 즉, 강체가 변형체(천)에 영향을 주지만 천이 로봇의 동역학에 되돌려주는 영향은 무시합니다. 이는 천 조작(cloth manipulation) 사례에서는 천이 로봇 동역학에 미치는 영향이 무시 가능하다고 판단될 때 합리적인 접근입니다.</p>
+<p>원문에 나오는 시뮬레이션 루프(단순화된 형태)는 다음과 같습니다:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># example_cloth_franka.py의 단순화된 시뮬레이션 루프 보기</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">def</span> simulate(<span class="va">self</span>):</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="cf">for</span> _step <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.sim_substeps):</span>
+<span id="cb10-5"><a href="#cb10-5"></a>        <span class="co"># 1. 로봇 솔버를 앞으로 한 스텝 진행</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>        <span class="va">self</span>.robot_solver.step(<span class="va">self</span>.state_0, <span class="va">self</span>.state_1, ...)</span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>        <span class="co"># 2. 로봇과 천 사이의 충돌(contacts)을 검사</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>        <span class="va">self</span>.contacts <span class="op">=</span> <span class="va">self</span>.model.collide(<span class="va">self</span>.state_0, ...)</span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a>        <span class="co"># 3. 로봇 충돌 정보를 전달하여 천 솔버를 한 스텝 진행</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>        <span class="va">self</span>.cloth_solver.step(<span class="va">self</span>.state_0, <span class="va">self</span>.state_1, ..., <span class="va">self</span>.contacts, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(위는 원문에 있는 간단화된 코드 블록의 직역입니다.) 이 명시적(explicit), 사용자 제어형 루프는 서로 다른 물리 시스템이 어떻게 결합되는지에 대해 연구자에게 미세한 제어권(fine-grained control)을 제공합니다. 원문 팀은 앞으로 상호 영향(two-way coupling) 또는 암묵적(implicit) 결합 방식을 더 탐구하여, 예를 들어 로봇이 토양이나 진흙 같은 변형성 지면 위를 걸을 때처럼 두 시스템이 서로에 강하게 영향을 미치는 상황에 대응하고자 한다고 밝히고 있습니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+</section>
+<section id="실행-방법원문에서-안내한-명령어-보존" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="실행-방법원문에서-안내한-명령어-보존"><span class="header-section-number">3.2</span> 실행 방법(원문에서 안내한 명령어 보존)</h2>
+<p>Newton 저장소 루트에서 다음 단일 명령으로 Franka-천 데모를 실행할 수 있습니다(원문 명령어 그대로 보존):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Newton 예제 환경 설정 (원문)</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">uv</span> sync <span class="at">--extra</span> examples</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># Franka arm + cloth 데모 실행 (원문)</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="ex">uv</span> run <span class="at">-m</span> newton.examples cloth_franka</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>원문은 또한 이 데모가 <strong>GPU 기반 VBD Cloth 솔버</strong>를 사용하며, <em>RTX 4090 기준으로 약 30 FPS 정도로 동작</em>하고 <strong>침투 없는(penetration-free) 접촉을 보장</strong>한다고 기술합니다. 또한 다른 GPU 기반 시뮬레이터(예: GPU-IPC)와 비교해 이 데모가 매우 높은 처리량(performance)을 달성한다고 설명합니다. (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</p>
+<hr>
+</section>
+</section>
+<section id="참고원문-링크들-원문에서-그대로-보존" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 참고(원문 링크들 — 원문에서 그대로 보존)</h1>
+<ul>
+<li>기사 원문: <a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/">https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/</a> (<a href="https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/" title="Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog">NVIDIA Developer</a>)</li>
+<li>Isaac Lab Sim2Sim 문서(관련): <a href="https://isaac-sim.github.io/IsaacLab/">https://isaac-sim.github.io/IsaacLab/</a>… (문서 내 Sim2Sim 설명과 스크립트 경로를 참조). (<a href="https://isaac-sim.github.io/IsaacLab/main/source/experimental-features/newton-physics-integration/sim-to-sim.html?utm_source=chatgpt.com" title="Sim-to-Sim Policy Transfer — Isaac Lab Documentation">아이작 심</a>)</li>
+<li>Newton GitHub: <a href="https://github.com/newton-physics/newton">https://github.com/newton-physics/newton</a> (예제 실행 방법 및 <code>cloth_franka</code> 예제가 저장소 예제 목록에 나옵니다). (<a href="https://github.com/newton-physics/newton" title="GitHub - newton-physics/newton: An open-source, GPU-accelerated physics simulation engine built upon NVIDIA Warp, specifically targeting roboticists and simulation researchers.">GitHub</a>)</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

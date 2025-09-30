@@ -1,0 +1,286 @@
+---
+draft: false
+title: "🧩Newton"
+description: Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton
+date: "2025-09-30"
+categories: [newton, isaacsim, 2025]
+toc: true
+number-sections: true
+---
+
+> [News](https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/)
+>
+> This post is a translated article of the original news.
+
+
+# NVIDIA Isaac Lab 및 Newton으로 Quadruped 보행 정책을 학습하고 천(옷감) 조작을 시뮬레이션하기
+
+*(원문: “Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton”)* ([NVIDIA Developer][1])
+
+**게시일:** 2025년 9월 29일
+**저자:** Mohammad Mohajerani, Aravindh Shanmuganathan, Eric Heiden, Anka Chen, Gilles Daviet, Milad Rakhsha, Antoine Richard. ([NVIDIA Developer][1])
+
+
+물리(Physics)는 로봇 시뮬레이션에서 매우 중요한 역할을 하며, 로봇 동작과 현실적인 환경 내 상호작용을 정확하게 가상으로 표현하는 기초를 제공합니다. 이러한 시뮬레이터를 통해 연구자와 엔지니어는 로봇 제어 알고리즘을 학습·개발·테스트·검증하고, 프로토타입을 안전하고 가속화된 방식으로 실험할 수 있습니다. 그러나 시뮬레이션은 종종 현실과 완전히 일치하지 않는데, 이를 **sim-to-real gap**(시뮬레이션→현실 차이)이라고 합니다. 로보틱스 개발자들은 다양한 솔버를 지원하는 통합 가능하고, 확장 가능하며, 커스터마이즈 가능한 물리 모델링 솔루션을 필요로 합니다.
+이 글에서는 **NVIDIA Isaac Lab** 내에서 **Newton**을 사용해 쿼드러페드 로봇을 한 지점에서 다른 지점으로 이동시키는 보행(Locomotion) 정책을 학습하는 방법과 산업용 매니퓰레이터(Franka)로 천(Cloth)을 접는 등 다중 물리(multi-physics) 시뮬레이션을 설정하는 방법을 안내합니다. ([NVIDIA Developer][1])
+
+
+## Newton이란 무엇인가?
+
+Newton은 NVIDIA, Google DeepMind, Disney Research가 공동 개발하고 Linux Foundation에서 관리하는 **오픈 소스, 확장 가능한 물리 엔진**으로 로봇 학습 및 개발을 진전시키기 위해 설계되었습니다. Newton은 **NVIDIA Warp** 및 **OpenUSD** 기반으로 구축되었으며, MuJoCo Playground나 Isaac Lab 같은 로봇 학습 프레임워크와 호환됩니다. ([NVIDIA Developer][1])
+
+Newton의 핵심은 수치적 적분과 제약(constraint) 해결을 위한 여러 **솔버 모듈(solver modules)** 입니다. 이 솔버들은 제약 기반이거나 힘(force) 기반일 수 있고, 직접법(direct) 또는 반복법(iterative)을 사용하며, 최대좌표(maximal) 또는 축소좌표(reduced) 표현을 사용할 수 있습니다. 공통 인터페이스와 공유 데이터 모델을 사용하면 MuJoCo Warp, Disney Research의 Kamino 솔버 또는 커스텀 솔버 등 어느 것을 사용하든 Newton을 동일한 방식으로 다룰 수 있어 충돌 처리, 역기구학, 상태 관리, 타임스텝 로직을 재작성할 필요 없이 재사용할 수 있습니다. ([NVIDIA Developer][1])
+
+학습(Training)을 위해 Newton은 물리 상태를 PyTorch 및 NumPy 호환 배열로 노출하는 텐서 기반 API를 제공해 배칭(batch) 처리와 Isaac Lab 같은 로봇 학습 프레임워크와의 통합을 효율적으로 지원합니다. Newton Selection API를 통해 학습 스크립트는 관절 상태를 질의하고(action) 적용하며 결과를 학습 알고리즘에 피드백할 수 있습니다. MuJoCo Warp(구글 딥마인드 개발)는 Newton 솔버로 완전 통합되어 있으며, MJX 및 Playground에서도 사용됩니다. Newton 및 연관 솔버들은 Apache 2.0 라이선스로 공개됩니다. ([NVIDIA Developer][1])
+
+
+## Newton 베타(β) 릴리스의 하이라이트
+
+* MuJoCo Warp(주요 Newton 솔버)는 GeForce RTX 4090에서 **로코모션(보행)**에 대해 최대 **152배**, **조작(manipulation)**에 대해 최대 **313배** 빠른 성능을 보입니다. (NVIDIA RTX PRO 6000 Blackwell Series는 MuJoCo Warp에 대해 최대 44% 추가 속도, MJX에 대해 75% 추가 속도 제공) ([NVIDIA Developer][1])
+* Newton 베타는 차세대 Isaac Lab 백엔드로 사용될 때, MuJoCo Warp 대비 PhysX보다 **인핸드(dexterous) 조작에서 최대 65% 빠른 성능**을 달성합니다. ([NVIDIA Developer][1])
+* 얇은 변형체(예: 의복)용 Vortex Block Descent(VBD) 솔버와, 입자 기반 재료(예: 흙·자갈)용 암시적 Material Point Method(MPM) 솔버의 성능 및 안정성 확장이 포함됩니다. ([NVIDIA Developer][1])
+
+## Isaac Lab에서 Newton을 사용해 쿼드러페드 보행 정책을 학습하는 방법(개요)
+
+Isaac Lab에 통합된 Newton 물리 엔진은 로봇 연구 개발을 위한 더 빠르고 강건한 워크플로를 제공합니다. 아래는 쿼드러페드(ANYmal-D 로봇 사용 예)를 대상으로 한 엔드 투 엔드(train → validate → deploy) 예시입니다. ([NVIDIA Developer][1])
+
+### Step 1 — Newton으로 보행 정책 학습하기
+
+1. **레포지토리 설정**: Isaac Lab 저장소를 설정합니다(레포지토리 셋업 링크: `https://isaac-sim.github.io` 참조).
+2. **학습 스크립트 실행**: Isaac Lab의 RL 스크립트(예: `rsl_rl`)를 사용해 ANYmal-D를 평지에서 걷도록 학습합니다. GPU 병렬화를 통해 수천 개의 병렬 환경에서 빠르게 수렴시킬 수 있습니다.
+3. **헤드리스(headless) 모드에서 학습(최대 성능 권장)** — 예시 커맨드(그대로 사용):
+
+```bash
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py \
+  --task Isaac-Velocity-Flat-Anymal-D-v0 --num_envs 4096 --headless
+```
+
+4. **Newton Visualizer(경량 모니터링 도구)**: 전체 Omniverse GUI 오버헤드 없이 학습 진행을 시각적으로 모니터링하려면 `--newton_visualizer` 플래그를 추가합니다:
+
+```bash
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py \
+  --task Isaac-Velocity-Flat-Anymal-D-v0 --num_envs 4096 --headless \
+  --newton_visualizer
+```
+
+학습이 완료되면 `.pt` 형식의 정책 체크포인트가 생성됩니다. ([NVIDIA Developer][1])
+
+### Step 2 — Sim2Sim 전이 검증(Validation with Sim2Sim transfer)
+
+* Sim2Sim 전이는 정책이 특정 물리 엔진 특성에 과적합(overfit)되지 않았는지 확인하는 필수 검증입니다. 서로 다른 시뮬레이터(예: PhysX ↔ Newton) 간 전이가 성공하면 실제 로봇에서도 동작할 가능성이 높아집니다.
+* 서로 다른 물리 엔진은 USD를 파싱하는 방식이나 관절 순서가 다를 수 있으므로, 관찰(observation)과 행동(action)을 재매핑하는 간단한 **YAML 매핑 파일**로 이를 해결합니다.
+* Newton에서 학습한 정책을 PhysX 기반 Isaac Lab에서 실행하려면 제공되는 전이 스크립트를 사용하세요:
+
+```bash
+./isaaclab.sh -p scripts/newton_sim2sim/rsl_rl_transfer.py \
+  --task=Isaac-Velocity-Flat-Anymal-D-v0 \
+  --num_envs=32 \
+  --checkpoint <PATH_TO_POLICY_CHECKPOINT> \
+  --policy_transfer_file scripts/sim2sim_transfer/config/newton_to_physx_anymal_d.yaml
+```
+
+해당 전이 스크립트는 Isaac Sim / IsaacLab GitHub 레포지토리에서 확인 가능합니다. ([NVIDIA Developer][1])
+
+### Step 3 — Sim2Real 배포 준비(Prepare for Sim2Real)
+
+* 시뮬레이션에서 학습한 정책을 실제 로봇으로 이전하는 마지막 단계입니다. 이 예시에서는 정책 학습 시 IMU, 관절 인코더와 같은 실제 로봇에서 사용 가능한 관찰값만 사용하도록 제한하여 **특권 정보(privileged info)를 사용하지 않았음**을 명시합니다.
+* ETH Zurich Robotic Systems Lab(RSL)의 협력으로 해당 정책은 물리적 ANYmal 로봇에 직접 배포되어 걷는 동작을 성공적으로 수행했습니다(하드웨어 테스트 비디오 참조). 이는 Isaac Lab에서의 학습이 실세계 테스트로 이어지는 직접적인 경로를 보여줍니다. ([NVIDIA Developer][1])
+
+---
+
+## Newton 독립(standalone) 엔진을 이용한 멀티피직스(Multiphysics)
+
+멀티피직스 시뮬레이션은 강체(예: 로봇 손)와 변형체(예: 천/옷감) 간의 결합된 상호작용을 하나의 프레임워크에서 캡처하여, 로봇 설계·제어·태스크 성능을 보다 현실적으로 평가하고 데이터 기반 최적화를 가능하게 합니다. Newton은 Isaac Lab과 함께 동작할 뿐 아니라, **독립 Python 모드**로도 사용하여 복잡한 물리 시스템을 실험할 수 있습니다. ([NVIDIA Developer][1])
+
+### Franka 암(로봇 팔) + Cloth(천) 데모 실행 예제
+
+1. Newton 저장소 루트에서 데모를 한 명령으로 실행할 수 있습니다.
+2. 환경 설정:
+
+```bash
+# Newton 예제 실행을 위한 uv 환경 설정
+uv sync --extra examples
+```
+
+3. Franka 암과 천 데모 실행:
+
+```bash
+# Franka arm + cloth 데모 실행
+uv run -m newton.examples cloth_franka
+```
+
+데모는 실시간 GPU 가속 시뮬레이션을 보여주는 인터랙티브 뷰어를 열며, Franka-cloth 데모는 GPU 기반 VBD Cloth 솔버를 사용합니다. RTX 4090에서 약 30 FPS로 실행되며 시뮬레이션 내 침투(penetration) 없는 접촉을 보장합니다. 다른 GPU 기반 침투-제거 시뮬레이터(예: GPU-IPC)와 비교해 **300배 이상의 성능 우위**를 달성하는 등, 현재 사용 가능한 완전 침투-프리(fully penetration-free) 천 조작 데모 중 매우 빠른 편입니다. ([NVIDIA Developer][1])
+
+### 멀티피직스 결합 이해하기
+
+* 이 데모는 서로 다른 동역학적 거동을 가진 시스템을 결합하는 멀티피직스 예시입니다. 각 구성요소에 전문화된 솔버를 할당함으로써 구현됩니다. 예제 스크립트(`example_cloth_franka.py`)에서 솔버 초기화 코드는 다음과 같습니다:
+
+```python
+# 로봇용 Featherstone 솔버 초기화
+self.robot_solver = SolverFeatherstone(self.model, ...)
+
+# 천용 Vertex-Block Descent (VBD) 솔버 초기화
+self.cloth_solver = SolverVBD(self.model, ...)
+```
+
+* 로봇 솔버를 `SolverFeatherstone` 대신 `SolverMuJoCo`처럼 강체 시뮬레이션을 지원하는 다른 솔버로 쉽게 바꿀 수 있습니다.
+* 예제는 **단방향(one-way) 결합**을 사용합니다(강체가 변형체에 영향을 미치지만, 반대 방향 영향은 무시). 천 조작과 같은 경우 천이 로봇 동역학에 미치는 영향이 무시될 수 있어 이 접근이 허용됩니다. 시뮬레이션 루프(단순화된 형태)는 다음과 같습니다:
+
+```python
+def simulate(self):
+    for _step in range(self.sim_substeps):
+        # 1. 로봇 솔버를 한 스텝 진행
+        self.robot_solver.step(self.state_0, self.state_1, ...)
+
+        # 2. 로봇과 천 입자 간 충돌 체크
+        self.contacts = self.model.collide(self.state_0, ...)
+
+        # 3. 로봇의 충돌 정보를 전달하여 천 솔버 한 스텝 진행
+        self.cloth_solver.step(self.state_0, self.state_1, ..., self.contacts, ...)
+```
+
+* 이처럼 사용자가 제어하는 루프는 서로 다른 물리 시스템이 어떻게 결합되는지를 세밀하게 제어할 수 있게 해 줍니다. 팀은 향후 **양방향(two-way) 결합**(예: 흙·진흙과 같은 변형성 지면 위에서의 보행 시 지면이 강체에 역으로 힘을 가하는 경우) 및 일부 솔버 조합에 대한 **암시적(implicit) 결합**을 탐색해 더 자동화된 힘 교환 관리를 구현할 계획입니다. ([NVIDIA Developer][1])
+
+
+## Newton을 생태계(에코시스템)이 어떻게 채택하고 있나?
+
+Newton 오픈 생태계는 빠르게 확장 중이며, 여러 대학 및 기업들이 특화된 솔버와 워크플로우를 통합하고 있습니다. 촉각 센싱(tactile sensing)에서 천 시뮬레이션, 섬세한 조작(dexterous manipulation)에서 거친 지형(locomotion over rough terrain)에 이르기까지 다양한 협업이 진행되고 있습니다. 주요 사례:
+
+* **ETH Zurich Robotic Systems Lab (RSL)**: 대형 장비 자동화(earthmoving) 관련 멀티피직스 시뮬레이션에 Newton을 적극 활용. 암시적 MPM 솔버를 사용해 토양·자갈·돌 같은 입자 상호작용을 캡처. 또한 Warp를 로보틱스·그래픽스 연구 전반에 활용(미분 가능한 시뮬레이션, 궤적 최적화, 대규모 3D 의류 모델링 등). ([NVIDIA Developer][1])
+* **Lightwheel**: SimReady 에셋 개발 및 변형체(soil, cables 등) 솔버 최적화에 기여. ANYmal 쿼드러페드가 다중 재질로 구성된 비강체(non-rigid) 지형(모래·자갈 등) 위를 이동하는 데 MPM 솔버를 적용하는 데모를 제작. ([NVIDIA Developer][1])
+* **Peking University (PKU)**: IPC 기반 솔버(Taccel)를 Newton에 통합해 비전 기반 촉각 센싱 시뮬레이션을 확장. Newton의 GPU 가속·미분 가능한 구조를 활용해 섬세한 접촉 상호작용을 모델링. ([NVIDIA Developer][1])
+* **Style3D**: 의류·연성체 시뮬레이션 기술을 Newton으로 통합, 수백만 정점 수준의 대규모 시뮬레이션을 지원하기 위한 API 노출 계획. ([NVIDIA Developer][1])
+* **TUM (Technical University of Munich)**: 실제 로봇에서 검증된 숙련된 조작 정책을 시뮬레이션에서 다시 재생(시뮬레이션 검증)하는 작업 등을 진행 중이며, MuJoCo Warp에서 4,000 병렬 환경으로 학습하는 것도 이미 가능하다고 보고. 향후 하드웨어로의 전송 및 공간 분해 촉각(Spatially resolved tactile skin)을 이용한 미세 조작(fine manipulation)으로 확장 예정. ([NVIDIA Developer][1])
+
+
+## Newton 시작하기(Get started)
+
+* Newton 물리 엔진은 모듈형·확장형·시뮬레이터 무관한(simulator-agnostic) 설계를 통해 로봇 학습을 위한 다양한 솔버 결합을 간단히 만듭니다.
+* 오픈 소스 커뮤니티 주도 프로젝트로서 개발자들은 Newton을 사용·배포·확장하고, 커스텀 솔버를 추가해 생태계에 기여할 수 있습니다. ([NVIDIA Developer][1])
+
+**참고(주요 레포지토리/자료)**
+
+* Newton standalone Beta 시작: GitHub 레포지토리 `newton-physics/newton` — [https://github.com/newton-physics/newton](https://github.com/newton-physics/newton). ([NVIDIA Developer][1])
+* Isaac Lab에서 Newton 사용해보기: Isaac Lab GitHub — [https://github.com/isaac-sim/IsaacLab](https://github.com/isaac-sim/IsaacLab). ([NVIDIA Developer][1])
+* Newton Developer(추가 자료): (원문 내 링크: Newton Developer). ([NVIDIA Developer][1])
+
+
+## 행사 및 챌린지 관련 정보
+
+* 본 글에 소개된 연구는 2025년 9월 27일~10월 2일 서울에서 열리는 **CoRL 및 Humanoids**에서 전시됩니다. ([NVIDIA Developer][1])
+* 또한 **2025 BEHAVIOR Challenge**(가정용 작업 50개 및 10,000개 원격조작 데모 포함)에 참여해 볼 것을 권장합니다. ([NVIDIA Developer][1])
+
+
+### 원문 참조
+
+* 원문 기사: [https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/](https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/) ([NVIDIA Developer][1])
+* Newton GitHub: [https://github.com/newton-physics/newton](https://github.com/newton-physics/newton) ([NVIDIA Developer][1])
+* Isaac Lab (GitHub / 문서): [https://github.com/isaac-sim/IsaacLab](https://github.com/isaac-sim/IsaacLab)  및 [https://isaac-sim.github.io](https://isaac-sim.github.io) (문서 페이지) ([NVIDIA Developer][1])
+* Newton Visualizer: (원문에 언급된 Newton Visualizer 링크) — [https://isaac-sim.github.io](https://isaac-sim.github.io) (관련 페이지). ([NVIDIA Developer][1])
+
+[1]: https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/ "Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog"
+
+
+---
+
+
+> 아래는 NVIDIA 개발자 블로그 기사 중 **Sim2Sim 전이(transfer)** 관련 섹션과 **cloth 예제(`example_cloth_franka.py`)**에 나오는 코드/설명 부분을 상세하게 직역(코드 주석 포함)한 것입니다.
+
+
+# Sim2Sim 전이 (원문 섹션: *Step 2: Validate the policy with Sim2Sim transfer*)
+
+> **원문 요지(한 문장 요약)**
+> Sim2Sim 전이는 정책이 특정 물리 엔진 특성에 과적합(overfit)되지 않았는지 확인하는 중요한 검증 단계입니다. 서로 다른 시뮬레이터(예: PhysX와 Newton) 사이에서 잘 전이되는 정책은 실제 로봇에서도 성공할 가능성이 큽니다. ([NVIDIA Developer][1])
+
+## 직역 (상세)
+
+Sim2Sim 전이는 단일 물리 엔진의 특정 특성에 정책이 과적합되지 않았는지 확인하기 위한 중요한 정합 검증(sanity check)입니다. PhysX와 Newton과 같은 서로 다른 시뮬레이터 사이에서 성공적으로 전이되는 정책은 실제 로봇에서 동작할 가능성이 훨씬 높습니다.
+
+한 가지 핵심적인 문제는 서로 다른 물리 엔진이 로봇의 USD를 파싱(parsing)할 때 관절(joint)의 순서를 다르게 정렬할 수 있다는 점입니다. 우리는 간단한 YAML 매핑 파일을 사용하여 정책의 관측(observations)과 액션(actions)을 재매핑(remap)함으로써 이 문제를 해결합니다.
+
+PhysX 기반 Isaac Lab에서 Newton으로 학습된(또는 반대 방향의) 정책을 실행하려면 제공된 전이 스크립트를 사용하십시오. 예(원문 명령어 형식):
+
+```bash
+# Newton에서 학습한 정책을 PhysX 기반 Isaac Lab에서 실행 (예시)
+./isaaclab.sh -p scripts/newton_sim2sim/rsl_rl_transfer.py \
+    --task=Isaac-Velocity-Flat-Anymal-D-v0 \
+    --num_envs=32 \
+    --checkpoint <PATH_TO_POLICY_CHECKPOINT> \
+    --policy_transfer_file scripts/sim2sim_transfer/config/newton_to_physx_anymal_d.yaml
+```
+
+> 이 전이 스크립트는 `isaac-sim/IsaacLab` GitHub 저장소에서 제공됩니다. ([NVIDIA Developer][1])
+
+**참고 및 제한 사항 (원문 내용의 직역)**
+
+* 이 전이 방법은 Unitree G1, Unitree Go2, Unitree H1, 및 ANYmal-D 로봇으로 테스트되었습니다. ([NVIDIA Developer][1])
+* PhysX→Newton 전이는 `physx_to_newton_*.yaml` 매핑 파일을 사용합니다. Newton→PhysX 전이는 `newton_to_physx_*.yaml` 매핑 파일을 사용합니다. ([NVIDIA Developer][1])
+* 관측 재매핑(observation remapping)은 기본(base) 관측 다음에 관절 관측이 오는(locomotion layout) 형태를 가정합니다. 다른 관측 레이아웃을 사용하는 경우 `scripts/sim2sim_transfer/rsl_rl_transfer.py` 파일의 `get_joint_mappings` 함수를 수정해야 합니다. ([아이작 심][2])
+* 새 로봇이나 백엔드를 추가할 때는 소스와 타깃(예: PhysX vs Newton)에서 동일한 관절 이름을 가지며 YAML 목록이 각 백엔드가 관절을 정렬하는 방식과 일치해야 합니다. ([NVIDIA Developer][1])
+
+---
+
+# cloth 예제 (`example_cloth_franka.py`) 관련 기술 설명 및 코드 스니펫 직역
+
+> **원문 요지(한 문장 요약)**
+> Newton의 standalone 예제에는 Franka 로봇이 천(cloth)을 조작하는 데모가 포함되어 있으며, 서로 다른 솔버(예: 로봇용 Featherstone, 천용 VBD)를 조합해 멀티피직스(multiphyics) 시뮬레이션을 구성합니다. ([NVIDIA Developer][1])
+
+## 직역 (상세)
+
+Newton은 서로 다른 물리 특성을 가진 시스템(예: 강체 로봇과 변형체인 천)이 상호작용하도록 멀티피직스 시뮬레이션을 지원합니다. 이 데모는 각 컴포넌트에 특화된 솔버를 할당(assign)함으로써 이를 달성합니다. `example_cloth_franka.py` 파일을 보면 솔버가 다음과 같이 초기화되는 것을 확인할 수 있습니다:
+
+```python
+# 로봇용 Featherstone 솔버 초기화
+self.robot_solver = SolverFeatherstone(self.model, ...)
+
+# 천용 Vertex-Block Descent (VBD) 솔버 초기화
+self.cloth_solver = SolverVBD(self.model, ...)
+```
+
+원문 설명에 따르면, 로봇 솔버를 `SolverFeatherstone` 대신 `SolverMuJoCo` 같은 다른 강체 시뮬레이션을 지원하는 솔버로 쉽게 바꿀 수 있습니다. 핵심은 시뮬레이션 루프에서 이들 솔버를 어떻게 조정하는지입니다. 이 예제는 일방향 결합(one-way coupling)을 사용합니다 — 즉, 강체가 변형체(천)에 영향을 주지만 천이 로봇의 동역학에 되돌려주는 영향은 무시합니다. 이는 천 조작(cloth manipulation) 사례에서는 천이 로봇 동역학에 미치는 영향이 무시 가능하다고 판단될 때 합리적인 접근입니다.
+
+원문에 나오는 시뮬레이션 루프(단순화된 형태)는 다음과 같습니다:
+
+```python
+# example_cloth_franka.py의 단순화된 시뮬레이션 루프 보기
+
+def simulate(self):
+    for _step in range(self.sim_substeps):
+        # 1. 로봇 솔버를 앞으로 한 스텝 진행
+        self.robot_solver.step(self.state_0, self.state_1, ...)
+
+        # 2. 로봇과 천 사이의 충돌(contacts)을 검사
+        self.contacts = self.model.collide(self.state_0, ...)
+
+        # 3. 로봇 충돌 정보를 전달하여 천 솔버를 한 스텝 진행
+        self.cloth_solver.step(self.state_0, self.state_1, ..., self.contacts, ...)
+```
+
+(위는 원문에 있는 간단화된 코드 블록의 직역입니다.) 이 명시적(explicit), 사용자 제어형 루프는 서로 다른 물리 시스템이 어떻게 결합되는지에 대해 연구자에게 미세한 제어권(fine-grained control)을 제공합니다. 원문 팀은 앞으로 상호 영향(two-way coupling) 또는 암묵적(implicit) 결합 방식을 더 탐구하여, 예를 들어 로봇이 토양이나 진흙 같은 변형성 지면 위를 걸을 때처럼 두 시스템이 서로에 강하게 영향을 미치는 상황에 대응하고자 한다고 밝히고 있습니다. ([NVIDIA Developer][1])
+
+## 실행 방법(원문에서 안내한 명령어 보존)
+
+Newton 저장소 루트에서 다음 단일 명령으로 Franka-천 데모를 실행할 수 있습니다(원문 명령어 그대로 보존):
+
+```bash
+# Newton 예제 환경 설정 (원문)
+uv sync --extra examples
+
+# Franka arm + cloth 데모 실행 (원문)
+uv run -m newton.examples cloth_franka
+```
+
+원문은 또한 이 데모가 **GPU 기반 VBD Cloth 솔버**를 사용하며, *RTX 4090 기준으로 약 30 FPS 정도로 동작*하고 **침투 없는(penetration-free) 접촉을 보장**한다고 기술합니다. 또한 다른 GPU 기반 시뮬레이터(예: GPU-IPC)와 비교해 이 데모가 매우 높은 처리량(performance)을 달성한다고 설명합니다. ([NVIDIA Developer][1])
+
+---
+
+# 참고(원문 링크들 — 원문에서 그대로 보존)
+
+* 기사 원문: [https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/](https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/) ([NVIDIA Developer][1])
+* Isaac Lab Sim2Sim 문서(관련): [https://isaac-sim.github.io/IsaacLab/](https://isaac-sim.github.io/IsaacLab/)... (문서 내 Sim2Sim 설명과 스크립트 경로를 참조). ([아이작 심][2])
+* Newton GitHub: [https://github.com/newton-physics/newton](https://github.com/newton-physics/newton) (예제 실행 방법 및 `cloth_franka` 예제가 저장소 예제 목록에 나옵니다). ([GitHub][3])
+
+
+[1]: https://developer.nvidia.com/blog/train-a-quadruped-locomotion-policy-and-simulate-cloth-manipulation-with-nvidia-isaac-lab-and-newton/ "Train a Quadruped Locomotion Policy and Simulate Cloth Manipulation with NVIDIA Isaac Lab and Newton | NVIDIA Technical Blog"
+[2]: https://isaac-sim.github.io/IsaacLab/main/source/experimental-features/newton-physics-integration/sim-to-sim.html?utm_source=chatgpt.com "Sim-to-Sim Policy Transfer — Isaac Lab Documentation"
+[3]: https://github.com/newton-physics/newton "GitHub - newton-physics/newton: An open-source, GPU-accelerated physics simulation engine built upon NVIDIA Warp, specifically targeting roboticists and simulation researchers."

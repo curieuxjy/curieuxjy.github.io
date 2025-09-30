@@ -2,6 +2,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/storage/2025-10-01-newton.html",
       "/posts/paper/2025-09-29-pi-zero.html",
       "/posts/paper/2025-09-28-aria-glass.html",
       "/posts/paper/2025-09-27-roboarena.html",
@@ -102,6 +103,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/storage/2025-10-01-newton.html",
       "/posts/paper/2025-09-29-pi-zero.html",
       "/posts/paper/2025-09-28-aria-glass.html",
       "/posts/paper/2025-09-27-roboarena.html",
@@ -214,6 +216,7 @@
   {
     "listing": "/note.html",
     "items": [
+      "/posts/note/2025-09-30-isaaclab-mjlab.html",
       "/posts/note/2025-09-25-mujoco-vs-isaaclab.html",
       "/posts/note/2025-08-25-simulators.html",
       "/posts/note/2025-07-31-linux-cheetsheet.html",
