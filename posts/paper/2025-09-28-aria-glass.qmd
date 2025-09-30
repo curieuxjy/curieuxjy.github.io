@@ -1,5 +1,5 @@
 ---
-title: "Aria Gen 1 리뷰"
+title: "📃Aria Gen 1 리뷰"
 date: 2025-09-28
 categories: [aria, glasses, meta]
 toc: true

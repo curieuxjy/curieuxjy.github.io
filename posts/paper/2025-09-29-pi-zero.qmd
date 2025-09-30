@@ -1,5 +1,5 @@
 ---
-title: "π0 리뷰"
+title: "📃π0 리뷰"
 date: 2025-09-29
 categories: [vla, flow, cross-embodiment]
 toc: true
