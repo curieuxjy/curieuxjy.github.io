@@ -1,0 +1,112 @@
+---
+title: "📝ROS2 bag 사용"
+toc: true
+date: "2025-10-01"
+description: Note
+categories: [ros2, bag, 2025]
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+
+# 기본 준비
+
+1. 새 터미널마다 ROS 2 환경을 **source** 합니다:
+   `source /opt/ros/<ROS_DISTRO>/setup.bash`
+2. 기록할 토픽 목록 확인:
+   `ros2 topic list` (토픽이 실제로 publish 되는지 `ros2 topic echo /토픽명`으로 확인). ([ROS Documentation][1])
+
+
+# 1) 특정 토픽 한 개 녹화
+
+```bash
+# 예: /turtle1/cmd_vel 토픽 녹화
+ros2 bag record /turtle1/cmd_vel
+```
+
+녹화 중지: `Ctrl+C`. 기록된 bag은 실행한 디렉토리 안에 `rosbag2_<timestamp>` 같은 폴더로 생성됩니다. ([ROS Documentation][1])
+
+
+# 2) 여러 토픽 녹화 & 출력 이름 지정
+
+```bash
+# 여러 토픽을 공백으로 나열. -o로 output 이름 지정
+ros2 bag record -o myrun /topic1 /topic2 /topic3
+```
+
+위 명령은 `myrun`이라는 이름의 bag(디렉토리/파일)을 만듭니다. ([ROS Documentation][1])
+
+# 3) 시스템의 모든 토픽 녹화
+
+```bash
+# 모든 토픽 녹화
+ros2 bag record -a
+# 또는 이름 지정
+ros2 bag record -a -o all_topics_run
+```
+
+많은 토픽/데이터가 쏟아져 들어오므로 디스크 사용량에 주의하세요. ([ROS Documentation][1])
+
+# 4) 제외(필터) — 정규표현식으로 제외하기
+
+모든 토픽을 녹화하면서 일부 토픽만 제외하려면 정규표현식 옵션을 사용합니다(버전별 이름이 약간 다름: `--exclude-regex` 등). 예:
+
+```bash
+# 예: /tf.* 토픽은 제외하고 녹화
+ros2 bag record -a -x "/tf.*"
+# 또는 --exclude-regex 사용(ROS 버전에 따라 이름/동작이 바뀔 수 있음)
+ros2 bag record -a --exclude-regex "/tf.*"
+```
+
+참고: 옵션명과 동작(예: `-x` vs `--exclude-regex`)은 ROS 2 버전(단일 배포판)에서 바뀐 적이 있으니, `ros2 bag --help`로 로컬 옵션을 확인하세요. (Jazzy 등 최신 릴리스에서 `--exclude` → `--exclude-regex`로 변경된 사례가 있습니다). ([ROS Documentation][2])
+
+# 5) 압축 저장(저장 포맷, 성능)
+
+rosbag2는 기본 저장 포맷(예: MCAP / sqlite)과 **압축 옵션**을 제공합니다. 예:
+
+```bash
+# zstd 파일 단위 압축으로 모든 토픽 녹화
+ros2 bag record -a --compression-mode file --compression-format zstd -o myrun_zstd
+```
+
+MCAP가 ROS 2의 기본/권장 포맷으로 도입되어 외부 툴 연동성(예: Foxglove)에서 유리한 경우가 있습니다. 압축을 사용하면 디스크 사용량을 크게 줄일 수 있으나 CPU 사용량이 늘어납니다. ([GitHub][3])
+
+
+# 6) 녹화한 bag 정보 보기 / 재생
+
+* 정보 확인:
+  `ros2 bag info <bag_name>`
+* 재생(퍼블리시):
+  `ros2 bag play <bag_name>`
+  예: `ros2 bag play myrun` — 플레이하면 녹화한 메시지들이 다시 퍼블리시됩니다. ([ROS Documentation][1])
+
+# 7) 자주 겪는 문제와 해결 팁
+
+* **토픽이 녹화되지 않을 때**: 해당 토픽이 실제로 publish 중인지(`ros2 topic echo`) 확인.
+* **QoS 호환성 문제**: ROS 2는 QoS(신뢰성 등) 호환성 요구가 있어, 녹화(구독)가 실패할 수 있습니다. 필요하면 QoS 오버라이드 옵션이나 문서를 참조하세요. ([ROS Documentation][1])
+* **버전 차이**: `ros2 bag`의 옵션명(`-x`, `--exclude-regex`, 압축 옵션 등)은 ROS 2 배포판(humble, jazzy, rolling 등)에 따라 달라질 수 있습니다. 로컬에서 `ros2 bag --help`로 실제 사용 가능한 옵션을 확인하세요. ([ROS Documentation][2])
+* **디스크 용량**: 고주파 토픽(예: 카메라, 라이다)을 녹화하면 금방 디스크를 잡아먹습니다. 카메라는 해상도/주파수를 낮추거나 압축을 적극 사용하세요. ([GitHub][3])
+
+
+# 8) 빠른 예제 모음 (복사해서 쓰기)
+
+```bash
+# 1) 특정 토픽 1개
+ros2 bag record /my_robot/joint_states
+
+# 2) 여러 토픽 + 이름지정
+ros2 bag record -o exp1 /tf /odom /scan /camera/image_raw
+
+# 3) 모든 토픽(이름 지정) + zstd 압축
+ros2 bag record -a -o allrun --compression-mode file --compression-format zstd
+
+# 4) 모든 토픽 녹화하되 /tf.* 제외
+ros2 bag record -a -x "/tf.*" -o all_except_tf
+```
+
+
+[1]: https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html "Recording and playing back data — ROS 2 Documentation: Foxy  documentation"
+[2]: https://docs.ros.org/en/jazzy/Releases/Release-Jazzy-Jalisco.html?utm_source=chatgpt.com "Jazzy Jalisco (jazzy) — ROS 2 Documentation"
+[3]: https://github.com/ros2/rosbag2?utm_source=chatgpt.com "ros2/rosbag2"
