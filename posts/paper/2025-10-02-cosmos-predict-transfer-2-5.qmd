@@ -1,0 +1,155 @@
+---
+title: "📃Cosmos predict/transfer 2.5 리뷰"
+date: 2025-10-02
+categories: [cosmos, nvidia, physical-ai]
+toc: true
+number-sections: False
+description: World Simulation with Video Foundation Models for Physical AI
+---
+
+- [Research Blog](https://research.nvidia.com/publication/2025-09_world-simulation-video-foundation-models-physical-ai)
+- [Paper Link](https://d1qx31qr3h6wln.cloudfront.net/publications/World_Simulation_with_Video_Foundation_Models_for_Physical_AI.pdf)
+- [Cosmos Github](https://github.com/nvidia-cosmos)
+
+
+1. NVIDIA는 Physical AI를 위한 차세대 월드 파운데이션 모델인 [Cosmos-Predict2.5]와 [Cosmos-Transfer2.5]를 소개하며, 로봇 및 자율 시스템을 위한 고품질 세계 시뮬레이션 및 데이터 생성을 가능하게 합니다.
+2. [Cosmos-Predict2.5]는 플로우 기반 아키텍처로 Text2World, Image2World, Video2World 생성을 통합하고, 2억 개의 비디오 클립으로 학습 및 강화 학습 기반 후속 훈련을 거쳐 비디오 품질과 명령어 정렬을 크게 향상시켰습니다.
+3. [Cosmos-Transfer2.5]는 Sim2Real 및 Real2Real 변환을 위한 Control-Net 스타일 프레임워크로, 이전 모델보다 3.5배 작지만 더 높은 충실도와 안정적인 장기 비디오 생성을 제공하며 다양한 Physical AI 애플리케이션에 활용됩니다.
+
+<center>
+<img src="../../images/2025-10-02-cosmos-predict-transfer-2-5/1.png" width="20%" />
+</center>
+
+We introduce [Cosmos-Predict2.5], the latest generation of the Cosmos World Foundation Models for Physical AI. Built on a flow-based architecture, [Cosmos-Predict2.5] unifies Text2World, Image2World, and Video2World generation in a single model and leverages [Cosmos-Reason1], a Physical AI vision-language model, to provide richer text grounding and finer control of world simulation. Trained on 200M curated video clips and refined with reinforcement learning–based post-training, [Cosmos-Predict2.5] achieves substantial improvements over [Cosmos-Predict1] in video quality and instruction alignment, with models released at 2B and 14B scales. These capabilities enable more reliable synthetic data generation, policy evaluation, and closed-loop simulation for robotics and autonomous systems. We further extend the family with [Cosmos-Transfer2.5], a control-net style framework for Sim2Real and Real2Real world translation. Despite being 3.5× smaller than [Cosmos-Transfer1], it delivers higher fidelity and robust long-horizon video generation. Together, these advances establish [Cosmos-Predict2.5] and Cosmos-Transfer2.5] as versatile tools for scaling embodied intelligence. To accelerate research and deployment in Physical AI, we release source code, pretrained checkpoints, and curated benchmarks under the NVIDIA Open Model License at [cosmos-predict2.5](https://github.com/nvidia-cosmos/cosmos-predict2.5) and [cosmos-transfer2.5](https://github.com/nvidia-cosmos/cosmos-transfer2.5). We hope these open resources lower the barrier to adoption and foster innovation in building the next generation of embodied intelligence.
+
+---
+
+# Brief Review
+
+NVIDIA는 Physical AI 시스템을 위한 세계 시뮬레이션에 중점을 둔 비디오 Foundation 모델인 [Cosmos-Predict2.5]를 소개합니다. 이 모델은 Flow Matching 기반 아키텍처를 통해 Text2World, Image2World, Video2World 생성을 단일 모델로 통합하며, Physical AI 특화 VLM인 [Cosmos-Reason1]을 활용하여 텍스트 접지(grounding) 및 세계 시뮬레이션 제어 기능을 강화합니다. 2억 개의 비디오 클립으로 사전 학습되고 RL 기반 후처리 학습(post-training)을 거쳐, [Cosmos-Predict1] 대비 비디오 품질 및 명령어 정렬(instruction alignment)에서 상당한 개선을 이루었습니다. 이 모델은 2B 및 14B 스케일로 출시되었으며, 로보틱스 및 자율 시스템을 위한 신뢰할 수 있는 합성 데이터(synthetic data) 생성, 정책 평가, 폐쇄 루프 시뮬레이션을 가능하게 합니다.
+
+또한, Sim2Real 및 Real2Real 세계 변환을 위한 ControlNet 스타일 프레임워크인 [Cosmos-Transfer2.5]를 공개했습니다. [Cosmos-Transfer1]보다 3.5배 작음에도 불구하고 더 높은 품질과 견고한 장기(long-horizon) 비디오 생성을 제공합니다. 이 모든 발전은 [Cosmos-Predict2.5]와 [Cosmos-Transfer2.5]를 Physical AI 확장을 위한 다목적 도구로 자리매김하게 합니다. NVIDIA는 Physical AI 연구 및 배포를 가속화하기 위해 소스 코드, 사전 학습된 체크포인트, 벤치마크를 NVIDIA Open Model License 하에 공개했습니다.
+
+**2. 데이터**
+
+데이터 파이프라인은 두 가지 주요 측면에서 개선되었습니다.
+
+첫째, 일반적인 데이터 처리를 위한 **필터링 파이프라인 구성 요소를 업그레이드**했습니다.
+
+둘째, Physical AI 역량을 강화하기 위해 **고품질 Physical AI 데이터를 큐레이션**했습니다.
+
+**2.1. 비디오 큐레이션 파이프라인**: 7단계로 구성됩니다: 1) Shot-aware video splitting, 2) GPU-based transcoding, 3) video cropping, 4) filtering, 5) captioning, 6) semantic deduplication, 7) sharding. 2억 개 이상의 원본 비디오를 처리하여 2억 개의 고품질 클립을 큐레이션했습니다. 필터링 단계는 움직임 아티팩트(motion artifacts), 왜곡(distortion), 시각적 노이즈(visual noise), 오버레이 텍스트(overlay text), 부적절한 콘텐츠 등을 제거하며, VLM을 활용한 최종 필터링을 통해 정밀도를 높였습니다. 캡셔닝 단계에서는 Qwen2.5-VL-7B VLM을 사용하여 사실적이고 맥락 인식적인 캡션을 생성하며, Semantic Deduplication 및 Sharding을 통해 데이터셋의 구조화된 사용을 지원합니다. 이 파이프라인은 [Cosmos-Predict1]에 비해 더 많은 데이터 볼륨을 처리하고, 엄격한 필터링으로 데이터 품질을 대폭 향상시켰습니다.
+
+**2.2. 도메인별 데이터**: 로보틱스, 자율 주행, 스마트 공간, 인간 역학(Human Dynamics), 물리(Physics)의 5가지 핵심 도메인에 걸쳐 고품질 데이터를 큐레이션했습니다. 각 도메인은 사전 학습과 유사한 큐레이션 프로세스를 따르지만, 도메인별 필터링 규칙과 맞춤형 프롬프트가 적용된 대규모 VLM을 사용합니다. 예를 들어, 로보틱스 데이터셋은 다양한 로봇 플랫폼과 시점을 포함하며, 자율 주행 데이터셋은 NVIDIA의 자체 주행 플랫폼에서 수집된 7개 카메라 시점의 약 310만 개의 클립으로 구성되어 다양한 운전 조건과 환경 속성을 반영합니다.
+
+**3. 방법론**
+
+**3.1. Flow Matching**: [Cosmos-Predict2.5]는 Flow Matching (FM)을 채택합니다. FM과 [Cosmos-Predict1]에 사용된 Elucidated Diffusion Model (EDM)은 수학적으로 동등하지만, 노이즈 제거 네트워크의 매개변수화 방식이 다릅니다. FM은 노이즈 제거 네트워크가 Diffusion 궤적의 속도(velocity)를 예측하도록 계수를 선택하며, 이는 더 직접적인 학습 목표를 제공하고 실질적으로 더 부드러운 최적화와 향상된 샘플 품질을 가져옵니다.
+데이터 샘플 $x$, 노이즈 벡터 $\epsilon \sim \mathcal{N}(0, I)$, 그리고 로짓-정규 분포에서 추출된 타임스텝 $t \in [0, 1]$이 주어질 때, 보간된 잠재 변수 $x_t$는 다음과 같이 정의됩니다:
+
+$$x_t = (1 - t)x + t\epsilon$$
+해당 Ground Truth 속도는 다음과 같습니다:
+$$v_t = \epsilon - x$$
+모델은 예측과 Ground Truth 간의 평균 제곱 오차(MSE)를 최소화하여 $v_t$를 예측하도록 학습됩니다:
+$$\mathcal{L}(\theta) = \mathbb{E}_{x, \epsilon, c, t} \|u(x_t, t, c; \theta) - v_t\|^2$$
+여기서 $c$는 컨디셔닝 정보(텍스트 임베딩, 참조 프레임 등)를 나타내고, $\theta$는 모델 매개변수이며, $u(\cdot; \theta)$는 예측된 속도 함수입니다. 고해상도 콘텐츠의 과도한 상관 관계를 해결하기 위해, **Shifted Logit-Normal Distribution** (Esser et al., 2024)을 사용하여 학습 프로세스를 더 높은 노이즈 레벨로 의도적으로 편향시킵니다. 이는 $\beta$라는 Shift Hyperparameter를 통해 $t$ 값을 더 높은 노이즈 쪽으로 치우치게 합니다:
+$$t_s = \frac{\beta t}{1 + (\beta - 1)t}$$
+
+**3.2. 네트워크 아키텍처**: [Cosmos-Predict2.5]는 [Cosmos-Predict1]의 DiT 기반 노이즈 제거 네트워크를 재사용하지만, **절대 위치 임베딩(absolute positional embeddings)을 제거**하고 **상대 위치 임베딩(relative positional embeddings)만 유지**하여 다양한 해상도 및 시퀀스 길이에 대한 일반화 능력을 향상시켰습니다. 시각적 토크나이저(visual tokenizer)로는 비디오 시퀀스를 4x8x8 압축하는 Causal VAE인 WAN2.1 VAE를 사용하며, 93프레임(24 잠재 프레임)을 생성합니다. 텍스트 인코더로는 [Cosmos-Predict1]의 T5 대신 [Cosmos-Reason1]을 활용하며, 여러 블록의 활성화(activations)를 연결하여 텍스트 임베딩을 생성함으로써 지역 및 전역 언어적 맥락을 더욱 충실히 포착합니다. 모델은 Text2World, Image2World, Video2World 세 가지 모드로 작동하며, Image2World 및 Video2World에서는 프레임 교체 전략을 사용하여 초기 프레임을 조건부 프레임으로 대체하여 시간적 일관성을 강화합니다.
+
+**4. 학습**
+
+**4.1. 사전 학습(Pre-training)**: 점진적인 학습 전략을 사용합니다. 256p 해상도의 Text2Image 작업으로 시작하여, Image2World 및 Video2World 작업을 도입합니다. 이때 1 또는 5개의 조건부 프레임을 샘플링하고 나머지 92 또는 88개 프레임을 생성하도록 합니다. 마스킹 스킴(masking scheme)을 사용하여 조건부 입력과 노이즈 입력 프레임을 구분합니다. 이후 해상도를 256p에서 480p, 720p로 점진적으로 증가시키고, 마지막으로 조건부 프레임이 없는 Text2World 작업을 추가합니다. 학습 타임스텝은 Logit-Normal Distribution에서 샘플링되며, 학습 해상도가 증가함에 따라 $\beta$ 값을 1에서 5로 점진적으로 증가시키는 Shifted Logit-Normal Distribution을 적용합니다. 또한, 고노이즈 영역에서의 학습 샘플 부족으로 인한 전환 아티팩트를 줄이기 위해, 학습 샘플의 5%를 노이즈 분포의 상위 2%에서 명시적으로 추출하는 타겟 샘플링 전략을 도입했습니다. AdamW 옵티마이저를 사용하며, 선형 학습률 스케줄러와 웜업(warmup) 단계를 적용합니다.
+
+**4.2. 후처리 학습(Post-training)**:
+
+*   **Supervised Fine-tuning (SFT)**: 객체 지속성(object permanence), 고속 움직임(high motion), 복합 장면(complex scenes), 운전, 로봇 조작 등 5개 도메인으로 분류된 고품질 Physical AI 데이터셋에 대해 SFT를 수행합니다. 각 도메인별로 별도의 모델을 학습시켜 전문 도메인 성능을 향상시키고, Cooldown 단계를 통해 4K 비디오로 미세한 시각적 디테일과 부드러운 움직임을 강화합니다. 여러 SFT 모델의 장점을 통합하기 위해 Model Merging (Yang et al., 2024)을 적용하며, Model Soup (Wortsman et al., 2022) 방식이 효과적임을 확인했습니다.
+*   **Reinforcement Learning (RL)**: VLM 기반 보상 모델인 VideoAlign (Liu et al., 2025)을 사용하여 텍스트 정렬, 움직임 품질, 시각적 품질을 평가하고 [Cosmos-Predict2.5-2B] (사전 학습 및 병합 모델 모두)를 후처리 학습합니다. VideoAlign은 GRPO (Guo et al., 2025)를 따라 롤아웃 그룹 내에서 보상을 정규화하여 각 출력의 장점(advantage)을 계산합니다. RL은 보상 점수와 인간 평가 모두에서 모델 품질을 효과적으로 향상시키는 것으로 입증되었습니다.
+
+**4.3. 인프라**: FSDP2를 기본 분산 학습 프레임워크로 사용하여 모델 가중치, 그래디언트, 옵티마이저 상태를 효율적으로 샤딩합니다. 고해상도 또는 장시간 비디오 학습 시 대규모 입력 시퀀스를 처리하기 위해 Ulysses 스타일의 유연한 컨텍스트 병렬 처리(Context Parallelism)를 사용합니다. 메모리 사용량과 계산 효율성의 균형을 위해 torch Selective Activation Checkpointing (SAC)을 적용합니다. RL 후처리 학습에서 대량의 입력과 다양한 보상 모델을 처리하기 위해 효율적이고 유연한 Elastic Reward Service를 사용합니다.
+
+**5. 결과**
+
+**벤치마킹**: [Cosmos-Predict2.5-2B] 모델의 성능을 Physical AI 생성 및 이해 능력을 평가하는 PAI-Bench (Zhou et al., 2025)에서 보고했습니다. PAI-Bench의 예측(predict) 작업에서 도메인 점수(Domain Score)와 품질 점수(Quality Score)를 측정하며, [Cosmos-Predict2.5-2B] 후처리 학습 모델은 T2W에서 더 큰 Wan2.2-5B 모델과 유사한 성능을 보였고, I2W에서는 가장 좋은 성능을 기록했습니다.
+
+**인간 평가**: 자동화된 지표 외에, 현실성, 시각적 품질, 시간적 일관성, 조건부 입력과의 정렬 등 인간 선호도를 반영하는 비디오 품질 측면을 평가하기 위한 인간 평가를 수행했습니다. [Cosmos-Predict2.5-2B]는 Wan 2.2 5B 및 Wan 2.1 14B에 비해 각각 60% 및 85.7% 작은 크기에도 불구하고, PAI-Bench I2W 및 T2W 설정에서 유사한 인간 선호도를 보였습니다.
+
+**정성적 예시**: [Cosmos-Predict2.5-2B] 후처리 학습 모델은 운전 시 정확한 행동을 시뮬레이션하고, 사실적인 산업 및 로봇 장면을 생성하며, 물리적으로 일관된 움직임을 생성하는 능력을 보여줍니다.
+
+**6. 애플리케이션**
+
+**6.1. Cosmos-Transfer2.5**: [Cosmos-Predict2.5-2B] 위에 구축된 조건부 세계 생성 모델로, 여러 공간 제어 입력(에지, 블러 처리된 비디오, 세그먼테이션 맵, 깊이 맵 등)에 따라 고품질 세계 시뮬레이션을 생성합니다. [Cosmos-Transfer1-7B]와 달리, 4개의 제어 블록을 메인 브랜치 전체에 걸쳐 균등하게 분배하여 조건 정보를 네트워크에 더 점진적으로 통합합니다. [Cosmos-Transfer2.5-2B]는 3.5배 작음에도 불구하고 [Cosmos-Transfer1-7B]를 능가하는 성능을 보였습니다. 이는 더 강력한 기본 모델과 Physical AI에 중점을 둔 큐레이션된 학습 데이터 덕분입니다.
+**장기 비디오 생성**: 장기 비디오 생성에서 오류 누적을 평가하기 위한 Averaged Relative Normalized Dover Score (RNDS)라는 새로운 메트릭을 도입했습니다. RNDS[i]는 DOVER[i] / DOVER_GT[i]를 DOVER[1] / DOVER_GT[1]로 정규화한 값입니다. [Cosmos-Transfer2.5-2B]는 [Cosmos-Transfer1-7B]에 비해 RNDS 감소가 훨씬 적어 장기 비디오 시퀀스에서 오류 누적과 환각(hallucination)이 적고 충실도(fidelity)가 더 높음을 나타냅니다.
+
+**6.2. 로봇 정책 학습을 위한 Cosmos-Transfer2.5**: [Cosmos-Transfer2.5-2B]는 로봇 정책 학습을 위한 시각적 합성 데이터 생성기로 활용되어, 로봇 정책의 훈련을 강화하고 이전에 보지 못한 시각적 시나리오로 일반화하는 데 사용될 수 있습니다. Ego-centric 카메라를 장착한 양팔 로봇을 사용하여 테이블 상단 조작 작업을 위한 인간 원격 조작 시연을 수집하고, 이를 통해 시각 기반 정책을 학습시킵니다. [Cosmos-Transfer2.5-2B]는 텍스트 프롬프트를 통해 원하는 시각적 조건을 지정함으로써 다양한 구조화된 시각적 변형을 생성하고, 정책의 견고성을 체계적으로 테스트할 수 있게 합니다. 실제 로봇 실험에서, [Cosmos-Transfer2.5-2B]로 증강된 정책은 30번의 시도 중 24번 성공하여, 새로운 테스트 시간 객체 및 환경 변화에 대해 현저히 높은 견고성과 일반화 능력을 입증했습니다.
+
+**6.3. 운전 시뮬레이션을 위한 Cosmos-Transfer2.5**: [Cosmos-Predict2.5-2B]를 단일 뷰에서 멀티 뷰 세계 생성으로 확장하여 [Cosmos-Predict2.5-2B/auto/multiview]를 개발했습니다. 또한, ControlNet 스타일로 확장하여 [Cosmos-Transfer2.5-2B/auto/multiview]를 통해 World Scenario Map에 따라 일관된 멀티 뷰 장면을 생성합니다. 720p 멀티 뷰 생성을 위해 잠재적 시간 차원(latent temporal dimension)을 재사용하여 여러 뷰를 연결하고, DiT 네트워크에 통과시키기 전에 컴팩트한 뷰별 학습 임베딩을 잠재 채널 차원에 연결합니다. 3D-factorized RoPE와 텍스트 임베딩과의 교차 어텐션(cross-attention)을 적용합니다.
+**학습 데이터셋**: [Cosmos-Predict2.5-2B/auto/multiview]는 150만 클립의 멀티 뷰 캡션 데이터셋으로 학습되었고, [Cosmos-Transfer2.5-2B/auto/multiview]는 HD 맵 및 동적 객체 정보를 포함하는 “World Scenario Map”을 제어 입력으로 사용합니다. 이 맵은 차선, 도로 표식, 신호등 등의 맵 요소와 동적 3D 바운딩 박스를 포함하며, RDS-HQ 데이터셋으로 학습됩니다.
+**실험 및 결과**: FVD/FID 점수에서 최대 2.3배의 상당한 향상을 보였고, 시간적 및 교차 카메라 샘슨 오류(cross-camera Sampson error)에서는 경쟁력 있는 수준을 유지했습니다. 제어 신호에 대한 충실도를 테스트하기 위해 생성된 비디오에서 3D Cuboid 및 차선 감지 모델의 성능을 측정했으며, Transfer1-7B-Sample-AV에 비해 최대 60%의 감지 지표 향상을 관찰했습니다.
+
+**6.4. 카메라 제어를 통한 멀티 뷰 생성**: [Cosmos-Predict2.5-2B/robot/multiview]는 참조 뷰의 비디오를 입력으로 받아 카메라 궤적에 따라 여러 목표 시점에서 추가 비디오를 합성하는 카메라 제어 가능한 멀티 뷰 세계 생성 모델입니다. 이는 로봇 조작 시뮬레이션과 같이 로봇이 직접 시야 밖의 객체를 추론해야 하는 로봇 공학에서 특히 유용합니다. Plücker Raymaps (Sitzmann et al., 2021)를 사용하여 카메라를 나타내고, 이를 비디오 잠재 공간에 통합합니다. Agibot, MultiCamVideo, SynCamVideo 데이터셋으로 학습되며, 머리 뷰(head-view) 로봇 조작 비디오를 입력으로 받아 좌우 그리퍼 시점에서 동기화된 비디오를 합성하거나(multiview-agibot), 제3자 뷰 비디오를 기반으로 기본 카메라 변환 하에 동기화된 비디오 2개를 생성합니다. [Cosmos-Predict2.5-2B/robot/multiview]는 단일 뷰 대응 모델보다 현저히 우수한 교차 뷰 일관성(cross-view consistency)을 달성하면서도 유사한 카메라 궤적 정확도를 유지합니다.
+
+**6.5. VLA 학습을 위한 합성 데이터 생성**: [Cosmos-Predict2.5]는 로봇 조작을 위한 플래너(planner) 및 시뮬레이터로서 잠재력이 큽니다. 자연어 명령어를 따르는 로봇의 실제 시연 대규모 비디오 데이터셋으로 후처리 학습된 [Cosmos-Predict2.5]는 보지 못한 명령어를 실행하는 로봇의 사실적인 비디오를 생성할 수 있습니다. 이 비디오에서 잠재 액션 모델(latent action model) 또는 역동역학 모델(inverse-dynamics model, IDM)을 사용하여 의사 액션 시퀀스(pseudo-action sequences)를 추출할 수 있습니다. 이를 통해 VLA (Vision-Language-Action) 학습을 위한 비전(생성된 비디오), 언어(명령어), 액션(생성된 의사 액션) 주석이 달린 샘플을 생성할 수 있습니다. [Cosmos-Predict2.5-14B/robot/gr00tdream-gr1]은 DreamGen 벤치마크 (Jang et al., 2025)에서 GR1 휴머노이드 로봇 데이터셋에 대해 가장 높은 명령어 추종 점수를 달성했습니다.
+
+**6.6. 액션 조건부 세계 생성**: [Cosmos-Predict2.5]를 순수 비디오 생성에서 액션 조건부 비디오 생성으로 확장하여 [Cosmos-Predict2.5-2B/robot/action-cond]를 개발했습니다. 이 모델은 단일 조건부 이미지와 로봇 액션 시퀀스를 입력으로 받아, 제공된 액션 시퀀스를 따르는 미래 프레임의 덩어리(chunk)를 생성합니다. 전체 궤적을 생성하기 위해, 각 덩어리는 마지막으로 생성된 프레임에 따라 예측되는 자동회귀(autoregressive) 방식으로 수행됩니다.
+
+---
+
+# Detail Review
+
+> 코스모스 비디오 기초 모델 기반의 세계 시뮬레이션: 심층 리뷰
+
+물리적 AI(Physical AI) 연구에서 세계 시뮬레이션은 매우 중요한 요소로, 실제 로봇이나 차량이 경험할 수 없는 다양한 환경과 상황을 학습 데이터로 제공해주는 역할을 합니다. 이를 위해 NVIDIA는 Cosmos라는 세계 기초 모델 (World Foundation Models) 플랫폼을 개발해왔습니다. Cosmos는 크게 세 가지 모델군(Cosmos-Predict, Cosmos-Transfer, Cosmos-Reason)으로 구성되며, **Cosmos-Predict**는 텍스트·이미지·동영상 입력으로 미래 시뮬레이션 비디오를 생성하고, **Cosmos-Transfer**는 시뮬레이션 장면을 현실감 있는 이미지/비디오로 변환하며, **Cosmos-Reason**는 물리적 추론을 돕는 모델입니다. 이번 심층 리뷰에서는 2025년 CoRL 학회에 소개된 논문『World Simulation with Video Foundation Models for Physical AI』를 중심으로, 특히 동영상 생성에 초점을 맞춘 Cosmos-Predict와 Cosmos-Transfer의 최신 버전(버전 2.5) 기여와 성능을 분석합니다.
+
+## 개요
+
+물리 기반 인공지능(Physical AI)에서 세계(World) 시뮬레이션은 대규모 학습을 위한 합성 데이터 생성을 가능하게 함으로써 핵심적인 역할을 한다. NVIDIA는 CoRL 2025에서 텍스트·이미지·비디오 입력으로부터 최대 30초 길이의 고품질 시뮬레이션 비디오를 생성하는 **Cosmos-Predict2.5**와, 공간정보(예: 깊이, 세그멘테이션, 에지 맵)를 바탕으로 사실적 데이터를 생성하는 **Cosmos-Transfer2.5**를 발표했다. Cosmos 시리즈는 물리 세계의 물체 움직임과 상호작용을 모델링하여 로봇 및 자율주행 같은 분야의 학습을 가속화할 수 있도록 설계되었다. 이러한 영상 기초 모델(Video Foundation Models, VFM)은 세계의 과거 프레임과 **조작 명령**(perturbation)을 입력으로 받아 미래 상태를 예측하는 능력을 갖춘다. 특히 Cosmos WFMs는 선행학습(pre-training)과 적응학습(post-training)을 통해 강력한 세계모델을 구축하며, *대규모 일반 데이터*로부터 물리 법칙을 학습하고(*pre-training*), 소수의 *특화된 데이터*로 세부 작업을 학습하는 구조이다.
+
+## 모델 아키텍처 분석
+
+**Cosmos-Predict2.5**는 세 개의 기존 WFM을 통합하여 복잡도를 줄이고, 기존보다 길고 다채로운 비디오 시뮬레이션을 생성한다. 특히 비디오 생성 방식에 **Flow-Matching** 기법을 도입한 것으로 알려져 있다. 전통적인 확산(Diffusion) 방식과 달리, 흐름-매칭은 연속적인 변환 함수를 학습하여 영상 노이즈를 제거하며 빠른 샘플링을 가능하게 한다. 이 모델은 *자유 형식의 텍스트*, *단일/다중 이미지*, *연속 비디오 프레임* 등을 입력으로 받아, 요구되는 미래 세계를 생성한다. 예를 들어, 텍스트 프롬프트로 현실적 장면을 만들거나, 비디오 입력과 결합한 지시문으로 로봇 조작 과정을 예측할 수 있다.
+
+Cosmos-Predict2.5는 **비디오 토크나이저(VAE)**로 알려진 WAN2.1 VAE(Visual AutoEncoder)를 이용해 영상 정보를 압축하여 연속(latent) 또는 이산(discrete) 토큰으로 변환한다. 대규모 영상 생성 모델들은 방대한 연산을 줄이기 위해 저차원 토큰 표현을 사용해야 하는데, 이를 위해 주의(attention) 기반 인코더-디코더 구조를 사용해 원본 프레임을 압축한다. WAN2.1 VAE는 이러한 영상 코덱 역할을 수행하여 비디오의 중요한 물리적 정보를 최대한 보존하면서 연산량을 줄인다.
+
+또한 Cosmos-Predict2.5는 **Cosmos-Reason1**과의 협업을 통해 추론 능력을 강화한다. Cosmos-Reason1은 물리 상식을 내장한 시각 언어 모델(VLM)으로, 영상 내 객체의 공간·시간적 관계와 물리 법칙을 이해하도록 설계되었다. 이 모델은 사전 학습된 세계모델이 생성한 잠재 세계에 대하여 “다음 동작은 무엇인가?”와 같은 질문에 연쇄추론(chain-of-thought) 방식으로 답할 수 있어, 물리적 제약을 고려한 시뮬레이션 생성에 기여한다. 예를 들어, 로봇 팔이 물체를 집어올리는 장면에서는 중력, 관성 등의 물리 상식을 바탕으로 자연스러운 동작 시퀀스를 생성하도록 돕는다. 요약하면, Cosmos-Predict2.5의 아키텍처는 **Flow-Matching 기반 영상 생성기**와 **WAN2.1 VAE 토크나이저**, **Cosmos-Reason1 지능**이 결합된 형태로, 텍스트·이미지·비디오 입력을 하나의 일관된 세계 시뮬레이션으로 변환하도록 구성된다.
+
+<center>
+<img src="../../images/2025-10-02-cosmos-predict-transfer-2-5/0.png" width="80%" />
+</center>
+
+
+## 훈련 전략
+
+Cosmos 모델은 **다단계(pre-training → 후속학습)** 전략으로 학습된다. 사전학습 단계에서는 약 20만 시간 분량의 영상 데이터에서 정적·동적 콘텐츠가 풍부한 부분을 선별해 약 1억 개의 비디오 클립(2~60초)을 구축하였다. 각 클립에는 영상 자막을 생성하기 위해 비주얼 언어 모델을 적용하였으며, H.264 GPU 가속 디코딩 등을 활용해 대규모 영상 데이터 파이프라인을 구현했다. 이로써 모델은 다양한 도메인의 물리적 장면 변화와 물체 운동을 포함한 일반화된 세계 지식을 습득한다. 사전학습 시에는 **Transformer 기반 확산 모델(diffusion)**과 **오토리그레시브(autogressive) 모델** 두 가지를 병행하여 사용한다. 이들은 연속(latent) 토큰과 이산 토큰 두 가지 표현을 각각 활용하며, 전자는 노이즈 제거 과정을 통해, 후자는 시계열 다음-프레임 예측을 통해 영상 시퀀스를 생성한다.
+
+이후에는 물리 AI 특정 과제에 맞춰 **지도학습 기반의 후속 학습(fine-tuning)**을 수행한다. 예를 들어, 카메라 시점 제어나 로봇 조작, 자율주행 등 도메인별 데이터(프롬프트-영상 쌍)를 이용해 사전학습된 모델을 미세조정한다. Cosmos-Reason1 학습에서도 마찬가지로, 먼저 대규모 범용 데이터를 통한 사전학습을 진행한 뒤, 물리 상식 및 임베디드(embedded) 행동 데이터를 이용해 사전지식(supervised fine-tuning)과 강화학습(reinforcement learning, RL) 단계를 수행한다. 실제로 Cosmos-Reason1 논문에서는 물리 상식 데이터로 지도학습(SFT)과 RL을 거친 후 모델 성능이 크게 향상됨을 보였으며, 유사한 접근으로 Cosmos-Predict2.5에서도 **negative-aware diffusion fine-tuning** 같은 온라인 강화학습 기법이 적용된 것으로 알려져 있다. 강화학습 단계에서는 생성된 시뮬레이션의 품질을 향상시키기 위해 보상함수(예: 현실성, 동작 일관성)를 정의하고, 이를 최적화하도록 모델을 조정한다. 이러한 다단계 학습 전략을 통해, Cosmos 모델은 일반 도메인 물리를 이해함과 동시에 특정 로봇·시뮬레이션 환경에 적합한 미세한 조정 능력을 갖추게 된다.
+
+<center>
+<img src="../../images/2025-10-02-cosmos-predict-transfer-2-5/00.png" width="100%" />
+</center>
+
+## 로봇 시뮬레이션 응용
+
+Cosmos 모델은 **Sim2Real(시뮬→실세계) 및 Real2Real(실세계 간) 전환** 작업에 강력히 활용된다. **Cosmos-Transfer2.5**는 Cosmos-Predict2.5 위에서 구동되는 조건부 확산 모델로, 심도(depth), 세그멘테이션, 에지 등 복수의 공간적 제어 입력을 받아 고품질 이미지를 생성한다. 예를 들어 시뮬레이션 환경의 깊이 맵과 세그멘테이션 맵을 입력하면, 이를 사실적 카메라 영상으로 변환하여 로봇 비전 학습에 활용할 수 있다. 이러한 구조적 변환을 통해 물리적 장면의 조명, 재질, 날씨 등을 변화시켜 데이터 다양성을 확장함으로써 정책(policy) 일반화 성능이 크게 개선된다. Cosmos-Transfer1 논문에서도 여러 공간 표현을 가중합으로 융합하는 *Adaptive Multi-ControlNets*를 도입하여, 자율주행 등의 도메인에서 시뮬레이터 데이터를 현실적으로 변환하고 일반화를 획기적으로 향상시킨 바 있다. Cosmos-Transfer2.5는 이전 모델에 비해 3.5배 가벼우면서도 고품질의 결과를 생성하며, 복수 뷰와 빠른 속도를 지원한다.
+
+로봇 정책 학습 측면에서는, **생성 비디오를 정책학습의 기반으로 활용**할 수 있다. 최근 연구에 따르면, 대규모 영상 생성 모델은 로봇의 시각-운동 정책 학습에 유용한 시뮬레이션 역할을 할 수 있다. 즉, 모델이 생성한 로봇 행동 영상은 정책으로 해석될 수 있으며, 이를 통해 적은 데이터로도 견고한 제어기를 학습할 수 있다. 예를 들어 “컵을 집으라”는 지시문을 받아 로봇 팔의 작업 과정을 생성하면, 행동 디코더를 통해 실제 로봇 제어 명령을 유도할 수 있다. 이는 시뮬레이션 데이터를 무작정 수집하는 것보다 훨씬 적은 데이터로도 학습 가능하며, **색상, 배경, 물체 형태 등의 변화에 잘 일반화되는** 특성을 보인다. 또한 Cosmos-Transfer2.5를 이용해 실제 로봇 실험 영상 간의 도메인 차이를 줄이는 *Real2Real* 변환도 가능하다. 예를 들어, 낮 시간 환경에서 학습된 정책을 비슷한 구조의 밤 시간 영상으로 변환하여 데이터 증강할 수 있다. 이러한 구조적 시각 변환(strutured visual transform)을 통한 다양성 증대는, 행동과 목표가 같더라도 환경 변화에 강건한 정책을 만드는 데 기여한다.
+
+<center>
+<img src="../../images/2025-10-02-cosmos-predict-transfer-2-5/000.png" width="80%" />
+</center>
+
+## 비교 평가 및 실험 결과
+
+NVIDIA는 Cosmos-Predict2.5/Transfer2.5의 성능을 기존 모델들과 비교 평가했다. 비공개 테스트 결과에 따르면, 새로운 모델은 이전 모델보다 더 길고 복잡한 장면을 자연스럽게 생성하며 연산 효율도 향상되었다고 한다. 인간 평가(Human Evaluation)에서도 긍정적인 결과가 보고되었다. 예컨대 Cosmos-Predict1 기반 모델의 실험에서, 비디오 예측 과제에 대해 공개된 VideoLDM 기반 모델 대비 전문가 평가에서 우수한 결과를 보인 바 있다. 이는 Cosmos 모델이 실제 인간의 물리 상식과 일치하는 시뮬레이션을 생성하는 데 성공했음을 시사한다. 또한, 비디오 생성 품질과 행동 정합도에 대한 평가에서 Cosmos 기반 모델이 높은 점수를 받았다고 알려져 있다.
+
+<center>
+<img src="../../images/2025-10-02-cosmos-predict-transfer-2-5/01.png" width="100%" />
+</center>
+
+정량적 성능 측정 지표로는 (가정) **PAI-Bench**와 같은 물리 AI 전용 벤치마크가 사용된다. 비록 세부 결과는 공개되지 않았으나, 언론 보도에 따르면 Cosmos-Transfer2.5는 동급의 **다른 모델 대비 3.5배 더 작은 모델 크기에도 불구하고 속도와 퀄리티 면에서 우수**하다고 한다. 이는 실제적인 시뮬레이션 도메인 전이 과제에서 학습 비용과 추론 시간을 크게 줄이면서도 품질 손실 없이 성능을 확보한 것임을 의미한다.
+
+## 결론
+
+세계 시뮬레이션을 다룬 **Cosmos-Predict2.5/Transfer2.5** 모델은 물리 기반 AI 연구에 중요한 진전을 가져왔다. 텍스트·이미지·비디오 등의 멀티모달 입력을 처리하고, 다루기 어려웠던 장기간 시뮬레이션을 생성함으로써, 다양한 로봇과 자율주행 시나리오에서 활용할 수 있는 합성 데이터를 제공한다. WAN2.1 VAE와 Cosmos-Reason1을 결합한 아키텍처는 물리적 일관성과 추론능력을 겸비하며, 복잡한 제어 태스크에도 대응할 수 있는 잠재력을 보여준다. 또한 Sim2Real/Real2Real 변환을 가능하게 하는 Cosmos-Transfer2.5는 로봇 학습에 필요한 데이터 격차를 좁히는 데 기여하며, 생성 모델이 정책 학습에도 응용될 수 있음을 실증했다.
+
+제한점으로는 거대 모델의 **학습 비용**과 **안정성** 문제가 남아 있다. 대규모 비디오 데이터 전처리 및 모델 학습은 계산 자원이 많이 필요하며, 모델이 생성한 시뮬레이션이 실제 물리와 얼마나 일치하는지는 여전히 전수 검증이 어렵다. 향후 연구에서는 효율적인 학습 방법, 강화학습과 모델체인의 결합, 그리고 인간-로봇 상호작용 데이터를 통한 지속적인 개선이 요구된다. 예를 들어 **Diffusion Negative-aware Fine-Tuning**과 같은 새로운 온라인 RL 기법과, 인간 평가에 기반한 보상 학습 등을 통해 생성 모델의 현실감을 높일 수 있을 것이다. 더불어, 다양한 실제 로봇 플랫폼에서의 광범위한 실험과 오픈 데이터셋 공개를 통해 모델의 일반화 범위를 검증하는 작업도 필요하다. 종합하면, Cosmos-Predict2.5와 Transfer2.5는 물리 AI 분야에서 세계모델 연구를 크게 앞당겼으며, 향후 로봇 시뮬레이션 및 제어 시스템 개발에 핵심 도구로 활용될 전망이다.
