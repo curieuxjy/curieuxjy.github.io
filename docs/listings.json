@@ -1,5 +1,58 @@
 [
   {
+    "listing": "/note.html",
+    "items": [
+      "/posts/note/2025-10-01-ros2-bag.html",
+      "/posts/note/2025-09-30-isaaclab-mjlab.html",
+      "/posts/note/2025-09-25-mujoco-vs-isaaclab.html",
+      "/posts/note/2025-08-25-simulators.html",
+      "/posts/note/2025-07-31-linux-cheetsheet.html",
+      "/posts/note/2025-07-08-git-lfs.html",
+      "/posts/note/2025-06-23-ros-errors.html",
+      "/posts/note/2025-03-30-gueltto-10th-end.html",
+      "/posts/note/2025-03-02-presentation-review.html",
+      "/posts/note/2025-01-13-ros2-build-issue.html",
+      "/posts/note/2025-01-07-ros2-cpp-python.html",
+      "/posts/note/2025-01-05-Goodbye-2024.html",
+      "/posts/note/2024-12-19-init-vs-call.html",
+      "/posts/note/2024-10-09-geultto-10th-start.html",
+      "/posts/note/2024-01-15-cs-study-001.html",
+      "/posts/note/2023-12-01-geultto-9th-start.html",
+      "/posts/note/2023-08-31-daily-english-010.html",
+      "/posts/note/2023-07-07-geultto-8th-end.html",
+      "/posts/note/2023-07-05-daily-english-009.html",
+      "/posts/note/2023-05-27-twinkle-github-star.html",
+      "/posts/note/2023-04-05-daily-english-008.html",
+      "/posts/note/2023-03-31-daily-english-007.html",
+      "/posts/note/2023-03-30-daily-english-006.html",
+      "/posts/note/2023-03-29-daily-english-005.html",
+      "/posts/note/2023-02-02-geultto-8th-start.html",
+      "/posts/note/2022-10-29-geultto-7th-end.html",
+      "/posts/note/2022-10-24-daily-english-004.html",
+      "/posts/note/2022-10-17-daily-english-003.html",
+      "/posts/note/2022-10-11-daily-english-002.html",
+      "/posts/note/2022-10-03-daily-english-001.html",
+      "/posts/note/2022-09-04-mid-retrospective.html",
+      "/posts/note/2022-05-06-geultto-7th-start.html",
+      "/posts/note/2021-01-31-ML-tu-berlin.html",
+      "/posts/note/2021-01-03-Goodbye-2020.html",
+      "/posts/note/2021-01-03-Hello-2021.html",
+      "/posts/note/2020-10-21-on-and-off-policy.html"
+    ]
+  },
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/posts/project/pick-gpt.html",
+      "/posts/project/quad_recovery.html",
+      "/posts/project/get_off_prediction.html",
+      "/posts/project/pulse_rl.html",
+      "/posts/project/active_learning.html",
+      "/posts/project/kompanion.html",
+      "/posts/project/traffic_signal_od.html"
+    ]
+  },
+  {
     "listing": "/post.html",
     "items": [
       "/posts/paper/2025-10-02-cosmos-predict-transfer-2-5.html",
@@ -201,59 +254,6 @@
       "/posts/code/2020-07-20-import-custom-module.html",
       "/posts/storage/2020-07-17-rl-study-roadmap.html",
       "/posts/code/2020-07-13-install-mujoco-win10.html"
-    ]
-  },
-  {
-    "listing": "/projects.html",
-    "items": [
-      "/posts/project/pick-gpt.html",
-      "/posts/project/quad_recovery.html",
-      "/posts/project/get_off_prediction.html",
-      "/posts/project/pulse_rl.html",
-      "/posts/project/active_learning.html",
-      "/posts/project/kompanion.html",
-      "/posts/project/traffic_signal_od.html"
-    ]
-  },
-  {
-    "listing": "/note.html",
-    "items": [
-      "/posts/note/2025-10-01-ros2-bag.html",
-      "/posts/note/2025-09-30-isaaclab-mjlab.html",
-      "/posts/note/2025-09-25-mujoco-vs-isaaclab.html",
-      "/posts/note/2025-08-25-simulators.html",
-      "/posts/note/2025-07-31-linux-cheetsheet.html",
-      "/posts/note/2025-07-08-git-lfs.html",
-      "/posts/note/2025-06-23-ros-errors.html",
-      "/posts/note/2025-03-30-gueltto-10th-end.html",
-      "/posts/note/2025-03-02-presentation-review.html",
-      "/posts/note/2025-01-13-ros2-build-issue.html",
-      "/posts/note/2025-01-07-ros2-cpp-python.html",
-      "/posts/note/2025-01-05-Goodbye-2024.html",
-      "/posts/note/2024-12-19-init-vs-call.html",
-      "/posts/note/2024-10-09-geultto-10th-start.html",
-      "/posts/note/2024-01-15-cs-study-001.html",
-      "/posts/note/2023-12-01-geultto-9th-start.html",
-      "/posts/note/2023-08-31-daily-english-010.html",
-      "/posts/note/2023-07-07-geultto-8th-end.html",
-      "/posts/note/2023-07-05-daily-english-009.html",
-      "/posts/note/2023-05-27-twinkle-github-star.html",
-      "/posts/note/2023-04-05-daily-english-008.html",
-      "/posts/note/2023-03-31-daily-english-007.html",
-      "/posts/note/2023-03-30-daily-english-006.html",
-      "/posts/note/2023-03-29-daily-english-005.html",
-      "/posts/note/2023-02-02-geultto-8th-start.html",
-      "/posts/note/2022-10-29-geultto-7th-end.html",
-      "/posts/note/2022-10-24-daily-english-004.html",
-      "/posts/note/2022-10-17-daily-english-003.html",
-      "/posts/note/2022-10-11-daily-english-002.html",
-      "/posts/note/2022-10-03-daily-english-001.html",
-      "/posts/note/2022-09-04-mid-retrospective.html",
-      "/posts/note/2022-05-06-geultto-7th-start.html",
-      "/posts/note/2021-01-31-ML-tu-berlin.html",
-      "/posts/note/2021-01-03-Goodbye-2020.html",
-      "/posts/note/2021-01-03-Hello-2021.html",
-      "/posts/note/2020-10-21-on-and-off-policy.html"
     ]
   }
 ]
