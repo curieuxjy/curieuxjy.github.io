@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-10">
+<meta name="description" content="Scaling Up Vision-based Tactile Robotics via High-performance GPU Simulation">
+
+<title>📃Taccel 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#서론-비전-기반-촉각-센서-시뮬레이션의-필요성과-도전과제" id="toc-서론-비전-기반-촉각-센서-시뮬레이션의-필요성과-도전과제" class="nav-link" data-scroll-target="#서론-비전-기반-촉각-센서-시뮬레이션의-필요성과-도전과제">서론: 비전 기반 촉각 센서 시뮬레이션의 필요성과 도전과제</a></li>
+  <li><a href="#장-taccel의-통합-ipc-기반-시뮬레이션-프레임워크" id="toc-장-taccel의-통합-ipc-기반-시뮬레이션-프레임워크" class="nav-link" data-scroll-target="#장-taccel의-통합-ipc-기반-시뮬레이션-프레임워크">3장: Taccel의 통합 IPC 기반 시뮬레이션 프레임워크</a></li>
+  <li><a href="#장-로봇-및-vbts-시뮬레이션-모듈의-설계" id="toc-장-로봇-및-vbts-시뮬레이션-모듈의-설계" class="nav-link" data-scroll-target="#장-로봇-및-vbts-시뮬레이션-모듈의-설계">4장: 로봇 및 VBTS 시뮬레이션 모듈의 설계</a></li>
+  <li><a href="#장-taccel의-성능-평가-및-분석" id="toc-장-taccel의-성능-평가-및-분석" class="nav-link" data-scroll-target="#장-taccel의-성능-평가-및-분석">5장: Taccel의 성능 평가 및 분석</a>
+  <ul class="collapse">
+  <li><a href="#기존-시뮬레이터와의-전반적인-비교" id="toc-기존-시뮬레이터와의-전반적인-비교" class="nav-link" data-scroll-target="#기존-시뮬레이터와의-전반적인-비교">5.1 기존 시뮬레이터와의 전반적인 비교</a></li>
+  <li><a href="#촉각-신호-시뮬레이션-품질-평가" id="toc-촉각-신호-시뮬레이션-품질-평가" class="nav-link" data-scroll-target="#촉각-신호-시뮬레이션-품질-평가">5.2 촉각 신호 시뮬레이션 품질 평가</a></li>
+  <li><a href="#마찰-및-전단-변형-정밀도-검증" id="toc-마찰-및-전단-변형-정밀도-검증" class="nav-link" data-scroll-target="#마찰-및-전단-변형-정밀도-검증">5.3 마찰 및 전단 변형 정밀도 검증</a></li>
+  <li><a href="#대규모-병렬-시뮬레이션-능력-평가" id="toc-대규모-병렬-시뮬레이션-능력-평가" class="nav-link" data-scroll-target="#대규모-병렬-시뮬레이션-능력-평가">5.4 대규모 병렬 시뮬레이션 능력 평가</a></li>
+  </ul></li>
+  <li><a href="#결론-및-기여-분석" id="toc-결론-및-기여-분석" class="nav-link" data-scroll-target="#결론-및-기여-분석">결론 및 기여 분석</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Taccel 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">tactile</div>
+    <div class="quarto-category">vision-based</div>
+    <div class="quarto-category">manipulation</div>
+    <div class="quarto-category">dexterous</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Scaling Up Vision-based Tactile Robotics via High-performance GPU Simulation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2504.12908">Paper Link</a></li>
+<li><a href="https://taccel-simulator.github.io/">Homepage</a></li>
+<li><a href="https://github.com/Taccel-Simulator/Taccel">Code Link</a></li>
+</ul>
+<ol type="1">
+<li>Taccel은 Vision-based Tactile Sensors(VBTS)를 장착한 로봇의 시뮬레이션 연구를 제한했던 기존 도구들의 비효율성과 부정확성을 해결하기 위해 개발된 고성능 시뮬레이션 플랫폼입니다.</li>
+<li>이 플랫폼은 Incremental Potential Contact(IPC)와 Affine Body Dynamics(ABD)를 통합하여 정확한 물리 시뮬레이션과 사실적인 촉각 신호 생성을 보장하며, 수천 개의 병렬 환경에서 실시간 대비 최대 18배 빠른 속도를 달성합니다.</li>
+<li>Taccel은 사용자 친화적인 API를 통해 유연한 로봇-센서 구성을 지원하며, 물체 인식, 로봇 그립, 관절형 물체 조작 등 다양한 작업에서 정밀한 시뮬레이션과 성공적인 sim-to-real 전이를 입증하여 촉각 로봇 연구를 가속화합니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-10-10-taccel/0.png" width="100%">
+</center>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>Taccel은 Vision-based Tactile Sensors(VBTSs)를 통합한 로봇 시스템을 위한 고성능 시뮬레이션 플랫폼입니다. 이 플랫폼은 VBTS의 복잡한 물리적 특성과 시각 신호 처리 요구 사항으로 인해 기존 시뮬레이션 도구들이 겪었던 효율성 및 정확성 문제를 해결하여, 촉각 로봇 연구의 규모와 범위를 확장하는 것을 목표로 합니다.</p>
+<p>Taccel은 Incremental Potential Contact (IPC)와 Affine Body Dynamics (ABD)를 통합하여 로봇, 촉각 센서 및 물체를 정확하고 전례 없는 속도로 모델링합니다. 특히 단일 H100 GPU에서 수천 개의 병렬 환경을 통해 실시간보다 18배 빠른 시뮬레이션 속도를 달성합니다. 기존 시뮬레이터들이 실시간보다 느리고 제한된 병렬화 기능을 가졌던 것과 달리, Taccel은 사용자 친화적인 API를 통해 유연한 로봇-센서 구성을 지원하면서도 정확한 물리 시뮬레이션과 사실적인 촉각 신호를 제공합니다.</p>
+<p>핵심 방법론은 다음과 같습니다. Taccel은 <strong>Unified IPC Simulation 프레임워크를 기반</strong>으로 합니다.</p>
+<ol type="1">
+<li><strong>Problem Formulation and Soft Body Dynamics:</strong> <span class="math inline">n_s</span>개의 사면체화된(tetrahedralized) Soft Body들은 <span class="math inline">N_s</span>개의 정점 <span class="math inline">x_1, x_2, \ldots, x_{N_s}</span>로 이산화됩니다. 시스템 상태는 <span class="math inline">x = [x_1^T, x_2^T, \ldots, x_{N_s}^T]^T \in \mathbb{R}^{3N_s}</span>로 표현되며, Lagrangian <span class="math inline">L(x, \dot{x}) = T(x, \dot{x}) - V(x)</span>를 따릅니다. 여기서 운동 에너지 <span class="math inline">T(x, \dot{x}) = \frac{1}{2} \dot{x}^T M \dot{x}</span>와 퍼텐셜 에너지 <span class="math inline">V(x)</span>는 초탄성 재료(Neo-Hookean constitutive model)의 탄성 에너지 <span class="math inline">\Phi(x)</span>와 외부 힘 <span class="math inline">E_{\text{ext}}(x)</span>로 구성됩니다.</li>
+<li><strong>Frictional Contact:</strong> Euler-Lagrange 방정식을 역방향 Euler 적분 스킴을 사용하여 시간에 따라 이산화함으로써 Incremental Potential(IP) 에너지 최소화 문제로 재구성합니다. <span class="math display">x^{n+1} = \arg \min_x E_{\text{IP}}(x)</span> <span class="math display">E_{\text{IP}}(x) = \frac{1}{2}(x - x^n - \Delta t \dot{x}^n)^T M(x - x^n - \Delta t \dot{x}^n) + \Delta t^2 V(x)</span> IPC는 교차 없는(intersection-free) 궤적을 보장하기 위해 접촉 원시 쌍 <span class="math inline">k</span> 사이의 거리 <span class="math inline">d_k(x)</span>가 0에 가까워질수록 발산하는 로그 배리어 함수 <span class="math inline">b(d_k(x))</span>를 목적 함수에 추가합니다. 또한, 마찰력(frictional forces)을 그라디언트를 통해 포착하는 근사 마찰 퍼텐셜 에너지 <span class="math inline">D_k(x, x^n)</span>를 도입합니다. 따라서 전체 시뮬레이션은 다음 IPC 에너지를 최소화합니다. <span class="math display">E_{\text{IPC}}(x) = E_{\text{IP}}(x) + \Delta t^2 B(x) + \Delta t^2 D(x, x^n)</span> 여기서 <span class="math inline">B(x) = \kappa \sum_{k \in \mathcal{B}} A_k b(d_k(x))</span>, <span class="math inline">D(x, x^n) = \sum_{k \in \mathcal{B}} D_k(x, x^n)</span>이며, <span class="math inline">\kappa &gt; 0</span>는 접촉 강성을 제어합니다.</li>
+<li><strong>ABD and Unified Simulation:</strong> <span class="math inline">n_a</span>개의 Affine Body에 대해, 임베딩 맵 <span class="math inline">\phi : \mathbb{R}^{12n_a} \to \mathbb{R}^{3N_a}</span>를 통해 Reduced Coordinate Space <span class="math inline">y \in \mathbb{R}^{12n_a}</span>를 도입하여 전체 공간 정점 <span class="math inline">\phi(y)</span>에 투영합니다. 각 Affine Body는 12개의 자유도(DoF)를 사용합니다. 운동 에너지 <span class="math inline">T(y, \dot{y})</span>는 <span class="math inline">\frac{1}{2} \dot{y}^T M_y \dot{y}</span>로 표현되며, <span class="math inline">M_y = J^T M J</span>는 Reduced-space Mass Matrix입니다. 퍼텐셜 에너지 <span class="math inline">V(y)</span>는 As-Rigid-As-Possible(ARAP) 항 <span class="math inline">\Phi_y(y)</span>와 외부 힘 <span class="math inline">E_{\text{ext}}(y)</span>를 포함합니다. 식 (2)와 결합하여 전체 시스템 상태 <span class="math inline">\{y; x\} \in \mathbb{R}^{12n_a + 3N_s}</span>에 대한 Unified IPC 에너지 <span class="math inline">E_{\text{IPC}}(y; x)</span>를 얻습니다. <span class="math display">E_{\text{IPC}}(y; x) = E_{\text{IP}}(x) + E_{\text{IP}}(y) + \Delta t^2 B(\phi(y); x) + \Delta t^2 D(\phi(y); x, \phi(y^n); x^n)</span> <span class="math display">E_{\text{IP}}(y) = \frac{1}{2}(y - y^n - \Delta t \dot{y}^n)^T M_y(y - y^n - \Delta t \dot{y}^n) + \Delta t^2 V(y)</span> 다음 타임스텝의 구성은 이 배리어 증강 IP를 최소화함으로써 결정됩니다. <span class="math display">y^{n+1}; x^{n+1} = \arg \min_{y;x} E_{\text{IPC}}(y; x)</span></li>
+<li><strong>Kinematic Constraints:</strong> 운동학적 제약 조건은 <span class="math inline">S_x x = s_x</span> (Soft Body) 및 <span class="math inline">S_y y = s_y</span> (Affine Body)로 표현됩니다. Augmented Lagrangian Method를 사용하여 <span class="math inline">E_{\text{IPC}}</span>를 확장함으로써 이러한 제약 조건을 적용합니다. <span class="math display">E_{\text{AL}}^{\text{IPC}}(y; x) = E_{\text{IPC}}(y; x) + \|(S_x x - s_x)^T \lambda_x\|_2^2 + \|(S_y y - s_y)^T \lambda_y\|_2^2</span></li>
+</ol>
+<p>Taccel은 IPC와 ABD의 결합을 통해 복잡한 비볼록(non-convex) 물체 간의 접촉을 안정적으로 처리하고, 부드러운 물체 간의 접촉에서 침투 없는(penetration-free) 상호작용을 유지하여 기존 시뮬레이터보다 우수한 물리적 정확도를 제공합니다. 또한, NVIDIA Warp를 사용한 효율적인 병렬화 구현으로 대규모 환경 시뮬레이션에서 높은 확장성을 보여줍니다.</p>
+<p>이 플랫폼은 객체 분류(object classification)를 위한 합성 데이터 생성, 다양한 로봇 핸드 구성에서의 로봇 파지(grasping) 시뮬레이션, 그리고 마이크로웨이브 오븐이나 서랍과 같은 관절형 객체 조작(articulated object manipulation)을 통해 그 유용성을 검증했습니다. 특히, 시뮬레이션에서 훈련된 모델이 실제 세계 데이터에 효과적으로 일반화되고, 실제 세계 조작 패턴과의 높은 일치도를 보여줌으로써 Sim-to-Real 전이 능력을 입증했습니다.</p>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>Taccel: 고성능 GPU 시뮬레이션으로 비전 기반 촉각 로보틱스를 확장하다</p>
+</blockquote>
+<section id="서론-비전-기반-촉각-센서-시뮬레이션의-필요성과-도전과제" class="level2">
+<h2 class="anchored" data-anchor-id="서론-비전-기반-촉각-센서-시뮬레이션의-필요성과-도전과제">서론: 비전 기반 촉각 센서 시뮬레이션의 필요성과 도전과제</h2>
+<p>비전 기반 촉각 센서(Vision-Based Tactile Sensor, VBTS)는 카메라로 젤 패드의 변형을 관찰하여 높은 해상도의 촉각 정보를 제공하는 센서로, GelSight 등 대표적인 예시가 있습니다. 이러한 VBTS는 저렴한 비용으로 세밀한 촉각 피드백을 제공하여 로봇 조작 연구에 큰 발전을 이끌었지만, <strong>복잡한 물리적 특성(예: 부드러운 젤의 비선형 탄성)과 영상 신호 처리 요구</strong> 때문에 로봇 시뮬레이션에 적용하기 매우 까다로운 문제가 있습니다. 실제로 <strong>VBTS를 장착한 로봇의 상호작용을 정확하고 효율적으로 모사할 시뮬레이터의 부재</strong>는, 촉각 로보틱스 연구의 규모와 범위를 제한해 온 핵심 요인입니다. 기존 연구들은 주로 두 가지 방향으로 접근해 왔으나(예: 센서 변형을 근사 모델로 단순화하거나, 물리 기반 모델을 사용하되 계산 효율을 포기) 여전히 <strong>정확도, 속도(실시간성), 병렬 확장성 면에서 한계를 드러냈습니다</strong>.</p>
+<p>이러한 한계를 극복하고자 등장한 것이 본 논문의 <strong>Taccel</strong> 시뮬레이터입니다. Taccel은 <strong>Incremental Potential Contact (IPC)</strong> 기반의 충돌 처리 기법과 <strong>Affine Body Dynamics (ABD)</strong> 기반 강체 모델을 <strong>하나의 통합 프레임워크로 결합한</strong> 고성능 물리 시뮬레이터로서, <strong>로봇, 촉각 센서, 그리고 환경 물체를 동시에 고정밀도로 그리고 전례 없는 속도로</strong> 모사합니다. 그림 1은 Taccel로 시뮬레이션한 예시로서, Allegro 로봇 손에 4개의 VBTS(GelSight류 센서)를 부착하여 마작 패를 정밀하게 집는 장면을 보여줍니다. 이 때 센서 젤 패드의 변형 맵을 통해 마작 패의 미세한 표면 기하가 정확히 포착되는 것을 볼 수 있습니다.</p>
+<p><strong>이상적인 VBTS 시뮬레이터</strong>가 갖추어야 할 요건으로는, 논문에서 강조했듯이 <strong>(1) 정밀한 물리 모델링</strong>, <strong>(2) 대규모 병렬 시뮬레이션이 가능한 확장성</strong>, <strong>(3) 다양한 로봇-센서 구성의 유연한 지원</strong>이 있습니다. 그러나 <strong>기존 솔루션들은 정밀도, 확장성 또는 유연성 면에서 하나 이상씩 타협</strong>하고 있었습니다. 예를 들어, 일부는 <strong>물리 정확도가 떨어지는 근사 충돌 모델</strong>이나 간단한 강체 모델에 의존하고, 일부는 <strong>실시간보다 느린 속도</strong>로만 동작하거나 <strong>병렬 환경 수가 극히 제한</strong>되며, 또 일부는 <strong>특정 센서/로봇 구성(예: 하나의 그리퍼)에만 집중</strong>하는 경향이 있었습니다. 이러한 제한으로 인해 촉각 로봇 연구의 <strong>범용성</strong>과 <strong>확장성</strong>이 심각하게 저해되어 왔습니다.</p>
+<p><strong>표 1</strong>은 대표적인 VBTS 시뮬레이터들을 Taccel과 종합적으로 비교한 것입니다. 각 시스템별로 <strong>연성 재료(Soft)</strong>를 어떻게 모델링하는지(예: 유한요소법 FEM 사용 여부), <strong>강체(Stiff)</strong> 물체는 어떻게 표현하는지(리지드 바디, 아핀 바디 등), <strong>접촉 처리 방식</strong>(가상 접촉, 페널티 기법, IPC 등), <strong>촉각 신호 생성 방법</strong>(이미지 룩업 테이블, 심층신경망 등), <strong>지원 로봇 범위</strong>(특정 그리퍼만 또는 임의의 로봇), 그리고 <strong>병렬 시뮬레이션 가능 환경 수 및 실시간 대비 속도</strong> 등을 정리하고 있습니다. 예를 들어 <strong>Taxim</strong> 시스템은 GelSight 촉각센서의 예제 기반 시뮬레이션으로, <strong>연성 재료를 직접 모델링하지 않고</strong> 센서 표면 변형-영상 매핑을 사전에 학습된 룩업 테이블로 대체하여 빠른 이미지만 생성합니다. 하지만 이러한 방식은 <strong>물리적 정확도가 낮고</strong> 일반적인 물체-센서 상호작용을 포괄하지 못하며, <strong>로봇과의 결합도 제한적</strong>입니다 (하나의 센서만 고려). <strong>DiffTactile</strong> 시뮬레이터는 물리 기반으로 FEM에 기반한 센서 변형과 MPM/입자 기반의 강체 모델을 사용하고, 심층신경망으로 촉각 이미지를 생성하는 <strong>차별화 가능한 시뮬레이터</strong>입니다. 그러나 <strong>접촉을 penalty 기반으로 처리</strong>하기 때문에 미세한 접촉 정밀도가 떨어질 수 있고, 병렬 확장이나 다양한 로봇 구성 지원이 미흡합니다. <strong>SAPIEN-IPC</strong>는 최신 연구로서 FEM 센서 모델과 ABD 강체 모델, 그리고 IPC 충돌처리를 결합한 시뮬레이터이며 실제 로봇 학습에 활용된 예가 있지만, <strong>촉각 이미지를 직접 생성하는 기능이 없고</strong>(주로 마커 움직임만 활용) 지원 로봇도 단순 그리퍼에 국한되었습니다. 또한 SAPIEN-IPC의 경우 <strong>1080 GPU 기준 최대 256개의 환경만 병렬 구동, 실시간의 0.8배 속도 정도</strong>로만 동작하는 등 성능 면에서도 제약이 있었습니다.</p>
+<p>이에 비해 <strong>Taccel</strong>은 <strong>연성 재질을 고해상도로 FEM 모델링</strong>하고 <strong>강체는 ABD로 효율적으로 표현</strong>하면서, <strong>IPC 기반의 정확한 충돌/마찰 계산</strong>, <strong>DNN 기반의 사실적인 촉각 이미지 생성</strong>, <strong>어떤 형태의 로봇-센서 구성도 수용하는 범용성</strong>을 모두 갖춘 <strong>균형 잡힌 솔루션</strong>입니다. 특히 한 개 GPU 상에서 <strong>최대 4096개의 환경을 병렬로 915 FPS 속도로 시뮬레이션</strong>하여, 단일 환경 기준 <strong>실시간의 18배</strong> 속도를 달성한 결과는 타 시뮬레이터와 차별되는 놀라운 확장성입니다. 아래에서는 Taccel이 이러한 성능을 가능하게 한 <strong>핵심 방법론(3장, 4장)</strong>과, <strong>이를 입증하는 성능 평가(5장)</strong>에 대하여 심층적으로 분석합니다.</p>
+</section>
+<section id="장-taccel의-통합-ipc-기반-시뮬레이션-프레임워크" class="level2">
+<h2 class="anchored" data-anchor-id="장-taccel의-통합-ipc-기반-시뮬레이션-프레임워크">3장: Taccel의 통합 IPC 기반 시뮬레이션 프레임워크</h2>
+<p><strong>3장 “Unified IPC Simulation in Taccel”</strong>에서는 Taccel의 물리 시뮬레이션 엔진의 수학적 기초와 설계 원리를 다루고 있습니다. Taccel의 핵심은 <strong>연성 물체 시뮬레이션을 위한 IPC (Incremental Potential Contact) 기법</strong>과 <strong>강성/준강성 물체 시뮬레이션을 위한 ABD (Affine Body Dynamics)</strong> 기법을 <strong>하나의 최적화 문제</strong>로 통합했다는 점입니다. 이를 통해 <strong>젤 패드 같은 변형체와 로봇 링크 같은 강체를 동일한 시뮬레이션 틀 내에서 상호작용</strong>시킬 수 있으며, 접촉 계산에 있어 <strong>충돌이나 관통이 없는 안정적 해법</strong>을 보장받으면서도 계산 효율을 높였습니다.</p>
+<p><strong>3.1절 (Problem Formulation and Soft Body Dynamics)</strong>에서는 연성체(soft body)인 촉각 센서 젤 패드를 어떻게 모델링하는지 제시합니다. 젤 패드는 유한요소법(FEM)을 통해 <strong>사면체(mesh) 형태로 이산화</strong>되며, 각 노드(vertex)의 위치로 상태가 표현됩니다. 시스템의 라그랑지안(Lagrangian)은 운동 에너지와 퍼텐셜 에너지의 차로 주어지며, <strong>네오후크(Neo-Hookean) 모델</strong>을 사용한 탄성 변형 에너지 <span class="math inline">\Phi(x)</span>와 외력에 의한 퍼텐셜을 포함합니다. 이는 젤 패드의 <strong>비선형 탄성 거동</strong>(Young 모듈러스 <span class="math inline">E</span>와 Poisson 비 <span class="math inline">ν</span>로 특성화)을 포착하기 위함입니다.</p>
+<p><strong>3.2절 (Frictional Contact)</strong>에서는 IPC 접근법의 핵심이 되는 <strong>증분적 잠재 에너지 최소화 문제</strong>를 소개합니다. 시간 적분은 후향 오일러(backward Euler) 방식으로 이루어지며, 한 스텝에서 다음 스텝의 상태 <span class="math inline">x_{n+1}</span>는 현재 상태 <span class="math inline">x_n</span>에서의 운동량과 퍼텐셜을 고려한 <strong>증분 퍼텐셜 에너지</strong> <span class="math inline">E_{\text{IP}}</span>를 최소화하여 구합니다. 이 <span class="math inline">E_{\text{IP}}</span>에는 관성(질량 행렬 <span class="math inline">M</span>) 항과 변형 에너지 <span class="math inline">\Phi(x)</span> 항이 포함되어 있습니다. IPC의 혁신은 여기에 <strong>충돌 및 마찰을 에너지 항으로 추가</strong>하여, 해를 구할 때 <strong>객체들이 관통되지 않도록</strong> 제약을 거는 점입니다. 구체적으로, 접촉 쌍 사이 거리가 0에 가까워지면 발산하는 <strong>로그 배리어(log barrier) 함수</strong> <span class="math inline">b(d_k(x))</span>들을 에너지에 포함하여 <strong>기하학적 관통을 원천 차단</strong>합니다. 또한 마찰력에 해당하는 <strong>마찰 퍼텐셜 <span class="math inline">D_k(x, x_n)</span></strong>을 정의하고 그 그래디언트를 마찰력으로 간주함으로써, 마찰 역시 에너지 최소화 과정에 포함시킵니다. 이렇게 하면 <strong>접촉과 마찰 문제를 미분가능한 에너지 최적화 문제</strong>로 변환하여 다룰 수 있고, 그 결과 해법은 <strong>준강체간 및 연성체-강체간 충돌에서 교차나 미끄러짐이 없는 안정적</strong>인 것이 됩니다. IPC는 이러한 물리적 정확도를 추구하면서도, 기존의 페널티 기법처럼 힘을 임의 조정하며 penetration을 허용하는 접근과 달리 <strong>수학적으로 일관된 최적화 문제</strong>로 정의되기에 <strong>해의 존재와 안정성</strong> 측면에서 장점이 있습니다.</p>
+<p><strong>3.3절 (ABD and Unified Simulation)</strong>에서는 ABD(Affine Body Dynamics) 모델을 도입하고, 이를 IPC 기반 연성체 시뮬레이션과 <strong>통합하는 방법</strong>을 설명합니다. ABD는 강체를 완전히 변형 불가능한 리지드 바디로 취급하는 대신, <strong>아핀 변형을 허용하는 12자유도 표현</strong>으로 모델링하는 기법입니다. 각 강체는 3자유도 병진 운동 + 9자유도 선형 변형(3x3 행렬)을 갖는 아핀 좌표 <span class="math inline">y</span>로 표현되며, 이 아핀 변환이 적용된 강체의 표면 메쉬(vertex 전체)를 사상하는 매핑 <span class="math inline">\phi(y)</span>가 정의됩니다. ABD의 핵심은 <strong>As-Rigid-As-Possible (ARAP)</strong> 제약을 통해 <strong>실제로는 거의 강체처럼 거동</strong>하도록 하면서도, 충돌해결에 유리한 약간의 변형 가능성을 부여하는 것입니다. 예컨대 두 단단한 물체가 충돌할 때, 완전 강체 모델에서는 미세한 <strong>타임스텝 제약이나 복잡한 지속적 충돌 감지(continuous collision detection)</strong>가 필요하지만, ABD 모델에서는 <strong>약간의 변형 여유</strong>가 있어 효과적으로 충돌 반응을 계산할 수 있습니다. Taccel에서는 강체(로봇 링크나 경성 물체)를 ABD로 표현함으로써, <strong>강체-연성체 간, 강체-강체 간 충돌을 효율적으로 다루면서도 정확도를 유지</strong>합니다. ABD의 운동 방정식은 연성체 경우와 유사하게 라그랑지안으로부터 유도되며, <strong>아핀 좌표계 상의 질량 행렬</strong> <span class="math inline">M_y = J^\top M J</span> (<span class="math inline">J</span>는 매핑 <span class="math inline">\phi</span>의 자코비안) 등을 정의하여 IP 에너지 형태로 정식화됩니다.</p>
+<p>위와 같이 정의된 <strong>연성체의 증분 퍼텐셜 에너지</strong> <span class="math inline">E_{\text{IP}}(x)</span>와 <strong>강체(아핀체)의 증분 퍼텐셜 에너지</strong> <span class="math inline">E_{\text{IP}}(y)</span>를 합치고, 거기에 <strong>공통의 배리어 충돌 에너지 <span class="math inline">B(\phi(y); x)</span></strong>와 <strong>마찰 에너지 <span class="math inline">D(\phi(y); x)</span></strong>를 추가하면, <strong>연성 노드 좌표 <span class="math inline">x</span>와 강체 아핀 좌표 <span class="math inline">y</span>를 모두 미지수로 갖는 통합 에너지</strong> <span class="math inline">E_{\text{IPC}}(y; x)</span>를 얻을 수 있습니다. 이 식 (식 (4))이 바로 Taccel 통합 시뮬레이션의 에너지 함수이며, <strong>시스템의 다음 시뮬레이션 상태 <span class="math inline">(y_{n+1}; x_{n+1})</span>는 이 <span class="math inline">E_{\text{IPC}}</span>를 최소화함으로써 결정</strong>됩니다. 요약하면, Taccel의 한 스텝 시뮬레이션은 <strong>“연성체 + 아핀 강체 + 충돌/마찰”</strong>로 구성된 거대한 에너지 최적화 문제를 푸는 것으로 이해할 수 있습니다. 이는 계산적으로는 어려운 문제이지만 NVIDIA GPU 상의 병렬 연산(Warp 프레임워크)을 활용하여 해를 빠르게 찾도록 구현되었습니다.</p>
+<p><strong>3.4절 (Kinematic Constraints)</strong>에서는 로봇 관절 등의 <strong>운동학적 제약을 이 에너지 최소화 문제에 통합</strong>하는 방법을 다룹니다. 로봇의 관절은 링크 간의 상대적 위치 제약으로 표현되며, 예컨대 <strong>“센서 젤 패드의 특정 노드들은 센서 하우징에 고정된다”</strong> 또는 <strong>“로봇 팔 링크들은 관절 값에 따라 서로 상대 변환 관계를 가진다”</strong>와 같은 조건들입니다. 이러한 <strong>선형 등식 제약</strong> <span class="math inline">S_x x = s_x,; S_y y = s_y</span>를 만족시키기 위해, Taccel은 <strong>Augmented Lagrangian(확장 라그랑지안) 방법</strong>을 사용합니다. 즉, 위에서 정의한 <span class="math inline">E_{\text{IPC}}(y;x)</span>에 페널티 항으로 <span class="math inline">\frac{\rho}{2}|S_x x - s_x|^2 + \frac{\rho}{2}|S_y y - s_y|^2</span> (및 라그랑주 승수 항)을 추가한 <span class="math inline">E_{\text{AL-IPC}}</span>를 최소화함으로써, 제약을 만족하는 최적해를 얻습니다. 이 방식은 <strong>제약 조건을 엄밀히 만족</strong>시키면서도 IPC 최적화에 큰 무리 없이 통합되며, 결과적으로 <strong>로봇 관절 움직임이나 센서 부착</strong> 등을 자연스럽게 시뮬레이션 내에 녹여낼 수 있습니다.</p>
+<p>정리하면, Taccel의 통합 물리 시뮬레이션 엔진은 <strong>연성체(FEM 기반 젤 패드)와 준강체(ABD 기반 로봇/물체)를 하나의 물리 시스템으로 묶고, IPC 알고리즘을 통해 충돌과 마찰까지 동시에 해결</strong>하는 혁신적인 구조입니다. 이를 통해 <strong>시뮬레이션 중 어떤 접촉 상황에서도 겹침이나 관통이 없이 정확한 상호작용</strong>이 이루어지며, 또한 <strong>연성체-강체 간의 복잡한 충돌</strong>(예: 손가락의 딱딱한 부분과 부드러운 젤 패드 사이의 접촉)도 <strong>안정적으로 계산</strong>됩니다. 이러한 견고한 물리 모델이 Taccel의 높은 정확성의 기반을 이루며, 다음 장에서는 이를 활용하여 <strong>로봇과 촉각 센서를 실제로 어떻게 시뮬레이트</strong>하는지 살펴봅니다.</p>
+</section>
+<section id="장-로봇-및-vbts-시뮬레이션-모듈의-설계" class="level2">
+<h2 class="anchored" data-anchor-id="장-로봇-및-vbts-시뮬레이션-모듈의-설계">4장: 로봇 및 VBTS 시뮬레이션 모듈의 설계</h2>
+<p><strong>4장 “Robot and VBTS Simulation in Taccel”</strong>에서는 앞서 확립된 통합 물리엔진을 기반으로 <strong>구체적인 로봇과 촉각센서 시뮬레이션을 구현하는 구조와 신호 생성 방법</strong>을 설명합니다. Taccel은 <strong>모듈화된 설계</strong>를 채택하여, 로봇 부분과 센서 부분을 분리된 컴포넌트로 구성하면서도 물리 엔진 상에서 밀접히 상호작용하도록 합니다. 이를 통해 <strong>아핀 동역학(강체 모델)</strong>과 <strong>연성체 동역학(젤 패드 모델)</strong>의 <strong>상호 보완적 장점</strong>을 십분 활용하고자 한 것입니다.</p>
+<p><strong>4.1절 (Robot and Sensor Simulation)</strong>에서는 로봇과 VBTS를 시뮬레이션하는 구체적인 방법을 다룹니다. 먼저 <strong>로봇 모델링</strong> 측면에서, Taccel은 <strong>표준 URDF (Unified Robot Description Format)</strong> 파일로부터 로봇의 구성 정보를 불러옵니다. URDF에는 로봇의 링크들과 관절 구조, 그리고 각 링크에 대응하는 <strong>시각/충돌 메쉬</strong>가 정의되어 있는데, Taccel은 이 중 <strong>충돌 메쉬를 ABD 기반 아핀 바디로 로딩</strong>합니다. 즉, 로봇의 각 링크는 12자유도의 아핀체로 시뮬레이터에 등록되고, URDF에 명시된 링크 간 접속구조(관절 종류와 한계 등)에 따라 앞서 설명한 <strong>운동학적 제약</strong>이 설정됩니다. 로봇의 초기 자세를 주어지면 <strong>전향 운동학</strong>으로 모든 링크의 세계 좌표계 변환 <span class="math inline">T^r_{l_j}(q)</span>가 계산되고, 이를 각 링크 아핀 바디의 초기 상태로 삼습니다. 덧붙여, 시뮬레이션상의 가시화를 위해 시각 메쉬(Visual mesh)도 불러오지만 이는 물리 계산에는 영향이 없습니다.</p>
+<p>다음으로 <strong>촉각 센서(VBTS) 모델링</strong>에 대해서, Taccel은 <strong>각 촉각센서의 젤 패드를 하나의 연성체 소자로 모델링</strong>합니다. 보통 GelSight 계열 센서는 얇은 탄성 젤 표면에 무늬가 그려지거나 도트 마커가 박혀 있고, 뒷면에는 카메라와 조명이 있는 구조입니다. Taccel에서는 이 <strong>젤 패드(탄성체 부분)를 사면체 메쉬의 연성체(FEM)로 표현</strong>하고, 이를 해당 센서가 부착된 로봇 링크의 표면에 <strong>부모-자식 관계</strong>로 붙입니다. 예컨대, 로봇 손가락 끝에 VBTS가 달린 경우, 손가락 링크는 ABD 바디로 움직이고 그 말단에 연결된 젤 패드는 연성체로서 따라다니며 변형됩니다. 이를 위해 각 센서 <span class="math inline">i</span>의 젤 패드 <span class="math inline">G_i</span>에 대해, 그 <strong>부착된 링크 <span class="math inline">l_j</span>와의 좌표 변환</strong> <span class="math inline">T^{l_j}_{G_i}</span>를 기록해두고 시뮬레이션 시 적용합니다.</p>
+<p>젤 패드의 표면은 크게 두 부분으로 나뉩니다: 카메라로 관찰하기 위해 <strong>반사 코팅된 부분</strong>(<span class="math inline">B^+_G</span>)과, 센서 하우징에 <strong>접착되어 고정된 가장자리 부분</strong>(<span class="math inline">B^-_G</span>)입니다. 시뮬레이션 초기에는 <span class="math inline">B^-_G</span>에 속한 노드들은 링크에 붙여 고정(운동학적 제약으로 구현)되고, <span class="math inline">B^+_G</span> 부분은 평평한 초기 상태입니다. <strong>접촉 상호작용이 발생하면 젤 패드가 변형되어 <span class="math inline">B^+_G</span> 표면이 <span class="math inline">B^+_G\tilde{}</span>로 변화</strong>하고, 표면에 박혀있던 마커들이 새로운 위치 <span class="math inline">P_i\tilde{}</span>로 이동하게 됩니다. 이러한 <strong>변형된 표면 형상과 마커 위치가 바로 촉각 신호 생성의 기초 자료</strong>가 됩니다. 다시 말해, Taccel의 물리 엔진은 <strong>“로봇 링크(강체) – 젤 패드(연성체) – 환경 물체”</strong> 사이의 힘과 변형을 계산하여 <strong>젤 표면의 변형 결과</strong>를 내놓고, 다음 단계에서는 이 결과를 가지고 가상의 <strong>카메라 신호</strong>를 만들어내는 구조입니다.</p>
+<p>시뮬레이션 중 <strong>로봇의 동작 제어</strong>는 어떻게 구현되었을까요? Taccel은 로봇의 관절 제어를 물리 시뮬레이션에 자연스럽게 녹이기 위해, <strong>관절 목표값을 운동학적 제약으로 변환</strong>하는 방식을 취합니다. 예를 들어 로봇 관절각 또는 손가락의 목표 포즈가 주어지면, 해당 링크들의 <strong>목표 아핀 변환 상태</strong>와 젤 패드 부착 노드들의 <strong>목표 위치</strong>를 계산합니다. 이들을 <span class="math inline">s_y, s_x</span> 형태로 두고 제약식 <span class="math inline">S_y y = s_y</span>, <span class="math inline">S_x x = s_x</span>로 설정하면, 물리 엔진의 에너지 최적화는 자동으로 그 <strong>목표 상태를 만족시키는 범위 내에서 최소 에너지 해</strong>를 찾게 됩니다. 즉, <strong>로봇 관절 운동은 강체 아핀 바디의 제약으로, 센서 패드의 부착면 움직임은 연성 노드의 제약으로 각각 반영</strong>되어, 사용자가 별도로 복잡한 제어 코드를 짤 필요 없이 Taccel 엔진이 알아서 관절 움직임 대로 시스템을 이끌어갑니다. 이러한 구조는 특히 다수의 센서를 장착한 복잡한 로봇(hand 같은)에 유리한데, <strong>연성 센서들이 로봇 움직임에 따라 정확히 따라오면서도 외부 물체와 힘을 주고받는 상호작용을 정확히 계산</strong>해낼 수 있기 때문입니다.</p>
+<p><strong>4.2절 (Tactile Signal Simulation in Taccel)</strong>에서는 물리 엔진으로부터 얻은 젤 패드 변형 결과를 어떻게 <strong>다양한 형태의 촉각 신호 출력</strong>으로 변환하는지 설명합니다. 이는 곧 <strong>시뮬레이터가 사용자에게 제공하는 관측값(observation)</strong>에 해당하며, 로봇 학습이나 알고리즘 개발에 직접 쓰입니다. Taccel은 <strong>고해상도 RGB 이미지</strong>, <strong>깊이 맵(depth map)</strong>, <strong>마커 위치 기반 저해상도 신호</strong>, <strong>3차원 점군(point cloud)</strong> 등 <strong>다양한 출력 모드를 지원</strong>합니다.</p>
+<p>먼저, <strong>고해상도 촉각 이미지와 깊이 맵 생성</strong> 방식입니다. 젤 패드 표면의 반사 코팅 영역 <span class="math inline">B^+*G</span>의 <strong>변형 후 표면 기하 정보를 이용해 깊이 맵과 법선 맵</strong> <span class="math inline">d(u,v), n(u,v)</span>를 계산합니다. 여기서 <span class="math inline">u,v</span>는 가상의 카메라 영상의 화소 좌표에 대응하며, <span class="math inline">d(u,v)</span>는 변형된 표면이 평탄했던 초기 상태에서 얼마나 들어왔는지를, <span class="math inline">n(u,v)</span>는 변형 후 표면의 법선 방향을 의미합니다. 이렇게 얻은 깊이/법선 정보만으로는 실제 GelSight 이미지 같은 <strong>복잡한 광학 패턴</strong>을 재현하기 어렵기 때문에, <strong>심층 신경망(DNN)을 이용한 이미지 생성 기법</strong>을 적용합니다. 논문에서는 Si 등의 방법을 따라, <strong>픽셀 단위의 2D 위치 인코딩 <span class="math inline">\gamma(u,v)</span>와 깊이/법선 정보 <span class="math inline">(d(u,v), n(u,v))</span>를 입력으로 받아 해당 픽셀의 색상 변화 <span class="math inline">\Delta\sigma(u,v)</span>를 출력하는 신경망 <span class="math inline">f*\theta</span></strong>를 사용했습니다. 이 신경망은 <strong>젤 패드가 변형되지 않은 기준 이미지</strong>를 참조로 하여, 변형에 의한 픽셀 색 변화만 예측합니다. 200장의 실제 촉각 이미지와 그에 대응하는 깊이 맵 데이터로 학습된 이 네트워크를 거치면, <strong>실제 센서가 보여줄 법한 RGB 촉각 영상</strong>이 생성됩니다. 결과적으로 Taccel은 <strong>물리 기반 시뮬레이션의 정확성을 유지하면서도, 시각적으로 현실감 있는 센서 영상을 출력</strong>할 수 있게 됩니다. 이는 기존에 룩업 테이블로 근사하거나 아예 RGB 생성을 지원하지 않던 시뮬레이터들과 달리, <strong>학습 기반 기법을 접목하여 구현한 현실성</strong>입니다.</p>
+<p>다음으로, <strong>저해상도 촉각 신호</strong>로 <strong>마커(marker) 위치 추적</strong>을 제공합니다. 센서 표면 <span class="math inline">B^+_G</span> 코팅 내에는 다수의 점(markers)이 박혀 있다고 가정하며, 이들의 초기 위치 <span class="math inline">p_k</span> (메쉬의 삼각형 내부 좌표로 표현)를 저장해 둡니다. 시뮬레이션 중 변형 후 각 마커의 3D 위치 <span class="math inline">\tilde{p}_k(t)</span>를 계산하고, 이를 2D 이미지 평면에 <strong>투영하여 마커의 이동 궤적(flow)</strong>을 얻을 수 있습니다. 마커들은 매우 작은 패턴이어서 RGB 이미지 상에서는 일종의 <strong>특징점 움직임</strong>처럼 나타나므로, <strong>국부 변형 양상을 추적</strong>하는 데 유용합니다. 이 marker 기반 신호는 고해상도 이미지를 직접 다루기에는 부담스러운 경우 (예: 강화학습의 상태로 쓰거나, 저차원 피처로 활용하고 싶을 때) 적합하며, 실제로 <strong>GelSight 등의 출력에서 특징점을 추적</strong>하는 방식과 유사합니다. Taccel은 이러한 마커 흐름을 통해 <strong>젤 패드의 국부 변형, 미끄러짐, 접촉점 이동</strong> 등을 간편하게 감지할 수 있도록 합니다.</p>
+<p>마지막으로, <strong>3차원 촉각 신호</strong> 출력도 지원됩니다. 변형 후 젤 패드 표면의 깊이 맵이나, 혹은 아까 구한 마커들의 3D 위치 정보를 <strong>월드 좌표계의 점군(point cloud)</strong> 형태로 변환할 수 있습니다. 로봇의 손끝이 센서를 누르는 상황이라면, 센서 표면의 변형된 3D 형상이 곧 접촉한 물체의 형태를 “조각난” 점구름으로 나타낼 것이고, 이를 활용해 로봇이 주변 환경의 기하학을 추론할 수도 있습니다. 논문에서는 이 3D 촉각 신호의 효과를 Tac-Man 프레임워크 시뮬레이션에서 보여주었다고 언급하는데, 이는 <strong>3D 접촉점 정보를 활용한 가전제품 다이얼 조작</strong> 등의 작업을 의미합니다. 요컨대, Taccel은 <strong>2D 이미지부터 저차원 특징, 3D 정보까지 다양한 촉각센서 출력 형태를 모두 시뮬레이션</strong>해낼 수 있어, 연구자가 목적에 맞게 적절한 형태의 데이터를 얻을 수 있게 합니다.</p>
+<p><strong>4.3절</strong>에서는 Taccel의 <strong>소프트웨어 API 설계와 사용성</strong>에 대해 간략히 언급됩니다. Taccel은 연구자들이 쉽게 활용할 수 있도록 <strong>Python 기반의 직관적인 API</strong>를 제공하며, 내부적으로는 <strong>NVIDIA Warp</strong>를 이용해 GPU 가속을 극대화했습니다. 사용자는 URDF로 로봇을 불러와 센서를 장착하고, 몇 줄의 코드로 시뮬레이션을 실행하며, 각 스텝에서 위에서 언급한 다양한 촉각 신호 (이미지, 깊이맵, 마커좌표 등)를 받아볼 수 있습니다. 이러한 <strong>높은 수준의 추상화와 사용 편의성</strong>은 Taccel의 <strong>유연성(flexibility)</strong>을 높여주는 요소로, 단순 그리퍼부터 복잡한 다지 손까지 <strong>어떤 로봇 플랫폼에도 센서를 손쉽게 붙여 대규모 시뮬레이션</strong>을 수행할 수 있게 합니다. 실제로 논문에서는 <strong>마작 패 촉각인식 예제(그림 1)</strong>나 <strong>Tac-Man 마이크로파 조작 시나리오</strong> 등 다양한 구성을 데모로 보였는데, 이는 곧 Taccel이 <strong>범용적인 촉각 로봇 시뮬레이션 플랫폼</strong>으로 설계되었음을 보여줍니다.</p>
+</section>
+<section id="장-taccel의-성능-평가-및-분석" class="level2">
+<h2 class="anchored" data-anchor-id="장-taccel의-성능-평가-및-분석">5장: Taccel의 성능 평가 및 분석</h2>
+<p><strong>5장 “Performance Evaluation of Taccel”</strong>에서는 앞서 제시된 Taccel의 설계가 <strong>정확도</strong>와 <strong>효율성</strong> 측면에서 얼마나 성과를 내는지를, <strong>여러 벤치마크 실험을 통해 정량적・정성적으로 평가</strong>합니다. 평가 항목은 <strong>(5.1) 전반적 비교</strong>, <strong>(5.2) 촉각 신호의 충실도</strong>, <strong>(5.3) 마찰 및 전단 변형 정확도</strong>, <strong>(5.4) 다중 환경 병렬 시뮬레이션 성능</strong>으로 구성되어 있습니다. 핵심 결과를 하나씩 요약하면 다음과 같습니다.</p>
+<section id="기존-시뮬레이터와의-전반적인-비교" class="level3">
+<h3 class="anchored" data-anchor-id="기존-시뮬레이터와의-전반적인-비교">5.1 기존 시뮬레이터와의 전반적인 비교</h3>
+<p>논문에서는 <strong>네 가지 도전적인 시나리오</strong>를 통해 Taccel과 기존 접근법들의 성능을 비교했습니다. <strong>그림 2</strong>에 그 결과들이 시각화되어 있는데, 각각 (a) 볼트-너트 결합, (b) 부드러운 블록 프레스, (c) 촉각 피드백을 활용한 관절 달린 물체 조작, (d) 페그 인서션 병렬 시뮬레이션의 네 부분으로 구성되어 있습니다.</p>
+<ul>
+<li><p><strong>(a) 볼트-너트 조립 시나리오</strong>: 작은 너트에 볼트를 회전 삽입하는 동작으로, <strong>오브젝트들이 모두 비볼록(non-convex) 형상</strong>이라 충돌 검출과 접촉 계산이 매우 까다롭습니다. 이 경우 Taccel은 <strong>안정적으로 너트와 볼트의 접촉을 처리하며 조립 동작을 시뮬레이션</strong>한 반면, <strong>PyBullet, SAPIEN 등 기존 시뮬레이터들은 시뮬레이션이 불안정하거나 아예 실패</strong>했다고 합니다. 그 이유에 대해 논문은 이렇게 분석합니다: 기존 접근법에서 <strong>강체-연성체 상호작용</strong>을 다루는 방식이 미흡한 탓입니다. 예를 들어 한 가지 대안으로 <strong>모든 물체를 연성체로 모델링</strong>할 수도 있으나, 그러면 자유도가 기하급수적으로 늘어나 계산이 크게 느려집니다. 다른 한편, 전통적인 강체 동역학(Rigid Body Dynamics) 시뮬레이션에서는 비볼록 물체의 충돌을 다루려면 <strong>지속적 충돌 감지(Continuous Collision Detection)</strong>를 사용해 관통을 막아야 하는데, 이는 계산 비용이 매우 커 실시간 수행이 어렵습니다. 반면 Taccel의 ABD 접근은 <strong>볼트와 너트를 준강체(아핀 바디)</strong>로 모델링하여, <strong>IPC 배리어로 관통을 예방</strong>하면서도 CCD에 의존하지 않고 효율적으로 접촉을 풀었기 때문에 가능한 일이었습니다. 요컨대, <strong>Taccel은 복잡한 기하학 간의 접촉도 처리할 수 있는 정밀도와 견고성을 보여준</strong> 사례입니다.</p></li>
+<li><p><strong>(b) 연성 블록 프레스(누르기) 테스트</strong>: 말랑한 고무 블록 위를 다른 연성 젤 패드로 눌러보는 실험입니다. 두 물체 모두 매우 부드럽기 때문에 <strong>연성-연성 접촉</strong>에서 정확한 변형 계산이 요구됩니다. Taccel은 <strong>IPC의 비관통 보장</strong> 덕분에 <strong>두 연성체가 서로 밀고 눌러도 절대 겹쳐들어가지 않는</strong> 현실적인 상호작용을 모사했습니다. 그 결과 블록이 눌리며 변형되는 형태가 <strong>침투나 비물리적 겹침 없이 자연스러운 모양</strong>으로 나타났습니다. 반면 <strong>기존의 페널티 기반 접근</strong>들은 어느 정도 <strong>겹침을 허용</strong>하고 그 정도에 따라 힘을 가정하기 때문에, 블록을 누를 때 <strong>젤 패드가 블록 안으로 비현실적으로 파고드는</strong> 현상이 나타났습니다. 이러한 차이는 <strong>IPC의 물리적 정확성</strong>이 가져오는 가시적 효과로, <strong>그림 2(b)</strong>에서 Taccel 결과는 표면이 깨끗이 분리되어 있지만, 다른 방법들은 겹침으로 인한 이상한 변형이 보임을 확인할 수 있습니다. 이 테스트는 주로 <strong>접촉 모델의 물리 충실도</strong>를 검증한 것으로, Taccel의 <strong>충돌-마찰 해법이 연성 접촉에서도 유효</strong>함을 보여줍니다.</p></li>
+<li><p><strong>(c) Tac-Man 관절물체 조작 과제</strong>: 실제 로봇이 <strong>전자레인지 문을 촉각 피드백으로 여는 Tac-Man 작업</strong>을 Taccel로 재현한 시나리오입니다. 여기서는 로봇 손가락의 젤 패드가 문 손잡이를 누르고 비틀어서 여는 복잡한 상호작용이 일어나는데, Taccel은 <strong>접촉력 계산의 정확성</strong> 덕분에 <strong>실제 로봇 수행과 거의 일치하는 패턴으로 젤 패드 변형과 문 움직임을 시뮬레이션</strong>했습니다. 실제 측정한 물리량과 비교했을 때 약 <strong>1% 정도의 오차</strong>만을 보였으며, 이는 <strong>사실상 현실과 구분 어려운 수준의 재현 정확도</strong>라고 할 수 있습니다. 반면 다른 접근법으로 동일 작업을 구현하려 하면, 예를 들어 <strong>Isaac Sim 등에서 시도한 구현</strong>은 센서-문 사이 마찰력 계산 오류로 인해 <strong>600% 이상의 큰 오차</strong>를 보였다고 합니다. Taccel은 <strong>젤 패드와 물체 사이의 미세한 힘까지 정확히 풀어내어</strong>, 문이 열리는 <strong>시점, 속도, 필요한 힘의 크기 등이 현실과 매우 가깝게</strong> 모사되었습니다. 이 결과를 통해 Taccel의 시뮬레이션이 <strong>단순히 연구용으로 빠르게 돌리는 수준을 넘어, 실제 로봇 동작을 예측하고 설계하는 데 신뢰할 수 있을 정도의 정밀도</strong>를 지닌다는 점을 알 수 있습니다.</p></li>
+<li><p><strong>(d) 병렬 환경 확장 테스트</strong>: 마지막으로 <strong>페그 인서션(puzzle peg 삽입) 과제를 다수의 환경에서 병렬로 실행</strong>시켜, Taccel의 <strong>스케일 업 능력</strong>을 측정했습니다. 낮은 해상도의 젤 패드(노드 139개) 2개를 가진 페그 삽입 작업 환경을 1개 GPU에서 얼마나 많이 돌릴 수 있는지, 그리고 실시간 대비 얼마나 빠른지 비교한 결과, <strong>Taccel은 최대 4096개 환경을 동시에 구동하면서 전체 915 FPS의 속도</strong>를 기록했습니다. 이는 <strong>동일 GPU에서 SAPIEN-IPC로 달성한 병렬 수(64개) 대비 64배 많은 환경</strong>이며, 속도 면에서도 <strong>64배 향상(18.30× real-time)</strong>된 수치입니다. 심지어 젤 패드 해상도를 높여(노드 1.5k) 난이도를 올린 경우에도 Taccel은 <strong>안정적으로 시뮬레이션을 지속</strong>했고, 여전히 <strong>경쟁 기법보다 우월한 FPS</strong>를 유지했습니다. 더욱 복잡한 <strong>전완 형태의 다지 그립퍼(손가락 5개에 젤 패드 17개, 노드 합계 5천 개 이상)</strong> 환경에서도 Taccel은 <strong>256개 병렬 환경에서 평균 12.67 FPS</strong>를 구현, <strong>환경 하나하나로 보면 비록 실시간의 1/4 속도 정도이지만 동시에 256개를 실행</strong>한다는 점에서 매우 높은 활용 효율을 보였습니다. 참고로 SAPIEN-IPC는 이 정도 복잡성의 작업에서 <strong>FP32 부동소수점 정밀도 한계로 수렴 문제가 발생</strong>하여 정상 동작하지 못한 반면, Taccel은 <strong>FP64 정밀도</strong>를 적용해 안정적으로 풀었음을 논문은 언급하고 있습니다. 그림 4(a)는 <strong>병렬 환경 수에 따른 Taccel과 SAPIEN-IPC의 FPS 스케일링 그래프</strong>를 로그 눈금으로 보여주고 있는데, Taccel의 곡선은 끝까지 가파르게 상승하는 반면 SAPIEN-IPC는 중간부터 수렴(또는 실패)하는 양상을 보입니다. 요약하면, Taccel의 병렬 시뮬레이션 최적화가 <strong>동일 하드웨어에서 월등한 데이터 처리량</strong>을 가능케 함을 입증한 것입니다. 이는 곧 <strong>강화학습 등 수천~수만회 에피소드 반복이 필요한 작업에 Taccel이 특히 유리</strong>하며, 이전에는 불가능했던 <strong>촉각 정보를 사용하는 대규모 학습</strong>을 현실화한 중요한 결과입니다.</p></li>
+</ul>
+</section>
+<section id="촉각-신호-시뮬레이션-품질-평가" class="level3">
+<h3 class="anchored" data-anchor-id="촉각-신호-시뮬레이션-품질-평가">5.2 촉각 신호 시뮬레이션 품질 평가</h3>
+<p>Taccel의 또 하나의 핵심 목표는 <strong>현실에 가까운 촉각 센서 신호 생성</strong>이며, 5.2절에서는 <strong>시뮬레이터가 만들어낸 촉각 이미지가 실제 센서의 출력과 얼마나 유사한지</strong> 평가했습니다. 저자들은 실제 GelSight 유사 센서를 만들어 18개의 다양한 형상의 물체를 눌러 얻은 <strong>실제 촉각 이미지 데이터셋</strong>과, 동일한 조건으로 Taccel에서 누른 <strong>가상 촉각 이미지</strong>를 비교했습니다. <strong>그림 3(a)</strong> 좌측은 이런 데이터 수집 장면을 보여주고, 우측의 violin 플롯은 테스트한 각 물체에 대해 <strong>시뮬레이션 대 실세계 이미지 간 구조 유사도(SSIM)</strong> 분포를 나타냅니다. 결과는 <strong>평균 SSIM 0.93</strong>으로, 거의 1에 가까운 매우 높은 유사도를 달성했습니다. 이는 인간 눈으로 봐도 시뮬레이터 이미지와 실제 카메라 이미지가 구별하기 어려울 만큼 <strong>시각적 패턴이 잘 일치</strong>함을 의미합니다. 실제 예시로 제시된 이미지를 보면, 기하학적 윤곽, 힘에 의한 밝기 변화 등 대부분 요소가 맞아떨어지고 약간의 노이즈나 밝기 차이만 존재할 뿐임을 확인할 수 있습니다. 미세한 차이가 존재하는 이유에 대해서 논문은 <strong>3D 프린팅한 시험 물체들의 제조 오차</strong>, <strong>카메라 보정의 한계</strong> 등을 들고 있으며, 전반적으로 <strong>Taccel이 고품질의 촉각 패턴을 생성하는 데 성공</strong>했다고 평가합니다. 이 정도의 정밀도로 가상 센서 신호를 얻을 수 있다는 것은, <strong>시뮬레이터에서 학습한 모델을 그대로 실제 센서 입력에서도 적용</strong>할 수 있을 만큼 sim-to-real 격차를 좁혀준다는 뜻이며, 실제로 논문도 <strong>성공적인 sim-to-real 전이</strong>를 강조하고 있습니다.</p>
+</section>
+<section id="마찰-및-전단-변형-정밀도-검증" class="level3">
+<h3 class="anchored" data-anchor-id="마찰-및-전단-변형-정밀도-검증">5.3 마찰 및 전단 변형 정밀도 검증</h3>
+<p>5.3절에서는 <strong>젤 패드와 물체 사이의 마찰 거동 및 전단(shear) 변형을 Taccel이 얼마나 정확히 재현</strong>하는지 평가합니다. 이는 촉각센서에서 매우 중요한 측면으로, 예를 들어 센서로 물체를 살짝 쥐었다 미끄럴 때 <strong>패드의 표면이 얼마나 따라 움직이다가 미끄러지는지</strong> 등의 동작을 가리킵니다. 실험 설정은 <strong>그림 3(b)</strong>에 나와 있는데, VBTS 그리퍼(두 손가락)에 막대기 모양의 물체를 쥐고 2 mm/s 속도로 잡아당기는 상황을 시뮬레이션하고, 동일한 실제 실험과 비교했습니다. 다른 조건으로는 잡은 물체(막대)의 표면 마찰계수를 다르게 하여, <strong>마찰력이 큰 경우에는 패드가 더 많이 따라오다 미끄러질 것이고, 작은 경우 빨리 미끄러질 것</strong>을 관찰할 수 있게 했습니다. Taccel 시뮬레이터에서 한 번의 실험 데이터를 활용해 해당 물체의 마찰계수를 <strong>캘리브레이션</strong>한 뒤, 다른 조건들에 대해 <strong>시뮬레이션 결과와 실제계를 비교</strong>한 결과 <strong>평균 28 마이크로미터(0.028 mm) 정도의 위치 오차</strong>만 발생했습니다. 그림 3(b)의 그래프에 나타난 여러 곡선들을 보면, 서로 다른 마찰계수 조건에서 <strong>실제 젤 패드 마커의 변형량과 Taccel 시뮬레이션 마커 변형량이 거의 겹칠 만큼 일치</strong>하는 것을 볼 수 있습니다. 이 정도의 미세한 움직임까지 맞아떨어진다는 것은, <strong>Taccel의 마찰 모델 (IPC의 마찰 퍼텐셜)과 연성체 변형 계산이 현실의 복잡한 stick-slip 거동까지 포착</strong>하고 있다는 의미입니다. 이런 결과는 단순히 정적 이미지 유사도를 넘어서 <strong>동적 상호작용의 정확성</strong>을 증명한 것으로서, Taccel이 <strong>정적, 동적 접촉 모두에서 신뢰할 만한 물리 정확도</strong>를 갖추었음을 뒷받침합니다.</p>
+</section>
+<section id="대규모-병렬-시뮬레이션-능력-평가" class="level3">
+<h3 class="anchored" data-anchor-id="대규모-병렬-시뮬레이션-능력-평가">5.4 대규모 병렬 시뮬레이션 능력 평가</h3>
+<p>마지막으로 5.4절에서는 Taccel의 <strong>병렬 시뮬레이션 성능</strong>을 체계적으로 분석합니다. 앞서 (5.1)의 (d) 시나리오에서 기본적인 결과를 확인했지만, 여기서는 <strong>과제 난이도에 따른 스케일 성능</strong>과 <strong>GPU 메모리 사용량</strong>, <strong>Floating point 정밀도에 따른 안정성</strong> 등 세부적인 평가가 이뤄졌습니다. 저자들은 복잡도가 다른 세 가지 과제를 준비했는데: (i) 앞서 언급한 <strong>듀얼 센서 페그 인서션 (저해상도)</strong>, (ii) <strong>고해상도 듀얼 센서 페그 인서션</strong>, (iii) <strong>17개 센서가 부착된 5형 로봇 손의 그립 동작</strong>이 그것입니다.</p>
+<p>(i)의 간단한 경우에는 SAPIEN-IPC와 Taccel 모두 수백 개 이상 병렬 실행이 가능했으나, <strong>Taccel은 훨씬 더 완만한 성능 저하로 4000개 수준까지 선형에 가깝게 확장</strong>되었습니다. 반면 SAPIEN-IPC는 <strong>256개 수준부터 FPS가 크게 떨어지고</strong> 512개를 넘어가면서부터는 <strong>일부 환경에서 수렴 실패(convergence failure)</strong>가 발생했습니다. 논문은 그 원인을 SAPIEN-IPC가 <strong>32비트 부동소수점(FP32)</strong> 정밀도를 써서 <strong>IPC 배리어 항 계산 시 수치오차</strong>가 누적되기 때문이라고 지적합니다. Taccel은 기본적으로 <strong>64비트 정밀도(FP64)</strong>로 계산하여 이런 문제를 회피했고, 또한 대규모 병렬 연산을 위해 Warp 프레임워크를 세심하게 최적화하여 <strong>VRAM(그래픽 메모리)의 효율적 사용과 스레드 병렬화</strong>를 이루었다고 부연합니다. (ii) 고해상도 센서의 경우, SAPIEN-IPC는 <strong>아예 100개 미만의 환경에서 이미 실시간보다 훨씬 느려져(0.03×)</strong> 대규모 병렬화가 무의미했던 데 반해, Taccel은 <strong>수백 개 환경에서도 안정적 시뮬레이션</strong>을 보였습니다. (iii) 복잡한 다지 로봇 손의 경우, SAPIEN-IPC는 개별 환경도 <strong>강체 수와 센서 수 증가로 계산이 버거워</strong> 제대로 실행하지 못했지만 Taccel은 <strong>256개 병렬 실행으로 12.67 FPS</strong>를 낼 수 있었고, 이를 통해 <strong>복잡한 로봇 시스템에도 적용 가능함</strong>을 증명했습니다. 이 모든 평가를 종합하면, Taccel의 GPU 기반 구현이 <strong>단일 PC에서 이전 세대 대비 월등히 많은 양의 촉각 시뮬레이션 데이터를 빠르게 생성</strong>할 수 있음을 확인할 수 있습니다. 이는 로봇 학습 커뮤니티에 매우 중요한 의미로, <strong>과거에는 불가능했던 규모의 데이터로 촉각 모델을 학습하거나, 수천 회의 시뮬레이션을 병렬 수행해 정책을 훈련</strong>하는 것이 Taccel로 현실화될 전망입니다.</p>
+</section>
+</section>
+<section id="결론-및-기여-분석" class="level2">
+<h2 class="anchored" data-anchor-id="결론-및-기여-분석">결론 및 기여 분석</h2>
+<p>“Taccel: Scaling Up Vision-based Tactile Robotics via High-performance GPU Simulation” 논문은 <strong>비전 기반 촉각 로보틱스 시뮬레이션 분야에 있어 획기적인 진전을 보여준 연구</strong>로 평가할 수 있습니다. 이들의 주요 <strong>기여</strong>를 정리하면 다음과 같습니다:</p>
+<ul>
+<li><p><strong>정확한 물리 모델 통합</strong>: 기존에 별개로 연구되던 <strong>IPC 기반 연성충돌해결</strong> 기법과 <strong>ABD 기반 준강체 모델링</strong>을 한 데 묶어, <strong>연성 젤과 강체 물체 간의 복잡한 상호작용도 물리적으로 타당하게 계산</strong>할 수 있는 프레임워크를 구현했습니다. 이를 통해 <strong>접촉 시뮬레이션의 정확도(inversion-free &amp; intersection-free)를 대폭 향상</strong>시켰으며, 실제 로봇과 물체의 접촉을 시뮬레이터에서 거의 오차없이 재현할 수 있음을 보여주었습니다.</p></li>
+<li><p><strong>고성능 GPU 병렬 구현</strong>: NVIDIA Warp를 활용한 커스텀 병렬화, 메모리 최적화, 이중정밀도 연산 등을 통해, <strong>기존 시뮬레이터 대비 수십 배 이상의 병렬 환경을 돌릴 수 있는 성능</strong>을 달성했습니다. 특히 하나의 H100 GPU로 <strong>4096개 환경을 실시간의 18배 속도로 구동</strong>한 결과는, 로봇 시뮬레이션 전반을 통틀어서도 매우 뛰어난 수치입니다. 이는 <strong>대용량 학습 데이터 생성</strong>이나 <strong>대규모 강화학습</strong>에 촉각 정보를 활용할 수 있는 길을 열었으며, 촉각 로보틱스 연구의 <strong>스케일을 한 차원 끌어올린</strong> 것으로 볼 수 있습니다.</p></li>
+<li><p><strong>현실감 있는 촉각 신호 생성</strong>: 물리 시뮬레이션 결과를 <strong>다양한 형태의 센서 출력</strong>으로 변환하는 모듈을 제시하고, 특히 <strong>심층학습(DNN)을 접목하여 RGB 촉각 이미지의 현실감을 확보</strong>한 점은 돋보입니다. 그 결과 시뮬레이터 이미지와 실제 센서 이미지 간 SSIM 0.93이라는 높은 유사도를 입증했고, 이는 곧 <strong>시뮬레이션-현실 간 격차(Sim2Real gap)를 최소화</strong>하여 시뮬레이터로 학습한 모델을 실제 로봇에 적용하기 용이하게 만들었습니다. 기존 일부 작업들이 촉각 신호를 단순화(예: 힘으로 바로 추정)하거나 아예 지원하지 않았던 것과 달리, Taccel은 <strong>고해상도 촉각 패턴부터 저해상도 특징까지 모두 제공</strong>함으로써 연구자가 다양한 방법으로 촉각 정보를 활용할 수 있게 했습니다.</p></li>
+<li><p><strong>범용성과 사용성</strong>: Taccel은 <strong>다양한 로봇 플랫폼과 센서 구성에 쉽게 적용</strong>될 수 있도록 설계되었습니다. URDF 기반 로봇 불러오기, 간단한 Python API, 그리고 센서 장착의 모듈화 등을 통해 <strong>병렬 로봇+촉각 시뮬레이션에 진입 장벽을 낮춘 것</strong>도 중요한 공헌입니다. 예컨대 연구자가 자신의 로봇 모델과 촉각 센서 매쉬만 준비하면, Taccel 환경에서 곧바로 <strong>복잡한 촉각 조작 실험을 대량으로 수행</strong>해볼 수 있습니다. 이는 <strong>실험 비용이나 물리적 제약으로 시도하기 어려웠던 다양한 촉각 상호작용 연구를 가상 환경에서 앞당겨 검증</strong>할 수 있게 해줄 것입니다.</p></li>
+<li><p><strong>검증된 실효성</strong>: 논문에서 저자들은 물체 인식, 그립 학습, 관절 객체 조작 등의 <strong>다양한 다운스트림 과제에 Taccel을 활용</strong>하여, 시뮬레이터의 성능이 단지 수치상 우수함에 그치지 않고 <strong>실제로 로봇 학습 및 제어에 유용</strong>함을 보여주었습니다. 특히 Tac-Man 등 현실 작업의 재현, sim-to-real 학습 사례 제시는 커뮤니티에 Taccel의 가치를 실감하게 하는 부분입니다.</p></li>
+</ul>
+<p>요약하면, Taccel은 <strong>로봇 촉각 센서 시뮬레이션의 정밀도-속도 트레이드오프를 극복</strong>하고 <strong>대규모화</strong>함으로써, 학계와 산업계의 촉각 로봇 연구에 새로운 지평을 열었다고 볼 수 있습니다. 이 연구는 <strong>고성능 물리 시뮬레이션 엔진 개발과 로봇 학습 응용</strong>의 만남이라는 점에서도 의미가 크며, 향후 Taccel을 기반으로 한 다양한 연구 확장 (예: 차별가능 시뮬레이션을 통한 역학습, 복합 소재/유연 물체 시뮬레이션 등)이 기대됩니다. 논문에도 언급되었듯이, 이러한 도구의 공개는 <strong>촉각 로보틱스 연구 개발의 규모 확장과 가속화</strong>를 가능케 하여, 궁극적으로 <strong>로봇이 촉각을 통해 주변을 이해하고 상호작용하는 방법</strong>에 혁신을 가져올 것으로 전망됩니다. Taccel이 제시한 접근법은 향후 다른 형태의 센서 시뮬레이션이나 멀티피직스 시뮬레이션 분야에도 참고할 만한 우수한 사례로 남을 것입니다.</p>
+<p><strong>표 1</strong>: Taccel과 기존 FEM 기반 VBTS 시뮬레이터들의 비교. Taccel은 연성체 모델링에 FEM, 강체에 ABD, 충돌에 IPC, 촉각 신호 생성에 DNN 기반 방법을 사용하며, 임의의 로봇 플랫폼에 적용 가능하다. 특히 병렬 시뮬레이션 면에서 최대 4096개 환경을 지원하고 실시간 대비 18.3배 속도로 구동하여, 다른 시뮬레이터들에 비해 월등한 확장성을 보여준다. (Taxim: 예제 기반 시뮬, DiffTactile: 물리 기반 differentiable 시뮬, SAPIEN-IPC: 기존 IPC 적용 시뮬레이터)</p>
+<p><strong>그림 1</strong>: Taccel 시뮬레이터 데모 – Allegro 핸드 로봇에 4개의 VBTS(GelSight 계열)를 부착하여 마작 패를 정밀 그립하는 장면. 젤 패드 표면 변형 맵을 통해 마작 패 표면의 음각 무늬 등 세밀한 지오메트리가 정확히 포착됨을 보여준다.</p>
+<p><strong>그림 2</strong>: 여러 VBTS 시뮬레이터들의 물리 시뮬레이션 성능 비교. (a) 볼트-너트 결합: Taccel은 비볼록 접촉에도 안정적 시뮬레이션을 달성했으나 PyBullet 등은 충돌 오류 발생. (b) 연성 블록 프레스: Taccel은 젤-블록 사이 무관통 변형을 유지하나 페널티 기반 타 시뮬레이터들은 패드가 블록을 관통하는 부자연스러운 결과를 보임. (c) 촉각 활용 관절물체(Tac-Man 마이크로파 문) 조작: Taccel은 실측과 ~1% 오차로 젤-손잡이 상호작용을 재현, 타 방법(예: Isaac Gym 구현)은 600% 넘는 오차. (d) 병렬 환경 테스트: 페그 삽입 작업을 다중 환경으로 실행한 결과, Taccel은 저해상도 4096개/&gt;915 FPS, 고해상도 256개/&gt;256 FPS 등을 달성하여 확장성이 높음을 입증.</p>
+<p><strong>그림 3</strong>: 시뮬레이션 정확도 평가. (a) 촉각 이미지 비교 – 실제 GelSight센서로 측정한 패턴과 Taccel 시뮬레이션 결과가 유사하며, 모든 시험 물체에 대해 시뮬레이션 대 실제 SSIM이 매우 높게 나타남(평균 0.93). (b) 마찰/전단 변형 – VBTS 그리퍼로 막대를 쥐고 당기는 실험에서, 서로 다른 마찰계수 조건 하에 실제 측정한 젤 변형(마커 이동)과 Taccel 결과가 거의 겹쳐짐. 평균 오차 0.028 mm 수준으로, 마찰 거동 및 미끄러짐까지 정밀하게 모사됨을 보여줌.</p>
+<p><strong>그림 4</strong>: 병렬 시뮬레이션 성능 분석. (a) 환경 개수 증가에 따른 FPS 변화 (로그 눈금) – Taccel은 4096개까지도 FPS가 꾸준히 증가(선형 스케일)하며, FP32 정밀도의 SAPIEN-IPC는 64개 이상에서 급격히 성능 저하 및 일부 수렴 실패 발생. FP64 정밀도의 Taccel이 안정성과 속도 모두 우수함. (b) 테스트 작업의 장면 예시 – 좌: 페그 인서션 (듀얼 센서), 우: 다지 로봇 손 그립. Appendix C.1에는 (a) 실험의 VRAM 메모리 사용량 등 추가 자료가 제시됨.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

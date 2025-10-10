@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-05">
+<meta name="description" content="World Simulation with Video Foundation Models for Physical AI">
+
+<title>📃Adversarial Differential Discriminator 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#장-adversarial-differential-discriminator-add" id="toc-장-adversarial-differential-discriminator-add" class="nav-link" data-scroll-target="#장-adversarial-differential-discriminator-add">4장: Adversarial Differential Discriminator (ADD)</a></li>
+  <li><a href="#장-motion-tracking-with-add" id="toc-장-motion-tracking-with-add" class="nav-link" data-scroll-target="#장-motion-tracking-with-add">5장: Motion Tracking with ADD</a></li>
+  <li><a href="#장-motion-tracking-실험-및-결과" id="toc-장-motion-tracking-실험-및-결과" class="nav-link" data-scroll-target="#장-motion-tracking-실험-및-결과">6장: Motion Tracking 실험 및 결과</a></li>
+  <li><a href="#장-non-motion-imitation-tasks" id="toc-장-non-motion-imitation-tasks" class="nav-link" data-scroll-target="#장-non-motion-imitation-tasks">7장: Non-Motion-Imitation Tasks</a></li>
+  <li><a href="#기존-adversarial-motion-prior-기법과의-차별점" id="toc-기존-adversarial-motion-prior-기법과의-차별점" class="nav-link" data-scroll-target="#기존-adversarial-motion-prior-기법과의-차별점">기존 Adversarial Motion Prior 기법과의 차별점</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Adversarial Differential Discriminator 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">cosmos</div>
+    <div class="quarto-category">nvidia</div>
+    <div class="quarto-category">physical-ai</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    World Simulation with Video Foundation Models for Physical AI
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 5, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://add-moo.github.io/">Project Link</a></li>
+<li><a href="https://arxiv.org/abs/2505.04961">Paper Link</a></li>
+<li><a href="https://github.com/xbpeng/MimicKit">MimicKit Github</a></li>
+</ul>
+<center>
+<img src="../../images/2025-10-05-add/climb_comparison.gif" width="70%">
+</center>
+<center>
+<img src="../../images/2025-10-05-add/add_web_go1.gif" width="70%">
+</center>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<hr>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>“Physics-Based Motion Imitation with Adversarial Differential Discriminators” 논문 심층 리뷰</p>
+</blockquote>
+<p>물리 기반 캐릭터 애니메이션에서 강화학습으로 목표 동작을 모방하려면 여러 목표 항목(예: 자세 정확도, 속도, 균형 등)을 동시에 최적화해야 하는데, 기존 접근법들은 각 항목을 가중합한 보상 함수를 미리 설계하는 방식을 사용한다. 그러나 이러한 다목적 최적화(MOO) 문제에서 최적의 가중치를 찾는 일은 매우 까다로우며, 많은 수작업 튜닝과 전문 지식이 필요하다. 특히 물리 시뮬레이션 캐릭터의 모션 트래킹에서는 높은 정확도를 얻기 위해 세밀하게 설계된 보상 함수에 의존하는데, 이는 동작마다 보상 구조를 다시 조정해야 하므로 범용성이 떨어진다는 한계가 있다.</p>
+<p>본 논문(Zhang 등, 2025)은 이러한 문제를 해결하기 위해 <strong>적대적 다목적 최적화 기법</strong>을 제안한다. 핵심 아이디어는 여러 목표를 자동으로 조합하여 학습하는 <em>Adversarial Differential Discriminator (ADD)</em>를 도입한 것으로, 단 하나의 이상적 샘플만으로도 (모든 목표에서 완벽한 성능을 나타내는 0 벡터) 에이전트 학습을 효과적으로 이끌 수 있음을 보였다. 제안된 ADD 기반 방법을 통해 물리 시뮬레이션 인간형 캐릭터와 로봇이 공중제비, 파쿠르 등의 다양한 고난도 동작을 높은 충실도로 모방했으며, 어떠한 수작업 보상 설계 없이도 최신 모션 트래킹 기법과 견줄만한 품질을 달성하였다. 본 심층 리뷰에서는 논문의 주요 내용인 4장(ADD 기법), 5장(ADD를 활용한 모션 트래킹 방법), 6장(모션 트래킹 실험 및 결과), 7장(모션 모방 이외 과제 적용)을 중점적으로 분석하고, 기존 Adversarial Motion Prior 기법과의 차별점을 고찰한다. 마지막으로 ADD 접근법을 실제 로봇의 정밀 손 조작 환경에 적용하는 방안을 제안한다.</p>
+<section id="장-adversarial-differential-discriminator-add" class="level2">
+<h2 class="anchored" data-anchor-id="장-adversarial-differential-discriminator-add">4장: Adversarial Differential Discriminator (ADD)</h2>
+<p>ADD는 여러 목적 함수를 <strong>비선형</strong>으로 결합하여 자동으로 최적화해주는 GAN 기반 프레임워크이다. 기존의 가중치 합산 방식이 선형 조합으로만 목표를 묶어주며 가중치 선택에 민감한 반면, ADD는 학습을 통해 <strong>유연한 조합</strong>과 <strong>동적 가중 조정</strong>을 수행할 수 있다. 이를 위해 제안된 ADD의 구성 요소와 학습 방식은 다음과 같다:</p>
+<ul>
+<li><strong>차분 벡터</strong>: 각 목표별 <em>현재 성능과 이상적 성능(최소 손실)의 차이</em>로 구성된 벡터이다. 이 벡터는 각 목적 함수별 오차를 나타내며, 이상적인 최적 해의 경우 모든 성분이 0이 된다:.</li>
+<li><strong>판별자 <span class="math inline">D</span></strong>: 차분 벡터를 입력받아 해당 벡터가 “이상적 해(0 벡터)에 해당하는지” 판단하는 신경망이다. <span class="math inline">D</span>는 여러 개별 손실 값을 하나의 <strong>비선형 종합 손실</strong>로 묶는 역할을 하며, 이상적인 해와 거리가 클수록 낮은 점수를, 0에 가까울수록 높은 점수를 출력하도록 학습된다.</li>
+<li><strong>단일 양성 샘플</strong>: <span class="math inline">D</span>를 훈련시킬 때 <strong>오직 하나의</strong> 이상적 사례만을 양성 데이터로 제공하는데, 이는 모든 목표에서 오차가 0인 <strong>0 벡터</strong>이다. 즉, <span class="math inline">D</span>는 0 벡터에 대해서만 “이상적”이라고 학습하고 그 외의 임의의 차분 벡터들은 음성 샘플로 간주한다. 저자들은 <strong>단 하나의 양성 데이터만으로도 판별자가 효과적으로 학습 가능</strong>하다는 흥미로운 결과를 보고한다.</li>
+<li><strong>적대적 학습</strong>: <span class="math inline">D</span>와 정책(policy) 혹은 모델 <span class="math inline">π</span>는 <strong>미니맥스 게임</strong>으로 공동 학습된다. 정책 <span class="math inline">π</span>는 자기 행동으로 인해 생성되는 차분 벡터를 0에 가깝게 만들어 <span class="math inline">D</span>를 “속이는” 방향으로 파라미터를 업데이트하고(다양한 목표들의 손실을 모두 줄이는 방향), 판별자 <span class="math inline">D</span>는 주어진 차분 벡터가 이상적 해(0)에 해당하는지 아닌지를 맞추도록 파라미터를 조정한다. 이 과정에서 <span class="math inline">D</span>의 출력이 곧 종합 보상(signal)이 되어 정책을 개선시키는 역할을 한다.</li>
+<li><strong>그래디언트 패널티</strong>: 위처럼 학습할 경우 판별자 <span class="math inline">D</span>가 자칫하면 <strong>퇴화 해법</strong>에 도달할 수 있다. 즉, <span class="math inline">D</span>가 0 벡터에 대해서만 출력 1, 그 외 모든 입력에 대해 출력 0을 내는 <em>델타 함수</em> 형태로 수렴하면, 0이 아닌 차분에 대해 유용한 기울기 정보를 주지 못해 학습이 멈출 우려가 있다. 이를 완화하기 위해 논문에서는 <strong>그래디언트 패널티(gradient penalty, GP)</strong> 정규화를 도입하였다. <span class="math inline">D</span>의 입력 공간에서 출력 변화에 큰 기울기가 발생하지 않도록 패널티를 부여함으로써 결정 경계를 부드럽게 만들고, 음성 샘플들에 대해서도 유용한 기울기를 제공하도록 유도한다. 특히 본 연구에서는 양성 샘플이 1개뿐이므로 GP를 <em>음성 샘플</em>에 적용하여 판별자가 다양한 오류 상황에서도 매끄럽게 출력하도록 했다.</li>
+<li><strong>동적 목표 집중</strong>: GP가 적용된 <span class="math inline">D</span>는 모든 입력에 대해 0/1로 극단적으로 나누기보다는 연속적인 점수를 출력하게 된다. 학습이 진행됨에 따라 정책 <span class="math inline">π</span>가 일부 목표들의 오차를 줄이면 해당 성분들이 포함된 차분 벡터에 대해 <span class="math inline">D</span>의 판별이 조금씩 “이상적에 가깝다”고 높아진다. 그러면 <span class="math inline">D</span>는 아직 남아있는 <strong>어려운 목표 조합</strong>들에 대해 더 엄격한 판별을 하게 되어, 점차 <strong>정확히 달성하기 힘든 목표들에 가중치를 실어주는 효과</strong>가 발생한다. 즉, 학습 초반에는 모든 목표의 오차가 크기 때문에 <span class="math inline">D</span>가 전반적인 오류에 반응하지만, 후반으로 갈수록 상대적으로 개선이 덜 된 목표들 (예: 다른 것은 맞췄지만 여전히 어려운 세부 목표)에 민감하게 반응하며 정책을 계속 압박한다.</li>
+</ul>
+<p>정리하면, ADD는 전통적인 가중치 합산 기반 보상 설계와 달리 <strong>학습을 통해 보상 함수를 구성</strong>함으로써, 목표 간 <strong>비선형 상호작용을 포착</strong>하고 학습 과정에 따라 <strong>자동으로 중요도를 재조정</strong>한다. 이를 통해 별도의 수작업 튜닝 없이도 다양한 목표들을 동시에 충족시키는 방향으로 정책을 최적화할 수 있게 된다.</p>
+<center>
+<img src="../../images/2025-10-05-add/weighted_sum_method_video.gif" width="70%">
+</center>
+<center>
+<img src="../../images/2025-10-05-add/wo_grad_penalty-ezgif.com-video-to-gif-converter.gif" width="70%">
+</center>
+<center>
+<img src="../../images/2025-10-05-add/w_grad_penalty-ezgif.com-video-to-gif-converter.gif" width="70%">
+</center>
+</section>
+<section id="장-motion-tracking-with-add" class="level2">
+<h2 class="anchored" data-anchor-id="장-motion-tracking-with-add">5장: Motion Tracking with ADD</h2>
+<p><strong>모션 트래킹</strong>이란 주어진 참고(reference) 동작 시퀀스를 모방하도록 캐릭터의 움직임을 추적 제어하는 것이다. 기존의 강화학습 기반 모션 트래킹 기법들은 일반적으로 다음과 같은 <strong>트래킹 보상 함수</strong>를 사용했다:</p>
+<p><span class="math display">r_{\text{tracking}} = \sum_i w_i \cdot \exp(-\alpha_i \cdot \text{err}_i)</span></p>
+<p>여기서 <span class="math inline">w_i</span>는 각 오류 항목(예: 관절 각도 차이, 루트(root) 위치 차이 등)에 부여하는 가중치이고, <span class="math inline">\alpha_i</span>는 스케일 파라미터이며, <span class="math inline">\text{err}_i</span>는 해당 특징의 현재 상태와 목표 상태(레퍼런스 모션) 간 오차이다. 이러한 보상 구성은 각 항목별 가중치 <span class="math inline">w_i</span>와 스케일 <span class="math inline">\alpha_i</span> 값을 사람 손으로 잘 조정해야 한다는 어려움이 있으며, 동작 종류에 따라 최적의 값이 달라져 <strong>모든 모션에 일반화하기 힘들다</strong>. 예를 들어 관절 속도 항목의 경우 관절마다 가중치를 달리 두는 등 튜닝 요소가 많아진다.</p>
+<p>논문에서는 모션 트래킹 문제를 다목적 RL로 해석하고, 식 (6)과 같은 <strong>선형 가중합 보상</strong>을 <strong>학습된 보상 함수</strong>로 대체하였다. 구체적으로, ADD의 판별자 <span class="math inline">D</span>는 에이전트의 상태과 레퍼런스 모션의 목표 상태 간 <strong>차이 벡터</strong>를 실시간으로 받아들여 그 <strong>트래킹 오차 정도</strong>를 평가한다. 이때 <span class="math inline">D</span>는 이전과 마찬가지로 “완벽 트래킹(모든 차이가 0)”인 경우에만 높은 점수를 주도록 학습되며, 양성 샘플로는 오직 0 벡터 (이상적 추적 상태) 하나만 제공된다. 판별자는 식 (8)의 목표로 훈련되는데, 여기서도 <strong>그래디언트 패널티</strong>를 적용하되 양성 샘플이 하나뿐이므로 패널티를 음성 샘플들에 적용하는 점이 기존 기법(Peng 등)과 다르다. 이렇게 학습된 <span class="math inline">D</span>는 현재 시점의 모션 추적 상태에 대해 <strong>즉각적인 보상 값</strong>을 출력하며, 정책은 이 보상을 최대화하도록 강화학습으로 훈련된다. 요약하면, 명시적인 트래킹 용 보상 함수를 수동 설계하는 대신 <strong>ADD 판별자가 산출한 학습형 보상</strong> <span class="math inline">{R(s_t)}</span>를 사용하여 에이전트가 참고 모션을 따라가도록 만든 것이다.</p>
+<p>이 접근법은 기존의 <strong>적대적 모방 학습(adversarial imitation)</strong> 방식과 비교해 중요한 차이가 있다. 이전의 GAIL, AMP 계열 방법에서는 판별자가 <strong>상태 또는 움직임 시퀀스 전체</strong>를 보고 그것이 인간 레퍼런스의 동작 분포와 일치하는지를 판별한다. 이는 에이전트가 <strong>전체적인 동작 스타일 분포</strong>는 흉내내도록 유도하지만, 특정 모션 클립 하나하나를 똑같이 따라할 필요는 없게 만든다. 그 결과, 일부 세부 동작이 달라지거나 순서가 바뀌어도 판별자를 속일 수 있다면 에이전트가 참고 모션과 다른 궤적으로 움직이기도 한다. 실제로 이전 적대적 모방 방법들은 <strong>정밀한 모션 복제보다는 자연스러운 스타일 모방</strong>에 초점을 맞췄기에, 목표 모션의 세부 자세까지 정확히 재현하지는 못하는 경우가 많았다. 반면 ADD를 활용한 모션 트래킹에서는 <strong>한 시점 시점마다</strong> 레퍼런스와의 차이를 판별자가 감지하여 보상으로 돌려주므로, 에이전트는 <strong>참고 모션과 완벽히 동일한 움직임</strong>을 만들도록 압력을 받는다. 이는 모션 보간(in-betweening)이나 키프레임 후처리와 같이 <strong>높은 정확도</strong>가 요구되는 응용에 특히 유리하다.</p>
+<p>또한 판별자의 입력 특성에도 기법이 적용되었다. 차분 벡터를 구성할 때 단순히 모든 관절 상태 값을 뺀 값을 넣는 대신, <em>관찰 맵(observation map)</em>을 통해 의미 있는 특징들을 추출하여 그 차이를 넣는다. 논문에서는 Peng 등 선행 연구를 따라 다음과 같은 특징들을 사용하였다:</p>
+<ul>
+<li><strong>루트의 전역 위치와 회전</strong> (캐릭터 몸통의 위치 및 방향)</li>
+<li><strong>각 관절의 위치</strong> (루트 좌표계 기준의 로컬 위치)</li>
+<li><strong>각 관절의 전역 회전</strong> (절대적인 관절 방향)</li>
+<li><strong>루트의 속도</strong> (루트의 선속도 및 각속도, 루트 좌표계 기준)</li>
+<li><strong>각 관절의 로컬 속도</strong> (각 관절의 상대적 선속도 및 각속도)</li>
+</ul>
+<p>이러한 특징 차이를 판별자 입력으로 사용하면, 단순한 상태 값 차이에 비해 <em>자세(posture)와 동작의 핵심 요소</em>들을 효과적으로 비교할 수 있다. 관절들의 위치는 루트 기준으로 변환하여 <strong>전체 위치 이동에 대한 불변성</strong>을 갖게 했고, 회전은 전역 공간에서 비교하여 <strong>절대적인 자세 오차</strong>를 측정하도록 했다. 속도 항목을 포함함으로써 에이전트의 움직임 <em>동적 특성(진동, 떨림 등)</em>까지 판별자가 감지할 수 있어, 단순히 자세만 맞추는 것이 아니라 움직임의 품질까지 모방하도록 유도한다.</p>
+</section>
+<section id="장-motion-tracking-실험-및-결과" class="level2">
+<h2 class="anchored" data-anchor-id="장-motion-tracking-실험-및-결과">6장: Motion Tracking 실험 및 결과</h2>
+<p><strong>실험 설정:</strong> 제안한 ADD 기반 모션 트래킹 기법을 28 자유도 인간형 캐릭터와 26 자유도 Sony EVAL 이족 로봇 시뮬레이션에 적용하여 성능을 평가하였다. 추적 대상(reference) 모션으로는 Peng 등 이전 연구에서 사용된 단일 모션 클립들(달리기, 재주넘기, 기어가기 등)과, 대규모 모션 데이터셋인 AMASS의 DanceDB 일부 및 LAFAN1 데이터셋 일부가 사용되었다. LAFAN1 데이터셋에는 점프, 스프린트, 격투, 춤 등 다양한 유형의 모션이 포함되어 있어, 본 기법이 광범위한 동작에 걸쳐 얼마나 일반적으로 동작하는지 검증할 수 있었다.</p>
+<p><strong>상태 및 행동 표현 (6.1):</strong> 에이전트(캐릭터/로봇)의 상태 공간에는 각 신체 링크의 <strong>위치</strong>(루트 기준 상대좌표)와 <strong>회전</strong>(6차원 회전 표현) 정보, 그리고 <strong>선속도</strong> 및 <strong>각속도</strong>가 포함된다. 이러한 모든 특징은 캐릭터의 루트 좌표계(몸체 기준 좌표계)로 표현하여 불필요한 절대 위치 영향이 제거되었다. 또한 현재 시점의 참고 포즈(목표 자세 프레임)가 상태 입력에 포함되어, 정책이 주어진 모션 클립의 진도(phase)에 동기화하도록 하였다. 행동 변수는 각 관절의 <strong>목표 위치/각도</strong>로 정의되어, 시뮬레이터 내 PD 제어기를 통해 해당 목표로 관절이 움직이게 된다. 3자유도 회전 관절(예: 어깨, 고관절 등)은 3차원 <strong>지수지도</strong>(exponential map) 형식으로 목표 회전을 표현하고, 1자유도 관절(예: 무릎 등)은 회전 각도를 직접 목표치로 사용하였다.</p>
+<p><strong>정책 및 판별자 신경망 구조 (6.2):</strong> 정책 <span class="math inline">\pi</span>는 주어진 상태를 받아 각 관절 행동의 확률분포(가우시안)를 출력하는 신경망으로 구현되었다. 네트워크는 두 개의 은닉층(1024, 512 노드, ReLU 활성화)으로 구성되며, 마지막에 선형 출력을 통해 각 행동에 대한 평균값을 예측한다. 가우시안 분포의 공분산은 학습 동안 고정된 대각 행렬로 두어, 탐험 노이즈의 크기를 일정하게 유지하였다. 가치함수(value function) 근사 신경망과 ADD 판별자 신경망도 유사한 구조를 갖는데, 출력 노드는 하나의 스칼라 값(가치 혹은 판별 점수)만 내도록 설계되었다.</p>
+<p><strong>훈련 과정 (6.3):</strong> 전체 학습은 PPO 알고리즘을 기반으로 진행되었다. 캐릭터의 초깃자세는 참고 모션 클립에서 임의 프레임을 추출하여 초기화함으로써 다양한 시작 상태를 경험하도록 하였다. 정책 <span class="math inline">\pi</span>가 환경과 상호작용하여 일정 시간 단계의 궤적을 수집하면, <strong>각 시점마다</strong> 에이전트 상태와 목표 상태의 차분 벡터가 ADD 판별자에게 입력되어 보상 신호(식 (10))를 계산한다. 이렇게 수집된 데이터는 버퍼에 저장되고, 충분한 샘플이 모이면 <strong>미니배치 학습</strong>을 수행한다. 판별자 <span class="math inline">D</span>는 식 (8)의 오차함수를 따라 업데이트되고, 정책 <span class="math inline">\pi</span>는 PPO 업데이트를 통해 개선된다. 이때 Advantage 추정에는 GAE(<span class="math inline">\lambda</span>) 방법을 사용하고, 가치함수는 TD(<span class="math inline">\lambda</span>) 타깃으로 학습시켰다. 이러한 과정을 반복하며, 판별자는 현재 정책의 부족한 부분에 대한 신호를 제공하고 정책은 그에 맞춰 참조 동작과의 오차를 줄여나가도록 훈련된다.</p>
+<p><strong>모션 트래킹 성능 비교 (6.4):</strong> 표 1, 2에는 인간형 캐릭터와 로봇의 다양한 동작에 대해 ADD, DeepMimic, AMP 방법으로 학습한 결과의 <strong>평균 위치 오차</strong>(루트 및 관절 위치) 및 <strong>관절 속도 오차</strong>(움직임의 떨림 정도)가 정리되어 있다. 전반적으로 <strong>ADD는 DeepMimic와 대등한 수준의 추적 정확도</strong>를 보이고, <strong>AMP에 비해 현저히 낮은 오차</strong>를 나타냈다. 즉, DeepMimic처럼 세밀한 모션 추적이 가능하면서도, 복잡한 보상 함수를 수동 설계한 DeepMimic의 성능에 맞먹는 결과를 ADD가 달성한 것이다.</p>
+<p><strong>주요 실험 관찰 및 분석:</strong></p>
+<ul>
+<li><strong>다양한 난이도의 동작 재현:</strong> DeepMimic 기법은 수동 보상 설계의 한계로 인해 특정 어려운 동작에서 실패하는 반면, ADD는 이러한 동작까지 성공적으로 모방했다. 예를 들어, <strong>파쿠르 동작</strong>인 더블콩(Double Kong) 점프의 경우 DeepMimic로 학습한 정책은 장애물을 뛰어넘지 못하고 뛰다가 걸려 제자리에서 러닝 동작만 반복했지만, <strong>ADD 정책은 상자를 완전히 뛰어넘으며 인간 시연과 동일한 접지 동작까지 재현</strong>해냈다. DeepMimic으로 학습한 정책들은 보상이 일반화되지 않아 <strong>특정 고난도 동작에서는 아예 성공하지 못하거나 실패 동작을 반복하는 현상</strong>이 나타난 반면, ADD는 보상 구조가 자동 조정되므로 다양한 난도의 동작에서도 높은 성공률을 보였다.</li>
+<li><strong>모션 품질 (감속도 및 떨림):</strong> ADD는 출력 모션의 부드러움 측면에서도 장점을 보였다. DeepMimic으로 학습한 정책들은 대규모 춤 동작(DanceDB 데이터셋)을 추적할 때 <strong>관절 속도 프로파일에 큰 진동</strong>이 나타나 모션이 다소 불안정하고 떨리는 경향이 있었으나, <strong>ADD 정책은 일관되게 매끄러운 움직임</strong>을 생성했다. 이는 표에 나타난 <strong>관절 속도 추적 오차</strong> 값이 DeepMimic 대비 ADD에서 낮게 측정된 것으로도 확인된다. 즉, ADD는 세부적인 움직임의 안정성 측면에서도 우수한 성능을 보였다.</li>
+<li><strong>보상 튜닝에 대한 의존성:</strong> DeepMimic의 큰 단점 중 하나는 <strong>많은 보상 세부항목의 가중치와 스케일을 사람이 조정해야 한다는 점</strong>이다. 실험에서는 이러한 파라미터 조합을 미세 조정하지 못하면 성능이 저하되고 학습 안정성이 떨어지는 사례가 다수 관찰되었다. 반면 ADD는 보상 함수를 학습을 통해 자동으로 구성하기 때문에, <strong>전문가의 개입 없이도</strong> 다양한 목표 간 균형을 맞추어 준다. 논문 부록의 실험에서도 DeepMimic 보상 파라미터의 민감도 분석을 통해 수동 설계의 어려움이 강조되었으며, ADD의 <strong>강건성</strong>이 부각되었다고 보고된다.</li>
+<li><strong>학습 안정성과 일관성:</strong> DeepMimic은 무작위 초기화 시드에 따라 학습 결과의 편차가 큰 반면, ADD는 <strong>일관된 학습 성과</strong>를 보였다. 예를 들어, 백플립이나 옆재주넘기(cartwheel) 동작을 학습할 때 DeepMimic 정책들은 절반 정도의 시드에서 국소 최적해에 빠져 <strong>학습이 조기 정체</strong>되었지만, <strong>ADD 정책들은 모든 시드에서 안정적으로 수렴</strong>하여 목표 동작을 따라갔다. 논문의 Figure 4 학습곡선 비교에서도 ADD 곡선은 시드마다 유사한 추이를 보인 반면 DeepMimic 곡선은 일부 시드에서 성능이 크게 떨어지는 모습이 확인된다.</li>
+<li><strong>AMP 기법과의 성능 차이:</strong> 앞서 언급했듯이 AMP(적대적 모션 프라이어)는 <strong>정확한 모션 추적을 목적으로 설계되지 않았기 때문에</strong>, 추적 성능 지표에서 ADD/DeepMimic 대비 현저히 낮은 결과를 보였다. AMP 정책은 주어진 모션의 “스타일”은 살렸지만 세부 자세나 타이밍은 원 참조와 동떨어진 동작을 만들어내어, <strong>숫자 상으로도 큰 위치 오차를 기록</strong>하였다. 이는 ADD가 AMP와 유사한 적대적 학습 구조를 활용하면서도 목적 함수를 변경하여 <strong>정밀 추적으로 목표를 전환</strong>함으로써 얻은 이득이라 볼 수 있다.</li>
+<li><strong>ADD의 한계:</strong> ADD도 몇 가지 한계가 관찰되었다. 첫째, <strong>극도로 난이도가 높은 매우 동적인 동작</strong>(예: 사이드플립(sideflip)이나 구르기 등)의 경우, ADD 정책이 완벽한 동작을 학습하지 못하고 일부 단순화된 형태로 수렴하는 현상이 있었다. 예를 들어 사이드플립의 경우 에이전트가 공중회전을 끝까지 수행하지 않고 중간에 멈춰 서는 식이다. 논문에 따르면 이러한 경우 DeepMimic 등의 기존 기법에서는 <strong>조기 종료(early termination)</strong> 규칙을 추가하여 동작을 끝까지 못하면 실패로 간주하는 장치를 썼지만, 본 평가에서는 모방 목표만으로 학습시키기 위해 그런 휴리스틱을 의도적으로 생략한 결과라고 한다. 둘째, ADD는 전진 이동 계열 동작(달리기, 보행 등)에서 DeepMimic 대비 <strong>루트 위치 추적 정확도</strong>가 약간 떨어지는 경향을 보였다. 연구진은 이는 루트의 좌표 오차가 차분 벡터 내 수많은 요소 중 일부(3차원)에 불과하고, 또 GP로 인해 판별자가 특정 요소에 과도한 가중치를 두기 어려워지면서 발생한 현상으로 해석했다. 향후에는 이러한 부분에서 ADD의 정밀도를 높이는 추가 기법(예: 루트 이동에 대한 가중치 보정 등)이 고려될 수 있을 것이다.</li>
+</ul>
+<p>전반적으로, ADD를 통한 모션 트래킹은 <strong>수작업 보상 없이도</strong> DeepMimic 수준의 고품질 모션 재현을 이루었고, 다양한 동작에 걸쳐 <strong>강건하고 안정적인 학습</strong>이 가능함을 입증했다. 사람 주도의 복잡한 보상 설계 없이도 높은 성능을 얻을 수 있다는 점에서, ADD는 <strong>범용 캐릭터 모션 제어</strong>에 한 걸음 더 다가간 의미 있는 결과를 보여준다.</p>
+</section>
+<section id="장-non-motion-imitation-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="장-non-motion-imitation-tasks">7장: Non-Motion-Imitation Tasks</h2>
+<p>ADD 기법의 <strong>범용성</strong>을 검증하기 위해, 논문에서는 모션 트래킹이 아닌 표준 강화학습 과제에도 ADD를 적용해 보았다. 선택된 과제는 (1) 다목적 보상으로 정의된 2D 워커(2D Walker) 달리기와 (2) <strong>사족보행 로봇 Unitree Go1</strong>의 목표 속도 추종 보행이다. 전자는 일정 속도로 앞으로 달리는 것과 에너지 효율 등의 다중 목표를 동시에 최적화하는 환경이고, 후자는 사용자가 명령하는 선속도/회전속도에 로봇이 따라가면서도 안정적인 보행을 유지하도록 하는 과제이다. 각각 기존 연구인 Tassa 등과 Rudin 등에서 제시된 <strong>수동 설계 보상 함수</strong>가 존재하며, 논문은 ADD로 학습한 정책과 이 수동 보상 기반 정책을 비교 평가하였다.</p>
+<p><strong>훈련 설정 (7.1):</strong> ADD를 적용한 경우에도 기본적으로 PPO 알고리즘을 사용하였고, 학습 절차는 앞서의 Algorithm&nbsp;1과 유사하다. 차이점은 참고 모션 시퀀스가 없다는 점으로, 그 대신 환경에서 제공하는 <strong>목표 상태</strong>를 이용하여 차분 벡터를 구성한다. 예를 들어 2D 워커의 경우 “목표 수평 속도”가 주어지며, 이 값과 현재 워커의 속도 간 오차가 차분 벡터의 한 성분이 된다. Go1 로봇의 경우 사용자가 실시간으로 보행 속도 명령을 주면, 이 <strong>명령 속도 벡터</strong>(전진, 회전 등)와 로봇의 실제 이동 속도 간 차이가 차분 벡터의 주요 성분으로 입력된다. 이 외에도 각각의 과제에서 추가로 고려된 목표(예: 워커의 균형 유지, 로봇의 몸체 기울기 억제 등)의 오차 항목들이 차분 벡터로 정의되었으며, 세부 구성은 논문 부록에 제공된다. 수동 보상 방식의 경우 문헌에 제시된 대로 보상 함수를 구성하여 동일한 PPO 설정으로 정책을 학습시켰다.</p>
+<p><strong>결과 및 비교 (7.2):</strong> 두 과제 모두에서 <strong>ADD로 학습한 정책은 수동 설계 보상으로 학습한 정책에 견줄만한 성능</strong>을 보였다. 먼저 2D 워커 달리기 과제를 보면, ADD를 사용한 워커는 똑바로 선 자세로 매우 빠르게 달리는 행동을 습득하였고, 그 동작의 질도 수동 보상으로 학습된 정책과 <strong>유사한 수준</strong>이었다. Figure&nbsp;5의 스냅샷을 보면 ADD 정책이나 수동 보상 정책 모두 워커가 목표 속도에 맞춰 안정적으로 달리고 있음을 알 수 있다. 학습 곡선(Figure&nbsp;7) 상에서도 <strong>최종 에피소드 리턴</strong>이 ADD와 수동 보상 실험군 사이에 거의 차이가 없었고, <strong>샘플 효율</strong>(주어진 학습 단계 수 내에 도달한 성능)도 유사했다. 다만 흥미로운 점은 ADD 정책이 <strong>학습 과정의 일관성</strong> 측면에서 더 나은 모습을 보였다는 것이다. 10개 시드에 대한 학습 곡선을 비교한 결과, 수동 보상 방식은 시드마다 수렴 속도와 최종 성능 편차가 다소 크게 나타난 반면 ADD는 대부분의 시드에서 매우 유사한 형태의 곡선을 그리며 안정적으로 수렴했다.</p>
+<p>Go1 사족보행 로봇의 경우에도 ADD를 통한 학습 결과가 <strong>기존 수동 보상 기반 제어기와 질적으로 달랐지만 우수한 동작 특성</strong>을 보였다. Figure&nbsp;6에서 (a)는 ADD로 학습한 로봇, (b)는 수동 보상으로 학습한 로봇의 보행 모습을 보여주는데, ADD 정책은 발을 높게 들어 올리고 보폭을 길게 내딛는 <strong>자연스러운 걸음걸이</strong>가 나타난 반면, 기존 수동 보상 정책은 상대적으로 <strong>발을 질질 끌며 자잘하게 걷는</strong> 모습을 보인다. 이는 수동 보상 함수가 보행 안정성을 위해 속도를 낮추고 보폭을 줄이도록 설계되었기 때문으로 추정되며, 반면 ADD는 보상 가중치를 자체적으로 조절하면서 <strong>속도와 안정성 사이에서 균형 잡힌 보행</strong>을 만들어낸 것으로 해석된다. 실제 측정 지표를 보면, ADD 정책이 목표 속도 추종에서는 약간 뒤쳐졌으나 롤/피치 <strong>몸체 기울기</strong>가 더 적고 관절 <strong>가속도 변화</strong>도 작아 전반적으로 <strong>동작이 안정적이고 컨트롤이 부드러움</strong>을 알 수 있다. 구체적으로, 수동 보상 정책은 지면과의 작은 불균형에도 빠르게 대응하려다 보니 몸체가 좌우로 약간씩 흔들리고(torso 롤/피치 진동) 다리 움직임이 불규칙해졌는데, ADD 정책은 오히려 약간의 속도 오차를 감수하는 대신 <strong>흔들림 없는 안정적인 자세</strong>를 유지하며 <strong>일정한 리듬</strong>으로 보행하는 양상을 보였다. 이러한 특징은 실제 로봇 하드웨어에 적용할 때 <strong>구동기에 가해지는 부담을 줄이고 제어 안정성을 높이는 장점</strong>이 될 수 있다고 논문은 언급한다.</p>
+<p>전반적으로 ADD는 <strong>다양한 과제와 로봇 플랫폼에 걸쳐 수동 설계 보상에 필적하는 모션 품질, 일관된 학습, 높은 샘플 효율</strong>을 달성하면서도 보상 함수를 손수 튜닝해야 하는 번거로움을 없앨 수 있음을 보여주었다. 물론 사람에 의해 잘 조정된 보상 함수를 사용할 경우에도 충분한 성능을 얻을 수 있지만, 그러한 튜닝에는 많은 시간과 전문성이 요구된다. 반면 ADD는 하나의 원칙적인 프레임워크로서 여러 형태의 다목적 RL 문제에 적용 가능하며, 매번 새로운 보상 설계 없이도 높은 수준의 정책을 학습할 수 있다는 <strong>일반성</strong>을 입증하였다.</p>
+</section>
+<section id="기존-adversarial-motion-prior-기법과의-차별점" class="level2">
+<h2 class="anchored" data-anchor-id="기존-adversarial-motion-prior-기법과의-차별점">기존 Adversarial Motion Prior 기법과의 차별점</h2>
+<p>본 연구에서 제안한 ADD 기법은 이전의 <strong>Adversarial Motion Prior (AMP)</strong> 접근법과는 목표 설정과 판별자 학습 방식에서 분명한 차이를 보인다. AMP는 Peng 등이 제안한 기법으로, <strong>모션 데이터셋</strong>으로부터 판별자를 학습시켜 에이전트의 동작이 그 데이터 분포와 유사한지를 판단하는 <strong>스타일 보상</strong>을 제공한다. 이를 통해 일일이 보상 함수를 설계하지 않아도 캐릭터가 다양한 모션 데이터의 <strong>전반적 스타일</strong>을 모방하도록 만들 수 있으며, 학습 과정에서 판별자가 알아서 어떤 모션을 수행할지 선택하게 된다. 예를 들어 AMP는 춤이나 무술 등 여러 모션 클립으로 학습한 판별자를 통해, 에이전트가 특정 클립을 그대로 따라하지는 않아도 그 <strong>전체 모션군(群)의 특징</strong>을 살린 새로운 동작을 만들어낼 수 있다. 이러한 <strong>분포 매칭</strong> 기반 접근은 큰 모션 데이터셋에서도 동작을 자연스럽게 합성하고, 여러 스킬을 자동으로 이어붙이는 <strong>자유로움</strong>을 부여하지만, <strong>개별 모션 클립을 정확히 재현</strong>해야 하는 경우에는 한계를 드러낸다. 실제로 AMP를 비롯한 기존 적대적 모방 기법들은 목표 동작의 세부 요소보다 전체적인 형태만 맞추면 판별자를 속일 수 있으므로, 결과적으로 <strong>정밀한 모션 추적 성능은 떨어지는</strong> 경향이 있었다.</p>
+<p>반면 ADD는 애초에 <strong>지정된 목표 동작 또는 목표 조건을 정확히 만족</strong>시키는 것을 목적으로 설계되었다. 판별자가 참고 동작과의 <strong>차분 벡터</strong>를 직접 입력으로 받아 이상적 솔루션(0 벡터)에 가까운지를 판별하므로, 에이전트는 <strong>모든 세부 목표에서 오차를 줄이는 방향으로</strong> 학습하게 된다. 이는 AMP처럼 광범위한 데이터 분포를 흉내내는 대신 <strong>단일 태스크에 최적화된 동작</strong>을 생성한다는 의미이다. 또한 ADD 판별자는 <strong>이상적 해의 개념(0 벡터)</strong>만을 활용해 학습되므로, 실제 모션 데이터를 양성 샘플로 다수 제공할 필요도 없다. 즉, AMP가 풍부한 모션 데이터를 필요로 하는 반면 ADD는 주어진 과제 자체만으로도 학습이 가능하며, 필요한 경우 한두 개의 시연(trajecotry)을 참고하여 정확도를 더욱 높일 수 있다. 결과적으로 ADD는 <strong>정확한 모션 모방</strong>이 요구되는 상황에 적합하며, AMP와 같은 기법이 다루기 어려운 세밀한 동작 복제 문제를 해결할 수 있다. 한편, AMP에서 보여준 것처럼 대규모 데이터셋으로 다양한 스타일을 학습하는 기능은 ADD에는 없으므로, 향후에는 ADD와 모션 프라이어 개념을 결합하여 <strong>정확도와 다양성</strong>을 동시에 추구하는 방향도 고려해볼 수 있을 것이다.</p>
+<!--
+
+## ADD의 실제 로봇 dexterous hand 조작 적용 방안
+
+정밀한 로봇 손 동작에 강화학습을 적용하려면 기존에는 과제별로 복잡한 보상 함수를 설계해야 한다는 어려움이 지적되어 왔다10. ADD 기반 접근법은 이런 보상 설계 부담을 줄여줄 수 있는 잠재력이 있으며, 이를 실제 **고성능 로봇 손**(예: 다자유도 로봇 손)의 조작 과제에 적용하기 위해 다음과 같은 단계를 고려할 수 있다:
+
+1. **사실적인 물리 시뮬레이션 환경 구축:** 우선 목표로 하는 로봇 손과 작업 환경의 정확한 물리 시뮬레이터를 준비한다. 로봇 손의 관절 구조, 관성, 마찰 특성 등을 실제 하드웨어에 가깝게 모델링하고, 조작 대상 물체의 물리 특성(질량, 마찰계수 등)도 실제에 맞게 세팅한다. 예를 들어, 로봇 손으로 작은 물체를 잡아 회전시키는 과제를 생각하면, 해당 물체의 3D 모델과 물리 속성을 시뮬레이션에 구현하고, 손가락 끝의 접촉 마찰 모델도 탑재해야 한다. 시뮬레이터는 MuJoCo, Bullet, IsaacGym 등의 고정밀 물리 엔진을 활용할 수 있으며, 필요하면 접촉 마찰 계수나 관절 감쇠 계수를 실제에 맞게 보정한다. 또한 **도메인 랜덤화** 기법을 활용하여 마찰계수, 물체 질량, 센서 노이즈 등을 약간씩 무작위로 변동시킴으로써, 정책이 정확한 물리 파라미터에 덜 민감하고 현실 변화에 강인하도록 훈련한다.
+
+2. **과제 정의 및 차분 벡터 구성:** 수행하려는 손 조작 작업의 **목표들을 명확히 정의**하고 이를 차분 벡터의 각 성분으로 설정한다. 두 가지 접근이 가능하다: (a) 신뢰할 만한 **시연 동작**이 존재하는 경우 (예: 인간 손동작 모캡 데이터나 원격 조종으로 얻은 로봇 손 동작), 그 **레퍼런스 동작**을 따라하도록 ADD를 적용한다. 이때 시뮬레이터에서 로봇 손의 관절 각도 시퀀스와 물체의 목표 경로를 참고 모션으로 제공하고, 각 시점마다 에이전트 손의 상태와 참고 상태의 차이를 차분 벡터로 만들어 판별자에게 입력한다. (b) 직접적인 시연 데이터가 없는 경우, 조작 과제 자체를 다목적 강화학습 문제로 정식화한다. 예를 들어 "물체를 원하는 자세로 회전시키면서 떨어뜨리지 않기" 과제의 경우, **물체의 현재 자세와 목표 자세 간 오차**, **물체를 놓칠 위험 지표**(예: 물체의 무게 중심이 손가락 그립 내부에 있는지 여부), **동작 효율**(예: 손가락 힘 또는 관절 속도의 급격한 변화) 등을 목표 항목으로 정의할 수 있다. 이러한 각 항목에 대해 이상적인 목표(예: 자세 오차 0, 낙하 위험 0, 가속도 변화 최소 등)를 설정하고, 현재 상태와의 차이를 차분 벡터로 만든다. 이처럼 **정밀 조작에서 고려해야 할 여러 요소**들을 하나의 벡터로 묶어내면, ADD 판별자가 학습을 통해 이들의 상대적 중요도를 자동으로 조정해줄 것이다.
+
+3. **ADD 기반 정책 학습:** 차분 벡터로 정의된 다목적 보상을 사용하여 로봇 손의 제어 정책을 학습시킨다. 학습은 시뮬레이터에서 진행하며, 논문의 모션 트래킹 경우와 마찬가지로 PPO 등의 RL 알고리즘과 ADD 판별자의 적대적 학습을 병행한다. 로봇 손의 **행동 공간**은 각 관절의 목표 위치 또는 토크로 설정할 수 있는데, 실제 적용에서는 **저수준 PD 제어**를 병행하는 것이 안정적이다. 예를 들어 정책이 각 관절의 목표 각도를 출력하면, 시뮬레이터 상에서 해당 각도를 추종하는 PD 제어기를 통해 모터 토크를 적용한다. 이렇게 하면 정책이 직접 토크를 출력할 때 발생할 수 있는 진동을 줄이고, 실제 하드웨어에서의 제어 이슈(고주파 제어 등)를 완화하여 학습을 용이하게 할 수 있다. 학습 초기에는 무작위 정책으로 인해 물체를 자주 떨어뜨리는 등 실패가 빈번할 수 있으므로, **안전 장치**도 필요하다. 예를 들어 물체를 떨어뜨리면 에피소드를 초기화하거나, 손가락에 과도한 힘이 가해지면 패널티를 주는 등의 장치를 시뮬레이션에 넣어 극단적인 실패 상황을 줄인다. 판별자 $D$는 매 시뮬레이션 스텝마다 현재 조작 상태의 "성공 여부"를 점수로 출력하고, 정책은 이 보상을 최대화하도록 업데이트된다. 충분한 학습 시간을 거치면, 정책은 주어진 다목적 목표들을 충족시키면서도 물체를 안정적으로 조작하는 행동 전략을 익힐 것이다.
+
+4. **센서 입력 및 관찰 공간 설계:** 실제 로봇 손에 장착된 **센서들의 정보**가 학습에 충분히 활용되도록, 시뮬레이터의 관찰 공간을 구성한다. 예를 들어 각 관절의 **엔코더 값(각도)** 및 **각속도**는 기본적인 관찰에 포함하고, 손가락에 힘/토크 센서나 촉각 센서가 있다면 **물체와의 접촉 여부**나 **미끄러짐 정도**를 감지하는 신호로 활용할 수 있으므로 시뮬레이션에서도 해당 값을 모사하여 상태에 넣는다. 특히 **조작 대상 물체의 위치와 자세**는 매우 중요한데, 실제 로봇에서는 카메라나 위치 센서로 물체의 포즈를 추정해야 한다. 따라서 시뮬레이션에서는 이상적인 물체의 포즈 정보를 사용하되, 학습 시 **센서 지연 및 노이즈**를 모방하여 약간의 오차를 더해준다. 예를 들어 카메라 인식 지연 0.1초, 위치/자세에 소량의 무작위 노이즈를 추가하여, 정책이 현실 센서의 한계 내에서도 동작하도록 만든다. 이처럼 관찰 공간을 현실의 센서 출력과 정합시키면, 학습된 정책을 **실제 로봇 손의 센서 입력만으로 동작**시킬 수 있게 된다. 또한 시뮬레이션 상에서 모든 정보를 이용해 학습하는 것을 지양하고, **필요 최소한의 관찰**만으로 학습하도록 해 현실 적용 시 과적합을 피한다.
+
+5. **구동기 한계 및 제어 안정성 고려:** 실제 로봇 손의 모터/액추에이터는 **출력 한계**(최대 토크, 속도 등)가 있으므로, 시뮬레이션에서 이를 반드시 모델링해야 한다. 각 관절 구동기에 포화 한계를 설정하여 정책이 현실에서 불가능한 힘이나 속도를 요구하지 않도록 하고, 관절별 속도 제한도 시뮬레이션에 반영한다. 예를 들어 1초에 360도를 회전하는 등의 비현실적인 동작은 시뮬레이터에서 구현 단계부터 불가능하게 만들어, 정책이 그런 행동을 탐색하지 못하게 유도한다. 추가로, 학습 보상에 **부드러운 제어에 대한 페널티**를 포함하는 것이 유용하다. 관절 속도 변화나 가속도 변화에 대해 코스트를 주면, 정책이 불필요하게 급격한 손가락 움직임을 피하고 **완만하고 안정적인 조작 경로**를 택하게 된다10. 이렇게 하면 **실제 로봇에서도 제어 신호가 매끄럽게 출력**되어 구동기의 부담을 줄이고 시스템의 안정성이 높아진다10. 또한 시뮬레이터 단계에서부터 관절 각도의 안전 한계, 자기 충돌(손가락 끼리 부딪힘) 방지 등을 적용하여, 정책이 물리적으로 불가능하거나 위험한 동작을 학습하지 않도록 해야 한다. 이러한 조치들은 실제 로봇 실험 시 장비 손상을 막고 안정적인 동작을 구현하기 위한 필수 조건이다.
+
+6. **실제 적용 및 반복 튜닝:** 시뮬레이션에서 충분히 학습된 정책은 실제 로봇 손에 이식하여 테스트한다. 초기에 **낮은 속도와 단순한 작업**부터 시작하여, 시뮬레이션과 현실 간의 차이로 인한 예기치 않은 거동이 없는지 확인한다. 만약 물체를 놓치는 등 문제가 발생하면, 시뮬레이터의 마찰 계수를 조정하거나 추가 학습을 통해 정책을 보정한다. 필요에 따라 **실환경에서의 추가 강화학습** 또는 **파인튜닝**을 고려할 수 있다. 도메인 랜덤화를 충분히 했다면 큰 보정 없이도 동작할 확률이 높지만, 불가피하게 현실에서 수정이 필요할 경우 작은 학습률로 판별자와 정책을 계속 학습시켜 현실 데이터에 적응시킨다. 이때에도 **안전 장치**를 두고, 사람의 모니터링 하에 점진적으로 Exploration을 늘려가는 보수적인 접근이 요구된다.
+
+요약하면, ADD 기법을 로봇 손 정밀 조작에 적용하려면 **고충실도 시뮬레이션**에서 시작해 **다목적 보상 정의** 및 **안정적인 학습**을 수행하고, **현실 센서/구동기 특성**을 충분히 반영한 뒤 실제 하드웨어로 전이하는 절차를 거쳐야 한다. 이러한 접근을 통해 ADD가 제시하는 **자동 보상 학습**의 이점을 로봇 핸드 조작에도 활용할 수 있을 것이다. 실제 OpenAI의 손 마스터(OpenAI Dactyl) 사례 등에서 인간이 보상 함수를 세심하게 설계해야 했던 부분을10, ADD를 이용하면 데이터나 목표 상태만으로 대체할 수 있으리라 기대된다. 궁극적으로 물리 기반 시뮬레이션으로 학습한 ADD 정책이 현실 로봇 손에 원활히 이식된다면, **정밀 손 조작** 분야에서 강화학습의 실용화를 앞당기고 더 복잡한 조작 스킬을 자동 학습하는 기반을 제공할 것으로 전망된다.
+
+-->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
