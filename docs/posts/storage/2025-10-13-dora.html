@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-13">
+<meta name="description" content="Making robotic applications fast and simple!">
+
+<title>🧩DORA – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> 1️⃣ Introduction</a>
+  <ul class="collapse">
+  <li><a href="#핵심-특징-요점-정리" id="toc-핵심-특징-요점-정리" class="nav-link" data-scroll-target="#핵심-특징-요점-정리"><span class="header-section-number">1.1</span> 핵심 특징 (요점 정리)</a></li>
+  <li><a href="#아키텍처와-동작-방식간단한-개념" id="toc-아키텍처와-동작-방식간단한-개념" class="nav-link" data-scroll-target="#아키텍처와-동작-방식간단한-개념"><span class="header-section-number">1.2</span> 아키텍처와 동작 방식(간단한 개념)</a></li>
+  <li><a href="#설치" id="toc-설치" class="nav-link" data-scroll-target="#설치"><span class="header-section-number">1.3</span> 설치</a></li>
+  <li><a href="#예제생태계" id="toc-예제생태계" class="nav-link" data-scroll-target="#예제생태계"><span class="header-section-number">1.4</span> 예제·생태계</a></li>
+  <li><a href="#언제-dora를-쓰면-좋나" id="toc-언제-dora를-쓰면-좋나" class="nav-link" data-scroll-target="#언제-dora를-쓰면-좋나"><span class="header-section-number">1.5</span> 언제 DORA를 쓰면 좋나?</a></li>
+  <li><a href="#장단점-주의사항" id="toc-장단점-주의사항" class="nav-link" data-scroll-target="#장단점-주의사항"><span class="header-section-number">1.6</span> 장단점 / 주의사항</a></li>
+  </ul></li>
+  <li><a href="#간단한-dora-노드rust-템플릿-ros2-연동-아키텍처브릿지-예시-포함" id="toc-간단한-dora-노드rust-템플릿-ros2-연동-아키텍처브릿지-예시-포함" class="nav-link" data-scroll-target="#간단한-dora-노드rust-템플릿-ros2-연동-아키텍처브릿지-예시-포함"><span class="header-section-number">2</span> 2️⃣ 간단한 Dora 노드(Rust) 템플릿 + ROS2 연동 아키텍처(브릿지 예시 포함)</a>
+  <ul class="collapse">
+  <li><a href="#목표-요약" id="toc-목표-요약" class="nav-link" data-scroll-target="#목표-요약"><span class="header-section-number">2.1</span> 목표 요약</a></li>
+  <li><a href="#rust-노드-템플릿-실행-가능한-최소-예제" id="toc-rust-노드-템플릿-실행-가능한-최소-예제" class="nav-link" data-scroll-target="#rust-노드-템플릿-실행-가능한-최소-예제"><span class="header-section-number">2.2</span> Rust 노드 템플릿 (실행 가능한 최소 예제)</a></li>
+  <li><a href="#간단한-dataflow.yml-예시-graphsdataflow.yml" id="toc-간단한-dataflow.yml-예시-graphsdataflow.yml" class="nav-link" data-scroll-target="#간단한-dataflow.yml-예시-graphsdataflow.yml"><span class="header-section-number">2.3</span> 간단한 <code>dataflow.yml</code> 예시 (graphs/dataflow.yml)</a></li>
+  <li><a href="#ros2와의-연동-아키텍처-실행-흐름-구체적" id="toc-ros2와의-연동-아키텍처-실행-흐름-구체적" class="nav-link" data-scroll-target="#ros2와의-연동-아키텍처-실행-흐름-구체적"><span class="header-section-number">2.4</span> ROS2와의 연동 — 아키텍처 &amp; 실행 흐름 (구체적)</a>
+  <ul class="collapse">
+  <li><a href="#아키텍처-개요-텍스트-다이어그램" id="toc-아키텍처-개요-텍스트-다이어그램" class="nav-link" data-scroll-target="#아키텍처-개요-텍스트-다이어그램"><span class="header-section-number">2.4.1</span> 아키텍처 개요 (텍스트 다이어그램)</a></li>
+  <li><a href="#구체적-연동-예시-rust-쪽-코드-흐름-요약" id="toc-구체적-연동-예시-rust-쪽-코드-흐름-요약" class="nav-link" data-scroll-target="#구체적-연동-예시-rust-쪽-코드-흐름-요약"><span class="header-section-number">2.4.2</span> 구체적 연동 예시 (Rust 쪽 코드 흐름 요약)</a></li>
+  <li><a href="#python-예시간단-문서에서-가져온-흐름" id="toc-python-예시간단-문서에서-가져온-흐름" class="nav-link" data-scroll-target="#python-예시간단-문서에서-가져온-흐름"><span class="header-section-number">2.4.3</span> Python 예시(간단) — 문서에서 가져온 흐름</a></li>
+  </ul></li>
+  <li><a href="#배포실행-체크리스트-실무-팁" id="toc-배포실행-체크리스트-실무-팁" class="nav-link" data-scroll-target="#배포실행-체크리스트-실무-팁"><span class="header-section-number">2.5</span> 배포/실행 체크리스트 (실무 팁)</a></li>
+  </ul></li>
+  <li><a href="#advanced" id="toc-advanced" class="nav-link" data-scroll-target="#advanced"><span class="header-section-number">3</span> 3️⃣ Advanced</a>
+  <ul class="collapse">
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">3.1</span> 요약</a></li>
+  <li><a href="#a.-완전한-간단한-dora-노드-rust-템플릿-실행-가능한-예제" id="toc-a.-완전한-간단한-dora-노드-rust-템플릿-실행-가능한-예제" class="nav-link" data-scroll-target="#a.-완전한-간단한-dora-노드-rust-템플릿-실행-가능한-예제"><span class="header-section-number">3.2</span> A. 완전한 “간단한 Dora 노드 (Rust) 템플릿” (실행 가능한 예제)</a>
+  <ul class="collapse">
+  <li><a href="#rust-노드코드-rust-heartbeat-node" id="toc-rust-노드코드-rust-heartbeat-node" class="nav-link" data-scroll-target="#rust-노드코드-rust-heartbeat-node"><span class="header-section-number">3.2.1</span> Rust 노드(코드) — <code>rust-heartbeat-node</code></a></li>
+  <li><a href="#간단한-dataflow.yml-dora-workspacegraphsdataflow.yml" id="toc-간단한-dataflow.yml-dora-workspacegraphsdataflow.yml" class="nav-link" data-scroll-target="#간단한-dataflow.yml-dora-workspacegraphsdataflow.yml"><span class="header-section-number">3.2.2</span> 간단한 <code>dataflow.yml</code> (dora-workspace/graphs/dataflow.yml)</a></li>
+  </ul></li>
+  <li><a href="#b.-ros2와-연동하는-구체적-아키텍처-설계브릿지-예시-포함" id="toc-b.-ros2와-연동하는-구체적-아키텍처-설계브릿지-예시-포함" class="nav-link" data-scroll-target="#b.-ros2와-연동하는-구체적-아키텍처-설계브릿지-예시-포함"><span class="header-section-number">3.3</span> B. ROS2와 연동하는 구체적 아키텍처 설계(브릿지 예시 포함)</a>
+  <ul class="collapse">
+  <li><a href="#ros2-python-퍼블리셔서브스크라이버-토이" id="toc-ros2-python-퍼블리셔서브스크라이버-토이" class="nav-link" data-scroll-target="#ros2-python-퍼블리셔서브스크라이버-토이"><span class="header-section-number">3.3.1</span> ROS2 Python 퍼블리셔/서브스크라이버 (토이)</a></li>
+  <li><a href="#dora-ros2-브리지를-통한-매핑설계-예시" id="toc-dora-ros2-브리지를-통한-매핑설계-예시" class="nav-link" data-scroll-target="#dora-ros2-브리지를-통한-매핑설계-예시"><span class="header-section-number">3.3.2</span> Dora ↔︎ ROS2 브리지를 통한 매핑(설계 &amp; 예시)</a></li>
+  </ul></li>
+  <li><a href="#c.-컨테이너화-docker-docker-compose-ros2-dora-rust-node" id="toc-c.-컨테이너화-docker-docker-compose-ros2-dora-rust-node" class="nav-link" data-scroll-target="#c.-컨테이너화-docker-docker-compose-ros2-dora-rust-node"><span class="header-section-number">3.4</span> C. 컨테이너화 (Docker + docker-compose) — ROS2 + Dora + Rust node</a>
+  <ul class="collapse">
+  <li><a href="#dockerdockerfile.dora-dora-데몬cli-간단-release-바이너리-사용" id="toc-dockerdockerfile.dora-dora-데몬cli-간단-release-바이너리-사용" class="nav-link" data-scroll-target="#dockerdockerfile.dora-dora-데몬cli-간단-release-바이너리-사용"><span class="header-section-number">3.4.1</span> <code>docker/Dockerfile.dora</code> — dora 데몬/CLI (간단: release 바이너리 사용)</a></li>
+  <li><a href="#dockerdockerfile.ros2-ros2-humble-컨테이너" id="toc-dockerdockerfile.ros2-ros2-humble-컨테이너" class="nav-link" data-scroll-target="#dockerdockerfile.ros2-ros2-humble-컨테이너"><span class="header-section-number">3.4.2</span> <code>docker/Dockerfile.ros2</code> — ROS2 (humble) 컨테이너</a></li>
+  <li><a href="#dockerdockerfile.rustnode-rust-노드를-빌드해-런타임-바이너리만-담는-다단계-빌드" id="toc-dockerdockerfile.rustnode-rust-노드를-빌드해-런타임-바이너리만-담는-다단계-빌드" class="nav-link" data-scroll-target="#dockerdockerfile.rustnode-rust-노드를-빌드해-런타임-바이너리만-담는-다단계-빌드"><span class="header-section-number">3.4.3</span> <code>docker/Dockerfile.rustnode</code> — Rust 노드를 빌드해 런타임 바이너리만 담는 다단계 빌드</a></li>
+  <li><a href="#docker-compose.yml-간단-템플릿" id="toc-docker-compose.yml-간단-템플릿" class="nav-link" data-scroll-target="#docker-compose.yml-간단-템플릿"><span class="header-section-number">3.4.4</span> <code>docker-compose.yml</code> (간단 템플릿)</a></li>
+  </ul></li>
+  <li><a href="#전체-실행-절차" id="toc-전체-실행-절차" class="nav-link" data-scroll-target="#전체-실행-절차"><span class="header-section-number">3.5</span> 전체 실행 절차</a></li>
+  <li><a href="#구현운영-팁-트러블슈팅" id="toc-구현운영-팁-트러블슈팅" class="nav-link" data-scroll-target="#구현운영-팁-트러블슈팅"><span class="header-section-number">3.6</span> 구현/운영 팁 &amp; 트러블슈팅</a></li>
+  <li><a href="#추가-자료바로-확인해야-할-문서-링크-요약" id="toc-추가-자료바로-확인해야-할-문서-링크-요약" class="nav-link" data-scroll-target="#추가-자료바로-확인해야-할-문서-링크-요약"><span class="header-section-number">3.7</span> 추가 자료(바로 확인해야 할 문서 링크 요약)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">🧩DORA</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">dora</div>
+    <div class="quarto-category">ros2</div>
+    <div class="quarto-category">rust</div>
+    <div class="quarto-category">2025</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Making robotic applications fast and simple!
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 13, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>AI is booming! Robotic framework however hasn’t changed much in years… I totally agree!</p>
+</blockquote>
+<hr>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 1️⃣ Introduction</h1>
+<p>DORA(<strong>D</strong>ataflow-<strong>O</strong>riented <strong>R</strong>obotic <strong>A</strong>rchitecture)는 <strong>로봇/임베디드 AI 애플리케이션을 위한 데이터플로우 지향 미들웨어</strong>로, 노드(연산)를 그래프(파이프라인)로 정의하여 저지연, 조합가능(composable), 분산 실행을 목표로 설계된 프레임워크입니다.</p>
+<center>
+<img src="../../images/2025-10-13-dora/logo.svg" width="60%">
+</center>
+<center>
+<img src="../../images/2025-10-13-dora/1.png" width="75%">
+</center>
+<center>
+<img src="../../images/2025-10-13-dora/2.png" width="75%">
+</center>
+<section id="핵심-특징-요점-정리" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="핵심-특징-요점-정리"><span class="header-section-number">1.1</span> 핵심 특징 (요점 정리)</h2>
+<ul>
+<li><strong>데이터플로우 모델</strong>: 애플리케이션을 노드(프로세스/모듈)와 엣지(데이터 연결)로 구성된 그래프(파이프라인)로 정의합니다. 노드를 쉽게 교체·재사용할 수 있습니다.</li>
+<li><strong>저지연(Zero-copy) 설계</strong>: 자체 공유 메모리 서버와 <strong>Apache Arrow</strong>를 활용해 제로 카피(복사 없는) 데이터 전달을 지원하여 높은 성능을 냅니다.</li>
+<li><strong>멀티언어/멀티런타임</strong>: Rust로 핵심이 개발되었지만, 노드는 Rust/Python/C 등 다양한 언어로 구현할 수 있도록 노드 API를 제공합니다. (예: <code>dora-node-api</code> 크레이트 문서).</li>
+<li><strong>분산·조합 가능</strong>: 로컬 프로세스뿐 아니라 분산 환경에서 파이프라인을 구성해 실행할 수 있도록 설계되어 있습니다.</li>
+<li><strong>오픈 소스·라이선스</strong>: GitHub에 공개되어 있으며 Apache-2.0 라이선스를 사용합니다. (스타/포크 등 활동도 활발).</li>
+</ul>
+</section>
+<section id="아키텍처와-동작-방식간단한-개념" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="아키텍처와-동작-방식간단한-개념"><span class="header-section-number">1.2</span> 아키텍처와 동작 방식(간단한 개념)</h2>
+<ol type="1">
+<li><strong>노드(node)</strong>: 센서 입력, 모델 추론, 플래너, 로그 등 각각의 연산 단위를 노드로 구현합니다. 노드는 입력을 받고 출력(또는 여러 출력)을 발행합니다.</li>
+<li><strong>오퍼레이터(operator)</strong>: 노드 내부에서 데이터를 변환하거나 라우팅하는 작은 연산 단위로 볼 수 있습니다.</li>
+<li><strong>그래프 정의</strong>: <code>dataflow.yml</code> 같은 그래프 정의 파일로 노드 간 연결(파이프라인)을 선언하고, DORA 런타임이 이를 해석해 노드 간 통신을 설정합니다.</li>
+<li><strong>데이터 포맷</strong>: 성능을 위해 Arrow 포맷을 우선 추천하고, 공유 메모리로 데이터 버퍼를 주고받아 복사 비용을 줄입니다.</li>
+</ol>
+<p>(요약하면: <strong>작은 독립 프로세스들</strong>을 그래프처럼 연결해 데이터가 흐르도록 하고, 그 전달을 고성능으로 처리하는 구조입니다.)</p>
+</section>
+<section id="설치" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="설치"><span class="header-section-number">1.3</span> 설치</h2>
+<ul>
+<li>배포판(릴리스 ZIP)을 다운로드해 <code>$HOME/bin</code> 등 경로에 넣고 <code>dora --help</code>로 설치 확인. ([dora-rs.ai][6])</li>
+<li>Rust로 노드를 작성하려면 워크스페이스를 만들고 <code>Cargo.toml</code>에 노드/오퍼레이터 멤버를 추가한 뒤 예시처럼 노드 소스(바이너리)와 sink(로그 등)를 만듭니다. <code>dora-node-api</code>를 통해 입력/출력을 처리합니다.</li>
+<li>문서의 “Getting started” 가이드가 단계별 예제를 제공하니 따라 하면 기본 파이프라인을 실행해볼 수 있습니다.</li>
+</ul>
+</section>
+<section id="예제생태계" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="예제생태계"><span class="header-section-number">1.4</span> 예제·생태계</h2>
+<ul>
+<li><strong>dora-drives</strong>: 초심자용 자율주행 튜토리얼로, DORA로 자율주행 파이프라인을 만들어보는 단계별 가이드가 제공됩니다. 학습·데모용으로 유용합니다.</li>
+<li><strong>dora-lerobot</strong>, 기타 데모/허브 리포지토리들이 있고, 공식 사이트의 Guides/Blog/Examples를 통해 데모(예: Reachy 로봇 데모)와 연동 사례를 확인할 수 있습니다.</li>
+</ul>
+</section>
+<section id="언제-dora를-쓰면-좋나" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="언제-dora를-쓰면-좋나"><span class="header-section-number">1.5</span> 언제 DORA를 쓰면 좋나?</h2>
+<ul>
+<li><strong>여러 센서·모듈(카메라, 라이다, IMU, 모델 추론 등)을 조합해 저지연 파이프라인을 구성해야 할 때</strong>: 데이터 포맷(Arrow)과 공유 메모리 기반 전달이 유리합니다.</li>
+<li><strong>멀티언어(예: 일부 모듈은 Python, 성능 모듈은 Rust)로 구성된 시스템</strong>을 하나의 파이프라인으로 묶어야 할 때.</li>
+<li><strong>분산 환경</strong>(로컬 + 엣지 + 클라우드)에서 파이프라인을 분해·배치해 실행해야 하는 경우.</li>
+</ul>
+</section>
+<section id="장단점-주의사항" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="장단점-주의사항"><span class="header-section-number">1.6</span> 장단점 / 주의사항</h2>
+<ul>
+<li>장점
+<ul>
+<li>성능(제로카피)과 안전성(주요 코드가 Rust로 작성)으로 높은 처리량과 낮은 지연을 기대할 수 있습니다.</li>
+<li>모듈화가 잘 되어 있어 복잡한 파이프라인을 깔끔하게 관리할 수 있습니다.</li>
+</ul></li>
+<li>단점 / 고려사항
+<ul>
+<li><strong>학습곡선</strong>: 데이터플로우 개념과 Rust 기반 워크스페이스/크레이트 구조에 익숙해져야 합니다.</li>
+<li><strong>생태계 성숙도</strong>: ROS2 브릿지 등 확장들이 있지만(문서/예제 참고) 특정 하드웨어 드라이버나 상용 미들웨어와의 직접 통합은 추가 작업이 필요할 수 있습니다. (가이드·예제 활용 권장).</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>빠른 실습 팁</p>
+</blockquote>
+<ul>
+<li>먼저 공식 “Getting started” 예제를 따라해 <code>dataflow.yml</code>과 간단한 Rust 노드를 실행해 보세요. <code>dora-node-api</code> 문서를 참고하면 노드 입출력 처리 코드 예제를 쉽게 찾을 수 있습니다.</li>
+</ul>
+<!--
+## 참고자료 (공식)
+
+* GitHub 저장소(코드·이슈·릴리스) — dora-rs/dora. [1][1], [7][7], [8][8]
+* 공식 웹사이트 / 문서(소개 · Guides · Getting started) — dora-rs.ai. [2][2], [3][3], [4][4], [5][5], [6][6], [9][9]
+* dora-drives 튜토리얼(예제): dora-drives 리포지토리 및 가이드.
+
+
+[1]: https://github.com/dora-rs/dora "dora-rs/dora"
+[2]: https://dora-rs.ai/dora/ "Introduction - dora-rs"
+[3]: https://dora-rs.ai/ "dora-rs.ai"
+[4]: https://docs.rs/dora-node-api/latest/dora_node_api/ "dora_node_api - Rust"
+[5]: https://dora-rs.ai/dora/getting-started.html "Getting started - dora-rs"
+[6]: https://dora-rs.ai/docs/guides/Installation/installing/ "Installing"
+[7]: https://github.com/dora-rs/dora-drives "dora-rs/dora-drives"
+[8]: https://github.com/dora-rs/dora-lerobot "Lerobot boosted with dora"
+[9]: https://dora-rs.ai/docs/guides/ "Guides"
+-->
+</section>
+</section>
+<section id="간단한-dora-노드rust-템플릿-ros2-연동-아키텍처브릿지-예시-포함" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 2️⃣ 간단한 Dora 노드(Rust) 템플릿 + ROS2 연동 아키텍처(브릿지 예시 포함)</h1>
+<p>아래는 <strong>(1)</strong> <code>dora-node-api</code> 를 사용한 최소 실행 가능 Rust 노드 템플릿과 실행/배포 방법, 그리고 <strong>(2)</strong> ROS2 ⇄ Dora 연동(ros2-bridge)을 포함한 구체적 아키텍처와 예시 코드입니다. 필요한 공식 문서/레퍼런스도 함께 표기했습니다. 주요 개념과 명령은 Dora 공식 문서·API 문서를 기준으로 구성했습니다.</p>
+<section id="목표-요약" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="목표-요약"><span class="header-section-number">2.1</span> 목표 요약</h2>
+<ul>
+<li>Rust로 간단한 Dora 노드를 만들어 <code>output</code> 토픽(데이터아이디)으로 바이트 데이터를 전송합니다.</li>
+<li>이 Dora 노드를 <strong>dora 데이터플로우(graph)</strong> 에 등록해 실행하고, 필요하면 ROS2와 <code>dora-ros2-bridge</code>를 통해 토픽을 주고받을 수 있게 합니다.</li>
+</ul>
+</section>
+<section id="rust-노드-템플릿-실행-가능한-최소-예제" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="rust-노드-템플릿-실행-가능한-최소-예제"><span class="header-section-number">2.2</span> Rust 노드 템플릿 (실행 가능한 최소 예제)</h2>
+<p>프로젝트 구조 (예시)</p>
+<pre><code>my_first_dataflow/
+├─ rust-heartbeat-node/
+│  ├─ Cargo.toml
+│  └─ src/
+│     └─ main.rs
+└─ graphs/
+   └─ dataflow.yml</code></pre>
+<p><code>Cargo.toml</code> (rust-heartbeat-node/Cargo.toml)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">[package]</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"rust-heartbeat-node"</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="dt">edition</span> <span class="op">=</span> <span class="st">"2021"</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">[dependencies]</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="dt">anyhow</span> <span class="op">=</span> <span class="st">"1.0"</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="dt">tokio</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">version</span><span class="op"> =</span> <span class="st">"1"</span><span class="op">, </span><span class="dt">features</span><span class="op"> =</span> <span class="op">[</span><span class="st">"macros"</span><span class="op">,</span><span class="st">"rt-multi-thread"</span><span class="op">] }</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="dt">futures</span> <span class="op">=</span> <span class="st">"0.3"</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="dt">dora-node-api</span> <span class="op">=</span> <span class="st">"0.3"</span>        <span class="co"># crates.io / docs.rs 기준; 실제 버전은 최신 확인 권장</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="dt">dora-core</span> <span class="op">=</span> <span class="st">"0.3"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>src/main.rs</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">use</span> <span class="pp">anyhow::</span><span class="dt">Result</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">use</span> <span class="pp">std::time::</span>Duration<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">use</span> <span class="pp">futures::</span>StreamExt<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">use</span> <span class="pp">tokio::time::</span>sleep<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">use</span> <span class="pp">dora_node_api::</span><span class="op">{</span>DoraNode<span class="op">,</span> MetadataParameters<span class="op">};</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw">use</span> <span class="pp">dora_core::config::</span>DataId<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="at">#[</span><span class="pp">tokio::</span>main<span class="at">]</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="kw">async</span> <span class="kw">fn</span> main() <span class="op">-&gt;</span> <span class="dt">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="co">// Dora 런타임(데몬)이 설정한 환경변수로부터 노드를 초기화합니다.</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="co">// (dora가 노드를 spawn/관리하도록 dataflow.yml로 실행하는 것이 권장)</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="kw">let</span> (<span class="kw">mut</span> node<span class="op">,</span> <span class="kw">mut</span> events) <span class="op">=</span> <span class="pp">DoraNode::</span>init_from_env()</span>
+<span id="cb3-14"><a href="#cb3-14"></a>        <span class="op">.</span>expect(<span class="st">"failed to init Dora node from env"</span>)<span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    <span class="co">// dataflow.yml에서 정의한 output id와 일치시킵니다.</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="kw">let</span> output_id <span class="op">=</span> <span class="pp">DataId::</span>from(<span class="st">"heartbeat"</span><span class="op">.</span>to_owned())<span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="kw">let</span> <span class="kw">mut</span> counter<span class="op">:</span> <span class="dt">u64</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="cf">loop</span> <span class="op">{</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>        <span class="co">// 전송할 바이트(예: u64 리틀엔디언)</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>        <span class="kw">let</span> bytes <span class="op">=</span> counter<span class="op">.</span>to_le_bytes()<span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a></span>
+<span id="cb3-25"><a href="#cb3-25"></a>        node<span class="op">.</span>send_output_raw(</span>
+<span id="cb3-26"><a href="#cb3-26"></a>            output_id<span class="op">.</span>clone()<span class="op">,</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a>            <span class="pp">MetadataParameters::</span><span class="kw">default</span>()<span class="op">,</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>            bytes<span class="op">.</span>len()<span class="op">,</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>            <span class="op">|</span>out_buf<span class="op">|</span> <span class="op">{</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>                out_buf<span class="op">.</span>copy_from_slice(<span class="op">&amp;</span>bytes)<span class="op">;</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>            <span class="op">}</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a>        )<span class="op">?;</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a></span>
+<span id="cb3-34"><a href="#cb3-34"></a>        <span class="pp">println!</span>(<span class="st">"Sent heartbeat {}"</span><span class="op">,</span> counter)<span class="op">;</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>        counter <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a></span>
+<span id="cb3-37"><a href="#cb3-37"></a>        <span class="co">// 이벤트(입력 등)를 비동기적으로 처리(여기선 간단히 drain)</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a>        <span class="co">// EventStream은 비동기 스트림입니다.</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a>        <span class="cf">while</span> <span class="kw">let</span> <span class="cn">Ok</span>(<span class="cn">Some</span>(evt)) <span class="op">=</span> <span class="pp">tokio::time::</span>timeout(<span class="pp">Duration::</span>from_millis(<span class="dv">0</span>)<span class="op">,</span> events<span class="op">.</span>next())<span class="op">.</span><span class="kw">await</span> <span class="op">{</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a>            <span class="co">// 실제 노드라면 Event::Input 등을 분기 처리</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>            <span class="co">// (여기서는 예시라 간단히 로그)</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a>            <span class="pp">println!</span>(<span class="st">"Got event: {:?}"</span><span class="op">,</span> evt)<span class="op">;</span></span>
+<span id="cb3-43"><a href="#cb3-43"></a>        <span class="op">}</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a></span>
+<span id="cb3-45"><a href="#cb3-45"></a>        sleep(<span class="pp">Duration::</span>from_millis(<span class="dv">500</span>))<span class="op">.</span><span class="kw">await</span><span class="op">;</span></span>
+<span id="cb3-46"><a href="#cb3-46"></a>    <span class="op">}</span></span>
+<span id="cb3-47"><a href="#cb3-47"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>설명·주의</p>
+<ul>
+<li><code>DoraNode::init_from_env()</code>는 <strong>dora 데몬(또는 dora-coordinator)</strong> 가 노드를 스폰할 때 설정해 주는 환경변수를 읽어 초기화합니다. (따라서 보통은 <code>dora start graphs/dataflow.yml</code> 등의 방식으로 실행합니다).</li>
+<li><code>send_output_raw</code>는 <strong>제로-카피(raw buffer closure)</strong> 방식으로 바이트 버퍼를 채워 전송하므로 고성능 전송에 유리합니다.</li>
+</ul>
+</section>
+<section id="간단한-dataflow.yml-예시-graphsdataflow.yml" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="간단한-dataflow.yml-예시-graphsdataflow.yml"><span class="header-section-number">2.3</span> 간단한 <code>dataflow.yml</code> 예시 (graphs/dataflow.yml)</h2>
+<blockquote class="blockquote">
+<p>이 YAML은 Dora의 데이터플로우 스펙을 간단히 보여주는 예시입니다. 실제 필드 이름/옵션은 프로젝트 문서(데이터플로우 스펙)를 참고해 조정하세요.</p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">dataflow</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="at">  </span><span class="fu">nodes</span><span class="kw">:</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> rust_heartbeat</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="at">      </span><span class="fu">exec</span><span class="kw">:</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">        # dora가 실행할 바이너리(절대/상대 경로 또는 컨테이너화된 이미지 등)</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="at">        </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">"./rust-heartbeat-node/target/release/rust-heartbeat-node"</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="at">      </span><span class="fu">outputs</span><span class="kw">:</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> heartbeat</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="at">          </span><span class="fu">format</span><span class="kw">:</span><span class="at"> bytes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>실행 (예시)</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 1) 빌드</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">cd</span> my_first_dataflow/rust-heartbeat-node</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="ex">cargo</span> build <span class="at">--release</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># 2) dora로 데이터플로우 실행 (dora-cli 설치/사용법은 Getting started 참고)</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># (아래 명령은 예시; 실제 파일 경로와 dora-cli 환경에 따릅니다)</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">dora</span> start graphs/dataflow.yml <span class="at">--attach</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>참고: <code>dora start</code>/<code>dora up</code> 등 CLI 사용 예시는 공식 가이드와 예제 레포에서 자주 등장합니다.</p>
+</section>
+<section id="ros2와의-연동-아키텍처-실행-흐름-구체적" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="ros2와의-연동-아키텍처-실행-흐름-구체적"><span class="header-section-number">2.4</span> ROS2와의 연동 — 아키텍처 &amp; 실행 흐름 (구체적)</h2>
+<section id="아키텍처-개요-텍스트-다이어그램" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="아키텍처-개요-텍스트-다이어그램"><span class="header-section-number">2.4.1</span> 아키텍처 개요 (텍스트 다이어그램)</h3>
+<pre><code>[ROS2 노드들] &lt;--&gt; [dora-ros2-bridge (프로세스)] &lt;--&gt; [Dora 런타임 / dataflow graph]
+                                                -&gt; [Dora 노드: rust-heartbeat-node]
+                                                -&gt; [Dora 노드: perception, model, recorder ...]</code></pre>
+<ul>
+<li><code>dora-ros2-bridge</code>는 ROS2 메시지를 런타임에 <strong>Apache Arrow struct</strong>로 변환하고, Dora 내부로(또는 반대로) 전달해 줍니다. 즉 <strong>colcon으로 빌드할 필요 없이</strong> (런타임 변환으로) 기존 ROS2 토픽을 Dora 파이프라인에서 사용 가능하게 합니다.</li>
+<li>Bridge를 통해 ROS2의 퍼블리셔/서브스크라이버는 Dora의 입출력 이벤트(데이터아이디)와 자연스럽게 매핑됩니다. (예: <code>/cmd_vel</code> → Dora output → 다른 Dora 노드에서 소비)</li>
+</ul>
+</section>
+<section id="구체적-연동-예시-rust-쪽-코드-흐름-요약" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="구체적-연동-예시-rust-쪽-코드-흐름-요약"><span class="header-section-number">2.4.2</span> 구체적 연동 예시 (Rust 쪽 코드 흐름 요약)</h3>
+<ul>
+<li>Rust Dora 노드에서 ROS2 명령을 퍼블리시하려면 <code>dora-ros2-bridge</code> 라이브러리의 ROS2 클라이언트를 사용합니다 (docs 예시 참조). 문서에 있는 예시(토이-예제: turtlesim 제어)는 다음 흐름입니다: <code>ros2_client::Context</code> 생성 → <code>new_node()</code> → <code>create_topic()</code> &amp; <code>create_publisher()</code> → Dora 이벤트 루프에서 조건에 따라 <code>publisher.publish(msg)</code> 호출.</li>
+</ul>
+<p><strong>(문서에 제시된 Rust 예시 요약)</strong></p>
+<ul>
+<li>ROS2 쪽에서 <code>create_publisher&lt;Twist&gt;</code> 로 토픽을 만들고, Dora 노드의 이벤트(예: “tick” input)를 받아 <code>publisher.publish(twist)</code> 를 호출하는 방식으로 통합됩니다. 더불어 ROS2에서 들어오는 메시지는 <code>merge_external</code>로 Dora 이벤트 스트림에 합쳐 처리할 수 있습니다.</li>
+</ul>
+</section>
+<section id="python-예시간단-문서에서-가져온-흐름" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="python-예시간단-문서에서-가져온-흐름"><span class="header-section-number">2.4.3</span> Python 예시(간단) — 문서에서 가져온 흐름</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> dora</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="im">from</span> dora <span class="im">import</span> Node</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>ros2_context <span class="op">=</span> dora.Ros2Context()</span>
+<span id="cb7-5"><a href="#cb7-5"></a>ros2_node <span class="op">=</span> ros2_context.new_node(<span class="st">"turtle_teleop"</span>, <span class="st">"/ros2_demo"</span>, dora.Ros2NodeOptions(rosout<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb7-6"><a href="#cb7-6"></a>turtle_twist_topic <span class="op">=</span> ros2_node.create_topic(<span class="st">"/turtle1/cmd_vel"</span>, <span class="st">"geometry_msgs/Twist"</span>, topic_qos)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>twist_writer <span class="op">=</span> ros2_node.create_publisher(turtle_twist_topic)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>pose_reader <span class="op">=</span> ros2_node.create_subscription(<span class="st">"/turtle1/pose"</span>, <span class="st">"turtlesim/Pose"</span>, topic_qos)</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>dora_node <span class="op">=</span> Node()</span>
+<span id="cb7-11"><a href="#cb7-11"></a>dora_node.merge_external_events(pose_reader)</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="cf">for</span> event <span class="kw">in</span> dora_node:</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    <span class="co"># Dora 이벤트/외부(ROS2) 이벤트 분기 처리</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>    ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(더 자세한 예시는 공식 가이드의 <code>Bridging ROS2</code> 페이지의 Python / Rust 예시를 참조하세요).</p>
+</section>
+</section>
+<section id="배포실행-체크리스트-실무-팁" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="배포실행-체크리스트-실무-팁"><span class="header-section-number">2.5</span> 배포/실행 체크리스트 (실무 팁)</h2>
+<ol type="1">
+<li><strong>ROS2 메시지 타입 접근</strong>: ros2-bridge가 ROS2 타입을 런타임 변환하려면 ROS2 환경(<code>source /opt/ros/&lt;distro&gt;/setup.bash</code> 또는 워크스페이스) 이 실행 환경에서 접근 가능해야 합니다. (bridge가 메시지 정보를 찾아 생성합니다).</li>
+<li><strong>dora-cli 사용</strong>: dora 데몬으로 dataflow를 시작하면 노드별 환경변수/소켓이 자동으로 설정되므로 <code>DoraNode::init_from_env()</code> 호출이 정상 동작합니다. 로컬 테스트를 위해서는 dora-cli 문서의 Getting Started 절차를 따르세요.</li>
+<li><strong>메시지 포맷</strong>: Dora 내부/브리지 사이에서는 Arrow 포맷을 쓰는 것을 권장(제로-카피 이점). ROS2 브릿지가 Arrow struct로 변환해줍니다.</li>
+<li><strong>디버깅</strong>: FOSDEM/발표 자료 및 GitHub 이슈·문서에 있는 예제(토이 예제: turtlesim 등)를 먼저 실행해 보면 설정·빌드 문제를 빠르게 잡을 수 있습니다.</li>
+</ol>
+<p><strong>중요한 문서·레퍼런스 (직접 읽어볼 곳)</strong></p>
+<ul>
+<li>dora Node API (Rust docs) — <code>DoraNode</code>, <code>send_output_raw</code>, <code>init_from_env()</code> 설명.</li>
+<li>Getting started (dora 공식 문서) — 워크스페이스/데이터플로우 실행 가이드.</li>
+<li>Bridging ROS2 (가이드 페이지, Python/Rust 예시 포함) — ros2-bridge 개념과 코드 예시(토이 예제 포함). <strong>(ROS2 연동의 핵심 예시가 이 페이지에 있음)</strong>.</li>
+<li>dora GitHub (코드·예제·릴리스).</li>
+<li>Dataflow 스펙(데이터플로우 YAML).</li>
+</ul>
+<!--
+[1][1], [2][2], [3][3], [4][4], [5][5], [6][6]
+
+[1]: https://docs.rs/dora-node-api/latest/dora_node_api/ "dora_node_api - Rust"
+[2]: https://dora-rs.ai/docs/api/dataflow-config/ "Dataflow Configuration"
+[3]: https://dora-rs.ai/dora/getting-started.html "Getting started - dora-rs"
+[4]: https://dora-rs.ai/zh-CN/docs/guides/dora-ros2-bridges/ "桥接 ROS2 | dora-rs"
+[5]: https://archive.fosdem.org/2024/events/attachments/fosdem-2024-3225-dora-rs-simplifying-robotics-stack-for-next-gen-robots/slides/22303/dora-fosdem_05S0HAi.pdf "Modern Dataflow Framework for Robo cs"
+[6]: https://github.com/dora-rs/dora "dora-rs/dora"
+-->
+</section>
+</section>
+<section id="advanced" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 3️⃣ Advanced</h1>
+<p><strong>(1) 실행 가능한 Rust Dora 노드 템플릿, (2) ROS2 ⇄ Dora 연동(브릿지) 완전 예제, (3) 컨테이너화(Docker + docker-compose)</strong> 를 한 번에 정리해서 드립니다. 아래는 바로 복사·붙여넣어 사용 가능한 파일들(모든 코드와 Docker 구성), 빌드/실행 명령, 운영 팁과 주의사항을 정리한 것입니다. 핵심 근거(문서)는 문장 끝에 표시합니다.</p>
+<blockquote class="blockquote">
+<p>핵심 문서 참조:</p>
+<ul>
+<li>Dora Rust 노드 API (<code>DoraNode::init_from_env</code>, <code>send_output_raw</code>) 문서.</li>
+<li>Dora 공식 가이드(데이터플로우 스펙, Getting started, Bridging ROS2).</li>
+<li>Dora 릴리스/설치(바이너리 다운로드 안내).</li>
+<li>Dora ROS2 bridge 관련 설명(브리지가 ROS2 메시지 타입을 런타임으로 생성하는 방식).</li>
+<li>ROS2 공식 Docker 가이드(컨테이너에서 ROS2 실행 관련).</li>
+</ul>
+</blockquote>
+<section id="요약" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="요약"><span class="header-section-number">3.1</span> 요약</h2>
+<ol type="1">
+<li>Rust로 만든 <code>heartbeat</code> Dora 노드(제로카피 전송)를 포함한 예제 워크스페이스.</li>
+<li>ROS2(파이썬) 퍼블리셔/서브스크라이버 예제 + Dora 쪽 dataflow 설정으로 브리지하는 구성 예시(설정·설명 포함).</li>
+<li>Dockerfile들 및 <code>docker-compose.yml</code>로 ROS2, dora(coordinator), rust node를 컨테이너로 띄우는 템플릿(호스트 네트워크 권장).</li>
+</ol>
+</section>
+<section id="a.-완전한-간단한-dora-노드-rust-템플릿-실행-가능한-예제" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="a.-완전한-간단한-dora-노드-rust-템플릿-실행-가능한-예제"><span class="header-section-number">3.2</span> A. 완전한 “간단한 Dora 노드 (Rust) 템플릿” (실행 가능한 예제)</h2>
+<p>프로젝트 루트: <code>my_dora_project/</code></p>
+<pre><code>my_dora_project/
+├─ dora-workspace/                # optional: Dora workspace / graph 파일 저장소
+│  └─ graphs/
+│     └─ dataflow.yml
+├─ rust-heartbeat-node/            # Rust node
+│  ├─ Cargo.toml
+│  └─ src/
+│     └─ main.rs
+├─ docker/                         # Dockerfile 예시(아래 C 항목과 중복 가능)
+└─ ros2_py_pkg/                    # ROS2 Python package (토이 퍼블리셔/서브스크라이버)
+   ├─ package.xml
+   ├─ setup.py
+   ├─ resource/
+   └─ ros2_py_pkg/
+       ├─ __init__.py
+       ├─ talker.py
+       └─ listener.py</code></pre>
+<section id="rust-노드코드-rust-heartbeat-node" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="rust-노드코드-rust-heartbeat-node"><span class="header-section-number">3.2.1</span> Rust 노드(코드) — <code>rust-heartbeat-node</code></h3>
+<p><code>rust-heartbeat-node/Cargo.toml</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">[package]</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"rust_heartbeat_node"</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="dt">edition</span> <span class="op">=</span> <span class="st">"2021"</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="kw">[dependencies]</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="dt">anyhow</span> <span class="op">=</span> <span class="st">"1.0"</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="dt">tokio</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">version</span><span class="op"> =</span> <span class="st">"1"</span><span class="op">, </span><span class="dt">features</span><span class="op"> =</span> <span class="op">[</span><span class="st">"macros"</span><span class="op">,</span> <span class="st">"rt-multi-thread"</span><span class="op">,</span> <span class="st">"time"</span><span class="op">] }</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="dt">futures</span> <span class="op">=</span> <span class="st">"0.3"</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="dt">dora-node-api</span> <span class="op">=</span> <span class="st">"0.3"</span>   <span class="co"># 실제 버전은 crates.io/docs.rs 확인 권장</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="dt">dora-core</span> <span class="op">=</span> <span class="st">"0.3"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(참고: <code>dora-node-api</code>와 <code>dora-core</code> 버전은 문서/크레이트에서 최신 버전 확인하세요).</p>
+<p><code>rust-heartbeat-node/src/main.rs</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource rust number-lines code-with-copy"><code class="sourceCode rust"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">use</span> <span class="pp">anyhow::</span><span class="dt">Result</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">use</span> <span class="pp">std::time::</span>Duration<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">use</span> <span class="pp">tokio::time::</span>sleep<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="kw">use</span> <span class="pp">futures::</span>StreamExt<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="kw">use</span> <span class="pp">dora_node_api::</span><span class="op">{</span>DoraNode<span class="op">,</span> MetadataParameters<span class="op">};</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="kw">use</span> <span class="pp">dora_core::config::</span>DataId<span class="op">;</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="at">#[</span><span class="pp">tokio::</span>main<span class="at">]</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="kw">async</span> <span class="kw">fn</span> main() <span class="op">-&gt;</span> <span class="dt">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="co">// Dora 데몬이 설정한 환경변수에서 노드 초기화 (일반적으로 dora가 노드를 스폰)</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="kw">let</span> (<span class="kw">mut</span> node<span class="op">,</span> <span class="kw">mut</span> events) <span class="op">=</span> <span class="pp">DoraNode::</span>init_from_env()</span>
+<span id="cb10-13"><a href="#cb10-13"></a>        <span class="op">.</span>expect(<span class="st">"failed to init Dora node from env"</span>)<span class="op">;</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="co">// dataflow.yml에서 정의한 output id와 일치시킵니다.</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>    <span class="kw">let</span> output_id <span class="op">=</span> <span class="pp">DataId::</span>from(<span class="st">"heartbeat"</span><span class="op">.</span>to_owned())<span class="op">;</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a></span>
+<span id="cb10-18"><a href="#cb10-18"></a>    <span class="kw">let</span> <span class="kw">mut</span> counter<span class="op">:</span> <span class="dt">u64</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a></span>
+<span id="cb10-20"><a href="#cb10-20"></a>    <span class="cf">loop</span> <span class="op">{</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a>        <span class="co">// 전송할 바이트(예: u64 리틀엔디언)</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a>        <span class="kw">let</span> bytes <span class="op">=</span> counter<span class="op">.</span>to_le_bytes()<span class="op">;</span></span>
+<span id="cb10-23"><a href="#cb10-23"></a></span>
+<span id="cb10-24"><a href="#cb10-24"></a>        <span class="co">// zero-copy 전송: 클로저로 제공된 버퍼에 직접 채워 보냄</span></span>
+<span id="cb10-25"><a href="#cb10-25"></a>        node<span class="op">.</span>send_output_raw(</span>
+<span id="cb10-26"><a href="#cb10-26"></a>            output_id<span class="op">.</span>clone()<span class="op">,</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a>            <span class="pp">MetadataParameters::</span><span class="kw">default</span>()<span class="op">,</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a>            bytes<span class="op">.</span>len()<span class="op">,</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a>            <span class="op">|</span>out_buf<span class="op">|</span> <span class="op">{</span></span>
+<span id="cb10-30"><a href="#cb10-30"></a>                out_buf<span class="op">.</span>copy_from_slice(<span class="op">&amp;</span>bytes)<span class="op">;</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a>            <span class="op">}</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a>        )<span class="op">?;</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a></span>
+<span id="cb10-34"><a href="#cb10-34"></a>        <span class="pp">println!</span>(<span class="st">"Sent heartbeat {}"</span><span class="op">,</span> counter)<span class="op">;</span></span>
+<span id="cb10-35"><a href="#cb10-35"></a>        counter <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb10-36"><a href="#cb10-36"></a></span>
+<span id="cb10-37"><a href="#cb10-37"></a>        <span class="co">// (선택) 이벤트 스트림 처리(예: 입력, control 이벤트)</span></span>
+<span id="cb10-38"><a href="#cb10-38"></a>        <span class="co">// 여기서는 짧게 드레인만 합니다.</span></span>
+<span id="cb10-39"><a href="#cb10-39"></a>        <span class="cf">while</span> <span class="kw">let</span> <span class="cn">Ok</span>(<span class="cn">Some</span>(evt)) <span class="op">=</span> <span class="pp">tokio::time::</span>timeout(<span class="pp">Duration::</span>from_millis(<span class="dv">0</span>)<span class="op">,</span> events<span class="op">.</span>next())<span class="op">.</span><span class="kw">await</span> <span class="op">{</span></span>
+<span id="cb10-40"><a href="#cb10-40"></a>            <span class="pp">println!</span>(<span class="st">"Dora event: {:?}"</span><span class="op">,</span> evt)<span class="op">;</span></span>
+<span id="cb10-41"><a href="#cb10-41"></a>        <span class="op">}</span></span>
+<span id="cb10-42"><a href="#cb10-42"></a></span>
+<span id="cb10-43"><a href="#cb10-43"></a>        sleep(<span class="pp">Duration::</span>from_millis(<span class="dv">500</span>))<span class="op">.</span><span class="kw">await</span><span class="op">;</span></span>
+<span id="cb10-44"><a href="#cb10-44"></a>    <span class="op">}</span></span>
+<span id="cb10-45"><a href="#cb10-45"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="빌드로컬-실행개발자-모드" class="level4" data-number="3.2.1.1">
+<h4 data-number="3.2.1.1" class="anchored" data-anchor-id="빌드로컬-실행개발자-모드"><span class="header-section-number">3.2.1.1</span> 빌드/로컬 실행(개발자 모드)</h4>
+<ol type="1">
+<li>Rust 빌드:</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="bu">cd</span> rust-heartbeat-node</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">cargo</span> build <span class="at">--release</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># 생성된 바이너리: target/release/rust_heartbeat_node</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Dora 런타임으로 실행하려면 <code>dataflow.yml</code>로 dora가 노드를 spawn 하도록 실행(아래 dataflow 예시 참조). <code>DoraNode::init_from_env()</code>는 dora가 설정한 환경변수에서 연결 정보를 읽습니다.</li>
+</ol>
+</section>
+</section>
+<section id="간단한-dataflow.yml-dora-workspacegraphsdataflow.yml" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="간단한-dataflow.yml-dora-workspacegraphsdataflow.yml"><span class="header-section-number">3.2.2</span> 간단한 <code>dataflow.yml</code> (dora-workspace/graphs/dataflow.yml)</h3>
+<blockquote class="blockquote">
+<p>이 YAML은 Dora의 데이터플로우 스펙을 간단히 사용 가능한 형태로 정리한 예시입니다. 실제 스펙 필드는 공식 문서의 Dataflow Configuration을 참고해 확장/조정하세요.</p>
+</blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">dataflow</span><span class="kw">:</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="at">  </span><span class="fu">nodes</span><span class="kw">:</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> rust_heartbeat</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">"./rust-heartbeat-node/target/release/rust_heartbeat_node"</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="at">      </span><span class="fu">args</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="at">      </span><span class="fu">outputs</span><span class="kw">:</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> heartbeat</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="at">          </span><span class="fu">format</span><span class="kw">:</span><span class="at"> bytes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>path</code>는 dora가 실행(스폰)할 노드 바이너리의 경로입니다. (절대경로/컨테이너 내 경로를 사용해도 됩니다).</li>
+</ul>
+</section>
+</section>
+<section id="b.-ros2와-연동하는-구체적-아키텍처-설계브릿지-예시-포함" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="b.-ros2와-연동하는-구체적-아키텍처-설계브릿지-예시-포함"><span class="header-section-number">3.3</span> B. ROS2와 연동하는 구체적 아키텍처 설계(브릿지 예시 포함)</h2>
+<p>아래는 <strong>토이 시나리오</strong>입니다:</p>
+<ul>
+<li>ROS2 쪽: <code>ros2_py_pkg</code> 라는 파이썬 패키지에 <code>talker.py</code>(퍼블리셔, <code>/cmd_vel</code> 또는 토픽 이름 예시)와 <code>listener.py</code>(서브스크라이버)를 둡니다.</li>
+<li>Dora 쪽: <code>rust_heartbeat</code>가 보내는 <code>heartbeat</code> 데이터를 Dora 내부에서 소비하거나, <code>dora-ros2-bridge</code>를 통해 ROS2 토픽으로 publish 할 수 있습니다.</li>
+<li>Bridge는 Dora 런타임의 확장(libraries/extensions/ros2-bridge)으로 동작하며, ROS2 메시지 타입을 런타임에서 생성/매핑해줍니다.</li>
+</ul>
+<section id="ros2-python-퍼블리셔서브스크라이버-토이" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="ros2-python-퍼블리셔서브스크라이버-토이"><span class="header-section-number">3.3.1</span> ROS2 Python 퍼블리셔/서브스크라이버 (토이)</h3>
+<p><code>ros2_py_pkg/package.xml</code> (간단)</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="fu">?&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>&lt;<span class="kw">package</span><span class="ot"> format=</span><span class="st">"3"</span>&gt;</span>
+<span id="cb13-3"><a href="#cb13-3"></a>  &lt;<span class="kw">name</span>&gt;ros2_py_pkg&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb13-4"><a href="#cb13-4"></a>  &lt;<span class="kw">version</span>&gt;0.0.0&lt;/<span class="kw">version</span>&gt;</span>
+<span id="cb13-5"><a href="#cb13-5"></a>  &lt;<span class="kw">description</span>&gt;toy ros2 python pub/sub for dora example&lt;/<span class="kw">description</span>&gt;</span>
+<span id="cb13-6"><a href="#cb13-6"></a>  &lt;<span class="kw">maintainer</span><span class="ot"> email=</span><span class="st">"you@example.com"</span>&gt;you&lt;/<span class="kw">maintainer</span>&gt;</span>
+<span id="cb13-7"><a href="#cb13-7"></a>  &lt;<span class="kw">license</span>&gt;Apache-2.0&lt;/<span class="kw">license</span>&gt;</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a>  &lt;<span class="kw">depend</span>&gt;rclpy&lt;/<span class="kw">depend</span>&gt;</span>
+<span id="cb13-10"><a href="#cb13-10"></a>  &lt;<span class="kw">depend</span>&gt;geometry_msgs&lt;/<span class="kw">depend</span>&gt;</span>
+<span id="cb13-11"><a href="#cb13-11"></a>&lt;/<span class="kw">package</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ros2_py_pkg/setup.py</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>package_name <span class="op">=</span> <span class="st">'ros2_py_pkg'</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>setup(</span>
+<span id="cb14-6"><a href="#cb14-6"></a>    name<span class="op">=</span>package_name,</span>
+<span id="cb14-7"><a href="#cb14-7"></a>    version<span class="op">=</span><span class="st">'0.0.0'</span>,</span>
+<span id="cb14-8"><a href="#cb14-8"></a>    packages<span class="op">=</span>[package_name],</span>
+<span id="cb14-9"><a href="#cb14-9"></a>    data_files<span class="op">=</span>[</span>
+<span id="cb14-10"><a href="#cb14-10"></a>        (<span class="st">'share/ament_index/resource_index/packages'</span>, [<span class="st">'resource/'</span> <span class="op">+</span> package_name]),</span>
+<span id="cb14-11"><a href="#cb14-11"></a>        (<span class="st">'share/'</span> <span class="op">+</span> package_name, [<span class="st">'package.xml'</span>]),</span>
+<span id="cb14-12"><a href="#cb14-12"></a>    ],</span>
+<span id="cb14-13"><a href="#cb14-13"></a>    install_requires<span class="op">=</span>[<span class="st">'setuptools'</span>],</span>
+<span id="cb14-14"><a href="#cb14-14"></a>    zip_safe<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-15"><a href="#cb14-15"></a>    maintainer<span class="op">=</span><span class="st">'you'</span>,</span>
+<span id="cb14-16"><a href="#cb14-16"></a>    maintainer_email<span class="op">=</span><span class="st">'you@example.com'</span>,</span>
+<span id="cb14-17"><a href="#cb14-17"></a>    description<span class="op">=</span><span class="st">'ROS2 python toy pub/sub'</span>,</span>
+<span id="cb14-18"><a href="#cb14-18"></a>    license<span class="op">=</span><span class="st">'Apache-2.0'</span>,</span>
+<span id="cb14-19"><a href="#cb14-19"></a>    entry_points<span class="op">=</span>{</span>
+<span id="cb14-20"><a href="#cb14-20"></a>        <span class="st">'console_scripts'</span>: [</span>
+<span id="cb14-21"><a href="#cb14-21"></a>            <span class="st">'talker = ros2_py_pkg.talker:main'</span>,</span>
+<span id="cb14-22"><a href="#cb14-22"></a>            <span class="st">'listener = ros2_py_pkg.listener:main'</span>,</span>
+<span id="cb14-23"><a href="#cb14-23"></a>        ],</span>
+<span id="cb14-24"><a href="#cb14-24"></a>    },</span>
+<span id="cb14-25"><a href="#cb14-25"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ros2_py_pkg/ros2_py_pkg/talker.py</code> (퍼블리셔)</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">import</span> rclpy</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="im">from</span> rclpy.node <span class="im">import</span> Node</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="im">from</span> geometry_msgs.msg <span class="im">import</span> Twist</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="kw">class</span> Talker(Node):</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb15-7"><a href="#cb15-7"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="st">'dora_talker'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>        <span class="va">self</span>.pub <span class="op">=</span> <span class="va">self</span>.create_publisher(Twist, <span class="st">'/dora/cmd_vel'</span>, <span class="dv">10</span>)</span>
+<span id="cb15-9"><a href="#cb15-9"></a>        <span class="va">self</span>.timer <span class="op">=</span> <span class="va">self</span>.create_timer(<span class="fl">0.5</span>, <span class="va">self</span>.on_timer)</span>
+<span id="cb15-10"><a href="#cb15-10"></a>        <span class="va">self</span>.cnt <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a></span>
+<span id="cb15-12"><a href="#cb15-12"></a>    <span class="kw">def</span> on_timer(<span class="va">self</span>):</span>
+<span id="cb15-13"><a href="#cb15-13"></a>        msg <span class="op">=</span> Twist()</span>
+<span id="cb15-14"><a href="#cb15-14"></a>        msg.linear.x <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> (<span class="va">self</span>.cnt <span class="op">%</span> <span class="dv">10</span>)</span>
+<span id="cb15-15"><a href="#cb15-15"></a>        msg.angular.z <span class="op">=</span> <span class="fl">0.01</span> <span class="op">*</span> (<span class="va">self</span>.cnt <span class="op">%</span> <span class="dv">20</span>)</span>
+<span id="cb15-16"><a href="#cb15-16"></a>        <span class="va">self</span>.pub.publish(msg)</span>
+<span id="cb15-17"><a href="#cb15-17"></a>        <span class="va">self</span>.get_logger().info(<span class="ss">f'Published cmd_vel: linear.x=</span><span class="sc">{</span>msg<span class="sc">.</span>linear<span class="sc">.</span>x<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb15-18"><a href="#cb15-18"></a>        <span class="va">self</span>.cnt <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb15-19"><a href="#cb15-19"></a></span>
+<span id="cb15-20"><a href="#cb15-20"></a><span class="kw">def</span> main():</span>
+<span id="cb15-21"><a href="#cb15-21"></a>    rclpy.init()</span>
+<span id="cb15-22"><a href="#cb15-22"></a>    node <span class="op">=</span> Talker()</span>
+<span id="cb15-23"><a href="#cb15-23"></a>    <span class="cf">try</span>:</span>
+<span id="cb15-24"><a href="#cb15-24"></a>        rclpy.spin(node)</span>
+<span id="cb15-25"><a href="#cb15-25"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb15-26"><a href="#cb15-26"></a>        <span class="cf">pass</span></span>
+<span id="cb15-27"><a href="#cb15-27"></a>    rclpy.shutdown()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ros2_py_pkg/ros2_py_pkg/listener.py</code> (서브스크라이버)</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="im">import</span> rclpy</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="im">from</span> rclpy.node <span class="im">import</span> Node</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="im">from</span> geometry_msgs.msg <span class="im">import</span> Twist</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="kw">class</span> Listener(Node):</span>
+<span id="cb16-6"><a href="#cb16-6"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb16-7"><a href="#cb16-7"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="st">'dora_listener'</span>)</span>
+<span id="cb16-8"><a href="#cb16-8"></a>        <span class="va">self</span>.sub <span class="op">=</span> <span class="va">self</span>.create_subscription(Twist, <span class="st">'/dora/cmd_vel'</span>, <span class="va">self</span>.cb, <span class="dv">10</span>)</span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a>    <span class="kw">def</span> cb(<span class="va">self</span>, msg):</span>
+<span id="cb16-11"><a href="#cb16-11"></a>        <span class="va">self</span>.get_logger().info(<span class="ss">f'Recv cmd_vel: linear.x=</span><span class="sc">{</span>msg<span class="sc">.</span>linear<span class="sc">.</span>x<span class="sc">:.3f}</span><span class="ss">, angular.z=</span><span class="sc">{</span>msg<span class="sc">.</span>angular<span class="sc">.</span>z<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="kw">def</span> main():</span>
+<span id="cb16-14"><a href="#cb16-14"></a>    rclpy.init()</span>
+<span id="cb16-15"><a href="#cb16-15"></a>    node <span class="op">=</span> Listener()</span>
+<span id="cb16-16"><a href="#cb16-16"></a>    <span class="cf">try</span>:</span>
+<span id="cb16-17"><a href="#cb16-17"></a>        rclpy.spin(node)</span>
+<span id="cb16-18"><a href="#cb16-18"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb16-19"><a href="#cb16-19"></a>        <span class="cf">pass</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a>    rclpy.shutdown()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>위 ROS2 예제는 ROS2 공식 튜토리얼(토이 예제, turtlesim 등)과 동일한 기본 패턴을 따릅니다. 컨테이너화/실행은 ROS2 Docker 가이드 권장사항을 따르세요. ([ROS Documentation][11])</p>
+</blockquote>
+<hr>
+</section>
+<section id="dora-ros2-브리지를-통한-매핑설계-예시" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="dora-ros2-브리지를-통한-매핑설계-예시"><span class="header-section-number">3.3.2</span> Dora ↔︎ ROS2 브리지를 통한 매핑(설계 &amp; 예시)</h3>
+<p>Dora의 Bridging 개념 요약:</p>
+<ul>
+<li>Dora의 ROS2 bridge는 ROS2 메시지 타입을 런타임에서 찾아 Dora API로 이용 가능한 함수(<code>create_topic_&lt;TYPE&gt;</code> 등)를 자동 생성합니다. 즉 Dora 쪽에서 ROS2 토픽을 퍼블리시/구독할 수 있게 해줍니다.</li>
+</ul>
+<section id="예시-시나리오" class="level4" data-number="3.3.2.1">
+<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="예시-시나리오"><span class="header-section-number">3.3.2.1</span> 예시 시나리오</h4>
+<ul>
+<li>Dora 내부에서 <code>heartbeat</code> 데이터를 ROS2 <code>std_msgs/Int64</code> 형태로 변환해 <code>/dora/heartbeat</code> 토픽으로 publish.</li>
+<li>ROS2 <code>talker</code>는 Dora를 모르는 상태로 동작(또는 반대로).</li>
+</ul>
+<blockquote class="blockquote">
+<p>Dora 쪽에서 ROS2 publish를 하려면 보통 <code>dora-ros2-bridge</code> extension을 활성화하거나, Dora 런타임을 빌드할 때 bridge 확장을 포함시켜야 합니다(문서/빌드 가이드 참조). ([GitHub][12])</p>
+</blockquote>
+<section id="대략적-흐름의사-코드" class="level5" data-number="3.3.2.1.1">
+<h5 data-number="3.3.2.1.1" class="anchored" data-anchor-id="대략적-흐름의사-코드"><span class="header-section-number">3.3.2.1.1</span> 대략적 흐름(의사 코드)</h5>
+<ul>
+<li>Dora 노드(예: Rust 또는 Python)에서 ros2-contex를 초기화 → <code>new_node(...)</code> → <code>create_publisher_std_msgs_int64("/dora/heartbeat")</code> → Dora event loop에서 publish.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Dora C++/Rust API 문서에 따르면 브리지 쪽에 <code>create_topic_&lt;TYPE&gt;</code> 혹은 자동 생성된 함수를 통해 topic을 만들 수 있다고 문서에 나와 있습니다. 아래 예시는 개념을 위한 의사 코드이며, 실제 함수 시그니처는 브리지 버전/문서 확인 후 사용하세요.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+</section>
+</section>
+<section id="c.-컨테이너화-docker-docker-compose-ros2-dora-rust-node" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="c.-컨테이너화-docker-docker-compose-ros2-dora-rust-node"><span class="header-section-number">3.4</span> C. 컨테이너화 (Docker + docker-compose) — ROS2 + Dora + Rust node</h2>
+<blockquote class="blockquote">
+<p>권장: ROS2 (DDS) 및 하드웨어 접근성 때문에 <code>network: host</code> 모드를 추천합니다. 자세한 이유와 권장 방법은 ROS2 Docker 문서 참조.</p>
+</blockquote>
+<p>프로젝트에 포함할 예시 <code>docker/</code> 파일들(간단 버전):</p>
+<section id="dockerdockerfile.dora-dora-데몬cli-간단-release-바이너리-사용" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="dockerdockerfile.dora-dora-데몬cli-간단-release-바이너리-사용"><span class="header-section-number">3.4.1</span> <code>docker/Dockerfile.dora</code> — dora 데몬/CLI (간단: release 바이너리 사용)</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># dora coordinator image (lightweight)</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">FROM</span> ubuntu:22.04</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="kw">ARG</span> DORA_VERSION=<span class="st">"v0.3.0"</span>   <span class="co"># 실제 최신 릴리스 태그로 바꾸세요</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="kw">WORKDIR</span> /opt/dora</span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># 기본 툴 설치</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> curl unzip ca-certificates <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="co"># GitHub release에서 바이너리 다운로드(문서 권장 방식)</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="co"># 실제 릴리스 파일명은 GitHub Releases 페이지에서 확인하세요.</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="kw">RUN</span> <span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> /tmp/dora.zip <span class="st">"https://github.com/dora-rs/dora/releases/download/</span><span class="va">${DORA_VERSION}</span><span class="st">/dora-</span><span class="va">${DORA_VERSION}</span><span class="st">-x86_64-Linux.zip"</span> <span class="dt">\</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a> <span class="kw">&amp;&amp;</span> <span class="fu">unzip</span> /tmp/dora.zip <span class="at">-d</span> /opt/dora <span class="dt">\</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a> <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> /tmp/dora.zip</span>
+<span id="cb17-15"><a href="#cb17-15"></a></span>
+<span id="cb17-16"><a href="#cb17-16"></a><span class="kw">ENV</span> PATH=<span class="st">"/opt/dora:${PATH}"</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="co"># 기본 포트/파일 시스템 마운트는 docker-compose에서 설정</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a><span class="kw">CMD</span> [<span class="st">"dora"</span>, <span class="st">"--help"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>dora 설치 안내는 공식 문서에서 “Release zip download” 방식을 권장합니다. (위 Dockerfile은 그 권장 방식을 자동화).</li>
+</ul>
+<p><strong>주의:</strong> <code>DORA_VERSION</code>은 실제 Release 태그(예: <code>v0.3.0</code>)로 바꾸세요. GitHub Releases 페이지를 확인하십시오.</p>
+</section>
+<section id="dockerdockerfile.ros2-ros2-humble-컨테이너" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="dockerdockerfile.ros2-ros2-humble-컨테이너"><span class="header-section-number">3.4.2</span> <code>docker/Dockerfile.ros2</code> — ROS2 (humble) 컨테이너</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">FROM</span> osrf/ros:humble-ros-core</span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co"># 기본 툴</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> python3-pip python3-colcon-common-extensions <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co"># (선택) 사용자 패키지 복사/빌드 지점은 docker-compose에서 volume으로 마운트해 사용 권장</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="kw">WORKDIR</span> /work</span>
+<span id="cb18-8"><a href="#cb18-8"></a></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="kw">CMD</span> [<span class="st">"/bin/bash"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>ROS2 공식 Docker 사용 가이드는 컨테이너에서 ROS2를 테스트/개발할 때 <code>host</code> 네트워킹을 권장하거나 환경을 맞춰주는 사례를 제시합니다.</li>
+</ul>
+</section>
+<section id="dockerdockerfile.rustnode-rust-노드를-빌드해-런타임-바이너리만-담는-다단계-빌드" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="dockerdockerfile.rustnode-rust-노드를-빌드해-런타임-바이너리만-담는-다단계-빌드"><span class="header-section-number">3.4.3</span> <code>docker/Dockerfile.rustnode</code> — Rust 노드를 빌드해 런타임 바이너리만 담는 다단계 빌드</h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># builder</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">FROM</span> rust:1.73 as builder</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="kw">WORKDIR</span> /usr/src/app</span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="kw">COPY</span> ./rust-heartbeat-node/ ./rust-heartbeat-node/</span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="kw">WORKDIR</span> /usr/src/app/rust-heartbeat-node</span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="kw">RUN</span> <span class="ex">cargo</span> build <span class="at">--release</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a></span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="co"># runtime</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a><span class="kw">FROM</span> debian:bookworm-slim</span>
+<span id="cb19-10"><a href="#cb19-10"></a><span class="kw">COPY</span> <span class="op">--from=builder</span> /usr/src/app/rust-heartbeat-node/target/release/rust_heartbeat_node /usr/local/bin/rust_heartbeat_node</span>
+<span id="cb19-11"><a href="#cb19-11"></a><span class="kw">WORKDIR</span> /app</span>
+<span id="cb19-12"><a href="#cb19-12"></a><span class="kw">CMD</span> [<span class="st">"/usr/local/bin/rust_heartbeat_node"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="docker-compose.yml-간단-템플릿" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="docker-compose.yml-간단-템플릿"><span class="header-section-number">3.4.4</span> <code>docker-compose.yml</code> (간단 템플릿)</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="at">  </span><span class="fu">dora</span><span class="kw">:</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> ./docker</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile.dora</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> dora_coordinator</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="at">    </span><span class="fu">network_mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"host"</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./dora-workspace:/work/dora-workspace</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="at">      </span><span class="kw">-</span><span class="at"> TZ=Asia/Seoul</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a></span>
+<span id="cb20-14"><a href="#cb20-14"></a><span class="at">  </span><span class="fu">ros2</span><span class="kw">:</span></span>
+<span id="cb20-15"><a href="#cb20-15"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb20-16"><a href="#cb20-16"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> ./docker</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile.ros2</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> ros2_core</span></span>
+<span id="cb20-19"><a href="#cb20-19"></a><span class="at">    </span><span class="fu">network_mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"host"</span></span>
+<span id="cb20-20"><a href="#cb20-20"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb20-21"><a href="#cb20-21"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./ros2_py_pkg:/work/ros2_py_pkg</span></span>
+<span id="cb20-22"><a href="#cb20-22"></a><span class="at">    </span><span class="fu">working_dir</span><span class="kw">:</span><span class="at"> /work</span></span>
+<span id="cb20-23"><a href="#cb20-23"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> /bin/bash -c "cd ros2_py_pkg &amp;&amp; /bin/bash -lc 'pip3 install -e . &amp;&amp; ros2 run ros2_py_pkg talker'"</span></span>
+<span id="cb20-24"><a href="#cb20-24"></a></span>
+<span id="cb20-25"><a href="#cb20-25"></a><span class="at">  </span><span class="fu">rustnode</span><span class="kw">:</span></span>
+<span id="cb20-26"><a href="#cb20-26"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb20-27"><a href="#cb20-27"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb20-28"><a href="#cb20-28"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> docker/Dockerfile.rustnode</span></span>
+<span id="cb20-29"><a href="#cb20-29"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> rust_heartbeat_node</span></span>
+<span id="cb20-30"><a href="#cb20-30"></a><span class="at">    </span><span class="fu">network_mode</span><span class="kw">:</span><span class="at"> </span><span class="st">"host"</span></span>
+<span id="cb20-31"><a href="#cb20-31"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb20-32"><a href="#cb20-32"></a><span class="at">      </span><span class="kw">-</span><span class="at"> dora</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>network_mode: "host"</code>: ROS2 DDS와 dora의 네트워크/IPC를 간단하게 접근하기 위해 권장합니다. (Docker와 DDS는 네트워크/포트 매핑/멀티호스트에서 복잡함을 유발할 수 있어 호스트 네트워크를 사용하는 것이 간단함).</li>
+<li>볼륨 마운트로 ROS2 패키지 소스와 dora 그래프를 공유하도록 했습니다.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="전체-실행-절차" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="전체-실행-절차"><span class="header-section-number">3.5</span> 전체 실행 절차</h2>
+<ol type="1">
+<li>코드/파일 복사: 위 파일들을 로컬 <code>my_dora_project/</code> 구조로 배치.</li>
+<li>Rust 빌드 &amp; 바이너리 확인(로컬에서 먼저 확인 권장):</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="bu">cd</span> my_dora_project/rust-heartbeat-node</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="ex">cargo</span> build <span class="at">--release</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">./target/release/rust_heartbeat_node</span>   <span class="co"># 동작 확인 (단독실행은 Dora env가 없으면 init_from_env 실패 가능)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>주의</strong>: <code>DoraNode::init_from_env()</code>는 dora 런타임이 설정한 환경변수가 필요합니다. 로컬에서 독립적으로 테스트하려면(데몬 없이) <code>init_from_env</code> 대신 <code>DoraNode::init_dummy()</code> 같은 개발 헬퍼가 문서에 있는지 확인하거나, 수동으로 환경변수를 설정해야 합니다(개발 시점의 문서 참고).</p>
+</blockquote>
+<ol start="3" type="1">
+<li>Docker 빌드/실행 (프로젝트 루트에서):</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># docker-compose 빌드 + 실행</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="ex">docker</span> compose build</span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="fu">sudo</span> docker compose up</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>dora graph 실행: (컨테이너 안에서 또는 호스트에서)</li>
+</ol>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># 예: dora 바이너리가 컨테이너에 있고, graphs/dataflow.yml을 마운트했으면</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="co"># 컨테이너에 접속해서</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="ex">docker</span> exec <span class="at">-it</span> dora_coordinator /bin/bash</span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="co"># inside container</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="ex">dora</span> start /work/dora-workspace/graphs/dataflow.yml <span class="at">--attach</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>dora 설치/릴리스 다운로드/CLI 사용법은 공식 설치 가이드를 확인하세요.</p>
+</blockquote>
+<ol start="5" type="1">
+<li>ROS2 퍼블리셔/서브스크라이버 동작 확인:</li>
+</ol>
+<ul>
+<li><code>ros2</code> 서비스 컨테이너가 <code>talker</code>를 시작하도록 <code>docker-compose</code>에 적어놨다면 (혹은 호스트에서 직접):</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># host or inside ros2 container</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co"># 패키지 설치</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="bu">cd</span> ros2_py_pkg</span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="ex">pip3</span> install <span class="at">-e</span> .</span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="co"># 터미널1: talker</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="ex">ros2</span> run ros2_py_pkg talker</span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="co"># 터미널2: listener</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="ex">ros2</span> run ros2_py_pkg listener</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="구현운영-팁-트러블슈팅" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="구현운영-팁-트러블슈팅"><span class="header-section-number">3.6</span> 구현/운영 팁 &amp; 트러블슈팅</h2>
+<ul>
+<li><strong>Dora 브리지 사용</strong>: Dora ROS2 bridge는 Dora 소스의 <code>libraries/extensions/ros2-bridge</code>에 통합되어 개발/배포되는 기능입니다. 빌드/사용 시 브리지 확장이 포함되었는지 확인하세요. ([GitHub][12])</li>
+<li><strong>Zero-copy 장점</strong>: <code>send_output_raw</code> 같은 API는 버퍼 클로저로 직접 데이터를 채워 전송(제로카피)하므로 저지연/고성능 파이프라인에 유리합니다. 이를 활용해 대용량 센서(이미지, 라이다) 전송 시 복사 비용을 줄이세요.</li>
+<li><strong>ROS2 + Docker</strong>: DDS 네이티브 동작을 위해 <code>network_mode: host</code>를 권장합니다. 멀티 호스트/보안이슈가 있다면 추가 네트워크/두 컨테이너 간 bridge 설정·ROS2의 RTPS 설정을 조정해야 합니다.</li>
+<li><strong>권한/디바이스</strong>: 실 하드웨어(예: GPU, USB 카메라 등)를 컨테이너에 붙일 경우 <code>--device</code> 옵션 혹은 nvidia-docker 런타임이 필요합니다(예: carla 등 dora-drives 예제). ([Dora RS][14])</li>
+</ul>
+</section>
+<section id="추가-자료바로-확인해야-할-문서-링크-요약" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="추가-자료바로-확인해야-할-문서-링크-요약"><span class="header-section-number">3.7</span> 추가 자료(바로 확인해야 할 문서 링크 요약)</h2>
+<ul>
+<li>Dora Guides (Getting started, Bridging ROS2 등).</li>
+<li>Dora Dataflow Configuration (YAML 스펙).</li>
+<li>Dora Rust API docs (<code>DoraNode</code>, <code>send_output_raw</code>, <code>init_from_env</code>).</li>
+<li>Dora GitHub (소스/릴리스).</li>
+<li>ROS2 Docker 실행 가이드.</li>
+</ul>
+<!--
+[1][1], [2][2], [3][3], [4][4], [5][5], [6][6], [7][7], [8][8], [9][9], [10][10], [11][11], [12][12], [13][13], [14][14], [15][15]
+
+[1]: https://docs.rs/dora-node-api/latest/dora_node_api/struct.DoraNode.html "DoraNode in dora_node_api - Rust"
+[2]: https://dora-rs.ai/docs/guides/ "Guides"
+[3]: https://dora-rs.ai/docs/guides/Installation/installing/ "Installing"
+[4]: https://dora-rs.ai/cpp/cpp-api.html "dora.c++ API Documentation"
+[5]: https://docs.ros.org/en/foxy/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html "Running ROS 2 nodes in Docker [community-contributed]"
+[6]: https://docs.rs/dora-node-api/latest/dora_node_api/ "dora_node_api - Rust"
+[7]: https://crates.io/crates/dora-node-api "dora-node-api - Rust Package Registry"
+[8]: https://dora-rs.ai/dora/rust-api.html "Rust API"
+[9]: https://dora-rs.ai/dora/dataflow-config.html "Dataflow Configuration"
+[10]: https://dora-rs.ai/docs/api/dataflow-config/ "Dataflow Configuration"
+[11]: https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html "Using turtlesim, ros2, and rqt"
+[12]: https://github.com/dora-rs/dora-ros2-bridge "dora-rs/dora-ros2-bridge"
+[13]: https://github.com/dora-rs/dora/releases "Releases · dora-rs/dora"
+[14]: https://dora-rs.ai/dora-drives/installation.html "installation - dora-drives"
+[15]: https://github.com/dora-rs/dora "dora-rs/dora"
+
+-->
+<hr>
+<p><a href="../../asset/my_dora_project.zip"><strong>File source</strong></a></p>
+<ul>
+<li>ZIP 안에 포함된 것: Rust Dora 노드 템플릿, dataflow.yml, ROS2(파이썬) 퍼블리셔·서브스크라이버, Dockerfile들, docker-compose.yml (모두 즉시 복사·붙여넣어 사용 가능).</li>
+<li>Dora 관련 버전(파일 내 기본값):
+<ul>
+<li>Dockerfile의 DORA_VERSION은 v0.3.13(GitHub 최신 릴리스 기준).</li>
+<li>Cargo.toml은 dora-node-api = “0.3.13”, dora-core = “0.3.13”으로 설정해 두었습니다.</li>
+<li>dora-ros2-bridge 관련 코드는 주석으로 남겨두었으니, 로컬에 설치된 브리지 버전에 맞춰 주석을 해제하고 버전을 맞추세요(브리지의 시그니처는 버전별로 달라질 수 있습니다)</li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><a href="https://dora-rs.ai/dora/">Dora — 공식 홈페이지 (Introduction)</a></li>
+<li><a href="https://dora-rs.ai/">Dora main site (dora-rs.ai)</a></li>
+<li><a href="https://dora-rs.ai/dora/getting-started.html">Getting started — dora-rs</a></li>
+<li><a href="https://dora-rs.ai/docs/guides/">Guides — dora-rs</a></li>
+<li><a href="https://dora-rs.ai/docs/guides/Installation/installing/">Installing — dora-rs (Guides → Installing)</a></li>
+<li><a href="https://dora-rs.ai/docs/api/dataflow-config/">Dataflow Configuration — dora (docs)</a></li>
+<li><a href="https://dora-rs.ai/dora/dataflow-config.html">Dataflow Configuration — dora (alternate page)</a></li>
+<li><a href="https://dora-rs.ai/dora/rust-api.html">Rust API — dora (Rust API page)</a></li>
+<li><a href="https://docs.rs/dora-node-api/latest/dora_node_api/">dora_node_api — docs.rs (crate docs)</a></li>
+<li><a href="https://docs.rs/dora-node-api/latest/dora_node_api/struct.DoraNode.html">DoraNode struct — docs.rs (DoraNode API)</a></li>
+<li><a href="https://crates.io/crates/dora-node-api">dora-node-api — crates.io (package)</a></li>
+<li><a href="https://github.com/dora-rs/dora">dora GitHub — repository</a></li>
+<li><a href="https://github.com/dora-rs/dora/releases">dora Releases — GitHub Releases</a></li>
+<li><a href="https://github.com/dora-rs/dora-ros2-bridge">dora-ros2-bridge — GitHub (bridge repo)</a></li>
+<li><a href="https://dora-rs.ai/dora-drives/installation.html">dora-drives — installation (dora-drives docs)</a></li>
+<li><a href="https://github.com/dora-rs/dora-drives">dora-drives — GitHub (repo)</a></li>
+<li><a href="https://github.com/dora-rs/dora-lerobot">dora-lerobot — GitHub (Lerobot with dora)</a></li>
+<li><a href="https://archive.fosdem.org/2024/events/attachments/fosdem-2024-3225-dora-rs-simplifying-robotics-stack-for-next-gen-robots/slides/22303/dora-fosdem_05S0HAi.pdf">FOSDEM — “Modern Dataflow Framework for Robotics” (PDF slides)</a></li>
+<li><a href="https://docs.ros.org/en/foxy/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker (community guide, Foxy)</a></li>
+<li><a href="https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using turtlesim, ros2, and rqt (tutorial, Foxy)</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

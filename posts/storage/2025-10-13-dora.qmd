@@ -1,0 +1,820 @@
+---
+draft: false
+title: "🧩DORA"
+description: Making robotic applications fast and simple!
+date: "2025-10-13"
+categories: [dora, ros2, rust, 2025]
+toc: true
+number-sections: true
+image: ../../images/2025-10-13-dora/logo.svg
+---
+
+> AI is booming! Robotic framework however hasn't changed much in years... I totally agree!
+
+---
+
+# 1️⃣ Introduction
+
+DORA(**D**ataflow-**O**riented **R**obotic **A**rchitecture)는 **로봇/임베디드 AI 애플리케이션을 위한 데이터플로우 지향 미들웨어**로, 노드(연산)를 그래프(파이프라인)로 정의하여 저지연, 조합가능(composable), 분산 실행을 목표로 설계된 프레임워크입니다.
+
+
+<center>
+<img src="../../images/2025-10-13-dora/logo.svg" width="60%" />
+</center>
+
+
+<center>
+<img src="../../images/2025-10-13-dora/1.png" width="75%" />
+</center>
+
+<center>
+<img src="../../images/2025-10-13-dora/2.png" width="75%" />
+</center>
+
+
+## 핵심 특징 (요점 정리)
+
+* **데이터플로우 모델**: 애플리케이션을 노드(프로세스/모듈)와 엣지(데이터 연결)로 구성된 그래프(파이프라인)로 정의합니다. 노드를 쉽게 교체·재사용할 수 있습니다.
+* **저지연(Zero-copy) 설계**: 자체 공유 메모리 서버와 **Apache Arrow**를 활용해 제로 카피(복사 없는) 데이터 전달을 지원하여 높은 성능을 냅니다.
+* **멀티언어/멀티런타임**: Rust로 핵심이 개발되었지만, 노드는 Rust/Python/C 등 다양한 언어로 구현할 수 있도록 노드 API를 제공합니다. (예: `dora-node-api` 크레이트 문서).
+* **분산·조합 가능**: 로컬 프로세스뿐 아니라 분산 환경에서 파이프라인을 구성해 실행할 수 있도록 설계되어 있습니다.
+* **오픈 소스·라이선스**: GitHub에 공개되어 있으며 Apache-2.0 라이선스를 사용합니다. (스타/포크 등 활동도 활발).
+
+
+## 아키텍처와 동작 방식(간단한 개념)
+
+1. **노드(node)**: 센서 입력, 모델 추론, 플래너, 로그 등 각각의 연산 단위를 노드로 구현합니다. 노드는 입력을 받고 출력(또는 여러 출력)을 발행합니다.
+2. **오퍼레이터(operator)**: 노드 내부에서 데이터를 변환하거나 라우팅하는 작은 연산 단위로 볼 수 있습니다.
+3. **그래프 정의**: `dataflow.yml` 같은 그래프 정의 파일로 노드 간 연결(파이프라인)을 선언하고, DORA 런타임이 이를 해석해 노드 간 통신을 설정합니다.
+4. **데이터 포맷**: 성능을 위해 Arrow 포맷을 우선 추천하고, 공유 메모리로 데이터 버퍼를 주고받아 복사 비용을 줄입니다.
+
+(요약하면: **작은 독립 프로세스들**을 그래프처럼 연결해 데이터가 흐르도록 하고, 그 전달을 고성능으로 처리하는 구조입니다.)
+
+## 설치
+
+* 배포판(릴리스 ZIP)을 다운로드해 `$HOME/bin` 등 경로에 넣고 `dora --help`로 설치 확인. ([dora-rs.ai][6])
+* Rust로 노드를 작성하려면 워크스페이스를 만들고 `Cargo.toml`에 노드/오퍼레이터 멤버를 추가한 뒤 예시처럼 노드 소스(바이너리)와 sink(로그 등)를 만듭니다. `dora-node-api`를 통해 입력/출력을 처리합니다.
+* 문서의 “Getting started” 가이드가 단계별 예제를 제공하니 따라 하면 기본 파이프라인을 실행해볼 수 있습니다.
+
+
+## 예제·생태계
+
+* **dora-drives**: 초심자용 자율주행 튜토리얼로, DORA로 자율주행 파이프라인을 만들어보는 단계별 가이드가 제공됩니다. 학습·데모용으로 유용합니다.
+* **dora-lerobot**, 기타 데모/허브 리포지토리들이 있고, 공식 사이트의 Guides/Blog/Examples를 통해 데모(예: Reachy 로봇 데모)와 연동 사례를 확인할 수 있습니다.
+
+## 언제 DORA를 쓰면 좋나?
+
+* **여러 센서·모듈(카메라, 라이다, IMU, 모델 추론 등)을 조합해 저지연 파이프라인을 구성해야 할 때**: 데이터 포맷(Arrow)과 공유 메모리 기반 전달이 유리합니다.
+* **멀티언어(예: 일부 모듈은 Python, 성능 모듈은 Rust)로 구성된 시스템**을 하나의 파이프라인으로 묶어야 할 때.
+* **분산 환경**(로컬 + 엣지 + 클라우드)에서 파이프라인을 분해·배치해 실행해야 하는 경우.
+
+
+## 장단점 / 주의사항
+
+* 장점
+  * 성능(제로카피)과 안전성(주요 코드가 Rust로 작성)으로 높은 처리량과 낮은 지연을 기대할 수 있습니다.
+  * 모듈화가 잘 되어 있어 복잡한 파이프라인을 깔끔하게 관리할 수 있습니다.
+* 단점 / 고려사항
+  * **학습곡선**: 데이터플로우 개념과 Rust 기반 워크스페이스/크레이트 구조에 익숙해져야 합니다.
+  * **생태계 성숙도**: ROS2 브릿지 등 확장들이 있지만(문서/예제 참고) 특정 하드웨어 드라이버나 상용 미들웨어와의 직접 통합은 추가 작업이 필요할 수 있습니다. (가이드·예제 활용 권장).
+
+> 빠른 실습 팁
+
+* 먼저 공식 “Getting started” 예제를 따라해 `dataflow.yml`과 간단한 Rust 노드를 실행해 보세요. `dora-node-api` 문서를 참고하면 노드 입출력 처리 코드 예제를 쉽게 찾을 수 있습니다.
+
+<!--
+## 참고자료 (공식)
+
+* GitHub 저장소(코드·이슈·릴리스) — dora-rs/dora. [1][1], [7][7], [8][8]
+* 공식 웹사이트 / 문서(소개 · Guides · Getting started) — dora-rs.ai. [2][2], [3][3], [4][4], [5][5], [6][6], [9][9]
+* dora-drives 튜토리얼(예제): dora-drives 리포지토리 및 가이드.
+
+
+[1]: https://github.com/dora-rs/dora "dora-rs/dora"
+[2]: https://dora-rs.ai/dora/ "Introduction - dora-rs"
+[3]: https://dora-rs.ai/ "dora-rs.ai"
+[4]: https://docs.rs/dora-node-api/latest/dora_node_api/ "dora_node_api - Rust"
+[5]: https://dora-rs.ai/dora/getting-started.html "Getting started - dora-rs"
+[6]: https://dora-rs.ai/docs/guides/Installation/installing/ "Installing"
+[7]: https://github.com/dora-rs/dora-drives "dora-rs/dora-drives"
+[8]: https://github.com/dora-rs/dora-lerobot "Lerobot boosted with dora"
+[9]: https://dora-rs.ai/docs/guides/ "Guides"
+-->
+
+# 2️⃣ 간단한 Dora 노드(Rust) 템플릿 + ROS2 연동 아키텍처(브릿지 예시 포함)
+
+아래는 **(1)** `dora-node-api` 를 사용한 최소 실행 가능 Rust 노드 템플릿과 실행/배포 방법, 그리고 **(2)** ROS2 ⇄ Dora 연동(ros2-bridge)을 포함한 구체적 아키텍처와 예시 코드입니다. 필요한 공식 문서/레퍼런스도 함께 표기했습니다. 주요 개념과 명령은 Dora 공식 문서·API 문서를 기준으로 구성했습니다.
+
+
+## 목표 요약
+
+* Rust로 간단한 Dora 노드를 만들어 `output` 토픽(데이터아이디)으로 바이트 데이터를 전송합니다.
+* 이 Dora 노드를 **dora 데이터플로우(graph)** 에 등록해 실행하고, 필요하면 ROS2와 `dora-ros2-bridge`를 통해 토픽을 주고받을 수 있게 합니다.
+
+
+## Rust 노드 템플릿 (실행 가능한 최소 예제)
+
+프로젝트 구조 (예시)
+
+```
+my_first_dataflow/
+├─ rust-heartbeat-node/
+│  ├─ Cargo.toml
+│  └─ src/
+│     └─ main.rs
+└─ graphs/
+   └─ dataflow.yml
+```
+
+`Cargo.toml` (rust-heartbeat-node/Cargo.toml)
+
+```toml
+[package]
+name = "rust-heartbeat-node"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+tokio = { version = "1", features = ["macros","rt-multi-thread"] }
+futures = "0.3"
+dora-node-api = "0.3"        # crates.io / docs.rs 기준; 실제 버전은 최신 확인 권장
+dora-core = "0.3"
+```
+
+`src/main.rs`
+
+```rust
+use anyhow::Result;
+use std::time::Duration;
+use futures::StreamExt;
+use tokio::time::sleep;
+
+use dora_node_api::{DoraNode, MetadataParameters};
+use dora_core::config::DataId;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Dora 런타임(데몬)이 설정한 환경변수로부터 노드를 초기화합니다.
+    // (dora가 노드를 spawn/관리하도록 dataflow.yml로 실행하는 것이 권장)
+    let (mut node, mut events) = DoraNode::init_from_env()
+        .expect("failed to init Dora node from env");
+
+    // dataflow.yml에서 정의한 output id와 일치시킵니다.
+    let output_id = DataId::from("heartbeat".to_owned());
+
+    let mut counter: u64 = 0;
+
+    loop {
+        // 전송할 바이트(예: u64 리틀엔디언)
+        let bytes = counter.to_le_bytes();
+
+        node.send_output_raw(
+            output_id.clone(),
+            MetadataParameters::default(),
+            bytes.len(),
+            |out_buf| {
+                out_buf.copy_from_slice(&bytes);
+            }
+        )?;
+
+        println!("Sent heartbeat {}", counter);
+        counter += 1;
+
+        // 이벤트(입력 등)를 비동기적으로 처리(여기선 간단히 drain)
+        // EventStream은 비동기 스트림입니다.
+        while let Ok(Some(evt)) = tokio::time::timeout(Duration::from_millis(0), events.next()).await {
+            // 실제 노드라면 Event::Input 등을 분기 처리
+            // (여기서는 예시라 간단히 로그)
+            println!("Got event: {:?}", evt);
+        }
+
+        sleep(Duration::from_millis(500)).await;
+    }
+}
+```
+
+설명·주의
+
+* `DoraNode::init_from_env()`는 **dora 데몬(또는 dora-coordinator)** 가 노드를 스폰할 때 설정해 주는 환경변수를 읽어 초기화합니다. (따라서 보통은 `dora start graphs/dataflow.yml` 등의 방식으로 실행합니다).
+* `send_output_raw`는 **제로-카피(raw buffer closure)** 방식으로 바이트 버퍼를 채워 전송하므로 고성능 전송에 유리합니다.
+
+
+## 간단한 `dataflow.yml` 예시 (graphs/dataflow.yml)
+
+> 이 YAML은 Dora의 데이터플로우 스펙을 간단히 보여주는 예시입니다. 실제 필드 이름/옵션은 프로젝트 문서(데이터플로우 스펙)를 참고해 조정하세요.
+
+```yaml
+dataflow:
+  nodes:
+    - id: rust_heartbeat
+      exec:
+        # dora가 실행할 바이너리(절대/상대 경로 또는 컨테이너화된 이미지 등)
+        path: "./rust-heartbeat-node/target/release/rust-heartbeat-node"
+      outputs:
+        - id: heartbeat
+          format: bytes
+```
+
+실행 (예시)
+
+```bash
+# 1) 빌드
+cd my_first_dataflow/rust-heartbeat-node
+cargo build --release
+
+# 2) dora로 데이터플로우 실행 (dora-cli 설치/사용법은 Getting started 참고)
+# (아래 명령은 예시; 실제 파일 경로와 dora-cli 환경에 따릅니다)
+dora start graphs/dataflow.yml --attach
+```
+
+참고: `dora start`/`dora up` 등 CLI 사용 예시는 공식 가이드와 예제 레포에서 자주 등장합니다.
+
+
+
+## ROS2와의 연동 — 아키텍처 & 실행 흐름 (구체적)
+
+### 아키텍처 개요 (텍스트 다이어그램)
+
+```
+[ROS2 노드들] <--> [dora-ros2-bridge (프로세스)] <--> [Dora 런타임 / dataflow graph]
+                                                -> [Dora 노드: rust-heartbeat-node]
+                                                -> [Dora 노드: perception, model, recorder ...]
+```
+
+* `dora-ros2-bridge`는 ROS2 메시지를 런타임에 **Apache Arrow struct**로 변환하고, Dora 내부로(또는 반대로) 전달해 줍니다. 즉 **colcon으로 빌드할 필요 없이** (런타임 변환으로) 기존 ROS2 토픽을 Dora 파이프라인에서 사용 가능하게 합니다.
+* Bridge를 통해 ROS2의 퍼블리셔/서브스크라이버는 Dora의 입출력 이벤트(데이터아이디)와 자연스럽게 매핑됩니다. (예: `/cmd_vel` → Dora output → 다른 Dora 노드에서 소비)
+
+### 구체적 연동 예시 (Rust 쪽 코드 흐름 요약)
+
+* Rust Dora 노드에서 ROS2 명령을 퍼블리시하려면 `dora-ros2-bridge` 라이브러리의 ROS2 클라이언트를 사용합니다 (docs 예시 참조).
+  문서에 있는 예시(토이-예제: turtlesim 제어)는 다음 흐름입니다: `ros2_client::Context` 생성 → `new_node()` → `create_topic()` & `create_publisher()` → Dora 이벤트 루프에서 조건에 따라 `publisher.publish(msg)` 호출.
+
+**(문서에 제시된 Rust 예시 요약)**
+
+* ROS2 쪽에서 `create_publisher<Twist>` 로 토픽을 만들고, Dora 노드의 이벤트(예: "tick" input)를 받아 `publisher.publish(twist)` 를 호출하는 방식으로 통합됩니다. 더불어 ROS2에서 들어오는 메시지는 `merge_external`로 Dora 이벤트 스트림에 합쳐 처리할 수 있습니다.
+
+### Python 예시(간단) — 문서에서 가져온 흐름
+
+```python
+import dora
+from dora import Node
+
+ros2_context = dora.Ros2Context()
+ros2_node = ros2_context.new_node("turtle_teleop", "/ros2_demo", dora.Ros2NodeOptions(rosout=True))
+turtle_twist_topic = ros2_node.create_topic("/turtle1/cmd_vel", "geometry_msgs/Twist", topic_qos)
+twist_writer = ros2_node.create_publisher(turtle_twist_topic)
+pose_reader = ros2_node.create_subscription("/turtle1/pose", "turtlesim/Pose", topic_qos)
+
+dora_node = Node()
+dora_node.merge_external_events(pose_reader)
+
+for event in dora_node:
+    # Dora 이벤트/외부(ROS2) 이벤트 분기 처리
+    ...
+```
+
+(더 자세한 예시는 공식 가이드의 `Bridging ROS2` 페이지의 Python / Rust 예시를 참조하세요).
+
+
+## 배포/실행 체크리스트 (실무 팁)
+
+1. **ROS2 메시지 타입 접근**: ros2-bridge가 ROS2 타입을 런타임 변환하려면 ROS2 환경(`source /opt/ros/<distro>/setup.bash` 또는 워크스페이스) 이 실행 환경에서 접근 가능해야 합니다. (bridge가 메시지 정보를 찾아 생성합니다).
+2. **dora-cli 사용**: dora 데몬으로 dataflow를 시작하면 노드별 환경변수/소켓이 자동으로 설정되므로 `DoraNode::init_from_env()` 호출이 정상 동작합니다. 로컬 테스트를 위해서는 dora-cli 문서의 Getting Started 절차를 따르세요.
+3. **메시지 포맷**: Dora 내부/브리지 사이에서는 Arrow 포맷을 쓰는 것을 권장(제로-카피 이점). ROS2 브릿지가 Arrow struct로 변환해줍니다.
+4. **디버깅**: FOSDEM/발표 자료 및 GitHub 이슈·문서에 있는 예제(토이 예제: turtlesim 등)를 먼저 실행해 보면 설정·빌드 문제를 빠르게 잡을 수 있습니다.
+
+
+**중요한 문서·레퍼런스 (직접 읽어볼 곳)**
+
+* dora Node API (Rust docs) — `DoraNode`, `send_output_raw`, `init_from_env()` 설명.
+* Getting started (dora 공식 문서) — 워크스페이스/데이터플로우 실행 가이드.
+* Bridging ROS2 (가이드 페이지, Python/Rust 예시 포함) — ros2-bridge 개념과 코드 예시(토이 예제 포함). **(ROS2 연동의 핵심 예시가 이 페이지에 있음)**.
+* dora GitHub (코드·예제·릴리스).
+* Dataflow 스펙(데이터플로우 YAML).
+
+<!--
+[1][1], [2][2], [3][3], [4][4], [5][5], [6][6]
+
+[1]: https://docs.rs/dora-node-api/latest/dora_node_api/ "dora_node_api - Rust"
+[2]: https://dora-rs.ai/docs/api/dataflow-config/ "Dataflow Configuration"
+[3]: https://dora-rs.ai/dora/getting-started.html "Getting started - dora-rs"
+[4]: https://dora-rs.ai/zh-CN/docs/guides/dora-ros2-bridges/ "桥接 ROS2 | dora-rs"
+[5]: https://archive.fosdem.org/2024/events/attachments/fosdem-2024-3225-dora-rs-simplifying-robotics-stack-for-next-gen-robots/slides/22303/dora-fosdem_05S0HAi.pdf "Modern Dataflow Framework for Robo cs"
+[6]: https://github.com/dora-rs/dora "dora-rs/dora"
+-->
+
+# 3️⃣ Advanced
+
+**(1) 실행 가능한 Rust Dora 노드 템플릿, (2) ROS2 ⇄ Dora 연동(브릿지) 완전 예제, (3) 컨테이너화(Docker + docker-compose)** 를 한 번에 정리해서 드립니다.
+아래는 바로 복사·붙여넣어 사용 가능한 파일들(모든 코드와 Docker 구성), 빌드/실행 명령, 운영 팁과 주의사항을 정리한 것입니다. 핵심 근거(문서)는 문장 끝에 표시합니다.
+
+> 핵심 문서 참조:
+>
+> * Dora Rust 노드 API (`DoraNode::init_from_env`, `send_output_raw`) 문서.
+> * Dora 공식 가이드(데이터플로우 스펙, Getting started, Bridging ROS2).
+> * Dora 릴리스/설치(바이너리 다운로드 안내).
+> * Dora ROS2 bridge 관련 설명(브리지가 ROS2 메시지 타입을 런타임으로 생성하는 방식).
+> * ROS2 공식 Docker 가이드(컨테이너에서 ROS2 실행 관련).
+
+
+## 요약
+
+1. Rust로 만든 `heartbeat` Dora 노드(제로카피 전송)를 포함한 예제 워크스페이스.
+2. ROS2(파이썬) 퍼블리셔/서브스크라이버 예제 + Dora 쪽 dataflow 설정으로 브리지하는 구성 예시(설정·설명 포함).
+3. Dockerfile들 및 `docker-compose.yml`로 ROS2, dora(coordinator), rust node를 컨테이너로 띄우는 템플릿(호스트 네트워크 권장).
+
+## A. 완전한 “간단한 Dora 노드 (Rust) 템플릿” (실행 가능한 예제)
+
+프로젝트 루트: `my_dora_project/`
+
+```
+my_dora_project/
+├─ dora-workspace/                # optional: Dora workspace / graph 파일 저장소
+│  └─ graphs/
+│     └─ dataflow.yml
+├─ rust-heartbeat-node/            # Rust node
+│  ├─ Cargo.toml
+│  └─ src/
+│     └─ main.rs
+├─ docker/                         # Dockerfile 예시(아래 C 항목과 중복 가능)
+└─ ros2_py_pkg/                    # ROS2 Python package (토이 퍼블리셔/서브스크라이버)
+   ├─ package.xml
+   ├─ setup.py
+   ├─ resource/
+   └─ ros2_py_pkg/
+       ├─ __init__.py
+       ├─ talker.py
+       └─ listener.py
+```
+
+### Rust 노드(코드) — `rust-heartbeat-node`
+
+`rust-heartbeat-node/Cargo.toml`
+
+```toml
+[package]
+name = "rust_heartbeat_node"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+futures = "0.3"
+dora-node-api = "0.3"   # 실제 버전은 crates.io/docs.rs 확인 권장
+dora-core = "0.3"
+```
+
+(참고: `dora-node-api`와 `dora-core` 버전은 문서/크레이트에서 최신 버전 확인하세요).
+
+`rust-heartbeat-node/src/main.rs`
+
+```rust
+use anyhow::Result;
+use std::time::Duration;
+use tokio::time::sleep;
+use futures::StreamExt;
+
+use dora_node_api::{DoraNode, MetadataParameters};
+use dora_core::config::DataId;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Dora 데몬이 설정한 환경변수에서 노드 초기화 (일반적으로 dora가 노드를 스폰)
+    let (mut node, mut events) = DoraNode::init_from_env()
+        .expect("failed to init Dora node from env");
+
+    // dataflow.yml에서 정의한 output id와 일치시킵니다.
+    let output_id = DataId::from("heartbeat".to_owned());
+
+    let mut counter: u64 = 0;
+
+    loop {
+        // 전송할 바이트(예: u64 리틀엔디언)
+        let bytes = counter.to_le_bytes();
+
+        // zero-copy 전송: 클로저로 제공된 버퍼에 직접 채워 보냄
+        node.send_output_raw(
+            output_id.clone(),
+            MetadataParameters::default(),
+            bytes.len(),
+            |out_buf| {
+                out_buf.copy_from_slice(&bytes);
+            }
+        )?;
+
+        println!("Sent heartbeat {}", counter);
+        counter += 1;
+
+        // (선택) 이벤트 스트림 처리(예: 입력, control 이벤트)
+        // 여기서는 짧게 드레인만 합니다.
+        while let Ok(Some(evt)) = tokio::time::timeout(Duration::from_millis(0), events.next()).await {
+            println!("Dora event: {:?}", evt);
+        }
+
+        sleep(Duration::from_millis(500)).await;
+    }
+}
+```
+
+#### 빌드/로컬 실행(개발자 모드)
+
+1. Rust 빌드:
+
+```bash
+cd rust-heartbeat-node
+cargo build --release
+# 생성된 바이너리: target/release/rust_heartbeat_node
+```
+
+2. Dora 런타임으로 실행하려면 `dataflow.yml`로 dora가 노드를 spawn 하도록 실행(아래 dataflow 예시 참조). `DoraNode::init_from_env()`는 dora가 설정한 환경변수에서 연결 정보를 읽습니다.
+
+
+### 간단한 `dataflow.yml` (dora-workspace/graphs/dataflow.yml)
+
+> 이 YAML은 Dora의 데이터플로우 스펙을 간단히 사용 가능한 형태로 정리한 예시입니다. 실제 스펙 필드는 공식 문서의 Dataflow Configuration을 참고해 확장/조정하세요.
+
+```yaml
+dataflow:
+  nodes:
+    - id: rust_heartbeat
+      path: "./rust-heartbeat-node/target/release/rust_heartbeat_node"
+      args: []
+      outputs:
+        - id: heartbeat
+          format: bytes
+```
+
+* `path`는 dora가 실행(스폰)할 노드 바이너리의 경로입니다. (절대경로/컨테이너 내 경로를 사용해도 됩니다).
+
+
+## B. ROS2와 연동하는 구체적 아키텍처 설계(브릿지 예시 포함)
+
+아래는 **토이 시나리오**입니다:
+
+* ROS2 쪽: `ros2_py_pkg` 라는 파이썬 패키지에 `talker.py`(퍼블리셔, `/cmd_vel` 또는 토픽 이름 예시)와 `listener.py`(서브스크라이버)를 둡니다.
+* Dora 쪽: `rust_heartbeat`가 보내는 `heartbeat` 데이터를 Dora 내부에서 소비하거나, `dora-ros2-bridge`를 통해 ROS2 토픽으로 publish 할 수 있습니다.
+* Bridge는 Dora 런타임의 확장(libraries/extensions/ros2-bridge)으로 동작하며, ROS2 메시지 타입을 런타임에서 생성/매핑해줍니다.
+
+### ROS2 Python 퍼블리셔/서브스크라이버 (토이)
+
+`ros2_py_pkg/package.xml` (간단)
+
+```xml
+<?xml version="1.0"?>
+<package format="3">
+  <name>ros2_py_pkg</name>
+  <version>0.0.0</version>
+  <description>toy ros2 python pub/sub for dora example</description>
+  <maintainer email="you@example.com">you</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+</package>
+```
+
+`ros2_py_pkg/setup.py`
+
+```python
+from setuptools import setup
+
+package_name = 'ros2_py_pkg'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='you',
+    maintainer_email='you@example.com',
+    description='ROS2 python toy pub/sub',
+    license='Apache-2.0',
+    entry_points={
+        'console_scripts': [
+            'talker = ros2_py_pkg.talker:main',
+            'listener = ros2_py_pkg.listener:main',
+        ],
+    },
+)
+```
+
+`ros2_py_pkg/ros2_py_pkg/talker.py` (퍼블리셔)
+
+```python
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+class Talker(Node):
+    def __init__(self):
+        super().__init__('dora_talker')
+        self.pub = self.create_publisher(Twist, '/dora/cmd_vel', 10)
+        self.timer = self.create_timer(0.5, self.on_timer)
+        self.cnt = 0
+
+    def on_timer(self):
+        msg = Twist()
+        msg.linear.x = 0.1 * (self.cnt % 10)
+        msg.angular.z = 0.01 * (self.cnt % 20)
+        self.pub.publish(msg)
+        self.get_logger().info(f'Published cmd_vel: linear.x={msg.linear.x:.2f}')
+        self.cnt += 1
+
+def main():
+    rclpy.init()
+    node = Talker()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    rclpy.shutdown()
+```
+
+`ros2_py_pkg/ros2_py_pkg/listener.py` (서브스크라이버)
+
+```python
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+class Listener(Node):
+    def __init__(self):
+        super().__init__('dora_listener')
+        self.sub = self.create_subscription(Twist, '/dora/cmd_vel', self.cb, 10)
+
+    def cb(self, msg):
+        self.get_logger().info(f'Recv cmd_vel: linear.x={msg.linear.x:.3f}, angular.z={msg.angular.z:.3f}')
+
+def main():
+    rclpy.init()
+    node = Listener()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    rclpy.shutdown()
+```
+
+> 위 ROS2 예제는 ROS2 공식 튜토리얼(토이 예제, turtlesim 등)과 동일한 기본 패턴을 따릅니다. 컨테이너화/실행은 ROS2 Docker 가이드 권장사항을 따르세요. ([ROS Documentation][11])
+
+---
+
+### Dora ↔ ROS2 브리지를 통한 매핑(설계 & 예시)
+
+Dora의 Bridging 개념 요약:
+
+* Dora의 ROS2 bridge는 ROS2 메시지 타입을 런타임에서 찾아 Dora API로 이용 가능한 함수(`create_topic_<TYPE>` 등)를 자동 생성합니다. 즉 Dora 쪽에서 ROS2 토픽을 퍼블리시/구독할 수 있게 해줍니다.
+
+#### 예시 시나리오
+
+* Dora 내부에서 `heartbeat` 데이터를 ROS2 `std_msgs/Int64` 형태로 변환해 `/dora/heartbeat` 토픽으로 publish.
+* ROS2 `talker`는 Dora를 모르는 상태로 동작(또는 반대로).
+
+> Dora 쪽에서 ROS2 publish를 하려면 보통 `dora-ros2-bridge` extension을 활성화하거나, Dora 런타임을 빌드할 때 bridge 확장을 포함시켜야 합니다(문서/빌드 가이드 참조). ([GitHub][12])
+
+##### 대략적 흐름(의사 코드)
+
+* Dora 노드(예: Rust 또는 Python)에서 ros2-contex를 초기화 → `new_node(...)` → `create_publisher_std_msgs_int64("/dora/heartbeat")` → Dora event loop에서 publish.
+
+> Dora C++/Rust API 문서에 따르면 브리지 쪽에 `create_topic_<TYPE>` 혹은 자동 생성된 함수를 통해 topic을 만들 수 있다고 문서에 나와 있습니다. 아래 예시는 개념을 위한 의사 코드이며, 실제 함수 시그니처는 브리지 버전/문서 확인 후 사용하세요.
+
+---
+
+## C. 컨테이너화 (Docker + docker-compose) — ROS2 + Dora + Rust node
+
+> 권장: ROS2 (DDS) 및 하드웨어 접근성 때문에 `network: host` 모드를 추천합니다. 자세한 이유와 권장 방법은 ROS2 Docker 문서 참조.
+
+프로젝트에 포함할 예시 `docker/` 파일들(간단 버전):
+
+### `docker/Dockerfile.dora` — dora 데몬/CLI (간단: release 바이너리 사용)
+
+```dockerfile
+# dora coordinator image (lightweight)
+FROM ubuntu:22.04
+
+ARG DORA_VERSION="v0.3.0"   # 실제 최신 릴리스 태그로 바꾸세요
+WORKDIR /opt/dora
+
+# 기본 툴 설치
+RUN apt-get update && apt-get install -y curl unzip ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# GitHub release에서 바이너리 다운로드(문서 권장 방식)
+# 실제 릴리스 파일명은 GitHub Releases 페이지에서 확인하세요.
+RUN curl -L -o /tmp/dora.zip "https://github.com/dora-rs/dora/releases/download/${DORA_VERSION}/dora-${DORA_VERSION}-x86_64-Linux.zip" \
+ && unzip /tmp/dora.zip -d /opt/dora \
+ && rm /tmp/dora.zip
+
+ENV PATH="/opt/dora:${PATH}"
+
+# 기본 포트/파일 시스템 마운트는 docker-compose에서 설정
+CMD ["dora", "--help"]
+```
+
+* dora 설치 안내는 공식 문서에서 “Release zip download” 방식을 권장합니다. (위 Dockerfile은 그 권장 방식을 자동화).
+
+**주의:** `DORA_VERSION`은 실제 Release 태그(예: `v0.3.0`)로 바꾸세요. GitHub Releases 페이지를 확인하십시오.
+
+### `docker/Dockerfile.ros2` — ROS2 (humble) 컨테이너
+
+```dockerfile
+FROM osrf/ros:humble-ros-core
+
+# 기본 툴
+RUN apt-get update && apt-get install -y python3-pip python3-colcon-common-extensions && rm -rf /var/lib/apt/lists/*
+
+# (선택) 사용자 패키지 복사/빌드 지점은 docker-compose에서 volume으로 마운트해 사용 권장
+WORKDIR /work
+
+CMD ["/bin/bash"]
+```
+
+* ROS2 공식 Docker 사용 가이드는 컨테이너에서 ROS2를 테스트/개발할 때 `host` 네트워킹을 권장하거나 환경을 맞춰주는 사례를 제시합니다.
+
+
+
+### `docker/Dockerfile.rustnode` — Rust 노드를 빌드해 런타임 바이너리만 담는 다단계 빌드
+
+```dockerfile
+# builder
+FROM rust:1.73 as builder
+WORKDIR /usr/src/app
+COPY ./rust-heartbeat-node/ ./rust-heartbeat-node/
+WORKDIR /usr/src/app/rust-heartbeat-node
+RUN cargo build --release
+
+# runtime
+FROM debian:bookworm-slim
+COPY --from=builder /usr/src/app/rust-heartbeat-node/target/release/rust_heartbeat_node /usr/local/bin/rust_heartbeat_node
+WORKDIR /app
+CMD ["/usr/local/bin/rust_heartbeat_node"]
+```
+
+
+### `docker-compose.yml` (간단 템플릿)
+
+```yaml
+version: '3.8'
+services:
+  dora:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.dora
+    container_name: dora_coordinator
+    network_mode: "host"
+    volumes:
+      - ./dora-workspace:/work/dora-workspace
+    environment:
+      - TZ=Asia/Seoul
+
+  ros2:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.ros2
+    container_name: ros2_core
+    network_mode: "host"
+    volumes:
+      - ./ros2_py_pkg:/work/ros2_py_pkg
+    working_dir: /work
+    command: /bin/bash -c "cd ros2_py_pkg && /bin/bash -lc 'pip3 install -e . && ros2 run ros2_py_pkg talker'"
+
+  rustnode:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.rustnode
+    container_name: rust_heartbeat_node
+    network_mode: "host"
+    depends_on:
+      - dora
+```
+
+* `network_mode: "host"`: ROS2 DDS와 dora의 네트워크/IPC를 간단하게 접근하기 위해 권장합니다. (Docker와 DDS는 네트워크/포트 매핑/멀티호스트에서 복잡함을 유발할 수 있어 호스트 네트워크를 사용하는 것이 간단함).
+* 볼륨 마운트로 ROS2 패키지 소스와 dora 그래프를 공유하도록 했습니다.
+
+---
+
+## 전체 실행 절차
+
+1. 코드/파일 복사: 위 파일들을 로컬 `my_dora_project/` 구조로 배치.
+2. Rust 빌드 & 바이너리 확인(로컬에서 먼저 확인 권장):
+
+```bash
+cd my_dora_project/rust-heartbeat-node
+cargo build --release
+./target/release/rust_heartbeat_node   # 동작 확인 (단독실행은 Dora env가 없으면 init_from_env 실패 가능)
+```
+
+> **주의**: `DoraNode::init_from_env()`는 dora 런타임이 설정한 환경변수가 필요합니다. 로컬에서 독립적으로 테스트하려면(데몬 없이) `init_from_env` 대신 `DoraNode::init_dummy()` 같은 개발 헬퍼가 문서에 있는지 확인하거나, 수동으로 환경변수를 설정해야 합니다(개발 시점의 문서 참고).
+
+3. Docker 빌드/실행 (프로젝트 루트에서):
+
+```bash
+# docker-compose 빌드 + 실행
+docker compose build
+sudo docker compose up
+```
+
+4. dora graph 실행: (컨테이너 안에서 또는 호스트에서)
+
+```bash
+# 예: dora 바이너리가 컨테이너에 있고, graphs/dataflow.yml을 마운트했으면
+# 컨테이너에 접속해서
+docker exec -it dora_coordinator /bin/bash
+# inside container
+dora start /work/dora-workspace/graphs/dataflow.yml --attach
+```
+
+> dora 설치/릴리스 다운로드/CLI 사용법은 공식 설치 가이드를 확인하세요.
+
+5. ROS2 퍼블리셔/서브스크라이버 동작 확인:
+
+* `ros2` 서비스 컨테이너가 `talker`를 시작하도록 `docker-compose`에 적어놨다면 (혹은 호스트에서 직접):
+
+```bash
+# host or inside ros2 container
+# 패키지 설치
+cd ros2_py_pkg
+pip3 install -e .
+# 터미널1: talker
+ros2 run ros2_py_pkg talker
+# 터미널2: listener
+ros2 run ros2_py_pkg listener
+```
+
+
+## 구현/운영 팁 & 트러블슈팅
+
+* **Dora 브리지 사용**: Dora ROS2 bridge는 Dora 소스의 `libraries/extensions/ros2-bridge`에 통합되어 개발/배포되는 기능입니다. 빌드/사용 시 브리지 확장이 포함되었는지 확인하세요. ([GitHub][12])
+* **Zero-copy 장점**: `send_output_raw` 같은 API는 버퍼 클로저로 직접 데이터를 채워 전송(제로카피)하므로 저지연/고성능 파이프라인에 유리합니다. 이를 활용해 대용량 센서(이미지, 라이다) 전송 시 복사 비용을 줄이세요.
+* **ROS2 + Docker**: DDS 네이티브 동작을 위해 `network_mode: host`를 권장합니다. 멀티 호스트/보안이슈가 있다면 추가 네트워크/두 컨테이너 간 bridge 설정·ROS2의 RTPS 설정을 조정해야 합니다.
+* **권한/디바이스**: 실 하드웨어(예: GPU, USB 카메라 등)를 컨테이너에 붙일 경우 `--device` 옵션 혹은 nvidia-docker 런타임이 필요합니다(예: carla 등 dora-drives 예제). ([Dora RS][14])
+
+
+## 추가 자료(바로 확인해야 할 문서 링크 요약)
+
+* Dora Guides (Getting started, Bridging ROS2 등).
+* Dora Dataflow Configuration (YAML 스펙).
+* Dora Rust API docs (`DoraNode`, `send_output_raw`, `init_from_env`).
+* Dora GitHub (소스/릴리스).
+* ROS2 Docker 실행 가이드.
+
+<!--
+[1][1], [2][2], [3][3], [4][4], [5][5], [6][6], [7][7], [8][8], [9][9], [10][10], [11][11], [12][12], [13][13], [14][14], [15][15]
+
+[1]: https://docs.rs/dora-node-api/latest/dora_node_api/struct.DoraNode.html "DoraNode in dora_node_api - Rust"
+[2]: https://dora-rs.ai/docs/guides/ "Guides"
+[3]: https://dora-rs.ai/docs/guides/Installation/installing/ "Installing"
+[4]: https://dora-rs.ai/cpp/cpp-api.html "dora.c++ API Documentation"
+[5]: https://docs.ros.org/en/foxy/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html "Running ROS 2 nodes in Docker [community-contributed]"
+[6]: https://docs.rs/dora-node-api/latest/dora_node_api/ "dora_node_api - Rust"
+[7]: https://crates.io/crates/dora-node-api "dora-node-api - Rust Package Registry"
+[8]: https://dora-rs.ai/dora/rust-api.html "Rust API"
+[9]: https://dora-rs.ai/dora/dataflow-config.html "Dataflow Configuration"
+[10]: https://dora-rs.ai/docs/api/dataflow-config/ "Dataflow Configuration"
+[11]: https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html "Using turtlesim, ros2, and rqt"
+[12]: https://github.com/dora-rs/dora-ros2-bridge "dora-rs/dora-ros2-bridge"
+[13]: https://github.com/dora-rs/dora/releases "Releases · dora-rs/dora"
+[14]: https://dora-rs.ai/dora-drives/installation.html "installation - dora-drives"
+[15]: https://github.com/dora-rs/dora "dora-rs/dora"
+
+-->
+---
+
+[**File source**](../../asset/my_dora_project.zip)
+
+- ZIP 안에 포함된 것: Rust Dora 노드 템플릿, dataflow.yml, ROS2(파이썬) 퍼블리셔·서브스크라이버, Dockerfile들, docker-compose.yml (모두 즉시 복사·붙여넣어 사용 가능).
+- Dora 관련 버전(파일 내 기본값):
+  - Dockerfile의 DORA_VERSION은 v0.3.13(GitHub 최신 릴리스 기준).
+  - Cargo.toml은 dora-node-api = "0.3.13", dora-core = "0.3.13"으로 설정해 두었습니다.
+  - dora-ros2-bridge 관련 코드는 주석으로 남겨두었으니, 로컬에 설치된 브리지 버전에 맞춰 주석을 해제하고 버전을 맞추세요(브리지의 시그니처는 버전별로 달라질 수 있습니다)
+
+
+---
+
+* [Dora — 공식 홈페이지 (Introduction)](https://dora-rs.ai/dora/)
+* [Dora main site (dora-rs.ai)](https://dora-rs.ai/)
+* [Getting started — dora-rs](https://dora-rs.ai/dora/getting-started.html)
+* [Guides — dora-rs](https://dora-rs.ai/docs/guides/)
+* [Installing — dora-rs (Guides → Installing)](https://dora-rs.ai/docs/guides/Installation/installing/)
+* [Dataflow Configuration — dora (docs)](https://dora-rs.ai/docs/api/dataflow-config/)
+* [Dataflow Configuration — dora (alternate page)](https://dora-rs.ai/dora/dataflow-config.html)
+* [Rust API — dora (Rust API page)](https://dora-rs.ai/dora/rust-api.html)
+* [dora_node_api — docs.rs (crate docs)](https://docs.rs/dora-node-api/latest/dora_node_api/)
+* [DoraNode struct — docs.rs (DoraNode API)](https://docs.rs/dora-node-api/latest/dora_node_api/struct.DoraNode.html)
+* [dora-node-api — crates.io (package)](https://crates.io/crates/dora-node-api)
+* [dora GitHub — repository](https://github.com/dora-rs/dora)
+* [dora Releases — GitHub Releases](https://github.com/dora-rs/dora/releases)
+* [dora-ros2-bridge — GitHub (bridge repo)](https://github.com/dora-rs/dora-ros2-bridge)
+* [dora-drives — installation (dora-drives docs)](https://dora-rs.ai/dora-drives/installation.html)
+* [dora-drives — GitHub (repo)](https://github.com/dora-rs/dora-drives)
+* [dora-lerobot — GitHub (Lerobot with dora)](https://github.com/dora-rs/dora-lerobot)
+* [FOSDEM — “Modern Dataflow Framework for Robotics” (PDF slides)](https://archive.fosdem.org/2024/events/attachments/fosdem-2024-3225-dora-rs-simplifying-robotics-stack-for-next-gen-robots/slides/22303/dora-fosdem_05S0HAi.pdf)
+* [Running ROS 2 nodes in Docker (community guide, Foxy)](https://docs.ros.org/en/foxy/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html)
+* [Using turtlesim, ros2, and rqt (tutorial, Foxy)](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html)
+
