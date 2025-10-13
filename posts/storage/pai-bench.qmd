@@ -1,0 +1,12 @@
+---
+draft: true
+title: "🧩Physical AI Bench"
+description: TBD
+date: "2025-11-11"
+categories: [physical-ai, benchmark, 2025]
+toc: true
+number-sections: true
+---
+
+
+- [https://github.com/SHI-Labs/physical-ai-bench](https://github.com/SHI-Labs/physical-ai-bench)
