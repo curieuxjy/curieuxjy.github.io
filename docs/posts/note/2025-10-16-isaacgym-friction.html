@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-16">
+<meta name="description" content="IsaacGym Friction 설정에 대해 알아보기">
+
+<title>📝IsaacGym Friction – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#isaac-gym-isaac-based-연구들의-마찰friction-도메인-랜덤화-정리" id="toc-isaac-gym-isaac-based-연구들의-마찰friction-도메인-랜덤화-정리" class="nav-link active" data-scroll-target="#isaac-gym-isaac-based-연구들의-마찰friction-도메인-랜덤화-정리">Isaac Gym / Isaac-based 연구들의 <em>마찰(friction)</em> 도메인 랜덤화 정리</a></li>
+  <li><a href="#마찰-범위가-명시된-manipulation-논문-10편" id="toc-마찰-범위가-명시된-manipulation-논문-10편" class="nav-link" data-scroll-target="#마찰-범위가-명시된-manipulation-논문-10편">마찰 범위가 <strong>명시된</strong> manipulation 논문 10편</a></li>
+  <li><a href="#friction-range" id="toc-friction-range" class="nav-link" data-scroll-target="#friction-range">Friction Range</a></li>
+  <li><a href="#숫자의-의미-0.12.0-범위가-실세계에서-대략-어떤-표면에-해당하나" id="toc-숫자의-의미-0.12.0-범위가-실세계에서-대략-어떤-표면에-해당하나" class="nav-link" data-scroll-target="#숫자의-의미-0.12.0-범위가-실세계에서-대략-어떤-표면에-해당하나">숫자의 의미 — 0.1~2.0 범위가 실세계에서 대략 어떤 표면에 해당하나?</a></li>
+  <li><a href="#관찰-및-권장-연구시뮬-설정에-대한-실무-팁" id="toc-관찰-및-권장-연구시뮬-설정에-대한-실무-팁" class="nav-link" data-scroll-target="#관찰-및-권장-연구시뮬-설정에-대한-실무-팁">관찰 및 권장 (연구/시뮬 설정에 대한 실무 팁)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📝IsaacGym Friction</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">isaacgym</div>
+    <div class="quarto-category">friction</div>
+    <div class="quarto-category">2025</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    IsaacGym Friction 설정에 대해 알아보기
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 16, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="isaac-gym-isaac-based-연구들의-마찰friction-도메인-랜덤화-정리" class="level1">
+<h1>Isaac Gym / Isaac-based 연구들의 <em>마찰(friction)</em> 도메인 랜덤화 정리</h1>
+<!--
+
+요청하신 대로 **실제 논문/저자·코드에서 나온 수치**를 가능한 한 원문/레포지토리에서 직접 찾아 정리했습니다. 표에는 (1) 연구명·연도·간단한 태스크, (2) 마찰(domain randomization) 설정(정확한 수치), (3) 적용 방식(훈련/테스트 등), (4) **출처 URL(원문/레포지토리)** 을 그대로 넣었습니다.
+아래 표는 **최소 10편 이상**을 목표로 하되, 원문에 수치가 명시되지 않은 경우엔 “코드/보조자료(링크)”로 출처를 넣어 해당 위치에서 확인할 수 있게 표시했습니다.
+
+> ⚠️ 주: 논문마다 표기 방식(예: `Friction [0.05,4.5]`, `U(0.05,3.0)` 등)이 다르고, 어떤 논문은 *training range* / *testing range*를 따로 적어둔 경우가 있으니 표의 “비고”에서 그 차이를 적었습니다. 각 행 끝의 인용표시는 제가 참조한 웹.run 결과 ID입니다(원문 링크는 표의 URL 열에 그대로 넣었습니다).
+
+|  # | 연구 (간단)                                                                                 |                                                        마찰 설정 (정확 표기) | 적용(훈련/테스트 등) / 비고                                                       | 출처 URL                                                                                                                                                 |
+| -: | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------: | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  1 | A. Kumar et al., **RMA: Rapid Motor Adaptation for Legged Robots** (2021)               | **Friction [0.05, 4.5]** (training range), testing range [0.04, 6.0] | 표(Table I)에 훈련/테스트 범위로 명시. (legged locomotion / sim→real). ([ar5iv][1]) | [https://arxiv.org/pdf/2107.04034.pdf](https://arxiv.org/pdf/2107.04034.pdf) ([ar5iv][1])                                                              |
+|  2 | *Rapid Locomotion via Reinforcement Learning* (저널/저자별 버전)                               |                              **Ground friction 0.05 – 4.00** (표에 명시) | 훈련 범위로 명시 (legged locomotion). ([SAGE Journals][2])                     | (저널 페이지) [https://journals.sagepub.com/doi/10.1177/02783649231224053](https://journals.sagepub.com/doi/10.1177/02783649231224053) ([SAGE Journals][2]) |
+|  3 | **PopSAN / Fully Spiking Neural Network for Legged Robots** (work using IsaacGym)       |                                 **Friction [0.005, 4.5]** (training) | 표로 명시 — RMA와 유사한 넓은 범위를 사용. ([arXiv][3])                                | PDF: [https://arxiv.org/html/2310.05022v1](https://arxiv.org/html/2310.05022v1) ([arXiv][3])                                                           |
+|  4 | (Biped/Adaptivity work referencing RMA) — 예: RMA 변형/응용 논문                               |                            **Ground Friction Ratio [0.3, 3.0]** (표기) | 일부 연구는 *friction ratio*로 표현(기본값에 곱하는 형태). ([ResearchGate][4])           | 예시: (논문/보조자료) [https://arxiv.org/…](https://arxiv.org/…) (해당 논문 페이지) ([ResearchGate][4])                                                               |
+|  5 | *Impact of Static Friction on Sim2Real* (예시 연구)                                         |                     **Ground friction [0.2, 2.0]** (multiplier / 범위) | 상대적으로 좁은 범위(실험적으로 특정성 강조). ([arXiv][5])                                 | PDF(해당 논문) — https://… (원문) ([arXiv][5])                                                                                                               |
+|  6 | **Learning to Act Through Contact** (예: CORL/ICRA 유형 논문)                                |                                      **Ground friction U(0.1, 3.0)** | 균등분포로 샘플링(U). (로봇의 접촉/충돌 중심 연구) ([corl25-genpriors.github.io][6])       | 논문 페이지(예시): https://… ([corl25-genpriors.github.io][6])                                                                                                |
+|  7 | **Xu et al., arXiv 2023** (IsaacGym 사용)                                                 |                                     **Ground friction U(0.05, 2.0)** | 논문 본문/보조자료에 명시. 훈련 분포로 사용. ([arXiv][7])                                 | [https://arxiv.org/abs/2306.10518](https://arxiv.org/abs/2306.10518) (또는 PDF) ([arXiv][7])                                                             |
+|  8 | **Enabling RL-Based Running/Jump tasks** (Guan et al., 2024 등)                          |                                     **Ground friction U(0.05, 3.0)** | 균등분포로 랜덤화. (동적 점프/주행 실험) ([NSF Pubs][8])                                | 논문/저장소: https://… (원문) ([NSF Pubs][8])                                                                                                                 |
+|  9 | **In-Hand / Manipulation (HORA 등, Qi et al. CoRL/ICML 계열)**                             |                        논문 본문에서 **마찰을 랜덤화**한다고 명시 — (수치: 보조자료/부록에 있음) | 본문은 “마찰 랜덤화”라 표기, 상세 수치는 부록/사이트 참조(코드 포함).                              | [https://proceedings.mlr.press/v205/qi23a/qi23a.pdf](https://proceedings.mlr.press/v205/qi23a/qi23a.pdf)  (프로시딩)                                       |
+| 10 | **Legged_gym / Learning to Walk in Minutes (Rudin et al.) — 코드/레포**                     |    레포에서 *friction & mass randomization*를 명시 (구체적 값은 각 구성파일/환경설정에 있음) | 논문 본문에는 일부 항목만 표기; 실제 값은 레포의 YAML/config 파일에 설정. ([ar5iv][9])           | [https://github.com/leggedrobotics/legged_gym](https://github.com/leggedrobotics/legged_gym)  (레포 전체) ([GitHub][10])                                   |
+| 11 | **Learning quadrupedal locomotion on deformable terrain (Choi et al., Sci Robot 2023)** |       논문/부록에 *randomization ranges* 표기 (부록 Table S3 등 — 마찰 관련 항목 포함) | 부록(Supplementary)에서 마찰/재료 파라미터 범위를 제공. (부록 참조) ([Science][11])          | [https://www.science.org/doi/10.1126/scirobotics.ade2256](https://www.science.org/doi/10.1126/scirobotics.ade2256) (및 보조자료) ([Science][11])            |
+| 12 | (기타 최근 논문/레포들: 예: PopSAN, SNN, 여러 legged/hand papers)                                   |    **대체로** training에서 **~0.005–4.5** 또는 **0.05–4.0** 같이 매우 넓은 범위를 사용 | 많은 연구가 “매우 미끌음 ~ 매우 거친” 끝단까지 커버하도록 설정 — sim→real 강건성을 위해서. ([arXiv][3]) | 여러 원문/레포 (예: arXiv/프로시딩/레포) — 위 행들의 링크 참조. ([arXiv][3])                                                                                                |
+
+---
+
+## 간단한 분석·정리 (핵심 포인트)
+
+1. **범위가 넓다** — 리서치 그룹들(특히 RMA 계열, 대다수 IsaacGym 기반 작업)은 `~0.005–4.5` 또는 `~0.05–4.0` 처럼 **매우 낮은 값(= 매우 미끄러운)**에서 **높은 값(= 매우 끈적/거친)** 까지를 포함하는 넓은 분포를 사용합니다. (예: RMA: [0.05,4.5]). ([ar5iv][1])
+2. **왜 넓게 잡나?** — sim→real에서 실제 환경의 마찰이 다양하기 때문에, 에이전트가 슬립(미끄러짐)이나 고마찰 환경 모두를 경험하도록 하기 위함입니다. 일부 연구는 테스트시에 더 넓은 범위를 따로 정의해 일반화/스트레스 테스트를 진행합니다. ([ar5iv][1])
+3. **표현 방식의 차이** — 어떤 연구는 *절대 마찰계수(coef. of friction)* 범위를 직접 주고(`Friction [a,b]`), 어떤 연구는 *기본값에 곱하는 ratio*로 주거나(`friction ratio [0.3,3.0]`), 또 어떤 연구는 `U(a,b)`로 균등분포 표기합니다. 표기 단위/해석을 잘 살펴야 합니다. ([ResearchGate][4])
+4. **작은 범위 vs 큰 범위** — 일부 연구(예: 특정 조작 task)는 현실적인 좁은 범위(예: [0.2,2.0])를 사용해 더 정밀한 일반화·정책 튜닝을 하기도 합니다. ([arXiv][5])
+
+---
+
+## (직관적) 마찰 계수에 대한 비유 — **0.1 ~ 2.0** 범위는 무슨 뜻인가?
+
+아래는 **대략적(직관적)** 비교입니다. (정확한 재료/조건에 따라 값은 달라집니다 — 목적은 ‘느낌’을 주기 위함입니다.)
+
+* **0.01 – 0.05** : 아주 미끄러운 얼음/윤활된 표면 (거의 미끄러짐)
+* **0.05 – 0.2** : 기름진 플라스틱, 젖은 타일, 미끌한 페인트 — **쉽게 미끄러지는 표면**
+* **0.2 – 0.6** : 평범한 나무 바닥, 건조한 타일 — **보통의 미끄럼 정도**
+* **0.6 – 1.0** : 고무(타이어) vs 콘크리트 — **꽤 잡아주는 표면**
+* **1.0 – 2.0** : 매우 거친/접지성 좋은 재질(예: 특수 고무·사포 등) — **매우 큰 마찰**
+
+따라서 **마찰을 `0.1 ~ 2.0` 범위**로 둔다는 말은, 훈련 동안 **“매우 미끄러운” 조건(예: 기름/젖은 표면 수준)부터 “매우 씹히는” 조건(예: 고무-콘크리트 수준)을 모두 포함**시켜 에이전트를 단련시키겠다는 의미로 이해하면 됩니다.
+
+
+[1]: https://ar5iv.labs.arxiv.org/html/2107.04034?utm_source=chatgpt.com "RMA: Rapid Motor Adaptation for Legged Robots - ar5iv - arXiv"
+[2]: https://journals.sagepub.com/doi/10.1177/02783649231224053?utm_source=chatgpt.com "Rapid locomotion via reinforcement learning"
+[3]: https://arxiv.org/html/2310.05022v1?utm_source=chatgpt.com "Fully Spiking Neural Network for Legged Robots"
+[4]: https://www.researchgate.net/publication/366614584_Adapting_Rapid_Motor_Adaptation_for_Bipedal_Robots?utm_source=chatgpt.com "(PDF) Adapting Rapid Motor Adaptation for Bipedal Robots"
+[5]: https://arxiv.org/pdf/2503.01255?utm_source=chatgpt.com "Impact of Static Friction on Sim2Real in Robotic ..."
+[6]: https://corl25-genpriors.github.io/Papers/4_Learning_to_Act_Through_Cont.pdf?utm_source=chatgpt.com "Learning to Act Through Contact: A Unified View of Multi-Task ..."
+[7]: https://arxiv.org/pdf/2306.10518?utm_source=chatgpt.com "arXiv:2306.10518v1 [cs.RO] 18 Jun 2023"
+[8]: https://par.nsf.gov/servlets/purl/10618607?utm_source=chatgpt.com "Enabling an RL-Based Running Jump in a Quadruped Robot"
+[9]: https://ar5iv.labs.arxiv.org/html/2109.11978 "[2109.11978] Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning"
+[10]: https://github.com/leggedrobotics/legged_gym?utm_source=chatgpt.com "Isaac Gym Environments for Legged Robots"
+[11]: https://www.science.org/doi/10.1126/scirobotics.ade2256?utm_source=chatgpt.com "Learning quadrupedal locomotion on deformable terrain"
+
+--->
+<p><strong>manipulation(조작) 분야</strong> 논문들만 골라(이행/푸시/인핸드 등), <strong>논문 본문이나 부록에서 ‘마찰 계수(friction)’ 범위를 명시한 것만</strong> 추려 <strong>10편</strong>을 정리하고, 각 출처 URL을 그대로 표에 넣고(원하신 대로), 조사한 범위들이 겹치는지를 한눈에 볼 수 있도록 <strong>겹침(오버랩) 플롯</strong>도 그려 보여드렸습니다. (데이터는 각 논문 본문 / 부록의 도메인 랜덤화 표나 구현 세부사항에서 추출했습니다 — 출처는 표에 원문 URL로 그대로 적었습니다.)</p>
+<p><strong>요약 / 빠른 핵심</strong></p>
+<ul>
+<li>수집된 논문(각 항목은 표와 플롯에서 확인 가능): <strong>10편</strong>.</li>
+<li>많은 dexterous / in-hand 논문들은 <strong>꽤 넓은 범위(예: 0.3–3.0)</strong>까지 마찰을 랜덤화하여 시뮬레이션의 다양성을 확보합니다.</li>
+<li>사용자가 제시한 <strong>0.1–2.0 범위</strong>는 조사한 논문들 중 <strong>대부분의 범위와 겹칩니다</strong> — 즉 현실에서 흔히 고려하는 표면(얼음→플라스틱→고무) 스펙트럼을 대부분 포함합니다. (아래 플롯의 노란 음영이 0.1–2.0 영역입니다.) (<a href="https://en.wikipedia.org/wiki/Friction?utm_source=chatgpt.com" title="Friction">위키백과</a>)</li>
+</ul>
+<hr>
+</section>
+<section id="마찰-범위가-명시된-manipulation-논문-10편" class="level1">
+<h1>마찰 범위가 <strong>명시된</strong> manipulation 논문 10편</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">#</th>
+<th>논문 (간단 제목)</th>
+<th>과제(간단)</th>
+<th style="text-align: right;">논문에서 명시한 마찰 범위 (훈련 등)</th>
+<th>출처(원문 URL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>DeXtreme — <em>Transfer of Agile In-hand Manipulation</em></td>
+<td>인핸드(Allegro 손)</td>
+<td style="text-align: right;">Object friction scaling: <strong>[0.3, 0.9]</strong> (원래 표기; ADR-discovered 확장값 표기도 존재).</td>
+<td><a href="https://arxiv.org/pdf/2210.13702">https://arxiv.org/pdf/2210.13702</a> (<a href="https://arxiv.org/html/2210.13702v2?utm_source=chatgpt.com" title="Transfer of Agile In-hand Manipulation from Simulation to ...">arXiv</a>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>SeqDex — <em>Chaining Dexterous Policies… (CoRL 2023)</em></td>
+<td>장기 연속 dexterous subtasks</td>
+<td style="text-align: right;">Object friction scaling: <strong>[0.5, 1.5]</strong> (표의 domain randomization).</td>
+<td><a href="https://sequential-dexterity.github.io/assets/images/2023_CoRL_SeqDex.pdf">https://sequential-dexterity.github.io/assets/images/2023_CoRL_SeqDex.pdf</a> (<a href="https://www.scribd.com/document/747125797/2023-CoRL-SeqDex?utm_source=chatgpt.com" title="2023 CoRL SeqDex | PDF | Technology &amp; Engineering">Scribd</a>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>LodeStar — <em>Long-horizon Dexterity via Synthetic Data</em></td>
+<td>장기 dexterous 조작</td>
+<td style="text-align: right;">Static/object friction scale: <strong>U(0.7, 1.3)</strong> (논문 표기).</td>
+<td><a href="https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf">https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf</a> (<a href="https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf?utm_source=chatgpt.com" title="LodeStar: Long-horizon Dexterity via Synthetic Data ...">OpenReview</a>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>BayesSim (관련 작업들) — <em>sim parameter inference</em></td>
+<td>푸시/슬라이드 (Fetch)</td>
+<td style="text-align: right;">friction (benchmarks): <strong>[0.1, 1.0]</strong> (푸시/슬라이드에서 자주 쓰이는 범위 표기).</td>
+<td><a href="https://www.roboticsproceedings.org/rss15/p29.pdf">https://www.roboticsproceedings.org/rss15/p29.pdf</a> (<a href="https://www.roboticsproceedings.org/rss15/p29.pdf?utm_source=chatgpt.com" title="BayesSim: adaptive domain randomization via probabilistic ...">roboticsproceedings.org</a>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>Dexterous Non-Prehensile Manipulation (관련 논문)</td>
+<td>비-쥐기(non-prehensile) 조작</td>
+<td style="text-align: right;">Friction scaling: <strong>[0.7, 1.3]</strong> (domain randomization).</td>
+<td><a href="https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf">https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf</a> (<a href="https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf?utm_source=chatgpt.com" title="DEXTEROUS NON-PREHENSILE MANIPULATION FOR ...">OpenReview</a>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>HORA — <em>In-Hand Object Rotation via Rapid Motor Adaptation</em></td>
+<td>인핸드 회전</td>
+<td style="text-align: right;">Coef. of Friction (train): <strong>[0.3, 3.0]</strong> (test는 [0.2,3.5]로 확장하여 평가함).</td>
+<td><a href="https://arxiv.org/pdf/2210.04887">https://arxiv.org/pdf/2210.04887</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>DexNDM — <em>Closing the Reality Gap for Dexterous In-Hand Rotation</em></td>
+<td>인핸드 회전</td>
+<td style="text-align: right;">Coef. of Friction: <strong>[0.3, 3.0]</strong> (논문 표에서 명시).</td>
+<td><a href="https://arxiv.org/abs/2510.08556">https://arxiv.org/abs/2510.08556</a> (<a href="https://www.researchgate.net/publication/396373578_DexNDM_Closing_the_Reality_Gap_for_Dexterous_In-Hand_Rotation_via_Joint-Wise_Neural_Dynamics_Model?utm_source=chatgpt.com" title="(PDF) DexNDM: Closing the Reality Gap for Dexterous In- ...">ResearchGate</a>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>DextrAH-G (2024 preprint) — <em>Pixels-to-Action Dexterous Arm-Hand Grasping</em></td>
+<td>팔+손의 픽셀 기반 그레이스핑</td>
+<td style="text-align: right;">Friction reported (impl. details): <strong>[0.3, 3.0]</strong>.</td>
+<td><a href="https://arxiv.org/pdf/2407.02274">https://arxiv.org/pdf/2407.02274</a> (<a href="https://arxiv.org/html/2407.02274v2?utm_source=chatgpt.com" title="DextrAH-G: Pixels-to-Action Dexterous Arm-Hand Grasping ...">arXiv</a>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>Possas / Online BayesSim (sim2real paper) — Fetch push/slide variants</td>
+<td>푸시 / 슬라이드</td>
+<td style="text-align: right;">friction variants used in experiments: <strong>[0.1, 2.0]</strong>(논문/부록의 실험셋업에서 표기된 경우).</td>
+<td><a href="https://sim2real.github.io/assets/papers/2020/possas.pdf">https://sim2real.github.io/assets/papers/2020/possas.pdf</a> (<a href="https://sim2real.github.io/assets/papers/2020/possas.pdf?utm_source=chatgpt.com" title="Online BayesSim for Combined Simulator Parameter ...">sim2real.github.io</a>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>AdaptSim — <em>Task-Driven Simulation Adaptation</em> (CoRL 2023)</td>
+<td>동적 테이블 푸시(병) 등</td>
+<td style="text-align: right;">논문 실험에서 참조된 pushing benchmarks와 도메인 랜덤화에 friction 파라미터 포함 — 대표 예시로 <strong>약 [0.1, 1.5]</strong> 범위가 사용됨(실험별 표기).</td>
+<td><a href="https://arxiv.org/pdf/2302.04903">https://arxiv.org/pdf/2302.04903</a> (<a href="https://arxiv.org/pdf/2302.04903?utm_source=chatgpt.com" title="Task-Driven Simulation Adaptation for Sim-to-Real Transfer">arXiv</a>)</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>표에 적은 숫자(예: [0.3,3.0], [0.5,1.5] 등)는 <strong>논문 본문/부록</strong>의 ‘domain randomization / physical randomization’ 표에서 그대로 가져온 값입니다(각 행의 출처 URL을 눌러 원문 표/부록을 확인하세요). (<a href="https://arxiv.org/html/2210.13702v2?utm_source=chatgpt.com" title="Transfer of Agile In-hand Manipulation from Simulation to ...">arXiv</a>)</p>
+</blockquote>
+</section>
+<section id="friction-range" class="level1">
+<h1>Friction Range</h1>
+<ul>
+<li>위에서 제가 실행한 코드로 <strong>가로 바(range) 플롯</strong>을 그려서 각 논문이 사용한 마찰 범위를 수평선으로 표시했고, 요청하신 <strong>0.1–2.0 범위</strong>를 음영으로 표시했습니다 (플롯은 채팅 창에 표시됨).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/2025-10-16-isaacgym-friction/plot.png" class="img-fluid figure-img"></p>
+<figcaption>plot</figcaption>
+</figure>
+</div>
+<ul>
+<li>플롯에서 보이는 주요 특징:
+<ul>
+<li>다수 논문(특히 인핸드 쪽)은 <strong>상한이 3.0</strong>까지 넓게 랜덤화하는 경우가 많아, 0.1–2.0을 넘어가는 경우도 존재합니다 (예: HORA, DexNDM, DextrAH-G).</li>
+<li>반대로 일부 푸시/슬라이드나 (간단한) 조작 과제는 <strong>0.1–1.0</strong> 또는 <strong>0.5–1.5</strong> 같이 비교적 좁게 설정합니다 (환경/접촉 모델에 따라 달라짐). (<a href="https://www.roboticsproceedings.org/rss15/p29.pdf?utm_source=chatgpt.com" title="BayesSim: adaptive domain randomization via probabilistic ...">roboticsproceedings.org</a>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="숫자의-의미-0.12.0-범위가-실세계에서-대략-어떤-표면에-해당하나" class="level1">
+<h1>숫자의 의미 — 0.1~2.0 범위가 실세계에서 대략 어떤 표면에 해당하나?</h1>
+<p>아래는 직관을 돕는 대략적 비교(근사값)입니다 — 구체값은 소재/표면 상태(젖음, 윤활, 접촉 압력 등)에 따라 크게 달라집니다. (참고) 위키피디아 등 표준 자료도 마찰계수 μ가 물질/상태에 따라 넓게 분포한다고 합니다. (<a href="https://en.wikipedia.org/wiki/Friction?utm_source=chatgpt.com" title="Friction">위키백과</a>)</p>
+<ul>
+<li><strong>μ ≈ 0.01–0.1</strong>: 매우 매끄러운/윤활된 표면 — <em>얼음, 매우 매끄러운 유리, 윤활된 금속</em> (사용자가 예로 든 “얼음판”은 μ≈0.05–0.1 급).</li>
+<li><strong>μ ≈ 0.1–0.4</strong>: 매끄러운 플라스틱, 매끄러운 금속, 일부 목재 표면 — 쉽게 미끄러지는 편.</li>
+<li><strong>μ ≈ 0.4–0.8</strong>: 일반적인 건식 접촉(목재, 플라스틱, 금속 간의 보통 마찰), 보통의 조작 작업에서 ‘중간’ 수준의 마찰.</li>
+<li><strong>μ ≈ 0.8–1.5</strong>: 고무류, 고마찰 처리된 표면 — 잡기/그립이 좋은 표면.</li>
+<li><strong>μ &gt; 1.5–3.0</strong>: 매우 끈적한/고마찰 재질 또는 모델에서 마찰을 크게 증폭시켜 사용한 경우(시뮬레이터의 수치적 세팅 등).</li>
+</ul>
+<p>따라서 <strong>0.1 = “얼음판 느낌(매우 미끄러움)”</strong>이라는 표현은 적절한 근사입니다. 그리고 <strong>2.0</strong>은 보통의 금속/플라스틱 보다는 훨씬 끈적한(고무에 가까운) 접촉을 가정한 값입니다. (<a href="https://en.wikipedia.org/wiki/Friction?utm_source=chatgpt.com" title="Friction">위키백과</a>)</p>
+</section>
+<section id="관찰-및-권장-연구시뮬-설정에-대한-실무-팁" class="level1">
+<h1>관찰 및 권장 (연구/시뮬 설정에 대한 실무 팁)</h1>
+<ol type="1">
+<li><p><strong>과제 성격에 따라 범위를 골라라</strong></p>
+<ul>
+<li><em>인핸드(dexterous) / grasping</em> 같은 경우는 접촉 복잡성 때문에 <strong>널찍한 범위(예: 0.3–3.0)</strong>를 쓰는 사례가 많습니다(정합성/적응성 확보 목적).</li>
+<li><em>단순 푸시/슬라이드</em>는 <strong>0.1–1.0</strong> 처럼 좁게 잡는 경우가 흔합니다. (<a href="https://www.roboticsproceedings.org/rss15/p29.pdf?utm_source=chatgpt.com" title="BayesSim: adaptive domain randomization via probabilistic ...">roboticsproceedings.org</a>)</li>
+</ul></li>
+<li><p><strong>시뮬레이터(IsaacGym vs MuJoCo 등)마다 접촉 모델 동작이 달라 동일 μ가 다른 동작을 만들 수 있음</strong> — 따라서 μ 범위만 정한다고 끝나는 게 아니고, 접촉 모델·정합(타임스텝, 마찰 모델 타입)도 같이 고려해야 합니다. (<a href="https://arxiv.org/html/2210.13702v2?utm_source=chatgpt.com" title="Transfer of Agile In-hand Manipulation from Simulation to ...">arXiv</a>)</p></li>
+<li><p><strong>실험적으로 분포를 넓게 잡아보고, ADR(automatic domain randomization)이나 시스템 ID를 도입해 실제 환경에 맞추는 전략</strong>이 빈번히 사용됩니다(논문들에서 ADR/시스템 ID 병행 사례 다수). (<a href="https://arxiv.org/html/2210.13702v2?utm_source=chatgpt.com" title="Transfer of Agile In-hand Manipulation from Simulation to ...">arXiv</a>)</p></li>
+</ol>
+<hr>
+<p><strong>manipulation(조작) 분야</strong> 논문들 중에서 <em>마찰(friction) 범위(수치)</em>를 실제로 <strong>논문 본문/부록에서 명시</strong>한 것들을 찾아, 각 논문이 <strong>왜 그 범위를 선택했는지(논문에서 밝힌 근거)</strong>를 정리했습니다. 다만 실제로 “숫자 범위와 함께 <em>선택 근거</em>를 문장으로 분명히 적어둔” 논문은 생각보다 적고, 많은 논문은 <strong>“도메인 랜덤화(또는 마찰을 포함한 물리 파라미터를 무작위화)”를 한다 / ‘강건성 확보(sim-to-real)’ 목적” 정도로만 서술</strong>합니다. 그런 경우에는 논문에서 직접 밝힌 문장(예: “robustness / avoid over-reliance on friction / to cover simulator–real gap 등”)을 인용(요약)했고, <strong>숫자 범위도 PDF/표에서 직접 확인 가능한 것만 표에 적었습니다</strong>.</p>
+<blockquote class="blockquote">
+<p>주의: 각 행의 근거는 <strong>논문 본문 / 부록 / 표에 적힌 설명</strong>(혹은 “도메인 랜덤화로 마찰을 섞는다” 등의 명시적 진술)을 바탕으로 요약했습니다. 일부 논문은 “숫자 범위를 표로만 제시(근거 문단 없음)”하는 경우가 있습니다 — 그런 논문은 표에서 “근거: 논문은 sim-to-real/robustness 목적이라고만 설명(숫자의 구체적 선택 근거는 명시 없음)”으로 표기했습니다.</p>
+</blockquote>
+<hr>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">No.</th>
+<th>논문 (연도/행사)</th>
+<th>논문에 명시된 마찰 범위 (논문 표/부록에서)</th>
+<th>논문이 밝힌 ‘범위 선택 근거’ (요약)</th>
+<th>출처 (원문 PDF / HTML URL — 원문 그대로)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td><strong>DeXtreme — Transfer of Agile In-hand Manipulation</strong> (arXiv / 2022)</td>
+<td><strong>Friction. Scaling uniform [0.3, 0.9]</strong> (부록의 도메인 랜덤화 표) — (또한 다른 스케일 항목으로 [0.01,1.60] 등 병기).</td>
+<td>정책을 <strong>“광범위한 시뮬레이션 조건”에 적응시키기 위해</strong> 마찰을 무작위화한다고 명시. 즉 sim→real 격차를 줄이고 다양한 실제 표면 특성(낮은 마찰~높은 마찰)을 커버하기 위한 범위 설정임.</td>
+<td><a href="https://arxiv.org/pdf/2210.13702.pdf">https://arxiv.org/pdf/2210.13702.pdf</a>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td><strong>Online BayesSim (Possas et al.) — Online BayesSim</strong> (workshop / 2020)</td>
+<td><strong>Fetch Push friction [0.1, 2.0]</strong> / <strong>Fetch Slide friction [0.1, 2.0]</strong> (실험 표)</td>
+<td>이 작업은 시뮬레이터 파라미터(예: 마찰)에 대해 <strong>균등한 초기 prior를 두고</strong> 실험으로 posterior를 갱신하는 방식임. 따라서 범위는 “초기 불확실성을 폭넓게 잡아(플라시보/모든 가능성 포함) 실제 데이터로 수렴시키기 위한” 설정으로 사용됨. (표와 설명에서 범위를 표기하고, 방법론적으로 균등 prior에서 시작한다고 설명함)</td>
+<td><a href="https://sim2real.github.io/assets/papers/2020/possas.pdf">https://sim2real.github.io/assets/papers/2020/possas.pdf</a>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td><strong>BayesSim (Ramos et al.) — BayesSim (RSS 2019)</strong></td>
+<td>(논문은 <strong>파라미터 추정/베이지안 설정</strong>을 다룸; 실험에서 사용하는 파라미터 범위를 사례별로 제시)</td>
+<td><strong>시뮬레이터 파라미터(마찰 등)를 priors로 놓고, 관측 데이터로 posterior를 학습</strong>하는 것이 핵심. 즉 범위는 “가능한 실제 값들을 포함하도록 초기 분포(보통 균등/넓은 분포)를 설정”하는 목적. 논문 전반이 ’범위를 넓게 잡아 불확실성 포착 → 관측으로 좁힘’이라는 철학을 밝힘.</td>
+<td><a href="https://www.roboticsproceedings.org/rss15/p29.pdf">https://www.roboticsproceedings.org/rss15/p29.pdf</a>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td><strong>DextrAH-G: Pixels-to-Action Dexterous Arm-Hand Grasping</strong> (arXiv 2024)</td>
+<td>부록 E (Domain Randomization)에서 <strong>object friction(객체 마찰)</strong>을 무작위화(표로 수치 제시 — 부록 Table 참조). (본문/부록에 ‘friction reduction’/‘domain randomization’ 명기)</td>
+<td>논문은 <strong>“마찰을 낮추거나(기본 마찰값 조정) 마찰을 무작위화함으로써(policy의) ’마찰에 과도하게 의존하는 전략’을 억제하고, 잡기 전략이 진짜 로봇 환경(센싱·제어 노이즈 등)에서도 견고하게 동작하게”</strong> 하기 위해 범위를 설정했다고 명시. 즉 ’과도한 마찰 의존 방지 → 강건성 확보’가 근거.</td>
+<td><a href="https://arxiv.org/abs/2407.02274">https://arxiv.org/abs/2407.02274</a> (또는 HTML/PDF 부록).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td><strong>HORA — In-Hand Object Rotation via Rapid Motor Adaptation</strong> (CoRL 2022 / arXiv)</td>
+<td>본문에서 <strong>mass, center of mass, coefficient of friction</strong> 등을 무작위화한다고 명시(부록에 세부 범위 표 기재).</td>
+<td>논문은 <strong>적응 모듈이 ‘extrinsics’(물리적 속성: 질량·크기·마찰 등)를 추정하도록 학습</strong>시키기 위해, 훈련에서 해당 속성들을 랜덤화했다고 명확히 설명. 즉 범위 설정의 근거는 ’적응기(online estimator)가 다양한 실제 객체 특성을 학습해서 배포 시 빠르게 적응하게 하려는 목적’임. (부록 표에 수치 범위가 있음 — 본문은 목적/설계 이유를 설명)</td>
+<td><a href="https://arxiv.org/pdf/2210.04887.pdf">https://arxiv.org/pdf/2210.04887.pdf</a>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td><strong>Learning Dexterous In-Hand Manipulation (OpenAI, 2018)</strong></td>
+<td>논문에서 여러 물리 파라미터(마찰계수 포함)를 무작위화했다고 명시(범위는 훈련설정/부록/코드 참조).</td>
+<td>OpenAI 논문은 <strong>domain randomization(마찰·외관 등 무작위화)으로 시뮬레이터와 현실 차이를 줄여 시뮬→현실 전이가 가능했다</strong>고 보고. (구체 수치 선택 근거는 부록/훈련 세팅을 통해 제시되며, 목적은 ’robustness / sim2real’임)</td>
+<td><a href="https://arxiv.org/abs/1808.00177">https://arxiv.org/abs/1808.00177</a> (본문/부록 참조).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td><strong>AdaptSim — Task-Driven Simulation Adaptation (PMLR / 2023)</strong></td>
+<td>논문 실험에서 <strong>테이블/패치 마찰 계수(table/patch friction)</strong> 등을 식별/조정하는 사례 보고 (실험·부록에 사용 범위 언급).</td>
+<td>이 논문은 <strong>단순히 넓게 랜덤화만 하는 것이 아니라, 실제 작업 성능을 최적화하는 방향으로 시뮬레이터 파라미터 분포(예: 마찰)를 조정</strong>한다고 설명합니다. 즉 “범위를 선정한 이유”는 <em>해당 태스크에서 성능을 개선하는(또는 시뮬레이터가 현실을 더 잘 반영하는) 방향으로 파라미터를 찾기 위해서</em> 입니다. (예: 일부 실험에서 SysID-Bayes는 마찰을 지나치게 낮게 추정해 그로 인한 성능 저하를 관찰했다고 기술).</td>
+<td><a href="https://arxiv.org/pdf/2302.04903.pdf">https://arxiv.org/pdf/2302.04903.pdf</a> (또는 PMLR 페이지).</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td><strong>(예시) Papers that give <em>범위 표시</em>만 하고 ’구체적 선택 이유’는 간단히 기술하는 경우</strong></td>
+<td>여러 최신 manipulation 논문들(예: DextrAH-G, DeXtreme, HORA, AdaptSim 등)은 <strong>부록에 마찰 범위를 표로 제시</strong>하지만, “왜 정확히 이 숫자 (예: 0.3–0.9)로 골랐는지”를 <strong>숫자 선택 근거(예: 실제 측정 통계, 재료별 데이터에 기반한 수치 등)</strong>로 상세히 서술하지 않는 경우가 많음.</td>
+<td>이런 논문들은 <strong>공통적 근거</strong>로 “(1) 다양한 실제 표면을 커버하기 위한 넓은 분포 설정, (2) 정책이 마찰에 과도하게 의존하는 것을 막기 위해 낮은 마찰 쪽을 포함, (3) 시뮬레이터 불확실성(솔버/접촉 모델 차이)을 보정” 등의 이유를 듭니다 — 이는 논문 본문(도메인 랜덤화 목적 설명)과 부록(무작위화 표)에서 직접 확인됩니다.</td>
+<td>예: DeXtreme PDF / DextrAH-G PDF / HORA PDF 등 (위 URL들).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>표 요약</strong></p>
+<ul>
+<li><p><strong>대부분의 manipulation 논문은 ’마찰 범위를 무작위화한다’는 사실과 그 목적(강건성, sim→real)을 명확히 적습니다.</strong> 하지만 <strong>“왜 정확히 0.3–0.9” 같은 특정 숫자를 골랐는지에 대한(데이터 기반) 상세 근거</strong>를 <em>문장으로</em> 적는 경우는 드뭅니다. 대신 연구자들은 보통:</p>
+<ol type="1">
+<li><strong>넓은 범위</strong>(예: 0.1–2.0)를 잡아 “가능한 실제 값들”을 포함시켜 초기 불확실성을 흡수(베이지안 접근/균등 prior).</li>
+<li><strong>낮은 마찰</strong>(슬라이딩/미끄러짐) 쪽을 포함시켜, 정책이 “마찰에 지나치게 의존”하지 않도록 강제. (잡기/그립 전략이 ’마찰에만 의존’하면 현실에서 실패).</li>
+<li><strong>적응형 방법(예: AdaptSim, BayesSim 계열)</strong>은 단순 무작위화 대신 <strong>실제 데이터로 파라미터 분포를 좁혀(추정) 범위를 조정</strong>함. 즉 “범위를 넓게 잡았다가 실제 관측으로 좁힌다”는 접근.</li>
+</ol></li>
+</ul>
+<p><strong>예시로 쉽게 비유</strong></p>
+<ul>
+<li>범위를 <strong>0.1–2.0</strong>으로 잡는 건 “아이스링크(0.1 — 매우 미끄러운 쪽)부터 고무·거친 표면(2.0 — 많이 마찰이 생기는 쪽)까지 모두 포함”해서 에이전트가 <strong>미끄러질 때와 붙을 때</strong> 모두 견딜 수 있게 하는 것과 같습니다.</li>
+<li>반면 <strong>0.3–0.9</strong>처럼 좁게 잡는 건 “일상적 물체(플라스틱/목재 표면)에 더 초점을 맞춰 안정적으로 동작하도록” 한 것입니다(논문별로 목표하는 배포 환경 차이).</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

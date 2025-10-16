@@ -14,6 +14,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-10-16-robotwin2.html",
       "/posts/storage/2025-10-13-dora.html",
       "/posts/paper/2025-10-10-taccel.html",
       "/posts/paper/2025-10-05-add.html",
@@ -119,6 +120,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-10-16-robotwin2.html",
       "/posts/storage/2025-10-13-dora.html",
       "/posts/paper/2025-10-10-taccel.html",
       "/posts/paper/2025-10-05-add.html",
@@ -224,6 +226,8 @@
   {
     "listing": "/note.html",
     "items": [
+      "/posts/note/2025-10-16-isaacgym-friction.html",
+      "/posts/note/2025-10-15-ros2-topic-vs-service.html",
       "/posts/note/2025-10-10-linux-cheetsheet.html",
       "/posts/note/2025-10-01-ros2-bag.html",
       "/posts/note/2025-09-30-isaaclab-mjlab.html",

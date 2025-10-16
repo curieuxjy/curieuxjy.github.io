@@ -1,0 +1,54 @@
+---
+title: "📃RoboTwin 2.0 리뷰"
+date: 2025-10-16
+categories: [vla, bimanual]
+toc: true
+number-sections: False
+description: A Scalable Data Generator and Benchmark with Strong Domain Randomization for Robust Bimanual Robotic Manipulation
+---
+
+- [Paper Link](https://arxiv.org/abs/2506.18088)
+- [Homepage](https://robotwin-platform.github.io/)
+- [Code Link](https://github.com/RoboTwin-Platform/RoboTwin)
+
+
+1. 🤖 RoboTwin 2.0은 이중 팔 로봇 조작을 위한 확장 가능한 시뮬레이션 프레임워크로, MLLM(Multimodal Large Language Model) 기반의 자동 데이터 생성 파이프라인과 포괄적인 도메인 무작위화 기능을 통합하여 실제 환경의 복잡성을 반영합니다.
+2. 💡 이 프레임워크는 731개 객체를 포함하는 RoboTwin-OD 라이브러리와 50가지 이중 팔 작업에 걸친 10만 개 이상의 전문가 궤적 데이터셋을 제공하며, 시뮬레이션 내 피드백을 통해 태스크 코드 생성 성공률을 10.9% 향상시키고 다양한 로봇 기구학에 적응합니다.
+3. 🚀 RoboTwin 2.0 데이터로 학습된 정책은 도메인 무작위화가 없는 데이터에 비해 시뮬레이션 환경에서 정책 견고성이 최대 31.9% 향상되었으며, 실제 환경에서 10개의 실제 데모와 함께 사용될 때 평균 성공률이 24.4% 상승하여 Sim-to-Real 전이 및 일반화 능력을 크게 개선했습니다.
+
+
+
+![teaser](../../images/2025-10-16-robotwin2/teaser.png)
+
+
+---
+
+# Brief Review
+
+
+
+RoboTwin 2.0은 이중 로봇 조작(bimanual robotic manipulation)을 위한 확장 가능한 데이터 생성 프레임워크이자 벤치마크이며, 강력한 도메인 무작위화(domain randomization)를 통해 로봇 정책(robot policy)의 강건함(robustness)과 일반화(generalization) 능력을 향상시키는 데 중점을 둡니다. 이 프레임워크는 기존의 시뮬레이션 기반 데이터셋이 새로운 작업을 위한 효율적이고 확장 가능한 생성 방법과 현실 세계의 복잡성을 포착하지 못하는 지나치게 단순화된 시뮬레이션 환경이라는 두 가지 문제점을 해결합니다.
+
+RoboTwin 2.0은 세 가지 핵심 구성 요소를 통합합니다:
+
+1.  **자동화된 전문가 데이터 생성 파이프라인 (Automated Expert Data Generation Pipeline):** 멀티모달 대규모 언어 모델(MLLM)과 시뮬레이션-인-더-루프(simulation-in-the-loop) 피드백을 활용하여 작업 실행 코드를 반복적으로 검증하고 개선합니다. MLLM은 자연어 지시(natural language instructions)로부터 실행 가능한 작업 계획(executable task plans)을 합성하고, vision-language model (VLM) observer는 시뮬레이션에서 실행을 모니터링하고 오류를 감지하며 수정을 제안합니다. 이 폐쇄 루프 아키텍처는 코드 생성 에이전트가 프로그램을 자동으로 개선하여 최소한의 사람 감독으로 강건하고 자체 개선되는 전문가 데이터를 생성할 수 있도록 합니다.
+
+2.  **포괄적인 도메인 무작위화 (Comprehensive Domain Randomization):** 정책의 Sim-to-Real 격차를 줄이고 일반화 능력을 향상시키기 위해 다섯 가지 축(언어 지시(language instructions), 장면 혼란(scene clutter), 배경 텍스처(background textures), 조명 조건(lighting conditions), 탁자 높이(tabletop configurations))에 걸쳐 적용됩니다. 장면 혼란을 위해 RoboTwin-OD에서 가져온 731개의 방해 객체(distractor objects)를 추가하며, 충돌 감지 배치(collision-aware placement)를 통해 물리적 타당성을 보장합니다. 배경 및 탁자 표면을 위해 LLM 프롬프트와 Stable Diffusion v2를 사용하여 생성하고 사람의 필터링을 거친 11,000개의 고품질 텍스처 라이브러리가 사용됩니다. 조명은 색온도, 광원 유형, 강도 및 위치가 무작위화됩니다. 탁자 높이는 가능한 범위 내에서 균일하게 무작위화됩니다. 언어 지시의 경우 MLLM을 사용하여 다양한 작업 템플릿과 객체 설명을 생성하여 언어적 다양성을 확보합니다.
+
+3.  **구현체 인식 파지 적응 (Embodiment-Aware Grasp Adaptation):** 로봇 팔의 자유도(DoF)와 운동학적 구조(kinematic structures)의 차이를 해결하기 위해 각 객체에 여러 파지 축(grasp axes)과 접근 방향(approach directions)을 포괄하는 풍부한 후보 조작 포즈(candidate manipulation poses) 세트를 주석 처리합니다. Curobo와 같은 고성능, GPU 가속 모션 플래너(motion planner)를 통합하여 다양한 운동학적 제약 조건(kinematic constraints) 하에서도 효율적이고 신뢰할 수 있는 계획을 가능하게 합니다. Franka, Piper, UR5, ARX-X5, Aloha-AgileX와 같은 다섯 가지 로봇 구현체(robot embodiments)를 지원합니다.
+
+RoboTwin 2.0은 다음과 같은 새로운 리소스를 제공합니다:
+
+-   **RoboTwin-OD 객체 라이브러리:** 147개 카테고리에 걸쳐 731개의 객체 인스턴스를 포함하며, 각 객체는 의미론적(semantic) 및 조작 관련(manipulation-relevant) 레이블, 다양한 언어 설명, 키포인트-축 정보(placement points, functional points, grasp points, grasp axes)로 주석 처리되어 있습니다.
+-   **대규모 데이터셋:** 50개의 이중 로봇 조작 작업을 5개의 로봇 구현체에 걸쳐 100,000개 이상의 전문가 궤적(expert trajectories)을 포함합니다.
+-   **벤치마크:** 혼란스러운 환경(cluttered environments)과 개방형 언어 목표(open-ended language goals)에 대한 정책 일반화 능력을 평가합니다.
+
+실험 결과는 RoboTwin 2.0의 효과를 입증합니다:
+
+-   **자동화된 전문가 코드 생성:** MLLM과 시뮬레이션-인-더-루프 피드백을 통합한 파이프라인은 RoboTwin 1.0 대비 코드 생성 성공률(ASR)에서 10.9% 향상된 71.3%를 달성합니다. 특히 멀티모달 피드백은 오류를 감지하고 정확한 수정을 유도하여 신뢰성을 높입니다.
+-   **적응형 파지(Adaptive Grasping) 효율성:** 구현체 인식 파지 증강 전략은 특히 Aloha-AgileX, Piper, ARX-X5와 같은 낮은 자유도 로봇 플랫폼에서 평균 8.3%의 작업 성공률 개선을 가져옵니다.
+-   **정책 강건함에 대한 영향:** RoboTwin 2.0의 도메인 무작위화 데이터로 사전 학습된 모델은 시각적 및 공간적 변화에 대한 강건함이 크게 향상됩니다. 10개의 실제 데모와 1,000개의 합성 궤적을 혼합하여 학습된 vision–language–action (VLA) 모델은 10개 데모 기반(baseline) 모델 대비 367%의 상대적 개선을 보였습니다. 실제 데이터 없이 합성 데이터만으로 학습된 제로샷(zero-shot) 모델도 228%의 상대적 개선을 달성했습니다.
+-   **Sim-to-Real 성능:** 실제 환경 실험에서 RoboTwin 2.0의 도메인 무작위화 합성 궤적으로 보강된 이중 로봇 정책은 강건함에서 명확한 이득을 보였습니다. 10개의 실제 데모와 1,000개의 합성 궤적을 결합한 few-shot 설정에서 평균 성공률은 24.4% 향상되었으며, 제로샷 설정에서도 20% 이상의 개선을 보였습니다. 이러한 개선은 시각적으로 복잡한 장면에서 더욱 두드러져, RoboTwin 2.0이 어려운 조건에서 특히 효과적임을 나타냅니다.
+-   **RoboTwin 2.0 벤치마크:** 50개 벤치마크 작업에서 VLA 모델을 평가한 결과, 사전 학습된 모델(RDT, Pi0)은 Hard 조건(도메인 무작위화된 환경)에서 더 강력한 회복탄력성을 보였지만, Easy 조건(깨끗한 환경) 대비 성공률이 각각 20.8%, 30.1% 하락하여 도메인 이동(domain shifts) 하에서의 강건함이 여전히 중요한 도전 과제임을 강조했습니다.
+
+결론적으로, RoboTwin 2.0은 다양하고 고품질의 전문가 데이터를 생성하기 위한 확장 가능한 시뮬레이션 프레임워크를 제공하여 강건한 이중 로봇 조작을 지원합니다. 이 시스템은 MLLM 기반 작업 생성, 구현체 적응형 행동 합성 및 포괄적인 도메인 무작위화를 통합하여 기존 합성 데이터 생성기의 주요 한계를 해결합니다.
