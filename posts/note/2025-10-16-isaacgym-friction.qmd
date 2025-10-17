@@ -13,110 +13,46 @@ format:
 
 # Isaac Gym / Isaac-based 연구들의 *마찰(friction)* 도메인 랜덤화 정리
 
-<!--
 
-요청하신 대로 **실제 논문/저자·코드에서 나온 수치**를 가능한 한 원문/레포지토리에서 직접 찾아 정리했습니다. 표에는 (1) 연구명·연도·간단한 태스크, (2) 마찰(domain randomization) 설정(정확한 수치), (3) 적용 방식(훈련/테스트 등), (4) **출처 URL(원문/레포지토리)** 을 그대로 넣었습니다.
-아래 표는 **최소 10편 이상**을 목표로 하되, 원문에 수치가 명시되지 않은 경우엔 “코드/보조자료(링크)”로 출처를 넣어 해당 위치에서 확인할 수 있게 표시했습니다.
+**manipulation(조작) 분야** 논문들만 골라(이행/푸시/인핸드 등), **논문 본문이나 부록에서 ‘마찰 계수(friction)’ 범위를 명시한 것만** 추려 **10편**을 정리
 
-> ⚠️ 주: 논문마다 표기 방식(예: `Friction [0.05,4.5]`, `U(0.05,3.0)` 등)이 다르고, 어떤 논문은 *training range* / *testing range*를 따로 적어둔 경우가 있으니 표의 “비고”에서 그 차이를 적었습니다. 각 행 끝의 인용표시는 제가 참조한 웹.run 결과 ID입니다(원문 링크는 표의 URL 열에 그대로 넣었습니다).
+![](../../images/2025-10-16-isaacgym-friction/Friction_Animation_2_Blocks.gif)
 
-|  # | 연구 (간단)                                                                                 |                                                        마찰 설정 (정확 표기) | 적용(훈련/테스트 등) / 비고                                                       | 출처 URL                                                                                                                                                 |
-| -: | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------: | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-|  1 | A. Kumar et al., **RMA: Rapid Motor Adaptation for Legged Robots** (2021)               | **Friction [0.05, 4.5]** (training range), testing range [0.04, 6.0] | 표(Table I)에 훈련/테스트 범위로 명시. (legged locomotion / sim→real). ([ar5iv][1]) | [https://arxiv.org/pdf/2107.04034.pdf](https://arxiv.org/pdf/2107.04034.pdf) ([ar5iv][1])                                                              |
-|  2 | *Rapid Locomotion via Reinforcement Learning* (저널/저자별 버전)                               |                              **Ground friction 0.05 – 4.00** (표에 명시) | 훈련 범위로 명시 (legged locomotion). ([SAGE Journals][2])                     | (저널 페이지) [https://journals.sagepub.com/doi/10.1177/02783649231224053](https://journals.sagepub.com/doi/10.1177/02783649231224053) ([SAGE Journals][2]) |
-|  3 | **PopSAN / Fully Spiking Neural Network for Legged Robots** (work using IsaacGym)       |                                 **Friction [0.005, 4.5]** (training) | 표로 명시 — RMA와 유사한 넓은 범위를 사용. ([arXiv][3])                                | PDF: [https://arxiv.org/html/2310.05022v1](https://arxiv.org/html/2310.05022v1) ([arXiv][3])                                                           |
-|  4 | (Biped/Adaptivity work referencing RMA) — 예: RMA 변형/응용 논문                               |                            **Ground Friction Ratio [0.3, 3.0]** (표기) | 일부 연구는 *friction ratio*로 표현(기본값에 곱하는 형태). ([ResearchGate][4])           | 예시: (논문/보조자료) [https://arxiv.org/…](https://arxiv.org/…) (해당 논문 페이지) ([ResearchGate][4])                                                               |
-|  5 | *Impact of Static Friction on Sim2Real* (예시 연구)                                         |                     **Ground friction [0.2, 2.0]** (multiplier / 범위) | 상대적으로 좁은 범위(실험적으로 특정성 강조). ([arXiv][5])                                 | PDF(해당 논문) — https://… (원문) ([arXiv][5])                                                                                                               |
-|  6 | **Learning to Act Through Contact** (예: CORL/ICRA 유형 논문)                                |                                      **Ground friction U(0.1, 3.0)** | 균등분포로 샘플링(U). (로봇의 접촉/충돌 중심 연구) ([corl25-genpriors.github.io][6])       | 논문 페이지(예시): https://… ([corl25-genpriors.github.io][6])                                                                                                |
-|  7 | **Xu et al., arXiv 2023** (IsaacGym 사용)                                                 |                                     **Ground friction U(0.05, 2.0)** | 논문 본문/보조자료에 명시. 훈련 분포로 사용. ([arXiv][7])                                 | [https://arxiv.org/abs/2306.10518](https://arxiv.org/abs/2306.10518) (또는 PDF) ([arXiv][7])                                                             |
-|  8 | **Enabling RL-Based Running/Jump tasks** (Guan et al., 2024 등)                          |                                     **Ground friction U(0.05, 3.0)** | 균등분포로 랜덤화. (동적 점프/주행 실험) ([NSF Pubs][8])                                | 논문/저장소: https://… (원문) ([NSF Pubs][8])                                                                                                                 |
-|  9 | **In-Hand / Manipulation (HORA 등, Qi et al. CoRL/ICML 계열)**                             |                        논문 본문에서 **마찰을 랜덤화**한다고 명시 — (수치: 보조자료/부록에 있음) | 본문은 “마찰 랜덤화”라 표기, 상세 수치는 부록/사이트 참조(코드 포함).                              | [https://proceedings.mlr.press/v205/qi23a/qi23a.pdf](https://proceedings.mlr.press/v205/qi23a/qi23a.pdf)  (프로시딩)                                       |
-| 10 | **Legged_gym / Learning to Walk in Minutes (Rudin et al.) — 코드/레포**                     |    레포에서 *friction & mass randomization*를 명시 (구체적 값은 각 구성파일/환경설정에 있음) | 논문 본문에는 일부 항목만 표기; 실제 값은 레포의 YAML/config 파일에 설정. ([ar5iv][9])           | [https://github.com/leggedrobotics/legged_gym](https://github.com/leggedrobotics/legged_gym)  (레포 전체) ([GitHub][10])                                   |
-| 11 | **Learning quadrupedal locomotion on deformable terrain (Choi et al., Sci Robot 2023)** |       논문/부록에 *randomization ranges* 표기 (부록 Table S3 등 — 마찰 관련 항목 포함) | 부록(Supplementary)에서 마찰/재료 파라미터 범위를 제공. (부록 참조) ([Science][11])          | [https://www.science.org/doi/10.1126/scirobotics.ade2256](https://www.science.org/doi/10.1126/scirobotics.ade2256) (및 보조자료) ([Science][11])            |
-| 12 | (기타 최근 논문/레포들: 예: PopSAN, SNN, 여러 legged/hand papers)                                   |    **대체로** training에서 **~0.005–4.5** 또는 **0.05–4.0** 같이 매우 넓은 범위를 사용 | 많은 연구가 “매우 미끌음 ~ 매우 거친” 끝단까지 커버하도록 설정 — sim→real 강건성을 위해서. ([arXiv][3]) | 여러 원문/레포 (예: arXiv/프로시딩/레포) — 위 행들의 링크 참조. ([arXiv][3])                                                                                                |
-
----
-
-## 간단한 분석·정리 (핵심 포인트)
-
-1. **범위가 넓다** — 리서치 그룹들(특히 RMA 계열, 대다수 IsaacGym 기반 작업)은 `~0.005–4.5` 또는 `~0.05–4.0` 처럼 **매우 낮은 값(= 매우 미끄러운)**에서 **높은 값(= 매우 끈적/거친)** 까지를 포함하는 넓은 분포를 사용합니다. (예: RMA: [0.05,4.5]). ([ar5iv][1])
-2. **왜 넓게 잡나?** — sim→real에서 실제 환경의 마찰이 다양하기 때문에, 에이전트가 슬립(미끄러짐)이나 고마찰 환경 모두를 경험하도록 하기 위함입니다. 일부 연구는 테스트시에 더 넓은 범위를 따로 정의해 일반화/스트레스 테스트를 진행합니다. ([ar5iv][1])
-3. **표현 방식의 차이** — 어떤 연구는 *절대 마찰계수(coef. of friction)* 범위를 직접 주고(`Friction [a,b]`), 어떤 연구는 *기본값에 곱하는 ratio*로 주거나(`friction ratio [0.3,3.0]`), 또 어떤 연구는 `U(a,b)`로 균등분포 표기합니다. 표기 단위/해석을 잘 살펴야 합니다. ([ResearchGate][4])
-4. **작은 범위 vs 큰 범위** — 일부 연구(예: 특정 조작 task)는 현실적인 좁은 범위(예: [0.2,2.0])를 사용해 더 정밀한 일반화·정책 튜닝을 하기도 합니다. ([arXiv][5])
-
----
-
-## (직관적) 마찰 계수에 대한 비유 — **0.1 ~ 2.0** 범위는 무슨 뜻인가?
-
-아래는 **대략적(직관적)** 비교입니다. (정확한 재료/조건에 따라 값은 달라집니다 — 목적은 ‘느낌’을 주기 위함입니다.)
-
-* **0.01 – 0.05** : 아주 미끄러운 얼음/윤활된 표면 (거의 미끄러짐)
-* **0.05 – 0.2** : 기름진 플라스틱, 젖은 타일, 미끌한 페인트 — **쉽게 미끄러지는 표면**
-* **0.2 – 0.6** : 평범한 나무 바닥, 건조한 타일 — **보통의 미끄럼 정도**
-* **0.6 – 1.0** : 고무(타이어) vs 콘크리트 — **꽤 잡아주는 표면**
-* **1.0 – 2.0** : 매우 거친/접지성 좋은 재질(예: 특수 고무·사포 등) — **매우 큰 마찰**
-
-따라서 **마찰을 `0.1 ~ 2.0` 범위**로 둔다는 말은, 훈련 동안 **“매우 미끄러운” 조건(예: 기름/젖은 표면 수준)부터 “매우 씹히는” 조건(예: 고무-콘크리트 수준)을 모두 포함**시켜 에이전트를 단련시키겠다는 의미로 이해하면 됩니다.
-
-
-[1]: https://ar5iv.labs.arxiv.org/html/2107.04034?utm_source=chatgpt.com "RMA: Rapid Motor Adaptation for Legged Robots - ar5iv - arXiv"
-[2]: https://journals.sagepub.com/doi/10.1177/02783649231224053?utm_source=chatgpt.com "Rapid locomotion via reinforcement learning"
-[3]: https://arxiv.org/html/2310.05022v1?utm_source=chatgpt.com "Fully Spiking Neural Network for Legged Robots"
-[4]: https://www.researchgate.net/publication/366614584_Adapting_Rapid_Motor_Adaptation_for_Bipedal_Robots?utm_source=chatgpt.com "(PDF) Adapting Rapid Motor Adaptation for Bipedal Robots"
-[5]: https://arxiv.org/pdf/2503.01255?utm_source=chatgpt.com "Impact of Static Friction on Sim2Real in Robotic ..."
-[6]: https://corl25-genpriors.github.io/Papers/4_Learning_to_Act_Through_Cont.pdf?utm_source=chatgpt.com "Learning to Act Through Contact: A Unified View of Multi-Task ..."
-[7]: https://arxiv.org/pdf/2306.10518?utm_source=chatgpt.com "arXiv:2306.10518v1 [cs.RO] 18 Jun 2023"
-[8]: https://par.nsf.gov/servlets/purl/10618607?utm_source=chatgpt.com "Enabling an RL-Based Running Jump in a Quadruped Robot"
-[9]: https://ar5iv.labs.arxiv.org/html/2109.11978 "[2109.11978] Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning"
-[10]: https://github.com/leggedrobotics/legged_gym?utm_source=chatgpt.com "Isaac Gym Environments for Legged Robots"
-[11]: https://www.science.org/doi/10.1126/scirobotics.ade2256?utm_source=chatgpt.com "Learning quadrupedal locomotion on deformable terrain"
-
---->
-
-**manipulation(조작) 분야** 논문들만 골라(이행/푸시/인핸드 등), **논문 본문이나 부록에서 ‘마찰 계수(friction)’ 범위를 명시한 것만** 추려 **10편**을 정리하고, 각 출처 URL을 그대로 표에 넣고(원하신 대로), 조사한 범위들이 겹치는지를 한눈에 볼 수 있도록 **겹침(오버랩) 플롯**도 그려 보여드렸습니다.
-(데이터는 각 논문 본문 / 부록의 도메인 랜덤화 표나 구현 세부사항에서 추출했습니다 — 출처는 표에 원문 URL로 그대로 적었습니다.)
-
-
-**요약 / 빠른 핵심**
 
 * 수집된 논문(각 항목은 표와 플롯에서 확인 가능): **10편**.
 * 많은 dexterous / in-hand 논문들은 **꽤 넓은 범위(예: 0.3–3.0)**까지 마찰을 랜덤화하여 시뮬레이션의 다양성을 확보합니다.
-* 사용자가 제시한 **0.1–2.0 범위**는 조사한 논문들 중 **대부분의 범위와 겹칩니다** — 즉 현실에서 흔히 고려하는 표면(얼음→플라스틱→고무) 스펙트럼을 대부분 포함합니다. (아래 플롯의 노란 음영이 0.1–2.0 영역입니다.) ([위키백과][1])
 
----
 
 # 마찰 범위가 **명시된** manipulation 논문 10편
 
-|  # | 논문 (간단 제목)                                                                 | 과제(간단)                   |                                                                                논문에서 명시한 마찰 범위 (훈련 등) | 출처(원문 URL)                                                                                                                                                           |
-| -: | -------------------------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|  1 | DeXtreme — *Transfer of Agile In-hand Manipulation*                        | 인핸드(Allegro 손)           |                          Object friction scaling: **[0.3, 0.9]** (원래 표기; ADR-discovered 확장값 표기도 존재). | [https://arxiv.org/pdf/2210.13702](https://arxiv.org/pdf/2210.13702) ([arXiv][2])                                                                                    |
-|  2 | SeqDex — *Chaining Dexterous Policies… (CoRL 2023)*                        | 장기 연속 dexterous subtasks |                                   Object friction scaling: **[0.5, 1.5]** (표의 domain randomization). | [https://sequential-dexterity.github.io/assets/images/2023_CoRL_SeqDex.pdf](https://sequential-dexterity.github.io/assets/images/2023_CoRL_SeqDex.pdf) ([Scribd][3]) |
-|  3 | LodeStar — *Long-horizon Dexterity via Synthetic Data*                     | 장기 dexterous 조작          |                                               Static/object friction scale: **U(0.7, 1.3)** (논문 표기). | [https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf](https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf) ([OpenReview][4]) |
-|  4 | BayesSim (관련 작업들) — *sim parameter inference*                              | 푸시/슬라이드 (Fetch)          |                                      friction (benchmarks): **[0.1, 1.0]** (푸시/슬라이드에서 자주 쓰이는 범위 표기). | [https://www.roboticsproceedings.org/rss15/p29.pdf](https://www.roboticsproceedings.org/rss15/p29.pdf) ([roboticsproceedings.org][5])                                |
-|  5 | Dexterous Non-Prehensile Manipulation (관련 논문)                              | 비-쥐기(non-prehensile) 조작  |                                             Friction scaling: **[0.7, 1.3]** (domain randomization). | [https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf](https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf) ([OpenReview][6]) |
-|  6 | HORA — *In-Hand Object Rotation via Rapid Motor Adaptation*                | 인핸드 회전                   |                               Coef. of Friction (train): **[0.3, 3.0]** (test는 [0.2,3.5]로 확장하여 평가함). | [https://arxiv.org/pdf/2210.04887](https://arxiv.org/pdf/2210.04887)                                                                                                 |
-|  7 | DexNDM — *Closing the Reality Gap for Dexterous In-Hand Rotation*          | 인핸드 회전                   |                                                       Coef. of Friction: **[0.3, 3.0]** (논문 표에서 명시). | [https://arxiv.org/abs/2510.08556](https://arxiv.org/abs/2510.08556) ([ResearchGate][7])                                                                             |
-|  8 | DextrAH-G (2024 preprint) — *Pixels-to-Action Dexterous Arm-Hand Grasping* | 팔+손의 픽셀 기반 그레이스핑         |                                                   Friction reported (impl. details): **[0.3, 3.0]**. | [https://arxiv.org/pdf/2407.02274](https://arxiv.org/pdf/2407.02274) ([arXiv][8])                                                                                    |
-|  9 | Possas / Online BayesSim (sim2real paper) — Fetch push/slide variants      | 푸시 / 슬라이드                |                         friction variants used in experiments: **[0.1, 2.0]**(논문/부록의 실험셋업에서 표기된 경우). | [https://sim2real.github.io/assets/papers/2020/possas.pdf](https://sim2real.github.io/assets/papers/2020/possas.pdf) ([sim2real.github.io][9])                       |
-| 10 | AdaptSim — *Task-Driven Simulation Adaptation* (CoRL 2023)                 | 동적 테이블 푸시(병) 등           | 논문 실험에서 참조된 pushing benchmarks와 도메인 랜덤화에 friction 파라미터 포함 — 대표 예시로 **약 [0.1, 1.5]** 범위가 사용됨(실험별 표기). | [https://arxiv.org/pdf/2302.04903](https://arxiv.org/pdf/2302.04903) ([arXiv][10])                                                                                   |
+|    # | 논문 (간단 제목)                                             | 과제(간단)                   |                          논문에서 명시한 마찰 범위 (훈련 등) | 출처(원문 URL)                                               |
+| ---: | - | - | -: | - |
+|    1 | DeXtreme — *Transfer of Agile In-hand Manipulation*          | 인핸드(Allegro 손)           | Object friction scaling: **[0.3, 0.9]** (원래 표기; ADR-discovered 확장값 표기도 존재). | [https://arxiv.org/pdf/2210.13702](https://arxiv.org/pdf/2210.13702) |
+|    2 | SeqDex — *Chaining Dexterous Policies… (CoRL 2023)*          | 장기 연속 dexterous subtasks | Object friction scaling: **[0.5, 1.5]** (표의 domain randomization). | [https://sequential-dexterity.github.io/assets/images/2023_CoRL_SeqDex.pdf](https://sequential-dexterity.github.io/assets/images/2023_CoRL_SeqDex.pdf) |
+|    3 | LodeStar — *Long-horizon Dexterity via Synthetic Data*       | 장기 dexterous 조작          |   Static/object friction scale: **U(0.7, 1.3)** (논문 표기). | [https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf](https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf) |
+|    4 | BayesSim (관련 작업들) — *sim parameter inference*           | 푸시/슬라이드 (Fetch)        | friction (benchmarks): **[0.1, 1.0]** (푸시/슬라이드에서 자주 쓰이는 범위 표기). | [https://www.roboticsproceedings.org/rss15/p29.pdf](https://www.roboticsproceedings.org/rss15/p29.pdf) |
+|    5 | Dexterous Non-Prehensile Manipulation (관련 논문)            | 비-쥐기(non-prehensile) 조작 |     Friction scaling: **[0.7, 1.3]** (domain randomization). | [https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf](https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf) |
+|    6 | HORA — *In-Hand Object Rotation via Rapid Motor Adaptation*  | 인핸드 회전                  | Coef. of Friction (train): **[0.3, 3.0]** (test는 [0.2,3.5]로 확장하여 평가함). | [https://arxiv.org/pdf/2210.04887](https://arxiv.org/pdf/2210.04887) |
+|    7 | DexNDM — *Closing the Reality Gap for Dexterous In-Hand Rotation* | 인핸드 회전                  |        Coef. of Friction: **[0.3, 3.0]** (논문 표에서 명시). | [https://arxiv.org/abs/2510.08556](https://arxiv.org/abs/2510.08556) |
+|    8 | DextrAH-G (2024 preprint) — *Pixels-to-Action Dexterous Arm-Hand Grasping* | 팔+손의 픽셀 기반 그레이스핑 |           Friction reported (impl. details): **[0.3, 3.0]**. | [https://arxiv.org/pdf/2407.02274](https://arxiv.org/pdf/2407.02274) |
+|    9 | Possas / Online BayesSim (sim2real paper) — Fetch push/slide variants | 푸시 / 슬라이드              | friction variants used in experiments: **[0.1, 2.0]**(논문/부록의 실험셋업에서 표기된 경우). | [https://sim2real.github.io/assets/papers/2020/possas.pdf](https://sim2real.github.io/assets/papers/2020/possas.pdf) ([sim2real.github.io][9]) |
+|   10 | AdaptSim — *Task-Driven Simulation Adaptation* (CoRL 2023)   | 동적 테이블 푸시(병) 등      | 논문 실험에서 참조된 pushing benchmarks와 도메인 랜덤화에 friction 파라미터 포함 — 대표 예시로 **약 [0.1, 1.5]** 범위가 사용됨(실험별 표기). | [https://arxiv.org/pdf/2302.04903](https://arxiv.org/pdf/2302.04903) |
 
-> 표에 적은 숫자(예: [0.3,3.0], [0.5,1.5] 등)는 **논문 본문/부록**의 ‘domain randomization / physical randomization’ 표에서 그대로 가져온 값입니다(각 행의 출처 URL을 눌러 원문 표/부록을 확인하세요). ([arXiv][2])
+> 표에 적은 숫자(예: [0.3,3.0], [0.5,1.5] 등)는 **논문 본문/부록**의 ‘domain randomization / physical randomization’ 표에서 그대로 가져온 값입니다
 
 # Friction Range
 
-* 위에서 제가 실행한 코드로 **가로 바(range) 플롯**을 그려서 각 논문이 사용한 마찰 범위를 수평선으로 표시했고, 요청하신 **0.1–2.0 범위**를 음영으로 표시했습니다 (플롯은 채팅 창에 표시됨).
-
-![plot](../../images/2025-10-16-isaacgym-friction/plot.png)
+![](../../images/2025-10-16-isaacgym-friction/plot.png)
 
 
 * 플롯에서 보이는 주요 특징:
   * 다수 논문(특히 인핸드 쪽)은 **상한이 3.0**까지 넓게 랜덤화하는 경우가 많아, 0.1–2.0을 넘어가는 경우도 존재합니다 (예: HORA, DexNDM, DextrAH-G).
-  * 반대로 일부 푸시/슬라이드나 (간단한) 조작 과제는 **0.1–1.0** 또는 **0.5–1.5** 같이 비교적 좁게 설정합니다 (환경/접촉 모델에 따라 달라짐). ([roboticsproceedings.org][5])
+  * 반대로 일부 푸시/슬라이드나 (간단한) 조작 과제는 **0.1–1.0** 또는 **0.5–1.5** 같이 비교적 좁게 설정합니다 (환경/접촉 모델에 따라 달라짐).
 
 
 # 숫자의 의미 — 0.1~2.0 범위가 실세계에서 대략 어떤 표면에 해당하나?
 
-아래는 직관을 돕는 대략적 비교(근사값)입니다 — 구체값은 소재/표면 상태(젖음, 윤활, 접촉 압력 등)에 따라 크게 달라집니다. (참고) 위키피디아 등 표준 자료도 마찰계수 μ가 물질/상태에 따라 넓게 분포한다고 합니다. ([위키백과][1])
+아래는 직관을 돕는 대략적 비교(근사값)입니다 — 구체값은 소재/표면 상태(젖음, 윤활, 접촉 압력 등)에 따라 크게 달라집니다. (참고) 위키피디아 등 표준 자료도 마찰계수 μ가 물질/상태에 따라 넓게 분포한다고 합니다.
 
 * **μ ≈ 0.01–0.1**: 매우 매끄러운/윤활된 표면 — *얼음, 매우 매끄러운 유리, 윤활된 금속* (사용자가 예로 든 “얼음판”은 μ≈0.05–0.1 급).
 * **μ ≈ 0.1–0.4**: 매끄러운 플라스틱, 매끄러운 금속, 일부 목재 표면 — 쉽게 미끄러지는 편.
@@ -124,7 +60,7 @@ format:
 * **μ ≈ 0.8–1.5**: 고무류, 고마찰 처리된 표면 — 잡기/그립이 좋은 표면.
 * **μ > 1.5–3.0**: 매우 끈적한/고마찰 재질 또는 모델에서 마찰을 크게 증폭시켜 사용한 경우(시뮬레이터의 수치적 세팅 등).
 
-따라서 **0.1 = “얼음판 느낌(매우 미끄러움)”**이라는 표현은 적절한 근사입니다. 그리고 **2.0**은 보통의 금속/플라스틱 보다는 훨씬 끈적한(고무에 가까운) 접촉을 가정한 값입니다. ([위키백과][1])
+따라서 **0.1 = “얼음판 느낌(매우 미끄러움)”**이라는 표현은 적절한 근사입니다. 그리고 **2.0**은 보통의 금속/플라스틱 보다는 훨씬 끈적한(고무에 가까운) 접촉을 가정한 값입니다.
 
 
 # 관찰 및 권장 (연구/시뮬 설정에 대한 실무 팁)
@@ -132,34 +68,21 @@ format:
 1. **과제 성격에 따라 범위를 골라라**
 
    * *인핸드(dexterous) / grasping* 같은 경우는 접촉 복잡성 때문에 **널찍한 범위(예: 0.3–3.0)**를 쓰는 사례가 많습니다(정합성/적응성 확보 목적).
-   * *단순 푸시/슬라이드*는 **0.1–1.0** 처럼 좁게 잡는 경우가 흔합니다. ([roboticsproceedings.org][5])
-2. **시뮬레이터(IsaacGym vs MuJoCo 등)마다 접촉 모델 동작이 달라 동일 μ가 다른 동작을 만들 수 있음** — 따라서 μ 범위만 정한다고 끝나는 게 아니고, 접촉 모델·정합(타임스텝, 마찰 모델 타입)도 같이 고려해야 합니다. ([arXiv][2])
-3. **실험적으로 분포를 넓게 잡아보고, ADR(automatic domain randomization)이나 시스템 ID를 도입해 실제 환경에 맞추는 전략**이 빈번히 사용됩니다(논문들에서 ADR/시스템 ID 병행 사례 다수). ([arXiv][2])
+   * *단순 푸시/슬라이드*는 **0.1–1.0** 처럼 좁게 잡는 경우가 흔합니다.
+2. **시뮬레이터(IsaacGym vs MuJoCo 등)마다 접촉 모델 동작이 달라 동일 μ가 다른 동작을 만들 수 있음** — 따라서 μ 범위만 정한다고 끝나는 게 아니고, 접촉 모델·정합(타임스텝, 마찰 모델 타입)도 같이 고려해야 합니다.
+3. **실험적으로 분포를 넓게 잡아보고, ADR(automatic domain randomization)이나 시스템 ID를 도입해 실제 환경에 맞추는 전략**이 빈번히 사용됩니다(논문들에서 ADR/시스템 ID 병행 사례 다수).
 
 
-[1]: https://en.wikipedia.org/wiki/Friction?utm_source=chatgpt.com "Friction"
-[2]: https://arxiv.org/html/2210.13702v2?utm_source=chatgpt.com "Transfer of Agile In-hand Manipulation from Simulation to ..."
-[3]: https://www.scribd.com/document/747125797/2023-CoRL-SeqDex?utm_source=chatgpt.com "2023 CoRL SeqDex | PDF | Technology & Engineering"
-[4]: https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf?utm_source=chatgpt.com "LodeStar: Long-horizon Dexterity via Synthetic Data ..."
-[5]: https://www.roboticsproceedings.org/rss15/p29.pdf?utm_source=chatgpt.com "BayesSim: adaptive domain randomization via probabilistic ..."
-[6]: https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf?utm_source=chatgpt.com "DEXTEROUS NON-PREHENSILE MANIPULATION FOR ..."
-[7]: https://www.researchgate.net/publication/396373578_DexNDM_Closing_the_Reality_Gap_for_Dexterous_In-Hand_Rotation_via_Joint-Wise_Neural_Dynamics_Model?utm_source=chatgpt.com "(PDF) DexNDM: Closing the Reality Gap for Dexterous In- ..."
-[8]: https://arxiv.org/html/2407.02274v2?utm_source=chatgpt.com "DextrAH-G: Pixels-to-Action Dexterous Arm-Hand Grasping ..."
-[9]: https://sim2real.github.io/assets/papers/2020/possas.pdf?utm_source=chatgpt.com "Online BayesSim for Combined Simulator Parameter ..."
-[10]: https://arxiv.org/pdf/2302.04903?utm_source=chatgpt.com "Task-Driven Simulation Adaptation for Sim-to-Real Transfer"
+# Why?
 
-
----
-
-**manipulation(조작) 분야** 논문들 중에서 *마찰(friction) 범위(수치)*를 실제로 **논문 본문/부록에서 명시**한 것들을 찾아, 각 논문이 **왜 그 범위를 선택했는지(논문에서 밝힌 근거)**를 정리했습니다.
-다만 실제로 “숫자 범위와 함께 *선택 근거*를 문장으로 분명히 적어둔” 논문은 생각보다 적고, 많은 논문은 **“도메인 랜덤화(또는 마찰을 포함한 물리 파라미터를 무작위화)”를 한다 / ‘강건성 확보(sim-to-real)’ 목적” 정도로만 서술**합니다. 그런 경우에는 논문에서 직접 밝힌 문장(예: “robustness / avoid over-reliance on friction / to cover simulator–real gap 등”)을 인용(요약)했고, **숫자 범위도 PDF/표에서 직접 확인 가능한 것만 표에 적었습니다**.
+> **manipulation(조작) 분야** 논문들 중에서 *마찰(friction) 범위(수치)*를 실제로 **논문 본문/부록에서 명시**한 것들을 찾아, 각 논문이 **왜 그 범위를 선택했는지(논문에서 밝힌 근거)**를 정리했습니다.
+> 다만 실제로 “숫자 범위와 함께 *선택 근거*를 문장으로 분명히 적어둔” 논문은 생각보다 적고, 많은 논문은 **“도메인 랜덤화(또는 마찰을 포함한 물리 파라미터를 무작위화)”를 한다 / ‘강건성 확보(sim-to-real)’ 목적” 정도로만 서술**합니다. 그런 경우에는 논문에서 직접 밝힌 문장(예: “robustness / avoid over-reliance on friction / to cover simulator–real gap 등”)을 인용(요약)했고, **숫자 범위도 PDF/표에서 직접 확인 가능한 것만 표에 적었습니다**.
 
 > 주의: 각 행의 근거는 **논문 본문 / 부록 / 표에 적힌 설명**(혹은 “도메인 랜덤화로 마찰을 섞는다” 등의 명시적 진술)을 바탕으로 요약했습니다. 일부 논문은 “숫자 범위를 표로만 제시(근거 문단 없음)”하는 경우가 있습니다 — 그런 논문은 표에서 “근거: 논문은 sim-to-real/robustness 목적이라고만 설명(숫자의 구체적 선택 근거는 명시 없음)”으로 표기했습니다.
 
----
 
-| No. | 논문 (연도/행사)                                                                        | 논문에 명시된 마찰 범위 (논문 표/부록에서)                                                                                                                                                                     | 논문이 밝힌 ‘범위 선택 근거’ (요약)                                                                                                                                                                                                                       | 출처 (원문 PDF / HTML URL — 원문 그대로)                                                                                                        |
-| --: | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| No. | 논문 (연도/행사)      | 논문에 명시된 마찰 범위 (논문 표/부록에서)     | 논문이 밝힌 ‘범위 선택 근거’ (요약)       | 출처     |
+| -: | - | - | - | - |
 |   1 | **DeXtreme — Transfer of Agile In-hand Manipulation** (arXiv / 2022)              | **Friction. Scaling uniform [0.3, 0.9]** (부록의 도메인 랜덤화 표) — (또한 다른 스케일 항목으로 [0.01,1.60] 등 병기).                                                                                                 | 정책을 **“광범위한 시뮬레이션 조건”에 적응시키기 위해** 마찰을 무작위화한다고 명시. 즉 sim→real 격차를 줄이고 다양한 실제 표면 특성(낮은 마찰~높은 마찰)을 커버하기 위한 범위 설정임.                                                                                                                              | [https://arxiv.org/pdf/2210.13702.pdf](https://arxiv.org/pdf/2210.13702.pdf).                                         |
 |   2 | **Online BayesSim (Possas et al.) — Online BayesSim** (workshop / 2020)           | **Fetch Push friction [0.1, 2.0]** / **Fetch Slide friction [0.1, 2.0]** (실험 표)                                                                                                               | 이 작업은 시뮬레이터 파라미터(예: 마찰)에 대해 **균등한 초기 prior를 두고** 실험으로 posterior를 갱신하는 방식임. 따라서 범위는 “초기 불확실성을 폭넓게 잡아(플라시보/모든 가능성 포함) 실제 데이터로 수렴시키기 위한” 설정으로 사용됨. (표와 설명에서 범위를 표기하고, 방법론적으로 균등 prior에서 시작한다고 설명함)                                              | [https://sim2real.github.io/assets/papers/2020/possas.pdf](https://sim2real.github.io/assets/papers/2020/possas.pdf).                  |
 |   3 | **BayesSim (Ramos et al.) — BayesSim (RSS 2019)**                                 | (논문은 **파라미터 추정/베이지안 설정**을 다룸; 실험에서 사용하는 파라미터 범위를 사례별로 제시)                                                                                                                                     | **시뮬레이터 파라미터(마찰 등)를 priors로 놓고, 관측 데이터로 posterior를 학습**하는 것이 핵심. 즉 범위는 “가능한 실제 값들을 포함하도록 초기 분포(보통 균등/넓은 분포)를 설정”하는 목적. 논문 전반이 ‘범위를 넓게 잡아 불확실성 포착 → 관측으로 좁힘’이라는 철학을 밝힘.                                                                       | [https://www.roboticsproceedings.org/rss15/p29.pdf](https://www.roboticsproceedings.org/rss15/p29.pdf).|
@@ -182,4 +105,16 @@ format:
 
 * 범위를 **0.1–2.0**으로 잡는 건 “아이스링크(0.1 — 매우 미끄러운 쪽)부터 고무·거친 표면(2.0 — 많이 마찰이 생기는 쪽)까지 모두 포함”해서 에이전트가 **미끄러질 때와 붙을 때** 모두 견딜 수 있게 하는 것과 같습니다.
 * 반면 **0.3–0.9**처럼 좁게 잡는 건 “일상적 물체(플라스틱/목재 표면)에 더 초점을 맞춰 안정적으로 동작하도록” 한 것입니다(논문별로 목표하는 배포 환경 차이).
+
+
+- ["Friction"](https://en.wikipedia.org/wiki/Friction)
+- ["Transfer of Agile In-hand Manipulation from Simulation to ..."](https://arxiv.org/html/2210.13702v2)
+- ["2023 CoRL SeqDex | PDF | Technology & Engineering"](https://www.scribd.com/document/747125797/2023-CoRL-SeqDex)
+- ["LodeStar: Long-horizon Dexterity via Synthetic Data ..."](https://openreview.net/pdf/58cb887ad909f57c866aad08dae8f76273b0f36c.pdf)
+- ["BayesSim: adaptive domain randomization via probabilistic ..."](https://www.roboticsproceedings.org/rss15/p29.pdf)
+- ["DEXTEROUS NON-PREHENSILE MANIPULATION FOR ..."](https://openreview.net/pdf/d59239071da98920c4c955f8132023ef48d41cd5.pdf)
+- ["(PDF) DexNDM: Closing the Reality Gap for Dexterous In- ..."](https://www.researchgate.net/publication/396373578_DexNDM_Closing_the_Reality_Gap_for_Dexterous_In-Hand_Rotation_via_Joint-Wise_Neural_Dynamics_Model)
+- ["DextrAH-G: Pixels-to-Action Dexterous Arm-Hand Grasping ..."](https://arxiv.org/html/2407.02274v2)
+- ["Online BayesSim for Combined Simulator Parameter ..."](https://sim2real.github.io/assets/papers/2020/possas.pdf)
+- ["Task-Driven Simulation Adaptation for Sim-to-Real Transfer"](https://arxiv.org/pdf/2302.04903)
 
