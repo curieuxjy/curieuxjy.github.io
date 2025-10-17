@@ -3320,51 +3320,79 @@
   {
     "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html",
     "href": "posts/note/2025-10-15-ros2-topic-vs-service.html",
-    "title": "📝ROS2 topic VS. service",
+    "title": "📝ROS2 topic/service/action",
     "section": "",
-    "text": "간단히 말하면:\n\n토픽(Topic)은 발행/구독(비동기적 스트리밍)에 적합하고, 상태·센서·지속적 명령에 주로 사용합니다.\n서비스(Service)는 요청-응답(단발성 RPC)에 적합합니다.\n액션(Action)은 장시간 실행되는 작업(목표/피드백/결과/취소)이 필요할 때 쓰는 상위 추상으로, 내부적으로는 토픽+서비스 패턴을 사용합니다.\n\n아래에서 차이와 장단점, 언제 어떤 걸 쓰면 좋은지 실무 관점에서 정리해 드릴게요."
+    "text": "Basic - Interfaces\nTopics vs Services vs Actions\nTopic은 발행/구독(비동기적 스트리밍)에 적합하고, 상태·센서·지속적 명령에 주로 사용\nService는 요청-응답(단발성 RPC)에 적합\nAction은 장시간 실행되는 작업(목표/피드백/결과/취소)이 필요할 때 쓰는 상위 추상으로, 내부적으로는 토픽+서비스 패턴을 사용"
   },
   {
-    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#topic-장점",
-    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#topic-장점",
-    "title": "📝ROS2 topic VS. service",
-    "section": "Topic 장점",
-    "text": "Topic 장점\n\n단순하고 경량. 낮은 오버헤드.\n다중 수신자/발행자에 적합.\nQoS로 전송 보장/일시적 구독자 복구(transient_local) 등 제어 가능."
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#topic-장단점",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#topic-장단점",
+    "title": "📝ROS2 topic/service/action",
+    "section": "Topic 장단점",
+    "text": "Topic 장단점\n\n\n장점\n\n단순하고 경량. 낮은 오버헤드.\n다중 수신자/발행자에 적합.\nQoS로 전송 보장/일시적 구독자 복구(transient_local) 등 제어 가능.\n\n단점\n\n요청-응답, 피드백, 취소 같은 패턴을 직접 구현해야 함(복잡해질 수 있음).\n상태 추적(logic 상태 기계)이 필요하면 토픽만으로는 관리가 번거로움.\n\nUnderstanding topics"
   },
   {
-    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#topic-단점",
-    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#topic-단점",
-    "title": "📝ROS2 topic VS. service",
-    "section": "Topic 단점",
-    "text": "Topic 단점\n\n요청-응답, 피드백, 취소 같은 패턴을 직접 구현해야 함(복잡해질 수 있음).\n상태 추적(logic 상태 기계)이 필요하면 토픽만으로는 관리가 번거로움."
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#service-장단점",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#service-장단점",
+    "title": "📝ROS2 topic/service/action",
+    "section": "Service 장단점",
+    "text": "Service 장단점\n\n\n장점\n\n동기적(또는 비동기 Future)으로 간단한 RPC 패턴 구현 쉬움.\n호출과 응답이 명확해 오류 처리/타임아웃 관리가 편함.\n\n단점\n\n긴 시간 작업에는 부적합(블로킹 위험, 클라이언트 구현 복잡).\n피드백 또는 중간 상태 전송 표준화 없음.\n\nUnderstanding servies"
   },
   {
-    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#service-장점",
-    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#service-장점",
-    "title": "📝ROS2 topic VS. service",
-    "section": "Service 장점",
-    "text": "Service 장점\n\n동기적(또는 비동기 Future)으로 간단한 RPC 패턴 구현 쉬움.\n호출과 응답이 명확해 오류 처리/타임아웃 관리가 편함."
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#action-장단점",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#action-장단점",
+    "title": "📝ROS2 topic/service/action",
+    "section": "Action 장단점",
+    "text": "Action 장단점\n\n\n장점\n\n장시간 작업에 적합: 목표, 주기적 피드백, 최종 결과, 취소를 표준화.\n클라이언트가 상태(accepted, executing, canceled, succeeded 등)를 관찰 가능.\n내장된 취소 메커니즘과 결과 코드로 안정적인 제어 흐름 제공.\n\n단점\n\n토픽/서비스보다 구현 복잡도 ↑ (액션 정의 파일, 서버/클라이언트 보일러플레이트).\n오버헤드가 있어서 단순/초저지연 메시지에는 불필요할 수 있음.\nQoS에 주의: 액션 내부 통신의 QoS 설정 필요하면 복잡해짐.\n\nUnderstanding actions"
   },
   {
-    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#service-단점",
-    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#service-단점",
-    "title": "📝ROS2 topic VS. service",
-    "section": "Service 단점",
-    "text": "Service 단점\n\n긴 시간 작업에는 부적합(블로킹 위험, 클라이언트 구현 복잡).\n피드백 또는 중간 상태 전송 표준화 없음."
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#한-줄-요약",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#한-줄-요약",
+    "title": "📝ROS2 topic/service/action",
+    "section": "한 줄 요약",
+    "text": "한 줄 요약\nQoS는 발행자(publisher)와 구독자(subscriber)가 “어떻게” 메시지를 주고받을지 약속하는 설정이에요. (신뢰성, 보관, 큐 크기, 만료시간 등) 이 설정으로 네트워크 상태 · 지연 · 대역폭 · late-joiner(나중에 구독을 시작한 노드) 처리를 조절할 수 있어요.\n\n토픽을 편지로 보면, QoS는 “편지를 어떻게 보낼까/보존할까”에 대한 약속이에요.\n\nreliable = 등기우편: 반드시 배달하려 시도(재전송).\nbest_effort = 엽서/통상우편: 한 번만 던지고 끝(빠르지만 분실될 수 있음).\ntransient_local = 우체통에 보관: 나중에 와도 우체통에서 편지를 찾아볼 수 있음(라칭과 유사)."
   },
   {
-    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#action-장점",
-    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#action-장점",
-    "title": "📝ROS2 topic VS. service",
-    "section": "Action 장점",
-    "text": "Action 장점\n\n장시간 작업에 적합: 목표, 주기적 피드백, 최종 결과, 취소를 표준화.\n클라이언트가 상태(accepted, executing, canceled, succeeded 등)를 관찰 가능.\n내장된 취소 메커니즘과 결과 코드로 안정적인 제어 흐름 제공."
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#주요-qos-옵션",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#주요-qos-옵션",
+    "title": "📝ROS2 topic/service/action",
+    "section": "주요 QoS 옵션",
+    "text": "주요 QoS 옵션\n\nReliability(신뢰성)\n\nRELIABLE : 메시지 손실을 줄이려 재전송함(중요한 명령/결과에 사용).\nBEST_EFFORT : 재전송 안 함(센서 스트리밍 같이 빠른 갱신이 중요하고 일부 손실 허용될 때).\n\nDurability(내구성)\n\nVOLATILE : 구독자가 없으면 메시지 버려짐(기본).\nTRANSIENT_LOCAL : 최근 메시지를 보관해서 새로 구독해도 마지막 메시지 받을 수 있음 (ROS1의 latching과 유사).\n\nHistory & Depth(히스토리/큐 크기)\n\nKEEP_LAST + depth = N: 최신 N개만 보관.\nKEEP_ALL: 가능한 모든 메시지를 보관(메모리/리소스 주의).\n\nDeadline\n\n발행자가 정한 주기(예: 0.1s) 안에 메시지를 보내야 하는지 약속. 기간 넘기면 알림/경고 가능.\n\nLiveliness(생존성 확인)\n\n발행자가 살아있는지 확인하는 설정. (자동/수동 방식 등)\n\nLifespan(수명)\n\n메시지가 “유효한 시간”을 가짐 — 시간이 지나면 폐기. (예: 이벤트성 알림)"
   },
   {
-    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#action-단점",
-    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#action-단점",
-    "title": "📝ROS2 topic VS. service",
-    "section": "Action 단점",
-    "text": "Action 단점\n\n토픽/서비스보다 구현 복잡도 ↑ (액션 정의 파일, 서버/클라이언트 보일러플레이트).\n오버헤드가 있어서 단순/초저지연 메시지에는 불필요할 수 있음.\nQoS에 주의: 액션 내부 통신의 QoS 설정 필요하면 복잡해짐."
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#실무-예시-어떤-토픽에-어떤-설정을-쓸까",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#실무-예시-어떤-토픽에-어떤-설정을-쓸까",
+    "title": "📝ROS2 topic/service/action",
+    "section": "실무 예시 — 어떤 토픽에 어떤 설정을 쓸까",
+    "text": "실무 예시 — 어떤 토픽에 어떤 설정을 쓸까\n(vision, arm, hand 기준)\n\nCamera 이미지 (/camera/image_raw)\n\n권장: BEST_EFFORT, KEEP_LAST depth 5\n이유: 이미지는 매우 자주 오고, 오래된 이미지는 쓸모가 없으며 약간의 프레임 손실은 괜찮음. 대역폭 절약.\n\nDetection 결과 (/vision/detections)\n\n권장: RELIABLE, KEEP_LAST depth 5, 또는 TRANSIENT_LOCAL(late-joiner에게 최신 결과 제공)\n이유: 검출 결과는 놓치면 안되는 경우가 있어 신뢰성 필요. 다만 빈도는 낮음.\n\nArm/Hand 명령 (/arm/move_to_pose 액션 내부 토픽 또는 /allegro_hand_position_controller_r/commands)\n\n권장: RELIABLE, KEEP_LAST depth 1~10\n이유: 명령 손실은 위험하므로 재전송 보장 필요.\n\nJoint state (/joint_states)\n\n권장: RELIABLE, KEEP_LAST depth 10\n이유: 상태 정보를 정확히 받아야 되는 경우가 많음.\n\n진단/로그 토픽\n\n권장: BEST_EFFORT 또는 RELIABLE (use-case에 따라)"
+  },
+  {
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#qos가-실제로-바꿔놓는-것-결과",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#qos가-실제로-바꿔놓는-것-결과",
+    "title": "📝ROS2 topic/service/action",
+    "section": "QoS가 실제로 바꿔놓는 것 (결과)",
+    "text": "QoS가 실제로 바꿔놓는 것 (결과)\n\nBEST_EFFORT → 더 낮은 지연, 패킷 손실 허용. 네트워크가 혼잡할 때 메시지 빠짐.\nRELIABLE → 재전송으로 신뢰성 ↑, 하지만 네트워크/지연·오버헤드 ↑.\nTRANSIENT_LOCAL → 새로 구독해도 최근 메시지 확보 가능(예: 상태/설정).\nKEEP_ALL → 메모리·디스크 부담 커질 수 있음(주의)."
+  },
+  {
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#간단한-코드-예-rclpy",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#간단한-코드-예-rclpy",
+    "title": "📝ROS2 topic/service/action",
+    "section": "간단한 코드 예 (rclpy)",
+    "text": "간단한 코드 예 (rclpy)\nfrom rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy\n\n# 예: 카메라 토픽용 QoS\ncamera_qos = QoSProfile(\n    reliability=QoSReliabilityPolicy.BEST_EFFORT,\n    history=QoSHistoryPolicy.KEEP_LAST,\n    depth=5\n)\n\n# 예: 중요한 명령 토픽용 QoS\ncmd_qos = QoSProfile(\n    reliability=QoSReliabilityPolicy.RELIABLE,\n    history=QoSHistoryPolicy.KEEP_LAST,\n    depth=10\n)\n그리고 퍼블리셔/서브스크라이버 생성 시 이 QoSProfile을 넘겨주면 됩니다."
+  },
+  {
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#언제-qos를-바꿔야-할까-체크리스트",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#언제-qos를-바꿔야-할까-체크리스트",
+    "title": "📝ROS2 topic/service/action",
+    "section": "언제 QoS를 바꿔야 할까? 체크리스트",
+    "text": "언제 QoS를 바꿔야 할까? 체크리스트\n\n네트워크가 불안정하고 중요한 메시지면 → RELIABLE.\n메시지가 실시간·자주 갱신되고 오래된 메시지는 필요없다면 → BEST_EFFORT.\n어떤 토픽은 나중에 시작하는 노드가 최근 상태를 꼭 받아야 한다면 → TRANSIENT_LOCAL.\n메모리/대역폭 한계가 걱정되면 → history/depth를 낮춰라."
+  },
+  {
+    "objectID": "posts/note/2025-10-15-ros2-topic-vs-service.html#간단-요약-표",
+    "href": "posts/note/2025-10-15-ros2-topic-vs-service.html#간단-요약-표",
+    "title": "📝ROS2 topic/service/action",
+    "section": "간단 요약 (표)",
+    "text": "간단 요약 (표)\n\n\n\n\n\n\n\n목적\n권장 QoS 설정\n\n\n\n\n카메라/이미지 스트리밍\nBEST_EFFORT, KEEP_LAST, depth=3~10\n\n\n센서/상태 (중요)\nRELIABLE, KEEP_LAST, depth=5~20\n\n\n제어 명령(중요)\nRELIABLE, KEEP_LAST, depth=1~10\n\n\n초기 상태 전달(나중 가입자 필요)\nTRANSIENT_LOCAL"
   },
   {
     "objectID": "posts/note/2022-10-17-daily-english-003.html",
@@ -5597,6 +5625,6 @@
     "href": "note.html",
     "title": "Note",
     "section": "",
-    "text": "📘 Diary | 🌎 Language | 📝 Study\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n    \n  \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\n\n\n\n\n\nOct 16, 2025\n\n\n📝IsaacGym Friction\n\n\n\n\n\n\nOct 15, 2025\n\n\n📝ROS2 topic VS. service\n\n\n\n\n\n\nOct 10, 2025\n\n\n📝Linux Cheet Sheet\n\n\n\n\n\n\nOct 1, 2025\n\n\n📝ROS2 bag 사용\n\n\n\n\n\n\nSep 30, 2025\n\n\n📝IsaacLab VS. MjLab\n\n\n\n\n\n\nSep 25, 2025\n\n\n📝Comparative Analysis of Robotic Simulation Environments\n\n\n\n\n\n\nAug 25, 2025\n\n\n📝Simluator Comparison\n\n\n\n\n\n\nJul 8, 2025\n\n\n📝Git LFS 사용하기\n\n\n\n\n\n\nJun 23, 2025\n\n\n📝ROS1/2 Errors\n\n\n\n\n\n\nMar 30, 2025\n\n\n📘글또를 마치며\n\n\n\n\n\n\nMar 2, 2025\n\n\n📘글또 발표 후기\n\n\n\n\n\n\nJan 13, 2025\n\n\n📝ROS2 Build Issue\n\n\n\n\n\n\nJan 7, 2025\n\n\n📝Python과 C++ 노드를 모두 포함하는 ROS2 패키지 생성\n\n\n\n\n\n\nJan 5, 2025\n\n\n📘Goodbye 2024\n\n\n\n\n\n\nDec 19, 2024\n\n\n📝__init__ VS. __call__\n\n\n\n\n\n\nOct 9, 2024\n\n\n📘Geultto 10th Start\n\n\n\n\n\n\nJan 15, 2024\n\n\n📝Operating System 001\n\n\n\n\n\n\nDec 1, 2023\n\n\n📘Geultto 9th Start\n\n\n\n\n\n\nAug 31, 2023\n\n\n🌎Casual English Phrases 010\n\n\n\n\n\n\nJul 7, 2023\n\n\n📘Geultto 8th End\n\n\n\n\n\n\nJul 5, 2023\n\n\n🌎Casual English Phrases 009\n\n\n\n\n\n\nMay 27, 2023\n\n\n📘Github Starstruck 128\n\n\n\n\n\n\nApr 5, 2023\n\n\n🌎Casual English Phrases 008\n\n\n\n\n\n\nMar 31, 2023\n\n\n🌎Casual English Phrases 007\n\n\n\n\n\n\nMar 30, 2023\n\n\n🌎Casual English Phrases 006\n\n\n\n\n\n\nMar 29, 2023\n\n\n🌎Casual English Phrases 005\n\n\n\n\n\n\nFeb 2, 2023\n\n\n📘Geultto 8th Start\n\n\n\n\n\n\nOct 29, 2022\n\n\n📘Gueltto 7th End\n\n\n\n\n\n\nOct 24, 2022\n\n\n🌎IT English Experssions 004\n\n\n\n\n\n\nOct 17, 2022\n\n\n🌎Casual English Phrases 003\n\n\n\n\n\n\nOct 11, 2022\n\n\n🌎Casual English Phrases 002\n\n\n\n\n\n\nOct 3, 2022\n\n\n🌎Casual English Phrases 001\n\n\n\n\n\n\nSep 4, 2022\n\n\n📘2022 상반기 회고\n\n\n\n\n\n\nMay 6, 2022\n\n\n📘Geultto 7th Start\n\n\n\n\n\n\nJan 31, 2021\n\n\n📘2021 TU Berlin Winter Course 수강 후기\n\n\n\n\n\n\nJan 3, 2021\n\n\n📘Goodbye 2020\n\n\n\n\n\n\nJan 3, 2021\n\n\n📘Hello 2021\n\n\n\n\n\n\nOct 21, 2020\n\n\n📝On policy VS. Off policy\n\n\n\n\n\n\nNo matching items"
+    "text": "📘 Diary | 🌎 Language | 📝 Study\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n    \n  \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\n\n\n\n\n\nOct 16, 2025\n\n\n📝IsaacGym Friction\n\n\n\n\n\n\nOct 15, 2025\n\n\n📝ROS2 topic/service/action\n\n\n\n\n\n\nOct 10, 2025\n\n\n📝Linux Cheet Sheet\n\n\n\n\n\n\nOct 1, 2025\n\n\n📝ROS2 bag 사용\n\n\n\n\n\n\nSep 30, 2025\n\n\n📝IsaacLab VS. MjLab\n\n\n\n\n\n\nSep 25, 2025\n\n\n📝Comparative Analysis of Robotic Simulation Environments\n\n\n\n\n\n\nAug 25, 2025\n\n\n📝Simluator Comparison\n\n\n\n\n\n\nJul 8, 2025\n\n\n📝Git LFS 사용하기\n\n\n\n\n\n\nJun 23, 2025\n\n\n📝ROS1/2 Errors\n\n\n\n\n\n\nMar 30, 2025\n\n\n📘글또를 마치며\n\n\n\n\n\n\nMar 2, 2025\n\n\n📘글또 발표 후기\n\n\n\n\n\n\nJan 13, 2025\n\n\n📝ROS2 Build Issue\n\n\n\n\n\n\nJan 7, 2025\n\n\n📝Python과 C++ 노드를 모두 포함하는 ROS2 패키지 생성\n\n\n\n\n\n\nJan 5, 2025\n\n\n📘Goodbye 2024\n\n\n\n\n\n\nDec 19, 2024\n\n\n📝__init__ VS. __call__\n\n\n\n\n\n\nOct 9, 2024\n\n\n📘Geultto 10th Start\n\n\n\n\n\n\nJan 15, 2024\n\n\n📝Operating System 001\n\n\n\n\n\n\nDec 1, 2023\n\n\n📘Geultto 9th Start\n\n\n\n\n\n\nAug 31, 2023\n\n\n🌎Casual English Phrases 010\n\n\n\n\n\n\nJul 7, 2023\n\n\n📘Geultto 8th End\n\n\n\n\n\n\nJul 5, 2023\n\n\n🌎Casual English Phrases 009\n\n\n\n\n\n\nMay 27, 2023\n\n\n📘Github Starstruck 128\n\n\n\n\n\n\nApr 5, 2023\n\n\n🌎Casual English Phrases 008\n\n\n\n\n\n\nMar 31, 2023\n\n\n🌎Casual English Phrases 007\n\n\n\n\n\n\nMar 30, 2023\n\n\n🌎Casual English Phrases 006\n\n\n\n\n\n\nMar 29, 2023\n\n\n🌎Casual English Phrases 005\n\n\n\n\n\n\nFeb 2, 2023\n\n\n📘Geultto 8th Start\n\n\n\n\n\n\nOct 29, 2022\n\n\n📘Gueltto 7th End\n\n\n\n\n\n\nOct 24, 2022\n\n\n🌎IT English Experssions 004\n\n\n\n\n\n\nOct 17, 2022\n\n\n🌎Casual English Phrases 003\n\n\n\n\n\n\nOct 11, 2022\n\n\n🌎Casual English Phrases 002\n\n\n\n\n\n\nOct 3, 2022\n\n\n🌎Casual English Phrases 001\n\n\n\n\n\n\nSep 4, 2022\n\n\n📘2022 상반기 회고\n\n\n\n\n\n\nMay 6, 2022\n\n\n📘Geultto 7th Start\n\n\n\n\n\n\nJan 31, 2021\n\n\n📘2021 TU Berlin Winter Course 수강 후기\n\n\n\n\n\n\nJan 3, 2021\n\n\n📘Goodbye 2020\n\n\n\n\n\n\nJan 3, 2021\n\n\n📘Hello 2021\n\n\n\n\n\n\nOct 21, 2020\n\n\n📝On policy VS. Off policy\n\n\n\n\n\n\nNo matching items"
   }
 ]
