@@ -118,6 +118,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </script>
+<meta name="mermaid-theme" content="dark">
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -335,15 +339,13 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#기본-개념" id="toc-기본-개념" class="nav-link active" data-scroll-target="#기본-개념">🧩 1. 기본 개념</a></li>
-  <li><a href="#예시-비교" id="toc-예시-비교" class="nav-link" data-scroll-target="#예시-비교">⚙️ 2. 예시 비교</a>
+  <li><a href="#기본-개념" id="toc-기본-개념" class="nav-link active" data-scroll-target="#기본-개념">🧩 기본 개념</a></li>
+  <li><a href="#예시-비교" id="toc-예시-비교" class="nav-link" data-scroll-target="#예시-비교">⚙️ 예시 비교</a>
   <ul class="collapse">
   <li><a href="#일반-함수-def" id="toc-일반-함수-def" class="nav-link" data-scroll-target="#일반-함수-def">(1) 일반 함수 (<code>def</code>)</a></li>
   <li><a href="#비동기-함수-async-def" id="toc-비동기-함수-async-def" class="nav-link" data-scroll-target="#비동기-함수-async-def">(2) 비동기 함수 (<code>async def</code>)</a></li>
-  <li><a href="#await로-실행하기" id="toc-await로-실행하기" class="nav-link" data-scroll-target="#await로-실행하기">(3) <code>await</code>로 실행하기</a></li>
   </ul></li>
-  <li><a href="#언제-async-def를-써야-할까" id="toc-언제-async-def를-써야-할까" class="nav-link" data-scroll-target="#언제-async-def를-써야-할까">⏱️ 3. 언제 <code>async def</code>를 써야 할까?</a></li>
-  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약">🧠 요약</a></li>
+  <li><a href="#언제-async-def를-써야-할까" id="toc-언제-async-def를-써야-할까" class="nav-link" data-scroll-target="#언제-async-def를-써야-할까">⏱️ 언제 <code>async def</code>를 써야 할까?</a></li>
   <li><a href="#동기-vs-비동기-실행-데모" id="toc-동기-vs-비동기-실행-데모" class="nav-link" data-scroll-target="#동기-vs-비동기-실행-데모">🚀 동기 vs 비동기 실행 데모</a></li>
   <li><a href="#결과-해석" id="toc-결과-해석" class="nav-link" data-scroll-target="#결과-해석">🔍 결과 해석</a></li>
   </ul>
@@ -390,7 +392,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 
 <p><code>async def</code>와 <code>def</code>의 차이는 <strong>함수의 실행 방식(동기 vs 비동기)</strong>에 있어요.</p>
 <section id="기본-개념" class="level2">
-<h2 class="anchored" data-anchor-id="기본-개념">🧩 1. 기본 개념</h2>
+<h2 class="anchored" data-anchor-id="기본-개념">🧩 기본 개념</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -425,21 +427,18 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <hr>
 </section>
 <section id="예시-비교" class="level2">
-<h2 class="anchored" data-anchor-id="예시-비교">⚙️ 2. 예시 비교</h2>
+<h2 class="anchored" data-anchor-id="예시-비교">⚙️ 예시 비교</h2>
 <section id="일반-함수-def" class="level3">
 <h3 class="anchored" data-anchor-id="일반-함수-def">(1) 일반 함수 (<code>def</code>)</h3>
-<div id="51cf7d94" class="cell" data-execution_count="1">
+<div id="05c0d0bf" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> greet():</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    <span class="cf">return</span> <span class="st">"Hello"</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a>result <span class="op">=</span> greet()</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="bu">print</span>(result)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>````</span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a>📌 실행 결과</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>```bash</span>
-<span id="cb1-11"><a href="#cb1-11"></a>Hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello</code></pre>
+</div>
 </div>
 <blockquote class="blockquote">
 <p><code>def</code>는 호출되면 바로 실행되고 결과를 반환해요.</p>
@@ -447,63 +446,146 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </section>
 <section id="비동기-함수-async-def" class="level3">
 <h3 class="anchored" data-anchor-id="비동기-함수-async-def">(2) 비동기 함수 (<code>async def</code>)</h3>
-<div id="ef554ce7" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">import</span> asyncio</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="cf">async</span> <span class="kw">def</span> greet():</span>
-<span id="cb2-4"><a href="#cb2-4"></a>    <span class="cf">return</span> <span class="st">"Hello"</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a>result <span class="op">=</span> greet()</span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e1241da3" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> asyncio</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="cf">async</span> <span class="kw">def</span> greet():</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">return</span> <span class="st">"Hello"</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>result <span class="op">=</span> greet()</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;coroutine object greet at 0x73214c2a6610&gt;</code></pre>
 </div>
-<p>📌 실행 결과</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">&lt;</span>coroutine <span class="ex">object</span> greet at 0x7f...<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p><code>async def</code>로 정의된 함수는 <strong>즉시 실행되지 않아요.</strong> 대신 “코루틴(coroutine)” 객체를 반환합니다. 실제 실행하려면 <code>await</code> 또는 <code>asyncio.run()</code>을 써야 해요.</p>
-</blockquote>
+</div>
+<ul>
+<li><code>async def</code>로 정의된 함수는 <strong>즉시 실행되지 않음</strong></li>
+<li>대신 “코루틴(coroutine)” 객체를 반환</li>
+<li>실제 실행하려면 <code>await</code> 또는 <code>asyncio.run()</code>을 써야 함</li>
+</ul>
 <hr>
-</section>
-<section id="await로-실행하기" class="level3">
-<h3 class="anchored" data-anchor-id="await로-실행하기">(3) <code>await</code>로 실행하기</h3>
-<div id="fa6945bc" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> asyncio</span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="cf">async</span> <span class="kw">def</span> greet():</span>
-<span id="cb4-4"><a href="#cb4-4"></a>    <span class="cf">return</span> <span class="st">"Hello"</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="cf">async</span> <span class="kw">def</span> main():</span>
-<span id="cb4-7"><a href="#cb4-7"></a>    result <span class="op">=</span> <span class="cf">await</span> greet()</span>
-<span id="cb4-8"><a href="#cb4-8"></a>    <span class="bu">print</span>(result)</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>asyncio.run(main())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="await로-실행하기" class="level4">
+<h4 class="anchored" data-anchor-id="await로-실행하기"><code>await</code>로 실행하기</h4>
+<div id="d330abd9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> asyncio  <span class="co"># ✅ asyncio: 파이썬의 비동기(Asynchronous) 프로그래밍을 지원하는 표준 모듈</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># ============================================================</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># ① 코루틴(Coroutine) 정의</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># ============================================================</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># async def 로 정의된 함수는 일반 함수처럼 즉시 실행되지 않음.</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># 호출 시 '코루틴 객체(coroutine object)'를 반환하고,</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># 이 객체를 이벤트 루프(event loop)가 스케줄링해서 실제로 실행함.</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="cf">async</span> <span class="kw">def</span> greet():</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="co"># 이 함수는 단순히 "Hello" 문자열을 반환하는 비동기 함수</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="cf">return</span> <span class="st">"Hello"</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># ============================================================</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># ② 메인 코루틴 (다른 코루틴을 호출하고 관리)</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co"># ============================================================</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="cf">async</span> <span class="kw">def</span> main():</span>
+<span id="cb5-18"><a href="#cb5-18"></a>    <span class="co"># await 키워드는 '코루틴 실행 결과를 기다린다'는 의미.</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>    <span class="co"># greet()를 호출하면 즉시 실행되는 게 아니라 코루틴 객체를 반환함.</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>    <span class="co"># await greet()는 이벤트 루프에게 "이 코루틴을 실행하고 끝날 때까지 기다려줘"라고 요청함.</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a>    result <span class="op">=</span> <span class="cf">await</span> greet()</span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a>    <span class="co"># greet()의 실행이 완료되면, result에는 "Hello"가 저장됨.</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a>    <span class="bu">print</span>(result)  <span class="co"># 콘솔에 "Hello" 출력</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co"># ============================================================</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co"># ③ 이벤트 루프(Event Loop)</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co"># ============================================================</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co"># asyncio.run()은 파이썬 3.7부터 도입된 고수준 API로,</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="co"># 내부적으로 다음과 같은 과정을 수행함:</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#  1️⃣ 새로운 이벤트 루프 생성</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#  2️⃣ main() 코루틴을 루프에 등록하고 실행 시작</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#  3️⃣ await 구문 등을 통해 다른 코루틴들을 스케줄링하여 실행 순서를 관리</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#  4️⃣ 모든 코루틴이 완료되면 루프를 정리하고 종료</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="co"># 즉, 프로그램 전체의 비동기 작업을 총괄하는 "조정자" 역할을 함.</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a>asyncio.run(main())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>📌 실행 결과</p>
 <pre><code>Hello</code></pre>
+<p>이벤트 루프 내부 구성을 나타내면 아래와 같습니다.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    %% =============================
+    %% asyncio (High-level)
+    %% =============================
+    subgraph A["asyncio (고수준 API)"]
+        A1["asyncio.run(main)"]
+        A2["루프 생성 및&lt;br&gt;run_until_complete(Task(main))"]
+        A3["Task&lt;br&gt;코루틴 실행 단위&lt;br&gt;(상태/콜백/스택 보유)"]
+        A4["Future&lt;br&gt;결과·예외 저장, 콜백 등록 가능"]
+
+        A1 --&gt; A2
+        A2 --&gt; A3
+        A2 --&gt; A4
+    end
+
+    %% =============================
+    %% Event Loop 내부 구조
+    %% =============================
+    subgraph B["Event Loop (단일 스레드, 협력형 전환)"]
+        direction LR
+        B1["Ready Queue"]
+        B2["Callback Queue"]
+        B3["실행 단계&lt;br&gt;(한 틱씩 Task 실행)"]
+        B5["Selector / IO&lt;br&gt;(epoll, kqueue)"]
+        B6["타이머 힙&lt;br&gt;(지연 콜백, sleep)"]
+
+        B1 &lt;--&gt;|"콜백 이동"| B2
+        B2 --&gt;|"run_ready()"| B3
+        B5 &lt;--&gt;|"poll(timeout)"| B3
+        B3 --&gt; B6
+    end
+
+    %% =============================
+    %% Control Flow
+    %% =============================
+    A3 -. "await" .-&gt; B3
+    B3 -. "I/O 완료·타이머 만료" .-&gt; B1
+    B1 --&gt;|"Task 재개"| A3
+
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
+</section>
 <section id="언제-async-def를-써야-할까" class="level2">
-<h2 class="anchored" data-anchor-id="언제-async-def를-써야-할까">⏱️ 3. 언제 <code>async def</code>를 써야 할까?</h2>
-<p>비동기는 <strong>I/O 작업(입출력)</strong>이 오래 걸리는 상황에서 유용합니다.</p>
-<p>예:</p>
+<h2 class="anchored" data-anchor-id="언제-async-def를-써야-할까">⏱️ 언제 <code>async def</code>를 써야 할까?</h2>
+<p>비동기는 <strong>I/O 작업(입출력)</strong>이 오래 걸리는 아래와 같은 상황에서 유용합니다.</p>
 <ul>
 <li>네트워크 요청 (<code>HTTP request</code>)</li>
 <li>파일 읽기/쓰기</li>
 <li>데이터베이스 쿼리</li>
 <li>대기 시간(<code>sleep</code>)이 많은 코드</li>
 </ul>
-<div id="2cda39ba" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> asyncio</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="cf">async</span> <span class="kw">def</span> download():</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="bu">print</span>(<span class="st">"다운로드 시작"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="cf">await</span> asyncio.sleep(<span class="dv">2</span>)   <span class="co"># 네트워크 대기</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>    <span class="bu">print</span>(<span class="st">"다운로드 완료"</span>)</span>
-<span id="cb6-7"><a href="#cb6-7"></a></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="cf">async</span> <span class="kw">def</span> main():</span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="cf">await</span> asyncio.gather(download(), download(), download())</span>
-<span id="cb6-10"><a href="#cb6-10"></a></span>
-<span id="cb6-11"><a href="#cb6-11"></a>asyncio.run(main())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d98b801f" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> asyncio</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="cf">async</span> <span class="kw">def</span> download():</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="bu">print</span>(<span class="st">"다운로드 시작"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="cf">await</span> asyncio.sleep(<span class="dv">2</span>)   <span class="co"># 네트워크 대기</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="bu">print</span>(<span class="st">"다운로드 완료"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="cf">async</span> <span class="kw">def</span> main():</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="cf">await</span> asyncio.gather(download(), download(), download())</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>asyncio.run(main())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>📌 실행 결과</p>
 <pre><code>다운로드 시작
@@ -516,10 +598,6 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <blockquote class="blockquote">
 <p>세 개가 동시에 실행되어 <strong>총 2초만 걸려요!</strong> 만약 <code>def</code>였다면 순서대로 실행되어 6초가 걸렸을 겁니다.</p>
 </blockquote>
-<hr>
-</section>
-<section id="요약" class="level2">
-<h2 class="anchored" data-anchor-id="요약">🧠 요약</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -560,61 +638,62 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <!--
 이제부터는 **실제로 실행되는 데모**를 보여줄게요.
 Quarto/Jupyter에서의 이벤트 루프 충돌을 피하기 위해 `nest_asyncio`를 사용합니다.
+
+
+> ✅ 실행 준비
+
+::: {#176d0abe .cell execution_count=5}
+``` {.python .cell-code}
+import sys, subprocess, importlib
+
+def ensure(pkg: str):
+    try:
+        importlib.import_module(pkg)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+
+ensure("nest_asyncio")
+```
+:::
+
+
 -->
-<blockquote class="blockquote">
-<p>✅ 실행 준비 (필요시 설치 → 적용)</p>
-</blockquote>
-<div id="77055c2a" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> sys, subprocess, importlib</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">def</span> ensure(pkg: <span class="bu">str</span>):</span>
-<span id="cb8-4"><a href="#cb8-4"></a>    <span class="cf">try</span>:</span>
-<span id="cb8-5"><a href="#cb8-5"></a>        importlib.import_module(pkg)</span>
-<span id="cb8-6"><a href="#cb8-6"></a>    <span class="cf">except</span> <span class="pp">ImportError</span>:</span>
-<span id="cb8-7"><a href="#cb8-7"></a>        subprocess.check_call([sys.executable, <span class="st">"-m"</span>, <span class="st">"pip"</span>, <span class="st">"install"</span>, pkg])</span>
-<span id="cb8-8"><a href="#cb8-8"></a></span>
-<span id="cb8-9"><a href="#cb8-9"></a>ensure(<span class="st">"nest_asyncio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="동기-vs-비동기-실행-데모" class="level2">
 <h2 class="anchored" data-anchor-id="동기-vs-비동기-실행-데모">🚀 동기 vs 비동기 실행 데모</h2>
-<div id="18c2144d" class="cell" data-execution_count="6">
+<div id="aed6d7ef" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">import</span> asyncio</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="im">import</span> time</span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="im">import</span> nest_asyncio</span>
-<span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># Jupyter/Quarto 이벤트 루프 중첩 허용</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>nest_asyncio.<span class="bu">apply</span>()</span>
-<span id="cb9-7"><a href="#cb9-7"></a></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co"># ------------------ 동기 (def) ------------------</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="kw">def</span> sync_task(name):</span>
-<span id="cb9-10"><a href="#cb9-10"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 시작"</span>)</span>
-<span id="cb9-11"><a href="#cb9-11"></a>    time.sleep(<span class="dv">2</span>)</span>
-<span id="cb9-12"><a href="#cb9-12"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 완료"</span>)</span>
-<span id="cb9-13"><a href="#cb9-13"></a></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="kw">def</span> sync_main():</span>
-<span id="cb9-15"><a href="#cb9-15"></a>    start <span class="op">=</span> time.time()</span>
-<span id="cb9-16"><a href="#cb9-16"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
-<span id="cb9-17"><a href="#cb9-17"></a>        sync_task(<span class="ss">f"작업 </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-18"><a href="#cb9-18"></a>    <span class="bu">print</span>(<span class="ss">f"총 소요 시간(동기): </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> start<span class="sc">:.2f}</span><span class="ss">초"</span>)</span>
-<span id="cb9-19"><a href="#cb9-19"></a></span>
-<span id="cb9-20"><a href="#cb9-20"></a><span class="co"># ------------------ 비동기 (async def) ------------------</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="cf">async</span> <span class="kw">def</span> async_task(name):</span>
-<span id="cb9-22"><a href="#cb9-22"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 시작"</span>)</span>
-<span id="cb9-23"><a href="#cb9-23"></a>    <span class="cf">await</span> asyncio.sleep(<span class="dv">2</span>)</span>
-<span id="cb9-24"><a href="#cb9-24"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 완료"</span>)</span>
-<span id="cb9-25"><a href="#cb9-25"></a></span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="cf">async</span> <span class="kw">def</span> async_main():</span>
-<span id="cb9-27"><a href="#cb9-27"></a>    start <span class="op">=</span> time.time()</span>
-<span id="cb9-28"><a href="#cb9-28"></a>    <span class="cf">await</span> asyncio.gather(<span class="op">*</span>[async_task(<span class="ss">f"작업 </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)])</span>
-<span id="cb9-29"><a href="#cb9-29"></a>    <span class="bu">print</span>(<span class="ss">f"총 소요 시간(비동기): </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> start<span class="sc">:.2f}</span><span class="ss">초"</span>)</span>
-<span id="cb9-30"><a href="#cb9-30"></a></span>
-<span id="cb9-31"><a href="#cb9-31"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 동기 실행 ==="</span>)</span>
-<span id="cb9-32"><a href="#cb9-32"></a>sync_main()</span>
-<span id="cb9-33"><a href="#cb9-33"></a></span>
-<span id="cb9-34"><a href="#cb9-34"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 비동기 실행 ==="</span>)</span>
-<span id="cb9-35"><a href="#cb9-35"></a><span class="co"># 이미 실행 중인 루프에서 안전하게 실행 (top-level await)</span></span>
-<span id="cb9-36"><a href="#cb9-36"></a><span class="cf">await</span> async_main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># ------------------ 동기 (def) ------------------</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw">def</span> sync_task(name):</span>
+<span id="cb9-6"><a href="#cb9-6"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 시작"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a>    time.sleep(<span class="dv">2</span>)</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 완료"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="kw">def</span> sync_main():</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    start <span class="op">=</span> time.time()</span>
+<span id="cb9-12"><a href="#cb9-12"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb9-13"><a href="#cb9-13"></a>        sync_task(<span class="ss">f"작업 </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14"></a>    <span class="bu">print</span>(<span class="ss">f"총 소요 시간(동기): </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> start<span class="sc">:.2f}</span><span class="ss">초"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co"># ------------------ 비동기 (async def) ------------------</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="cf">async</span> <span class="kw">def</span> async_task(name):</span>
+<span id="cb9-18"><a href="#cb9-18"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 시작"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19"></a>    <span class="cf">await</span> asyncio.sleep(<span class="dv">2</span>)</span>
+<span id="cb9-20"><a href="#cb9-20"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> 완료"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21"></a></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="cf">async</span> <span class="kw">def</span> async_main():</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    start <span class="op">=</span> time.time()</span>
+<span id="cb9-24"><a href="#cb9-24"></a>    <span class="cf">await</span> asyncio.gather(<span class="op">*</span>[async_task(<span class="ss">f"작업 </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)])</span>
+<span id="cb9-25"><a href="#cb9-25"></a>    <span class="bu">print</span>(<span class="ss">f"총 소요 시간(비동기): </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> start<span class="sc">:.2f}</span><span class="ss">초"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26"></a></span>
+<span id="cb9-27"><a href="#cb9-27"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 동기 실행 ==="</span>)</span>
+<span id="cb9-28"><a href="#cb9-28"></a>sync_main()</span>
+<span id="cb9-29"><a href="#cb9-29"></a></span>
+<span id="cb9-30"><a href="#cb9-30"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 비동기 실행 ==="</span>)</span>
+<span id="cb9-31"><a href="#cb9-31"></a><span class="co"># 이미 실행 중인 루프에서 안전하게 실행 (top-level await)</span></span>
+<span id="cb9-32"><a href="#cb9-32"></a><span class="cf">await</span> async_main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === 동기 실행 ===

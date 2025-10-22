@@ -12,8 +12,6 @@ description: World Simulation with Video Foundation Models for Physical AI
 - [MimicKit Github](https://github.com/xbpeng/MimicKit)
 
 
-
-
 <center>
 <img src="../../images/2025-10-05-add/climb_comparison.gif" width="70%" />
 </center>
@@ -26,6 +24,26 @@ description: World Simulation with Video Foundation Models for Physical AI
 ---
 
 # Brief Review
+
+이 논문은 수동으로 보상 함수를 설계하고 튜닝해야 하는 다중 목적 최적화(Multi-Objective Optimization, MOO) 문제, 특히 물리 기반 캐릭터 애니메이션의 모션 모방(motion imitation) 문제를 해결하기 위해 Adversarial Differential Discriminator (ADD)라는 새로운 접근 방식을 제안합니다. 기존 MOO 방법은 종종 수동으로 튜닝된 가중치 합을 사용하여 여러 목적 함수를 단일 목표로 집계하며, 이는 시간이 많이 걸리고 노동 집약적인 과정입니다. 또한, 기존의 적대적 모방 학습(adversarial imitation learning) 방법은 일반적으로 전체적인 모션 분포를 일치시키는 데 중점을 두어 정밀한 모션 추적에 한계가 있습니다.
+
+저자들은 이러한 한계를 극복하기 위해 다중 목적 문제에 널리 적용될 수 있는 새로운 적대적 MOO 기법인 ADD를 제안합니다. ADD는 모델의 성능과 각 목적에 대한 이상적인 성능 간의 차이인 목적 함수 값들의 벡터, 즉 `differential vector` $\Delta$를 입력으로 받습니다. $n$개의 손실 함수 $l_i(\cdot)$가 주어졌을 때, differential vector는 $\Delta = [l_1(\theta), \dots, l_n(\theta)]^\top$로 구성됩니다. 이상적인 "오류 제로" 솔루션에 해당하는 단일 양성 샘플인 0 벡터 $\Delta = \mathbf{0}$를 사용하여 discriminator $D(\Delta)$를 훈련시킵니다.
+
+ADD 프레임워크는 MOO 문제를 다음과 같은 미니맥스 게임(mini-max game)으로 공식화합니다:
+$$ \min_{\theta} \max_{D} \log(D(\mathbf{0})) + \mathbb{E}_{\Delta \sim p(\Delta|\theta)}[\log(1 - D(\Delta))] $$
+여기서 $p(\Delta|\theta)$는 현재 모델 파라미터 $\theta$에 의해 생성된 differential vector 분포입니다. 이러한 공식화는 discriminator가 개별 손실을 하나의 집계된 손실로 결합하는 비선형 집계 함수 역할을 하도록 하여, 훈련 과정에서 다양한 목적들을 자동으로 동적으로 균형 있게 맞추도록 합니다.
+
+단일 양성 샘플만으로 훈련할 때 발생할 수 있는 퇴화된(degenerate) 행동을 완화하기 위해 저자들은 그래디언트 페널티(gradient penalty, GP) 정규화 항을 도입합니다. 이 그래디언트 페널티는 다음과 같이 정의됩니다:
+$$ L_{GP}(D) = \mathbb{E}_{\tilde{\Delta} \sim p(\tilde{\Delta}|\theta)} \left[ \left\| \nabla_{\tilde{\Delta}} D(\tilde{\Delta}) \right\|_2^2 \right] $$
+여기서 $\tilde{\Delta}$는 정책에 의해 생성된 negative sample (differential vector)입니다. ADD에서는 GP가 negative sample에만 적용되는 반면, 이전 연구에서는 주로 positive sample에 적용되었습니다. 정책 $\pi$를 훈련하기 위한 보상 $r_t$는 다음과 같이 주어집니다:
+$$ r_t = -\log(1 - D(\Delta_t)) $$
+여기서 $\Delta_t = \phi(\hat{s}_t) \ominus \phi(s_t)$는 에이전트의 상태 $s_t$와 레퍼런스 모션 $\hat{s}_t$에서 추출된 특징들의 차이(differential vector)입니다.
+
+이 논문은 28 자유도(DoF) 시뮬레이션된 휴머노이드와 26 자유도(DoF) 시뮬레이션된 Sony EVAL 로봇을 사용하여 ADD의 효과를 입증합니다. ADD는 점프, 백플립, 크롤링, 킥, 펀치와 같은 다양한 고도로 민첩하고 곡예적인 기술들을 정밀하게 모방할 수 있도록 합니다. DeepMimic과 AMP와 같은 최신 모션 추적 방법과 비교했을 때, ADD는 수동 보상 엔지니어링 없이도 유사하거나 우수한 품질을 달성합니다. 특히, DeepMimic이 복잡한 파쿠르 모션에서 실패하거나 모션이 떨리는 현상을 보이는 반면, ADD는 더 부드러운 행동과 더 높은 정확도를 보여줍니다.
+
+ADD는 또한 모션 모방 외의 작업에서도 효과적임을 보여줍니다. 표준 RL 벤치마크인 Walker 작업과 Unitree Go1 쿼드러플드 로봇의 보행 작업에 적용했을 때, ADD는 수동으로 설계된 보상 함수에 필적하는 성능과 샘플 효율성을 달성합니다. 특히 Go1 로봇의 경우, ADD는 더 안정적인 로봇 베이스와 더 부드러운 움직임을 특징으로 하는 더 자연스러운 보행을 생성합니다.
+
+그래디언트 페널티에 대한 심층적인 분석을 통해 negative sample에 GP를 적용하는 것이 ADD의 효과적인 학습과 안정화에 중요함이 밝혀졌습니다. ADD는 특정 고도로 동적인 모션(예: 옆돌기)을 재현하는 데 어려움을 겪는 등 몇 가지 한계를 가지고 있지만, 이는 추가적인 발견적 방법(heuristics)으로 완화될 수 있습니다. 전반적으로 ADD는 성능, 모션 품질, 일관성 및 샘플 효율성 측면에서 신중하게 설계된 보상 함수의 성능에 필적하면서도 수동 보상 엔지니어링의 필요성을 줄여주는 MOO를 위한 강력하고 일반적인 솔루션을 제공합니다.
 
 ---
 
