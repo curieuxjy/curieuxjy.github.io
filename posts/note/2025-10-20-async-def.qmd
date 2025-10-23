@@ -5,10 +5,10 @@ toc: true
 date: "2025-10-20"
 description: Async def에 대해 알아보기
 categories: [python, async, 2025]
-format:
-  html:
-    mermaid:
-      theme: dark
+# format:
+#   html:
+#     mermaid:
+#       theme: dark
 execute:
   echo: true
   warning: true
