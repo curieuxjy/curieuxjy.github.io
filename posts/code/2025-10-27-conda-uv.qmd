@@ -76,21 +76,20 @@ execute:
 
 다음으로 네 가지 방식 간에 **가능한 전환 조합**을 모두 고려해, 주요 의미 있는 조합에 대해 단계별로 어떻게 이전할 수 있는지 가이드를 드리겠습니다.
 
-전환 가능한 주요 조합:
+전환 가능한 주요 조합(총 12가지가 가능하나, 유의미한 8가지 정도를 우선 제시):
 
-* [conda → uv]()
-* [conda → venv]()
-* [venv → conda]()
-* [venv → uv]()
-* [uv → conda]()
-* [uv → venv]()
-* [conda → mamba]()
-* [mamba → conda]()
-* [mamba → uv]()
-* [uv → mamba]()
-* [venv → mamba]()
+* [conda → uv](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#a-conda-uv)
+* [conda → venv](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#b-conda-venv)
+* [venv → conda](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#c-venv-conda)
+* [venv → uv](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#d-venv-uv)
+* [uv → conda](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#e-uv-conda)
+* [uv → venv](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#f-uv-venv)
+* [conda → mamba](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#g-conda-mamba)
+* [mamba → conda](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#h-mamba-conda)
+* [mamba → uv](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#i-mamba-uv)
+* [venv → mamba](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#j-venv-mamba)
+* [uv → mamba](https://curieuxjy.github.io/posts/code/2025-10-27-conda-uv.html#k-uv-mamba)
 
-총 12가지가 가능하나, 유의미한 8가지 정도를 우선 제시하고 나머지는 비슷한 방식으로 적용할 수 있게 합니다.
 
 ### 조합별 단계 가이드
 

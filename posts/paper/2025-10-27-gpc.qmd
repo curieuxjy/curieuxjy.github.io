@@ -1,0 +1,63 @@
+---
+title: "📃Generative Predictive Control 리뷰"
+date: 2025-10-27
+categories: [generative-model, flow-matching, predictive-control]
+toc: true
+number-sections: False
+description: Flow Matching Policies for Dynamic, Difficult-to-Demonstrate Tasks
+---
+
+- [Paper Link](https://arxiv.org/abs/2502.13406)
+- [Code](https://github.com/vincekurtz/gpc)
+- [Video](https://youtu.be/mjL7CF877Ow?si=ctI0Az0RxmuSgO9J)
+
+
+1. 전문가 데모 없이 시뮬레이션으로 학습 가능한 동적 작업을 위한 새로운 생성형 예측 제어(Generative Predictive Control, GPC) 프레임워크를 제안합니다.
+2. GPC는 샘플링 기반 예측 제어(Sampling-based Predictive Control, SPC)를 통해 고품질 훈련 데이터를 생성하고, 이를 반복적으로 활용하여 흐름 일치(flow matching) 정책을 감독 학습 방식으로 학습시킵니다.
+3. GPC는 warm-start를 통해 빠른 동적 시스템에서 높은 주파수의 제어를 가능하게 하며, 다양한 로봇 작업에서 SPC와 유사하거나 더 나은 성능과 훈련 안정성을 보여주었습니다.
+
+
+<center>
+<img src="../../images/2025-10-27-gpc/0.png" width="80%" />
+</center>
+
+---
+
+# Brief Review
+
+이 논문은 로봇 공학에서 빠른 다이내믹스를 가지지만 전문가 데모를 얻기 어려운 작업들을 위해 `Generative Predictive Control (GPC)`이라는 새로운 지도 학습 프레임워크를 제안합니다. 기존의 생성 정책들은 데모 데이터에 크게 의존하고 느리거나 준정적인(quasi-static) 작업에 한정되는 한계가 있었습니다. GPC는 샘플링 기반 예측 제어(Sampling-based Predictive Control, SPC)와 생성 모델링 사이의 깊은 연결을 활용하여 이러한 문제를 해결합니다.
+
+핵심 방법론은 다음과 같습니다:
+
+1.  **SPC와 생성 모델링의 연결성:**
+    - 논문은 SPC 업데이트 규칙이 노이즈가 있는 타겟 분포의 스코어(score)에 대한 Monte Carlo 추정치임을 보여줍니다. 특히, 초기 상태 $x$에 조건화된 타겟 분포 $p(U | x) \propto g(J(U; x))$를 정의합니다. 여기서 $U$는 $T$ 길이의 액션 시퀀스이고, $J(U;x)$는 비용 함수, $g(\cdot)$는 SPC 알고리즘별 가중 함수입니다.
+    - 노이즈가 있는 타겟 분포 $p_\sigma(U | x) \propto E_{\tilde{U} \sim \mathcal{N}(U, \sigma^2)}[g(\tilde{U})]$를 정의할 때, 이 분포의 스코어는 다음과 같이 주어집니다:
+    $$ \nabla_U \log p_\sigma(U | x) = \frac{1}{\sigma^2} \frac{E_{\tilde{U} \sim \mathcal{N}(U, \sigma^2)}[g(\tilde{U})(\tilde{U} - U)]}{E_{\tilde{U} \sim \mathcal{N}(U, \sigma^2)}[g(\tilde{U})]} $$
+    - 이는 SPC 업데이트 $\bar{U}_k = \bar{U}_{k-1} + \sum_{i=1}^N g(J^{(i)})(U^{(i)} - \bar{U}_{k-1}) / \sum_{i=1}^N g(J^{(i)})$가 스코어 상승($\bar{U}_k \leftarrow \bar{U}_{k-1} + \sigma^2 \nabla_{\bar{U}_{k-1}} \log p_\sigma(\bar{U}_{k-1} | x_{k-1})$)에 대한 Monte Carlo 추정치를 제공한다는 것을 의미합니다. 이 연결을 통해 SPC의 평균 액션 시퀀스 $\bar{U}_k$를 상태 $x_k$에 조건화된 최적 액션 분포 $p(U|x_k) \propto g(J(U;x_k))$에서 추출된 것으로 볼 수 있습니다.
+
+2.  **GPC 프레임워크:**
+    - GPC는 SPC를 통해 시뮬레이션에서 생성된 데이터 $(\bar{U}_k, x_k)$를 사용하여 플로우 매칭(flow matching) 모델을 학습합니다. 이 모델은 다음과 같은 벡터 필드를 학습합니다:
+    $$ \dot{U} = v_\theta(U, x, t) $$
+    - 이는 $t=0$에서의 $\mathcal{N}(0, I)$ 샘플 $U_0$를 $t=1$에서의 타겟 분포 $p(U|x_k)$로 밀어냅니다. 학습은 다음과 같은 조건부 플로우 매칭 손실을 최소화하는 방식으로 이루어집니다:
+    $$ \mathcal{L}_{GPC}(\theta; U_0, \bar{U}_k, x_k, t) = \left\| v_\theta(t \bar{U}_k - (1-t)U_0, x_k, t) - (\bar{U}_k - U_0) \right\|^2 $$
+    - 여기에 $\bar{U}_k - \bar{U}_{k-1}$와 $\bar{U}_k - U_0$ 간의 코사인 유사도에 기반한 가중치 $w(\bar{U}_k, \bar{U}_{k-1}, U_0)$를 추가하여 훈련 효율을 높입니다.
+    - GPC는 시뮬레이션과 모델 학습의 여러 사이클을 수행합니다. 각 사이클에서 부분적으로 훈련된 플로우 매칭 정책에서 생성된 샘플은 SPC를 부트스트랩하는 데 사용되어, 개선된 샘플링 분포와 더 나은 훈련 데이터를 제공합니다. 이는 `Algorithm 1`에 명시되어 있으며, 병렬 시뮬레이션 환경, 병렬 롤아웃, 모델 훈련 단계에서의 병렬화를 통해 효율성을 극대화합니다.
+
+3.  **훈련된 GPC 정책의 활용 (Warm-starts):**
+    - 훈련된 GPC 정책을 사용하는 두 가지 방법이 있습니다.
+      *   **GPC (직접 배포):** 정책을 직접 배포하여, 특히 `warm-starts`를 사용하여 순행하는(receding-horizon) 방식으로 액션을 적용합니다. `warm-starts`는 플로우 생성 과정을 $U_0 = (1 - \alpha)\mathcal{N}(0, I) + \alpha \bar{U}_{k-1}$에서 시작하여, 이전 시간 단계의 샘플과 일관성을 유지하도록 돕고, 빠른 피드백 루프에서 발생할 수 있는 "jittering" 현상을 줄여줍니다.
+      *   **GPC+ (부트스트랩):** 정책 샘플을 일반적인 가우시안 제안 분포에서 온 샘플과 함께 SPC에 활용합니다. 이는 추론 시 계산 리소스를 활용하여 더 나은 성능을 달성합니다.
+
+4.  **위험 인식 도메인 무작위화 (Risk-Aware Domain Randomization, DR):**
+    - 대규모 병렬 시뮬레이터를 활용하여 SPC 롤아웃 시 여러 무작위 도메인에서 각 액션 시퀀스를 시뮬레이션하여 비용 데이터 $J^{(i,d)}$를 수집합니다.
+    - 이를 평균($E_d[J^{(i,d)}]$), 최악의 경우($\max_d[J^{(i,d)}]$), 또는 조건부 위험 가치(CVaR)와 같은 위험 메트릭스를 사용하여 집계하여 정책의 견고성을 높입니다.
+
+**실험 결과:**
+
+논문은 진자(inverted pendulum)부터 인간형 로봇(humanoid standup)에 이르는 7가지 시스템에 대해 GPC를 평가했습니다. GPC는 Multi-modal 추론이 필요한 `push-T` 작업과 빠른 동역학이 필요한 `double cart-pole`과 같은 작업을 높은 제어 주파수에서 효과적으로 처리할 수 있음을 보여주었습니다. 특히, `warm-starts`는 `double cart-pole`과 같은 동적 시스템에서 부드러운 고주파수 제어를 가능하게 하는 데 중요했습니다.
+GPC는 SPC와 유사하거나 더 나은 성능을 보였고, GPC+는 모든 예시에서 다른 방법들의 성능을 능가했습니다. 훈련 안정성 측면에서는 지도 학습의 장점을 보였고, 위험 인식 DR 전략은 모델 오차가 있는 시나리오에서 정책의 견고성을 향상시켰습니다. 그러나 가장 크고 어려운 `humanoid standup` 예시에서는 GPC 정책만으로는 안정적인 성능을 내기 어려웠으며, GPC+만이 효과적이었습니다. 이는 현재 방법의 확장성 한계를 시사합니다.
+
+**결론 및 한계:**
+
+GPC는 시뮬레이션하기 쉽지만 데모하기 어려운 동적 작업에 대한 플로우 매칭 정책을 학습하기 위한 유망한 프레임워크입니다. SPC와의 연결성을 통해 전문가 데모 없이 지도 학습을 위한 훈련 데이터를 생성하고, `warm-starts`는 시간적 일관성을 보장하며 실시간 고주파수 제어를 가능하게 합니다.
+주요 한계로는 가장 복잡한 작업에서의 제한된 효과성, 비교적 높은 샘플 복잡성(단일 훈련 데이터 포인트 생성에 $N$번의 시뮬레이션 필요), 그리고 액션 시퀀스 표현의 단순성 등이 언급되었습니다. 향후 연구는 가치 함수 학습 통합, 하드웨어 검증, 일반화된 Multi-task 정책 훈련, 그리고 제약 조건이 있는 생성 모델링 등을 포함할 것입니다.
