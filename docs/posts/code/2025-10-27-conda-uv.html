@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-27">
+<meta name="description" content="conda vs.&nbsp;uv vs.&nbsp;mamba vs.&nbsp;venv">
+
+<title>👩‍💻Python 환경설정 팁 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#비교-정리" id="toc-비교-정리" class="nav-link active" data-scroll-target="#비교-정리">1. 비교 정리</a>
+  <ul class="collapse">
+  <li><a href="#비교표" id="toc-비교표" class="nav-link" data-scroll-target="#비교표">비교표</a></li>
+  <li><a href="#장단점-상세" id="toc-장단점-상세" class="nav-link" data-scroll-target="#장단점-상세">장단점 상세</a></li>
+  </ul></li>
+  <li><a href="#migration" id="toc-migration" class="nav-link" data-scroll-target="#migration">2. Migration</a>
+  <ul class="collapse">
+  <li><a href="#조합별-단계-가이드" id="toc-조합별-단계-가이드" class="nav-link" data-scroll-target="#조합별-단계-가이드">조합별 단계 가이드</a></li>
+  </ul></li>
+  <li><a href="#정리-및-추천" id="toc-정리-및-추천" class="nav-link" data-scroll-target="#정리-및-추천">3. 정리 및 추천</a></li>
+  <li><a href="#conda-환경-옮기기" id="toc-conda-환경-옮기기" class="nav-link" data-scroll-target="#conda-환경-옮기기">4. Conda 환경 옮기기</a>
+  <ul class="collapse">
+  <li><a href="#기본-절차" id="toc-기본-절차" class="nav-link" data-scroll-target="#기본-절차">✅ 기본 절차</a>
+  <ul class="collapse">
+  <li><a href="#원본-환경-활성화" id="toc-원본-환경-활성화" class="nav-link" data-scroll-target="#원본-환경-활성화">1. 원본 환경 활성화</a></li>
+  <li><a href="#패키지-리스트-및-환경-정보-내보내기" id="toc-패키지-리스트-및-환경-정보-내보내기" class="nav-link" data-scroll-target="#패키지-리스트-및-환경-정보-내보내기">2. 패키지 리스트 및 환경 정보 내보내기</a></li>
+  <li><a href="#새-환경-생성" id="toc-새-환경-생성" class="nav-link" data-scroll-target="#새-환경-생성">3. 새 환경 생성</a></li>
+  <li><a href="#동작-테스트" id="toc-동작-테스트" class="nav-link" data-scroll-target="#동작-테스트">4. 동작 테스트</a></li>
+  <li><a href="#선택-원본-환경-정리" id="toc-선택-원본-환경-정리" class="nav-link" data-scroll-target="#선택-원본-환경-정리">5. (선택) 원본 환경 정리</a></li>
+  </ul></li>
+  <li><a href="#자주-마주치는-문제-및-해결-팁" id="toc-자주-마주치는-문제-및-해결-팁" class="nav-link" data-scroll-target="#자주-마주치는-문제-및-해결-팁">⚠️ 자주 마주치는 문제 및 해결 팁</a></li>
+  <li><a href="#심화-옵션-복사클론-방식" id="toc-심화-옵션-복사클론-방식" class="nav-link" data-scroll-target="#심화-옵션-복사클론-방식">🔧 심화 옵션: 복사/클론 방식</a></li>
+  <li><a href="#체크리스트-복잡한-conda-환경-마이그레이션용" id="toc-체크리스트-복잡한-conda-환경-마이그레이션용" class="nav-link" data-scroll-target="#체크리스트-복잡한-conda-환경-마이그레이션용">✅ 체크리스트: 복잡한 Conda 환경 마이그레이션용</a></li>
+  <li><a href="#사용-팁" id="toc-사용-팁" class="nav-link" data-scroll-target="#사용-팁">🛠 사용 팁</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">👩‍💻Python 환경설정 팁</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">env</div>
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    conda vs.&nbsp;uv vs.&nbsp;mamba vs.&nbsp;venv
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 27, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>venv</strong>, <strong>conda</strong>, <strong>mamba</strong>, <strong>uv</strong> 네 가지 Python 가상환경/패키지관리 방식에 대해 <strong>비교 정리 및 장단점</strong>을 상세히 조사하고, 이어서 이들 간 서로 전환(Migration)할 수 있는 <strong>모든 조합</strong>(총 4×3 = 12가지 방향 중 현실적으로 의미 있는 6가지 이상) 각각에 대해 <strong>단계별 가이드</strong>를 제시합니다.</p>
+<section id="비교-정리" class="level2">
+<h2 class="anchored" data-anchor-id="비교-정리">1. 비교 정리</h2>
+<section id="비교표" class="level3">
+<h3 class="anchored" data-anchor-id="비교표">비교표</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방식</th>
+<th>주요 기능/지원 범위</th>
+<th>강점</th>
+<th>약점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>venv</td>
+<td>Python 표준 라이브러리 기반 가상환경 생성 (<code>python3 -m venv …</code>), 주로 순수 Python 패키지 중심</td>
+<td>설치가 간단하고 별도 도구 없거나 적음. 가볍고 빠름</td>
+<td>바이너리(C/C++ 확장), OS-레벨 의존성, 여러 언어 혼합 환경에 한계</td>
+</tr>
+<tr class="even">
+<td>conda</td>
+<td>Anaconda/Miniconda 체계, 가상환경 + 패키지관리 + 다양한 바이너리/언어/OS 의존성 설치 가능</td>
+<td>다양한 언어/라이브러리 지원, 과학/머신러닝 스택에 강점</td>
+<td>환경 생성/패키지 설치가 느릴 수 있고 복잡성 있음</td>
+</tr>
+<tr class="odd">
+<td>mamba</td>
+<td>conda와 거의 명령어 호환되는, 속도 및 의존성 해결 알고리즘이 개선된 도구 (“drop-in replacement”) (<a href="https://statistics.berkeley.edu/computing/conda?utm_source=chatgpt.com" title="Conda and Mamba - UC Berkeley Statistics">statistics.berkeley.edu</a>)</td>
+<td>conda 대비 빠른 설치/해결, 동일 인터페이스로 진입 장벽 낮음</td>
+<td>비교적 최신 도구라 일부 생태계/버그 측면에서 완전히 검증된 상태는 아님 (<a href="https://stackoverflow.com/questions/68004789/how-could-using-mamba-instead-of-conda-as-package-manager-for-anaconda-be-proble?utm_source=chatgpt.com" title="How could using Mamba instead of Conda as package manager for ...">Stack Overflow</a>)</td>
+</tr>
+<tr class="even">
+<td>uv</td>
+<td>Astral‑sh가 개발한 Rust 기반 Python 프로젝트/패키지관리 도구. 가상환경 생성, Python 버전 관리, 패키지 설치 및 실행까지 통합됨. (<a href="https://docs.astral.sh/uv/?utm_source=chatgpt.com" title="uv - Astral Docs">docs.astral.sh</a>)</td>
+<td>매우 빠른 의존성 해결 + Python 버전 설치 지원 + 프로젝트 단위 워크플로우에 적합</td>
+<td>아직 일부 생태계(복잡한 바이너리/OS 의존)에서는 제약이 있을 수 있고, 기존 워크플로우와 마이그레이션 비용 있음</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="장단점-상세" class="level3">
+<h3 class="anchored" data-anchor-id="장단점-상세">장단점 상세</h3>
+<section id="venv" class="level4">
+<h4 class="anchored" data-anchor-id="venv">venv</h4>
+<p><strong>장점</strong></p>
+<ul>
+<li>Python 표준 라이브러리로 제공되므로 별도 설치 부담이 적습니다.</li>
+<li>간단한 프로젝트, 순수 Python 패키지만 쓰는 경우 가볍고 빠르게 환경 세팅 가능.</li>
+<li>프로젝트 폴더 내부에 <code>.venv</code> 형태로 관리하면 구조가 직관적입니다. <strong>단점</strong></li>
+<li>바이너리(C/C++), OS-레벨 라이브러리, GPU/쿠다 등 복잡한 의존성이 필요할 경우 수동 설치가 많고 오류 가능성 높음.</li>
+<li>여러 프로젝트에서 다양한 Python 버전을 쓰거나 공유/복제 환경을 만들려면 별도 도구(pyenv 등)가 필요할 수 있음.</li>
+<li>패키지 재현성(lockfile-기반) 또는 대형 스택 관리에는 기능이 제한적일 수 있습니다.</li>
+</ul>
+</section>
+<section id="conda" class="level4">
+<h4 class="anchored" data-anchor-id="conda">conda</h4>
+<p><strong>장점</strong></p>
+<ul>
+<li>Python뿐 아니라 R, C/C++, 기타 언어 및 OS-바이너리 의존성을 포함한 환경 설정이 가능합니다.</li>
+<li>데이터사이언스/머신러닝 생태계에서 폭넓게 쓰이며 패키지 생태계/문서/지원이 풍부합니다.</li>
+<li>환경 격리 및 복제(reproducibility)를 위한 <code>environment.yml</code> 등 방식이 존재합니다. <strong>단점</strong></li>
+<li>환경 생성 및 패키지 설치 시 시간이 오래 걸릴 수 있으며, 의존성 해결이 복잡할 수 있습니다. (<a href="https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/?utm_source=chatgpt.com" title="Managing Scientific Python environments using Conda, Mamba and ...">FocalPlane</a>)</li>
+<li>저장소(channel) 설정, 충돌 대응, 환경관리 등의 추가 학습이 필요할 수 있습니다.</li>
+<li>가벼운 프로젝트나 순수 Python만 사용할 경우 도구가 과할 수 있고, 디스크/메모리 오버헤드가 있을 수 있습니다.</li>
+</ul>
+</section>
+<section id="mamba" class="level4">
+<h4 class="anchored" data-anchor-id="mamba">mamba</h4>
+<p><strong>장점</strong></p>
+<ul>
+<li>conda 명령어 인터페이스와 거의 동일하므로 기존 conda 사용자에게 진입 장벽이 낮습니다. (<a href="https://eoas-ubc.github.io/tut-conda_environs.html?utm_source=chatgpt.com" title="Environments: Conda, Mamba, and all that — OCESE Documentation">eoas-ubc.github.io</a>)</li>
+<li>특히 의존성 해결 및 패키지 설치 속도 면에서 유리하다는 여러 보고가 있습니다. (<a href="https://iamdamilare13.medium.com/mamba-vs-conda-know-the-differences-and-similarities-be3ae94d2542?utm_source=chatgpt.com" title="Mamba vs Conda: Know the Differences and Similarities">Medium</a>) <strong>단점</strong></li>
+<li>비교적 신생 도구이므로 conda 대비 생태계 지원이나 안정성 측면에서 아직 완성도가 낮다는 의견도 있습니다. (<a href="https://stackoverflow.com/questions/68004789/how-could-using-mamba-instead-of-conda-as-package-manager-for-anaconda-be-proble?utm_source=chatgpt.com" title="How could using Mamba instead of Conda as package manager for ...">Stack Overflow</a>)</li>
+<li>일부 조직/CI/CD 환경에서는 conda만 공식 지원하는 경우가 있어 전환 시 고려사항이 있습니다.</li>
+</ul>
+</section>
+<section id="uv" class="level4">
+<h4 class="anchored" data-anchor-id="uv">uv</h4>
+<p><strong>장점</strong></p>
+<ul>
+<li>매우 최신 도구로, “가상환경 생성 + Python 버전 설치 + 패키지/의존성 관리”를 하나의 워크플로우로 통합한다는 비전이 있습니다. (<a href="https://astral.sh/blog/uv?utm_source=chatgpt.com" title="uv: Python packaging in Rust - Astral">astral.sh</a>)</li>
+<li>의존성 해결 속도가 빠르며, 프로젝트 단위로 재현 가능한 환경(lockfile 기반 등) 구성에 유리하다는 평가가 있습니다. (<a href="https://www.reddit.com/r/Python/comments/1g0imjf/psa_if_youre_starting_a_new_project_try_astraluv/?utm_source=chatgpt.com" title="PSA: If you're starting a new project, try astral/uv! : r/Python - Reddit">Reddit</a>) <strong>단점</strong></li>
+<li>복잡한 바이너리/OS 수준의 라이브러리, GPU 스택 등에서는 아직 conda 대비 제약이 있을 수 있다는 사용자 경험이 존재합니다. (<a href="https://www.reddit.com/r/NixOS/comments/1fdxpam/help_request_python_development_specifically_with/?utm_source=chatgpt.com" title="[Help Request] Python development, specifically with `uv` from astral ...">Reddit</a>)</li>
+<li>기존 워크플로우를 uv로 바꾸려면 학습/마이그레이션 비용이 있을 수 있고, 일부 도구와의 통합이 아직 미성숙할 수 있습니다.</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="migration" class="level2">
+<h2 class="anchored" data-anchor-id="migration">2. Migration</h2>
+<p>다음으로 네 가지 방식 간에 <strong>가능한 전환 조합</strong>을 모두 고려해, 주요 의미 있는 조합에 대해 단계별로 어떻게 이전할 수 있는지 가이드를 드리겠습니다.</p>
+<p>전환 가능한 주요 조합:</p>
+<ul>
+<li><a href="">conda → uv</a></li>
+<li><a href="">conda → venv</a></li>
+<li><a href="">venv → conda</a></li>
+<li><a href="">venv → uv</a></li>
+<li><a href="">uv → conda</a></li>
+<li><a href="">uv → venv</a></li>
+<li><a href="">conda → mamba</a></li>
+<li><a href="">mamba → conda</a></li>
+<li><a href="">mamba → uv</a></li>
+<li><a href="">uv → mamba</a></li>
+<li><a href="">venv → mamba</a></li>
+</ul>
+<p>총 12가지가 가능하나, 유의미한 8가지 정도를 우선 제시하고 나머지는 비슷한 방식으로 적용할 수 있게 합니다.</p>
+<section id="조합별-단계-가이드" class="level3">
+<h3 class="anchored" data-anchor-id="조합별-단계-가이드">조합별 단계 가이드</h3>
+<section id="a-conda-uv" class="level4">
+<h4 class="anchored" data-anchor-id="a-conda-uv">A) conda → uv</h4>
+<ol type="1">
+<li><p>conda 환경 활성화:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">conda</span> activate my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Python 버전 확인 및 패키지 리스트 추출:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">conda</span> list <span class="at">--export</span> <span class="op">&gt;</span> conda_env_export.txt</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_conda.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>uv 설치 (시스템에 없으면):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">curl</span> <span class="at">-LsSf</span> https://astral.sh/uv/install.sh <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">```</span> <span class="ex">:contentReference[oaicite:15]{index=15}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>프로젝트 디렉토리로 이동 및 초기화:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">cd</span> project_folder</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">uv</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>원하는 Python 버전 설치 혹은 사용:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">uv</span> python install 3.x   <span class="co"># 필요한 버전</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">```</span> <span class="ex">:contentReference[oaicite:16]{index=16}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>uv로 가상환경 생성:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">uv</span> venv <span class="at">--python</span> 3.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">uv</span> pip install <span class="at">-r</span> requirements_conda.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>lockfile 생성 및 동기화:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">uv</span> lock</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">uv</span> sync</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>실행/테스트:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">uv</span> run python your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) 기존 conda 환경 정리:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">conda</span> deactivate</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="ex">conda</span> env remove <span class="at">-n</span> my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="b-conda-venv" class="level4">
+<h4 class="anchored" data-anchor-id="b-conda-venv">B) conda → venv</h4>
+<ol type="1">
+<li><p>conda 환경 활성화:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">conda</span> activate my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 리스트 및 Python 버전 확인:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_conda.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>프로젝트 디렉토리로 이동:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="bu">cd</span> project_folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>venv 생성:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>venv 활성화:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="bu">source</span> .venv/bin/activate   <span class="co"># (Linux/macOS)</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co"># or .venv\Scripts\activate  # (Windows)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_conda.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트 실행:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) conda 환경 제거:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">conda</span> deactivate</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="ex">conda</span> env remove <span class="at">-n</span> my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="c-venv-conda" class="level4">
+<h4 class="anchored" data-anchor-id="c-venv-conda">C) venv → conda</h4>
+<ol type="1">
+<li><p>venv 활성화:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="bu">source</span> .venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Python 버전 및 패키지 리스트 저장:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_venv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>conda 설치/준비 (이미 설치돼 있다면 생략)</p></li>
+<li><p>새 conda 환경 생성:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="ex">conda</span> create <span class="at">-n</span> new_env python=3.x</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="ex">conda</span> activate new_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>가능하면 conda 패키지 설치, 이후 pip 설치:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="ex">conda</span> install <span class="at">--yes</span> <span class="at">--file</span> requirements_venv.txt   <span class="co"># 가능할 경우</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="co"># 아니면</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_venv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) venv 제거:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="ex">deactivate</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">rm</span> <span class="at">-rf</span> .venv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="d-venv-uv" class="level4">
+<h4 class="anchored" data-anchor-id="d-venv-uv">D) venv → uv</h4>
+<ol type="1">
+<li><p>venv 활성화:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="bu">source</span> .venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 리스트 저장:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_venv.txt</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>uv 설치 (시스템에 없으면):</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="ex">curl</span> <span class="at">-LsSf</span> https://astral.sh/uv/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>프로젝트 디렉토리로 이동 / 초기화:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="bu">cd</span> project_folder</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="ex">uv</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Python 버전 설치/사용:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="ex">uv</span> python install 3.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>가상환경 생성:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1"></a><span class="ex">uv</span> venv <span class="at">--python</span> 3.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1"></a><span class="ex">uv</span> pip install <span class="at">-r</span> requirements_venv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>lockfile 생성 및 동기화:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1"></a><span class="ex">uv</span> lock</span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="ex">uv</span> sync</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트 실행:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1"></a><span class="ex">uv</span> run python your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) 기존 venv 제거:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">rm</span> <span class="at">-rf</span> .venv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="e-uv-conda" class="level4">
+<h4 class="anchored" data-anchor-id="e-uv-conda">E) uv → conda</h4>
+<ol type="1">
+<li><p>uv 환경에서 Python 버전 및 패키지 리스트 추출:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a><span class="ex">uv</span> run python <span class="at">--version</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="ex">uv</span> pip freeze <span class="op">&gt;</span> requirements_uv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>conda 설치/준비</p></li>
+<li><p>새로운 conda 환경 생성:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1"></a><span class="ex">conda</span> create <span class="at">-n</span> new_env python=3.x</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="ex">conda</span> activate new_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1"></a><span class="ex">conda</span> install <span class="at">--yes</span> <span class="at">--file</span> requirements_uv.txt  <span class="co"># 가능하다면</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="co"># 또는</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_uv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) uv 환경 관련 파일 정리 (.venv, uv.lock 등)</p></li>
+</ol>
+</section>
+<section id="f-uv-venv" class="level4">
+<h4 class="anchored" data-anchor-id="f-uv-venv">F) uv → venv</h4>
+<ol type="1">
+<li><p>uv 환경에서 패키지 리스트 추출:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1"></a><span class="ex">uv</span> pip freeze <span class="op">&gt;</span> requirements_uv.txt</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>프로젝트 디렉토리로 이동:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1"></a><span class="bu">cd</span> project_folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>venv 생성:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>venv 활성화:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1"></a><span class="bu">source</span> .venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_uv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트 실행:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) uv 환경 제거/정리</p></li>
+</ol>
+</section>
+<section id="g-conda-mamba" class="level4">
+<h4 class="anchored" data-anchor-id="g-conda-mamba">G) conda → mamba</h4>
+<ol type="1">
+<li><p>시스템에 mamba 설치:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a><span class="ex">conda</span> install mamba <span class="at">-n</span> base <span class="at">-c</span> conda-forge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>기존 conda 명령어 대부분을 mamba로 바꾸어 실행 가능:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> env2 python=3.x</span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="ex">mamba</span> install numpy scipy</span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="kw">```</span> <span class="ex">:contentReference[oaicite:17]{index=17}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a><span class="ex">conda</span> activate env2  <span class="co"># or mamba activate env2</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>(선택) 기존 conda 명령어 쓰던 습관을 mamba로 교체</p></li>
+</ol>
+</section>
+<section id="h-mamba-conda" class="level4">
+<h4 class="anchored" data-anchor-id="h-mamba-conda">H) mamba → conda</h4>
+<ol type="1">
+<li><p>conda 설치/준비 (이미 대부분 설치되어 있음)</p></li>
+<li><p>mamba 환경에서 패키지 리스트 추출:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1"></a><span class="ex">conda</span> activate env_mamba</span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_mamba.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>새 conda 환경 생성:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a><span class="ex">conda</span> create <span class="at">-n</span> new_env python=3.x</span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="ex">conda</span> activate new_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1"></a><span class="ex">conda</span> install <span class="at">--yes</span> <span class="at">--file</span> requirements_mamba.txt</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="co"># 또는</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_mamba.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트 실행:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="i-mamba-uv" class="level4">
+<h4 class="anchored" data-anchor-id="i-mamba-uv">I) mamba → uv</h4>
+<ol type="1">
+<li><p>mamba 환경 활성화 및 리스트 추출:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1"></a><span class="ex">conda</span> activate env_mamba  <span class="co"># since mamba uses conda env</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_mamba.txt</span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>uv 설치</p></li>
+<li><p>프로젝트 초기화 (<code>uv init</code>)</p></li>
+<li><p>Python 버전 설치 (<code>uv python install 3.x</code>)</p></li>
+<li><p>uv venv 생성 (<code>uv venv --python 3.x</code>)</p></li>
+<li><p>uv pip install from requirements file (<code>uv pip install -r requirements_mamba.txt</code>)</p></li>
+<li><p>uv lock + sync</p></li>
+<li><p>실행 테스트 (<code>uv run python your_script.py</code>)</p></li>
+</ol>
+</section>
+<section id="j-venv-mamba" class="level4">
+<h4 class="anchored" data-anchor-id="j-venv-mamba">J) venv → mamba</h4>
+<ol type="1">
+<li><p>venv 활성화</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements_venv.txt</span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>conda+mamba 설치/준비</p></li>
+<li><p>새 mamba 환경 생성:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> env_mamba python=3.x</span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="ex">mamba</span> activate env_mamba</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1"></a><span class="ex">mamba</span> install <span class="at">--yes</span> <span class="at">--file</span> requirements_venv.txt</span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="co"># 또는</span></span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_venv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트 실행:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="k-uv-mamba" class="level4">
+<h4 class="anchored" data-anchor-id="k-uv-mamba">K) uv → mamba</h4>
+<ol type="1">
+<li><p>uv 환경에서 리스트 추출:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1"></a><span class="ex">uv</span> pip freeze <span class="op">&gt;</span> requirements_uv.txt</span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>conda/mamba 설치</p></li>
+<li><p>새 mamba 환경 생성:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> env2 python=3.x</span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="ex">mamba</span> activate env2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>패키지 설치:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1"></a><span class="ex">mamba</span> install <span class="at">--yes</span> <span class="at">--file</span> requirements_uv.txt</span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="co"># 또는</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements_uv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>테스트 실행:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<hr>
+</section>
+</section>
+</section>
+<section id="정리-및-추천" class="level2">
+<h2 class="anchored" data-anchor-id="정리-및-추천">3. 정리 및 추천</h2>
+<ul>
+<li><strong>간단하고 순수 Python 패키지 중심</strong>이라면 <code>venv</code> 방식이 최소한의 오버헤드로 적합합니다.</li>
+<li><strong>복잡한 라이브러리/바이너리/과학/머신러닝 스택</strong>이 많다면 <code>conda</code> 또는 <code>mamba</code> 방식이 안정적입니다. 특히 설치/의존성 해결 속도가 중요하다면 <code>mamba</code>가 좋은 선택입니다.</li>
+<li><strong>최신 워크플로우, Python 버전 관리, 프로젝트 단위 재현성(lockfile)지원</strong>이 중요하고, 바이너리/OS 의존성이 덜하다면 <code>uv</code>가 매력적인 선택입니다.</li>
+<li>마이그레이션 (환경을 바꾸는 것)를 고려할 때는 “완전히 동일한 환경을 복제한다”보다는 “유사하게 재구성한다”는 관점으로 접근하는 것이 현실적입니다.</li>
+</ul>
+</section>
+<section id="conda-환경-옮기기" class="level1">
+<h1>4. Conda 환경 옮기기</h1>
+<p>Conda 환경을 최대한 그대로 복제(이동/백업/재생)하는 <strong>추천 절차</strong>를 아래에 정리합니다. 버전이나 로컬 경로(p-prefix) 등이 꼬여서 실패하는 경우가 많으므로, <strong>주의사항</strong>과 <strong>우회 방법</strong>까지 함께 포함하였습니다.</p>
+<section id="기본-절차" class="level2">
+<h2 class="anchored" data-anchor-id="기본-절차">✅ 기본 절차</h2>
+<section id="원본-환경-활성화" class="level3">
+<h3 class="anchored" data-anchor-id="원본-환경-활성화">1. 원본 환경 활성화</h3>
+<div class="sourceCode" id="cb61"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1"></a><span class="ex">conda</span> activate my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="패키지-리스트-및-환경-정보-내보내기" class="level3">
+<h3 class="anchored" data-anchor-id="패키지-리스트-및-환경-정보-내보내기">2. 패키지 리스트 및 환경 정보 내보내기</h3>
+<div class="sourceCode" id="cb62"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1"></a><span class="co"># OS 독립성을 높이려면 빌드 정보 생략</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="ex">conda</span> env export <span class="at">--no-builds</span> <span class="op">&gt;</span> environment.yml</span>
+<span id="cb62-3"><a href="#cb62-3"></a><span class="co"># (선택) pip로 설치된 패키지가 있다면</span></span>
+<span id="cb62-4"><a href="#cb62-4"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> pip_requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>주의</strong>: <code>environment.yml</code> 내에 <code>prefix:</code> 항목(예: 로컬 경로)이 포함되어 있을 수 있습니다. 다른 경로/다른 머신에 복제할 때 문제를 일으키므로 제거하는 것이 좋습니다.</p>
+</blockquote>
+</section>
+<section id="새-환경-생성" class="level3">
+<h3 class="anchored" data-anchor-id="새-환경-생성">3. 새 환경 생성</h3>
+<div class="sourceCode" id="cb63"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1"></a><span class="ex">conda</span> env create <span class="at">-n</span> new_env <span class="at">-f</span> environment.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>또는</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1"></a><span class="ex">conda</span> create <span class="at">-n</span> new_env python=3.x</span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="ex">conda</span> activate new_env</span>
+<span id="cb64-3"><a href="#cb64-3"></a><span class="co"># 이후 pip_requirements.txt가 있다면</span></span>
+<span id="cb64-4"><a href="#cb64-4"></a><span class="ex">pip</span> install <span class="at">-r</span> pip_requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="동작-테스트" class="level3">
+<h3 class="anchored" data-anchor-id="동작-테스트">4. 동작 테스트</h3>
+<div class="sourceCode" id="cb65"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1"></a><span class="ex">conda</span> activate new_env</span>
+<span id="cb65-2"><a href="#cb65-2"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import 필요한_모듈; print(모듈.__version__)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>프로젝트가 예상대로 동작하는지 확인합니다.</p>
+</section>
+<section id="선택-원본-환경-정리" class="level3">
+<h3 class="anchored" data-anchor-id="선택-원본-환경-정리">5. (선택) 원본 환경 정리</h3>
+<div class="sourceCode" id="cb66"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1"></a><span class="ex">conda</span> deactivate</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="ex">conda</span> env remove <span class="at">-n</span> my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="자주-마주치는-문제-및-해결-팁" class="level2">
+<h2 class="anchored" data-anchor-id="자주-마주치는-문제-및-해결-팁">⚠️ 자주 마주치는 문제 및 해결 팁</h2>
+<ol type="1">
+<li><strong>prefix 경로 문제</strong>
+<ul>
+<li><code>environment.yml</code> 안에 원본 환경의 절대 경로가 <code>prefix:</code>로 저장되어 있을 경우, 다른 머신 또는 다른 위치에서 그대로 만들면 충돌하거나 무시되는 경우가 많습니다. (<a href="https://statistics.berkeley.edu/computing/conda?utm_source=chatgpt.com" title="Conda and Mamba - UC Berkeley Statistics">Stack Overflow</a>)</li>
+<li>➤ 해결: <code>grep -v "^prefix:" environment.yml &gt; clean_env.yml</code> 같은 방법으로 제거 후 사용.</li>
+</ul></li>
+<li><strong>빌드 번호/플랫폼 의존성 문제</strong>
+<ul>
+<li>빌드 번호(<code>=py38_0</code> 등)나 OS/아키텍처 특유 패키지가 포함되어 있으면, 다른 시스템(예: Windows ↔︎ Linux)에서 설치 실패가 납니다.</li>
+<li>➤ 해결: <code>--no-builds</code> 옵션으로 빌드정보 생략, 또는 수동으로 해당 패키지 버전을 단순화.</li>
+</ul></li>
+<li><strong>pip 설치된 패키지 포함 누락/버전 문제</strong>
+<ul>
+<li><code>conda env export</code>만으로는 pip로 설치된 패키지가 제대로 포함되지 않거나, 이름이 달라서 재설치 실패하는 경우가 있습니다.</li>
+<li>➤ 해결: <code>pip freeze</code>로 따로 덤프해두고, 생성된 환경에서 <code>pip install -r pip_requirements.txt</code>를 수행.</li>
+</ul></li>
+<li><strong>로컬/커스텀 패키지 또는 비-공식 채널 사용</strong>
+<ul>
+<li>어떤 패키지는 공식 conda 채널이 없고 로컬 빌드하거나 커스텀 채널(기업 내부 채널)을 사용했을 수 있습니다. 이 경우 새 환경에서 동일하게 설치되지 않으면 재현이 깨질 수 있습니다.</li>
+<li>➤ 해결: <code>environment.yml</code> 안의 <code>channels:</code> 항목을 확인하고, 필요한 추가 채널을 명시하거나 수동으로 설치 스크립트를 만들어야 합니다.</li>
+</ul></li>
+<li><strong>OS나 아키텍처 변경 시 문제</strong>
+<ul>
+<li>같은 환경이라 해도 원본이 Windows이고 대상이 Linux이면 아예 설치 불가능한 패키지가 있을 수 있습니다.</li>
+<li>➤ 해결: 플랫폼을 동일하게 맞추거나, OS-특정 패키지는 수동으로 조정해야 합니다.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="심화-옵션-복사클론-방식" class="level2">
+<h2 class="anchored" data-anchor-id="심화-옵션-복사클론-방식">🔧 심화 옵션: 복사/클론 방식</h2>
+<ul>
+<li><p>단순히 복제하고 싶은 경우 아래 방법도 있습니다:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1"></a><span class="ex">conda</span> create <span class="at">--name</span> new_env <span class="at">--clone</span> my_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이 명령은 같은 시스템 안에서 환경을 거의 그대로 복사합니다. 단, 이 방식도 로컬 경로(prefix)나 시스템 라이브러리를 그대로 복사하므로 이동이나 다른 머신에서는 문제가 생길 수 있습니다.</p></li>
+<li><p>네트워크 없거나 패키지 다운로드가 어려운 경우에는 conda‑pack 을 이용해서 바이너리 형태로 환경을 묶어 옮기는 방법도 존재합니다. 다만 이 방법은 대상 머신의 OS/아키텍처가 동일해야 안정적입니다.</p></li>
+</ul>
+<p><strong>Reference</strong></p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/41274007/anaconda-export-environment-file?utm_source=chatgpt.com">“Anaconda export Environment file - python - Stack Overflow”</a></li>
+<li><a href="https://www.monicathieu.com/posts/2024-05-20-conda-env-export-from-history.html?utm_source=chatgpt.com">“Export your conda envs –from-history - Monica Thieu, PhD”</a></li>
+<li><a href="https://stackoverflow.com/questions/69831234/how-to-export-and-import-a-conda-environment-without-errors?utm_source=chatgpt.com">“How to export and import a conda environment without errors”</a></li>
+<li><a href="https://stackoverflow.com/questions/40700039/how-can-you-clone-a-conda-environment-into-the-base-root-environment?utm_source=chatgpt.com">“How can you "clone" a conda environment into the base (root …”</a></li>
+<li><a href="https://www.anaconda.com/blog/moving-conda-environments?utm_source=chatgpt.com">“Moving Conda Environments - Anaconda”</a></li>
+</ul>
+<p>아래는 <strong>Conda 환경을 최대한 그대로 옮기거나 재현할 때</strong>, 특히 <strong>로컬 경로</strong>, <strong>채널 설정</strong>, <strong>pip 혼합 설치</strong> 등 복잡한 조건이 있는 경우에 꼭 체크해야 할 항목들로 만든 체크리스트입니다. 마이그레이션 전-후에 이 항목들을 하나씩 확인하면 “버전 충돌”“설치 실패”“환경 깨짐” 같은 문제를 줄일 수 있습니다.</p>
+</section>
+<section id="체크리스트-복잡한-conda-환경-마이그레이션용" class="level2">
+<h2 class="anchored" data-anchor-id="체크리스트-복잡한-conda-환경-마이그레이션용">✅ 체크리스트: 복잡한 Conda 환경 마이그레이션용</h2>
+<p>다음은 항목별로 <strong>설명 + 체크 사항</strong>을 정리한 것입니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>항목</th>
+<th>설명</th>
+<th>체크해야 할 것</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>환경 파일 내 <code>prefix:</code> 경로 확인</strong></td>
+<td><code>conda env export</code> 명령으로 생성된 <code>environment.yml</code> 안에 <code>prefix:</code> 항목이 들어 있으면, 대상 시스템/경로가 다를 경우 설치 시 경로 충돌이 생깁니다.</td>
+<td>  • <code>environment.yml</code> 열어보고 <code>prefix:</code> 항목이 있는지 확인<br>  • 있다면 대상 경로에 맞게 수정하거나 삭제</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>채널(channels:) 설정</strong></td>
+<td>특정 채널(ex: <code>conda-forge</code>, custom local channel)에서 패키지를 받아왔으면, 새 환경에서도 동일 채널이 있어야 동일 버전 설치 가능. 일부 로컬 채널/파일 경로 채널은 URL 형태나 로컬 파일 경로가 잘못되면 실패합니다. (<a href="https://statistics.berkeley.edu/computing/conda?utm_source=chatgpt.com" title="Conda and Mamba - UC Berkeley Statistics">GitHub</a>)</td>
+<td>  • <code>channels:</code> 리스트 확인 (예: <code>- conda-forge</code>, <code>- defaults</code>, <code>- file:///…</code>)<br>  • 로컬 채널 사용 시 해당 파일경로/URL이 대상 머신에서도 유효한지 확인<br>  • <code>conda config --show channels</code>로 전역 설정도 검토</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>패키지 빌드번호 및 플랫폼 의존성</strong></td>
+<td><code>environment.yml</code>에 패키지들이 <code>numpy=1.23.4=py39h…_0</code>처럼 빌드번호 포함될 수 있고, OS/아키텍처가 바뀌면 동일 빌드가 없을 수 있습니다.</td>
+<td>  • <code>--no-builds</code> 옵션으로 export해보는 것 고려<br>  • Windows ↔︎ Linux 등 플랫폼이 바뀌는 경우에는 버전만 지정하고 빌드번호 제거</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>pip 설치된 패키지 혼합 여부</strong></td>
+<td>Conda 환경에 <code>pip install …</code>로 설치된 패키지가 섞여 있으면, <code>conda env export</code>만으로 완전하게 복제되지 않을 수 있고, pip + conda 충돌이 생길 수 있습니다. (<a href="https://stackoverflow.com/questions/68004789/how-could-using-mamba-instead-of-conda-as-package-manager-for-anaconda-be-proble?utm_source=chatgpt.com" title="How could using Mamba instead of Conda as package manager for ...">docs.conda.io</a>)</td>
+<td>  • <code>pip freeze</code> 출력도 함께 저장 (<code>pip_requirements.txt</code>)<br>  • <code>environment.yml</code> 내 <code>dependencies:</code> 아래 <code>- pip:</code> 블록이 있는지 확인<br>  • 새 환경 생성 시: 먼저 conda 패키지 설치 → 그 다음에 pip 설치 순서 유지</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><strong>로컬설치된 패키지(예: <code>~/.local/lib/pythonX.Y</code>) 또는 사용자 site-packages 누적 여부</strong></td>
+<td>사용자가 시스템 수준 또는 홈 디렉토리 수준에서 설치한 패키지가 env 내부에 영향을 줄 수 있으며, 마이그레이션 시 누락되거나 충돌이 있을 수 있습니다. (<a href="https://docs.astral.sh/uv/?utm_source=chatgpt.com" title="uv - Astral Docs">docs.icer.msu.edu</a>)</td>
+<td>  • <code>PYTHONPATH</code> / <code>PYTHONHOME</code> 환경변수가 설정돼 있는지 확인 (<a href="https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/?utm_source=chatgpt.com" title="Managing Scientific Python environments using Conda, Mamba and ...">docs.conda.io</a>)<br>  • <code>~/.local/lib/pythonX.Y</code> 등에 설치된 패키지가 있는지 확인<br>  • 환경 깨짐 가능성이 있는 경우 해당 사용자 설치 경로 백업 또는 제거 고려</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><strong>환경 변수(environment variables) 설정 여부</strong></td>
+<td>Conda 환경에 특정 환경변수(<code>VAR=…</code>)를 설정해 놓았으면, 새 환경에서도 동일하게 설정해야 동일 동작 보장됩니다. (<a href="https://stackoverflow.com/questions/68004789/how-could-using-mamba-instead-of-conda-as-package-manager-for-anaconda-be-proble?utm_source=chatgpt.com" title="How could using Mamba instead of Conda as package manager for ...">docs.conda.io</a>)</td>
+<td>  • <code>conda env config vars list -n my_env</code> 또는 <code>conda env export</code> 내 <code>variables:</code> 블록 확인<br>  • 새 <code>environment.yml</code>에 <code>variables:</code> 섹션을 포함하는지 확인</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><strong>경로 및 작업 디렉토리(dependencies referencing local path)</strong></td>
+<td>프로젝트 내부에서 로컬 경로로 참조하는 패키지(예: <code>- /home/user/project/mypkg</code> 형태)나 Git submodule 등이 있을 경우, 대상 머신에서 경로가 달라지면 설치/참조가 깨질 수 있습니다.</td>
+<td>  • <code>environment.yml</code> 또는 <code>requirements-pip.txt</code>에 로컬 경로 설치가 있는지 검색<br>  • Git submodule 또는 <code>pip install -e ../local/package</code> 식 설치가 있는지 확인<br>  • 대상 시스템 경로를 맞추거나 relative path로 변경 가능한지 확인</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><strong>OS/아키텍처(Windows vs Linux vs macOS) 호환성</strong></td>
+<td>원본 환경이 특정 OS/아키텍처에서 만들어졌다면, 다른 OS/아키텍처에서 동일한 패키지 버전이 없거나 빌드가 다를 수 있습니다.</td>
+<td>  • <code>conda info</code> 및 <code>conda list</code>에서 플랫폼 정보를 확인<br>  • 대상 머신 플랫폼이 동일한지 확인<br>  • 플랫폼이 다르면 일부 패키 버전을 조정하거나 제거 고려</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><strong>채널 우선순위 및 strict priority 설정</strong></td>
+<td>채널 우선순위(<code>channel_priority</code>)가 다르면 동일 버전 패키지를 찾지 못하거나 다른 빌드가 설치될 수 있습니다. (<a href="https://eoas-ubc.github.io/tut-conda_environs.html?utm_source=chatgpt.com" title="Environments: Conda, Mamba, and all that — OCESE Documentation">Ohio Supercomputer Center</a>)</td>
+<td>  • <code>conda config --show channel_priority</code> 값 확인 (예: <code>strict</code> vs <code>flexible</code>)<br>  • <code>environment.yml</code> 생성 시 동일 설정 반영 (필요시 <code>conda config --set channel_priority strict</code>)</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><strong>패키지 캐시 및 깨진 링크 여부</strong></td>
+<td>패키지 캐시나 하드 링크 문제로 환경이 깨지는 경우가 있습니다. (<a href="https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/?utm_source=chatgpt.com" title="Managing Scientific Python environments using Conda, Mamba and ...">docs.conda.io</a>)</td>
+<td>  • 실행 중 <code>ImportError</code> 또는 “패키지가 설치됐지만 import 안 됨” 오류 있는지 확인<br>  • <code>conda install -f &lt;package&gt;</code> 로 강제 재설치 검토<br>  • 새 환경 생성 전에 캐시 정리(<code>conda clean --all</code>) 고려</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="사용-팁" class="level2">
+<h2 class="anchored" data-anchor-id="사용-팁">🛠 사용 팁</h2>
+<ul>
+<li>마이그레이션을 시작하기 전에 위 체크리스트를 <strong>문서화</strong>해두고, 원본 환경에서 체크한 상태, 대상 환경에서 체크한 상태를 기록해두면 이후 추적이 쉬워집니다.</li>
+<li><code>environment.yml</code> 생성 시 <code>--no-builds</code> 옵션을 사용하는 것이 플랫폼/빌드번호 충돌을 줄이는 데 도움이 됩니다.</li>
+<li>새 환경 생성 후 바로 프로젝트 코드 실행 전에 <strong>간단한 테스트 스크립트</strong>를 만들어 <code>import 주요_모듈; print(모듈.__version__)</code> 식으로 확인하면 이상 여부를 바로 알 수 있습니다.</li>
+<li>특히 채널이나 로컬 패키지 참조가 많은 경우, “먼저 conda 패키지 설치” → “그다음 pip 설치/로컬 설치” 순서를 지키는 것이 중요합니다. (<a href="https://stackoverflow.com/questions/68004789/how-could-using-mamba-instead-of-conda-as-package-manager-for-anaconda-be-proble?utm_source=chatgpt.com" title="How could using Mamba instead of Conda as package manager for ...">docs.conda.io</a>)</li>
+<li>기록해두기: 어떤 로컬 패키지를 참조했는지, 어떤 채널을 썼는지, 어떤 환경변수를 설정했는지 등을 메모해두면 “왜 재현이 안 되지?” 상태에서 해답을 찾기 쉬워집니다.</li>
+</ul>
+<!--
+[1]: https://github.com/conda/conda/issues/9828?utm_source=chatgpt.com "Installing from local channel with channel::package fails"
+[2]: https://docs.conda.io/docs/user-guide/tasks/manage-environments.html?utm_source=chatgpt.com "Managing environments — conda 25.9.2.dev34 ..."
+[3]: https://docs.icer.msu.edu/Using_conda/?utm_source=chatgpt.com "Using Conda - MSU HPCC User Documentation"
+[4]: https://docs.conda.io/docs/troubleshooting.html?utm_source=chatgpt.com "Troubleshooting — conda 25.9.2.dev34 documentation"
+[5]: https://www.osc.edu/resources/getting_started/howto/howto_add_python_packages_using_the_conda_package_manager?utm_source=chatgpt.com "HOWTO: Create and Manage Python Environments"
+-->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

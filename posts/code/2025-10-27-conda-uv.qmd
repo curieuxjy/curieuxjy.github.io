@@ -1,0 +1,647 @@
+---
+title: "👩‍💻Python 환경설정 팁"
+toc: true
+number-sections: false
+date: "2025-10-27"
+description: conda vs. uv vs. mamba vs. venv
+categories: [python, env, code]
+execute:
+  freeze: auto
+---
+
+
+**venv**, **conda**, **mamba**, **uv** 네 가지 Python 가상환경/패키지관리 방식에 대해 **비교 정리 및 장단점**을 상세히 조사하고, 이어서 이들 간 서로 전환(Migration)할 수 있는 **모든 조합**(총 4×3 = 12가지 방향 중 현실적으로 의미 있는 6가지 이상) 각각에 대해 **단계별 가이드**를 제시합니다.
+
+## 1. 비교 정리
+
+
+### 비교표
+
+| 방식    | 주요 기능/지원 범위               | 강점           | 약점                               |
+| ---------------- | ---------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------- |
+| venv  | Python 표준 라이브러리 기반 가상환경 생성 (`python3 -m venv …`), 주로 순수 Python 패키지 중심                                        | 설치가 간단하고 별도 도구 없거나 적음. 가볍고 빠름                      | 바이너리(C/C++ 확장), OS-레벨 의존성, 여러 언어 혼합 환경에 한계                       |
+| conda | Anaconda/Miniconda 체계, 가상환경 + 패키지관리 + 다양한 바이너리/언어/OS 의존성 설치 가능                                               | 다양한 언어/라이브러리 지원, 과학/머신러닝 스택에 강점                    | 환경 생성/패키지 설치가 느릴 수 있고 복잡성 있음                                     |
+| mamba | conda와 거의 명령어 호환되는, 속도 및 의존성 해결 알고리즘이 개선된 도구 (“drop-in replacement”) ([statistics.berkeley.edu][1])          | conda 대비 빠른 설치/해결, 동일 인터페이스로 진입 장벽 낮음              | 비교적 최신 도구라 일부 생태계/버그 측면에서 완전히 검증된 상태는 아님 ([Stack Overflow][2])   |
+| uv    | Astral‑sh가 개발한 Rust 기반 Python 프로젝트/패키지관리 도구. 가상환경 생성, Python 버전 관리, 패키지 설치 및 실행까지 통합됨. ([docs.astral.sh][3]) | 매우 빠른 의존성 해결 + Python 버전 설치 지원 + 프로젝트 단위 워크플로우에 적합 | 아직 일부 생태계(복잡한 바이너리/OS 의존)에서는 제약이 있을 수 있고, 기존 워크플로우와 마이그레이션 비용 있음 |
+
+### 장단점 상세
+
+#### venv
+
+**장점**
+
+* Python 표준 라이브러리로 제공되므로 별도 설치 부담이 적습니다.
+* 간단한 프로젝트, 순수 Python 패키지만 쓰는 경우 가볍고 빠르게 환경 세팅 가능.
+* 프로젝트 폴더 내부에 `.venv` 형태로 관리하면 구조가 직관적입니다.
+  **단점**
+* 바이너리(C/C++), OS-레벨 라이브러리, GPU/쿠다 등 복잡한 의존성이 필요할 경우 수동 설치가 많고 오류 가능성 높음.
+* 여러 프로젝트에서 다양한 Python 버전을 쓰거나 공유/복제 환경을 만들려면 별도 도구(pyenv 등)가 필요할 수 있음.
+* 패키지 재현성(lockfile-기반) 또는 대형 스택 관리에는 기능이 제한적일 수 있습니다.
+
+#### conda
+
+**장점**
+
+* Python뿐 아니라 R, C/C++, 기타 언어 및 OS-바이너리 의존성을 포함한 환경 설정이 가능합니다.
+* 데이터사이언스/머신러닝 생태계에서 폭넓게 쓰이며 패키지 생태계/문서/지원이 풍부합니다.
+* 환경 격리 및 복제(reproducibility)를 위한 `environment.yml` 등 방식이 존재합니다.
+  **단점**
+* 환경 생성 및 패키지 설치 시 시간이 오래 걸릴 수 있으며, 의존성 해결이 복잡할 수 있습니다. ([FocalPlane][4])
+* 저장소(channel) 설정, 충돌 대응, 환경관리 등의 추가 학습이 필요할 수 있습니다.
+* 가벼운 프로젝트나 순수 Python만 사용할 경우 도구가 과할 수 있고, 디스크/메모리 오버헤드가 있을 수 있습니다.
+
+#### mamba
+
+**장점**
+
+* conda 명령어 인터페이스와 거의 동일하므로 기존 conda 사용자에게 진입 장벽이 낮습니다. ([eoas-ubc.github.io][5])
+* 특히 의존성 해결 및 패키지 설치 속도 면에서 유리하다는 여러 보고가 있습니다. ([Medium][6])
+  **단점**
+* 비교적 신생 도구이므로 conda 대비 생태계 지원이나 안정성 측면에서 아직 완성도가 낮다는 의견도 있습니다. ([Stack Overflow][2])
+* 일부 조직/CI/CD 환경에서는 conda만 공식 지원하는 경우가 있어 전환 시 고려사항이 있습니다.
+
+#### uv
+
+**장점**
+
+* 매우 최신 도구로, “가상환경 생성 + Python 버전 설치 + 패키지/의존성 관리”를 하나의 워크플로우로 통합한다는 비전이 있습니다. ([astral.sh][7])
+* 의존성 해결 속도가 빠르며, 프로젝트 단위로 재현 가능한 환경(lockfile 기반 등) 구성에 유리하다는 평가가 있습니다. ([Reddit][8])
+  **단점**
+* 복잡한 바이너리/OS 수준의 라이브러리, GPU 스택 등에서는 아직 conda 대비 제약이 있을 수 있다는 사용자 경험이 존재합니다. ([Reddit][9])
+* 기존 워크플로우를 uv로 바꾸려면 학습/마이그레이션 비용이 있을 수 있고, 일부 도구와의 통합이 아직 미성숙할 수 있습니다.
+
+---
+
+## 2. Migration
+
+다음으로 네 가지 방식 간에 **가능한 전환 조합**을 모두 고려해, 주요 의미 있는 조합에 대해 단계별로 어떻게 이전할 수 있는지 가이드를 드리겠습니다.
+
+전환 가능한 주요 조합:
+
+* [conda → uv]()
+* [conda → venv]()
+* [venv → conda]()
+* [venv → uv]()
+* [uv → conda]()
+* [uv → venv]()
+* [conda → mamba]()
+* [mamba → conda]()
+* [mamba → uv]()
+* [uv → mamba]()
+* [venv → mamba]()
+
+총 12가지가 가능하나, 유의미한 8가지 정도를 우선 제시하고 나머지는 비슷한 방식으로 적용할 수 있게 합니다.
+
+### 조합별 단계 가이드
+
+#### A) conda → uv
+
+1. conda 환경 활성화:
+
+   ```bash
+   conda activate my_env
+   ```
+2. Python 버전 확인 및 패키지 리스트 추출:
+
+   ```bash
+   python --version
+   conda list --export > conda_env_export.txt
+   pip freeze > requirements_conda.txt
+   ```
+3. uv 설치 (시스템에 없으면):
+
+   ````bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ``` :contentReference[oaicite:15]{index=15}
+   ````
+4. 프로젝트 디렉토리로 이동 및 초기화:
+
+   ```bash
+   cd project_folder
+   uv init
+   ```
+5. 원하는 Python 버전 설치 혹은 사용:
+
+   ````bash
+   uv python install 3.x   # 필요한 버전
+   ``` :contentReference[oaicite:16]{index=16}
+   ````
+6. uv로 가상환경 생성:
+
+   ```bash
+   uv venv --python 3.x
+   ```
+7. 패키지 설치:
+
+   ```bash
+   uv pip install -r requirements_conda.txt
+   ```
+8. lockfile 생성 및 동기화:
+
+   ```bash
+   uv lock
+   uv sync
+   ```
+9. 실행/테스트:
+
+   ```bash
+   uv run python your_script.py
+   ```
+10. (선택) 기존 conda 환경 정리:
+
+    ```bash
+    conda deactivate
+    conda env remove -n my_env
+    ```
+
+#### B) conda → venv
+
+1. conda 환경 활성화:
+
+   ```bash
+   conda activate my_env
+   ```
+2. 패키지 리스트 및 Python 버전 확인:
+
+   ```bash
+   python --version
+   pip freeze > requirements_conda.txt
+   ```
+3. 프로젝트 디렉토리로 이동:
+
+   ```bash
+   cd project_folder
+   ```
+4. venv 생성:
+
+   ```bash
+   python3 -m venv .venv
+   ```
+5. venv 활성화:
+
+   ```bash
+   source .venv/bin/activate   # (Linux/macOS)
+   # or .venv\Scripts\activate  # (Windows)
+   ```
+6. 패키지 설치:
+
+   ```bash
+   pip install -r requirements_conda.txt
+   ```
+7. 테스트 실행:
+
+   ```bash
+   python your_script.py
+   ```
+8. (선택) conda 환경 제거:
+
+   ```bash
+   conda deactivate
+   conda env remove -n my_env
+   ```
+
+#### C) venv → conda
+
+1. venv 활성화:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+2. Python 버전 및 패키지 리스트 저장:
+
+   ```bash
+   python --version
+   pip freeze > requirements_venv.txt
+   ```
+3. conda 설치/준비 (이미 설치돼 있다면 생략)
+4. 새 conda 환경 생성:
+
+   ```bash
+   conda create -n new_env python=3.x
+   conda activate new_env
+   ```
+5. 가능하면 conda 패키지 설치, 이후 pip 설치:
+
+   ```bash
+   conda install --yes --file requirements_venv.txt   # 가능할 경우
+   # 아니면
+   pip install -r requirements_venv.txt
+   ```
+6. 테스트:
+
+   ```bash
+   python your_script.py
+   ```
+7. (선택) venv 제거:
+
+   ```bash
+   deactivate
+   rm -rf .venv
+   ```
+
+#### D) venv → uv
+
+1. venv 활성화:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+2. 패키지 리스트 저장:
+
+   ```bash
+   pip freeze > requirements_venv.txt
+   python --version
+   ```
+3. uv 설치 (시스템에 없으면):
+
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+4. 프로젝트 디렉토리로 이동 / 초기화:
+
+   ```bash
+   cd project_folder
+   uv init
+   ```
+5. Python 버전 설치/사용:
+
+   ```bash
+   uv python install 3.x
+   ```
+6. 가상환경 생성:
+
+   ```bash
+   uv venv --python 3.x
+   ```
+7. 패키지 설치:
+
+   ```bash
+   uv pip install -r requirements_venv.txt
+   ```
+8. lockfile 생성 및 동기화:
+
+   ```bash
+   uv lock
+   uv sync
+   ```
+9. 테스트 실행:
+
+   ```bash
+   uv run python your_script.py
+   ```
+10. (선택) 기존 venv 제거:
+
+    ```bash
+    rm -rf .venv
+    ```
+
+#### E) uv → conda
+
+1. uv 환경에서 Python 버전 및 패키지 리스트 추출:
+
+   ```bash
+   uv run python --version
+   uv pip freeze > requirements_uv.txt
+   ```
+2. conda 설치/준비
+3. 새로운 conda 환경 생성:
+
+   ```bash
+   conda create -n new_env python=3.x
+   conda activate new_env
+   ```
+4. 패키지 설치:
+
+   ```bash
+   conda install --yes --file requirements_uv.txt  # 가능하다면
+   # 또는
+   pip install -r requirements_uv.txt
+   ```
+5. 테스트:
+
+   ```bash
+   python your_script.py
+   ```
+6. (선택) uv 환경 관련 파일 정리 (.venv, uv.lock 등)
+
+#### F) uv → venv
+
+1. uv 환경에서 패키지 리스트 추출:
+
+   ```bash
+   uv pip freeze > requirements_uv.txt
+   python --version
+   ```
+2. 프로젝트 디렉토리로 이동:
+
+   ```bash
+   cd project_folder
+   ```
+3. venv 생성:
+
+   ```bash
+   python3 -m venv .venv
+   ```
+4. venv 활성화:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+5. 패키지 설치:
+
+   ```bash
+   pip install -r requirements_uv.txt
+   ```
+6. 테스트 실행:
+
+   ```bash
+   python your_script.py
+   ```
+7. (선택) uv 환경 제거/정리
+
+#### G) conda → mamba
+
+1. 시스템에 mamba 설치:
+
+   ```bash
+   conda install mamba -n base -c conda-forge
+   ```
+2. 기존 conda 명령어 대부분을 mamba로 바꾸어 실행 가능:
+
+   ````bash
+   mamba create -n env2 python=3.x
+   mamba install numpy scipy
+   ``` :contentReference[oaicite:17]{index=17}
+   ````
+3. 테스트:
+
+   ```bash
+   conda activate env2  # or mamba activate env2
+   python your_script.py
+   ```
+4. (선택) 기존 conda 명령어 쓰던 습관을 mamba로 교체
+
+#### H) mamba → conda
+
+1. conda 설치/준비 (이미 대부분 설치되어 있음)
+2. mamba 환경에서 패키지 리스트 추출:
+
+   ```bash
+   conda activate env_mamba
+   pip freeze > requirements_mamba.txt
+   ```
+3. 새 conda 환경 생성:
+
+   ```bash
+   conda create -n new_env python=3.x
+   conda activate new_env
+   ```
+4. 패키지 설치:
+
+   ```bash
+   conda install --yes --file requirements_mamba.txt
+   # 또는
+   pip install -r requirements_mamba.txt
+   ```
+5. 테스트 실행:
+
+   ```bash
+   python your_script.py
+   ```
+
+#### I) mamba → uv
+
+1. mamba 환경 활성화 및 리스트 추출:
+
+   ```bash
+   conda activate env_mamba  # since mamba uses conda env
+   pip freeze > requirements_mamba.txt
+   python --version
+   ```
+2. uv 설치
+3. 프로젝트 초기화 (`uv init`)
+4. Python 버전 설치 (`uv python install 3.x`)
+5. uv venv 생성 (`uv venv --python 3.x`)
+6. uv pip install from requirements file (`uv pip install -r requirements_mamba.txt`)
+7. uv lock + sync
+8. 실행 테스트 (`uv run python your_script.py`)
+
+#### J) venv → mamba
+
+1. venv 활성화
+
+   ```bash
+   source .venv/bin/activate
+   pip freeze > requirements_venv.txt
+   python --version
+   ```
+2. conda+mamba 설치/준비
+3. 새 mamba 환경 생성:
+
+   ```bash
+   mamba create -n env_mamba python=3.x
+   mamba activate env_mamba
+   ```
+4. 패키지 설치:
+
+   ```bash
+   mamba install --yes --file requirements_venv.txt
+   # 또는
+   pip install -r requirements_venv.txt
+   ```
+5. 테스트 실행:
+
+   ```bash
+   python your_script.py
+   ```
+
+#### K) uv → mamba
+
+1. uv 환경에서 리스트 추출:
+
+   ```bash
+   uv pip freeze > requirements_uv.txt
+   python --version
+   ```
+2. conda/mamba 설치
+3. 새 mamba 환경 생성:
+
+   ```bash
+   mamba create -n env2 python=3.x
+   mamba activate env2
+   ```
+4. 패키지 설치:
+
+   ```bash
+   mamba install --yes --file requirements_uv.txt
+   # 또는
+   pip install -r requirements_uv.txt
+   ```
+5. 테스트 실행:
+
+   ```bash
+   python your_script.py
+   ```
+
+---
+
+## 3. 정리 및 추천
+
+* **간단하고 순수 Python 패키지 중심**이라면 `venv` 방식이 최소한의 오버헤드로 적합합니다.
+* **복잡한 라이브러리/바이너리/과학/머신러닝 스택**이 많다면 `conda` 또는 `mamba` 방식이 안정적입니다. 특히 설치/의존성 해결 속도가 중요하다면 `mamba`가 좋은 선택입니다.
+* **최신 워크플로우, Python 버전 관리, 프로젝트 단위 재현성(lockfile)지원**이 중요하고, 바이너리/OS 의존성이 덜하다면 `uv`가 매력적인 선택입니다.
+* 마이그레이션 (환경을 바꾸는 것)를 고려할 때는 “완전히 동일한 환경을 복제한다”보다는 “유사하게 재구성한다”는 관점으로 접근하는 것이 현실적입니다.
+
+[1]: https://statistics.berkeley.edu/computing/conda?utm_source=chatgpt.com "Conda and Mamba - UC Berkeley Statistics"
+[2]: https://stackoverflow.com/questions/68004789/how-could-using-mamba-instead-of-conda-as-package-manager-for-anaconda-be-proble?utm_source=chatgpt.com "How could using Mamba instead of Conda as package manager for ..."
+[3]: https://docs.astral.sh/uv/?utm_source=chatgpt.com "uv - Astral Docs"
+[4]: https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/?utm_source=chatgpt.com "Managing Scientific Python environments using Conda, Mamba and ..."
+[5]: https://eoas-ubc.github.io/tut-conda_environs.html?utm_source=chatgpt.com "Environments: Conda, Mamba, and all that — OCESE Documentation"
+[6]: https://iamdamilare13.medium.com/mamba-vs-conda-know-the-differences-and-similarities-be3ae94d2542?utm_source=chatgpt.com "Mamba vs Conda: Know the Differences and Similarities"
+[7]: https://astral.sh/blog/uv?utm_source=chatgpt.com "uv: Python packaging in Rust - Astral"
+[8]: https://www.reddit.com/r/Python/comments/1g0imjf/psa_if_youre_starting_a_new_project_try_astraluv/?utm_source=chatgpt.com "PSA: If you're starting a new project, try astral/uv! : r/Python - Reddit"
+[9]: https://www.reddit.com/r/NixOS/comments/1fdxpam/help_request_python_development_specifically_with/?utm_source=chatgpt.com "[Help Request] Python development, specifically with `uv` from astral ..."
+
+
+# 4. Conda 환경 옮기기
+
+Conda 환경을 최대한 그대로 복제(이동/백업/재생)하는 **추천 절차**를 아래에 정리합니다. 버전이나 로컬 경로(p-prefix) 등이 꼬여서 실패하는 경우가 많으므로, **주의사항**과 **우회 방법**까지 함께 포함하였습니다.
+
+## ✅ 기본 절차
+
+### 1. 원본 환경 활성화
+
+```bash
+conda activate my_env
+```
+
+### 2. 패키지 리스트 및 환경 정보 내보내기
+
+```bash
+# OS 독립성을 높이려면 빌드 정보 생략
+conda env export --no-builds > environment.yml
+# (선택) pip로 설치된 패키지가 있다면
+pip freeze > pip_requirements.txt
+```
+
+
+> **주의**: `environment.yml` 내에 `prefix:` 항목(예: 로컬 경로)이 포함되어 있을 수 있습니다. 다른 경로/다른 머신에 복제할 때 문제를 일으키므로 제거하는 것이 좋습니다.
+
+### 3. 새 환경 생성
+
+```bash
+conda env create -n new_env -f environment.yml
+```
+
+또는
+
+```bash
+conda create -n new_env python=3.x
+conda activate new_env
+# 이후 pip_requirements.txt가 있다면
+pip install -r pip_requirements.txt
+```
+
+### 4. 동작 테스트
+
+```bash
+conda activate new_env
+python -c "import 필요한_모듈; print(모듈.__version__)"
+```
+
+프로젝트가 예상대로 동작하는지 확인합니다.
+
+### 5. (선택) 원본 환경 정리
+
+```bash
+conda deactivate
+conda env remove -n my_env
+```
+
+---
+
+## ⚠️ 자주 마주치는 문제 및 해결 팁
+
+1. **prefix 경로 문제**
+   - `environment.yml` 안에 원본 환경의 절대 경로가 `prefix:`로 저장되어 있을 경우, 다른 머신 또는 다른 위치에서 그대로 만들면 충돌하거나 무시되는 경우가 많습니다. ([Stack Overflow][1])
+   - ➤ 해결: `grep -v "^prefix:" environment.yml > clean_env.yml` 같은 방법으로 제거 후 사용.
+
+2. **빌드 번호/플랫폼 의존성 문제**
+   - 빌드 번호(`=py38_0` 등)나 OS/아키텍처 특유 패키지가 포함되어 있으면, 다른 시스템(예: Windows ↔ Linux)에서 설치 실패가 납니다.
+   - ➤ 해결: `--no-builds` 옵션으로 빌드정보 생략, 또는 수동으로 해당 패키지 버전을 단순화.
+
+3. **pip 설치된 패키지 포함 누락/버전 문제**
+   - `conda env export`만으로는 pip로 설치된 패키지가 제대로 포함되지 않거나, 이름이 달라서 재설치 실패하는 경우가 있습니다.
+   - ➤ 해결: `pip freeze`로 따로 덤프해두고, 생성된 환경에서 `pip install -r pip_requirements.txt`를 수행.
+
+4. **로컬/커스텀 패키지 또는 비-공식 채널 사용**
+   - 어떤 패키지는 공식 conda 채널이 없고 로컬 빌드하거나 커스텀 채널(기업 내부 채널)을 사용했을 수 있습니다. 이 경우 새 환경에서 동일하게 설치되지 않으면 재현이 깨질 수 있습니다.
+   - ➤ 해결: `environment.yml` 안의 `channels:` 항목을 확인하고, 필요한 추가 채널을 명시하거나 수동으로 설치 스크립트를 만들어야 합니다.
+
+5. **OS나 아키텍처 변경 시 문제**
+   - 같은 환경이라 해도 원본이 Windows이고 대상이 Linux이면 아예 설치 불가능한 패키지가 있을 수 있습니다.
+   - ➤ 해결: 플랫폼을 동일하게 맞추거나, OS-특정 패키지는 수동으로 조정해야 합니다.
+
+---
+
+## 🔧 심화 옵션: 복사/클론 방식
+
+* 단순히 복제하고 싶은 경우 아래 방법도 있습니다:
+
+  ```bash
+  conda create --name new_env --clone my_env
+  ```
+
+  이 명령은 같은 시스템 안에서 환경을 거의 그대로 복사합니다.
+  단, 이 방식도 로컬 경로(prefix)나 시스템 라이브러리를 그대로 복사하므로 이동이나 다른 머신에서는 문제가 생길 수 있습니다.
+
+* 네트워크 없거나 패키지 다운로드가 어려운 경우에는 conda‑pack 을 이용해서 바이너리 형태로 환경을 묶어 옮기는 방법도 존재합니다.
+  다만 이 방법은 대상 머신의 OS/아키텍처가 동일해야 안정적입니다.
+
+
+**Reference**
+
+- ["Anaconda export Environment file - python - Stack Overflow"](https://stackoverflow.com/questions/41274007/anaconda-export-environment-file?utm_source=chatgpt.com)
+- ["Export your conda envs –from-history - Monica Thieu, PhD"](https://www.monicathieu.com/posts/2024-05-20-conda-env-export-from-history.html?utm_source=chatgpt.com)
+- ["How to export and import a conda environment without errors"](https://stackoverflow.com/questions/69831234/how-to-export-and-import-a-conda-environment-without-errors?utm_source=chatgpt.com)
+- ["How can you \"clone\" a conda environment into the base (root ..."](https://stackoverflow.com/questions/40700039/how-can-you-clone-a-conda-environment-into-the-base-root-environment?utm_source=chatgpt.com)
+- ["Moving Conda Environments - Anaconda"](https://www.anaconda.com/blog/moving-conda-environments?utm_source=chatgpt.com)
+
+
+아래는 **Conda 환경을 최대한 그대로 옮기거나 재현할 때**, 특히 **로컬 경로**, **채널 설정**, **pip 혼합 설치** 등 복잡한 조건이 있는 경우에 꼭 체크해야 할 항목들로 만든 체크리스트입니다. 마이그레이션 전-후에 이 항목들을 하나씩 확인하면 “버전 충돌”“설치 실패”“환경 깨짐” 같은 문제를 줄일 수 있습니다.
+
+
+## ✅ 체크리스트: 복잡한 Conda 환경 마이그레이션용
+
+다음은 항목별로 **설명 + 체크 사항**을 정리한 것입니다.
+
+|No.  | 항목            | 설명          | 체크해야 할 것                                                                             |
+| -- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1  | **환경 파일 내 `prefix:` 경로 확인**                                           | `conda env export` 명령으로 생성된 `environment.yml` 안에 `prefix:` 항목이 들어 있으면, 대상 시스템/경로가 다를 경우 설치 시 경로 충돌이 생깁니다.                                                   |   • `environment.yml` 열어보고 `prefix:` 항목이 있는지 확인<br>  • 있다면 대상 경로에 맞게 수정하거나 삭제                                                                                                             |
+| 2  | **채널(channels:) 설정**                                                  | 특정 채널(ex: `conda-forge`, custom local channel)에서 패키지를 받아왔으면, 새 환경에서도 동일 채널이 있어야 동일 버전 설치 가능. 일부 로컬 채널/파일 경로 채널은 URL 형태나 로컬 파일 경로가 잘못되면 실패합니다. ([GitHub][1]) |   • `channels:` 리스트 확인 (예: `- conda-forge`, `- defaults`, `- file:///…`)<br>  • 로컬 채널 사용 시 해당 파일경로/URL이 대상 머신에서도 유효한지 확인<br>  • `conda config --show channels`로 전역 설정도 검토                 |
+| 3  | **패키지 빌드번호 및 플랫폼 의존성**                                                | `environment.yml`에 패키지들이 `numpy=1.23.4=py39h…_0`처럼 빌드번호 포함될 수 있고, OS/아키텍처가 바뀌면 동일 빌드가 없을 수 있습니다.                                                            |   • `--no-builds` 옵션으로 export해보는 것 고려<br>  • Windows ↔ Linux 등 플랫폼이 바뀌는 경우에는 버전만 지정하고 빌드번호 제거                                                                                             |
+| 4  | **pip 설치된 패키지 혼합 여부**                                                 | Conda 환경에 `pip install …`로 설치된 패키지가 섞여 있으면, `conda env export`만으로 완전하게 복제되지 않을 수 있고, pip + conda 충돌이 생길 수 있습니다. ([docs.conda.io][2])                        |   • `pip freeze` 출력도 함께 저장 (`pip_requirements.txt`)<br>  • `environment.yml` 내 `dependencies:` 아래 `- pip:` 블록이 있는지 확인<br>  • 새 환경 생성 시: 먼저 conda 패키지 설치 → 그 다음에 pip 설치 순서 유지              |
+| 5  | **로컬설치된 패키지(예: `~/.local/lib/pythonX.Y`) 또는 사용자 site-packages 누적 여부** | 사용자가 시스템 수준 또는 홈 디렉토리 수준에서 설치한 패키지가 env 내부에 영향을 줄 수 있으며, 마이그레이션 시 누락되거나 충돌이 있을 수 있습니다. ([docs.icer.msu.edu][3])                                             |   • `PYTHONPATH` / `PYTHONHOME` 환경변수가 설정돼 있는지 확인 ([docs.conda.io][4])<br>  • `~/.local/lib/pythonX.Y` 등에 설치된 패키지가 있는지 확인<br>  • 환경 깨짐 가능성이 있는 경우 해당 사용자 설치 경로 백업 또는 제거 고려                 |
+| 6  | **환경 변수(environment variables) 설정 여부**                                | Conda 환경에 특정 환경변수(`VAR=…`)를 설정해 놓았으면, 새 환경에서도 동일하게 설정해야 동일 동작 보장됩니다. ([docs.conda.io][2])                                                                   |   • `conda env config vars list -n my_env` 또는 `conda env export` 내 `variables:` 블록 확인<br>  • 새 `environment.yml`에 `variables:` 섹션을 포함하는지 확인                                               |
+| 7  | **경로 및 작업 디렉토리(dependencies referencing local path)**                 | 프로젝트 내부에서 로컬 경로로 참조하는 패키지(예: `- /home/user/project/mypkg` 형태)나 Git submodule 등이 있을 경우, 대상 머신에서 경로가 달라지면 설치/참조가 깨질 수 있습니다.                                   |   • `environment.yml` 또는 `requirements-pip.txt`에 로컬 경로 설치가 있는지 검색<br>  • Git submodule 또는 `pip install -e ../local/package` 식 설치가 있는지 확인<br>  • 대상 시스템 경로를 맞추거나 relative path로 변경 가능한지 확인 |
+| 8  | **OS/아키텍처(Windows vs Linux vs macOS) 호환성**                            | 원본 환경이 특정 OS/아키텍처에서 만들어졌다면, 다른 OS/아키텍처에서 동일한 패키지 버전이 없거나 빌드가 다를 수 있습니다.                                                                                     |   • `conda info` 및 `conda list`에서 플랫폼 정보를 확인<br>  • 대상 머신 플랫폼이 동일한지 확인<br>  • 플랫폼이 다르면 일부 패키 버전을 조정하거나 제거 고려                                                                              |
+| 9  | **채널 우선순위 및 strict priority 설정**                                      | 채널 우선순위(`channel_priority`)가 다르면 동일 버전 패키지를 찾지 못하거나 다른 빌드가 설치될 수 있습니다. ([Ohio Supercomputer Center][5])                                                     |   • `conda config --show channel_priority` 값 확인 (예: `strict` vs `flexible`)<br>  • `environment.yml` 생성 시 동일 설정 반영 (필요시 `conda config --set channel_priority strict`)                     |
+| 10 | **패키지 캐시 및 깨진 링크 여부**                                                 | 패키지 캐시나 하드 링크 문제로 환경이 깨지는 경우가 있습니다. ([docs.conda.io][4])                                                                                                    |   • 실행 중 `ImportError` 또는 “패키지가 설치됐지만 import 안 됨” 오류 있는지 확인<br>  • `conda install -f <package>` 로 강제 재설치 검토<br>  • 새 환경 생성 전에 캐시 정리(`conda clean --all`) 고려                               |
+
+
+
+## 🛠 사용 팁
+
+* 마이그레이션을 시작하기 전에 위 체크리스트를 **문서화**해두고, 원본 환경에서 체크한 상태, 대상 환경에서 체크한 상태를 기록해두면 이후 추적이 쉬워집니다.
+* `environment.yml` 생성 시 `--no-builds` 옵션을 사용하는 것이 플랫폼/빌드번호 충돌을 줄이는 데 도움이 됩니다.
+* 새 환경 생성 후 바로 프로젝트 코드 실행 전에 **간단한 테스트 스크립트**를 만들어 `import 주요_모듈; print(모듈.__version__)` 식으로 확인하면 이상 여부를 바로 알 수 있습니다.
+* 특히 채널이나 로컬 패키지 참조가 많은 경우, “먼저 conda 패키지 설치” → “그다음 pip 설치/로컬 설치” 순서를 지키는 것이 중요합니다. ([docs.conda.io][2])
+* 기록해두기: 어떤 로컬 패키지를 참조했는지, 어떤 채널을 썼는지, 어떤 환경변수를 설정했는지 등을 메모해두면 “왜 재현이 안 되지?” 상태에서 해답을 찾기 쉬워집니다.
+
+<!--
+[1]: https://github.com/conda/conda/issues/9828?utm_source=chatgpt.com "Installing from local channel with channel::package fails"
+[2]: https://docs.conda.io/docs/user-guide/tasks/manage-environments.html?utm_source=chatgpt.com "Managing environments — conda 25.9.2.dev34 ..."
+[3]: https://docs.icer.msu.edu/Using_conda/?utm_source=chatgpt.com "Using Conda - MSU HPCC User Documentation"
+[4]: https://docs.conda.io/docs/troubleshooting.html?utm_source=chatgpt.com "Troubleshooting — conda 25.9.2.dev34 documentation"
+[5]: https://www.osc.edu/resources/getting_started/howto/howto_add_python_packages_using_the_conda_package_manager?utm_source=chatgpt.com "HOWTO: Create and Manage Python Environments"
+-->
