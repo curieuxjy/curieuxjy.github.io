@@ -1,9 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ===== 설정 =====
 PRE_MSG="${1:-pre-commit}"
+SIZE_LIMIT="${SIZE_LIMIT:-50M}"   # 환경변수로 조정 가능 (예: SIZE_LIMIT=100M)
 
-# 현재 HEAD 기록 (프리커밋이 없을 때 비교 기준으로 사용)
+# ===== 1) 대용량 파일(> SIZE_LIMIT) 사전 검사 =====
+echo "🔎 Checking for files larger than ${SIZE_LIMIT} (excluding .git) ..."
+mapfile -t large_files < <(find . -path ./.git -prune -o -type f -size +"${SIZE_LIMIT}" -print)
+
+if [ "${#large_files[@]}" -gt 0 ]; then
+  echo "❌ 커밋/푸시 중단: 아래 파일(들)이 ${SIZE_LIMIT} 초과입니다."
+  printf '   %s\n' "${large_files[@]}"
+  echo "ℹ️  해결 방법 예시: Git LFS 사용, 파일 제외(.gitignore), 용량 축소 등"
+  exit 1
+fi
+echo "✅ Large file check passed."
+
+# ===== 2) Pre-commit (있을 때만) & push =====
 before_hash="$(git rev-parse HEAD)"
 
 echo "🔹 Pre-commit: '$PRE_MSG'"
@@ -19,17 +33,13 @@ else
   echo "✅ Pre-commit & push 완료"
 fi
 
-# 비교 기준 설정
-# - 프리커밋이 생겼다면 HEAD~1..HEAD 범위를 사용
-# - 아니면 before_hash..HEAD (사실상 동일 HEAD..HEAD)로 안전 처리
+# ===== 3) 기준점 설정 =====
 base_ref="$before_hash"
 if [ $pre_committed -eq 1 ]; then
   base_ref="HEAD~1"
 fi
 
-# 방금 커밋(또는 기준점) 대비 변경된 .qmd 목록 추출
-#  - pre-commit이 있었다면 그 커밋에 포함된 .qmd들을 타겟팅하게 됨
-#  - 없었다면 빈 목록일 수 있음
+# ===== 4) 방금 커밋(또는 기준점) 대비 변경된 .qmd 목록 추출 =====
 changed="$(git diff --name-only "$base_ref" HEAD | grep '\.qmd$' || true)"
 
 if [ -z "$changed" ]; then
@@ -40,23 +50,19 @@ fi
 echo "🔹 렌더링 대상:"
 echo "$changed"
 
-# 변경된 .qmd 파일 렌더링
-# (quarto output은 repo 정책에 따라 docs/ 등을 포함할 수 있으므로 이후에 전체 add)
+# ===== 5) 변경된 .qmd 렌더링 =====
 while IFS= read -r f; do
   [ -z "$f" ] && continue
   echo "🛠️  Rendering: $f"
   quarto render "$f"
 done <<< "$changed"
 
-# 렌더 결과 및 관련 산출물 포함하여 전부 추가
+# ===== 6) 렌더 결과 커밋 & 푸시 =====
 git add -A
 
-# 커밋 메시지에 업데이트된 .qmd 파일명을 포함
-# 한 줄로 정리
 changed_one_line="$(echo "$changed" | tr '\n' ' ')"
 commit_msg="Render updated QMD files: ${changed_one_line}"
 
-# 변경이 실제로 있으면 커밋 & 푸시
 if git diff --cached --quiet; then
   echo "ℹ️  렌더 후 커밋할 변경이 없습니다."
 else
@@ -64,3 +70,9 @@ else
   git push
   echo "✅ Commit & push 완료: $commit_msg"
 fi
+
+
+# chmod +x render_and_commit.sh
+# ./render_and_commit.sh "chore: pre-commit before render"
+# # 또는
+# SIZE_LIMIT=100M ./render_and_commit.sh
