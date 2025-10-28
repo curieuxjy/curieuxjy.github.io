@@ -6,10 +6,19 @@ be myself
 
 # Commit
 
-1. contents를 qmd에 작성
-2. commit -> push
-3. bash update.sh 파일로 render
-4. commit -> push
+`bash render_and_commit.sh`
+
+```
+chmod +x render_and_commit.sh
+./render_and_commit.sh "chore: pre-commit before render"
+# 또는
+SIZE_LIMIT=100M ./render_and_commit.sh
+```
+
+- 50MB 이상 커밋 시도 시 오류 발생 방지
+  - `SIZE_LIMIT` 환경변수로 제한 크기 조정 가능
+- 변경된 qmd 파일만 렌더링
+
 
 # TODO
 - [ ] project page 정리
