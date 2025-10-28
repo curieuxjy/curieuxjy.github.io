@@ -3,7 +3,7 @@
     "listing": "/post.html",
     "items": [
       "/posts/paper/2025-10-27-gpc.html",
-      "/posts/code/2025-10-27-conda-uv.html",
+      "/posts/code/2025-10-27-python-envs.html",
       "/posts/paper/2025-10-23-softmimic.html",
       "/posts/paper/2025-10-22-dexpbt.html",
       "/posts/paper/2025-10-21-vt-refine.html",
@@ -113,7 +113,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/code/2025-10-27-conda-uv.html",
+      "/posts/code/2025-10-27-python-envs.html",
       "/posts/paper/2025-10-27-gpc.html",
       "/posts/paper/2025-10-23-softmimic.html",
       "/posts/paper/2025-10-22-dexpbt.html",
