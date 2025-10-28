@@ -61,7 +61,7 @@ done <<< "$changed"
 git add -A
 
 changed_one_line="$(echo "$changed" | tr '\n' ' ')"
-commit_msg="Render updated QMD files: ${changed_one_line}"
+commit_msg="Render: ${changed_one_line}"
 
 if git diff --cached --quiet; then
   echo "ℹ️  렌더 후 커밋할 변경이 없습니다."
