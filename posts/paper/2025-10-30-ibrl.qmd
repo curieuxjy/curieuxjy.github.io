@@ -61,9 +61,9 @@ IBRL은 6개의 시뮬레이션 태스크(Meta-World 및 Robomimic)와 3개의 �
 
 ## 2. IBRL 알고리즘 개요
 
-IBRL의 핵심 아이디어는 (그림 1) 우선 전문가 시연으로 모방학습 정책($$\mu_\psi$$)을 학습하고, 이 정책을 RL 학습의 **두 단계**에 활용하는 것이다.
+IBRL의 핵심 아이디어는 (그림 1) 우선 전문가 시연으로 모방학습 정책($\mu_\psi$)을 학습하고, 이 정책을 RL 학습의 **두 단계**에 활용하는 것이다.
 
-첫째, **온라인 상호작용 단계(Actor Proposal)**에서는 매 시점마다 IL 정책과 현재 학습 중인 RL 정책($$\pi_\theta$$)이 각각 행동 $$a_{IL} \sim \mu_{\psi}(s)$$, $$a_{RL} \sim \pi_{\theta}(s)$$를 제안한다. 이 두 후보 행동을 타깃 Q-네트워크 $$Q_{\phi'}$$로 평가하여 더 높은 Q값을 갖는 행동 $$a^{*} = \arg\max_{a \in \{ a_{IL},a_{RL}\}}Q_{\phi'}(s,a)$$를 실제 행동으로 선택한다(식 (1)). 이 방식으로 IL 정책이 초기 탐색에서 신뢰할 수 있는 행동을 지속적으로 제공함으로써, 희소 보상 환경에서 빠른 성공 경험을 얻을 수 있다.
+첫째, **온라인 상호작용 단계(Actor Proposal)**에서는 매 시점마다 IL 정책과 현재 학습 중인 RL 정책($\pi_\theta$)이 각각 행동 $$a_{IL} \sim \mu_{\psi}(s),$$ $$a_{RL} \sim \pi_{\theta}(s)$$를 제안한다. 이 두 후보 행동을 타깃 Q-네트워크 $Q_{\phi'}$로 평가하여 더 높은 Q값을 갖는 행동 $$a^{*} = \arg\max_{a \in \{ a_{IL},a_{RL}\}}Q_{\phi'}(s,a)$$를 실제 행동으로 선택한다(식 (1)). 이 방식으로 IL 정책이 초기 탐색에서 신뢰할 수 있는 행동을 지속적으로 제공함으로써, 희소 보상 환경에서 빠른 성공 경험을 얻을 수 있다.
 
 둘째, **RL 학습 단계(Bootstrap Proposal)**에서는 Q-함수 업데이트 시 다음 상태에서의 최대 Q값을 계산할 때 IL 정책과 RL 정책이 제안하는 행동 중 더 높은 Q값을 갖는 쪽을 사용한다. 즉, 일반적인 TD 타깃 $$r + \gamma Q'\left( s',\pi'(s') \right)$$ 대신에 $$r + \gamma\max\{ Q'\left( s',a_{IL} \right),Q'\left( s',a_{RL} \right)\}$$ 형태로 값 함수를 부트스트래핑한다.
 
@@ -71,9 +71,9 @@ IBRL의 핵심 아이디어는 (그림 1) 우선 전문가 시연으로 모방�
 
 ## 3. 이론적 기초
 
-IBRL은 표준 MDP $$\left( \mathcal{S},\mathcal{A},T,R,\gamma \right)$$를 가정하며, 오프-폴리시 RL(TD3/SAC)을 기반으로 한다. 비평자($$Q_\varphi$$) 네트워크는 강화학습 손실 $$L(\varphi) = \left( r_{t} + \gamma Q_{\phi'}\left( s_{t + 1},\pi_{\theta'}\left( s_{t + 1} \right) \right) - Q_{\varphi}\left( s_{t},a_{t} \right) \right)^{2}$$를 최소화하며, 정책(Actor) $$\pi_\theta$$는 $$L(\theta) = - Q_{\varphi}\left( s,\pi_{\theta}(s) \right)$$ 손실로 학습된다.
+IBRL은 표준 MDP $$\left( \mathcal{S},\mathcal{A},T,R,\gamma \right)$$를 가정하며, 오프-폴리시 RL(TD3/SAC)을 기반으로 한다. 비평자($Q_\varphi$) 네트워크는 강화학습 손실 $$L(\varphi) = \left( r_{t} + \gamma Q_{\phi'}\left( s_{t + 1},\pi_{\theta'}\left( s_{t + 1} \right) \right) - Q_{\varphi}\left( s_{t},a_{t} \right) \right)^{2}$$를 최소화하며, 정책(Actor) $\pi_\theta$는 $$L(\theta) = - Q_{\varphi}\left( s,\pi_{\theta}(s) \right)$$ 손실로 학습된다.
 
-모방학습(IL) 정책 $$\mu_\psi$$는 전문가 데이터 $$\mathcal{D}$$에서 최대우도 또는 평균제곱오차로 행동을 복제하여 학습된다. IBRL은 먼저 이 데이터셋으로 $$\mu_\psi$$를 학습하고, 그 후 강화학습 과정에 $$\mu_\psi$$를 `참조 정책(reference policy)`으로 활용한다.
+모방학습(IL) 정책 $\mu_\psi$는 전문가 데이터 $\mathcal{D}$에서 최대우도 또는 평균제곱오차로 행동을 복제하여 학습된다. IBRL은 먼저 이 데이터셋으로 $\mu_\psi$를 학습하고, 그 후 강화학습 과정에 $\mu_\psi$를 `참조 정책(reference policy)`으로 활용한다.
 
 기존 연구 중 비슷한 아이디어로는, 사람이 만든 참조 정책을 온/오프-라인에서 사용하는 PEX, EfficientImitate 등이 있으나, 이들은 주로 탐색 보조에만 IL 정책을 사용하거나 저차원 관측에 제한되며 실험도 시뮬레이션에 한정되었다. IBRL은 IL 정책을 탐색과 학습 두 단계에 모두 적극적으로 활용하며 실제 로봇 태스크까지 평가한 점에서 차별화된다.
 
@@ -115,7 +115,6 @@ IBRL은 표준 MDP $$\left( \mathcal{S},\mathcal{A},T,R,\gamma \right)$$를 가�
 
 IBRL Basic(점선)은 인코더를 간단화한 변형으로, 단순 환경에서는 오히려 IBRL보다 우수하나, 복잡한 작업에서는 깊은 구조의 IBRL이 더 안정적임을 보여준다. 전반적으로 IBRL과 그 변형은 모든 Meta-World 과제를 성공적으로 해결했으나, MoDem은 4개 중 3개 환경에서 신뢰할 수 있는 해결률을 달성하지 못했다. 아울러 MoDem은 모델 학습 및 계획 단계 때문에 시간 비용이 150시간 이상 소요되지만, IBRL은 단순히 정책 학습만으로 더 빠르게 수렴하였다.
 
-
 <center>
 <img src="../../images/2025-10-30-ibrl/1.png" width="100%" />
 </center>
@@ -130,7 +129,15 @@ IBRL Basic(점선)은 인코더를 간단화한 변형으로, 단순 환경에�
 
 IBRL의 실제 적용 가능성을 검증하기 위해 저자들은 3가지 실제 로봇 조작 과제를 설정했다. 과제는 Franka Panda 로봇팔로 수행되며, Lift(블록 들어올리기), Drawer(서랍 열기), Hang(천 걸기)으로 난이도가 증가한다. 초기 조건이나 로봇 시작 위치에 변이가 있으며, 각 과제별로 10~30회의 시연 데이터를 수집했다. Lift에서는 손목 카메라 시점을, Hang에서는 3인칭 카메라를 사용했다. 모든 방법은 동일한 네트워크 구조와 파라미터를 사용하고, 상호작용 예산도 과제 난이도에 맞추어 부여했다.
 
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+  <img src="../../images/2025-10-30-ibrl/01.png" width="48%">
+  <img src="../../images/2025-10-30-ibrl/02.png" width="48%">
+</div>
+
+
 그림 8 및 표 I에 따르면, IBRL은 세 과제 모두에서 RLPD(RFT) 및 행동 복제(BC) 대비 우수한 성능을 보였다. **Lift** 과제에서는 8K 상호작용 단계 만에 IBRL이 100% 성공률을 달성했고, RLPD와 RFT는 각각 95%, 90%로 뒤를 이었다. 더 어려운 **Lift Hard Eval** 상황(블록이 손목 카메라 시야 가장자리에 놓임)에서도 IBRL은 95%의 성공률을 유지한 반면, BC는 0%로 성능이 급락했다. 이는 IBRL이 학습 중 다양한 초기 상태를 경험하며 분포 차이를 극복했음을 의미한다.
+
 
 **Drawer** 과제(서랍 열기)에서는 16K 단계 상호작용에서 IBRL이 95% 성공률로 가장 높았다. 실험을 조기 중단한 10K 단계 지점에서도 IBRL은 이미 100%에 도달했으나, RLPD와 RFT는 15% 이하로 극히 낮은 성공률이었다. IBRL은 데모가 충분하더라도 실제 환경의 세밀한 조작이 필요함을 빠르게 학습했음을 보여준다.
 

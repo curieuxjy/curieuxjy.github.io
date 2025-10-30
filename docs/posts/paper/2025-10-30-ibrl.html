@@ -448,15 +448,15 @@ window.Quarto = {
 </section>
 <section id="ibrl-알고리즘-개요" class="level2">
 <h2 class="anchored" data-anchor-id="ibrl-알고리즘-개요">2. IBRL 알고리즘 개요</h2>
-<p>IBRL의 핵심 아이디어는 (그림 1) 우선 전문가 시연으로 모방학습 정책(<span class="math display">\mu_\psi</span>)을 학습하고, 이 정책을 RL 학습의 <strong>두 단계</strong>에 활용하는 것이다.</p>
-<p>첫째, <strong>온라인 상호작용 단계(Actor Proposal)</strong>에서는 매 시점마다 IL 정책과 현재 학습 중인 RL 정책(<span class="math display">\pi_\theta</span>)이 각각 행동 <span class="math display">a_{IL} \sim \mu_{\psi}(s)</span>, <span class="math display">a_{RL} \sim \pi_{\theta}(s)</span>를 제안한다. 이 두 후보 행동을 타깃 Q-네트워크 <span class="math display">Q_{\phi'}</span>로 평가하여 더 높은 Q값을 갖는 행동 <span class="math display">a^{*} = \arg\max_{a \in \{ a_{IL},a_{RL}\}}Q_{\phi'}(s,a)</span>를 실제 행동으로 선택한다(식 (1)). 이 방식으로 IL 정책이 초기 탐색에서 신뢰할 수 있는 행동을 지속적으로 제공함으로써, 희소 보상 환경에서 빠른 성공 경험을 얻을 수 있다.</p>
+<p>IBRL의 핵심 아이디어는 (그림 1) 우선 전문가 시연으로 모방학습 정책(<span class="math inline">\mu_\psi</span>)을 학습하고, 이 정책을 RL 학습의 <strong>두 단계</strong>에 활용하는 것이다.</p>
+<p>첫째, <strong>온라인 상호작용 단계(Actor Proposal)</strong>에서는 매 시점마다 IL 정책과 현재 학습 중인 RL 정책(<span class="math inline">\pi_\theta</span>)이 각각 행동 <span class="math display">a_{IL} \sim \mu_{\psi}(s),</span> <span class="math display">a_{RL} \sim \pi_{\theta}(s)</span>를 제안한다. 이 두 후보 행동을 타깃 Q-네트워크 <span class="math inline">Q_{\phi'}</span>로 평가하여 더 높은 Q값을 갖는 행동 <span class="math display">a^{*} = \arg\max_{a \in \{ a_{IL},a_{RL}\}}Q_{\phi'}(s,a)</span>를 실제 행동으로 선택한다(식 (1)). 이 방식으로 IL 정책이 초기 탐색에서 신뢰할 수 있는 행동을 지속적으로 제공함으로써, 희소 보상 환경에서 빠른 성공 경험을 얻을 수 있다.</p>
 <p>둘째, <strong>RL 학습 단계(Bootstrap Proposal)</strong>에서는 Q-함수 업데이트 시 다음 상태에서의 최대 Q값을 계산할 때 IL 정책과 RL 정책이 제안하는 행동 중 더 높은 Q값을 갖는 쪽을 사용한다. 즉, 일반적인 TD 타깃 <span class="math display">r + \gamma Q'\left( s',\pi'(s') \right)</span> 대신에 <span class="math display">r + \gamma\max\{ Q'\left( s',a_{IL} \right),Q'\left( s',a_{RL} \right)\}</span> 형태로 값 함수를 부트스트래핑한다.</p>
 <p>이를 통해 IL 정책이 제안하는 고품질 행동이 Q-값 학습에 직접 반영되어 학습 속도가 개선된다. 모듈화된 구조 덕분에 IL 정책과 RL 정책은 각자 최적화된 네트워크(예: ResNet-18 vs.&nbsp;ViT)로 독립적 학습이 가능하며, RL에 의한 초기 IL 지식 소실(catastrophic forgetting)을 우려하지 않아도 된다. 또한 초기 학습 신호를 제공하기 위해 리플레이 버퍼를 전문가 시연으로 미리 채우는 것은 종전 방법과 유사하게 적용된다.</p>
 </section>
 <section id="이론적-기초" class="level2">
 <h2 class="anchored" data-anchor-id="이론적-기초">3. 이론적 기초</h2>
-<p>IBRL은 표준 MDP <span class="math display">\left( \mathcal{S},\mathcal{A},T,R,\gamma \right)</span>를 가정하며, 오프-폴리시 RL(TD3/SAC)을 기반으로 한다. 비평자(<span class="math display">Q_\varphi</span>) 네트워크는 강화학습 손실 <span class="math display">L(\varphi) = \left( r_{t} + \gamma Q_{\phi'}\left( s_{t + 1},\pi_{\theta'}\left( s_{t + 1} \right) \right) - Q_{\varphi}\left( s_{t},a_{t} \right) \right)^{2}</span>를 최소화하며, 정책(Actor) <span class="math display">\pi_\theta</span>는 <span class="math display">L(\theta) = - Q_{\varphi}\left( s,\pi_{\theta}(s) \right)</span> 손실로 학습된다.</p>
-<p>모방학습(IL) 정책 <span class="math display">\mu_\psi</span>는 전문가 데이터 <span class="math display">\mathcal{D}</span>에서 최대우도 또는 평균제곱오차로 행동을 복제하여 학습된다. IBRL은 먼저 이 데이터셋으로 <span class="math display">\mu_\psi</span>를 학습하고, 그 후 강화학습 과정에 <span class="math display">\mu_\psi</span>를 <code>참조 정책(reference policy)</code>으로 활용한다.</p>
+<p>IBRL은 표준 MDP <span class="math display">\left( \mathcal{S},\mathcal{A},T,R,\gamma \right)</span>를 가정하며, 오프-폴리시 RL(TD3/SAC)을 기반으로 한다. 비평자(<span class="math inline">Q_\varphi</span>) 네트워크는 강화학습 손실 <span class="math display">L(\varphi) = \left( r_{t} + \gamma Q_{\phi'}\left( s_{t + 1},\pi_{\theta'}\left( s_{t + 1} \right) \right) - Q_{\varphi}\left( s_{t},a_{t} \right) \right)^{2}</span>를 최소화하며, 정책(Actor) <span class="math inline">\pi_\theta</span>는 <span class="math display">L(\theta) = - Q_{\varphi}\left( s,\pi_{\theta}(s) \right)</span> 손실로 학습된다.</p>
+<p>모방학습(IL) 정책 <span class="math inline">\mu_\psi</span>는 전문가 데이터 <span class="math inline">\mathcal{D}</span>에서 최대우도 또는 평균제곱오차로 행동을 복제하여 학습된다. IBRL은 먼저 이 데이터셋으로 <span class="math inline">\mu_\psi</span>를 학습하고, 그 후 강화학습 과정에 <span class="math inline">\mu_\psi</span>를 <code>참조 정책(reference policy)</code>으로 활용한다.</p>
 <p>기존 연구 중 비슷한 아이디어로는, 사람이 만든 참조 정책을 온/오프-라인에서 사용하는 PEX, EfficientImitate 등이 있으나, 이들은 주로 탐색 보조에만 IL 정책을 사용하거나 저차원 관측에 제한되며 실험도 시뮬레이션에 한정되었다. IBRL은 IL 정책을 탐색과 학습 두 단계에 모두 적극적으로 활용하며 실제 로봇 태스크까지 평가한 점에서 차별화된다.</p>
 </section>
 <section id="실험-설정" class="level2">
@@ -504,6 +504,9 @@ window.Quarto = {
 <section id="실제-로봇-실험-및-적용성" class="level2">
 <h2 class="anchored" data-anchor-id="실제-로봇-실험-및-적용성">6. 실제 로봇 실험 및 적용성</h2>
 <p>IBRL의 실제 적용 가능성을 검증하기 위해 저자들은 3가지 실제 로봇 조작 과제를 설정했다. 과제는 Franka Panda 로봇팔로 수행되며, Lift(블록 들어올리기), Drawer(서랍 열기), Hang(천 걸기)으로 난이도가 증가한다. 초기 조건이나 로봇 시작 위치에 변이가 있으며, 각 과제별로 10~30회의 시연 데이터를 수집했다. Lift에서는 손목 카메라 시점을, Hang에서는 3인칭 카메라를 사용했다. 모든 방법은 동일한 네트워크 구조와 파라미터를 사용하고, 상호작용 예산도 과제 난이도에 맞추어 부여했다.</p>
+<div style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+<p><img src="../../images/2025-10-30-ibrl/01.png" width="48%"> <img src="../../images/2025-10-30-ibrl/02.png" width="48%"></p>
+</div>
 <p>그림 8 및 표 I에 따르면, IBRL은 세 과제 모두에서 RLPD(RFT) 및 행동 복제(BC) 대비 우수한 성능을 보였다. <strong>Lift</strong> 과제에서는 8K 상호작용 단계 만에 IBRL이 100% 성공률을 달성했고, RLPD와 RFT는 각각 95%, 90%로 뒤를 이었다. 더 어려운 <strong>Lift Hard Eval</strong> 상황(블록이 손목 카메라 시야 가장자리에 놓임)에서도 IBRL은 95%의 성공률을 유지한 반면, BC는 0%로 성능이 급락했다. 이는 IBRL이 학습 중 다양한 초기 상태를 경험하며 분포 차이를 극복했음을 의미한다.</p>
 <p><strong>Drawer</strong> 과제(서랍 열기)에서는 16K 단계 상호작용에서 IBRL이 95% 성공률로 가장 높았다. 실험을 조기 중단한 10K 단계 지점에서도 IBRL은 이미 100%에 도달했으나, RLPD와 RFT는 15% 이하로 극히 낮은 성공률이었다. IBRL은 데모가 충분하더라도 실제 환경의 세밀한 조작이 필요함을 빠르게 학습했음을 보여준다.</p>
 <p>가장 어려운 <strong>Hang</strong> 과제(변형 천 걸기)에서는 IBRL만이 강건함을 증명했다. 30K 단계 상호작용 후 IBRL은 85% 성공률을 달성하여 BC(65%)보다 20%p 높았으나, RLPD와 RFT는 각각 15%, 25%에 머물렀다. 이는 천의 변형성을 예측하기 힘들어 랜덤 탐색이 거의 불가능한 상황에서, IBRL이 IL 정책으로부터 얻은 우수한 초기 행동을 꾸준히 활용해 정책을 빠르게 개선한 결과다. 그림 9의 롤아웃 예시에서도 IBRL은 더 적은 스텝 내에 성공했으며, BC가 실패하는 초기 조건에서도 성공함을 확인할 수 있다.</p>
