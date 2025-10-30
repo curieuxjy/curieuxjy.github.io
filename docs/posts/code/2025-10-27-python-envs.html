@@ -441,13 +441,13 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </tr>
 <tr class="odd">
 <td>mamba</td>
-<td>conda와 거의 명령어 호환되는, 속도 및 의존성 해결 알고리즘이 개선된 도구 (“drop-in replacement”) ([statistics.berkeley.edu][1])</td>
+<td>conda와 거의 명령어 호환되는, 속도 및 의존성 해결 알고리즘이 개선된 도구 (“drop-in replacement”)</td>
 <td>conda 대비 빠른 설치/해결, 동일 인터페이스로 진입 장벽 낮음</td>
-<td>비교적 최신 도구라 일부 생태계/버그 측면에서 완전히 검증된 상태는 아님 ([Stack Overflow][2])</td>
+<td>비교적 최신 도구라 일부 생태계/버그 측면에서 완전히 검증된 상태는 아님</td>
 </tr>
 <tr class="even">
 <td>uv</td>
-<td>Astral‑sh가 개발한 Rust 기반 Python 프로젝트/패키지관리 도구. 가상환경 생성, Python 버전 관리, 패키지 설치 및 실행까지 통합됨. ([docs.astral.sh][3])</td>
+<td>Astral‑sh가 개발한 Rust 기반 Python 프로젝트/패키지관리 도구. 가상환경 생성, Python 버전 관리, 패키지 설치 및 실행까지 통합됨.</td>
 <td>매우 빠른 의존성 해결 + Python 버전 설치 지원 + 프로젝트 단위 워크플로우에 적합</td>
 <td>아직 일부 생태계(복잡한 바이너리/OS 의존)에서는 제약이 있을 수 있고, 기존 워크플로우와 마이그레이션 비용 있음</td>
 </tr>
@@ -481,7 +481,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </ul>
 <p><strong>단점</strong></p>
 <ul>
-<li>환경 생성 및 패키지 설치 시 시간이 오래 걸릴 수 있으며, 의존성 해결이 복잡할 수 있습니다. ([FocalPlane][4])</li>
+<li>환경 생성 및 패키지 설치 시 시간이 오래 걸릴 수 있으며, 의존성 해결이 복잡할 수 있습니다.</li>
 <li>저장소(channel) 설정, 충돌 대응, 환경관리 등의 추가 학습이 필요할 수 있습니다.</li>
 <li>가벼운 프로젝트나 순수 Python만 사용할 경우 도구가 과할 수 있고, 디스크/메모리 오버헤드가 있을 수 있습니다.</li>
 </ul>
@@ -490,12 +490,12 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <h4 class="anchored" data-anchor-id="mamba">mamba</h4>
 <p><strong>장점</strong></p>
 <ul>
-<li>conda 명령어 인터페이스와 거의 동일하므로 기존 conda 사용자에게 진입 장벽이 낮습니다. ([eoas-ubc.github.io][5])</li>
-<li>특히 의존성 해결 및 패키지 설치 속도 면에서 유리하다는 여러 보고가 있습니다. ([Medium][6])</li>
+<li>conda 명령어 인터페이스와 거의 동일하므로 기존 conda 사용자에게 진입 장벽이 낮습니다.</li>
+<li>특히 의존성 해결 및 패키지 설치 속도 면에서 유리하다는 여러 보고가 있습니다.</li>
 </ul>
 <p><strong>단점</strong></p>
 <ul>
-<li>비교적 신생 도구이므로 conda 대비 생태계 지원이나 안정성 측면에서 아직 완성도가 낮다는 의견도 있습니다. ([Stack Overflow][2])</li>
+<li>비교적 신생 도구이므로 conda 대비 생태계 지원이나 안정성 측면에서 아직 완성도가 낮다는 의견도 있습니다.</li>
 <li>일부 조직/CI/CD 환경에서는 conda만 공식 지원하는 경우가 있어 전환 시 고려사항이 있습니다.</li>
 </ul>
 </section>
@@ -503,12 +503,12 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <h4 class="anchored" data-anchor-id="uv">uv</h4>
 <p><strong>장점</strong></p>
 <ul>
-<li>매우 최신 도구로, “가상환경 생성 + Python 버전 설치 + 패키지/의존성 관리”를 하나의 워크플로우로 통합한다는 비전이 있습니다. ([astral.sh][7])</li>
-<li>의존성 해결 속도가 빠르며, 프로젝트 단위로 재현 가능한 환경(lockfile 기반 등) 구성에 유리하다는 평가가 있습니다. ([Reddit][8])</li>
+<li>매우 최신 도구로, “가상환경 생성 + Python 버전 설치 + 패키지/의존성 관리”를 하나의 워크플로우로 통합한다는 비전이 있습니다.</li>
+<li>의존성 해결 속도가 빠르며, 프로젝트 단위로 재현 가능한 환경(lockfile 기반 등) 구성에 유리하다는 평가가 있습니다.</li>
 </ul>
 <p><strong>단점</strong></p>
 <ul>
-<li>복잡한 바이너리/OS 수준의 라이브러리, GPU 스택 등에서는 아직 conda 대비 제약이 있을 수 있다는 사용자 경험이 존재합니다. ([Reddit][9])</li>
+<li>복잡한 바이너리/OS 수준의 라이브러리, GPU 스택 등에서는 아직 conda 대비 제약이 있을 수 있다는 사용자 경험이 존재합니다.</li>
 <li>기존 워크플로우를 uv로 바꾸려면 학습/마이그레이션 비용이 있을 수 있고, 일부 도구와의 통합이 아직 미성숙할 수 있습니다.</li>
 </ul>
 <hr>
@@ -686,8 +686,7 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <div class="sourceCode" id="cb45"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a><span class="ex">conda</span> install mamba <span class="at">-n</span> base <span class="at">-c</span> conda-forge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>기존 conda 명령어 대부분을 mamba로 바꾸어 실행 가능:</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> env2 python=3.x</span>
-<span id="cb46-2"><a href="#cb46-2"></a><span class="ex">mamba</span> install numpy scipy</span>
-<span id="cb46-3"><a href="#cb46-3"></a><span class="kw">```</span> <span class="ex">:contentReference[oaicite:17]{index=17}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="ex">mamba</span> install numpy scipy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>테스트:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a><span class="ex">conda</span> activate env2  <span class="co"># or mamba activate env2</span></span>
 <span id="cb47-2"><a href="#cb47-2"></a><span class="ex">python</span> your_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
