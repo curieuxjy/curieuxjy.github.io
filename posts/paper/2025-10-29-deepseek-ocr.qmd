@@ -1,5 +1,5 @@
 ---
-title: "📃IBRL 리뷰"
+title: "📃DeepSeek-OCR 리뷰"
 date: 2025-10-29
 categories: [deepseek, llm]
 toc: true
