@@ -2,6 +2,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-10-30-ibrl.html",
       "/posts/paper/2025-10-27-gpc.html",
       "/posts/code/2025-10-27-python-envs.html",
       "/posts/paper/2025-10-23-softmimic.html",
@@ -113,6 +114,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paper/2025-10-30-ibrl.html",
       "/posts/code/2025-10-27-python-envs.html",
       "/posts/paper/2025-10-27-gpc.html",
       "/posts/paper/2025-10-23-softmimic.html",
