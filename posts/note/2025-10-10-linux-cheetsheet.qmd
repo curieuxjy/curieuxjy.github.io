@@ -1,5 +1,5 @@
 ---
-title: "📝Linux Cheet Sheet"
+title: "💡Linux Cheet Sheet"
 toc: true
 date: "2025-10-10"
 description: 자주 사용하는 Commands
