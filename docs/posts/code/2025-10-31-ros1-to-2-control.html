@@ -335,19 +335,18 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#제어-루프의-근본적인-전환" id="toc-제어-루프의-근본적인-전환" class="nav-link active" data-scroll-target="#제어-루프의-근본적인-전환"><span class="header-section-number">1</span> 제어 루프의 근본적인 전환</a></li>
+  <li><a href="#제어-루프의-근본적인-전환timer" id="toc-제어-루프의-근본적인-전환timer" class="nav-link active" data-scroll-target="#제어-루프의-근본적인-전환timer"><span class="header-section-number">1</span> 제어 루프의 근본적인 전환(Timer)</a></li>
   <li><a href="#실행기-백그라운드-처리의-안정화" id="toc-실행기-백그라운드-처리의-안정화" class="nav-link" data-scroll-target="#실행기-백그라운드-처리의-안정화"><span class="header-section-number">2</span> 실행기 백그라운드 처리의 안정화</a></li>
-  <li><a href="#장치-일관성-문제의-해결" id="toc-장치-일관성-문제의-해결" class="nav-link" data-scroll-target="#장치-일관성-문제의-해결"><span class="header-section-number">3</span> 장치 일관성 문제의 해결</a></li>
+  <li><a href="#device-일관성-문제의-해결" id="toc-device-일관성-문제의-해결" class="nav-link" data-scroll-target="#device-일관성-문제의-해결"><span class="header-section-number">3</span> Device 일관성 문제의 해결</a></li>
   <li><a href="#추론-성능-최적화" id="toc-추론-성능-최적화" class="nav-link" data-scroll-target="#추론-성능-최적화"><span class="header-section-number">4</span> 추론 성능 최적화</a></li>
-  <li><a href="#관측-드랍에-대한-로버스트한-대응" id="toc-관측-드랍에-대한-로버스트한-대응" class="nav-link" data-scroll-target="#관측-드랍에-대한-로버스트한-대응"><span class="header-section-number">5</span> 관측 드랍에 대한 로버스트한 대응</a></li>
-  <li><a href="#버퍼-롤링의-안전한-구현" id="toc-버퍼-롤링의-안전한-구현" class="nav-link" data-scroll-target="#버퍼-롤링의-안전한-구현"><span class="header-section-number">6</span> 버퍼 롤링의 안전한 구현</a></li>
-  <li><a href="#디버깅을-위한-포지션-갭-퍼블리셔" id="toc-디버깅을-위한-포지션-갭-퍼블리셔" class="nav-link" data-scroll-target="#디버깅을-위한-포지션-갭-퍼블리셔"><span class="header-section-number">7</span> 디버깅을 위한 포지션 갭 퍼블리셔</a></li>
+  <li><a href="#observation-drop에-대한-robustness" id="toc-observation-drop에-대한-robustness" class="nav-link" data-scroll-target="#observation-drop에-대한-robustness"><span class="header-section-number">5</span> Observation Drop에 대한 Robustness</a></li>
+  <li><a href="#buffer-rolling의-안전한-구현" id="toc-buffer-rolling의-안전한-구현" class="nav-link" data-scroll-target="#buffer-rolling의-안전한-구현"><span class="header-section-number">6</span> Buffer Rolling의 안전한 구현</a></li>
+  <li><a href="#디버깅을-위한-포지션-gap-퍼블리셔" id="toc-디버깅을-위한-포지션-gap-퍼블리셔" class="nav-link" data-scroll-target="#디버깅을-위한-포지션-gap-퍼블리셔"><span class="header-section-number">7</span> 디버깅을 위한 포지션 Gap 퍼블리셔</a></li>
   <li><a href="#신중한-초기화-과정" id="toc-신중한-초기화-과정" class="nav-link" data-scroll-target="#신중한-초기화-과정"><span class="header-section-number">8</span> 신중한 초기화 과정</a></li>
   <li><a href="#효율적인-로깅-전략" id="toc-효율적인-로깅-전략" class="nav-link" data-scroll-target="#효율적인-로깅-전략"><span class="header-section-number">9</span> 효율적인 로깅 전략</a></li>
   <li><a href="#ros2-api의-올바른-사용" id="toc-ros2-api의-올바른-사용" class="nav-link" data-scroll-target="#ros2-api의-올바른-사용"><span class="header-section-number">10</span> ROS2 API의 올바른 사용</a></li>
   <li><a href="#추가-최적화-가능성" id="toc-추가-최적화-가능성" class="nav-link" data-scroll-target="#추가-최적화-가능성"><span class="header-section-number">11</span> 추가 최적화 가능성</a></li>
   <li><a href="#로직의-일관성-유지" id="toc-로직의-일관성-유지" class="nav-link" data-scroll-target="#로직의-일관성-유지"><span class="header-section-number">12</span> 로직의 일관성 유지</a></li>
-  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론"><span class="header-section-number">13</span> 결론</a></li>
   </ul>
 </nav>
     </div>
@@ -397,8 +396,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <center>
 <img src="../../images/2025-10-31-ros1-to-2-control/img-1761880999237-1.png" width="60%">
 </center>
-<section id="제어-루프의-근본적인-전환" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 제어 루프의 근본적인 전환</h1>
+<section id="제어-루프의-근본적인-전환timer" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 제어 루프의 근본적인 전환(Timer)</h1>
 <p>기존 코드는 <code>while True</code> 루프 안에서 <code>time.sleep()</code>을 사용해 주기를 맞추는 방식이었습니다. 얼핏 보면 간단하고 직관적이지만, 실제로는 여러 문제를 안고 있었습니다. 운영체제의 스케줄링 정책, 파이썬의 GIL(Global Interpreter Lock), 깊은 함수 호출 스택 등이 복합적으로 작용하면서 제어 주기에 큰 지터(jitter)가 발생했습니다. 특히 ROS 콜백이나 구독자 처리와 동시에 실행될 때는 주기가 더욱 불안정해지는 문제가 있었습니다.</p>
 <p>이를 해결하기 위해 ROS2의 타이머 메커니즘을 도입했습니다. <code>self.allegro.create_timer(period, self._control_step)</code>처럼 타이머를 등록하면, ROS2의 실행기(executor)가 지정된 주기마다 콜백 함수를 호출해줍니다. 이 방식의 장점은 제어 주기가 ROS 실행기에 의해 관리되기 때문에 지터가 크게 감소한다는 것입니다. 메인 스레드는 타이머만 처리하고, I/O 작업이나 다른 콜백은 실행기가 적절히 스케줄링해주기 때문에 자원 경합도 줄어듭니다.</p>
 </section>
@@ -407,31 +406,31 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <p>초기 구현에서는 rclpy의 내부 API인 <code>rclpy.executors._util</code>이나 <code>_thread</code>를 사용했습니다. 하지만 이는 공식적으로 지원되지 않는 private API였고, ROS2 버전이 달라지면 <code>AttributeError</code>가 발생하는 심각한 문제가 있었습니다. 실제로 다른 환경에서 코드를 실행하려고 할 때 이 문제로 인해 코드가 동작하지 않는 경우가 빈번했습니다.</p>
 <p>이를 해결하기 위해 표준 라이브러리인 <code>threading.Thread</code>와 ROS2의 <code>SingleThreadedExecutor</code>를 조합한 안정적인 방식으로 전환했습니다. 별도의 스레드에서 실행기를 돌리면서 ROS2 노드가 백그라운드에서 안전하게 동작하도록 구현했습니다. 이렇게 하면 타이머 콜백과 구독자 콜백이 서로 막히지 않고 원활하게 처리됩니다. 공식 API만 사용하기 때문에 버전 호환성 문제도 완전히 해결되었습니다.</p>
 </section>
-<section id="장치-일관성-문제의-해결" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> 장치 일관성 문제의 해결</h1>
+<section id="device-일관성-문제의-해결" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Device 일관성 문제의 해결</h1>
 <p>딥러닝 모델을 사용할 때 가장 흔하게 마주치는 문제 중 하나가 텐서, 모델, 정규화 객체들이 서로 다른 디바이스(CUDA GPU 또는 CPU)에 있을 때 발생하는 오류입니다. “Expected all tensors to be on the same device”라는 런타임 에러가 발생하면 디버깅이 매우 어렵습니다.</p>
-<p>이를 근본적으로 해결하기 위해 <code>self.device</code>를 단일 진실 공급원(single source of truth)으로 설정하고, 모델, running_mean_std, sa_mean_std는 물론이고 관측 버퍼인 <code>obs_buf</code>, 고유 수용 히스토리 버퍼인 <code>proprio_hist_buf</code>까지 모두 같은 디바이스에 생성하고 이동시켰습니다. 하드웨어로 명령을 보내야 할 때만 <code>self.cur_target.detach().to('cpu').numpy()</code>처럼 CPU로 변환합니다. 이렇게 하면 디바이스 간 이동을 최소화해 속도가 향상되고, 디바이스 불일치 에러도 완전히 사라집니다.</p>
+<p>이를 근본적으로 해결하기 위해 <code>self.device</code>를 단일 진실 공급원(single source of truth)으로 설정하고, 모델, running_mean_std, sa_mean_std는 물론이고 관측 버퍼인 <code>obs_buf</code>, 고유 수용 히스토리 버퍼인 <code>proprio_hist_buf</code>까지 모두 같은 디바이스에 생성하고 이동시켰습니다. <strong>⚠️하드웨어로 명령을 보내야 할 때만</strong> <code>self.cur_target.detach().to('cpu').numpy()</code>처럼 CPU로 변환합니다. 이렇게 하면 디바이스 간 이동을 최소화해 속도가 향상되고, 디바이스 불일치 에러도 완전히 사라집니다.</p>
 </section>
 <section id="추론-성능-최적화" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> 추론 성능 최적화</h1>
-<p>제어 루프에서는 모델의 순전파만 필요하고 역전파는 전혀 필요하지 않습니다. 하지만 기본적으로 PyTorch는 그래디언트 트래킹을 수행하기 때문에 불필요한 메모리와 연산 비용이 발생합니다. 또한 코드 곳곳에서 <code>.clone()</code>을 남발하면 메모리 복사 오버헤드가 커집니다.</p>
-<p>타이머 콜백 함수인 <code>_control_step</code>에 <code>@torch.inference_mode()</code> 데코레이터를 적용해 추론 모드임을 명시적으로 선언했습니다. 이렇게 하면 그래디언트 계산과 관련된 모든 오버헤드가 제거됩니다. 또한 코드를 전체적으로 검토해서 꼭 필요한 위치에서만 <code>clone()</code>을 사용하도록 수정했습니다. 이러한 최적화를 통해 추론 시간이 안정화되고 전체적인 제어 주기가 일정하게 유지됩니다.</p>
+<p>제어 루프에서는 모델의 순전파(feed forwarding)만 필요하고 역전파(backprop)는 전혀 필요하지 않습니다. 하지만 기본적으로 PyTorch는 그래디언트 트래킹을 수행하기 때문에 불필요한 메모리와 연산 비용이 발생합니다. 또한 코드 곳곳에서 <code>.clone()</code>을 남발하면 <strong>메모리 복사 오버헤드가 커집니다.</strong></p>
+<p>타이머 콜백 함수인 <code>_control_step</code>에 <code>@torch.inference_mode()</code> 데코레이터를 적용해 <strong>추론 모드임을 명시적으로 선언</strong>했습니다. 이렇게 하면 그래디언트 계산과 관련된 모든 오버헤드가 제거됩니다. 또한 코드를 전체적으로 검토해서 꼭 필요한 위치에서만 <code>clone()</code>을 사용하도록 수정했습니다. 이러한 최적화를 통해 추론 시간이 안정화되고 전체적인 제어 주기가 일정하게 유지됩니다.</p>
 </section>
-<section id="관측-드랍에-대한-로버스트한-대응" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> 관측 드랍에 대한 로버스트한 대응</h1>
+<section id="observation-drop에-대한-robustness" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Observation Drop에 대한 Robustness</h1>
 <p>실시간 제어 시스템에서 피할 수 없는 문제 중 하나가 센서 데이터의 지연이나 누락입니다. 타이머 주기와 <code>/joint_states</code> 토픽의 퍼블리시 주기가 완벽하게 일치하지 않으면, 어떤 제어 틱에서는 새로운 관측 데이터가 도착하지 않을 수 있습니다. 이때 블로킹 방식으로 데이터를 기다리면 제어 주기 자체가 깨져버립니다.</p>
 <p>이를 해결하기 위해 논블로킹 방식인 <code>wait=False</code>로 데이터를 읽도록 변경했습니다. 새로운 샘플이 없으면 직전에 유효했던 관측값인 <code>_last_obs_q</code>를 재사용합니다. 동시에 드랍된 횟수를 <code>_skipped</code> 카운터로 기록해서 로깅합니다. 이렇게 하면 센서 데이터가 일시적으로 지연되더라도 제어 주기는 계속 유지되고, 시스템이 로버스트하게 동작합니다. 드랍 횟수를 모니터링함으로써 센서 통신에 문제가 있는지도 파악할 수 있습니다.</p>
 </section>
-<section id="버퍼-롤링의-안전한-구현" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> 버퍼 롤링의 안전한 구현</h1>
+<section id="buffer-rolling의-안전한-구현" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Buffer Rolling의 안전한 구현</h1>
 <p>시계열 데이터를 처리할 때 버퍼를 시프트하는 작업이 자주 필요합니다. 하지만 <code>self.obs_buf[:, :64] = self.obs_buf[:, 32:]</code>처럼 같은 텐서 내에서 겹치는 메모리 영역에 대입하면 PyTorch가 예외를 발생시킵니다. 이는 메모리 안정성을 위한 설계 결정인데, 올바르게 처리하지 않으면 런타임 에러로 이어집니다.</p>
 <p>이를 해결하는 방법으로 두 가지를 제시했습니다. 첫 번째는 <code>clone()</code>을 사용하는 방법입니다. <code>src = self.obs_buf[:, 32:96].clone()</code>처럼 원본 데이터를 먼저 복사한 후 대입하면 안전합니다. 두 번째는 <code>torch.roll()</code>을 사용하는 방법입니다. <code>rolled = torch.roll(self.obs_buf, shifts=-32, dims=1)</code>로 전체 버퍼를 시프트한 후 <code>self.obs_buf.copy_(rolled)</code>로 복사하면 됩니다. 두 방법 모두 안전하고 명확하며, 예외 없이 동작합니다.</p>
 </section>
-<section id="디버깅을-위한-포지션-갭-퍼블리셔" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> 디버깅을 위한 포지션 갭 퍼블리셔</h1>
-<p>로봇 제어에서 명령값과 실제 위치 사이의 오차는 매우 중요한 지표입니다. 하지만 기존 코드에서는 이를 외부에서 확인할 방법이 없었습니다. 디버깅이나 성능 분석을 할 때 이 정보가 매우 유용합니다.</p>
+<section id="디버깅을-위한-포지션-gap-퍼블리셔" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> 디버깅을 위한 포지션 Gap 퍼블리셔</h1>
+<p>로봇 제어에서 <strong>명령값과 (명령값 실행 후의)실제 위치 사이의 오차</strong>는 매우 중요한 지표입니다. 하지만 기존 코드에서는 이를 외부에서 확인할 방법이 없었습니다. 디버깅이나 성능 분석을 할 때 이 정보가 매우 유용합니다.</p>
 <p>이를 위해 <code>/position_gap</code> 토픽을 새로 추가했습니다. <code>sensor_msgs/JointState</code> 메시지 타입을 사용해서 ROS 생태계의 표준 도구들과 호환되도록 했습니다. <code>header.stamp</code>에는 <code>node.get_clock().now().to_msg()</code>로 정확한 ROS 타임스탬프를 기록하고, <code>name</code> 필드에는 16개 조인트의 이름을, <code>position</code> 필드에는 명령값과 실측값의 차이를 담습니다. 이렇게 하면 rqt_plot으로 실시간 모니터링을 하거나, rosbag으로 기록해서 나중에 분석하는 것이 가능해집니다.</p>
-<p>갭을 측정하는 타이밍도 중요합니다. 초기에는 “명령 전송 → 짧은 sleep → 갭 측정”을 고려했지만, 최종 구조에서는 타이머 콜백이 매 틱마다 최신 상태를 반영하기 때문에 별도의 sleep이 필요 없습니다. I/O 노드가 항상 최신 <code>/joint_states</code>를 기준으로 논블로킹 방식으로 갭을 계산하므로 제어 주기를 전혀 방해하지 않습니다.</p>
+<p><strong>갭을 측정하는 타이밍</strong>도 중요합니다. 초기에는 “명령 전송 → 짧은 sleep → 갭 측정”을 고려했지만, 최종 구조에서는 타이머 콜백이 매 틱마다 최신 상태를 반영하기 때문에 별도의 sleep이 필요 없습니다. I/O 노드가 항상 최신 <code>/joint_states</code>를 기준으로 논블로킹 방식으로 갭을 계산하므로 제어 주기를 전혀 방해하지 않습니다.</p>
 </section>
 <section id="신중한-초기화-과정" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> 신중한 초기화 과정</h1>
@@ -441,16 +440,16 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <section id="효율적인-로깅-전략" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> 효율적인 로깅 전략</h1>
 <p>디버깅을 위해 로깅은 필수적이지만, 매 제어 틱마다 출력하면 성능이 크게 저하됩니다. 특히 고주파수로 동작하는 제어 루프에서는 로깅 자체가 병목이 될 수 있습니다.</p>
-<p>이를 해결하기 위해 간헐적 로깅 전략을 사용했습니다. 예를 들어 5초에 한 번씩만 주기와 지터 정보를 출력합니다. <code>skipped</code> 카운터는 계속 업데이트하되, 출력은 주기적으로만 합니다. 이렇게 하면 필요한 정보는 얻으면서도 성능 저하를 최소화할 수 있습니다.</p>
+<p>이를 해결하기 위해 <strong>간헐적 로깅 전략</strong>을 사용했습니다. 예를 들어 <code>5초에 한 번씩만</code> 주기와 지터 정보를 출력합니다. <code>skipped</code> 카운터는 계속 업데이트하되, 출력은 주기적으로만 합니다. 이렇게 하면 필요한 정보는 얻으면서도 성능 저하를 최소화할 수 있습니다.</p>
 </section>
 <section id="ros2-api의-올바른-사용" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> ROS2 API의 올바른 사용</h1>
 <p>ROS2를 사용할 때는 공식 API만 사용하는 것이 매우 중요합니다. 앞서 언급한 것처럼 내부 API를 사용하면 버전 호환성 문제가 발생할 수 있습니다. <code>SingleThreadedExecutor</code>로도 대부분의 경우 충분하지만, 만약 콜백 간의 경합이 심하다면 <code>MultiThreadedExecutor</code>를 고려할 수 있습니다.</p>
-<p>프로그램을 종료할 때도 올바른 순서가 중요합니다. <code>stop_allegro_io()</code> 함수에서 <code>executor.shutdown()</code>을 먼저 호출해서 실행기를 정리하고, <code>node.destroy_node()</code>로 노드를 파괴한 다음, 마지막으로 <code>rclpy.shutdown()</code>을 호출합니다. 이 순서를 지키면 리소스가 깨끗하게 정리되고 예기치 않은 에러를 방지할 수 있습니다.</p>
+<p><strong>프로그램을 종료할 때도 올바른 순서가 중요</strong>합니다. <code>stop_allegro_io()</code> 함수에서 <code>executor.shutdown()</code>을 먼저 호출해서 실행기를 정리하고, <code>node.destroy_node()</code>로 노드를 파괴한 다음, 마지막으로 <code>rclpy.shutdown()</code>을 호출합니다. 이 순서를 지키면 리소스가 깨끗하게 정리되고 예기치 않은 에러를 방지할 수 있습니다.</p>
 </section>
 <section id="추가-최적화-가능성" class="level1" data-number="11">
 <h1 data-number="11"><span class="header-section-number">11</span> 추가 최적화 가능성</h1>
-<p>더 나아가 성능을 극대화하고 싶다면 몇 가지 선택적인 최적화 기법을 적용할 수 있습니다. FP16이나 TF32를 사용하면 모델을 half precision으로 변환해서 추론 지연을 줄일 수 있습니다. 단, 이는 CUDA를 사용할 때만 가능하고 입력 데이터도 같은 타입으로 맞춰야 합니다.</p>
+<p>더 나아가 성능을 극대화하고 싶다면 몇 가지 선택적인 최적화 기법을 적용할 수 있습니다. <code>FP16이나 TF32를 사용하면</code> 모델을 half precision으로 변환해서 추론 지연을 줄일 수 있습니다. 단, 이는 CUDA를 사용할 때만 가능하고 입력 데이터도 같은 타입으로 맞춰야 합니다.</p>
 <p>입력 shape이 고정되어 있다면 CUDA Graph를 활용할 수 있습니다. 그래프를 한 번 캡처한 후 재사용하면 커널 런칭 오버헤드가 줄어들어 지터가 감소합니다. MLP 네트워크의 <code>actor_units</code>이나 <code>priv_mlp_units</code> 차원을 줄이는 것도 실시간성을 향상시키는 방법입니다.</p>
 <p>타이머 주기 설정도 신중해야 합니다. 하드웨어와 드라이버의 지연을 고려해서 20Hz부터 시작하는 것이 안전합니다. 시스템이 안정적으로 동작하는 것을 확인한 후 점진적으로 주파수를 높이면 됩니다.</p>
 </section>
@@ -458,9 +457,8 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <h1 data-number="12"><span class="header-section-number">12</span> 로직의 일관성 유지</h1>
 <p>이 모든 개선 과정에서 가장 중요하게 생각한 것은 ROS1과 ROS2 사이의 로직 일관성입니다. 관측 데이터를 받아서 정규화하고, 버퍼를 업데이트하고, 모델로 추론하고, 액션을 스케일링하고 클리핑해서 타깃을 갱신하고, 명령을 전송하고, 다음 관측을 받는 전체 파이프라인은 동일합니다.</p>
 <p>차이점은 조인트 순서 변환과 토픽 인터페이스뿐입니다. ROS1과 ROS2는 조인트 순서가 다르기 때문에 이를 변환하는 로직이 필요하고, 토픽 이름이나 메시지 타입이 약간 다를 수 있습니다. 하지만 핵심 제어 로직은 완전히 동일하게 유지했습니다.</p>
-</section>
-<section id="결론" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> 결론</h1>
+<hr>
+<p><strong>결론</strong></p>
 <p>이번 리팩토링의 핵심은 ROS2의 특성을 제대로 활용해서 실시간성과 안정성을 극대화하는 것이었습니다. 타이머 기반 제어 루프로 전환해서 정확한 제어 주기를 달성했고, 디바이스 일관성과 버퍼 관리를 개선해서 안정성을 높였습니다. 포지션 갭 퍼블리셔를 추가해서 분석 가능성을 향상시켰고, inference_mode와 최적화 기법을 적용해서 성능을 개선했습니다.</p>
 <p>이러한 개선들은 개별적으로도 의미가 있지만, 함께 적용했을 때 시너지 효과가 큽니다. 정확한 제어 주기, 안정적인 동작, 효율적인 성능, 그리고 디버깅 가능성이 모두 향상되어 실제 로봇 제어 시스템에서 신뢰할 수 있는 코드가 되었습니다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -922,8 +920,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 이후는 논블로킹으로 주기 유지</li>
 </ul>
 <hr>
-<section id="요약-핵심-개선-사항" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> 요약: 핵심 개선 사항</h1>
+<section id="요약-핵심-개선-사항" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> 요약: 핵심 개선 사항</h1>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1225,8 +1223,8 @@ Development Guide
 <li>두 시스템 간 <strong>조인트 순서/스케일</strong> 차이는 별도 유틸 함수로 관리(가독성↑, 버그↓).</li>
 </ul>
 <hr>
-<section id="실전-체크리스트" class="level1" data-number="15">
-<h1 data-number="15"><span class="header-section-number">15</span> 실전 체크리스트</h1>
+<section id="실전-체크리스트" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> 실전 체크리스트</h1>
 <ul class="task-list">
 <li><label><input type="checkbox">제어 루프는 <strong>Timer 콜백</strong>으로, 블로킹 금지</label></li>
 <li><label><input type="checkbox">실행기는 <strong>threading + (Single|Multi)ThreadedExecutor</strong></label></li>
