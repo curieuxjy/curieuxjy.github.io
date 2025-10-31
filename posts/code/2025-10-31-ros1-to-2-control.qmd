@@ -1,0 +1,1714 @@
+---
+title: "👩‍💻ROS2 code 개선"
+toc: true
+number-sections: true
+date: "2025-11=0-31"
+description: 기존의 ROS1 제어 코드에서 ROS2 제어 코드로 리펙토링
+categories: [ros2, python, code]
+execute:
+  freeze: auto
+---
+
+# ROS2 제어 코드 개선: 실시간성과 안정성을 위한 종합 가이드
+
+ROS1 기반의 제어 코드를 ROS2로 전환하면서 가장 중요하게 생각한 점은 단순히 API를 바꾸는 것이 아니라, ROS2의 특성을 활용해 실시간성과 안정성을 근본적으로 향상시키는 것이었습니다. 이 글에서는 기존 코드가 가진 문제점들을 하나씩 짚어보고, 어떻게 개선했는지 그 과정과 이유를 상세히 설명하겠습니다.
+
+## 제어 루프의 근본적인 전환
+
+기존 코드는 `while True` 루프 안에서 `time.sleep()`을 사용해 주기를 맞추는 방식이었습니다. 얼핏 보면 간단하고 직관적이지만, 실제로는 여러 문제를 안고 있었습니다. 운영체제의 스케줄링 정책, 파이썬의 GIL(Global Interpreter Lock), 깊은 함수 호출 스택 등이 복합적으로 작용하면서 제어 주기에 큰 지터(jitter)가 발생했습니다. 특히 ROS 콜백이나 구독자 처리와 동시에 실행될 때는 주기가 더욱 불안정해지는 문제가 있었습니다.
+
+이를 해결하기 위해 ROS2의 타이머 메커니즘을 도입했습니다. `self.allegro.create_timer(period, self._control_step)`처럼 타이머를 등록하면, ROS2의 실행기(executor)가 지정된 주기마다 콜백 함수를 호출해줍니다. 이 방식의 장점은 제어 주기가 ROS 실행기에 의해 관리되기 때문에 지터가 크게 감소한다는 것입니다. 메인 스레드는 타이머만 처리하고, I/O 작업이나 다른 콜백은 실행기가 적절히 스케줄링해주기 때문에 자원 경합도 줄어듭니다.
+
+## 실행기 백그라운드 처리의 안정화
+
+초기 구현에서는 rclpy의 내부 API인 `rclpy.executors._util`이나 `_thread`를 사용했습니다. 하지만 이는 공식적으로 지원되지 않는 private API였고, ROS2 버전이 달라지면 `AttributeError`가 발생하는 심각한 문제가 있었습니다. 실제로 다른 환경에서 코드를 실행하려고 할 때 이 문제로 인해 코드가 동작하지 않는 경우가 빈번했습니다.
+
+이를 해결하기 위해 표준 라이브러리인 `threading.Thread`와 ROS2의 `SingleThreadedExecutor`를 조합한 안정적인 방식으로 전환했습니다. 별도의 스레드에서 실행기를 돌리면서 ROS2 노드가 백그라운드에서 안전하게 동작하도록 구현했습니다. 이렇게 하면 타이머 콜백과 구독자 콜백이 서로 막히지 않고 원활하게 처리됩니다. 공식 API만 사용하기 때문에 버전 호환성 문제도 완전히 해결되었습니다.
+
+## 장치 일관성 문제의 해결
+
+딥러닝 모델을 사용할 때 가장 흔하게 마주치는 문제 중 하나가 텐서, 모델, 정규화 객체들이 서로 다른 디바이스(CUDA GPU 또는 CPU)에 있을 때 발생하는 오류입니다. "Expected all tensors to be on the same device"라는 런타임 에러가 발생하면 디버깅이 매우 어렵습니다.
+
+이를 근본적으로 해결하기 위해 `self.device`를 단일 진실 공급원(single source of truth)으로 설정하고, 모델, running_mean_std, sa_mean_std는 물론이고 관측 버퍼인 `obs_buf`, 고유 수용 히스토리 버퍼인 `proprio_hist_buf`까지 모두 같은 디바이스에 생성하고 이동시켰습니다. 하드웨어로 명령을 보내야 할 때만 `self.cur_target.detach().to('cpu').numpy()`처럼 CPU로 변환합니다. 이렇게 하면 디바이스 간 이동을 최소화해 속도가 향상되고, 디바이스 불일치 에러도 완전히 사라집니다.
+
+## 추론 성능 최적화
+
+제어 루프에서는 모델의 순전파만 필요하고 역전파는 전혀 필요하지 않습니다. 하지만 기본적으로 PyTorch는 그래디언트 트래킹을 수행하기 때문에 불필요한 메모리와 연산 비용이 발생합니다. 또한 코드 곳곳에서 `.clone()`을 남발하면 메모리 복사 오버헤드가 커집니다.
+
+타이머 콜백 함수인 `_control_step`에 `@torch.inference_mode()` 데코레이터를 적용해 추론 모드임을 명시적으로 선언했습니다. 이렇게 하면 그래디언트 계산과 관련된 모든 오버헤드가 제거됩니다. 또한 코드를 전체적으로 검토해서 꼭 필요한 위치에서만 `clone()`을 사용하도록 수정했습니다. 이러한 최적화를 통해 추론 시간이 안정화되고 전체적인 제어 주기가 일정하게 유지됩니다.
+
+## 관측 드랍에 대한 로버스트한 대응
+
+실시간 제어 시스템에서 피할 수 없는 문제 중 하나가 센서 데이터의 지연이나 누락입니다. 타이머 주기와 `/joint_states` 토픽의 퍼블리시 주기가 완벽하게 일치하지 않으면, 어떤 제어 틱에서는 새로운 관측 데이터가 도착하지 않을 수 있습니다. 이때 블로킹 방식으로 데이터를 기다리면 제어 주기 자체가 깨져버립니다.
+
+이를 해결하기 위해 논블로킹 방식인 `wait=False`로 데이터를 읽도록 변경했습니다. 새로운 샘플이 없으면 직전에 유효했던 관측값인 `_last_obs_q`를 재사용합니다. 동시에 드랍된 횟수를 `_skipped` 카운터로 기록해서 로깅합니다. 이렇게 하면 센서 데이터가 일시적으로 지연되더라도 제어 주기는 계속 유지되고, 시스템이 로버스트하게 동작합니다. 드랍 횟수를 모니터링함으로써 센서 통신에 문제가 있는지도 파악할 수 있습니다.
+
+## 버퍼 롤링의 안전한 구현
+
+시계열 데이터를 처리할 때 버퍼를 시프트하는 작업이 자주 필요합니다. 하지만 `self.obs_buf[:, :64] = self.obs_buf[:, 32:]`처럼 같은 텐서 내에서 겹치는 메모리 영역에 대입하면 PyTorch가 예외를 발생시킵니다. 이는 메모리 안정성을 위한 설계 결정인데, 올바르게 처리하지 않으면 런타임 에러로 이어집니다.
+
+이를 해결하는 방법으로 두 가지를 제시했습니다. 첫 번째는 `clone()`을 사용하는 방법입니다. `src = self.obs_buf[:, 32:96].clone()`처럼 원본 데이터를 먼저 복사한 후 대입하면 안전합니다. 두 번째는 `torch.roll()`을 사용하는 방법입니다. `rolled = torch.roll(self.obs_buf, shifts=-32, dims=1)`로 전체 버퍼를 시프트한 후 `self.obs_buf.copy_(rolled)`로 복사하면 됩니다. 두 방법 모두 안전하고 명확하며, 예외 없이 동작합니다.
+
+## 디버깅을 위한 포지션 갭 퍼블리셔
+
+로봇 제어에서 명령값과 실제 위치 사이의 오차는 매우 중요한 지표입니다. 하지만 기존 코드에서는 이를 외부에서 확인할 방법이 없었습니다. 디버깅이나 성능 분석을 할 때 이 정보가 매우 유용합니다.
+
+이를 위해 `/position_gap` 토픽을 새로 추가했습니다. `sensor_msgs/JointState` 메시지 타입을 사용해서 ROS 생태계의 표준 도구들과 호환되도록 했습니다. `header.stamp`에는 `node.get_clock().now().to_msg()`로 정확한 ROS 타임스탬프를 기록하고, `name` 필드에는 16개 조인트의 이름을, `position` 필드에는 명령값과 실측값의 차이를 담습니다. 이렇게 하면 rqt_plot으로 실시간 모니터링을 하거나, rosbag으로 기록해서 나중에 분석하는 것이 가능해집니다.
+
+갭을 측정하는 타이밍도 중요합니다. 초기에는 "명령 전송 → 짧은 sleep → 갭 측정"을 고려했지만, 최종 구조에서는 타이머 콜백이 매 틱마다 최신 상태를 반영하기 때문에 별도의 sleep이 필요 없습니다. I/O 노드가 항상 최신 `/joint_states`를 기준으로 논블로킹 방식으로 갭을 계산하므로 제어 주기를 전혀 방해하지 않습니다.
+
+## 신중한 초기화 과정
+
+제어를 시작하기 전의 초기화 과정도 매우 중요합니다. 워밍업 단계에서는 제어 주파수의 4배에 해당하는 횟수만큼 초기 자세 명령을 보냅니다. 이는 모터 드라이버가 안정화되도록 하기 위함입니다.
+
+첫 번째 관측은 특별하게 처리합니다. `wait=True, timeout=5.0`으로 블로킹 방식으로 한 번만 읽어서 유효한 데이터가 확실히 들어왔는지 확인합니다. 타임아웃을 설정해서 무한정 기다리는 것을 방지합니다. 이후부터는 모두 논블로킹 방식으로 전환합니다. 이렇게 하면 초기 버퍼 상태가 정상적으로 설정되고, 그 다음부터는 제어 주기가 깨지지 않습니다.
+
+## 효율적인 로깅 전략
+
+디버깅을 위해 로깅은 필수적이지만, 매 제어 틱마다 출력하면 성능이 크게 저하됩니다. 특히 고주파수로 동작하는 제어 루프에서는 로깅 자체가 병목이 될 수 있습니다.
+
+이를 해결하기 위해 간헐적 로깅 전략을 사용했습니다. 예를 들어 5초에 한 번씩만 주기와 지터 정보를 출력합니다. `skipped` 카운터는 계속 업데이트하되, 출력은 주기적으로만 합니다. 이렇게 하면 필요한 정보는 얻으면서도 성능 저하를 최소화할 수 있습니다.
+
+## ROS2 API의 올바른 사용
+
+ROS2를 사용할 때는 공식 API만 사용하는 것이 매우 중요합니다. 앞서 언급한 것처럼 내부 API를 사용하면 버전 호환성 문제가 발생할 수 있습니다. `SingleThreadedExecutor`로도 대부분의 경우 충분하지만, 만약 콜백 간의 경합이 심하다면 `MultiThreadedExecutor`를 고려할 수 있습니다.
+
+프로그램을 종료할 때도 올바른 순서가 중요합니다. `stop_allegro_io()` 함수에서 `executor.shutdown()`을 먼저 호출해서 실행기를 정리하고, `node.destroy_node()`로 노드를 파괴한 다음, 마지막으로 `rclpy.shutdown()`을 호출합니다. 이 순서를 지키면 리소스가 깨끗하게 정리되고 예기치 않은 에러를 방지할 수 있습니다.
+
+## 추가 최적화 가능성
+
+더 나아가 성능을 극대화하고 싶다면 몇 가지 선택적인 최적화 기법을 적용할 수 있습니다. FP16이나 TF32를 사용하면 모델을 half precision으로 변환해서 추론 지연을 줄일 수 있습니다. 단, 이는 CUDA를 사용할 때만 가능하고 입력 데이터도 같은 타입으로 맞춰야 합니다.
+
+입력 shape이 고정되어 있다면 CUDA Graph를 활용할 수 있습니다. 그래프를 한 번 캡처한 후 재사용하면 커널 런칭 오버헤드가 줄어들어 지터가 감소합니다. MLP 네트워크의 `actor_units`이나 `priv_mlp_units` 차원을 줄이는 것도 실시간성을 향상시키는 방법입니다.
+
+타이머 주기 설정도 신중해야 합니다. 하드웨어와 드라이버의 지연을 고려해서 20Hz부터 시작하는 것이 안전합니다. 시스템이 안정적으로 동작하는 것을 확인한 후 점진적으로 주파수를 높이면 됩니다.
+
+## 로직의 일관성 유지
+
+이 모든 개선 과정에서 가장 중요하게 생각한 것은 ROS1과 ROS2 사이의 로직 일관성입니다. 관측 데이터를 받아서 정규화하고, 버퍼를 업데이트하고, 모델로 추론하고, 액션을 스케일링하고 클리핑해서 타깃을 갱신하고, 명령을 전송하고, 다음 관측을 받는 전체 파이프라인은 동일합니다.
+
+차이점은 조인트 순서 변환과 토픽 인터페이스뿐입니다. ROS1과 ROS2는 조인트 순서가 다르기 때문에 이를 변환하는 로직이 필요하고, 토픽 이름이나 메시지 타입이 약간 다를 수 있습니다. 하지만 핵심 제어 로직은 완전히 동일하게 유지했습니다.
+
+## 결론
+
+이번 리팩토링의 핵심은 ROS2의 특성을 제대로 활용해서 실시간성과 안정성을 극대화하는 것이었습니다. 타이머 기반 제어 루프로 전환해서 정확한 제어 주기를 달성했고, 디바이스 일관성과 버퍼 관리를 개선해서 안정성을 높였습니다. 포지션 갭 퍼블리셔를 추가해서 분석 가능성을 향상시켰고, inference_mode와 최적화 기법을 적용해서 성능을 개선했습니다.
+
+이러한 개선들은 개별적으로도 의미가 있지만, 함께 적용했을 때 시너지 효과가 큽니다. 정확한 제어 주기, 안정적인 동작, 효율적인 성능, 그리고 디버깅 가능성이 모두 향상되어 실제 로봇 제어 시스템에서 신뢰할 수 있는 코드가 되었습니다.
+
+::: {.callout-note icon="false"}
+
+# ROS2 제어 코드 개선: Before/After 핵심 코드 비교
+
+## 1. 제어 루프: while+sleep → ROS2 Timer
+
+### ❌ Before: 불안정한 while 루프
+```python
+def deploy(self):
+    self.allegro = start_allegro_io(side='right')
+    hz = 20
+
+    # ... 초기화 ...
+
+    timestep = 0
+    try:
+        while True:
+            loop_start = time.perf_counter()
+
+            # 관측 정규화
+            self.obs_buf = self.running_mean_std(self.obs_buf.clone())
+
+            # 추론
+            input_dict = {
+                "obs": self.obs_buf,
+                "proprio_hist": self.sa_mean_std(self.proprio_hist_buf.clone()),
+            }
+            action = torch.clamp(self.model.act_inference(input_dict), -1.0, 1.0)
+
+            # 제어
+            self.pre_physics_step(action)
+            cmd = self.cur_target.detach().to('cpu').numpy()[0]
+            ros1 = _action_hora2allegro(cmd)
+            ros2 = _reorder_imrt2timr(ros1)
+            self.allegro.command_joint_position(ros2)
+
+            # 블로킹으로 관측 대기
+            q_pos = self.allegro.poll_joint_position(wait=True, timeout=0.2)
+            ros1_q = _reorder_timr2imrt(q_pos)
+            hora_q = _obs_allegro2hora(ros1_q)
+            obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+
+            self.post_physics_step(obs_q)
+
+            time.sleep(0.03)  # 주기가 불안정!
+            timestep += 1
+
+            freq = 1.0 / (time.perf_counter() - loop_start)
+            print(f"Hz={freq:.2f}")
+```
+
+**문제점:**
+- `time.sleep(0.03)`는 OS 스케줄링에 의존 → 지터 발생
+- 블로킹 I/O(`wait=True`)로 주기 깨짐
+- 매 틱마다 주파수 출력 → 성능 저하
+
+### ✅ After: ROS2 Timer + 논블로킹
+```python
+def deploy(self):
+    self.allegro = start_allegro_io(side='right')
+
+    # ... 초기화 ...
+
+    # Timer 등록 (정확한 주기 보장)
+    period = 1.0 / self.hz
+    self.timer = self.allegro.create_timer(period, self._control_step)
+    print(f"Deployment started (timer-based {self.hz:.1f} Hz).")
+
+    # 메인 스레드는 시그널만 처리
+    interrupted = False
+    def _sigint(_sig, _frm):
+        nonlocal interrupted
+        interrupted = True
+    signal.signal(signal.SIGINT, _sigint)
+
+    try:
+        while not interrupted:
+            time.sleep(0.2)
+    finally:
+        if self.timer is not None:
+            self.timer.cancel()
+        self.allegro.go_safe()
+        stop_allegro_io(self.allegro)
+
+@torch.inference_mode()  # 그래디언트 트래킹 비활성화
+def _control_step(self):
+    t0 = time.perf_counter()
+
+    # 1) 정규화
+    obs_norm = self.running_mean_std(self.obs_buf)
+
+    # 2) 추론
+    input_dict = {
+        "obs": obs_norm,
+        "proprio_hist": self.sa_mean_std(self.proprio_hist_buf),
+    }
+    action = torch.clamp(self.model.act_inference(input_dict), -1.0, 1.0)
+
+    # 3) 타깃 업데이트
+    self._pre_physics_step(action)
+
+    # 4) 명령 전송
+    cmd = self.cur_target.detach().to("cpu").numpy()[0]
+    ros1 = _action_hora2allegro(cmd)
+    ros2 = _reorder_imrt2timr(ros1)
+    self.allegro.command_joint_position(ros2)
+
+    # 5) 논블로킹 관측 (드랍 시 last-good 사용)
+    q_pos = self.allegro.poll_joint_position(wait=False, timeout=0.0)
+    if q_pos is not None:
+        ros1_q = _reorder_timr2imrt(q_pos)
+        hora_q = _obs_allegro2hora(ros1_q)
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+        self._last_obs_q = obs_q
+    else:
+        obs_q = self._last_obs_q  # 재사용
+        self._skipped += 1
+
+    if obs_q is not None:
+        self._post_physics_step(obs_q)
+
+    # 6) 간헐적 로깅 (5초마다)
+    if self._last_step_t is not None:
+        dt = t0 - self._last_step_t
+        if int(time.time()) % 5 == 0:
+            hz_est = 1.0 / max(dt, 1e-6)
+            print(f"[timer] {hz_est:.2f} Hz, skipped={self._skipped}")
+    self._last_step_t = t0
+```
+
+**개선 효과:**
+
+- ✅ ROS2 실행기가 주기 관리 → 지터 감소
+- ✅ 논블로킹 I/O → 주기 유지
+- ✅ `@torch.inference_mode()` → 추론 오버헤드 제거
+- ✅ 간헐적 로깅 → 성능 저하 최소화
+
+---
+
+## 2. ROS2 실행기: 내부 API → 표준 threading
+
+### ❌ Before: 불안정한 내부 API
+```python
+class _Runner:
+    def __init__(self, node: AllegroHandIO):
+        self.node = node
+        self.exec = SingleThreadedExecutor()
+        self.exec.add_node(node)
+        # ⚠️ 내부 API 사용 - 버전 호환성 문제!
+        self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        try:
+            self.exec.shutdown()
+        finally:
+            self.node.destroy_node()
+```
+
+### ✅ After: 안전한 표준 API
+```python
+import threading
+from rclpy.executors import SingleThreadedExecutor
+
+class _Runner:
+    def __init__(self, node: 'AllegroHandIO'):
+        self.node = node
+        self.exec = SingleThreadedExecutor()
+        self.exec.add_node(node)
+        # ✅ 표준 threading 사용
+        self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        try:
+            self.exec.shutdown()          # 1. executor 중지
+        finally:
+            try:
+                self.node.destroy_node()  # 2. 노드 파괴
+            finally:
+                # 3. 스레드 종료 대기 (타임아웃 설정)
+                self.thread.join(timeout=2.0)
+```
+
+**개선 효과:**
+
+- ✅ 공식 API만 사용 → 버전 호환성 보장
+- ✅ 올바른 종료 순서 → 리소스 누수 방지
+
+---
+
+## 3. 장치 일관성: 디바이스 불일치 해결
+
+### ❌ Before: 산발적인 디바이스 할당
+```python
+def __init__(self):
+    self.device = "cuda"
+
+    # 모델은 CUDA로
+    self.model = ActorCritic(net_config).to(self.device).eval()
+    self.running_mean_std = RunningMeanStd(obs_shape).to(self.device).eval()
+
+    # ⚠️ 버퍼는 디바이스 명시 없음 - CPU에 생성됨!
+    self.obs_buf = torch.zeros((1, 16 * 3 * 2), dtype=torch.float32)
+    self.proprio_hist_buf = torch.zeros((1, 30, 16 * 2), dtype=torch.float32)
+
+    # limits도 디바이스 명시
+    self.allegro_dof_lower = torch.tensor([...], dtype=torch.float32, device=self.device)
+
+    # ⚠️ targets는 디바이스 명시 없음
+    self.prev_target = torch.zeros((1, 16), dtype=torch.float32)
+```
+
+### ✅ After: 모든 텐서를 같은 디바이스로
+```python
+def __init__(self, hz: float = 20.0, device: str = "cuda"):
+    torch.set_grad_enabled(False)
+    self.hz = float(hz)
+    self.device = device  # ✅ 단일 진실 공급원
+
+    # 모델과 RMS
+    self.model = ActorCritic(net_config).to(self.device).eval()
+    self.running_mean_std = RunningMeanStd(obs_shape).to(self.device).eval()
+    self.sa_mean_std = RunningMeanStd((30, 32)).to(self.device).eval()
+
+    # ✅ 모든 버퍼를 명시적으로 같은 디바이스에 생성
+    self.obs_buf = torch.zeros((1, 96), dtype=torch.float32, device=self.device)
+    self.proprio_hist_buf = torch.zeros((1, 30, 32), dtype=torch.float32, device=self.device)
+
+    # ✅ limits도 같은 디바이스
+    self.allegro_dof_lower = torch.tensor([...], dtype=torch.float32, device=self.device)
+    self.allegro_dof_upper = torch.tensor([...], dtype=torch.float32, device=self.device)
+
+    # ✅ targets도 같은 디바이스
+    self.prev_target = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+    self.cur_target = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+
+# ✅ 하드웨어 I/O 직전에만 CPU로 이동
+def _control_step(self):
+    # ... 추론 ...
+
+    # CPU로 이동은 명령 전송 시에만
+    cmd = self.cur_target.detach().to("cpu").numpy()[0]
+    self.allegro.command_joint_position(ros2)
+
+    # 관측 읽기 후 바로 디바이스로
+    q_pos = self.allegro.poll_joint_position(wait=False)
+    if q_pos is not None:
+        # ... 변환 ...
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+```
+
+**개선 효과:**
+
+- ✅ "Expected all tensors to be on the same device" 에러 제거
+- ✅ 불필요한 디바이스 이동 최소화 → 속도 향상
+
+---
+
+## 4. 버퍼 롤링: 겹침 오류 수정
+
+### ❌ Before: 메모리 겹침 오류
+```python
+def post_physics_step(self, obses):
+    self.cur_obs_buf = self.unscale(obses, ...)[None]
+
+    # ⚠️ 같은 텐서 내 겹치는 메모리 영역에 대입!
+    # obs_buf[:, 32:96]의 일부가 [:, :64]와 겹침
+    self.prev_obs_buf = self.obs_buf[:, 32:].clone()
+    self.obs_buf[:, :64] = self.prev_obs_buf  # RuntimeError!
+    self.obs_buf[:, 64:80] = self.cur_obs_buf.clone()
+    self.obs_buf[:, 80:96] = self.cur_target.clone()
+
+    # proprio history도 동일 문제
+    cur = torch.cat([cur_norm_t, cur_tgt_t], dim=-1)
+    prev = self.proprio_hist_buf[:, 1:30, :].clone()
+    self.proprio_hist_buf[:] = torch.cat([prev, cur], dim=1)  # 비효율적
+```
+
+### ✅ After: 안전한 버퍼 시프트
+
+**방법 1: clone() 사용**
+```python
+def _post_physics_step(self, obses):
+    # 1) 현재 관측 정규화
+    cur_obs = self._unscale(
+        obses.view(-1), self.allegro_dof_lower, self.allegro_dof_upper
+    ).view(1, 16)
+
+    # 2) obs_buf 롤링 - ✅ 소스를 먼저 clone()
+    src64 = self.obs_buf[:, 32:96].clone()     # (1,64) 복사
+    self.obs_buf[:, 0:64] = src64              # 안전한 대입
+    self.obs_buf[:, 64:80] = cur_obs
+    self.obs_buf[:, 80:96] = self.cur_target
+
+    # 3) proprio_hist_buf 롤링 - ✅ 소스를 먼저 clone()
+    src_hist = self.proprio_hist_buf[:, 1:, :].clone()  # (1,29,32)
+    self.proprio_hist_buf[:, 0:-1, :] = src_hist
+    self.proprio_hist_buf[:, -1, :16] = cur_obs
+    self.proprio_hist_buf[:, -1, 16:32] = self.cur_target
+```
+
+**방법 2: torch.roll 사용 (대안)**
+```python
+def _post_physics_step(self, obses):
+    cur_obs = self._unscale(obses.view(-1), ...).view(1, 16)
+
+    # ✅ roll을 사용한 시프트
+    rolled = torch.roll(self.obs_buf, shifts=-32, dims=1)
+    self.obs_buf[:, :-32].copy_(rolled[:, :-32])  # 앞 64칸
+    self.obs_buf[:, 64:80] = cur_obs
+    self.obs_buf[:, 80:96] = self.cur_target
+```
+
+**개선 효과:**
+
+- ✅ RuntimeError 완전 제거
+- ✅ 명확한 시프트 로직
+
+---
+
+## 5. 관측 드랍 대응: 블로킹 → 논블로킹 + last-good
+
+### ❌ Before: 블로킹으로 주기 깨짐
+```python
+# 매 틱마다 블로킹 대기
+q_pos = self.allegro.poll_joint_position(wait=True, timeout=0.2)
+if q_pos is None:
+    # 데이터 없으면 에러...
+    print("❌ failed to read")
+
+ros1_q = _reorder_timr2imrt(q_pos)
+# ... 처리 ...
+```
+
+### ✅ After: 논블로킹 + 재사용
+```python
+def __init__(self, ...):
+    # ...
+    self._last_obs_q = None  # ✅ 마지막 유효 관측 저장
+    self._skipped = 0        # ✅ 드랍 카운터
+
+def _control_step(self):
+    # ... 명령 전송 ...
+
+    # ✅ 논블로킹으로 읽기
+    q_pos = self.allegro.poll_joint_position(wait=False, timeout=0.0)
+
+    if q_pos is not None:
+        # 새 데이터 있으면 갱신
+        ros1_q = _reorder_timr2imrt(q_pos)
+        hora_q = _obs_allegro2hora(ros1_q)
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+        self._last_obs_q = obs_q  # ✅ 저장
+    else:
+        # 새 데이터 없으면 이전 것 재사용
+        obs_q = self._last_obs_q
+        self._skipped += 1  # ✅ 카운트
+
+    if obs_q is not None:
+        self._post_physics_step(obs_q)
+
+    # 로깅 (5초마다)
+    if int(time.time()) % 5 == 0:
+        print(f"skipped={self._skipped}")
+```
+
+**개선 효과:**
+
+- ✅ 제어 주기 유지 (실시간성↑)
+- ✅ 센서 지연에 강건한 동작
+- ✅ 드랍 횟수 모니터링 가능
+
+---
+
+## 6. Position Gap 퍼블리셔: 타임스탬프 + 조인트 이름
+
+### ❌ Before: Gap 측정에 짧은 sleep 삽입
+
+```python
+def command_joint_position(self, positions: List[float]) -> bool:
+    # 명령 퍼블리시
+    msg = Float64MultiArray()
+    msg.data = data
+    self._cmd_pub.publish(msg)
+    self._last_cmd = np.asarray(data, dtype=float)
+
+    # ⚠️ 명령 직후 짧게 대기 (비효율적)
+    if self._gap_after_cmd_delay > 0:
+        time.sleep(self._gap_after_cmd_delay)  # 0.02초
+
+    # gap 1회 퍼블리시
+    self._publish_position_gap()
+    return True
+
+def _publish_position_gap(self):
+    if self._last_cmd is None or self._last_js is None:
+        return
+    cur = self.poll_joint_position(wait=False)
+    if cur is None or cur.size != 16:
+        return
+
+    cmd = np.asarray(self._last_cmd, dtype=float).reshape(16)
+    gap = (cmd - cur).astype(float)
+
+    # ⚠️ Header 정보 부족
+    msg = JointState()
+    msg.header.stamp = self.get_clock().now().to_msg()
+    msg.header.frame_id = ""
+    msg.name = list(self._desired_names)
+    msg.position = gap.tolist()
+    self._gap_pub.publish(msg)
+```
+
+### ✅ After: 타이머 콜백 내에서 최신 상태로
+```python
+def command_joint_position(self, positions: List[float]) -> bool:
+    msg = Float64MultiArray()
+    msg.data = data
+    self._cmd_pub.publish(msg)
+    self._last_cmd = np.asarray(data, dtype=float)
+
+    # ✅ sleep 없이 바로 gap 퍼블리시 (논블로킹)
+    self._publish_position_gap()
+    return True
+
+def _publish_position_gap(self):
+    if self._last_cmd is None or self._last_js is None:
+        return
+
+    # ✅ 논블로킹으로 현재 최신 상태 읽기
+    cur = self.poll_joint_position(wait=False)
+    if cur is None or cur.size != 16:
+        return
+
+    gap = (self._last_cmd - cur).astype(float)
+
+    # ✅ 완전한 JointState 메시지
+    js = JointState()
+    js.header.stamp = self.get_clock().now().to_msg()  # ROS 타임스탬프
+    js.header.frame_id = ""                            # 또는 "allegro"
+    js.name = list(self._desired_names)                # 16개 조인트 이름
+    js.position = gap.tolist()                         # gap 값
+    # velocity/effort는 빈 리스트 (미사용)
+
+    self._gap_pub.publish(js)
+```
+
+**개선 효과:**
+
+- ✅ sleep 제거 → 주기 안정성↑
+- ✅ 타임스탬프 + 조인트 이름 → rqt_plot, rosbag 호환
+- ✅ 타이머 콜백이 매 틱마다 최신 상태 반영
+
+---
+
+## 7. 초기화: 워밍업 + 첫 관측 블로킹
+
+### ✅ 안전한 초기화 순서
+```python
+def deploy(self):
+    self.allegro = start_allegro_io(side='right')
+
+    # 1) ✅ 워밍업 (하드웨어 안정화)
+    warmup = int(self.hz * 4)
+    for t in range(warmup):
+        tprint(f"setup {t} / {warmup}")
+        pose = _reorder_imrt2timr(np.array(self.init_pose, dtype=np.float64))
+        self.allegro.command_joint_position(pose)
+        time.sleep(1.0 / self.hz)
+
+    # 2) ✅ 첫 관측만 블로킹 (타임아웃 설정)
+    q_pos = self.allegro.poll_joint_position(wait=True, timeout=5.0)
+    if q_pos is None:
+        print("❌ failed to read joint state.")
+        stop_allegro_io(self.allegro)
+        return
+
+    # 3) ✅ 버퍼 초기화
+    ros1_q = _reorder_timr2imrt(q_pos)
+    hora_q = _obs_allegro2hora(ros1_q)
+    obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+    self._last_obs_q = obs_q
+
+    cur_obs_buf = self._unscale(obs_q, self.allegro_dof_lower, self.allegro_dof_upper)[None]
+    self.prev_target = obs_q[None]
+
+    # obs_buf 3 타임스텝 채우기
+    for i in range(3):
+        self.obs_buf[:, i*32:i*32+16] = cur_obs_buf
+        self.obs_buf[:, i*32+16:i*32+32] = self.prev_target
+
+    # proprio_hist_buf 30 타임스텝 채우기
+    self.proprio_hist_buf[:, :, :16] = cur_obs_buf
+    self.proprio_hist_buf[:, :, 16:32] = self.prev_target
+
+    # 4) ✅ 타이머 시작 (이후는 모두 논블로킹)
+    period = 1.0 / self.hz
+    self.timer = self.allegro.create_timer(period, self._control_step)
+```
+
+**개선 효과:**
+
+- ✅ 워밍업으로 모터 드라이버 안정화
+- ✅ 첫 관측 블로킹으로 유효한 초기 상태 확보
+- ✅ 이후는 논블로킹으로 주기 유지
+
+---
+
+## 요약: 핵심 개선 사항
+
+| 항목 | Before | After | 효과 |
+|------|--------|-------|------|
+| **제어 루프** | `while` + `sleep` | ROS2 Timer | 지터↓, 주기 정확도↑ |
+| **실행기** | 내부 API | 표준 `threading` | 버전 호환성↑ |
+| **디바이스** | 산발적 할당 | 단일 소스 통일 | 에러 제거, 속도↑ |
+| **버퍼 롤링** | 겹침 대입 | `clone()` 사용 | RuntimeError 제거 |
+| **관측 읽기** | 블로킹 | 논블로킹 + 재사용 | 실시간성↑, 강건성↑ |
+| **추론** | 일반 모드 | `@inference_mode()` | 오버헤드↓ |
+| **로깅** | 매 틱 출력 | 5초마다 출력 | 성능 저하 최소화 |
+| **Gap** | sleep 후 측정 | 논블로킹 측정 | 주기 안정성↑ |
+
+:::
+
+<!--
+
+:::::: {.callout-note}
+
+# Before Code
+
+```python
+#!/usr/bin/env python3
+import os
+import time
+import numpy as np
+import torch
+
+from hora.algo.models.models import ActorCritic
+from hora.algo.models.running_mean_std import RunningMeanStd
+from hora.utils.misc import tprint
+
+
+import threading
+import time
+from typing import List, Optional
+
+import numpy as np
+import rclpy
+from rclpy.executors import SingleThreadedExecutor
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64MultiArray, Header
+
+
+DEFAULT_ORDER = {
+    "right": [
+        "ah_joint00", "ah_joint01", "ah_joint02", "ah_joint03",
+        "ah_joint10", "ah_joint11", "ah_joint12", "ah_joint13",
+        "ah_joint20", "ah_joint21", "ah_joint22", "ah_joint23",
+        "ah_joint30", "ah_joint31", "ah_joint32", "ah_joint33",
+    ],
+}
+
+
+class AllegroHandIO(Node):
+    """
+    Minimal ROS 2 node for Allegro hand.
+    - Publishes commands to /<controller_name>/commands
+    - Subscribes to /joint_states and returns a 16-D vector in Allegro order
+    - Publishes position gap (command - current) to /position_gap (JointState)
+    """
+
+    def __init__(
+        self,
+        side: str = "right",
+        controller_name: Optional[str] = None,
+        joint_states_topic: str = "/joint_states",
+        command_topic: Optional[str] = None,
+    ):
+        super().__init__("allegro_hand_io")
+
+        side = (side or "right").lower()
+        if side not in ("right", "left"):
+            self.get_logger().warn(f"Unknown side '{side}', defaulting to 'right'.")
+            side = "right"
+        self.side = side
+
+        # 컨트롤러명 고정 (필요 시 외부 인자로 바꿔도 됨)
+        controller_name = controller_name or "allegro_hand_position_controller"
+
+        if command_topic is None:
+            command_topic = f"/{controller_name}/commands"
+
+        # Publishers / Subscribers
+        self._cmd_pub = self.create_publisher(Float64MultiArray, command_topic, 10)
+        self._gap_pub = self.create_publisher(JointState, "/position_gap", 10)
+        self.create_subscription(JointState, joint_states_topic, self._on_js, 10)
+
+        # 최근 상태 / 매핑 / 명령 저장
+        self._last_js: Optional[JointState] = None
+        self._index_map: Optional[List[int]] = None
+        self._last_cmd: Optional[np.ndarray] = None  # 명령 16D (Allegro 순서)
+
+        # Allegro 조인트 이름(원하는 정렬 순서)
+        self._desired_names = DEFAULT_ORDER["right"] if self.side == "right" else DEFAULT_ORDER["left"]
+
+        # 명령 직후 gap 측정 전에 짧은 대기 (joint_states 반영 유도)
+        self._gap_after_cmd_delay = 0.02  # seconds
+
+        # 안전 포즈
+        self.safe_pose = np.array([
+            0.5, 0.2, 0.0, 0.0,   # Thumb
+            0.0, 0.0, 0.0, 0.0,   # Index
+            0.0, 0.0, 0.0, 0.0,   # Middle
+            0.0, 0.0, 0.0, 0.0,   # Ring
+        ], dtype=float)
+
+        self.get_logger().info(f"[AllegroHandIO] side={self.side}")
+        self.get_logger().info(f"[AllegroHandIO] cmd topic={command_topic}")
+        self.get_logger().info(f"[AllegroHandIO] joint_states topic={joint_states_topic}")
+        self.get_logger().info(f"[AllegroHandIO] gap topic=/position_gap")
+
+    # -------------------- Public APIs --------------------
+
+    def command_joint_position(self, positions: List[float]) -> bool:
+        """16D 목표 자세 명령 퍼블리시 + 직후 position gap 1회 퍼블리시."""
+        try:
+            data = [float(x) for x in list(positions)]
+        except Exception:
+            self.get_logger().warn("command_joint_position: positions must be a sequence of numbers.")
+            return False
+
+        if len(data) != 16:
+            self.get_logger().warn(f"command_joint_position: expected 16 elements, got {len(data)}.")
+            return False
+
+        # 명령 퍼블리시
+        msg = Float64MultiArray()
+        msg.data = data
+        self._cmd_pub.publish(msg)
+
+        # 마지막 명령 기억
+        self._last_cmd = np.asarray(data, dtype=float)
+
+        # 아주 짧게 대기 → 최신 /joint_states 반영 유도 (백그라운드 스피너가 콜백 실행)
+        if self._gap_after_cmd_delay > 0:
+            time.sleep(self._gap_after_cmd_delay)
+
+        # 명령 직후 gap 1회 퍼블리시
+        self._publish_position_gap()
+
+        return True
+
+    def poll_joint_position(
+        self, wait: bool = False, timeout: float = 3.0
+    ) -> Optional[np.ndarray]:
+        """현재 조인트 위치를 Allegro 순서(16-D)로 반환.
+
+        Args:
+            wait (bool): 데이터를 기다릴지 여부 (True이면 timeout까지 spin)
+            timeout (float): 최대 대기 시간(초)
+
+        Returns:
+            np.ndarray | None: 16-D 조인트 벡터 또는 None
+        """
+
+        # 1) JointState 수신 대기
+        if self._last_js is None and wait:
+            start_time = time.time()
+            while self._last_js is None and (time.time() - start_time) < timeout:
+                rclpy.spin_once(self, timeout_sec=0.05)
+
+        js = self._last_js
+        if js is None or not js.position:
+            return None
+
+        # 2) 이름 기반 인덱스 매핑 초기화 (첫 수신 시 1회만)
+        if self._index_map is None and js.name:
+            self._index_map = self._build_index_map(js.name)
+
+        # 3) 인덱스 매핑 성공 시 그대로 정렬하여 반환
+        if self._index_map:
+            try:
+                vec = np.array([js.position[i] for i in self._index_map], dtype=float)
+                if vec.size == 16:
+                    return vec
+            except Exception:
+                self.get_logger().warn("poll_joint_position: index mapping failed, fallback to raw order.")
+
+        # 4) 매핑 실패 시 fallback — 앞 16개 사용
+        if len(js.position) >= 16:
+            return np.array(js.position[:16], dtype=float)
+
+        return None
+
+    def go_safe(self):
+        """안전 포즈로 이동."""
+        self.command_joint_position(self.safe_pose)
+
+    # -------------------- Internals --------------------
+
+    def _publish_position_gap(self):
+        """마지막 명령(self._last_cmd)과 현재 관측을 비교해 gap을 /position_gap으로 퍼블리시."""
+        if self._last_cmd is None or self._last_js is None:
+            return
+
+        # 현재 위치(16D, Allegro 순서) 읽기
+        cur = self.poll_joint_position(wait=False)
+        if cur is None or cur.size != 16:
+            return
+
+        cmd = np.asarray(self._last_cmd, dtype=float).reshape(16)
+        gap = (cmd - cur).astype(float)
+
+        msg = JointState()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        # frame_id는 빈 문자열로 두거나 필요 시 "allegro" 등으로 지정
+        msg.header.frame_id = ""
+        msg.name = list(self._desired_names)  # 16개 조인트 이름
+        msg.position = gap.tolist()           # gap(16D)을 position 필드에 담음
+        # velocity/effort는 미사용 (빈 리스트)
+        self._gap_pub.publish(msg)
+
+    def _build_index_map(self, joint_names: List[str]) -> Optional[List[int]]:
+        """joint_states의 이름 리스트로부터 Allegro 16D 인덱스 매핑 생성."""
+        name_to_index = {n.lower(): i for i, n in enumerate(joint_names)}
+        index_map = []
+
+        for desired in self._desired_names:
+            idx = name_to_index.get(desired.lower())
+            if idx is None:
+                # 하나라도 매칭 실패하면 전체 매핑 무효화
+                self.get_logger().warn(f"Missing joint name in /joint_states: '{desired}'")
+                return None
+            index_map.append(idx)
+
+        return index_map if len(index_map) == 16 else None
+
+    def _on_js(self, msg: JointState):
+        self._last_js = msg
+
+
+################### one hand io runner ####################
+
+class _Runner:
+    def __init__(self, node: AllegroHandIO):
+        self.node = node
+        self.exec = SingleThreadedExecutor()
+        self.exec.add_node(node)
+        self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        try:
+            self.exec.shutdown()
+        finally:
+            self.node.destroy_node()
+
+
+def start_allegro_io(side: str = "right") -> AllegroHandIO:
+    if not rclpy.ok():
+        rclpy.init()
+    io = AllegroHandIO(side=side)
+    io._runner = _Runner(io)   # keep reference
+    io._runner.start()
+    return io
+
+
+def stop_allegro_io(io: AllegroHandIO):
+    if hasattr(io, "_runner") and io._runner:
+        io._runner.stop()
+    if rclpy.ok():
+        try:
+            rclpy.shutdown()
+        except Exception:
+            pass
+
+
+
+# ---------- Reorder helpers ----------
+def _action_hora2allegro(actions):
+    if isinstance(actions, torch.Tensor):
+        if actions.dim() > 1:
+            actions = actions.view(-1)
+        cmd_act = actions.clone()
+        temp = actions[[4, 5, 6, 7]].clone()
+        cmd_act[[4, 5, 6, 7]] = actions[[8, 9, 10, 11]]
+        cmd_act[[12, 13, 14, 15]] = temp
+        cmd_act[[8, 9, 10, 11]] = actions[[12, 13, 14, 15]]
+        return cmd_act
+    else:
+        a = np.asarray(actions).flatten()
+        cmd = a.copy()
+        temp = a[[4, 5, 6, 7]].copy()
+        cmd[[4, 5, 6, 7]] = a[[8, 9, 10, 11]]
+        cmd[[12, 13, 14, 15]] = temp
+        cmd[[8, 9, 10, 11]] = a[[12, 13, 14, 15]]
+        return cmd
+
+
+def _obs_allegro2hora(o):
+    # allegro: index - middle - ring - thumb
+    # hora  : index, thumb, middle, ring
+    return np.concatenate([o[0:4], o[12:16], o[4:8], o[8:12]]).astype(np.float64)
+
+
+def _reorder_imrt2timr(imrt):
+    # [ROS1] index - middle - ring - thumb  ->  [ROS2] thumb - index - middle - ring
+    return np.concatenate([imrt[12:16], imrt[0:12]]).astype(np.float64)
+
+
+def _reorder_timr2imrt(timr):
+    # [ROS2] thumb - index - middle - ring  ->  [ROS1] index - middle - ring - thumb
+    return np.concatenate([timr[4:16], timr[0:4]]).astype(np.float64)
+
+
+class HardwarePlayer(object):
+    def __init__(self):
+        self.action_scale = 1 / 24
+        self.actions_num = 16
+        self.device = "cuda"  # ← 여기서 디바이스 통일
+
+        # ===== Model / RMS =====
+        obs_shape = (96,)
+        net_config = {
+            "actions_num": self.actions_num,
+            "input_shape": obs_shape,
+            "actor_units": [512, 256, 128],
+            "priv_mlp_units": [256, 128, 8],
+            "priv_info": True,
+            "proprio_adapt": True,
+            "priv_info_dim": 9,
+        }
+
+        self.model = ActorCritic(net_config).to(self.device).eval()
+        self.running_mean_std = RunningMeanStd(obs_shape).to(self.device).eval()
+        self.sa_mean_std = RunningMeanStd((30, 32)).to(self.device).eval()
+
+        # ===== Runtime buffers (device 통일) =====
+        self.obs_buf = torch.zeros((1, 16 * 3 * 2), dtype=torch.float32, device=self.device)           # 96
+        self.proprio_hist_buf = torch.zeros((1, 30, 16 * 2), dtype=torch.float32, device=self.device)  # (1,30,32)
+
+        # ===== Allegro joint limits =====
+        self.allegro_dof_lower = torch.tensor([
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Index
+             0.2630, -0.1050, -0.1890, -0.1620,   # Thumb
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Middle
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Ring
+        ], dtype=torch.float32, device=self.device)
+
+        self.allegro_dof_upper = torch.tensor([
+             0.4700, 1.6100, 1.7090, 1.6180,      # Index
+             1.3960, 1.1630, 1.6440, 1.7190,      # Thumb
+             0.4700, 1.6100, 1.7090, 1.6180,      # Middle
+             0.4700, 1.6100, 1.7090, 1.6180,      # Ring
+        ], dtype=torch.float32, device=self.device)
+
+        # ===== Poses =====
+        self.init_pose = [
+            0.0627, 1.2923, 0.3383, 0.1088,
+            0.0724, 1.1983, 0.1551, 0.1499,
+            0.1343, 1.1736, 0.5355, 0.2164,
+            1.1202, 1.1374, 0.8535, -0.0852,
+        ]
+
+        # ===== Targets (rad) =====
+        self.prev_target = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+        self.cur_target  = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+
+    # ---------- Steps ----------
+    def pre_physics_step(self, action):
+        self.action = action.clone()
+        target = self.prev_target + self.action_scale * self.action
+        self.cur_target = torch.clip(target, self.allegro_dof_lower, self.allegro_dof_upper)
+        self.prev_target = self.cur_target.clone()
+
+    def post_physics_step(self, obses):
+        # normalize current obs (obses: real q) -> (1,16)
+        self.cur_obs_buf = self.unscale(
+            obses, self.allegro_dof_lower, self.allegro_dof_upper
+        )[None]
+
+        # obs_buf roll
+        self.prev_obs_buf = self.obs_buf[:, 32:].clone()
+        self.obs_buf[:, :64]   = self.prev_obs_buf
+        self.obs_buf[:, 64:80] = self.cur_obs_buf.clone()
+        self.obs_buf[:, 80:96] = self.cur_target.clone()  # real target
+
+        # proprio history (30)
+        cur_norm_t = self.cur_obs_buf.unsqueeze(1)          # (1,1,16)
+        cur_tgt_t  = self.cur_target.unsqueeze(1)           # (1,1,16)
+        cur = torch.cat([cur_norm_t, cur_tgt_t], dim=-1)    # (1,1,32)
+        prev = self.proprio_hist_buf[:, 1:30, :].clone()    # (1,29,32)
+        self.proprio_hist_buf[:] = torch.cat([prev, cur], dim=1)
+
+    # ---------- Utils ----------
+    def unscale(self, x, lower, upper):
+        return (2.0 * x - upper - lower) / (upper - lower)
+
+    # ---------- Deploy ----------
+    def deploy(self):
+        # 1) Allegro I/O 노드 시작
+        self.allegro = start_allegro_io(side='right')
+
+        hz = 20
+
+        # 2) 초기 셋업 루프
+        warmup = hz * 4
+        for t in range(warmup):
+            tprint(f"setup {t} / {warmup}")
+            pose = _reorder_imrt2timr(np.array(self.init_pose, dtype=np.float64))
+            self.allegro.command_joint_position(pose)
+            time.sleep(1/hz)
+
+        # 3) 첫 관측
+        q_pos = self.allegro.poll_joint_position(wait=True, timeout=5.0)
+        if q_pos is None:
+            print("❌ failed to read joint state.")
+            stop_allegro_io(self.allegro)
+            return
+
+        ros1_q = _reorder_timr2imrt(q_pos)
+        hora_q = _obs_allegro2hora(ros1_q)
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)  # ← device 통일
+
+        # q값은 normalize(=unscale) 해서 버퍼에 저장 // isaacgym 순서
+        self.cur_obs_buf = self.unscale(obs_q, self.allegro_dof_lower, self.allegro_dof_upper)[None]
+        # prev_target은 실측(rad)
+        self.prev_target = obs_q[None].clone()
+
+        # obs_buf 초기화
+        for i in range(3):
+            print(f"init fill: {i*32}:{i*32+16}, {i*32+16}:{i*32+32}")
+            self.obs_buf[:, i*32:i*32+16] = self.cur_obs_buf      # q_t
+            self.obs_buf[:, i*32+16:i*32+32] = self.prev_target   # a_{t-1}
+
+        # proprio_hist_buf 초기화
+        self.proprio_hist_buf[:, :, :16] = self.cur_obs_buf
+        self.proprio_hist_buf[:, :, 16:32] = self.prev_target
+
+        timestep = 0
+        print("Deployment started. Press Ctrl+C to stop.")
+        try:
+            while True:
+                loop_start = time.perf_counter()
+
+                # Normalize the observation buffer (device 동일)
+                self.obs_buf = self.running_mean_std(self.obs_buf.clone())
+
+                input_dict = {
+                    "obs": self.obs_buf,
+                    "proprio_hist": self.sa_mean_std(self.proprio_hist_buf.clone()),
+                }
+                action = torch.clamp(self.model.act_inference(input_dict), -1.0, 1.0)
+
+                # control
+                self.pre_physics_step(action)
+
+                # 명령 전송: 하드웨어 I/O 직전에만 CPU로 내림
+                cmd = self.cur_target.detach().to('cpu').numpy()[0]
+                ros1 = _action_hora2allegro(cmd)
+                ros2 = _reorder_imrt2timr(ros1)
+                self.allegro.command_joint_position(ros2)
+
+                # 관측 업데이트 / o_{t+1}
+                q_pos = self.allegro.poll_joint_position(wait=True, timeout=0.2)
+                ros1_q = _reorder_timr2imrt(q_pos)
+                hora_q = _obs_allegro2hora(ros1_q)
+                obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)  # ← device 통일
+
+                self.post_physics_step(obs_q)  # buffer 업데이트
+
+                time.sleep(0.03)  # ~20 Hz
+                timestep += 1
+
+                freq = 1.0 / (time.perf_counter() - loop_start)
+                print(f"Hz={freq:.2f}")
+
+        except KeyboardInterrupt:
+            print("KeyboardInterrupt, stopping...")
+        finally:
+            # 안전 정지
+            try:
+                self.allegro.go_safe()
+            except Exception:
+                pass
+            stop_allegro_io(self.allegro)
+            print("🧠 Deployment stopped cleanly.")
+
+    # ---------- checkpoint restore ----------
+    def restore(self, fn):
+        # 체크포인트 로딩 시에도 device 매핑 통일
+        checkpoint = torch.load(fn, map_location=self.device)
+        self.running_mean_std.load_state_dict(checkpoint["running_mean_std"])
+        self.model.load_state_dict(checkpoint["model"])
+        self.sa_mean_std.load_state_dict(checkpoint["sa_mean_std"])
+
+```
+
+:::
+
+:::::: {.callout-note}
+
+# After Code
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import os
+import time
+import signal
+from typing import List, Optional
+
+import numpy as np
+import torch
+
+import rclpy
+from rclpy.executors import SingleThreadedExecutor
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64MultiArray
+
+from hora.algo.models.models import ActorCritic
+from hora.algo.models.running_mean_std import RunningMeanStd
+from hora.utils.misc import tprint
+
+
+# =========================================================
+# Allegro ROS2 I/O (백그라운드 스피너 + position_gap 퍼블리셔)
+# =========================================================
+
+DEFAULT_ORDER = {
+    "right": [
+        "ah_joint00", "ah_joint01", "ah_joint02", "ah_joint03",
+        "ah_joint10", "ah_joint11", "ah_joint12", "ah_joint13",
+        "ah_joint20", "ah_joint21", "ah_joint22", "ah_joint23",
+        "ah_joint30", "ah_joint31", "ah_joint32", "ah_joint33",
+    ],
+}
+
+
+class AllegroHandIO(Node):
+    """ROS2 Allegro I/O 노드: 명령 퍼블리시 + joint_states 구독 + /position_gap 퍼블리시"""
+    def __init__(
+        self,
+        side: str = "right",
+        controller_name: Optional[str] = None,
+        joint_states_topic: str = "/joint_states",
+        command_topic: Optional[str] = None,
+    ):
+        super().__init__("allegro_hand_io")
+
+        side = (side or "right").lower()
+        if side not in ("right", "left"):
+            self.get_logger().warn(f"Unknown side '{side}', defaulting to 'right'.")
+            side = "right"
+        self.side = side
+
+        controller_name = controller_name or "allegro_hand_position_controller"
+        if command_topic is None:
+            command_topic = f"/{controller_name}/commands"
+
+        # pubs/subs
+        self._cmd_pub = self.create_publisher(Float64MultiArray, command_topic, 10)
+        self._gap_pub = self.create_publisher(JointState, "/position_gap", 10)
+        self.create_subscription(JointState, joint_states_topic, self._on_js, 50)
+
+        # state
+        self._last_js: Optional[JointState] = None
+        self._index_map: Optional[List[int]] = None
+        self._last_cmd: Optional[np.ndarray] = None
+
+        self._desired_names = DEFAULT_ORDER["right"]
+
+        # 안전 포즈
+        self.safe_pose = np.array([
+            0.5, 0.2, 0.0, 0.0,   # Thumb
+            0.0, 0.0, 0.0, 0.0,   # Index
+            0.0, 0.0, 0.0, 0.0,   # Middle
+            0.0, 0.0, 0.0, 0.0,   # Ring
+        ], dtype=float)
+
+        self.get_logger().info(f"[AllegroHandIO] side={self.side}")
+        self.get_logger().info(f"[AllegroHandIO] cmd topic={command_topic}")
+        self.get_logger().info(f"[AllegroHandIO] joint_states topic={joint_states_topic}")
+        self.get_logger().info(f"[AllegroHandIO] gap topic=/position_gap")
+
+    # ---------- public ----------
+    def command_joint_position(self, positions: List[float]) -> bool:
+        """16D 목표 자세 퍼블리시 + 직후 1회 gap 퍼블리시"""
+        try:
+            data = [float(x) for x in positions]
+        except Exception:
+            self.get_logger().warn("command_joint_position: positions must be a sequence of numbers.")
+            return False
+        if len(data) != 16:
+            self.get_logger().warn(f"command_joint_position: expected 16 elements, got {len(data)}.")
+            return False
+
+        msg = Float64MultiArray()
+        msg.data = data
+        self._cmd_pub.publish(msg)
+        self._last_cmd = np.asarray(data, dtype=float)
+
+        # 현재 최신 상태로 gap 한번 퍼블리시(논블로킹)
+        self._publish_position_gap()
+        return True
+
+    def poll_joint_position(self, wait: bool = False, timeout: float = 0.0) -> Optional[np.ndarray]:
+        """현재 조인트를 Allegro 순서(16D)로 반환"""
+        if self._last_js is None and wait:
+            # timer 콜백에서 블로킹은 권장하지 않으나, 초기화 시에는 사용 가능
+            end_t = time.perf_counter() + max(0.0, float(timeout))
+            while self._last_js is None and time.perf_counter() < end_t:
+                rclpy.spin_once(self, timeout_sec=0.02)
+
+        js = self._last_js
+        if js is None or not js.position:
+            return None
+
+        if self._index_map is None and js.name:
+            self._index_map = self._build_index_map(js.name)
+
+        if self._index_map:
+            try:
+                vec = np.array([js.position[i] for i in self._index_map], dtype=float)
+                if vec.size == 16:
+                    return vec
+            except Exception:
+                self.get_logger().warn("poll_joint_position: index mapping failed, fallback to raw order.")
+
+        if len(js.position) >= 16:
+            return np.array(js.position[:16], dtype=float)
+        return None
+
+    def go_safe(self):
+        self.command_joint_position(self.safe_pose)
+
+    # ---------- internals ----------
+    def _on_js(self, msg: JointState):
+        self._last_js = msg
+
+    def _build_index_map(self, joint_names: List[str]) -> Optional[List[int]]:
+        mp = {n.lower(): i for i, n in enumerate(joint_names)}
+        out = []
+        for desired in self._desired_names:
+            idx = mp.get(desired.lower())
+            if idx is None:
+                self.get_logger().warn(f"Missing joint name in /joint_states: '{desired}'")
+                return None
+            out.append(idx)
+        return out if len(out) == 16 else None
+
+    def _publish_position_gap(self):
+        if self._last_cmd is None or self._last_js is None:
+            return
+        cur = self.poll_joint_position(wait=False)
+        if cur is None or cur.size != 16:
+            return
+        gap = (self._last_cmd - cur).astype(float)
+        js = JointState()
+        js.header.stamp = self.get_clock().now().to_msg()
+        js.header.frame_id = ""
+        js.name = list(self._desired_names)
+        js.position = gap.tolist()
+        self._gap_pub.publish(js)
+
+
+# ========== FIX: Runner를 표준 threading 기반으로 ==========
+
+import threading
+from rclpy.executors import SingleThreadedExecutor
+
+class _Runner:
+    def __init__(self, node: 'AllegroHandIO'):
+        self.node = node
+        self.exec = SingleThreadedExecutor()
+        self.exec.add_node(node)
+        self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        try:
+            self.exec.shutdown()          # executor 중지
+        finally:
+            try:
+                self.node.destroy_node()  # 노드 파괴
+            finally:
+                # 백그라운드 스레드 종료 대기 (너무 오래 기다리지 않도록 타임아웃)
+                self.thread.join(timeout=2.0)
+
+
+
+def start_allegro_io(side: str = "right") -> 'AllegroHandIO':
+    if not rclpy.ok():
+        rclpy.init()
+    io = AllegroHandIO(side=side)
+    io._runner = _Runner(io)
+    io._runner.start()
+    return io
+
+def stop_allegro_io(io: 'AllegroHandIO'):
+    if hasattr(io, "_runner") and io._runner:
+        io._runner.stop()
+    if rclpy.ok():
+        try:
+            rclpy.shutdown()
+        except Exception:
+            pass
+
+
+# =========================================================
+# 변환/재배열 유틸
+# =========================================================
+
+def _action_hora2allegro(actions):
+    if isinstance(actions, torch.Tensor):
+        if actions.dim() > 1:
+            actions = actions.view(-1)
+        cmd_act = actions.clone()
+        temp = actions[[4, 5, 6, 7]].clone()
+        cmd_act[[4, 5, 6, 7]] = actions[[8, 9, 10, 11]]
+        cmd_act[[12, 13, 14, 15]] = temp
+        cmd_act[[8, 9, 10, 11]] = actions[[12, 13, 14, 15]]
+        return cmd_act
+    else:
+        a = np.asarray(actions).flatten()
+        cmd = a.copy()
+        temp = a[[4, 5, 6, 7]].copy()
+        cmd[[4, 5, 6, 7]] = a[[8, 9, 10, 11]]
+        cmd[[12, 13, 14, 15]] = temp
+        cmd[[8, 9, 10, 11]] = a[[12, 13, 14, 15]]
+        return cmd
+
+
+def _obs_allegro2hora(o):
+    # allegro: index - middle - ring - thumb
+    # hora   : index, thumb, middle, ring
+    return np.concatenate([o[0:4], o[12:16], o[4:8], o[8:12]]).astype(np.float64)
+
+
+def _reorder_imrt2timr(imrt):
+    # [ROS1] index-middle-ring-thumb → [ROS2] thumb-index-middle-ring
+    return np.concatenate([imrt[12:16], imrt[0:12]]).astype(np.float64)
+
+
+def _reorder_timr2imrt(timr):
+    # [ROS2] thumb-index-middle-ring → [ROS1] index-middle-ring-thumb
+    return np.concatenate([timr[4:16], timr[0:4]]).astype(np.float64)
+
+
+# =========================================================
+# 제어 에이전트 (Timer 기반)
+# =========================================================
+
+class HardwarePlayer:
+    def __init__(self, hz: float = 20.0, device: str = "cuda"):
+        torch.set_grad_enabled(False)
+        self.hz = float(hz)
+        self.device = device
+
+        # model / rms
+        obs_shape = (96,)
+        net_config = {
+            "actions_num": 16,
+            "input_shape": obs_shape,
+            "actor_units": [512, 256, 128],
+            "priv_mlp_units": [256, 128, 8],
+            "priv_info": True,
+            "proprio_adapt": True,
+            "priv_info_dim": 9,
+        }
+        self.model = ActorCritic(net_config).to(self.device).eval()
+        self.running_mean_std = RunningMeanStd(obs_shape).to(self.device).eval()
+        self.sa_mean_std = RunningMeanStd((30, 32)).to(self.device).eval()
+
+        # buffers
+        self.obs_buf = torch.zeros((1, 96), dtype=torch.float32, device=self.device)
+        self.proprio_hist_buf = torch.zeros((1, 30, 32), dtype=torch.float32, device=self.device)
+
+        # limits
+        self.allegro_dof_lower = torch.tensor([
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Index
+             0.2630, -0.1050, -0.1890, -0.1620,   # Thumb
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Middle
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Ring
+        ], dtype=torch.float32, device=self.device)
+        self.allegro_dof_upper = torch.tensor([
+             0.4700, 1.6100, 1.7090, 1.6180,      # Index
+             1.3960, 1.1630, 1.6440, 1.7190,      # Thumb
+             0.4700, 1.6100, 1.7090, 1.6180,      # Middle
+             0.4700, 1.6100, 1.7090, 1.6180,      # Ring
+        ], dtype=torch.float32, device=self.device)
+
+        # poses
+        self.init_pose = [
+            0.0627, 1.2923, 0.3383, 0.1088,
+            0.0724, 1.1983, 0.1551, 0.1499,
+            0.1343, 1.1736, 0.5355, 0.2164,
+            1.1202, 1.1374, 0.8535, -0.0852,
+        ]
+
+        # state
+        self.action_scale = 1.0 / 24.0
+        self.prev_target = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+        self.cur_target  = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+        self._last_obs_q = None
+        self._skipped = 0
+        self._last_step_t = None
+
+        # ros
+        self.timer = None
+        self.allegro = None
+
+    # ---------- utils ----------
+    @staticmethod
+    def _unscale(x, lower, upper):
+        return (2.0 * x - upper - lower) / (upper - lower)
+
+    def _pre_physics_step(self, action):
+        target = self.prev_target + self.action_scale * action
+        self.cur_target = torch.clamp(target, min=self.allegro_dof_lower, max=self.allegro_dof_upper)
+        self.prev_target = self.cur_target
+
+    def _post_physics_step(self, obses):
+        # 1) 현재 관측 정규화 (obses: (16,) 또는 (1,16) 텐서 on self.device)
+        #    결과를 (1,16)로 보장
+        cur_obs = self._unscale(
+            obses.view(-1), self.allegro_dof_lower, self.allegro_dof_upper
+        ).view(1, 16)
+
+        # 2) obs_buf 롤링 (96 = 32*3)
+        #    [0:64] <- [32:96],  [64:80] <- cur_obs,  [80:96] <- cur_target
+        #    ⚠️ 겹침 방지: 소스 부분을 먼저 clone() 해서 임시 보관
+        src64 = self.obs_buf[:, 32:96].clone()     # (1,64)
+        self.obs_buf[:, 0:64] = src64              # 앞 64칸으로 당김
+        self.obs_buf[:, 64:80] = cur_obs           # 현재 관측(정규화)
+        self.obs_buf[:, 80:96] = self.cur_target   # 최신 타깃(rad)
+
+        # 3) proprio_hist_buf 롤링 (T=30)
+        #    [:, 0:-1, :] <- [:, 1:, :];  마지막 step에 [cur_obs | cur_target]
+        #    ⚠️ 동일 텐서 내 겹침 방지: 소스 clone()
+        src_hist = self.proprio_hist_buf[:, 1:, :].clone()  # (1,29,32)
+        self.proprio_hist_buf[:, 0:-1, :] = src_hist
+        self.proprio_hist_buf[:, -1, :16] = cur_obs
+        self.proprio_hist_buf[:, -1, 16:32] = self.cur_target
+
+    # ---------- timer callback ----------
+    @torch.inference_mode()
+    def _control_step(self):
+        t0 = time.perf_counter()
+
+        # 1) norm
+        obs_norm = self.running_mean_std(self.obs_buf)
+
+        # 2) inference
+        input_dict = {
+            "obs": obs_norm,
+            "proprio_hist": self.sa_mean_std(self.proprio_hist_buf),
+        }
+        action = torch.clamp(self.model.act_inference(input_dict), -1.0, 1.0)
+
+        # 3) update target
+        self._pre_physics_step(action)
+
+        # 4) publish command (CPU로만 내릴 때 변환)
+        cmd = self.cur_target.detach().to("cpu").numpy()[0]
+        ros1 = _action_hora2allegro(cmd)
+        ros2 = _reorder_imrt2timr(ros1)
+        self.allegro.command_joint_position(ros2)
+
+        # 5) non-blocking obs update (드랍 시 마지막 유효 관측 사용)
+        q_pos = self.allegro.poll_joint_position(wait=False, timeout=0.0)
+        if q_pos is not None:
+            ros1_q = _reorder_timr2imrt(q_pos)
+            hora_q = _obs_allegro2hora(ros1_q)
+            obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+            self._last_obs_q = obs_q
+        else:
+            obs_q = self._last_obs_q
+            self._skipped += 1
+
+        if obs_q is not None:
+            self._post_physics_step(obs_q)
+
+        # 6) light jitter log
+        if self._last_step_t is None:
+            self._last_step_t = t0
+        else:
+            dt = t0 - self._last_step_t
+            self._last_step_t = t0
+            # 5초마다 한 번만 출력
+            if int(time.time()) % 5 == 0:
+                hz_est = 1.0 / max(dt, 1e-6)
+                print(f"[timer] {hz_est:.2f} Hz, skipped={self._skipped}")
+
+    # ---------- deploy ----------
+    def deploy(self):
+        # ROS2 I/O 시작(백그라운드 실행기)
+        self.allegro = start_allegro_io(side='right')
+
+        # 워밍업(블로킹) — 하드웨어 settle
+        warmup = int(self.hz * 4)
+        for t in range(warmup):
+            tprint(f"setup {t} / {warmup}")
+            pose = _reorder_imrt2timr(np.array(self.init_pose, dtype=np.float64))
+            self.allegro.command_joint_position(pose)
+            time.sleep(1.0 / self.hz)
+
+        # 첫 관측(블로킹 1회 — 초기화 안정)
+        q_pos = self.allegro.poll_joint_position(wait=True, timeout=5.0)
+        if q_pos is None:
+            print("❌ failed to read joint state.")
+            stop_allegro_io(self.allegro)
+            return
+
+        ros1_q = _reorder_timr2imrt(q_pos)
+        hora_q = _obs_allegro2hora(ros1_q)
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+        self._last_obs_q = obs_q
+
+        # buffers 초기화
+        cur_obs_buf = self._unscale(obs_q, self.allegro_dof_lower, self.allegro_dof_upper)[None]
+        self.prev_target = obs_q[None]
+        for i in range(3):
+            self.obs_buf[:, i*32:i*32+16] = cur_obs_buf
+            self.obs_buf[:, i*32+16:i*32+32] = self.prev_target
+        self.proprio_hist_buf[:, :, :16] = cur_obs_buf
+        self.proprio_hist_buf[:, :, 16:32] = self.prev_target
+
+        # Timer 등록 (정확 주기)
+        period = 1.0 / self.hz
+        self.timer = self.allegro.create_timer(period, self._control_step)
+        print(f"Deployment started (timer-based {self.hz:.1f} Hz). Ctrl+C to stop.")
+
+        # 메인 스레드: 시그널 처리 + 유지
+        interrupted = False
+
+        def _sigint(_sig, _frm):
+            nonlocal interrupted
+            interrupted = True
+        signal.signal(signal.SIGINT, _sigint)
+
+        try:
+            while not interrupted:
+                time.sleep(0.2)
+        finally:
+            try:
+                if self.timer is not None:
+                    self.timer.cancel()
+            except Exception:
+                pass
+            try:
+                self.allegro.go_safe()
+            except Exception:
+                pass
+            stop_allegro_io(self.allegro)
+            print("🧠 Deployment stopped cleanly.")
+
+    # ---------- checkpoint ----------
+    def restore(self, fn):
+        ckpt = torch.load(fn, map_location=self.device)
+        self.running_mean_std.load_state_dict(ckpt["running_mean_std"])
+        self.model.load_state_dict(ckpt["model"])
+        self.sa_mean_std.load_state_dict(ckpt["sa_mean_std"])
+
+
+# =========================================================
+# 실행 예시
+# =========================================================
+if __name__ == "__main__":
+    # 예: CUDA가 없으면 device="cpu"로 변경
+    agent = HardwarePlayer(hz=20.0, device="cuda" if torch.cuda.is_available() else "cpu")
+    # 필요한 경우 체크포인트 로드
+    # agent.restore("/path/to/checkpoint.pth")
+    agent.deploy()
+
+```
+
+:::
+
+
+
+> ROS1/ROS2 공통 로직은 그대로 유지하면서, ROS2 특성에 맞춰 실시간성/안정성을 끌어올리는 데 초점
+
+# 1) while+sleep 루프 → ROS2 Timer 기반 제어 루프
+
+* **문제**: `while True` + `time.sleep()`는 OS 스케줄링·파이썬 GIL·깊은 콜 스택 등에 의해 지터가 커지고, 콜백/구독자와 경합할 때 주기가 더 틀어질 수 있어.
+* **개선**: `self.allegro.create_timer(period, self._control_step)`로 **주기 콜백**을 등록.
+* **효과**
+
+  * 제어 주기가 ROS 실행기에 의해 유지돼 지터가 감소.
+  * 메인 스레드는 타이머만 돌고, I/O와 콜백은 실행기가 적절히 스케줄링.
+
+---
+
+# 2) rclpy 실행기(Executor) 백그라운드 스레드화 (공식 API만 사용)
+
+* **문제**: rclpy의 내부(private) API(`rclpy.executors._util`, `_thread`)를 쓰면 버전 차이로 **AttributeError**가 발생.
+* **개선**: **표준 `threading.Thread` + `SingleThreadedExecutor`** 로 안정적인 백그라운드 스피너 구현.
+* **효과**: ROS2 노드는 백그라운드에서 안전하게 돌고, 타이머/구독 콜백이 막힘 없이 처리됨.
+
+---
+
+# 3) 장치(device) 일관성 유지 (cuda/cpu mismatch 방지)
+
+* **문제**: 텐서/모델/RMS가 서로 다른 디바이스(cu﻿da·cpu)에 있으면 `Expected all tensors to be on the same device` 런타임 오류 발생.
+* **개선**
+
+  * `self.device`를 단일 소스로 두고, `model`, `running_mean_std`, `sa_mean_std`, **버퍼(`obs_buf`, `proprio_hist_buf`)**까지 전부 같은 디바이스로 생성/이동.
+  * 하드웨어 I/O 직전 **필요할 때만** CPU로 내림: `self.cur_target.detach().to('cpu').numpy()`
+* **효과**: 디바이스 이동 최소화로 속도↑, 디바이스 불일치 에러↓.
+
+---
+
+# 4) `@torch.inference_mode()` + 불필요한 clone 최소화
+
+* **문제**: 추론 중 그래디언트 트래킹은 낭비이며, 잦은 `.clone()`은 메모리/시간 비용.
+* **개선**
+
+  * 타이머 콜백(`_control_step`)에 `@torch.inference_mode()` 적용.
+  * 꼭 필요한 위치에서만 `clone()` 사용.
+* **효과**: 추론 시 오버헤드 감소, 속도 안정화.
+
+---
+
+# 5) 관측 드랍(미수신) 대비: **last-good sample 재사용**
+
+* **문제**: 타이머 주기와 `/joint_states` 주기가 딱 맞지 않으면 어떤 틱에서 관측이 **없을 수** 있음. 그때 블로킹(`wait=True`)을 걸면 제어 주기가 깨짐.
+* **개선**: 논블로킹 `wait=False`로 읽고, 샘플이 없으면 **직전 유효 관측(`_last_obs_q`) 재사용**. 드랍 횟수 `_skipped` 로깅.
+* **효과**: 제어 주기 유지(실시간성↑), 관측 지연에 대한 **로버스트**한 동작.
+
+---
+
+# 6) 버퍼 롤링(overlap) 오류 수정
+
+* **문제**: `self.obs_buf[:, :64] = self.obs_buf[:, 32:]` 처럼 같은 텐서 내 **겹치는 메모리**에 대입하면 PyTorch가 예외를 던짐.
+* **개선 (두 가지 버전 제공)**
+
+  1. **clone 사용**: `src = self.obs_buf[:, 32:96].clone(); self.obs_buf[:, :64] = src`
+  2. **`torch.roll` 사용**: `rolled = torch.roll(self.obs_buf, shifts=-32, dims=1); self.obs_buf.copy_(rolled)`
+* **효과**: 안전하고 명확한 시프트, 예외 제거.
+
+---
+
+# 7) position gap 퍼블리셔 추가 + Header/Name 세팅
+
+* **문제**: 명령과 실제 위치 사이 오차를 외부에서 보기 어려움.
+* **개선**
+
+  * `/position_gap` 토픽에 **`sensor_msgs/JointState`**로 퍼블리시.
+  * `header.stamp = node.get_clock().now().to_msg()` (ROS 시간), `name`에 16개 조인트 이름, `position`에 gap(명령-실측) 기록.
+* **효과**: rqt_plot, bag 기록 등에서 **정확한 타임스탬프**로 시각화/분석 가능.
+
+---
+
+# 8) 명령 직후 gap 측정 (짧은 지연 대신 “다음 콜백에서 최신 상태”)
+
+* 초기에 “명령 → 아주 짧게 sleep → gap 발행”도 보여줬지만, 최종 구조에선 **타이머 콜백 안**에서 매 틱마다 최신 상태로 갱신되므로 별도 sleep이 필요 없음.
+* gap은 I/O 노드가 **항상 최신 `/joint_states` 기준**으로 계산(논블로킹) → 주기 유지.
+
+---
+
+# 9) 초기화 루틴(워밍업 + 첫 관측 블로킹 1회)
+
+* **워밍업**: `hz*4`만큼 초기 자세 명령을 보내 **드라이브 settle**.
+* **첫 관측**: `wait=True, timeout=5.0`으로 블로킹 1회만 수행 → 이후는 논블로킹.
+* **효과**: 초기 버퍼 상태가 정상적이고, 그 다음엔 주기를 깨지 않음.
+
+---
+
+# 10) 가벼운 주기/지터 로깅
+
+* 매 틱마다 출력하면 성능 저하 → **간헐(예: 5초에 한 번)** 로깅.
+* `skipped` 카운터로 관측 드랍 정도를 확인 가능.
+
+---
+
+# 11) ROS2 API 안전한 사용
+
+* 내부 API 제거(앞선 AttributeError 해결).
+* `SingleThreadedExecutor`로도 충분하나, 콜백 경합이 커지면 `MultiThreadedExecutor` 고려 가능.
+* `stop_allegro_io()`에서 `executor.shutdown()` → `node.destroy_node()` → `rclpy.shutdown()` 순서로 안전 종료.
+
+---
+
+# 12) 수치 안정성 및 성능 팁(선택적)
+
+* **FP16/TF32**: `model.half()` 및 입력도 half로 맞추면 추론 지연이 감소(CUDA 필요).
+* **CUDA Graph**: 입력 shape 고정 시 그래프 캡처 후 재사용으로 지터 감소.
+* **MLP 축소**: `actor_units`/`priv_mlp_units` 차원 줄여 실시간성↑.
+* **타이머 주기**: 하드웨어·드라이버 지연을 고려해 20 Hz부터 시작, 여유되면 상향.
+
+---
+
+# 13) ROS1/ROS2 로직 일관성 유지
+
+* **관측 → 정규화(unscale) → obs_buf/proprio_hist 업데이트 → 모델 추론 → 액션 스케일·클리핑 → 타깃 갱신 → 명령 전송 → 다음 관측**의 파이프라인은 동일.
+* 차이는 **조인트 순서 변환(ROS1↔ROS2)** 과 **토픽 인터페이스**뿐.
+
+---
+
+## 요약
+
+* **정확한 제어 주기**: ROS2 Timer로 전환, 블로킹 제거, 논블로킹 관측 + last-good 재사용.
+* **안정성**: 디바이스 일관성, 겹침 대입 수정, 안전 종료 순서 적용.
+* **분석 가능성**: `/position_gap`에 타임스탬프/이름 포함 퍼블리시.
+* **성능**: inference_mode, 최소화된 `.clone()`, 필요 시 FP16·CUDA Graph로 확장 가능.
+-->
