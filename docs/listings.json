@@ -2,6 +2,7 @@
   {
     "listing": "/post.html",
     "items": [
+      "/posts/paper/2025-10-31-push-anything.html",
       "/posts/code/2025-10-31-ros1-to-2-control.html",
       "/posts/paper/2025-10-30-ibrl.html",
       "/posts/paper/2025-10-29-deepseek-ocr.html",
@@ -117,6 +118,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/code/2025-10-31-ros1-to-2-control.html",
+      "/posts/paper/2025-10-31-push-anything.html",
       "/posts/paper/2025-10-30-ibrl.html",
       "/posts/paper/2025-10-29-deepseek-ocr.html",
       "/posts/code/2025-10-27-python-envs.html",

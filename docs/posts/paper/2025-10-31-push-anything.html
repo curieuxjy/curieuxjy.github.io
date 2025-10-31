@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-31">
+<meta name="description" content="Single- and Multi-Object Pushing From First Sight with Contact-Implicit MPC">
+
+<title>📃Push Anything 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#brief-review" id="toc-brief-review" class="nav-link active" data-scroll-target="#brief-review">Brief Review</a></li>
+  <li><a href="#detail-review" id="toc-detail-review" class="nav-link" data-scroll-target="#detail-review">Detail Review</a>
+  <ul class="collapse">
+  <li><a href="#기술적-메서드-분석" id="toc-기술적-메서드-분석" class="nav-link" data-scroll-target="#기술적-메서드-분석">기술적 메서드 분석</a>
+  <ul class="collapse">
+  <li><a href="#파이프라인-개요-perception-to-control-pipeline" id="toc-파이프라인-개요-perception-to-control-pipeline" class="nav-link" data-scroll-target="#파이프라인-개요-perception-to-control-pipeline">2.1 파이프라인 개요 (Perception-to-Control Pipeline)</a></li>
+  <li><a href="#엔드이펙터-샘플링-전략-end-effector-sampling-strategy" id="toc-엔드이펙터-샘플링-전략-end-effector-sampling-strategy" class="nav-link" data-scroll-target="#엔드이펙터-샘플링-전략-end-effector-sampling-strategy">2.2 엔드이펙터 샘플링 전략 (End-Effector Sampling Strategy)</a></li>
+  <li><a href="#접촉-암시적-mpc-수식-모델-lcs와-qpcc" id="toc-접촉-암시적-mpc-수식-모델-lcs와-qpcc" class="nav-link" data-scroll-target="#접촉-암시적-mpc-수식-모델-lcs와-qpcc">2.3 접촉-암시적 MPC 수식 모델 (LCS와 QPCC)</a></li>
+  <li><a href="#c3-알고리즘-슬랙-변수와-admm" id="toc-c3-알고리즘-슬랙-변수와-admm" class="nav-link" data-scroll-target="#c3-알고리즘-슬랙-변수와-admm">2.4 C3+ 알고리즘 (슬랙 변수와 ADMM)</a></li>
+  <li><a href="#시스템-구현-요약" id="toc-시스템-구현-요약" class="nav-link" data-scroll-target="#시스템-구현-요약">2.5 시스템 구현 요약</a></li>
+  </ul></li>
+  <li><a href="#실험-설정-및-결과-평가" id="toc-실험-설정-및-결과-평가" class="nav-link" data-scroll-target="#실험-설정-및-결과-평가">실험 설정 및 결과 평가</a>
+  <ul class="collapse">
+  <li><a href="#실험-구성" id="toc-실험-구성" class="nav-link" data-scroll-target="#실험-구성">3.1 실험 구성</a></li>
+  <li><a href="#단일-객체-푸싱-결과" id="toc-단일-객체-푸싱-결과" class="nav-link" data-scroll-target="#단일-객체-푸싱-결과">3.2 단일 객체 푸싱 결과</a></li>
+  <li><a href="#다중-객체-푸싱-결과" id="toc-다중-객체-푸싱-결과" class="nav-link" data-scroll-target="#다중-객체-푸싱-결과">3.3 다중 객체 푸싱 결과</a></li>
+  <li><a href="#c3-vs-c3-속도-비교" id="toc-c3-vs-c3-속도-비교" class="nav-link" data-scroll-target="#c3-vs-c3-속도-비교">3.4 C3 vs C3+ 속도 비교</a></li>
+  </ul></li>
+  <li><a href="#기존-연구와의-비교-분석" id="toc-기존-연구와의-비교-분석" class="nav-link" data-scroll-target="#기존-연구와의-비교-분석">기존 연구와의 비교 분석</a></li>
+  <li><a href="#결론-및-향후-연구" id="toc-결론-및-향후-연구" class="nav-link" data-scroll-target="#결론-및-향후-연구">결론 및 향후 연구</a></li>
+  <li><a href="#참고문헌" id="toc-참고문헌" class="nav-link" data-scroll-target="#참고문헌">참고문헌</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃Push Anything 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">push</div>
+    <div class="quarto-category">mpc</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Single- and Multi-Object Pushing From First Sight with Contact-Implicit MPC
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 31, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><a href="https://arxiv.org/abs/2510.19974">Paper Link</a></li>
+<li><a href="https://dairlab.github.io/push-anything/">Project LInk</a></li>
+</ul>
+<ol type="1">
+<li>🤔 이 연구는 다양한 형태의 단일 및 다중 객체를 실시간으로 밀어 조작하는 핵심 과제를 해결하기 위해 ’Push Anything’이라는 통합 파이프라인을 소개합니다.</li>
+<li>🚀 이 파이프라인은 객체 스캔 및 메시 재구성, 견고한 객체 추적, 그리고 ADMM 기반 CI-MPC인 C3를 개선하여 투영 단계 연산 속도를 획기적으로 향상시킨 C3+ 컨트롤러를 통합합니다.</li>
+<li>✨ 하드웨어 실험을 통해 33개 객체에 걸쳐 98%의 성공률과 높은 정밀도를 달성했으며, 이전에 다루기 어려웠던 복잡한 다중 객체 밀기 작업을 실시간으로 성공적으로 수행함을 입증했습니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-10-31-push-anything/0.gif" width="80%">
+</center>
+<hr>
+<section id="brief-review" class="level1">
+<h1>Brief Review</h1>
+<p>본 논문은 다양한 형상의 객체, 특히 다중 객체 환경에서 정밀한 비파지(non-prehensile) 평면 푸싱 작업을 수행하기 위한 “Push Anything”이라는 로봇 조작 파이프라인을 제안합니다. 기존의 Contact-Implicit Model Predictive Control (CI-MPC) 방법은 복잡한 접촉 상호작용과 알 수 없는 물리적 특성으로 인해 제한된 시나리오에서만 적용 가능했으며, 다중 객체 환경에서의 수많은 접촉 추론은 사실상 불가능했습니다. 이를 극복하기 위해 본 연구는 핵심적으로 Consensus Complementarity Control (C3) [1]의 개선된 버전인 Consensus Complementarity Control Plus (C3+) 알고리즘을 도입하여 실시간 성능을 대폭 향상시키고, 객체 스캐닝, 메시 재구성, 로봇 하드웨어 실행을 아우르는 완전한 파이프라인을 구축했습니다.</p>
+<p><strong>핵심 방법론: C3+ (Consensus Complementarity Control Plus)</strong></p>
+<p>C3+는 접촉 동역학을 최적화 문제에 직접 내장하는 CI-MPC 프레임워크를 기반으로 합니다. 특히, Venkatesh, Bianchini et al.&nbsp;[4]의 샘플링 기반 CI-MPC 접근 방식에 개선 사항을 적용했습니다. 이 접근 방식은 로봇의 엔드 이펙터(end effector) 후보 위치를 샘플링하고, 각 후보에 대해 CI-MPC 문제를 풀어 최적의 궤적을 찾는 방식으로 지역 최적화 문제를 극복합니다.</p>
+<p><strong>1. 접촉 동역학 모델:</strong></p>
+<p>접촉 동역학은 본질적으로 불연속적이며, 부착(sticking), 미끄러짐(sliding), 분리(separation)와 같은 행동을 포함합니다. 이는 상보성 제약 조건(complementarity constraints)을 사용하여 하이브리드 모델로 표현됩니다:</p>
+<p><span class="math display">x_{k+1} = f (x_k, u_k, \lambda_k)</span> <span class="math display">0 \le \lambda_k \perp \Phi(x_k, u_k, \lambda_k) \ge 0</span> 여기서 <span class="math inline">x_k \in \mathbb{R}^{n_x}</span>는 시스템 상태, <span class="math inline">u_k \in \mathbb{R}^{n_u}</span>는 제어 입력, <span class="math inline">\lambda_k \in \mathbb{R}^{n_\lambda}</span>는 접촉력, <span class="math inline">\Phi</span>는 잠재적 접촉 쌍 사이의 부호 있는 거리(gap function)입니다. 이 모델은 접촉 모드의 다중 모드(multi-modal) 특성을 보존합니다.</p>
+<p><strong>2. CI-MPC 문제 공식화:</strong></p>
+<p>C3+는 이 접촉 동역학 모델을 표준 2차 비용 함수와 결합하여 Quadratic Program with Complementarity Constraints (QPCC)를 형성합니다:</p>
+<p><span class="math display">\min_{x_{0:N}, u_{0:N-1}, \lambda_{0:N-1}} \sum_{k=0}^{N-1} (x_k^T Q_k x_k + u_k^T R_k u_k) + x_N^T Q_N x_N</span> <span class="math display">\text{s.t.} x_{k+1} = A x_k + B u_k + D \lambda_k + d</span> <span class="math display">0 \le \lambda_k \perp E x_k + F \lambda_k + H u_k + c \ge 0</span> <span class="math display">(x_k, u_k) \in \mathcal{C}</span></p>
+<p>여기서 동역학 <span class="math inline">f</span>와 거리 함수 <span class="math inline">\Phi</span>는 상태 <span class="math inline">x</span>, 입력 <span class="math inline">u</span>, 접촉력 <span class="math inline">\lambda</span>에 대해 선형화된 근사치를 사용합니다. 기존의 QPCC는 비볼록(non-convex) 문제이며 Mixed-Integer Quadratic Program (MIQP)으로 재구성될 수 있지만, 이는 계산 비용이 매우 높습니다.</p>
+<p><strong>3. C3+의 핵심 개선 사항: Slack Variable 도입 및 ADMM 최적화:</strong></p>
+<p>C3+는 효율적인 해법을 위해 ADMM(Alternating Direction Method of Multipliers) [33]을 활용하는 C3 프레임워크를 기반으로 합니다. C3+의 핵심은 상보성 제약 조건 내의 선형 표현식(<span class="math inline">E x_k + F \lambda_k + H u_k + c</span>)을 나타내는 슬랙 변수 <span class="math inline">\eta_k \in \mathbb{R}^{n_\lambda}</span>를 도입하는 것입니다.</p>
+<p><span class="math display">\min_{x_{0:N}, u_{0:N-1}, \lambda_{0:N-1}, \eta_{0:N-1}} \sum_{k=0}^{N-1} (x_k^T Q_k x_k + u_k^T R_k u_k) + x_N^T Q_N x_N</span> <span class="math display">\text{s.t.} x_{k+1} = A x_k + B u_k + D \lambda_k + d</span> <span class="math display">\eta_k = E x_k + F \lambda_k + H u_k + c</span> <span class="math display">0 \le \lambda_k \perp \eta_k \ge 0</span> <span class="math display">(x_k, u_k) \in \mathcal{C}</span></p>
+<p>이 문제(5)는 컨센서스(consensus) 형태로 재구성되어 ADMM 알고리즘을 통해 반복적으로 해를 찾습니다. ADMM은 다음 세 가지 업데이트 단계를 반복합니다:</p>
+<ol type="1">
+<li><strong>Quadratic Step (z-update):</strong> 볼록(convex) QP를 풀어 시스템 동역학, 슬랙 변수 등 시간에 걸쳐 결합된 제약 조건을 업데이트합니다. C3+에서는 <span class="math inline">\eta_k</span>에 대한 선형 등식 제약이 추가되어 QP 크기가 약간 커지지만, OSQP [34]와 같은 표준 솔버로 효율적으로 풀 수 있습니다.</li>
+<li><strong>Projection Step (δ-update):</strong> 이 단계는 C3+의 주요 계산상의 이점입니다. 각 타임스텝 <span class="math inline">k</span>에 대해 이전 단계의 결과를 단순 상보성 집합 <span class="math inline">0 \le \delta\lambda_k \perp \delta\eta_k \ge 0</span>에 투영합니다. 슬랙 변수 도입 덕분에 비볼록 상보성 제약 조건이 접촉별로 분리됩니다. 따라서, (11)은 많은 독립적인 1D MIQP를 푸는 것과 동등해지며, 이는 각 구성 요소에 대해 간단한 닫힌 형태의 해를 가집니다: <span class="math display">(\delta\lambda_k, \delta\eta_k)^* = \begin{cases} (0, \eta^\circ) &amp; \text{if } \eta^\circ \ge 0 \text{ and } \eta^\circ \ge p_{\lambda}/p_{\eta} \lambda^\circ \\ (\lambda^\circ, 0) &amp; \text{if } \lambda^\circ \ge 0 \text{ and } \eta^\circ &lt; p_{\lambda}/p_{\eta} \lambda^\circ \\ (0, 0) &amp; \text{otherwise} \end{cases}</span> 여기서 <span class="math inline">\lambda^\circ = (z_{k+1}^i + w_k^i)_\lambda</span>, <span class="math inline">\eta^\circ = (z_{k+1}^i + w_k^i)_\eta</span>이며 <span class="math inline">p_\lambda, p_\eta &gt; 0</span>는 가중치입니다. 이 닫힌 형태의 해는 값비싼 MIQP를 상수 시간의 분석적 계산으로 대체하여 상당한 속도 향상을 가져옵니다.</li>
+<li><strong>Dual Update (w-update):</strong> 스케일링된 듀얼 변수 <span class="math inline">w_k</span>를 조정하여 <span class="math inline">z_k</span>와 <span class="math inline">\delta_k</span>가 다음 반복에서 일치하도록 합니다.</li>
+</ol>
+<p>C3+는 정해진 수의 ADMM 반복 후 조기 종료하여 실시간 제어 속도를 유지하며, 마지막 이차 단계에서 엔드 이펙터-객체 접촉 구성 요소에 큰 가중치를 부여하여 동역학적으로 실현 가능한 힘을 유도합니다.</p>
+<p><strong>Push Anything 프레임워크의 다른 구성 요소:</strong></p>
+<ul>
+<li><strong>객체 메시 재구성:</strong> RealSense D455 RGBD 카메라로 객체 비디오를 녹화하고, XMem [29]으로 객체 마스크를 생성한 후, BundleSDF [30]를 통해 메시 재구성을 수행합니다.</li>
+<li><strong>다중 객체 추적:</strong> FoundationPose [31]의 여러 인스턴스를 병렬로 실행하여 다중 객체를 추적합니다. XMem [29]을 통합하여 마스크의 주기적 재등록을 통해 시간 경과에 따른 드리프트(drift)를 수정하고, 갑작스러운 방향 변화를 감지하여 객체 대칭 문제를 해결합니다.</li>
+<li><strong>샘플링 전략:</strong> 객체 메시의 바디-프레임(body-frame) 면 위치, 면적, 법선 벡터를 사용하여 엔드 이펙터 후보 위치를 생성합니다. 임의로 객체, 면, 면 위의 점을 선택한 후, 그 점을 면의 바깥 법선 벡터를 따라 고정된 거리만큼 투영하고, 다시 고정된 월드 높이로 투영하여 후보 위치를 만듭니다. 다른 객체에 너무 가까운 샘플은 제거합니다.</li>
+</ul>
+<p><strong>실험 및 결과:</strong></p>
+<p>Franka Panda 로봇과 구형 엔드 이펙터를 사용하여 33개의 다양한 객체에 대해 광범위한 하드웨어 실험을 수행했습니다. * <strong>단일 객체 푸싱:</strong> 25개 객체에 대한 701회 시도에서 99.9%의 성공률을 달성했습니다. 평균 목표 도달 시간은 약 31초였으며, 이전 작업 [4]보다 향상된 성능을 보였습니다. * <strong>다중 객체 푸싱:</strong> 2-객체, 3-객체, 4-객체 시나리오에서 총 227회 시도에 걸쳐 92.5%의 성공률을 기록했습니다. 평균 목표 도달 시간은 각각 96.4초, 191.1초, 315.7초로, 객체 수의 증가에 비례하여 증가했습니다. * <strong>C3 대비 C3+의 해법 시간 비교:</strong> C3+는 C3에 비해 전체 성능이 더 빠릅니다. Quadratic Step은 약간 느리지만, Projection Step은 네다섯 자릿수만큼 압도적으로 빠르며, 이는 슬랙 변수 도입으로 인한 계산 효율성 덕분입니다.</p>
+<p><strong>한계 및 향후 연구:</strong></p>
+<ul>
+<li>FoundationPose의 포즈 추적 정확도, 특히 객체 가림(occlusion) 상황에서 성능이 저하될 수 있습니다. 다중 뷰 추적을 통한 지각(perception) 견고성 향상이 필요합니다.</li>
+<li>모든 객체에 동일한 질량과 관성을 모델링하여, 향후 온라인 모델 학습 또는 적응(adaptation)이 필요합니다.</li>
+<li>고차원적인 다단계 장기 계획(multi-step long-horizon planning)을 수행하지 않아 작업 복잡성이 증가함에 따라 비효율적일 수 있습니다. 상위 레벨 추론과의 결합이 필요합니다.</li>
+<li>파이프라인을 3D 비파지 조작으로 확장하는 것이 목표입니다.</li>
+</ul>
+<p>결론적으로, “Push Anything”은 C3+ 알고리즘의 도입을 통해 복잡한 다중 객체 접촉을 실시간으로 처리할 수 있는 CI-MPC의 능력을 크게 확장했으며, 다양한 실제 객체에 대한 고정밀 평면 푸싱 작업을 성공적으로 수행할 수 있음을 하드웨어 실험을 통해 입증했습니다.</p>
+</section>
+<section id="detail-review" class="level1">
+<h1>Detail Review</h1>
+<blockquote class="blockquote">
+<p>Push Anything: 단일 및 다중 객체 푸싱을 위한 CI-MPC (Contact-Implicit MPC) – 심층 리뷰</p>
+</blockquote>
+<p>본 리뷰에서는 Hien Bui 등(2025)의 <em>Push Anything: Single- and Multi-Object Pushing From First Sight with Contact-Implicit MPC</em> 논문을 다룬다. 이 연구는 <strong>비선점적 조작</strong>(planar pushing) 문제에서 <strong>Contact-Implicit MPC</strong> (CI-MPC) 기반 제어법을 확장하여 단일 객체뿐 아니라 다중 객체 환경에서도 실시간으로 고정밀 푸싱 제어를 구현했다. 주요 기여는 다음과 같다. 첫째, 실제 물체 스캔 및 메시 재구성, 객체 추적, 샘플링 기반 CI-MPC를 통합하는 완전한 조작 파이프라인인 <strong>Push Anything</strong>를 제안했다. 둘째, 기존 C3(Consensus Complementarity Control) 방법을 개선한 <strong>C3+</strong> 알고리즘을 개발하여 풀기 어려운 혼합정수제곱문제(MIQP)를 효율적으로 해결했다. C3+는 접촉 모드를 느슨하게 분리하고 ADM(Mixed-Integer Linear Complementarity) 기반 ADMM 최적화로 병렬 계산을 가능케 함으로써, C3 대비 투영 단계에서 10⁴–10⁵배에 달하는 속도 향상을 달성했다. 셋째, 개발된 시스템을 33종의 다양한 객체에 적용하여 928회의 하드웨어 실험을 수행한 결과 <strong>98% 이상의 성공률</strong>(단일 객체 99.9%, 다중 객체 92.5%)과 물체 위치 오차 2cm, 회전 오차 0.1rad 내 도달을 보였으며, 실시간 성능(단일 객체 0.5분 평균, 4객체 5.3분 평균)으로 목표 위치까지 정밀하게 푸싱함을 보였다. 이처럼 Push Anything은 미리 알려지지 않은 다양한 형상의 객체들에 대해, 많은 물체-물체 및 물체-환경 간 접촉을 포함하는 복잡한 장면에서도 기존 CI-MPC 방식으로는 불가능했던 작업을 실시간으로 수행할 수 있음을 보였다.</p>
+<section id="기술적-메서드-분석" class="level2">
+<h2 class="anchored" data-anchor-id="기술적-메서드-분석">기술적 메서드 분석</h2>
+<section id="파이프라인-개요-perception-to-control-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="파이프라인-개요-perception-to-control-pipeline">2.1 파이프라인 개요 (Perception-to-Control Pipeline)</h3>
+<center>
+<img src="../../images/2025-10-31-push-anything/1.png" width="100%">
+</center>
+<p>Push Anything 시스템은 <strong>오프라인 단계</strong>와 <strong>온라인 단계</strong>로 구분된다. 오프라인 단계에서는 새 객체를 카메라로 스캔해 이를 기하 모델로 변환한다. 예를 들어, RealSense D455 RGB-D 카메라로 객체 동영상을 촬영한 뒤, 첫 프레임에서 수동 마스킹을 수행하고 이후 프레임에서는 XMem을 사용해 마스크를 자동 추적한다. 이 RGB, 깊이, 마스크, 카메라 내부파라미터를 입력으로 <strong>BundleSDF</strong> (신경 임베디드 SDF) 알고리즘을 통해 객체 메시를 재구성하고, 표면을 밀봉(watertight)하여 URDF 모델을 생성한다. 여기서는 모든 객체의 질량과 관성 텐서를 동일하다고 가정한다. 이후 URDF들을 라이브러리에 저장해 두고, 실험 시에는 임의로 선택된 1~4개의 객체를 사용한다.</p>
+<p>온라인 단계에서는 카메라 영상으로부터 <strong>FoundationPose</strong> 기반의 객체 상태 추정기로 각 객체의 위치·자세를 추적한다. 이를 위해 프레임마다 여러 FoundationPose 인스턴스를 병렬 실행하며, 앞서 얻은 객체 메시를 참조하여 추적을 초기화하고 진행한다. 다만, 객체 간 또는 로봇의 팔에 의한 빈번한 가림과 메시의 불완전성으로 인해 추적 에러가 생길 수 있다. 이를 보완하기 위해 주기적으로 XMem으로 마스크를 재등록하여 추적 드리프트를 보정하고, 객체 대칭성으로 인한 자세 추정 불연속을 걸러낸다. 결과적으로 현재 로봇 상태와 추정된 각 객체의 상태(<span class="math inline">x_{obj}</span>)가 획득된다.</p>
+<p>이후 <strong>샘플링 기반 CI-MPC 컨트롤러</strong>가 동작한다. 우선 객체 메시와 상태를 기반으로 가능성 있는 푸싱 접점(또는 엔드이펙터 목표 위치) 후보를 샘플링한다. 그런 다음 각 후보 위치에 대한 <strong>현지 CI-MPC 최적화</strong>를 풀어 비용을 계산하고, 최종적으로 가장 낮은 비용을 내는 후보로 로봇을 이동시켜 실질적인 푸싱 동작을 수행한다. 로봇의 움직임은 <strong>운동 공간 제어기</strong>(operational space controller)를 통해 실행된다. 즉, CI-MPC가 계획한 엔드이펙터 궤적 <span class="math inline">u^{*}</span>, <span class="math inline">x^{*}</span>를 1kHz의 고주파 제어기로 추종한다. 하드웨어 구성으로는 고성능 CPU 3대를 사용하여 (i) CI-MPC 알고리즘 전용, (ii) 로봇 제어와 OSC, (iii) FoundationPose 등 인식용으로 분리하여 병렬 처리한다.</p>
+</section>
+<section id="엔드이펙터-샘플링-전략-end-effector-sampling-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="엔드이펙터-샘플링-전략-end-effector-sampling-strategy">2.2 엔드이펙터 샘플링 전략 (End-Effector Sampling Strategy)</h3>
+<p>샘플링 기반 CI-MPC의 핵심은 <strong>다양한 엔드이펙터 위치 후보</strong>를 생성하는 것이다. 이를 위해 먼저 각 객체 메시에 포함된 모든 삼각형 면의 위치, 면적, 법선 벡터를 저장한다. 샘플링 절차는 다음과 같다: (1) 전체 객체 중 하나를 균등하게 선택, (2) 해당 객체에서 면적에 비례해 하나의 삼각형 면을 선택, (3) 선택된 면 위에서 임의의 점을 샘플링한다. 이렇게 얻은 표면상의 점을 해당 면의 법선 방향으로 고정 거리만큼 바깥으로 이동시키고, 세계 좌표에서 고정된 높이로 투영하여 후보 위치를 얻는다. 생성된 후보 위치 중 물체 표면과 지나치게 가까운(충돌 가능성이 있는) 위치는 필터링해 제거한다. 위 과정을 원하는 후보 개수가 나올 때까지 반복한다. 이 샘플링 전략은 대상 객체의 메시만 있으면 적용 가능하며, 비구형/오목형 객체나 다중 객체 환경도 문제없이 다룰 수 있다.</p>
+<p>이러한 샘플링 결과로 얻은 엔드이펙터 위치 후보 <span class="math inline">x_{\text{ee}}^{(i)}</span>들이 로봇 시작 위치 <span class="math inline">x_{\text{ee}}^{(0)}</span>와 함께 CI-MPC의 입력으로 들어간다. 즉, 각 후보에 대해 <strong>로컬 CI-MPC 문제</strong>를 풀어 비용 <span class="math inline">\mathcal{J}</span>를 계산하고, <span class="math inline">\min_{i}\mathcal{J}\left( x_{\text{ee}}^{(i)} \right)</span>가 되도록 로봇을 이동시킨다. 이때 이동 경로는 충돌이 없는 경로 찾기 알고리즘으로 사전 계획한 뒤, 그 목표 위치에서 CI-MPC를 수행하는 두 단계 방식이다. 샘플링을 통해 전역 탐색(guidance)을 보완함으로써, 로컬 CI-MPC의 지역 최적화 한계를 극복하고 장기적 목표를 달성할 수 있다.</p>
+</section>
+<section id="접촉-암시적-mpc-수식-모델-lcs와-qpcc" class="level3">
+<h3 class="anchored" data-anchor-id="접촉-암시적-mpc-수식-모델-lcs와-qpcc">2.3 접촉-암시적 MPC 수식 모델 (LCS와 QPCC)</h3>
+<p>CI-MPC는 <strong>혼합 연속-불연속 시스템</strong>(hybrid dynamics) 모델을 사용하며, 특히 접촉 역학을 명시적으로 포함한다. 상태 <span class="math inline">x_{k} \in \mathbb{R}^{n_{x}}</span>와 제어입력 <span class="math inline">u_{k} \in \mathbb{R}^{n_{u}}</span>가 주어질 때, 선형화 전의 일반 동역학은 다음과 같이 표현할 수 있다:</p>
+<p><span class="math display">x_{k + 1} = f\left( x_{k},u_{k},\lambda_{k} \right),\quad 0 \leq \lambda_{k}\bot\Phi\left( x_{k},u_{k},\lambda_{k} \right) \geq 0,</span></p>
+<p>여기서 <span class="math inline">\lambda_{k} \in \mathbb{R}^{n_{\lambda}}</span>은 접촉력(contact force)을 나타내고, <span class="math inline">\Phi( \cdot )</span>는 접촉 간극(gap 함수 또는 signed distance)이다. <span class="math inline">0 \leq \lambda\bot\Phi \geq 0</span>는 <strong>보완성 제약</strong>으로, 접촉력이 비제로면 접촉 간극은 0 (밀착), 간극이 양이면 접촉력은 0(비접촉)을 의미한다. 이 비선형 모델을 시간-이산화하고 선형화하여 얻은 <strong>선형 보완 시스템</strong>(Linear Complementarity System, LCS)의 형태는 다음과 같다:</p>
+<p><span class="math display">\begin{aligned}
+x_{k + 1} &amp;= Ax_{k} + Bu_{k} + D\lambda_{k} + d, \\
+0 \leq \lambda_{k} &amp;\bot Ex_{k} + F\lambda_{k} + Hu_{k} + c \geq 0,
+\end{aligned}</span></p>
+<p>여기서 <span class="math inline">A,B,D,E,F,H,c,d</span>는 선형화 계수 행렬 및 상수항이다. 이 모델은 접촉 시 미끄러짐·고착 같은 다중 접촉 모드를 포함하는 복합 역학을 유지하면서도, 이산선형 형태로 근사한 것이다.</p>
+<p>이 LCS 모델과 이차비용(예: <span class="math inline">x^{T}Qx + u^{T}Ru</span>)을 결합하면, 모든 시간 단계에 대한 미분불가능한 보완성 제약까지 포함하는 <strong>QPCC</strong>(Quadratic Program with Complementarity Constraints) 문제를 정의할 수 있다. 이 문제는 <span class="math inline">\min\sum_{k = 0}^{N - 1}\left( x_{k}^{T}Q_{k}x_{k} + u_{k}^{T}R_{k}u_{k} \right) + x_{N}^{T}Q_{N}x_{N}</span> 같은 이차목적과, <span class="math inline">x_{k + 1} = Ax_{k} + Bu_{k} + D\lambda_{k} + d</span>, 그리고 <span class="math inline">0 \leq \lambda_{k}\bot Ex_{k} + F\lambda_{k} + Hu_{k} + c \geq 0</span> 등의 제약을 갖는 비볼록 최적화 문제이다. 보통 이를 풀기 위해 혼합정수 제곱계획(MIQP) 형태로 변환하여 푼다. 그러나 실제 연산 비용이 매우 크기 때문에 C3+는 이 문제를 효율적으로 근사·해결하는 전략을 사용한다.</p>
+</section>
+<section id="c3-알고리즘-슬랙-변수와-admm" class="level3">
+<h3 class="anchored" data-anchor-id="c3-알고리즘-슬랙-변수와-admm">2.4 C3+ 알고리즘 (슬랙 변수와 ADMM)</h3>
+<p>C3+는 기존 <strong>Consensus Complementarity Control (C3)</strong> 방법을 개선한 기법이다. 핵심 아이디어는 보완성 제약의 식 표현을 별도의 <strong>슬랙 변수</strong> <span class="math inline">\eta_{k}</span>로 분리하는 것이다. 즉 <span class="math inline">Ex_{k} + F\lambda_{k} + Hu_{k} + c</span>의 값을 <span class="math inline">\eta_{k}</span>로 정의하면, 보완성 제약 <span class="math inline">0 \leq \lambda_{k}\bot Ex_{k} + F\lambda_{k} + Hu_{k} + c \geq 0</span>은 대신에</p>
+<p><span class="math display">\eta_{k} = Ex_{k} + F\lambda_{k} + Hu_{k} + c,\quad 0 \leq \lambda_{k}\bot\eta_{k} \geq 0</span></p>
+<p>로 바뀐다. 이를 통해 원래 문제(4번)을 등가 문제(5번)로 재구성할 수 있는데, 이 형태는 풀기 위해 <strong>ADMM (Alternating Direction Method of Multipliers)</strong>를 적용할 수 있게 된다.</p>
+<p>구체적으로, C3+는 변수를 <span class="math inline">z_{k} = \left\lbrack x_{k};\lambda_{k};u_{k};\eta_{k} \right\rbrack</span>로 묶고, 이를 복사한 <span class="math inline">\delta_{k}</span>를 도입하여 제약을 두 그룹으로 분리한다. 첫 번째 집합 <span class="math inline">\mathcal{C}_{z}</span>은 선형 동역학(式(5b))·슬랙 정의(式(5c)) 및 입력/상태 경계(式(5e))를 포함하는 결합 제약들을 포함하고, 두 번째 집합 <span class="math inline">\mathcal{C}_{\delta}</span>는 <strong>간단해진 보완성 제약</strong> <span class="math inline">0 \leq \delta\lambda_{k}\bot\delta\eta_{k} \geq 0</span>만을 갖는다. ADMM 알고리즘은 이 두 집합에 대해 반복적으로 다음 세 단계(예: 1-Quadratic, 2-Projection, 3-Dual)를 수행하며 최적해를 구한다:</p>
+<ol type="1">
+<li><p><strong>Quadratic Step (z-업데이트)</strong>: 제약조건과 ADMM 패널티 항을 포함한 확장 라그랑지언의 이차 목적 문제를 푼다. 즉, <span class="math inline">z</span> 변수를 고정하고, <span class="math inline">\delta</span>, <span class="math inline">\omega</span> (라그랑주 승수) 등을 포함한 연관된 2차 계획문제를 풀어 <span class="math inline">z</span>를 업데이트한다. 이때 풀리는 문제는 선형 제약만을 포함하는 <strong>볼록 이차계획(QP)</strong>이다.</p></li>
+<li><p><strong>Projection Step (δ-업데이트)</strong>: 각 시간 단계별로, <span class="math inline">z</span>-업데이트 결과를 집합 <span class="math inline">\mathcal{C}_{\delta}</span>에 투영한다. 즉, <span class="math inline">0 \leq \delta\lambda_{k}\bot\delta\eta_{k} \geq 0</span> 조건을 만족하도록 <span class="math inline">\left( \delta\lambda_{k},\delta\eta_{k} \right)</span>를 조정한다. 슬랙 변수 도입 덕분에 이 문제가 <strong>시간 및 접촉별로 완전히 분리</strong>되어, 각 접촉 성분은 독립적인 1차원 MIQP가 된다. 놀랍게도 이 1D MIQP는 닫힌형태 해를 갖는다. 실제로 수식(11)–(12)에서 보듯이, 투영값 <span class="math inline">\left( \lambda_{k}^{*},\eta_{k}^{*} \right)</span>는 원래값 <span class="math inline">\left( \lambda_{k}^{\circ},\eta_{k}^{\circ} \right)</span>과 가중치 <span class="math inline">u_{\lambda},u_{\eta}</span>를 이용한 간단한 부등식 판별로 계산된다. 이 방식으로, 원래 C3에서 지수시간에 가까운 복잡도를 갖던 믹스드 인티저 문제풀이가 상수시간 함수 평가로 변환되어, <strong>투영 단계의 연산량이 10⁴–10⁵배 이상 감소</strong>한다.</p></li>
+<li><p><strong>Dual Step (w-업데이트)</strong>: 증분된 듀얼 변수(라그랑주 승수) <span class="math inline">\omega</span>를 업데이트하여, 다음 반복에서 <span class="math inline">z</span>와 <span class="math inline">\delta</span>가 일치하도록 조정한다.</p></li>
+</ol>
+<p>이 ADMM 반복은 관점에 따라 무한히 수행할 수 있으나, Push Anything 시스템에서는 <strong>실시간 제어를 위해 제한된 반복 횟수</strong>만 수행하고 조기 종료한다. 실제 구현에서는 극히 소수(예: 1–2회) 반복 후 종료하며, 마지막 Quadratic Step만 수행하는 방법이 성능상 유리했다. 또한 최종 단계에서 엔드이펙터-객체 접촉 성분의 가중치를 크게 조정하여(예: 1000배) 제약 만족도를 높인다.</p>
+<p>요약하면, C3+는 C3가 사용하는 SLIM, 퍼텍스 접근과 ADMM 구조를 계승하되, <strong>슬랙 변수</strong>를 활용하여 접촉 제약을 해체하고 대수적 닫힌형 해로 해결함으로써 계산 비용을 극적으로 줄인다. 이를 통해 다수의 접촉이 있는 다중 물체 장면에서도 실시간으로 CI-MPC를 돌릴 수 있는 효율성을 확보했다.</p>
+</section>
+<section id="시스템-구현-요약" class="level3">
+<h3 class="anchored" data-anchor-id="시스템-구현-요약">2.5 시스템 구현 요약</h3>
+<p>앞서 설명한 파이프라인에 따라, 실제 시스템은 Fig.28과 같은 구조를 갖는다. 오프라인에 생성한 객체 메시와 URDF 파일들은 온라인에서 <strong>엔드이펙터 샘플링 + C3+ 컨트롤러</strong>로 전달된다. 엔드이펙터는 7–40Hz 빈도로 후보 위치를 샘플링하고, 각 후보에 대해 C3+ 기반 CI-MPC를 해 풀이 나온다. 이후 최적 후보가 선택되면, 로봇은 충돌 회피 경로로 이동한 뒤 CI-MPC 궤적을 OSC(1kHz)로 추종하여 물체를 푸싱한다. 모든 컴포넌트는 Drake 등 로봇 프레임워크 위에 C++로 구현되어 있으며, 컴퓨터 간 LCM 통신으로 실험이 수행된다.</p>
+</section>
+</section>
+<section id="실험-설정-및-결과-평가" class="level2">
+<h2 class="anchored" data-anchor-id="실험-설정-및-결과-평가">실험 설정 및 결과 평가</h2>
+<section id="실험-구성" class="level3">
+<h3 class="anchored" data-anchor-id="실험-구성">3.1 실험 구성</h3>
+<p>실험은 Franka Emika Panda 7자유도 협동로봇과 구형(end-cap) 푸시 툴을 사용해 수행되었다. 33종의 다양한 객체(볼록체, 오목체, 3D 프린팅된 문자, 가정용품 등)가 준비되었으며, 각 객체가 탁자 위에 놓인 상태에서 목표 자세(goal pose)까지 SE(2) 평면 내 이동하도록 설정했다. 목표 허용오차는 높음(평면상 5cm, 회전 0.4rad)과 낮음(2cm, 0.1rad)의 두 조건으로 평가하였다.</p>
+<p>장면 설정으로는 단일 객체부터 네 개의 객체가 초기 난잡(cluttered)하게 놓인 다중 객체 까지 다뤘다. 성능 평가는 하드웨어 실험을 통해 이루어졌다. 단일 객체 실험은 25개 객체 각각에 대해 28번의 성공적인 트라이얼을 얻을 때까지 반복했으며, 결과 701회의 실험이 수행되었다. 다중 객체 실험은 2개 객체 조합 10개, 3개 조합 6개, 4개 조합 5개를 각각 10번의 성공 사례를 얻을 때까지 수행하여 총 227회의 실험을 진행했다. 모든 실험은 물리 굴절 및 마찰이 있는 실제 환경에서 이루어졌다.</p>
+</section>
+<section id="단일-객체-푸싱-결과" class="level3">
+<h3 class="anchored" data-anchor-id="단일-객체-푸싱-결과">3.2 단일 객체 푸싱 결과</h3>
+<p>단일 객체 실험에서 시스템은 <strong>99.9%의 성공률</strong>을 보였다. 25개 객체를 대상으로 701회 실험을 진행하여 700회 성공(실패 1회: 큰 달걀판이 로봇 작동 범위를 벗어난 사례)하였다. 엄격한 허용오차(이동 ≤2cm, 회전 ≤0.1rad) 기준에서 평균 목표 도달 시간은 대략 <em>약 31초</em>(0.52분)로 기록되었다. 이는 종전 연구[4]보다 목표 시간(35.5초) 대비 약 13% 단축된 결과이다. 대부분의 객체에서 일관되게 빠른 도달이 가능했으며, 예외적으로 무거운 집게(clamp)나 마찰이 큰 물병 같은 경우 일부 롱테일(outlier)이 나타나기도 했지만, 전반적으로 높은 정밀도와 신뢰성을 확인했다.</p>
+</section>
+<section id="다중-객체-푸싱-결과" class="level3">
+<h3 class="anchored" data-anchor-id="다중-객체-푸싱-결과">3.3 다중 객체 푸싱 결과</h3>
+<p>다중 객체 실험(2~4개 객체)에서는 성공률이 <strong>92.5%</strong>였다. 2개 객체 실험(10<em>10), 3개(6</em>10), 4개(5*10)로 총 227회의 실험 중 210회를 성공적으로 마쳤다. 실패(17회) 사례는 모두 객체가 로봇의 작동 범위를 벗어난 경우였다. 다중 객체 설정에서는 계획 수평선(horizon)을 줄여(2객체: N=15, 3객체: N=10, 4객체: N=5) 연산 속도를 유지했다. 그 결과, 2객체 작업의 평균 목표 시간은 약 96.4초, 3객체 191.1초, 4객체 315.7초로 측정되었다. 참고로 이는 1개 객체 때(≈31초)보다 선형적으로 증가하지 않았는데, 이는 각 실험에서 객체별 목표 할당(goal assignment)이 무작위로 다르게 설정되어 추가적인 재배치 동작이 필요했기 때문이다.</p>
+<p>하드웨어 실험에서 C3+ 기반 시스템은 매우 강인한 성능을 보였다. 평균 목표 시간은 1, 2, 3, 4개 객체에서 각각 <strong>0.5분, 1.6분, 3.2분, 5.3분</strong>(≈30s, 96s, 192s, 318s)이었다. 특히 네 객체에서도 5분 이내에 모든 목표를 달성하여, 이전까지 불가능했던 복잡한 다중 객체 환경에서의 안정적인 푸싱을 입증했다.</p>
+</section>
+<section id="c3-vs-c3-속도-비교" class="level3">
+<h3 class="anchored" data-anchor-id="c3-vs-c3-속도-비교">3.4 C3 vs C3+ 속도 비교</h3>
+<p>한편 CI-MPC 내부 성능도 평가되었다. C3+는 기존 C3에 비해 <strong>해결 시간 면에서 획기적 개선</strong>을 보였다. 실험적으로 1~4개 객체의 CI-MPC 계획을 반복적으로 풀어본 결과, C3+의 전반적인 퍼포먼스가 우수했다. 구체적으로, ADMM의 Quadratic Step에서는 C3에 비해 오히려 약간 느렸지만, <strong>Projection Step 속도가 4~5자릿수(10⁴–10⁵)배 빨랐다</strong>. 예를 들어 3객체 상황에서 C3의 단일 투영 연산 시간이 평균 40ms인 반면, C3+에서는 0.005ms 수준에 불과했다. 이로써 C3+는 투영 단계에서 실제 마이크로초급 연산만으로도 접촉 모드를 결정할 수 있게 되었다. 결과적으로, C3+ 기반 컨트롤러는 실제 하드웨어 제어 주기(20–40Hz)를 충분히 만족시켜 실시간 성능을 유지했다.</p>
+</section>
+</section>
+<section id="기존-연구와의-비교-분석" class="level2">
+<h2 class="anchored" data-anchor-id="기존-연구와의-비교-분석">기존 연구와의 비교 분석</h2>
+<p>Push Anything는 여러 측면에서 기존 연구들을 확장 및 통합하였다. 전통적인 <strong>접촉 비선점적 조작 연구</strong>(예: Mason의 기계적 푸싱 모델 [32], 힘 기반 비선점적 계획 등)는 주로 단일 객체의 정적 환경에서 이론적 모델에 근거해 추진력을 계산하거나 그리퍼를 이용한 하이브리드 계획을 다루어 왔다. 그러나 이들 방법은 <em>조합적 복잡성</em>으로 인해 다중 객체 환경이나 접촉 모드 변화가 많은 동적 상황에서 확장성이 떨어진다. 데이터 기반 접근법(예: Push-Net, 강화학습 기반 푸싱 [38–40])은 단일 객체에서 경험을 쌓아 회전·재배치 등에 강인한 성능을 보였으나, 높은 데이터 수집 비용과 다중 객체 장면의 확장성 문제로 아직 제한적이다.</p>
+<p>한편 <strong>Contact-Implicit MPC</strong> 계열 연구는 모델 기반으로 접촉 거동을 제어 궤적 최적화에 직접 포함시킨다. Aydinoglu 등[1]의 C3는 ADMM을 이용해 접촉 제약을 해결했으며, Venkatesh 등[4]은 엔드이펙터 샘플링을 결합해 지역 최적화의 한계를 일부 극복했다. 그러나 이들 초기 연구들은 모두 <strong>CAD로 정확하게 알려진 단일 객체</strong>를 전제로 했으며, 대상 객체의 물리 파라미터와 메시를 미리 알고 있어야 했다. 또한 계산 비용이 커서 실시간 적용이 제한적이었다.</p>
+<p>본 논문은 이러한 한계를 극복했다. 먼저 객체의 3D 형태를 실시간으로 획득하기 위해 <strong>학습기반 3D 재구성</strong>(BundleSDF)과 <strong>비전 기반 자세 추정</strong>(FoundationPose) 모듈을 도입함으로써, 사전 정보 없이 다양한 물체를 처리할 수 있게 했다. 이는 이전 CI-MPC 연구에서는 다루지 않았던 혁신적 통합이다. 또한 C3+ 알고리즘은 원본 C3 대비 <strong>비선형 보완성 제약을 해체하고 병렬화하여</strong> 계산 복잡도를 대폭 줄였는데, 이는 도식적으로도 이 논문이 제안한 핵심 공헌이다. C3+는 이전 방법들이 인스턴트적으로 처리하지 못했던 최대 19개 접촉까지 효율적으로 고려하면서 다중 객체를 제어할 수 있음을 보였다.</p>
+<p>실험적으로도, Push Anything는 <strong>고정밀 실시간 하드웨어 제어</strong> 성능을 실증했다는 점이 독보적이다. 실제 로봇으로 33개 임의 객체를 대상으로 928회 실험을 진행해 98% 이상의 성공률을 달성한 것은 이전 CI-MPC 문헌에서 보고된 수치(98–99.9%)와 비슷하거나 높다. 동시에, 상당수 다중 객체 장면(최대 4개)에서 수분 내에 목표를 달성한 점은, 기존에 다루지 못했던 클러터 정리(cluttered scene) 문제를 해결했다는 점에서 의미가 크다. 요약하면, Push Anything는 실제 감지-추적-최적화-제어가 결합된 <strong>완전 시스템</strong>으로서, 이 분야의 획기적 진전으로 평가할 수 있다.</p>
+</section>
+<section id="결론-및-향후-연구" class="level2">
+<h2 class="anchored" data-anchor-id="결론-및-향후-연구">결론 및 향후 연구</h2>
+<p>Push Anything 논문은 <strong>접촉 풍부한 비선점적 조작</strong>에서 모델 기반 최적화 방식의 새로운 지평을 열었다. 저자들은 <strong>C3+</strong>를 도입해 수많은 접촉 상황에서도 실시간으로 MPC를 구현하고, 이를 실제 로봇 하드웨어에 통합하여 높은 정확도와 성공률을 입증했다. 비록 동일한 질량·관성 가정, 단일 시점 카메라 의존, 다중 단계 계획 부재 등 몇 가지 한계는 남아 있으나, 이는 추후 리서치 방향을 제시한다. 예를 들어 다중 뷰 인식, 온라인 물리 파라미터 학습, 고수준 플래너와의 통합 등을 통해 현 시스템의 범용성과 성능을 더욱 높일 수 있을 것이다. 전반적으로, Push Anything은 접촉-암시적 MPC의 적용 범위를 크게 확장시켰으며, 로봇공학 분야의 푸싱·조작 연구자들에게 유용한 기술적 통찰을 제공한다.</p>
+</section>
+<section id="참고문헌" class="level2">
+<h2 class="anchored" data-anchor-id="참고문헌">참고문헌</h2>
+<p>논문 본문 내용은 주로 Push Anything (2025) 논문 자체에서 발췌하여 정리하였다. 추가로 CI-MPC의 현황 개요는 EmergentMind 블로그를 참고하였다.</p>
+<hr>
+<p><strong>출처:</strong></p>
+<ul>
+<li><p>Push Anything: Single- and Multi-Object Pushing From First Sight with Contact-Implicit MPC(Hien Bui et al., University of Pennsylvania, 2025)</p></li>
+<li><p>Additional References:</p>
+<ul>
+<li>Literature Review: <a href="https://www.themoonlight.io/en/review/push-anything-single-and-multi-object-pushing-from-first-sight-with-contact-implicit-mpc">https://www.themoonlight.io/en/review/push-anything-single-and-multi-object-pushing-from-first-sight-with-contact-implicit-mpc</a></li>
+<li>Contact-Implicit MPC Overview: <a href="https://www.emergentmind.com/topics/contact-implicit-model-predictive-control-ci-mpc">https://www.emergentmind.com/topics/contact-implicit-model-predictive-control-ci-mpc</a> ```</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

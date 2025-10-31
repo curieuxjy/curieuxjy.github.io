@@ -15,7 +15,7 @@ ROS1 기반의 제어 코드를 ROS2로 전환하면서 가장 중요하게 생�
 
 
 <center>
-<img src="../../images/2025-10-31-ros1-to-2-control/img-1761880999237-1.png" width="60%" />
+<img src="../../images/2025-10-31-ros1-to-2-control/img-1761880999237-1.png" width="70%" />
 </center>
 
 
