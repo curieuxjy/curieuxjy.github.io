@@ -32,7 +32,7 @@ number-sections: true
 
 콜아웃
 ```html
-::: {.callout-tip icon="false"}
+::: {.callout-tip collapse="true" icon="false"}
 # Overview
 
 Isaac Orbit (or orbit in short) is **a unified and modular framework**, built on top of [NVIDIA Omniverse](https://docs.omniverse.nvidia.com/) and [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html), **for robot learning**. It offers a modular design to easily and efficiently create robot learning environments with photo-realistic scenes, and fast and efficient simulation.
