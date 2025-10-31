@@ -6591,6 +6591,6 @@
     "href": "posts/paper/2025-10-31-push-anything.html#참고문헌",
     "title": "📃Push Anything 리뷰",
     "section": "참고문헌",
-    "text": "참고문헌\n논문 본문 내용은 주로 Push Anything (2025) 논문 자체에서 발췌하여 정리하였다. 추가로 CI-MPC의 현황 개요는 EmergentMind 블로그를 참고하였다.\n\n출처:\n\nPush Anything: Single- and Multi-Object Pushing From First Sight with Contact-Implicit MPC(Hien Bui et al., University of Pennsylvania, 2025)\nAdditional References:\n\nLiterature Review: https://www.themoonlight.io/en/review/push-anything-single-and-multi-object-pushing-from-first-sight-with-contact-implicit-mpc\nContact-Implicit MPC Overview: https://www.emergentmind.com/topics/contact-implicit-model-predictive-control-ci-mpc ```"
+    "text": "참고문헌\n논문 본문 내용은 주로 Push Anything (2025) 논문 자체에서 발췌하여 정리하였다. 추가로 CI-MPC의 현황 개요는 EmergentMind 블로그를 참고하였다.\n\n출처:\n\nPush Anything: Single- and Multi-Object Pushing From First Sight with Contact-Implicit MPC(Hien Bui et al., University of Pennsylvania, 2025)\nAdditional References:\n\nLiterature Review: https://www.themoonlight.io/en/review/push-anything-single-and-multi-object-pushing-from-first-sight-with-contact-implicit-mpc\nContact-Implicit MPC Overview: https://www.emergentmind.com/topics/contact-implicit-model-predictive-control-ci-mpc"
   }
 ]
