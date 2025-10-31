@@ -394,6 +394,9 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <p>ROS2 제어 코드 개선: 실시간성과 안정성을 위한 종합 가이드</p>
 </blockquote>
 <p>ROS1 기반의 제어 코드를 ROS2로 전환하면서 가장 중요하게 생각한 점은 단순히 API를 바꾸는 것이 아니라, ROS2의 특성을 활용해 실시간성과 안정성을 근본적으로 향상시키는 것이었습니다. 이 글에서는 기존 코드가 가진 문제점들을 하나씩 짚어보고, 어떻게 개선했는지 그 과정과 이유를 상세히 설명하겠습니다.</p>
+<center>
+<img src="../../images/2025-10-31-ros1-to-2-control/img-1761880999237-1.png" width="60%">
+</center>
 <section id="제어-루프의-근본적인-전환" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 제어 루프의 근본적인 전환</h1>
 <p>기존 코드는 <code>while True</code> 루프 안에서 <code>time.sleep()</code>을 사용해 주기를 맞추는 방식이었습니다. 얼핏 보면 간단하고 직관적이지만, 실제로는 여러 문제를 안고 있었습니다. 운영체제의 스케줄링 정책, 파이썬의 GIL(Global Interpreter Lock), 깊은 함수 호출 스택 등이 복합적으로 작용하면서 제어 주기에 큰 지터(jitter)가 발생했습니다. 특히 ROS 콜백이나 구독자 처리와 동시에 실행될 때는 주기가 더욱 불안정해지는 문제가 있었습니다.</p>
@@ -472,10 +475,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<section id="제어-루프-whilesleep-ros2-timer" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> 1. 제어 루프: while+sleep → ROS2 Timer</h1>
-<section id="before-불안정한-while-루프" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="before-불안정한-while-루프"><span class="header-section-number">14.1</span> ❌ Before: 불안정한 while 루프</h2>
+<p><strong>1. 제어 루프: while+sleep → ROS2 Timer</strong></p>
+<p><strong>❌ Before: 불안정한 while 루프</strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> deploy(<span class="va">self</span>):</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    <span class="va">self</span>.allegro <span class="op">=</span> start_allegro_io(side<span class="op">=</span><span class="st">'right'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a>    hz <span class="op">=</span> <span class="dv">20</span></span>
@@ -518,9 +519,7 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <span id="cb1-40"><a href="#cb1-40"></a>            freq <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> (time.perf_counter() <span class="op">-</span> loop_start)</span>
 <span id="cb1-41"><a href="#cb1-41"></a>            <span class="bu">print</span>(<span class="ss">f"Hz=</span><span class="sc">{</span>freq<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>문제점:</strong> - <code>time.sleep(0.03)</code>는 OS 스케줄링에 의존 → 지터 발생 - 블로킹 I/O(<code>wait=True</code>)로 주기 깨짐 - 매 틱마다 주파수 출력 → 성능 저하</p>
-</section>
-<section id="after-ros2-timer-논블로킹" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="after-ros2-timer-논블로킹"><span class="header-section-number">14.2</span> ✅ After: ROS2 Timer + 논블로킹</h2>
+<p><strong>✅ After: ROS2 Timer + 논블로킹</strong></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> deploy(<span class="va">self</span>):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    <span class="va">self</span>.allegro <span class="op">=</span> start_allegro_io(side<span class="op">=</span><span class="st">'right'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
@@ -599,12 +598,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 간헐적 로깅 → 성능 저하 최소화</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="ros2-실행기-내부-api-표준-threading" class="level1" data-number="15">
-<h1 data-number="15"><span class="header-section-number">15</span> 2. ROS2 실행기: 내부 API → 표준 threading</h1>
-<section id="before-불안정한-내부-api" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="before-불안정한-내부-api"><span class="header-section-number">15.1</span> ❌ Before: 불안정한 내부 API</h2>
+<p><strong>2. ROS2 실행기: 내부 API → 표준 threading</strong></p>
+<p><strong>❌ Before: 불안정한 내부 API</strong></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> _Runner:</span>
 <span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, node: AllegroHandIO):</span>
 <span id="cb3-3"><a href="#cb3-3"></a>        <span class="va">self</span>.node <span class="op">=</span> node</span>
@@ -621,9 +616,7 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <span id="cb3-14"><a href="#cb3-14"></a>            <span class="va">self</span>.<span class="bu">exec</span>.shutdown()</span>
 <span id="cb3-15"><a href="#cb3-15"></a>        <span class="cf">finally</span>:</span>
 <span id="cb3-16"><a href="#cb3-16"></a>            <span class="va">self</span>.node.destroy_node()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="after-안전한-표준-api" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="after-안전한-표준-api"><span class="header-section-number">15.2</span> ✅ After: 안전한 표준 API</h2>
+<p><strong>✅ After: 안전한 표준 API</strong></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> threading</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="im">from</span> rclpy.executors <span class="im">import</span> SingleThreadedExecutor</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
@@ -653,12 +646,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 올바른 종료 순서 → 리소스 누수 방지</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="장치-일관성-디바이스-불일치-해결" class="level1" data-number="16">
-<h1 data-number="16"><span class="header-section-number">16</span> 3. 장치 일관성: 디바이스 불일치 해결</h1>
-<section id="before-산발적인-디바이스-할당" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="before-산발적인-디바이스-할당"><span class="header-section-number">16.1</span> ❌ Before: 산발적인 디바이스 할당</h2>
+<p><strong>3. 장치 일관성: 디바이스 불일치 해결</strong></p>
+<p><strong>❌ Before: 산발적인 디바이스 할당</strong></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb5-2"><a href="#cb5-2"></a>    <span class="va">self</span>.device <span class="op">=</span> <span class="st">"cuda"</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a></span>
@@ -675,9 +664,7 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <span id="cb5-14"><a href="#cb5-14"></a></span>
 <span id="cb5-15"><a href="#cb5-15"></a>    <span class="co"># ⚠️ targets는 디바이스 명시 없음</span></span>
 <span id="cb5-16"><a href="#cb5-16"></a>    <span class="va">self</span>.prev_target <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">16</span>), dtype<span class="op">=</span>torch.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="after-모든-텐서를-같은-디바이스로" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="after-모든-텐서를-같은-디바이스로"><span class="header-section-number">16.2</span> ✅ After: 모든 텐서를 같은 디바이스로</h2>
+<p><strong>✅ After: 모든 텐서를 같은 디바이스로</strong></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, hz: <span class="bu">float</span> <span class="op">=</span> <span class="fl">20.0</span>, device: <span class="bu">str</span> <span class="op">=</span> <span class="st">"cuda"</span>):</span>
 <span id="cb6-2"><a href="#cb6-2"></a>    torch.set_grad_enabled(<span class="va">False</span>)</span>
 <span id="cb6-3"><a href="#cb6-3"></a>    <span class="va">self</span>.hz <span class="op">=</span> <span class="bu">float</span>(hz)</span>
@@ -719,12 +706,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 불필요한 디바이스 이동 최소화 → 속도 향상</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="버퍼-롤링-겹침-오류-수정" class="level1" data-number="17">
-<h1 data-number="17"><span class="header-section-number">17</span> 4. 버퍼 롤링: 겹침 오류 수정</h1>
-<section id="before-메모리-겹침-오류" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="before-메모리-겹침-오류"><span class="header-section-number">17.1</span> ❌ Before: 메모리 겹침 오류</h2>
+<p><strong>4. 버퍼 롤링: 겹침 오류 수정</strong></p>
+<p><strong>❌ Before: 메모리 겹침 오류</strong></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> post_physics_step(<span class="va">self</span>, obses):</span>
 <span id="cb7-2"><a href="#cb7-2"></a>    <span class="va">self</span>.cur_obs_buf <span class="op">=</span> <span class="va">self</span>.unscale(obses, ...)[<span class="va">None</span>]</span>
 <span id="cb7-3"><a href="#cb7-3"></a></span>
@@ -739,9 +722,7 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <span id="cb7-12"><a href="#cb7-12"></a>    cur <span class="op">=</span> torch.cat([cur_norm_t, cur_tgt_t], dim<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb7-13"><a href="#cb7-13"></a>    prev <span class="op">=</span> <span class="va">self</span>.proprio_hist_buf[:, <span class="dv">1</span>:<span class="dv">30</span>, :].clone()</span>
 <span id="cb7-14"><a href="#cb7-14"></a>    <span class="va">self</span>.proprio_hist_buf[:] <span class="op">=</span> torch.cat([prev, cur], dim<span class="op">=</span><span class="dv">1</span>)  <span class="co"># 비효율적</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="after-안전한-버퍼-시프트" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="after-안전한-버퍼-시프트"><span class="header-section-number">17.2</span> ✅ After: 안전한 버퍼 시프트</h2>
+<p><strong>✅ After: 안전한 버퍼 시프트</strong></p>
 <p><strong>방법 1: clone() 사용</strong></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">def</span> _post_physics_step(<span class="va">self</span>, obses):</span>
 <span id="cb8-2"><a href="#cb8-2"></a>    <span class="co"># 1) 현재 관측 정규화</span></span>
@@ -775,12 +756,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 명확한 시프트 로직</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="관측-드랍-대응-블로킹-논블로킹-last-good" class="level1" data-number="18">
-<h1 data-number="18"><span class="header-section-number">18</span> 5. 관측 드랍 대응: 블로킹 → 논블로킹 + last-good</h1>
-<section id="before-블로킹으로-주기-깨짐" class="level2" data-number="18.1">
-<h2 data-number="18.1" class="anchored" data-anchor-id="before-블로킹으로-주기-깨짐"><span class="header-section-number">18.1</span> ❌ Before: 블로킹으로 주기 깨짐</h2>
+<p><strong>5. 관측 드랍 대응: 블로킹 → 논블로킹 + last-good</strong></p>
+<p><strong>❌ Before: 블로킹으로 주기 깨짐</strong></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 매 틱마다 블로킹 대기</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="fl">0.2</span>)</span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="cf">if</span> q_pos <span class="kw">is</span> <span class="va">None</span>:</span>
@@ -789,9 +766,7 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <span id="cb10-6"><a href="#cb10-6"></a></span>
 <span id="cb10-7"><a href="#cb10-7"></a>ros1_q <span class="op">=</span> _reorder_timr2imrt(q_pos)</span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co"># ... 처리 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="after-논블로킹-재사용" class="level2" data-number="18.2">
-<h2 data-number="18.2" class="anchored" data-anchor-id="after-논블로킹-재사용"><span class="header-section-number">18.2</span> ✅ After: 논블로킹 + 재사용</h2>
+<p><strong>✅ After: 논블로킹 + 재사용</strong></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ...):</span>
 <span id="cb11-2"><a href="#cb11-2"></a>    <span class="co"># ...</span></span>
 <span id="cb11-3"><a href="#cb11-3"></a>    <span class="va">self</span>._last_obs_q <span class="op">=</span> <span class="va">None</span>  <span class="co"># ✅ 마지막 유효 관측 저장</span></span>
@@ -827,12 +802,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 드랍 횟수 모니터링 가능</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="position-gap-퍼블리셔-타임스탬프-조인트-이름" class="level1" data-number="19">
-<h1 data-number="19"><span class="header-section-number">19</span> 6. Position Gap 퍼블리셔: 타임스탬프 + 조인트 이름</h1>
-<section id="before-gap-측정에-짧은-sleep-삽입" class="level2" data-number="19.1">
-<h2 data-number="19.1" class="anchored" data-anchor-id="before-gap-측정에-짧은-sleep-삽입"><span class="header-section-number">19.1</span> ❌ Before: Gap 측정에 짧은 sleep 삽입</h2>
+<p><strong>6. Position Gap 퍼블리셔: 타임스탬프 + 조인트 이름</strong></p>
+<p><strong>❌ Before: Gap 측정에 짧은 sleep 삽입</strong></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">def</span> command_joint_position(<span class="va">self</span>, positions: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
 <span id="cb12-2"><a href="#cb12-2"></a>    <span class="co"># 명령 퍼블리시</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a>    msg <span class="op">=</span> Float64MultiArray()</span>
@@ -865,9 +836,7 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <span id="cb12-30"><a href="#cb12-30"></a>    msg.name <span class="op">=</span> <span class="bu">list</span>(<span class="va">self</span>._desired_names)</span>
 <span id="cb12-31"><a href="#cb12-31"></a>    msg.position <span class="op">=</span> gap.tolist()</span>
 <span id="cb12-32"><a href="#cb12-32"></a>    <span class="va">self</span>._gap_pub.publish(msg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="after-타이머-콜백-내에서-최신-상태로" class="level2" data-number="19.2">
-<h2 data-number="19.2" class="anchored" data-anchor-id="after-타이머-콜백-내에서-최신-상태로"><span class="header-section-number">19.2</span> ✅ After: 타이머 콜백 내에서 최신 상태로</h2>
+<p><strong>✅ After: 타이머 콜백 내에서 최신 상태로</strong></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">def</span> command_joint_position(<span class="va">self</span>, positions: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
 <span id="cb13-2"><a href="#cb13-2"></a>    msg <span class="op">=</span> Float64MultiArray()</span>
 <span id="cb13-3"><a href="#cb13-3"></a>    msg.data <span class="op">=</span> data</span>
@@ -905,12 +874,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 타이머 콜백이 매 틱마다 최신 상태 반영</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="초기화-워밍업-첫-관측-블로킹" class="level1" data-number="20">
-<h1 data-number="20"><span class="header-section-number">20</span> 7. 초기화: 워밍업 + 첫 관측 블로킹</h1>
-<section id="안전한-초기화-순서" class="level2" data-number="20.1">
-<h2 data-number="20.1" class="anchored" data-anchor-id="안전한-초기화-순서"><span class="header-section-number">20.1</span> ✅ 안전한 초기화 순서</h2>
+<p><strong>7. 초기화: 워밍업 + 첫 관측 블로킹</strong></p>
+<p><strong>✅ 안전한 초기화 순서</strong></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">def</span> deploy(<span class="va">self</span>):</span>
 <span id="cb14-2"><a href="#cb14-2"></a>    <span class="va">self</span>.allegro <span class="op">=</span> start_allegro_io(side<span class="op">=</span><span class="st">'right'</span>)</span>
 <span id="cb14-3"><a href="#cb14-3"></a></span>
@@ -957,10 +922,8 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 <li>✅ 이후는 논블로킹으로 주기 유지</li>
 </ul>
 <hr>
-</section>
-</section>
-<section id="요약-핵심-개선-사항" class="level1" data-number="21">
-<h1 data-number="21"><span class="header-section-number">21</span> 요약: 핵심 개선 사항</h1>
+<section id="요약-핵심-개선-사항" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> 요약: 핵심 개선 사항</h1>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1021,6 +984,263 @@ ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 </tr>
 </tbody>
 </table>
+</section>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Development Guide
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>정리한 13개 팁을 <strong>ROS2 실전 개발 관점</strong>에서 하나씩 깊게 풀어쓴 가이드(각 항목마다 “왜(배경) → 어떻게(패턴/코드) → 주의점(함정)” 순서로 짚어보기)</p>
+</blockquote>
+<p><strong>1) while+sleep 루프 → </strong>ROS2 Timer** 기반 제어 루프**</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li><code>while True + time.sleep()</code>는 OS 스케줄링, GIL, 콜백 경합 때문에 지터가 커짐. ROS 이벤트 루프와 분리되어 타이밍이 뒤틀리기 쉽다.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="va">self</span>.timer <span class="op">=</span> <span class="va">self</span>.create_timer(period_sec<span class="op">=</span><span class="fl">1.0</span><span class="op">/</span>hz, callback<span class="op">=</span><span class="va">self</span>._control_step)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>타이머 콜백 안에서 “관측 → 추론 → 명령 → 버퍼업데이트”를 수행.</li>
+<li>메인 스레드는 아무것도 안 하고 살아만 있어도 됨(시그널 대기 정도).</li>
+</ul>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>타이머 콜백 안에서 <strong>블로킹 작업</strong>(디스크 IO, 긴 슬립, 네트워크 대기 등) 금지.</li>
+<li>꼭 필요한 블로킹 초기화는 타이머 시작 <strong>전</strong>에 1회만.</li>
+</ul>
+<hr>
+<p><strong>2) rclpy 실행기(Executor) </strong>백그라운드 스레드<strong>로 구동 (공식 API만)</strong></p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>내부 API(<code>rclpy.executors._util</code>)는 버전별로 없어질 수 있어 에러 유발.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="im">from</span> rclpy.executors <span class="im">import</span> SingleThreadedExecutor</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="im">import</span> threading</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="va">self</span>.<span class="bu">exec</span> <span class="op">=</span> SingleThreadedExecutor()</span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="va">self</span>.<span class="bu">exec</span>.add_node(node)</span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="va">self</span>.thread <span class="op">=</span> threading.Thread(target<span class="op">=</span><span class="va">self</span>.<span class="bu">exec</span>.spin, daemon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="va">self</span>.thread.start()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>종료 시: <code>executor.shutdown()</code> → <code>node.destroy_node()</code> → <code>rclpy.shutdown()</code> 순서.</li>
+<li>콜백 경합이 크면 <code>MultiThreadedExecutor(max_workers=2~4)</code> 고려.</li>
+</ul>
+<hr>
+<p><strong>3) </strong>디바이스 일관성<strong>(cuda/cpu mismatch 방지)</strong></p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>모델/버퍼/RMS가 서로 다른 디바이스면 즉시 런타임 에러.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="va">self</span>.device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="va">self</span>.model <span class="op">=</span> ActorCritic(...).to(<span class="va">self</span>.device).<span class="bu">eval</span>()</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="va">self</span>.obs_buf <span class="op">=</span> torch.zeros(..., device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># 하드웨어 I/O 직전에만</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>cmd <span class="op">=</span> <span class="va">self</span>.cur_target.detach().to(<span class="st">'cpu'</span>).numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>중간에 <code>.cpu()</code> 했다가 다시 <code>.to(device)</code> 하는 왕복 금지(오버헤드+버그).</li>
+<li>체크포인트 로드 시 <code>map_location=self.device</code> 고정.</li>
+</ul>
+<hr>
+<p><strong>4) <code>@torch.inference_mode()</code> + </strong>불필요한 clone 최소화****</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>추론 시 그래디언트 불필요. <code>.clone()</code> 남발은 메모리/시간 낭비.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="at">@torch.inference_mode</span>()</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">def</span> _control_step(<span class="va">self</span>):</span>
+<span id="cb18-3"><a href="#cb18-3"></a>    obs_norm <span class="op">=</span> <span class="va">self</span>.running_mean_std(<span class="va">self</span>.obs_buf)</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    action <span class="op">=</span> <span class="va">self</span>.model.act_inference({...})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>학습 코드와 섞여 있으면 <code>inference_mode()</code> 범위를 추론 블록에만.</li>
+</ul>
+<hr>
+<p><strong>5) 관측 드랍 대비: </strong>last-good sample 재사용****</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li><code>/joint_states</code>가 매 틱 오지 않을 수 있음. 이때 블로킹 대기하면 <strong>주기 깨짐</strong>.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="cf">if</span> q_pos <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb19-3"><a href="#cb19-3"></a>    <span class="va">self</span>._last_obs_q <span class="op">=</span> obs_q_from(q_pos)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>obs_q <span class="op">=</span> <span class="va">self</span>._last_obs_q  <span class="co"># 드랍 시 마지막 관측 사용</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>드랍이 잦으면 로깅/모니터링으로 원인 추적(드라이버 주기, 버스 지연 등).</li>
+<li>재사용 샘플은 <strong>짧은 구간</strong>에서만 허용(장기 드랍은 안전 중지 고려).</li>
+</ul>
+<hr>
+<p><strong>6) 버퍼 롤링 시 </strong>overlap 쓰기 금지** (clone or roll)**</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>같은 텐서 내 겹치는 메모리에 직접 대입하면 PyTorch가 예외 던짐.</li>
+</ul>
+<p><strong>어떻게(둘 중 하나)</strong></p>
+<ul>
+<li><strong>clone 방식</strong></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>src <span class="op">=</span> <span class="va">self</span>.obs_buf[:, <span class="dv">32</span>:<span class="dv">96</span>].clone()</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="va">self</span>.obs_buf[:, :<span class="dv">64</span>] <span class="op">=</span> src</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>roll 방식</strong></li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>rolled <span class="op">=</span> torch.roll(<span class="va">self</span>.obs_buf, shifts<span class="op">=-</span><span class="dv">32</span>, dims<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="va">self</span>.obs_buf.copy_(rolled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li><code>roll</code> 후 덮어쓰는 구간(새 샘플 넣는 64:80, 80:96)은 <strong>명확히</strong> 채우기.</li>
+</ul>
+<hr>
+<p><strong>7) </strong>position_gap 퍼블리셔** 추가 (정확한 타임스탬프/조인트 이름)**</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>명령-실측 오차를 rqt_plot/bag로 쉽게 시각화·분석 가능.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>js <span class="op">=</span> JointState()</span>
+<span id="cb22-2"><a href="#cb22-2"></a>js.header.stamp <span class="op">=</span> <span class="va">self</span>.get_clock().now().to_msg()</span>
+<span id="cb22-3"><a href="#cb22-3"></a>js.name <span class="op">=</span> desired_joint_names  <span class="co"># 16개</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>js.position <span class="op">=</span> (cmd <span class="op">-</span> cur).tolist()</span>
+<span id="cb22-5"><a href="#cb22-5"></a>gap_pub.publish(js)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>이름 배열은 <code>/joint_states.name</code>과 일치하는 <strong>의미</strong>를 가져야 비교가 쉽다.</li>
+<li>frame_id는 필요 시 지정(기본은 빈 문자열).</li>
+</ul>
+<hr>
+<p><strong>8) “명령 직후 gap 측정”의 타이밍</strong></p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>명령 퍼블리시 직후 즉시 읽으면 아직 상태가 반영되지 않았을 수 있음.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<ul>
+<li><strong>타이머 주기 기반</strong>으로 다음 틱에서 최신 <code>/joint_states</code>로 gap 계산(권장).</li>
+<li>반드시 “즉시” 필요하면 아주 짧은 sleep(수 ms)을 두되, 타이머 콜백에서는 가급적 지양.</li>
+</ul>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>제어 주기가 최우선. gap을 위한 블로킹이 주기를 깨지 않게.</li>
+</ul>
+<hr>
+<p><strong>9) 초기화 루틴: </strong>워밍업 + 첫 관측 블로킹 1회****</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>드라이브 settling/초기 버퍼 정합성 확보.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">int</span>(hz<span class="op">*</span><span class="dv">4</span>)):</span>
+<span id="cb23-2"><a href="#cb23-2"></a>    command_initial_pose()</span>
+<span id="cb23-3"><a href="#cb23-3"></a>    time.sleep(<span class="dv">1</span><span class="op">/</span>hz)</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a>q_pos <span class="op">=</span> poll_joint_position(wait<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="fl">5.0</span>)</span>
+<span id="cb23-6"><a href="#cb23-6"></a>init_obs <span class="op">=</span> process(q_pos)</span>
+<span id="cb23-7"><a href="#cb23-7"></a>init_buffers_with(init_obs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>블로킹은 <strong>초기 1회</strong>까지만. 이후는 논블로킹 운영.</li>
+</ul>
+<hr>
+<p><strong>10) </strong>지터/드랍** 가벼운 로깅**</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>실시간 제어에서 주기/드랍 상황은 디버깅 핵심 지표.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="cf">if</span> <span class="bu">int</span>(time.time()) <span class="op">%</span> <span class="dv">5</span> <span class="op">==</span> <span class="dv">0</span>:  <span class="co"># 5초 간격</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>    <span class="bu">print</span>(<span class="ss">f"[timer] </span><span class="sc">{</span>hz_est<span class="sc">:.2f}</span><span class="ss"> Hz, skipped=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>_skipped<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>로그 너무 잦으면 오히려 성능 저하. 파일 로깅은 버퍼링/비동기 권장.</li>
+</ul>
+<hr>
+<p><strong>11) </strong>ROS2 API 안전 사용****</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>내부 API는 버전 변화에 취약. 유지보수 어려움.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<ul>
+<li>실행기: <code>SingleThreadedExecutor</code> 또는 <code>MultiThreadedExecutor</code>.</li>
+<li>스레드: 표준 <code>threading.Thread(target=exec.spin, daemon=True)</code>.</li>
+<li>종료: <code>executor.shutdown()</code> → <code>node.destroy_node()</code> → <code>rclpy.shutdown()</code>.</li>
+</ul>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li><code>rclpy.ok()</code> 확인 후 <code>shutdown()</code> 호출하면 중복 호출 안전.</li>
+</ul>
+<hr>
+<p><strong>12) </strong>성능 튜닝<strong>(선택)</strong></p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>더 높은 주기, 낮은 지터를 위해.</li>
+</ul>
+<p><strong>HOW</strong></p>
+<ul>
+<li>FP16: <code>model.half()</code> + 입력도 half로 변환(CUDA 필요).</li>
+<li>CUDA Graph: 입력 shape 고정이면 캡처 후 재사용.</li>
+<li>네트워크 축소: <code>actor_units</code>/<code>priv_mlp_units</code> 차원 줄이기.</li>
+<li>실행기 멀티스레드: 콜백 경합이 크면 <code>MultiThreadedExecutor(max_workers=2~4)</code>.</li>
+</ul>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>FP16은 <strong>수치 안정성</strong> 체크(특히 normalize/clip 부분).</li>
+<li>그래프는 <strong>shape 고정</strong> 전제.</li>
+</ul>
+<hr>
+<p><strong>13) </strong>ROS1/ROS2 로직 일관성** 유지**</p>
+<p><strong>🤔 WHY</strong></p>
+<ul>
+<li>프레임워크만 달라졌을 뿐, 제어 파이프라인의 본질은 같음. 재현성과 디버깅이 쉬워짐.</li>
+</ul>
+<p><strong>어떻게(파이프라인 공통 패턴)</strong></p>
+<ol type="1">
+<li>관측(o_t) 수집(순서 변환 포함)</li>
+<li>정규화(unscale/normalize)</li>
+<li>버퍼 업데이트(obs_buf roll, proprio_hist roll)</li>
+<li>모델 추론 → action</li>
+<li>스케일/클리핑 → target(q*) 갱신</li>
+<li>명령 퍼블리시</li>
+<li>다음 틱에서 o_{t+1} 반영</li>
+</ol>
+<p><strong>CAUTION</strong></p>
+<ul>
+<li>두 시스템 간 <strong>조인트 순서/스케일</strong> 차이는 별도 유틸 함수로 관리(가독성↑, 버그↓).</li>
+</ul>
+<hr>
+<section id="실전-체크리스트" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> 실전 체크리스트</h1>
+<ul class="task-list">
+<li><label><input type="checkbox">제어 루프는 <strong>Timer 콜백</strong>으로, 블로킹 금지</label></li>
+<li><label><input type="checkbox">실행기는 <strong>threading + (Single|Multi)ThreadedExecutor</strong></label></li>
+<li><label><input type="checkbox"><strong>device 일관성</strong>(모델/버퍼/RMS 동일)</label></li>
+<li><label><input type="checkbox">추론은 <code>@torch.inference_mode()</code></label></li>
+<li><label><input type="checkbox">관측 드랍 → <strong>last-good</strong> 재사용(로그로 카운트)</label></li>
+<li><label><input type="checkbox">버퍼 롤링은 <strong>clone</strong> 또는 <strong>torch.roll</strong></label></li>
+<li><label><input type="checkbox"><code>/position_gap</code>는 <strong>타임스탬프+name</strong> 포함해 퍼블리시</label></li>
+<li><label><input type="checkbox">초기화: <strong>워밍업+첫 관측 블로킹 1회</strong></label></li>
+<li><label><input type="checkbox">로깅은 <strong>간헐적</strong>, 성능 영향 최소화</label></li>
+<li><label><input type="checkbox">내부 API 금지, 종료 순서 지키기</label></li>
+<li><label><input type="checkbox">필요 시 FP16 / CUDA Graph / 네트워크 축소</label></li>
+<li><label><input type="checkbox">ROS1/ROS2 간 변환(순서/스케일) 유틸화로 <strong>로직 동일성</strong> 유지</label></li>
+</ul>
 </section>
 </div>
 </div>

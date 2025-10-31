@@ -13,6 +13,12 @@ execute:
 
 ROS1 기반의 제어 코드를 ROS2로 전환하면서 가장 중요하게 생각한 점은 단순히 API를 바꾸는 것이 아니라, ROS2의 특성을 활용해 실시간성과 안정성을 근본적으로 향상시키는 것이었습니다. 이 글에서는 기존 코드가 가진 문제점들을 하나씩 짚어보고, 어떻게 개선했는지 그 과정과 이유를 상세히 설명하겠습니다.
 
+
+<center>
+<img src="../../images/2025-10-31-ros1-to-2-control/img-1761880999237-1.png" width="60%" />
+</center>
+
+
 # 제어 루프의 근본적인 전환
 
 기존 코드는 `while True` 루프 안에서 `time.sleep()`을 사용해 주기를 맞추는 방식이었습니다. 얼핏 보면 간단하고 직관적이지만, 실제로는 여러 문제를 안고 있었습니다. 운영체제의 스케줄링 정책, 파이썬의 GIL(Global Interpreter Lock), 깊은 함수 호출 스택 등이 복합적으로 작용하면서 제어 주기에 큰 지터(jitter)가 발생했습니다. 특히 ROS 콜백이나 구독자 처리와 동시에 실행될 때는 주기가 더욱 불안정해지는 문제가 있었습니다.
@@ -99,9 +105,10 @@ ROS2를 사용할 때는 공식 API만 사용하는 것이 매우 중요합니�
 
 # ROS2 제어 코드 개선: Before/After 핵심 코드 비교
 
-# 1. 제어 루프: while+sleep → ROS2 Timer
+**1. 제어 루프: while+sleep → ROS2 Timer**
 
-## ❌ Before: 불안정한 while 루프
+**❌ Before: 불안정한 while 루프**
+
 ```python
 def deploy(self):
     self.allegro = start_allegro_io(side='right')
@@ -151,7 +158,8 @@ def deploy(self):
 - 블로킹 I/O(`wait=True`)로 주기 깨짐
 - 매 틱마다 주파수 출력 → 성능 저하
 
-## ✅ After: ROS2 Timer + 논블로킹
+**✅ After: ROS2 Timer + 논블로킹**
+
 ```python
 def deploy(self):
     self.allegro = start_allegro_io(side='right')
@@ -234,9 +242,10 @@ def _control_step(self):
 
 ---
 
-# 2. ROS2 실행기: 내부 API → 표준 threading
+**2. ROS2 실행기: 내부 API → 표준 threading**
 
-## ❌ Before: 불안정한 내부 API
+**❌ Before: 불안정한 내부 API**
+
 ```python
 class _Runner:
     def __init__(self, node: AllegroHandIO):
@@ -256,7 +265,8 @@ class _Runner:
             self.node.destroy_node()
 ```
 
-## ✅ After: 안전한 표준 API
+**✅ After: 안전한 표준 API**
+
 ```python
 import threading
 from rclpy.executors import SingleThreadedExecutor
@@ -290,9 +300,10 @@ class _Runner:
 
 ---
 
-# 3. 장치 일관성: 디바이스 불일치 해결
+**3. 장치 일관성: 디바이스 불일치 해결**
 
-## ❌ Before: 산발적인 디바이스 할당
+**❌ Before: 산발적인 디바이스 할당**
+
 ```python
 def __init__(self):
     self.device = "cuda"
@@ -312,7 +323,8 @@ def __init__(self):
     self.prev_target = torch.zeros((1, 16), dtype=torch.float32)
 ```
 
-## ✅ After: 모든 텐서를 같은 디바이스로
+**✅ After: 모든 텐서를 같은 디바이스로**
+
 ```python
 def __init__(self, hz: float = 20.0, device: str = "cuda"):
     torch.set_grad_enabled(False)
@@ -358,9 +370,10 @@ def _control_step(self):
 
 ---
 
-# 4. 버퍼 롤링: 겹침 오류 수정
+**4. 버퍼 롤링: 겹침 오류 수정**
 
-## ❌ Before: 메모리 겹침 오류
+**❌ Before: 메모리 겹침 오류**
+
 ```python
 def post_physics_step(self, obses):
     self.cur_obs_buf = self.unscale(obses, ...)[None]
@@ -378,9 +391,10 @@ def post_physics_step(self, obses):
     self.proprio_hist_buf[:] = torch.cat([prev, cur], dim=1)  # 비효율적
 ```
 
-## ✅ After: 안전한 버퍼 시프트
+**✅ After: 안전한 버퍼 시프트**
 
 **방법 1: clone() 사용**
+
 ```python
 def _post_physics_step(self, obses):
     # 1) 현재 관측 정규화
@@ -402,6 +416,7 @@ def _post_physics_step(self, obses):
 ```
 
 **방법 2: torch.roll 사용 (대안)**
+
 ```python
 def _post_physics_step(self, obses):
     cur_obs = self._unscale(obses.view(-1), ...).view(1, 16)
@@ -420,9 +435,10 @@ def _post_physics_step(self, obses):
 
 ---
 
-# 5. 관측 드랍 대응: 블로킹 → 논블로킹 + last-good
+**5. 관측 드랍 대응: 블로킹 → 논블로킹 + last-good**
 
-## ❌ Before: 블로킹으로 주기 깨짐
+**❌ Before: 블로킹으로 주기 깨짐**
+
 ```python
 # 매 틱마다 블로킹 대기
 q_pos = self.allegro.poll_joint_position(wait=True, timeout=0.2)
@@ -434,7 +450,8 @@ ros1_q = _reorder_timr2imrt(q_pos)
 # ... 처리 ...
 ```
 
-## ✅ After: 논블로킹 + 재사용
+**✅ After: 논블로킹 + 재사용**
+
 ```python
 def __init__(self, ...):
     # ...
@@ -474,9 +491,9 @@ def _control_step(self):
 
 ---
 
-# 6. Position Gap 퍼블리셔: 타임스탬프 + 조인트 이름
+**6. Position Gap 퍼블리셔: 타임스탬프 + 조인트 이름**
 
-## ❌ Before: Gap 측정에 짧은 sleep 삽입
+**❌ Before: Gap 측정에 짧은 sleep 삽입**
 
 ```python
 def command_joint_position(self, positions: List[float]) -> bool:
@@ -513,7 +530,8 @@ def _publish_position_gap(self):
     self._gap_pub.publish(msg)
 ```
 
-## ✅ After: 타이머 콜백 내에서 최신 상태로
+**✅ After: 타이머 콜백 내에서 최신 상태로**
+
 ```python
 def command_joint_position(self, positions: List[float]) -> bool:
     msg = Float64MultiArray()
@@ -555,9 +573,10 @@ def _publish_position_gap(self):
 
 ---
 
-# 7. 초기화: 워밍업 + 첫 관측 블로킹
+**7. 초기화: 워밍업 + 첫 관측 블로킹**
 
-## ✅ 안전한 초기화 순서
+**✅ 안전한 초기화 순서**
+
 ```python
 def deploy(self):
     self.allegro = start_allegro_io(side='right')
@@ -622,6 +641,318 @@ def deploy(self):
 | **Gap** | sleep 후 측정 | 논블로킹 측정 | 주기 안정성↑ |
 
 :::
+
+
+
+::: {.callout-tip collapse="true"}
+
+# Development Guide
+
+> 정리한 13개 팁을 **ROS2 실전 개발 관점**에서 하나씩 깊게 풀어쓴 가이드(각 항목마다 “왜(배경) → 어떻게(패턴/코드) → 주의점(함정)” 순서로 짚어보기)
+
+**1) while+sleep 루프 → **ROS2 Timer** 기반 제어 루프**
+
+**🤔 WHY**
+
+* `while True + time.sleep()`는 OS 스케줄링, GIL, 콜백 경합 때문에 지터가 커짐. ROS 이벤트 루프와 분리되어 타이밍이 뒤틀리기 쉽다.
+
+**HOW**
+
+```python
+self.timer = self.create_timer(period_sec=1.0/hz, callback=self._control_step)
+```
+
+* 타이머 콜백 안에서 “관측 → 추론 → 명령 → 버퍼업데이트”를 수행.
+* 메인 스레드는 아무것도 안 하고 살아만 있어도 됨(시그널 대기 정도).
+
+**CAUTION**
+
+* 타이머 콜백 안에서 **블로킹 작업**(디스크 IO, 긴 슬립, 네트워크 대기 등) 금지.
+* 꼭 필요한 블로킹 초기화는 타이머 시작 **전**에 1회만.
+
+---
+
+**2) rclpy 실행기(Executor) **백그라운드 스레드**로 구동 (공식 API만)**
+
+**🤔 WHY**
+
+* 내부 API(`rclpy.executors._util`)는 버전별로 없어질 수 있어 에러 유발.
+
+**HOW**
+
+```python
+from rclpy.executors import SingleThreadedExecutor
+import threading
+
+self.exec = SingleThreadedExecutor()
+self.exec.add_node(node)
+self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+self.thread.start()
+```
+
+**CAUTION**
+
+* 종료 시: `executor.shutdown()` → `node.destroy_node()` → `rclpy.shutdown()` 순서.
+* 콜백 경합이 크면 `MultiThreadedExecutor(max_workers=2~4)` 고려.
+
+---
+
+**3) **디바이스 일관성**(cuda/cpu mismatch 방지)**
+
+**🤔 WHY**
+
+* 모델/버퍼/RMS가 서로 다른 디바이스면 즉시 런타임 에러.
+
+**HOW**
+
+```python
+self.device = "cuda" if torch.cuda.is_available() else "cpu"
+self.model = ActorCritic(...).to(self.device).eval()
+self.obs_buf = torch.zeros(..., device=self.device)
+# 하드웨어 I/O 직전에만
+cmd = self.cur_target.detach().to('cpu').numpy()
+```
+
+**CAUTION**
+
+* 중간에 `.cpu()` 했다가 다시 `.to(device)` 하는 왕복 금지(오버헤드+버그).
+* 체크포인트 로드 시 `map_location=self.device` 고정.
+
+---
+
+**4) `@torch.inference_mode()` + **불필요한 clone 최소화****
+
+**🤔 WHY**
+
+* 추론 시 그래디언트 불필요. `.clone()` 남발은 메모리/시간 낭비.
+
+**HOW**
+
+```python
+@torch.inference_mode()
+def _control_step(self):
+    obs_norm = self.running_mean_std(self.obs_buf)
+    action = self.model.act_inference({...})
+```
+
+**CAUTION**
+
+* 학습 코드와 섞여 있으면 `inference_mode()` 범위를 추론 블록에만.
+
+---
+
+**5) 관측 드랍 대비: **last-good sample 재사용****
+
+**🤔 WHY**
+
+* `/joint_states`가 매 틱 오지 않을 수 있음. 이때 블로킹 대기하면 **주기 깨짐**.
+
+**HOW**
+
+```python
+q_pos = self.allegro.poll_joint_position(wait=False)
+if q_pos is not None:
+    self._last_obs_q = obs_q_from(q_pos)
+obs_q = self._last_obs_q  # 드랍 시 마지막 관측 사용
+```
+
+**CAUTION**
+
+* 드랍이 잦으면 로깅/모니터링으로 원인 추적(드라이버 주기, 버스 지연 등).
+* 재사용 샘플은 **짧은 구간**에서만 허용(장기 드랍은 안전 중지 고려).
+
+---
+
+**6) 버퍼 롤링 시 **overlap 쓰기 금지** (clone or roll)**
+
+**🤔 WHY**
+
+* 같은 텐서 내 겹치는 메모리에 직접 대입하면 PyTorch가 예외 던짐.
+
+**어떻게(둘 중 하나)**
+
+* **clone 방식**
+
+```python
+src = self.obs_buf[:, 32:96].clone()
+self.obs_buf[:, :64] = src
+```
+
+* **roll 방식**
+
+```python
+rolled = torch.roll(self.obs_buf, shifts=-32, dims=1)
+self.obs_buf.copy_(rolled)
+```
+
+**CAUTION**
+
+* `roll` 후 덮어쓰는 구간(새 샘플 넣는 64:80, 80:96)은 **명확히** 채우기.
+
+---
+
+**7) **position_gap 퍼블리셔** 추가 (정확한 타임스탬프/조인트 이름)**
+
+**🤔 WHY**
+
+* 명령-실측 오차를 rqt_plot/bag로 쉽게 시각화·분석 가능.
+
+**HOW**
+
+```python
+js = JointState()
+js.header.stamp = self.get_clock().now().to_msg()
+js.name = desired_joint_names  # 16개
+js.position = (cmd - cur).tolist()
+gap_pub.publish(js)
+```
+
+**CAUTION**
+
+* 이름 배열은 `/joint_states.name`과 일치하는 **의미**를 가져야 비교가 쉽다.
+* frame_id는 필요 시 지정(기본은 빈 문자열).
+
+---
+
+**8) “명령 직후 gap 측정”의 타이밍**
+
+**🤔 WHY**
+
+* 명령 퍼블리시 직후 즉시 읽으면 아직 상태가 반영되지 않았을 수 있음.
+
+**HOW**
+
+* **타이머 주기 기반**으로 다음 틱에서 최신 `/joint_states`로 gap 계산(권장).
+* 반드시 “즉시” 필요하면 아주 짧은 sleep(수 ms)을 두되, 타이머 콜백에서는 가급적 지양.
+
+**CAUTION**
+
+* 제어 주기가 최우선. gap을 위한 블로킹이 주기를 깨지 않게.
+
+---
+
+**9) 초기화 루틴: **워밍업 + 첫 관측 블로킹 1회****
+
+**🤔 WHY**
+
+* 드라이브 settling/초기 버퍼 정합성 확보.
+
+**HOW**
+
+```python
+for t in range(int(hz*4)):
+    command_initial_pose()
+    time.sleep(1/hz)
+
+q_pos = poll_joint_position(wait=True, timeout=5.0)
+init_obs = process(q_pos)
+init_buffers_with(init_obs)
+```
+
+**CAUTION**
+
+* 블로킹은 **초기 1회**까지만. 이후는 논블로킹 운영.
+
+---
+
+**10) **지터/드랍** 가벼운 로깅**
+
+**🤔 WHY**
+
+* 실시간 제어에서 주기/드랍 상황은 디버깅 핵심 지표.
+
+**HOW**
+
+```python
+if int(time.time()) % 5 == 0:  # 5초 간격
+    print(f"[timer] {hz_est:.2f} Hz, skipped={self._skipped}")
+```
+
+**CAUTION**
+
+* 로그 너무 잦으면 오히려 성능 저하. 파일 로깅은 버퍼링/비동기 권장.
+
+---
+
+**11) **ROS2 API 안전 사용****
+
+**🤔 WHY**
+
+* 내부 API는 버전 변화에 취약. 유지보수 어려움.
+
+**HOW**
+
+* 실행기: `SingleThreadedExecutor` 또는 `MultiThreadedExecutor`.
+* 스레드: 표준 `threading.Thread(target=exec.spin, daemon=True)`.
+* 종료: `executor.shutdown()` → `node.destroy_node()` → `rclpy.shutdown()`.
+
+**CAUTION**
+
+* `rclpy.ok()` 확인 후 `shutdown()` 호출하면 중복 호출 안전.
+
+---
+
+**12) **성능 튜닝**(선택)**
+
+**🤔 WHY**
+
+* 더 높은 주기, 낮은 지터를 위해.
+
+**HOW**
+
+* FP16: `model.half()` + 입력도 half로 변환(CUDA 필요).
+* CUDA Graph: 입력 shape 고정이면 캡처 후 재사용.
+* 네트워크 축소: `actor_units`/`priv_mlp_units` 차원 줄이기.
+* 실행기 멀티스레드: 콜백 경합이 크면 `MultiThreadedExecutor(max_workers=2~4)`.
+
+**CAUTION**
+
+* FP16은 **수치 안정성** 체크(특히 normalize/clip 부분).
+* 그래프는 **shape 고정** 전제.
+
+---
+
+**13) **ROS1/ROS2 로직 일관성** 유지**
+
+**🤔 WHY**
+
+* 프레임워크만 달라졌을 뿐, 제어 파이프라인의 본질은 같음. 재현성과 디버깅이 쉬워짐.
+
+**어떻게(파이프라인 공통 패턴)**
+
+1. 관측(o_t) 수집(순서 변환 포함)
+2. 정규화(unscale/normalize)
+3. 버퍼 업데이트(obs_buf roll, proprio_hist roll)
+4. 모델 추론 → action
+5. 스케일/클리핑 → target(q*) 갱신
+6. 명령 퍼블리시
+7. 다음 틱에서 o_{t+1} 반영
+
+**CAUTION**
+
+* 두 시스템 간 **조인트 순서/스케일** 차이는 별도 유틸 함수로 관리(가독성↑, 버그↓).
+
+---
+
+# 실전 체크리스트
+
+* [ ] 제어 루프는 **Timer 콜백**으로, 블로킹 금지
+* [ ] 실행기는 **threading + (Single|Multi)ThreadedExecutor**
+* [ ] **device 일관성**(모델/버퍼/RMS 동일)
+* [ ] 추론은 `@torch.inference_mode()`
+* [ ] 관측 드랍 → **last-good** 재사용(로그로 카운트)
+* [ ] 버퍼 롤링은 **clone** 또는 **torch.roll**
+* [ ] `/position_gap`는 **타임스탬프+name** 포함해 퍼블리시
+* [ ] 초기화: **워밍업+첫 관측 블로킹 1회**
+* [ ] 로깅은 **간헐적**, 성능 영향 최소화
+* [ ] 내부 API 금지, 종료 순서 지키기
+* [ ] 필요 시 FP16 / CUDA Graph / 네트워크 축소
+* [ ] ROS1/ROS2 간 변환(순서/스케일) 유틸화로 **로직 동일성** 유지
+
+
+:::
+
+
 
 <!--
 
