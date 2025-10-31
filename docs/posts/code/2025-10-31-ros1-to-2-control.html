@@ -1,0 +1,2560 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="기존의 ROS1 제어 코드에서 ROS2 제어 코드로 리펙토링">
+
+<title>👩‍💻ROS2 code 개선 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ros2-제어-코드-개선-실시간성과-안정성을-위한-종합-가이드" id="toc-ros2-제어-코드-개선-실시간성과-안정성을-위한-종합-가이드" class="nav-link active" data-scroll-target="#ros2-제어-코드-개선-실시간성과-안정성을-위한-종합-가이드"><span class="header-section-number">1</span> ROS2 제어 코드 개선: 실시간성과 안정성을 위한 종합 가이드</a>
+  <ul class="collapse">
+  <li><a href="#제어-루프의-근본적인-전환" id="toc-제어-루프의-근본적인-전환" class="nav-link" data-scroll-target="#제어-루프의-근본적인-전환"><span class="header-section-number">1.1</span> 제어 루프의 근본적인 전환</a></li>
+  <li><a href="#실행기-백그라운드-처리의-안정화" id="toc-실행기-백그라운드-처리의-안정화" class="nav-link" data-scroll-target="#실행기-백그라운드-처리의-안정화"><span class="header-section-number">1.2</span> 실행기 백그라운드 처리의 안정화</a></li>
+  <li><a href="#장치-일관성-문제의-해결" id="toc-장치-일관성-문제의-해결" class="nav-link" data-scroll-target="#장치-일관성-문제의-해결"><span class="header-section-number">1.3</span> 장치 일관성 문제의 해결</a></li>
+  <li><a href="#추론-성능-최적화" id="toc-추론-성능-최적화" class="nav-link" data-scroll-target="#추론-성능-최적화"><span class="header-section-number">1.4</span> 추론 성능 최적화</a></li>
+  <li><a href="#관측-드랍에-대한-로버스트한-대응" id="toc-관측-드랍에-대한-로버스트한-대응" class="nav-link" data-scroll-target="#관측-드랍에-대한-로버스트한-대응"><span class="header-section-number">1.5</span> 관측 드랍에 대한 로버스트한 대응</a></li>
+  <li><a href="#버퍼-롤링의-안전한-구현" id="toc-버퍼-롤링의-안전한-구현" class="nav-link" data-scroll-target="#버퍼-롤링의-안전한-구현"><span class="header-section-number">1.6</span> 버퍼 롤링의 안전한 구현</a></li>
+  <li><a href="#디버깅을-위한-포지션-갭-퍼블리셔" id="toc-디버깅을-위한-포지션-갭-퍼블리셔" class="nav-link" data-scroll-target="#디버깅을-위한-포지션-갭-퍼블리셔"><span class="header-section-number">1.7</span> 디버깅을 위한 포지션 갭 퍼블리셔</a></li>
+  <li><a href="#신중한-초기화-과정" id="toc-신중한-초기화-과정" class="nav-link" data-scroll-target="#신중한-초기화-과정"><span class="header-section-number">1.8</span> 신중한 초기화 과정</a></li>
+  <li><a href="#효율적인-로깅-전략" id="toc-효율적인-로깅-전략" class="nav-link" data-scroll-target="#효율적인-로깅-전략"><span class="header-section-number">1.9</span> 효율적인 로깅 전략</a></li>
+  <li><a href="#ros2-api의-올바른-사용" id="toc-ros2-api의-올바른-사용" class="nav-link" data-scroll-target="#ros2-api의-올바른-사용"><span class="header-section-number">1.10</span> ROS2 API의 올바른 사용</a></li>
+  <li><a href="#추가-최적화-가능성" id="toc-추가-최적화-가능성" class="nav-link" data-scroll-target="#추가-최적화-가능성"><span class="header-section-number">1.11</span> 추가 최적화 가능성</a></li>
+  <li><a href="#로직의-일관성-유지" id="toc-로직의-일관성-유지" class="nav-link" data-scroll-target="#로직의-일관성-유지"><span class="header-section-number">1.12</span> 로직의 일관성 유지</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론"><span class="header-section-number">1.13</span> 결론</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">👩‍💻ROS2 code 개선</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">ros2</div>
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    기존의 ROS1 제어 코드에서 ROS2 제어 코드로 리펙토링
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="ros2-제어-코드-개선-실시간성과-안정성을-위한-종합-가이드" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> ROS2 제어 코드 개선: 실시간성과 안정성을 위한 종합 가이드</h1>
+<p>ROS1 기반의 제어 코드를 ROS2로 전환하면서 가장 중요하게 생각한 점은 단순히 API를 바꾸는 것이 아니라, ROS2의 특성을 활용해 실시간성과 안정성을 근본적으로 향상시키는 것이었습니다. 이 글에서는 기존 코드가 가진 문제점들을 하나씩 짚어보고, 어떻게 개선했는지 그 과정과 이유를 상세히 설명하겠습니다.</p>
+<section id="제어-루프의-근본적인-전환" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="제어-루프의-근본적인-전환"><span class="header-section-number">1.1</span> 제어 루프의 근본적인 전환</h2>
+<p>기존 코드는 <code>while True</code> 루프 안에서 <code>time.sleep()</code>을 사용해 주기를 맞추는 방식이었습니다. 얼핏 보면 간단하고 직관적이지만, 실제로는 여러 문제를 안고 있었습니다. 운영체제의 스케줄링 정책, 파이썬의 GIL(Global Interpreter Lock), 깊은 함수 호출 스택 등이 복합적으로 작용하면서 제어 주기에 큰 지터(jitter)가 발생했습니다. 특히 ROS 콜백이나 구독자 처리와 동시에 실행될 때는 주기가 더욱 불안정해지는 문제가 있었습니다.</p>
+<p>이를 해결하기 위해 ROS2의 타이머 메커니즘을 도입했습니다. <code>self.allegro.create_timer(period, self._control_step)</code>처럼 타이머를 등록하면, ROS2의 실행기(executor)가 지정된 주기마다 콜백 함수를 호출해줍니다. 이 방식의 장점은 제어 주기가 ROS 실행기에 의해 관리되기 때문에 지터가 크게 감소한다는 것입니다. 메인 스레드는 타이머만 처리하고, I/O 작업이나 다른 콜백은 실행기가 적절히 스케줄링해주기 때문에 자원 경합도 줄어듭니다.</p>
+</section>
+<section id="실행기-백그라운드-처리의-안정화" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="실행기-백그라운드-처리의-안정화"><span class="header-section-number">1.2</span> 실행기 백그라운드 처리의 안정화</h2>
+<p>초기 구현에서는 rclpy의 내부 API인 <code>rclpy.executors._util</code>이나 <code>_thread</code>를 사용했습니다. 하지만 이는 공식적으로 지원되지 않는 private API였고, ROS2 버전이 달라지면 <code>AttributeError</code>가 발생하는 심각한 문제가 있었습니다. 실제로 다른 환경에서 코드를 실행하려고 할 때 이 문제로 인해 코드가 동작하지 않는 경우가 빈번했습니다.</p>
+<p>이를 해결하기 위해 표준 라이브러리인 <code>threading.Thread</code>와 ROS2의 <code>SingleThreadedExecutor</code>를 조합한 안정적인 방식으로 전환했습니다. 별도의 스레드에서 실행기를 돌리면서 ROS2 노드가 백그라운드에서 안전하게 동작하도록 구현했습니다. 이렇게 하면 타이머 콜백과 구독자 콜백이 서로 막히지 않고 원활하게 처리됩니다. 공식 API만 사용하기 때문에 버전 호환성 문제도 완전히 해결되었습니다.</p>
+</section>
+<section id="장치-일관성-문제의-해결" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="장치-일관성-문제의-해결"><span class="header-section-number">1.3</span> 장치 일관성 문제의 해결</h2>
+<p>딥러닝 모델을 사용할 때 가장 흔하게 마주치는 문제 중 하나가 텐서, 모델, 정규화 객체들이 서로 다른 디바이스(CUDA GPU 또는 CPU)에 있을 때 발생하는 오류입니다. “Expected all tensors to be on the same device”라는 런타임 에러가 발생하면 디버깅이 매우 어렵습니다.</p>
+<p>이를 근본적으로 해결하기 위해 <code>self.device</code>를 단일 진실 공급원(single source of truth)으로 설정하고, 모델, running_mean_std, sa_mean_std는 물론이고 관측 버퍼인 <code>obs_buf</code>, 고유 수용 히스토리 버퍼인 <code>proprio_hist_buf</code>까지 모두 같은 디바이스에 생성하고 이동시켰습니다. 하드웨어로 명령을 보내야 할 때만 <code>self.cur_target.detach().to('cpu').numpy()</code>처럼 CPU로 변환합니다. 이렇게 하면 디바이스 간 이동을 최소화해 속도가 향상되고, 디바이스 불일치 에러도 완전히 사라집니다.</p>
+</section>
+<section id="추론-성능-최적화" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="추론-성능-최적화"><span class="header-section-number">1.4</span> 추론 성능 최적화</h2>
+<p>제어 루프에서는 모델의 순전파만 필요하고 역전파는 전혀 필요하지 않습니다. 하지만 기본적으로 PyTorch는 그래디언트 트래킹을 수행하기 때문에 불필요한 메모리와 연산 비용이 발생합니다. 또한 코드 곳곳에서 <code>.clone()</code>을 남발하면 메모리 복사 오버헤드가 커집니다.</p>
+<p>타이머 콜백 함수인 <code>_control_step</code>에 <code>@torch.inference_mode()</code> 데코레이터를 적용해 추론 모드임을 명시적으로 선언했습니다. 이렇게 하면 그래디언트 계산과 관련된 모든 오버헤드가 제거됩니다. 또한 코드를 전체적으로 검토해서 꼭 필요한 위치에서만 <code>clone()</code>을 사용하도록 수정했습니다. 이러한 최적화를 통해 추론 시간이 안정화되고 전체적인 제어 주기가 일정하게 유지됩니다.</p>
+</section>
+<section id="관측-드랍에-대한-로버스트한-대응" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="관측-드랍에-대한-로버스트한-대응"><span class="header-section-number">1.5</span> 관측 드랍에 대한 로버스트한 대응</h2>
+<p>실시간 제어 시스템에서 피할 수 없는 문제 중 하나가 센서 데이터의 지연이나 누락입니다. 타이머 주기와 <code>/joint_states</code> 토픽의 퍼블리시 주기가 완벽하게 일치하지 않으면, 어떤 제어 틱에서는 새로운 관측 데이터가 도착하지 않을 수 있습니다. 이때 블로킹 방식으로 데이터를 기다리면 제어 주기 자체가 깨져버립니다.</p>
+<p>이를 해결하기 위해 논블로킹 방식인 <code>wait=False</code>로 데이터를 읽도록 변경했습니다. 새로운 샘플이 없으면 직전에 유효했던 관측값인 <code>_last_obs_q</code>를 재사용합니다. 동시에 드랍된 횟수를 <code>_skipped</code> 카운터로 기록해서 로깅합니다. 이렇게 하면 센서 데이터가 일시적으로 지연되더라도 제어 주기는 계속 유지되고, 시스템이 로버스트하게 동작합니다. 드랍 횟수를 모니터링함으로써 센서 통신에 문제가 있는지도 파악할 수 있습니다.</p>
+</section>
+<section id="버퍼-롤링의-안전한-구현" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="버퍼-롤링의-안전한-구현"><span class="header-section-number">1.6</span> 버퍼 롤링의 안전한 구현</h2>
+<p>시계열 데이터를 처리할 때 버퍼를 시프트하는 작업이 자주 필요합니다. 하지만 <code>self.obs_buf[:, :64] = self.obs_buf[:, 32:]</code>처럼 같은 텐서 내에서 겹치는 메모리 영역에 대입하면 PyTorch가 예외를 발생시킵니다. 이는 메모리 안정성을 위한 설계 결정인데, 올바르게 처리하지 않으면 런타임 에러로 이어집니다.</p>
+<p>이를 해결하는 방법으로 두 가지를 제시했습니다. 첫 번째는 <code>clone()</code>을 사용하는 방법입니다. <code>src = self.obs_buf[:, 32:96].clone()</code>처럼 원본 데이터를 먼저 복사한 후 대입하면 안전합니다. 두 번째는 <code>torch.roll()</code>을 사용하는 방법입니다. <code>rolled = torch.roll(self.obs_buf, shifts=-32, dims=1)</code>로 전체 버퍼를 시프트한 후 <code>self.obs_buf.copy_(rolled)</code>로 복사하면 됩니다. 두 방법 모두 안전하고 명확하며, 예외 없이 동작합니다.</p>
+</section>
+<section id="디버깅을-위한-포지션-갭-퍼블리셔" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="디버깅을-위한-포지션-갭-퍼블리셔"><span class="header-section-number">1.7</span> 디버깅을 위한 포지션 갭 퍼블리셔</h2>
+<p>로봇 제어에서 명령값과 실제 위치 사이의 오차는 매우 중요한 지표입니다. 하지만 기존 코드에서는 이를 외부에서 확인할 방법이 없었습니다. 디버깅이나 성능 분석을 할 때 이 정보가 매우 유용합니다.</p>
+<p>이를 위해 <code>/position_gap</code> 토픽을 새로 추가했습니다. <code>sensor_msgs/JointState</code> 메시지 타입을 사용해서 ROS 생태계의 표준 도구들과 호환되도록 했습니다. <code>header.stamp</code>에는 <code>node.get_clock().now().to_msg()</code>로 정확한 ROS 타임스탬프를 기록하고, <code>name</code> 필드에는 16개 조인트의 이름을, <code>position</code> 필드에는 명령값과 실측값의 차이를 담습니다. 이렇게 하면 rqt_plot으로 실시간 모니터링을 하거나, rosbag으로 기록해서 나중에 분석하는 것이 가능해집니다.</p>
+<p>갭을 측정하는 타이밍도 중요합니다. 초기에는 “명령 전송 → 짧은 sleep → 갭 측정”을 고려했지만, 최종 구조에서는 타이머 콜백이 매 틱마다 최신 상태를 반영하기 때문에 별도의 sleep이 필요 없습니다. I/O 노드가 항상 최신 <code>/joint_states</code>를 기준으로 논블로킹 방식으로 갭을 계산하므로 제어 주기를 전혀 방해하지 않습니다.</p>
+</section>
+<section id="신중한-초기화-과정" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="신중한-초기화-과정"><span class="header-section-number">1.8</span> 신중한 초기화 과정</h2>
+<p>제어를 시작하기 전의 초기화 과정도 매우 중요합니다. 워밍업 단계에서는 제어 주파수의 4배에 해당하는 횟수만큼 초기 자세 명령을 보냅니다. 이는 모터 드라이버가 안정화되도록 하기 위함입니다.</p>
+<p>첫 번째 관측은 특별하게 처리합니다. <code>wait=True, timeout=5.0</code>으로 블로킹 방식으로 한 번만 읽어서 유효한 데이터가 확실히 들어왔는지 확인합니다. 타임아웃을 설정해서 무한정 기다리는 것을 방지합니다. 이후부터는 모두 논블로킹 방식으로 전환합니다. 이렇게 하면 초기 버퍼 상태가 정상적으로 설정되고, 그 다음부터는 제어 주기가 깨지지 않습니다.</p>
+</section>
+<section id="효율적인-로깅-전략" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="효율적인-로깅-전략"><span class="header-section-number">1.9</span> 효율적인 로깅 전략</h2>
+<p>디버깅을 위해 로깅은 필수적이지만, 매 제어 틱마다 출력하면 성능이 크게 저하됩니다. 특히 고주파수로 동작하는 제어 루프에서는 로깅 자체가 병목이 될 수 있습니다.</p>
+<p>이를 해결하기 위해 간헐적 로깅 전략을 사용했습니다. 예를 들어 5초에 한 번씩만 주기와 지터 정보를 출력합니다. <code>skipped</code> 카운터는 계속 업데이트하되, 출력은 주기적으로만 합니다. 이렇게 하면 필요한 정보는 얻으면서도 성능 저하를 최소화할 수 있습니다.</p>
+</section>
+<section id="ros2-api의-올바른-사용" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="ros2-api의-올바른-사용"><span class="header-section-number">1.10</span> ROS2 API의 올바른 사용</h2>
+<p>ROS2를 사용할 때는 공식 API만 사용하는 것이 매우 중요합니다. 앞서 언급한 것처럼 내부 API를 사용하면 버전 호환성 문제가 발생할 수 있습니다. <code>SingleThreadedExecutor</code>로도 대부분의 경우 충분하지만, 만약 콜백 간의 경합이 심하다면 <code>MultiThreadedExecutor</code>를 고려할 수 있습니다.</p>
+<p>프로그램을 종료할 때도 올바른 순서가 중요합니다. <code>stop_allegro_io()</code> 함수에서 <code>executor.shutdown()</code>을 먼저 호출해서 실행기를 정리하고, <code>node.destroy_node()</code>로 노드를 파괴한 다음, 마지막으로 <code>rclpy.shutdown()</code>을 호출합니다. 이 순서를 지키면 리소스가 깨끗하게 정리되고 예기치 않은 에러를 방지할 수 있습니다.</p>
+</section>
+<section id="추가-최적화-가능성" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="추가-최적화-가능성"><span class="header-section-number">1.11</span> 추가 최적화 가능성</h2>
+<p>더 나아가 성능을 극대화하고 싶다면 몇 가지 선택적인 최적화 기법을 적용할 수 있습니다. FP16이나 TF32를 사용하면 모델을 half precision으로 변환해서 추론 지연을 줄일 수 있습니다. 단, 이는 CUDA를 사용할 때만 가능하고 입력 데이터도 같은 타입으로 맞춰야 합니다.</p>
+<p>입력 shape이 고정되어 있다면 CUDA Graph를 활용할 수 있습니다. 그래프를 한 번 캡처한 후 재사용하면 커널 런칭 오버헤드가 줄어들어 지터가 감소합니다. MLP 네트워크의 <code>actor_units</code>이나 <code>priv_mlp_units</code> 차원을 줄이는 것도 실시간성을 향상시키는 방법입니다.</p>
+<p>타이머 주기 설정도 신중해야 합니다. 하드웨어와 드라이버의 지연을 고려해서 20Hz부터 시작하는 것이 안전합니다. 시스템이 안정적으로 동작하는 것을 확인한 후 점진적으로 주파수를 높이면 됩니다.</p>
+</section>
+<section id="로직의-일관성-유지" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="로직의-일관성-유지"><span class="header-section-number">1.12</span> 로직의 일관성 유지</h2>
+<p>이 모든 개선 과정에서 가장 중요하게 생각한 것은 ROS1과 ROS2 사이의 로직 일관성입니다. 관측 데이터를 받아서 정규화하고, 버퍼를 업데이트하고, 모델로 추론하고, 액션을 스케일링하고 클리핑해서 타깃을 갱신하고, 명령을 전송하고, 다음 관측을 받는 전체 파이프라인은 동일합니다.</p>
+<p>차이점은 조인트 순서 변환과 토픽 인터페이스뿐입니다. ROS1과 ROS2는 조인트 순서가 다르기 때문에 이를 변환하는 로직이 필요하고, 토픽 이름이나 메시지 타입이 약간 다를 수 있습니다. 하지만 핵심 제어 로직은 완전히 동일하게 유지했습니다.</p>
+</section>
+<section id="결론" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="결론"><span class="header-section-number">1.13</span> 결론</h2>
+<p>이번 리팩토링의 핵심은 ROS2의 특성을 제대로 활용해서 실시간성과 안정성을 극대화하는 것이었습니다. 타이머 기반 제어 루프로 전환해서 정확한 제어 주기를 달성했고, 디바이스 일관성과 버퍼 관리를 개선해서 안정성을 높였습니다. 포지션 갭 퍼블리셔를 추가해서 분석 가능성을 향상시켰고, inference_mode와 최적화 기법을 적용해서 성능을 개선했습니다.</p>
+<p>이러한 개선들은 개별적으로도 의미가 있지만, 함께 적용했을 때 시너지 효과가 큽니다. 정확한 제어 주기, 안정적인 동작, 효율적인 성능, 그리고 디버깅 가능성이 모두 향상되어 실제 로봇 제어 시스템에서 신뢰할 수 있는 코드가 되었습니다.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ROS2 제어 코드 개선: Before/After 핵심 코드 비교
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="제어-루프-whilesleep-ros2-timer" class="level2" data-number="1.14">
+<h2 data-number="1.14" class="anchored" data-anchor-id="제어-루프-whilesleep-ros2-timer"><span class="header-section-number">1.14</span> 1. 제어 루프: while+sleep → ROS2 Timer</h2>
+<section id="before-불안정한-while-루프" class="level3" data-number="1.14.1">
+<h3 data-number="1.14.1" class="anchored" data-anchor-id="before-불안정한-while-루프"><span class="header-section-number">1.14.1</span> ❌ Before: 불안정한 while 루프</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> deploy(<span class="va">self</span>):</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="va">self</span>.allegro <span class="op">=</span> start_allegro_io(side<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    hz <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="co"># ... 초기화 ...</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    timestep <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="cf">try</span>:</span>
+<span id="cb1-9"><a href="#cb1-9"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb1-10"><a href="#cb1-10"></a>            loop_start <span class="op">=</span> time.perf_counter()</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>            <span class="co"># 관측 정규화</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>            <span class="va">self</span>.obs_buf <span class="op">=</span> <span class="va">self</span>.running_mean_std(<span class="va">self</span>.obs_buf.clone())</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>            <span class="co"># 추론</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>            input_dict <span class="op">=</span> {</span>
+<span id="cb1-17"><a href="#cb1-17"></a>                <span class="st">"obs"</span>: <span class="va">self</span>.obs_buf,</span>
+<span id="cb1-18"><a href="#cb1-18"></a>                <span class="st">"proprio_hist"</span>: <span class="va">self</span>.sa_mean_std(<span class="va">self</span>.proprio_hist_buf.clone()),</span>
+<span id="cb1-19"><a href="#cb1-19"></a>            }</span>
+<span id="cb1-20"><a href="#cb1-20"></a>            action <span class="op">=</span> torch.clamp(<span class="va">self</span>.model.act_inference(input_dict), <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>)</span>
+<span id="cb1-21"><a href="#cb1-21"></a></span>
+<span id="cb1-22"><a href="#cb1-22"></a>            <span class="co"># 제어</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>            <span class="va">self</span>.pre_physics_step(action)</span>
+<span id="cb1-24"><a href="#cb1-24"></a>            cmd <span class="op">=</span> <span class="va">self</span>.cur_target.detach().to(<span class="st">'cpu'</span>).numpy()[<span class="dv">0</span>]</span>
+<span id="cb1-25"><a href="#cb1-25"></a>            ros1 <span class="op">=</span> _action_hora2allegro(cmd)</span>
+<span id="cb1-26"><a href="#cb1-26"></a>            ros2 <span class="op">=</span> _reorder_imrt2timr(ros1)</span>
+<span id="cb1-27"><a href="#cb1-27"></a>            <span class="va">self</span>.allegro.command_joint_position(ros2)</span>
+<span id="cb1-28"><a href="#cb1-28"></a></span>
+<span id="cb1-29"><a href="#cb1-29"></a>            <span class="co"># 블로킹으로 관측 대기</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>            q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb1-31"><a href="#cb1-31"></a>            ros1_q <span class="op">=</span> _reorder_timr2imrt(q_pos)</span>
+<span id="cb1-32"><a href="#cb1-32"></a>            hora_q <span class="op">=</span> _obs_allegro2hora(ros1_q)</span>
+<span id="cb1-33"><a href="#cb1-33"></a>            obs_q <span class="op">=</span> torch.from_numpy(hora_q.astype(np.float32)).to(<span class="va">self</span>.device)</span>
+<span id="cb1-34"><a href="#cb1-34"></a></span>
+<span id="cb1-35"><a href="#cb1-35"></a>            <span class="va">self</span>.post_physics_step(obs_q)</span>
+<span id="cb1-36"><a href="#cb1-36"></a></span>
+<span id="cb1-37"><a href="#cb1-37"></a>            time.sleep(<span class="fl">0.03</span>)  <span class="co"># 주기가 불안정!</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>            timestep <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a></span>
+<span id="cb1-40"><a href="#cb1-40"></a>            freq <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> (time.perf_counter() <span class="op">-</span> loop_start)</span>
+<span id="cb1-41"><a href="#cb1-41"></a>            <span class="bu">print</span>(<span class="ss">f"Hz=</span><span class="sc">{</span>freq<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>문제점:</strong> - <code>time.sleep(0.03)</code>는 OS 스케줄링에 의존 → 지터 발생 - 블로킹 I/O(<code>wait=True</code>)로 주기 깨짐 - 매 틱마다 주파수 출력 → 성능 저하</p>
+</section>
+<section id="after-ros2-timer-논블로킹" class="level3" data-number="1.14.2">
+<h3 data-number="1.14.2" class="anchored" data-anchor-id="after-ros2-timer-논블로킹"><span class="header-section-number">1.14.2</span> ✅ After: ROS2 Timer + 논블로킹</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> deploy(<span class="va">self</span>):</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="va">self</span>.allegro <span class="op">=</span> start_allegro_io(side<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="co"># ... 초기화 ...</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="co"># Timer 등록 (정확한 주기 보장)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>    period <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="va">self</span>.hz</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="va">self</span>.timer <span class="op">=</span> <span class="va">self</span>.allegro.create_timer(period, <span class="va">self</span>._control_step)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="bu">print</span>(<span class="ss">f"Deployment started (timer-based </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>hz<span class="sc">:.1f}</span><span class="ss"> Hz)."</span>)</span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="co"># 메인 스레드는 시그널만 처리</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>    interrupted <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>    <span class="kw">def</span> _sigint(_sig, _frm):</span>
+<span id="cb2-14"><a href="#cb2-14"></a>        <span class="kw">nonlocal</span> interrupted</span>
+<span id="cb2-15"><a href="#cb2-15"></a>        interrupted <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>    signal.signal(signal.SIGINT, _sigint)</span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-19"><a href="#cb2-19"></a>        <span class="cf">while</span> <span class="kw">not</span> interrupted:</span>
+<span id="cb2-20"><a href="#cb2-20"></a>            time.sleep(<span class="fl">0.2</span>)</span>
+<span id="cb2-21"><a href="#cb2-21"></a>    <span class="cf">finally</span>:</span>
+<span id="cb2-22"><a href="#cb2-22"></a>        <span class="cf">if</span> <span class="va">self</span>.timer <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-23"><a href="#cb2-23"></a>            <span class="va">self</span>.timer.cancel()</span>
+<span id="cb2-24"><a href="#cb2-24"></a>        <span class="va">self</span>.allegro.go_safe()</span>
+<span id="cb2-25"><a href="#cb2-25"></a>        stop_allegro_io(<span class="va">self</span>.allegro)</span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="at">@torch.inference_mode</span>()  <span class="co"># 그래디언트 트래킹 비활성화</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="kw">def</span> _control_step(<span class="va">self</span>):</span>
+<span id="cb2-29"><a href="#cb2-29"></a>    t0 <span class="op">=</span> time.perf_counter()</span>
+<span id="cb2-30"><a href="#cb2-30"></a></span>
+<span id="cb2-31"><a href="#cb2-31"></a>    <span class="co"># 1) 정규화</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a>    obs_norm <span class="op">=</span> <span class="va">self</span>.running_mean_std(<span class="va">self</span>.obs_buf)</span>
+<span id="cb2-33"><a href="#cb2-33"></a></span>
+<span id="cb2-34"><a href="#cb2-34"></a>    <span class="co"># 2) 추론</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a>    input_dict <span class="op">=</span> {</span>
+<span id="cb2-36"><a href="#cb2-36"></a>        <span class="st">"obs"</span>: obs_norm,</span>
+<span id="cb2-37"><a href="#cb2-37"></a>        <span class="st">"proprio_hist"</span>: <span class="va">self</span>.sa_mean_std(<span class="va">self</span>.proprio_hist_buf),</span>
+<span id="cb2-38"><a href="#cb2-38"></a>    }</span>
+<span id="cb2-39"><a href="#cb2-39"></a>    action <span class="op">=</span> torch.clamp(<span class="va">self</span>.model.act_inference(input_dict), <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>)</span>
+<span id="cb2-40"><a href="#cb2-40"></a></span>
+<span id="cb2-41"><a href="#cb2-41"></a>    <span class="co"># 3) 타깃 업데이트</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a>    <span class="va">self</span>._pre_physics_step(action)</span>
+<span id="cb2-43"><a href="#cb2-43"></a></span>
+<span id="cb2-44"><a href="#cb2-44"></a>    <span class="co"># 4) 명령 전송</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a>    cmd <span class="op">=</span> <span class="va">self</span>.cur_target.detach().to(<span class="st">"cpu"</span>).numpy()[<span class="dv">0</span>]</span>
+<span id="cb2-46"><a href="#cb2-46"></a>    ros1 <span class="op">=</span> _action_hora2allegro(cmd)</span>
+<span id="cb2-47"><a href="#cb2-47"></a>    ros2 <span class="op">=</span> _reorder_imrt2timr(ros1)</span>
+<span id="cb2-48"><a href="#cb2-48"></a>    <span class="va">self</span>.allegro.command_joint_position(ros2)</span>
+<span id="cb2-49"><a href="#cb2-49"></a></span>
+<span id="cb2-50"><a href="#cb2-50"></a>    <span class="co"># 5) 논블로킹 관측 (드랍 시 last-good 사용)</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a>    q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">False</span>, timeout<span class="op">=</span><span class="fl">0.0</span>)</span>
+<span id="cb2-52"><a href="#cb2-52"></a>    <span class="cf">if</span> q_pos <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-53"><a href="#cb2-53"></a>        ros1_q <span class="op">=</span> _reorder_timr2imrt(q_pos)</span>
+<span id="cb2-54"><a href="#cb2-54"></a>        hora_q <span class="op">=</span> _obs_allegro2hora(ros1_q)</span>
+<span id="cb2-55"><a href="#cb2-55"></a>        obs_q <span class="op">=</span> torch.from_numpy(hora_q.astype(np.float32)).to(<span class="va">self</span>.device)</span>
+<span id="cb2-56"><a href="#cb2-56"></a>        <span class="va">self</span>._last_obs_q <span class="op">=</span> obs_q</span>
+<span id="cb2-57"><a href="#cb2-57"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-58"><a href="#cb2-58"></a>        obs_q <span class="op">=</span> <span class="va">self</span>._last_obs_q  <span class="co"># 재사용</span></span>
+<span id="cb2-59"><a href="#cb2-59"></a>        <span class="va">self</span>._skipped <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-60"><a href="#cb2-60"></a></span>
+<span id="cb2-61"><a href="#cb2-61"></a>    <span class="cf">if</span> obs_q <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-62"><a href="#cb2-62"></a>        <span class="va">self</span>._post_physics_step(obs_q)</span>
+<span id="cb2-63"><a href="#cb2-63"></a></span>
+<span id="cb2-64"><a href="#cb2-64"></a>    <span class="co"># 6) 간헐적 로깅 (5초마다)</span></span>
+<span id="cb2-65"><a href="#cb2-65"></a>    <span class="cf">if</span> <span class="va">self</span>._last_step_t <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-66"><a href="#cb2-66"></a>        dt <span class="op">=</span> t0 <span class="op">-</span> <span class="va">self</span>._last_step_t</span>
+<span id="cb2-67"><a href="#cb2-67"></a>        <span class="cf">if</span> <span class="bu">int</span>(time.time()) <span class="op">%</span> <span class="dv">5</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-68"><a href="#cb2-68"></a>            hz_est <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="bu">max</span>(dt, <span class="fl">1e-6</span>)</span>
+<span id="cb2-69"><a href="#cb2-69"></a>            <span class="bu">print</span>(<span class="ss">f"[timer] </span><span class="sc">{</span>hz_est<span class="sc">:.2f}</span><span class="ss"> Hz, skipped=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>_skipped<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-70"><a href="#cb2-70"></a>    <span class="va">self</span>._last_step_t <span class="op">=</span> t0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ ROS2 실행기가 주기 관리 → 지터 감소</li>
+<li>✅ 논블로킹 I/O → 주기 유지</li>
+<li>✅ <code>@torch.inference_mode()</code> → 추론 오버헤드 제거</li>
+<li>✅ 간헐적 로깅 → 성능 저하 최소화</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="ros2-실행기-내부-api-표준-threading" class="level2" data-number="1.15">
+<h2 data-number="1.15" class="anchored" data-anchor-id="ros2-실행기-내부-api-표준-threading"><span class="header-section-number">1.15</span> 2. ROS2 실행기: 내부 API → 표준 threading</h2>
+<section id="before-불안정한-내부-api" class="level3" data-number="1.15.1">
+<h3 data-number="1.15.1" class="anchored" data-anchor-id="before-불안정한-내부-api"><span class="header-section-number">1.15.1</span> ❌ Before: 불안정한 내부 API</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> _Runner:</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, node: AllegroHandIO):</span>
+<span id="cb3-3"><a href="#cb3-3"></a>        <span class="va">self</span>.node <span class="op">=</span> node</span>
+<span id="cb3-4"><a href="#cb3-4"></a>        <span class="va">self</span>.<span class="bu">exec</span> <span class="op">=</span> SingleThreadedExecutor()</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="va">self</span>.<span class="bu">exec</span>.add_node(node)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        <span class="co"># ⚠️ 내부 API 사용 - 버전 호환성 문제!</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>        <span class="va">self</span>.thread <span class="op">=</span> threading.Thread(target<span class="op">=</span><span class="va">self</span>.<span class="bu">exec</span>.spin, daemon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="kw">def</span> start(<span class="va">self</span>):</span>
+<span id="cb3-10"><a href="#cb3-10"></a>        <span class="va">self</span>.thread.start()</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="kw">def</span> stop(<span class="va">self</span>):</span>
+<span id="cb3-13"><a href="#cb3-13"></a>        <span class="cf">try</span>:</span>
+<span id="cb3-14"><a href="#cb3-14"></a>            <span class="va">self</span>.<span class="bu">exec</span>.shutdown()</span>
+<span id="cb3-15"><a href="#cb3-15"></a>        <span class="cf">finally</span>:</span>
+<span id="cb3-16"><a href="#cb3-16"></a>            <span class="va">self</span>.node.destroy_node()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="after-안전한-표준-api" class="level3" data-number="1.15.2">
+<h3 data-number="1.15.2" class="anchored" data-anchor-id="after-안전한-표준-api"><span class="header-section-number">1.15.2</span> ✅ After: 안전한 표준 API</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> threading</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="im">from</span> rclpy.executors <span class="im">import</span> SingleThreadedExecutor</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="kw">class</span> _Runner:</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, node: <span class="st">'AllegroHandIO'</span>):</span>
+<span id="cb4-6"><a href="#cb4-6"></a>        <span class="va">self</span>.node <span class="op">=</span> node</span>
+<span id="cb4-7"><a href="#cb4-7"></a>        <span class="va">self</span>.<span class="bu">exec</span> <span class="op">=</span> SingleThreadedExecutor()</span>
+<span id="cb4-8"><a href="#cb4-8"></a>        <span class="va">self</span>.<span class="bu">exec</span>.add_node(node)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>        <span class="co"># ✅ 표준 threading 사용</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>        <span class="va">self</span>.thread <span class="op">=</span> threading.Thread(target<span class="op">=</span><span class="va">self</span>.<span class="bu">exec</span>.spin, daemon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="kw">def</span> start(<span class="va">self</span>):</span>
+<span id="cb4-13"><a href="#cb4-13"></a>        <span class="va">self</span>.thread.start()</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a>    <span class="kw">def</span> stop(<span class="va">self</span>):</span>
+<span id="cb4-16"><a href="#cb4-16"></a>        <span class="cf">try</span>:</span>
+<span id="cb4-17"><a href="#cb4-17"></a>            <span class="va">self</span>.<span class="bu">exec</span>.shutdown()          <span class="co"># 1. executor 중지</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>        <span class="cf">finally</span>:</span>
+<span id="cb4-19"><a href="#cb4-19"></a>            <span class="cf">try</span>:</span>
+<span id="cb4-20"><a href="#cb4-20"></a>                <span class="va">self</span>.node.destroy_node()  <span class="co"># 2. 노드 파괴</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>            <span class="cf">finally</span>:</span>
+<span id="cb4-22"><a href="#cb4-22"></a>                <span class="co"># 3. 스레드 종료 대기 (타임아웃 설정)</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>                <span class="va">self</span>.thread.join(timeout<span class="op">=</span><span class="fl">2.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ 공식 API만 사용 → 버전 호환성 보장</li>
+<li>✅ 올바른 종료 순서 → 리소스 누수 방지</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="장치-일관성-디바이스-불일치-해결" class="level2" data-number="1.16">
+<h2 data-number="1.16" class="anchored" data-anchor-id="장치-일관성-디바이스-불일치-해결"><span class="header-section-number">1.16</span> 3. 장치 일관성: 디바이스 불일치 해결</h2>
+<section id="before-산발적인-디바이스-할당" class="level3" data-number="1.16.1">
+<h3 data-number="1.16.1" class="anchored" data-anchor-id="before-산발적인-디바이스-할당"><span class="header-section-number">1.16.1</span> ❌ Before: 산발적인 디바이스 할당</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="va">self</span>.device <span class="op">=</span> <span class="st">"cuda"</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="co"># 모델은 CUDA로</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="va">self</span>.model <span class="op">=</span> ActorCritic(net_config).to(<span class="va">self</span>.device).<span class="bu">eval</span>()</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="va">self</span>.running_mean_std <span class="op">=</span> RunningMeanStd(obs_shape).to(<span class="va">self</span>.device).<span class="bu">eval</span>()</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="co"># ⚠️ 버퍼는 디바이스 명시 없음 - CPU에 생성됨!</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="va">self</span>.obs_buf <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">16</span> <span class="op">*</span> <span class="dv">3</span> <span class="op">*</span> <span class="dv">2</span>), dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="va">self</span>.proprio_hist_buf <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">30</span>, <span class="dv">16</span> <span class="op">*</span> <span class="dv">2</span>), dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="co"># limits도 디바이스 명시</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>    <span class="va">self</span>.allegro_dof_lower <span class="op">=</span> torch.tensor([...], dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a>    <span class="co"># ⚠️ targets는 디바이스 명시 없음</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>    <span class="va">self</span>.prev_target <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">16</span>), dtype<span class="op">=</span>torch.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="after-모든-텐서를-같은-디바이스로" class="level3" data-number="1.16.2">
+<h3 data-number="1.16.2" class="anchored" data-anchor-id="after-모든-텐서를-같은-디바이스로"><span class="header-section-number">1.16.2</span> ✅ After: 모든 텐서를 같은 디바이스로</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, hz: <span class="bu">float</span> <span class="op">=</span> <span class="fl">20.0</span>, device: <span class="bu">str</span> <span class="op">=</span> <span class="st">"cuda"</span>):</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    torch.set_grad_enabled(<span class="va">False</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="va">self</span>.hz <span class="op">=</span> <span class="bu">float</span>(hz)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="va">self</span>.device <span class="op">=</span> device  <span class="co"># ✅ 단일 진실 공급원</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="co"># 모델과 RMS</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="va">self</span>.model <span class="op">=</span> ActorCritic(net_config).to(<span class="va">self</span>.device).<span class="bu">eval</span>()</span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="va">self</span>.running_mean_std <span class="op">=</span> RunningMeanStd(obs_shape).to(<span class="va">self</span>.device).<span class="bu">eval</span>()</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="va">self</span>.sa_mean_std <span class="op">=</span> RunningMeanStd((<span class="dv">30</span>, <span class="dv">32</span>)).to(<span class="va">self</span>.device).<span class="bu">eval</span>()</span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a>    <span class="co"># ✅ 모든 버퍼를 명시적으로 같은 디바이스에 생성</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="va">self</span>.obs_buf <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">96</span>), dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="va">self</span>.proprio_hist_buf <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">30</span>, <span class="dv">32</span>), dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb6-14"><a href="#cb6-14"></a></span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="co"># ✅ limits도 같은 디바이스</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>    <span class="va">self</span>.allegro_dof_lower <span class="op">=</span> torch.tensor([...], dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="va">self</span>.allegro_dof_upper <span class="op">=</span> torch.tensor([...], dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb6-18"><a href="#cb6-18"></a></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="co"># ✅ targets도 같은 디바이스</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="va">self</span>.prev_target <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">16</span>), dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb6-21"><a href="#cb6-21"></a>    <span class="va">self</span>.cur_target <span class="op">=</span> torch.zeros((<span class="dv">1</span>, <span class="dv">16</span>), dtype<span class="op">=</span>torch.float32, device<span class="op">=</span><span class="va">self</span>.device)</span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co"># ✅ 하드웨어 I/O 직전에만 CPU로 이동</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="kw">def</span> _control_step(<span class="va">self</span>):</span>
+<span id="cb6-25"><a href="#cb6-25"></a>    <span class="co"># ... 추론 ...</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a></span>
+<span id="cb6-27"><a href="#cb6-27"></a>    <span class="co"># CPU로 이동은 명령 전송 시에만</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>    cmd <span class="op">=</span> <span class="va">self</span>.cur_target.detach().to(<span class="st">"cpu"</span>).numpy()[<span class="dv">0</span>]</span>
+<span id="cb6-29"><a href="#cb6-29"></a>    <span class="va">self</span>.allegro.command_joint_position(ros2)</span>
+<span id="cb6-30"><a href="#cb6-30"></a></span>
+<span id="cb6-31"><a href="#cb6-31"></a>    <span class="co"># 관측 읽기 후 바로 디바이스로</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a>    q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-33"><a href="#cb6-33"></a>    <span class="cf">if</span> q_pos <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb6-34"><a href="#cb6-34"></a>        <span class="co"># ... 변환 ...</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a>        obs_q <span class="op">=</span> torch.from_numpy(hora_q.astype(np.float32)).to(<span class="va">self</span>.device)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ “Expected all tensors to be on the same device” 에러 제거</li>
+<li>✅ 불필요한 디바이스 이동 최소화 → 속도 향상</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="버퍼-롤링-겹침-오류-수정" class="level2" data-number="1.17">
+<h2 data-number="1.17" class="anchored" data-anchor-id="버퍼-롤링-겹침-오류-수정"><span class="header-section-number">1.17</span> 4. 버퍼 롤링: 겹침 오류 수정</h2>
+<section id="before-메모리-겹침-오류" class="level3" data-number="1.17.1">
+<h3 data-number="1.17.1" class="anchored" data-anchor-id="before-메모리-겹침-오류"><span class="header-section-number">1.17.1</span> ❌ Before: 메모리 겹침 오류</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> post_physics_step(<span class="va">self</span>, obses):</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="va">self</span>.cur_obs_buf <span class="op">=</span> <span class="va">self</span>.unscale(obses, ...)[<span class="va">None</span>]</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="co"># ⚠️ 같은 텐서 내 겹치는 메모리 영역에 대입!</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="co"># obs_buf[:, 32:96]의 일부가 [:, :64]와 겹침</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="va">self</span>.prev_obs_buf <span class="op">=</span> <span class="va">self</span>.obs_buf[:, <span class="dv">32</span>:].clone()</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    <span class="va">self</span>.obs_buf[:, :<span class="dv">64</span>] <span class="op">=</span> <span class="va">self</span>.prev_obs_buf  <span class="co"># RuntimeError!</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">64</span>:<span class="dv">80</span>] <span class="op">=</span> <span class="va">self</span>.cur_obs_buf.clone()</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">80</span>:<span class="dv">96</span>] <span class="op">=</span> <span class="va">self</span>.cur_target.clone()</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="co"># proprio history도 동일 문제</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>    cur <span class="op">=</span> torch.cat([cur_norm_t, cur_tgt_t], dim<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    prev <span class="op">=</span> <span class="va">self</span>.proprio_hist_buf[:, <span class="dv">1</span>:<span class="dv">30</span>, :].clone()</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    <span class="va">self</span>.proprio_hist_buf[:] <span class="op">=</span> torch.cat([prev, cur], dim<span class="op">=</span><span class="dv">1</span>)  <span class="co"># 비효율적</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="after-안전한-버퍼-시프트" class="level3" data-number="1.17.2">
+<h3 data-number="1.17.2" class="anchored" data-anchor-id="after-안전한-버퍼-시프트"><span class="header-section-number">1.17.2</span> ✅ After: 안전한 버퍼 시프트</h3>
+<p><strong>방법 1: clone() 사용</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">def</span> _post_physics_step(<span class="va">self</span>, obses):</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="co"># 1) 현재 관측 정규화</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    cur_obs <span class="op">=</span> <span class="va">self</span>._unscale(</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        obses.view(<span class="op">-</span><span class="dv">1</span>), <span class="va">self</span>.allegro_dof_lower, <span class="va">self</span>.allegro_dof_upper</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    ).view(<span class="dv">1</span>, <span class="dv">16</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a>    <span class="co"># 2) obs_buf 롤링 - ✅ 소스를 먼저 clone()</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>    src64 <span class="op">=</span> <span class="va">self</span>.obs_buf[:, <span class="dv">32</span>:<span class="dv">96</span>].clone()     <span class="co"># (1,64) 복사</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">0</span>:<span class="dv">64</span>] <span class="op">=</span> src64              <span class="co"># 안전한 대입</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">64</span>:<span class="dv">80</span>] <span class="op">=</span> cur_obs</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">80</span>:<span class="dv">96</span>] <span class="op">=</span> <span class="va">self</span>.cur_target</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>    <span class="co"># 3) proprio_hist_buf 롤링 - ✅ 소스를 먼저 clone()</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>    src_hist <span class="op">=</span> <span class="va">self</span>.proprio_hist_buf[:, <span class="dv">1</span>:, :].clone()  <span class="co"># (1,29,32)</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a>    <span class="va">self</span>.proprio_hist_buf[:, <span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>, :] <span class="op">=</span> src_hist</span>
+<span id="cb8-16"><a href="#cb8-16"></a>    <span class="va">self</span>.proprio_hist_buf[:, <span class="op">-</span><span class="dv">1</span>, :<span class="dv">16</span>] <span class="op">=</span> cur_obs</span>
+<span id="cb8-17"><a href="#cb8-17"></a>    <span class="va">self</span>.proprio_hist_buf[:, <span class="op">-</span><span class="dv">1</span>, <span class="dv">16</span>:<span class="dv">32</span>] <span class="op">=</span> <span class="va">self</span>.cur_target</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>방법 2: torch.roll 사용 (대안)</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">def</span> _post_physics_step(<span class="va">self</span>, obses):</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    cur_obs <span class="op">=</span> <span class="va">self</span>._unscale(obses.view(<span class="op">-</span><span class="dv">1</span>), ...).view(<span class="dv">1</span>, <span class="dv">16</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="co"># ✅ roll을 사용한 시프트</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>    rolled <span class="op">=</span> torch.roll(<span class="va">self</span>.obs_buf, shifts<span class="op">=-</span><span class="dv">32</span>, dims<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>    <span class="va">self</span>.obs_buf[:, :<span class="op">-</span><span class="dv">32</span>].copy_(rolled[:, :<span class="op">-</span><span class="dv">32</span>])  <span class="co"># 앞 64칸</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">64</span>:<span class="dv">80</span>] <span class="op">=</span> cur_obs</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    <span class="va">self</span>.obs_buf[:, <span class="dv">80</span>:<span class="dv">96</span>] <span class="op">=</span> <span class="va">self</span>.cur_target</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ RuntimeError 완전 제거</li>
+<li>✅ 명확한 시프트 로직</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="관측-드랍-대응-블로킹-논블로킹-last-good" class="level2" data-number="1.18">
+<h2 data-number="1.18" class="anchored" data-anchor-id="관측-드랍-대응-블로킹-논블로킹-last-good"><span class="header-section-number">1.18</span> 5. 관측 드랍 대응: 블로킹 → 논블로킹 + last-good</h2>
+<section id="before-블로킹으로-주기-깨짐" class="level3" data-number="1.18.1">
+<h3 data-number="1.18.1" class="anchored" data-anchor-id="before-블로킹으로-주기-깨짐"><span class="header-section-number">1.18.1</span> ❌ Before: 블로킹으로 주기 깨짐</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 매 틱마다 블로킹 대기</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="cf">if</span> q_pos <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="co"># 데이터 없으면 에러...</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="bu">print</span>(<span class="st">"❌ failed to read"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a>ros1_q <span class="op">=</span> _reorder_timr2imrt(q_pos)</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co"># ... 처리 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="after-논블로킹-재사용" class="level3" data-number="1.18.2">
+<h3 data-number="1.18.2" class="anchored" data-anchor-id="after-논블로킹-재사용"><span class="header-section-number">1.18.2</span> ✅ After: 논블로킹 + 재사용</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ...):</span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="co"># ...</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="va">self</span>._last_obs_q <span class="op">=</span> <span class="va">None</span>  <span class="co"># ✅ 마지막 유효 관측 저장</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="va">self</span>._skipped <span class="op">=</span> <span class="dv">0</span>        <span class="co"># ✅ 드랍 카운터</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="kw">def</span> _control_step(<span class="va">self</span>):</span>
+<span id="cb11-7"><a href="#cb11-7"></a>    <span class="co"># ... 명령 전송 ...</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a></span>
+<span id="cb11-9"><a href="#cb11-9"></a>    <span class="co"># ✅ 논블로킹으로 읽기</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>    q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">False</span>, timeout<span class="op">=</span><span class="fl">0.0</span>)</span>
+<span id="cb11-11"><a href="#cb11-11"></a></span>
+<span id="cb11-12"><a href="#cb11-12"></a>    <span class="cf">if</span> q_pos <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb11-13"><a href="#cb11-13"></a>        <span class="co"># 새 데이터 있으면 갱신</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a>        ros1_q <span class="op">=</span> _reorder_timr2imrt(q_pos)</span>
+<span id="cb11-15"><a href="#cb11-15"></a>        hora_q <span class="op">=</span> _obs_allegro2hora(ros1_q)</span>
+<span id="cb11-16"><a href="#cb11-16"></a>        obs_q <span class="op">=</span> torch.from_numpy(hora_q.astype(np.float32)).to(<span class="va">self</span>.device)</span>
+<span id="cb11-17"><a href="#cb11-17"></a>        <span class="va">self</span>._last_obs_q <span class="op">=</span> obs_q  <span class="co"># ✅ 저장</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>    <span class="cf">else</span>:</span>
+<span id="cb11-19"><a href="#cb11-19"></a>        <span class="co"># 새 데이터 없으면 이전 것 재사용</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>        obs_q <span class="op">=</span> <span class="va">self</span>._last_obs_q</span>
+<span id="cb11-21"><a href="#cb11-21"></a>        <span class="va">self</span>._skipped <span class="op">+=</span> <span class="dv">1</span>  <span class="co"># ✅ 카운트</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a></span>
+<span id="cb11-23"><a href="#cb11-23"></a>    <span class="cf">if</span> obs_q <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb11-24"><a href="#cb11-24"></a>        <span class="va">self</span>._post_physics_step(obs_q)</span>
+<span id="cb11-25"><a href="#cb11-25"></a></span>
+<span id="cb11-26"><a href="#cb11-26"></a>    <span class="co"># 로깅 (5초마다)</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a>    <span class="cf">if</span> <span class="bu">int</span>(time.time()) <span class="op">%</span> <span class="dv">5</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb11-28"><a href="#cb11-28"></a>        <span class="bu">print</span>(<span class="ss">f"skipped=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>_skipped<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ 제어 주기 유지 (실시간성↑)</li>
+<li>✅ 센서 지연에 강건한 동작</li>
+<li>✅ 드랍 횟수 모니터링 가능</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="position-gap-퍼블리셔-타임스탬프-조인트-이름" class="level2" data-number="1.19">
+<h2 data-number="1.19" class="anchored" data-anchor-id="position-gap-퍼블리셔-타임스탬프-조인트-이름"><span class="header-section-number">1.19</span> 6. Position Gap 퍼블리셔: 타임스탬프 + 조인트 이름</h2>
+<section id="before-gap-측정에-짧은-sleep-삽입" class="level3" data-number="1.19.1">
+<h3 data-number="1.19.1" class="anchored" data-anchor-id="before-gap-측정에-짧은-sleep-삽입"><span class="header-section-number">1.19.1</span> ❌ Before: Gap 측정에 짧은 sleep 삽입</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">def</span> command_joint_position(<span class="va">self</span>, positions: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="co"># 명령 퍼블리시</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>    msg <span class="op">=</span> Float64MultiArray()</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    msg.data <span class="op">=</span> data</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="va">self</span>._cmd_pub.publish(msg)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="va">self</span>._last_cmd <span class="op">=</span> np.asarray(data, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a>    <span class="co"># ⚠️ 명령 직후 짧게 대기 (비효율적)</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>    <span class="cf">if</span> <span class="va">self</span>._gap_after_cmd_delay <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb12-10"><a href="#cb12-10"></a>        time.sleep(<span class="va">self</span>._gap_after_cmd_delay)  <span class="co"># 0.02초</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="co"># gap 1회 퍼블리시</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>    <span class="va">self</span>._publish_position_gap()</span>
+<span id="cb12-14"><a href="#cb12-14"></a>    <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="kw">def</span> _publish_position_gap(<span class="va">self</span>):</span>
+<span id="cb12-17"><a href="#cb12-17"></a>    <span class="cf">if</span> <span class="va">self</span>._last_cmd <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> <span class="va">self</span>._last_js <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb12-18"><a href="#cb12-18"></a>        <span class="cf">return</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a>    cur <span class="op">=</span> <span class="va">self</span>.poll_joint_position(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-20"><a href="#cb12-20"></a>    <span class="cf">if</span> cur <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> cur.size <span class="op">!=</span> <span class="dv">16</span>:</span>
+<span id="cb12-21"><a href="#cb12-21"></a>        <span class="cf">return</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a></span>
+<span id="cb12-23"><a href="#cb12-23"></a>    cmd <span class="op">=</span> np.asarray(<span class="va">self</span>._last_cmd, dtype<span class="op">=</span><span class="bu">float</span>).reshape(<span class="dv">16</span>)</span>
+<span id="cb12-24"><a href="#cb12-24"></a>    gap <span class="op">=</span> (cmd <span class="op">-</span> cur).astype(<span class="bu">float</span>)</span>
+<span id="cb12-25"><a href="#cb12-25"></a></span>
+<span id="cb12-26"><a href="#cb12-26"></a>    <span class="co"># ⚠️ Header 정보 부족</span></span>
+<span id="cb12-27"><a href="#cb12-27"></a>    msg <span class="op">=</span> JointState()</span>
+<span id="cb12-28"><a href="#cb12-28"></a>    msg.header.stamp <span class="op">=</span> <span class="va">self</span>.get_clock().now().to_msg()</span>
+<span id="cb12-29"><a href="#cb12-29"></a>    msg.header.frame_id <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a>    msg.name <span class="op">=</span> <span class="bu">list</span>(<span class="va">self</span>._desired_names)</span>
+<span id="cb12-31"><a href="#cb12-31"></a>    msg.position <span class="op">=</span> gap.tolist()</span>
+<span id="cb12-32"><a href="#cb12-32"></a>    <span class="va">self</span>._gap_pub.publish(msg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="after-타이머-콜백-내에서-최신-상태로" class="level3" data-number="1.19.2">
+<h3 data-number="1.19.2" class="anchored" data-anchor-id="after-타이머-콜백-내에서-최신-상태로"><span class="header-section-number">1.19.2</span> ✅ After: 타이머 콜백 내에서 최신 상태로</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">def</span> command_joint_position(<span class="va">self</span>, positions: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    msg <span class="op">=</span> Float64MultiArray()</span>
+<span id="cb13-3"><a href="#cb13-3"></a>    msg.data <span class="op">=</span> data</span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="va">self</span>._cmd_pub.publish(msg)</span>
+<span id="cb13-5"><a href="#cb13-5"></a>    <span class="va">self</span>._last_cmd <span class="op">=</span> np.asarray(data, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb13-6"><a href="#cb13-6"></a></span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="co"># ✅ sleep 없이 바로 gap 퍼블리시 (논블로킹)</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="va">self</span>._publish_position_gap()</span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="kw">def</span> _publish_position_gap(<span class="va">self</span>):</span>
+<span id="cb13-12"><a href="#cb13-12"></a>    <span class="cf">if</span> <span class="va">self</span>._last_cmd <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> <span class="va">self</span>._last_js <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb13-13"><a href="#cb13-13"></a>        <span class="cf">return</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a>    <span class="co"># ✅ 논블로킹으로 현재 최신 상태 읽기</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a>    cur <span class="op">=</span> <span class="va">self</span>.poll_joint_position(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-17"><a href="#cb13-17"></a>    <span class="cf">if</span> cur <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> cur.size <span class="op">!=</span> <span class="dv">16</span>:</span>
+<span id="cb13-18"><a href="#cb13-18"></a>        <span class="cf">return</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a></span>
+<span id="cb13-20"><a href="#cb13-20"></a>    gap <span class="op">=</span> (<span class="va">self</span>._last_cmd <span class="op">-</span> cur).astype(<span class="bu">float</span>)</span>
+<span id="cb13-21"><a href="#cb13-21"></a></span>
+<span id="cb13-22"><a href="#cb13-22"></a>    <span class="co"># ✅ 완전한 JointState 메시지</span></span>
+<span id="cb13-23"><a href="#cb13-23"></a>    js <span class="op">=</span> JointState()</span>
+<span id="cb13-24"><a href="#cb13-24"></a>    js.header.stamp <span class="op">=</span> <span class="va">self</span>.get_clock().now().to_msg()  <span class="co"># ROS 타임스탬프</span></span>
+<span id="cb13-25"><a href="#cb13-25"></a>    js.header.frame_id <span class="op">=</span> <span class="st">""</span>                            <span class="co"># 또는 "allegro"</span></span>
+<span id="cb13-26"><a href="#cb13-26"></a>    js.name <span class="op">=</span> <span class="bu">list</span>(<span class="va">self</span>._desired_names)                <span class="co"># 16개 조인트 이름</span></span>
+<span id="cb13-27"><a href="#cb13-27"></a>    js.position <span class="op">=</span> gap.tolist()                         <span class="co"># gap 값</span></span>
+<span id="cb13-28"><a href="#cb13-28"></a>    <span class="co"># velocity/effort는 빈 리스트 (미사용)</span></span>
+<span id="cb13-29"><a href="#cb13-29"></a></span>
+<span id="cb13-30"><a href="#cb13-30"></a>    <span class="va">self</span>._gap_pub.publish(js)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ sleep 제거 → 주기 안정성↑</li>
+<li>✅ 타임스탬프 + 조인트 이름 → rqt_plot, rosbag 호환</li>
+<li>✅ 타이머 콜백이 매 틱마다 최신 상태 반영</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="초기화-워밍업-첫-관측-블로킹" class="level2" data-number="1.20">
+<h2 data-number="1.20" class="anchored" data-anchor-id="초기화-워밍업-첫-관측-블로킹"><span class="header-section-number">1.20</span> 7. 초기화: 워밍업 + 첫 관측 블로킹</h2>
+<section id="안전한-초기화-순서" class="level3" data-number="1.20.1">
+<h3 data-number="1.20.1" class="anchored" data-anchor-id="안전한-초기화-순서"><span class="header-section-number">1.20.1</span> ✅ 안전한 초기화 순서</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">def</span> deploy(<span class="va">self</span>):</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="va">self</span>.allegro <span class="op">=</span> start_allegro_io(side<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a>    <span class="co"># 1) ✅ 워밍업 (하드웨어 안정화)</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>    warmup <span class="op">=</span> <span class="bu">int</span>(<span class="va">self</span>.hz <span class="op">*</span> <span class="dv">4</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(warmup):</span>
+<span id="cb14-7"><a href="#cb14-7"></a>        tprint(<span class="ss">f"setup </span><span class="sc">{</span>t<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span>warmup<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8"></a>        pose <span class="op">=</span> _reorder_imrt2timr(np.array(<span class="va">self</span>.init_pose, dtype<span class="op">=</span>np.float64))</span>
+<span id="cb14-9"><a href="#cb14-9"></a>        <span class="va">self</span>.allegro.command_joint_position(pose)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>        time.sleep(<span class="fl">1.0</span> <span class="op">/</span> <span class="va">self</span>.hz)</span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="co"># 2) ✅ 첫 관측만 블로킹 (타임아웃 설정)</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>    q_pos <span class="op">=</span> <span class="va">self</span>.allegro.poll_joint_position(wait<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="fl">5.0</span>)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>    <span class="cf">if</span> q_pos <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb14-15"><a href="#cb14-15"></a>        <span class="bu">print</span>(<span class="st">"❌ failed to read joint state."</span>)</span>
+<span id="cb14-16"><a href="#cb14-16"></a>        stop_allegro_io(<span class="va">self</span>.allegro)</span>
+<span id="cb14-17"><a href="#cb14-17"></a>        <span class="cf">return</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a></span>
+<span id="cb14-19"><a href="#cb14-19"></a>    <span class="co"># 3) ✅ 버퍼 초기화</span></span>
+<span id="cb14-20"><a href="#cb14-20"></a>    ros1_q <span class="op">=</span> _reorder_timr2imrt(q_pos)</span>
+<span id="cb14-21"><a href="#cb14-21"></a>    hora_q <span class="op">=</span> _obs_allegro2hora(ros1_q)</span>
+<span id="cb14-22"><a href="#cb14-22"></a>    obs_q <span class="op">=</span> torch.from_numpy(hora_q.astype(np.float32)).to(<span class="va">self</span>.device)</span>
+<span id="cb14-23"><a href="#cb14-23"></a>    <span class="va">self</span>._last_obs_q <span class="op">=</span> obs_q</span>
+<span id="cb14-24"><a href="#cb14-24"></a></span>
+<span id="cb14-25"><a href="#cb14-25"></a>    cur_obs_buf <span class="op">=</span> <span class="va">self</span>._unscale(obs_q, <span class="va">self</span>.allegro_dof_lower, <span class="va">self</span>.allegro_dof_upper)[<span class="va">None</span>]</span>
+<span id="cb14-26"><a href="#cb14-26"></a>    <span class="va">self</span>.prev_target <span class="op">=</span> obs_q[<span class="va">None</span>]</span>
+<span id="cb14-27"><a href="#cb14-27"></a></span>
+<span id="cb14-28"><a href="#cb14-28"></a>    <span class="co"># obs_buf 3 타임스텝 채우기</span></span>
+<span id="cb14-29"><a href="#cb14-29"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb14-30"><a href="#cb14-30"></a>        <span class="va">self</span>.obs_buf[:, i<span class="op">*</span><span class="dv">32</span>:i<span class="op">*</span><span class="dv">32</span><span class="op">+</span><span class="dv">16</span>] <span class="op">=</span> cur_obs_buf</span>
+<span id="cb14-31"><a href="#cb14-31"></a>        <span class="va">self</span>.obs_buf[:, i<span class="op">*</span><span class="dv">32</span><span class="op">+</span><span class="dv">16</span>:i<span class="op">*</span><span class="dv">32</span><span class="op">+</span><span class="dv">32</span>] <span class="op">=</span> <span class="va">self</span>.prev_target</span>
+<span id="cb14-32"><a href="#cb14-32"></a></span>
+<span id="cb14-33"><a href="#cb14-33"></a>    <span class="co"># proprio_hist_buf 30 타임스텝 채우기</span></span>
+<span id="cb14-34"><a href="#cb14-34"></a>    <span class="va">self</span>.proprio_hist_buf[:, :, :<span class="dv">16</span>] <span class="op">=</span> cur_obs_buf</span>
+<span id="cb14-35"><a href="#cb14-35"></a>    <span class="va">self</span>.proprio_hist_buf[:, :, <span class="dv">16</span>:<span class="dv">32</span>] <span class="op">=</span> <span class="va">self</span>.prev_target</span>
+<span id="cb14-36"><a href="#cb14-36"></a></span>
+<span id="cb14-37"><a href="#cb14-37"></a>    <span class="co"># 4) ✅ 타이머 시작 (이후는 모두 논블로킹)</span></span>
+<span id="cb14-38"><a href="#cb14-38"></a>    period <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="va">self</span>.hz</span>
+<span id="cb14-39"><a href="#cb14-39"></a>    <span class="va">self</span>.timer <span class="op">=</span> <span class="va">self</span>.allegro.create_timer(period, <span class="va">self</span>._control_step)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>개선 효과:</strong></p>
+<ul>
+<li>✅ 워밍업으로 모터 드라이버 안정화</li>
+<li>✅ 첫 관측 블로킹으로 유효한 초기 상태 확보</li>
+<li>✅ 이후는 논블로킹으로 주기 유지</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="요약-핵심-개선-사항" class="level2" data-number="1.21">
+<h2 data-number="1.21" class="anchored" data-anchor-id="요약-핵심-개선-사항"><span class="header-section-number">1.21</span> 요약: 핵심 개선 사항</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>Before</th>
+<th>After</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>제어 루프</strong></td>
+<td><code>while</code> + <code>sleep</code></td>
+<td>ROS2 Timer</td>
+<td>지터↓, 주기 정확도↑</td>
+</tr>
+<tr class="even">
+<td><strong>실행기</strong></td>
+<td>내부 API</td>
+<td>표준 <code>threading</code></td>
+<td>버전 호환성↑</td>
+</tr>
+<tr class="odd">
+<td><strong>디바이스</strong></td>
+<td>산발적 할당</td>
+<td>단일 소스 통일</td>
+<td>에러 제거, 속도↑</td>
+</tr>
+<tr class="even">
+<td><strong>버퍼 롤링</strong></td>
+<td>겹침 대입</td>
+<td><code>clone()</code> 사용</td>
+<td>RuntimeError 제거</td>
+</tr>
+<tr class="odd">
+<td><strong>관측 읽기</strong></td>
+<td>블로킹</td>
+<td>논블로킹 + 재사용</td>
+<td>실시간성↑, 강건성↑</td>
+</tr>
+<tr class="even">
+<td><strong>추론</strong></td>
+<td>일반 모드</td>
+<td><code>@inference_mode()</code></td>
+<td>오버헤드↓</td>
+</tr>
+<tr class="odd">
+<td><strong>로깅</strong></td>
+<td>매 틱 출력</td>
+<td>5초마다 출력</td>
+<td>성능 저하 최소화</td>
+</tr>
+<tr class="even">
+<td><strong>Gap</strong></td>
+<td>sleep 후 측정</td>
+<td>논블로킹 측정</td>
+<td>주기 안정성↑</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</div>
+<!--
+
+:::::: {.callout-note}
+
+# Before Code
+
+```python
+#!/usr/bin/env python3
+import os
+import time
+import numpy as np
+import torch
+
+from hora.algo.models.models import ActorCritic
+from hora.algo.models.running_mean_std import RunningMeanStd
+from hora.utils.misc import tprint
+
+
+import threading
+import time
+from typing import List, Optional
+
+import numpy as np
+import rclpy
+from rclpy.executors import SingleThreadedExecutor
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64MultiArray, Header
+
+
+DEFAULT_ORDER = {
+    "right": [
+        "ah_joint00", "ah_joint01", "ah_joint02", "ah_joint03",
+        "ah_joint10", "ah_joint11", "ah_joint12", "ah_joint13",
+        "ah_joint20", "ah_joint21", "ah_joint22", "ah_joint23",
+        "ah_joint30", "ah_joint31", "ah_joint32", "ah_joint33",
+    ],
+}
+
+
+class AllegroHandIO(Node):
+    """
+    Minimal ROS 2 node for Allegro hand.
+    - Publishes commands to /<controller_name>/commands
+    - Subscribes to /joint_states and returns a 16-D vector in Allegro order
+    - Publishes position gap (command - current) to /position_gap (JointState)
+    """
+
+    def __init__(
+        self,
+        side: str = "right",
+        controller_name: Optional[str] = None,
+        joint_states_topic: str = "/joint_states",
+        command_topic: Optional[str] = None,
+    ):
+        super().__init__("allegro_hand_io")
+
+        side = (side or "right").lower()
+        if side not in ("right", "left"):
+            self.get_logger().warn(f"Unknown side '{side}', defaulting to 'right'.")
+            side = "right"
+        self.side = side
+
+        # 컨트롤러명 고정 (필요 시 외부 인자로 바꿔도 됨)
+        controller_name = controller_name or "allegro_hand_position_controller"
+
+        if command_topic is None:
+            command_topic = f"/{controller_name}/commands"
+
+        # Publishers / Subscribers
+        self._cmd_pub = self.create_publisher(Float64MultiArray, command_topic, 10)
+        self._gap_pub = self.create_publisher(JointState, "/position_gap", 10)
+        self.create_subscription(JointState, joint_states_topic, self._on_js, 10)
+
+        # 최근 상태 / 매핑 / 명령 저장
+        self._last_js: Optional[JointState] = None
+        self._index_map: Optional[List[int]] = None
+        self._last_cmd: Optional[np.ndarray] = None  # 명령 16D (Allegro 순서)
+
+        # Allegro 조인트 이름(원하는 정렬 순서)
+        self._desired_names = DEFAULT_ORDER["right"] if self.side == "right" else DEFAULT_ORDER["left"]
+
+        # 명령 직후 gap 측정 전에 짧은 대기 (joint_states 반영 유도)
+        self._gap_after_cmd_delay = 0.02  # seconds
+
+        # 안전 포즈
+        self.safe_pose = np.array([
+            0.5, 0.2, 0.0, 0.0,   # Thumb
+            0.0, 0.0, 0.0, 0.0,   # Index
+            0.0, 0.0, 0.0, 0.0,   # Middle
+            0.0, 0.0, 0.0, 0.0,   # Ring
+        ], dtype=float)
+
+        self.get_logger().info(f"[AllegroHandIO] side={self.side}")
+        self.get_logger().info(f"[AllegroHandIO] cmd topic={command_topic}")
+        self.get_logger().info(f"[AllegroHandIO] joint_states topic={joint_states_topic}")
+        self.get_logger().info(f"[AllegroHandIO] gap topic=/position_gap")
+
+    # -------------------- Public APIs --------------------
+
+    def command_joint_position(self, positions: List[float]) -> bool:
+        """16D 목표 자세 명령 퍼블리시 + 직후 position gap 1회 퍼블리시."""
+        try:
+            data = [float(x) for x in list(positions)]
+        except Exception:
+            self.get_logger().warn("command_joint_position: positions must be a sequence of numbers.")
+            return False
+
+        if len(data) != 16:
+            self.get_logger().warn(f"command_joint_position: expected 16 elements, got {len(data)}.")
+            return False
+
+        # 명령 퍼블리시
+        msg = Float64MultiArray()
+        msg.data = data
+        self._cmd_pub.publish(msg)
+
+        # 마지막 명령 기억
+        self._last_cmd = np.asarray(data, dtype=float)
+
+        # 아주 짧게 대기 → 최신 /joint_states 반영 유도 (백그라운드 스피너가 콜백 실행)
+        if self._gap_after_cmd_delay > 0:
+            time.sleep(self._gap_after_cmd_delay)
+
+        # 명령 직후 gap 1회 퍼블리시
+        self._publish_position_gap()
+
+        return True
+
+    def poll_joint_position(
+        self, wait: bool = False, timeout: float = 3.0
+    ) -> Optional[np.ndarray]:
+        """현재 조인트 위치를 Allegro 순서(16-D)로 반환.
+
+        Args:
+            wait (bool): 데이터를 기다릴지 여부 (True이면 timeout까지 spin)
+            timeout (float): 최대 대기 시간(초)
+
+        Returns:
+            np.ndarray | None: 16-D 조인트 벡터 또는 None
+        """
+
+        # 1) JointState 수신 대기
+        if self._last_js is None and wait:
+            start_time = time.time()
+            while self._last_js is None and (time.time() - start_time) < timeout:
+                rclpy.spin_once(self, timeout_sec=0.05)
+
+        js = self._last_js
+        if js is None or not js.position:
+            return None
+
+        # 2) 이름 기반 인덱스 매핑 초기화 (첫 수신 시 1회만)
+        if self._index_map is None and js.name:
+            self._index_map = self._build_index_map(js.name)
+
+        # 3) 인덱스 매핑 성공 시 그대로 정렬하여 반환
+        if self._index_map:
+            try:
+                vec = np.array([js.position[i] for i in self._index_map], dtype=float)
+                if vec.size == 16:
+                    return vec
+            except Exception:
+                self.get_logger().warn("poll_joint_position: index mapping failed, fallback to raw order.")
+
+        # 4) 매핑 실패 시 fallback — 앞 16개 사용
+        if len(js.position) >= 16:
+            return np.array(js.position[:16], dtype=float)
+
+        return None
+
+    def go_safe(self):
+        """안전 포즈로 이동."""
+        self.command_joint_position(self.safe_pose)
+
+    # -------------------- Internals --------------------
+
+    def _publish_position_gap(self):
+        """마지막 명령(self._last_cmd)과 현재 관측을 비교해 gap을 /position_gap으로 퍼블리시."""
+        if self._last_cmd is None or self._last_js is None:
+            return
+
+        # 현재 위치(16D, Allegro 순서) 읽기
+        cur = self.poll_joint_position(wait=False)
+        if cur is None or cur.size != 16:
+            return
+
+        cmd = np.asarray(self._last_cmd, dtype=float).reshape(16)
+        gap = (cmd - cur).astype(float)
+
+        msg = JointState()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        # frame_id는 빈 문자열로 두거나 필요 시 "allegro" 등으로 지정
+        msg.header.frame_id = ""
+        msg.name = list(self._desired_names)  # 16개 조인트 이름
+        msg.position = gap.tolist()           # gap(16D)을 position 필드에 담음
+        # velocity/effort는 미사용 (빈 리스트)
+        self._gap_pub.publish(msg)
+
+    def _build_index_map(self, joint_names: List[str]) -> Optional[List[int]]:
+        """joint_states의 이름 리스트로부터 Allegro 16D 인덱스 매핑 생성."""
+        name_to_index = {n.lower(): i for i, n in enumerate(joint_names)}
+        index_map = []
+
+        for desired in self._desired_names:
+            idx = name_to_index.get(desired.lower())
+            if idx is None:
+                # 하나라도 매칭 실패하면 전체 매핑 무효화
+                self.get_logger().warn(f"Missing joint name in /joint_states: '{desired}'")
+                return None
+            index_map.append(idx)
+
+        return index_map if len(index_map) == 16 else None
+
+    def _on_js(self, msg: JointState):
+        self._last_js = msg
+
+
+################### one hand io runner ####################
+
+class _Runner:
+    def __init__(self, node: AllegroHandIO):
+        self.node = node
+        self.exec = SingleThreadedExecutor()
+        self.exec.add_node(node)
+        self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        try:
+            self.exec.shutdown()
+        finally:
+            self.node.destroy_node()
+
+
+def start_allegro_io(side: str = "right") -> AllegroHandIO:
+    if not rclpy.ok():
+        rclpy.init()
+    io = AllegroHandIO(side=side)
+    io._runner = _Runner(io)   # keep reference
+    io._runner.start()
+    return io
+
+
+def stop_allegro_io(io: AllegroHandIO):
+    if hasattr(io, "_runner") and io._runner:
+        io._runner.stop()
+    if rclpy.ok():
+        try:
+            rclpy.shutdown()
+        except Exception:
+            pass
+
+
+
+# ---------- Reorder helpers ----------
+def _action_hora2allegro(actions):
+    if isinstance(actions, torch.Tensor):
+        if actions.dim() > 1:
+            actions = actions.view(-1)
+        cmd_act = actions.clone()
+        temp = actions[[4, 5, 6, 7]].clone()
+        cmd_act[[4, 5, 6, 7]] = actions[[8, 9, 10, 11]]
+        cmd_act[[12, 13, 14, 15]] = temp
+        cmd_act[[8, 9, 10, 11]] = actions[[12, 13, 14, 15]]
+        return cmd_act
+    else:
+        a = np.asarray(actions).flatten()
+        cmd = a.copy()
+        temp = a[[4, 5, 6, 7]].copy()
+        cmd[[4, 5, 6, 7]] = a[[8, 9, 10, 11]]
+        cmd[[12, 13, 14, 15]] = temp
+        cmd[[8, 9, 10, 11]] = a[[12, 13, 14, 15]]
+        return cmd
+
+
+def _obs_allegro2hora(o):
+    # allegro: index - middle - ring - thumb
+    # hora  : index, thumb, middle, ring
+    return np.concatenate([o[0:4], o[12:16], o[4:8], o[8:12]]).astype(np.float64)
+
+
+def _reorder_imrt2timr(imrt):
+    # [ROS1] index - middle - ring - thumb  ->  [ROS2] thumb - index - middle - ring
+    return np.concatenate([imrt[12:16], imrt[0:12]]).astype(np.float64)
+
+
+def _reorder_timr2imrt(timr):
+    # [ROS2] thumb - index - middle - ring  ->  [ROS1] index - middle - ring - thumb
+    return np.concatenate([timr[4:16], timr[0:4]]).astype(np.float64)
+
+
+class HardwarePlayer(object):
+    def __init__(self):
+        self.action_scale = 1 / 24
+        self.actions_num = 16
+        self.device = "cuda"  # ← 여기서 디바이스 통일
+
+        # ===== Model / RMS =====
+        obs_shape = (96,)
+        net_config = {
+            "actions_num": self.actions_num,
+            "input_shape": obs_shape,
+            "actor_units": [512, 256, 128],
+            "priv_mlp_units": [256, 128, 8],
+            "priv_info": True,
+            "proprio_adapt": True,
+            "priv_info_dim": 9,
+        }
+
+        self.model = ActorCritic(net_config).to(self.device).eval()
+        self.running_mean_std = RunningMeanStd(obs_shape).to(self.device).eval()
+        self.sa_mean_std = RunningMeanStd((30, 32)).to(self.device).eval()
+
+        # ===== Runtime buffers (device 통일) =====
+        self.obs_buf = torch.zeros((1, 16 * 3 * 2), dtype=torch.float32, device=self.device)           # 96
+        self.proprio_hist_buf = torch.zeros((1, 30, 16 * 2), dtype=torch.float32, device=self.device)  # (1,30,32)
+
+        # ===== Allegro joint limits =====
+        self.allegro_dof_lower = torch.tensor([
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Index
+             0.2630, -0.1050, -0.1890, -0.1620,   # Thumb
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Middle
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Ring
+        ], dtype=torch.float32, device=self.device)
+
+        self.allegro_dof_upper = torch.tensor([
+             0.4700, 1.6100, 1.7090, 1.6180,      # Index
+             1.3960, 1.1630, 1.6440, 1.7190,      # Thumb
+             0.4700, 1.6100, 1.7090, 1.6180,      # Middle
+             0.4700, 1.6100, 1.7090, 1.6180,      # Ring
+        ], dtype=torch.float32, device=self.device)
+
+        # ===== Poses =====
+        self.init_pose = [
+            0.0627, 1.2923, 0.3383, 0.1088,
+            0.0724, 1.1983, 0.1551, 0.1499,
+            0.1343, 1.1736, 0.5355, 0.2164,
+            1.1202, 1.1374, 0.8535, -0.0852,
+        ]
+
+        # ===== Targets (rad) =====
+        self.prev_target = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+        self.cur_target  = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+
+    # ---------- Steps ----------
+    def pre_physics_step(self, action):
+        self.action = action.clone()
+        target = self.prev_target + self.action_scale * self.action
+        self.cur_target = torch.clip(target, self.allegro_dof_lower, self.allegro_dof_upper)
+        self.prev_target = self.cur_target.clone()
+
+    def post_physics_step(self, obses):
+        # normalize current obs (obses: real q) -> (1,16)
+        self.cur_obs_buf = self.unscale(
+            obses, self.allegro_dof_lower, self.allegro_dof_upper
+        )[None]
+
+        # obs_buf roll
+        self.prev_obs_buf = self.obs_buf[:, 32:].clone()
+        self.obs_buf[:, :64]   = self.prev_obs_buf
+        self.obs_buf[:, 64:80] = self.cur_obs_buf.clone()
+        self.obs_buf[:, 80:96] = self.cur_target.clone()  # real target
+
+        # proprio history (30)
+        cur_norm_t = self.cur_obs_buf.unsqueeze(1)          # (1,1,16)
+        cur_tgt_t  = self.cur_target.unsqueeze(1)           # (1,1,16)
+        cur = torch.cat([cur_norm_t, cur_tgt_t], dim=-1)    # (1,1,32)
+        prev = self.proprio_hist_buf[:, 1:30, :].clone()    # (1,29,32)
+        self.proprio_hist_buf[:] = torch.cat([prev, cur], dim=1)
+
+    # ---------- Utils ----------
+    def unscale(self, x, lower, upper):
+        return (2.0 * x - upper - lower) / (upper - lower)
+
+    # ---------- Deploy ----------
+    def deploy(self):
+        # 1) Allegro I/O 노드 시작
+        self.allegro = start_allegro_io(side='right')
+
+        hz = 20
+
+        # 2) 초기 셋업 루프
+        warmup = hz * 4
+        for t in range(warmup):
+            tprint(f"setup {t} / {warmup}")
+            pose = _reorder_imrt2timr(np.array(self.init_pose, dtype=np.float64))
+            self.allegro.command_joint_position(pose)
+            time.sleep(1/hz)
+
+        # 3) 첫 관측
+        q_pos = self.allegro.poll_joint_position(wait=True, timeout=5.0)
+        if q_pos is None:
+            print("❌ failed to read joint state.")
+            stop_allegro_io(self.allegro)
+            return
+
+        ros1_q = _reorder_timr2imrt(q_pos)
+        hora_q = _obs_allegro2hora(ros1_q)
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)  # ← device 통일
+
+        # q값은 normalize(=unscale) 해서 버퍼에 저장 // isaacgym 순서
+        self.cur_obs_buf = self.unscale(obs_q, self.allegro_dof_lower, self.allegro_dof_upper)[None]
+        # prev_target은 실측(rad)
+        self.prev_target = obs_q[None].clone()
+
+        # obs_buf 초기화
+        for i in range(3):
+            print(f"init fill: {i*32}:{i*32+16}, {i*32+16}:{i*32+32}")
+            self.obs_buf[:, i*32:i*32+16] = self.cur_obs_buf      # q_t
+            self.obs_buf[:, i*32+16:i*32+32] = self.prev_target   # a_{t-1}
+
+        # proprio_hist_buf 초기화
+        self.proprio_hist_buf[:, :, :16] = self.cur_obs_buf
+        self.proprio_hist_buf[:, :, 16:32] = self.prev_target
+
+        timestep = 0
+        print("Deployment started. Press Ctrl+C to stop.")
+        try:
+            while True:
+                loop_start = time.perf_counter()
+
+                # Normalize the observation buffer (device 동일)
+                self.obs_buf = self.running_mean_std(self.obs_buf.clone())
+
+                input_dict = {
+                    "obs": self.obs_buf,
+                    "proprio_hist": self.sa_mean_std(self.proprio_hist_buf.clone()),
+                }
+                action = torch.clamp(self.model.act_inference(input_dict), -1.0, 1.0)
+
+                # control
+                self.pre_physics_step(action)
+
+                # 명령 전송: 하드웨어 I/O 직전에만 CPU로 내림
+                cmd = self.cur_target.detach().to('cpu').numpy()[0]
+                ros1 = _action_hora2allegro(cmd)
+                ros2 = _reorder_imrt2timr(ros1)
+                self.allegro.command_joint_position(ros2)
+
+                # 관측 업데이트 / o_{t+1}
+                q_pos = self.allegro.poll_joint_position(wait=True, timeout=0.2)
+                ros1_q = _reorder_timr2imrt(q_pos)
+                hora_q = _obs_allegro2hora(ros1_q)
+                obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)  # ← device 통일
+
+                self.post_physics_step(obs_q)  # buffer 업데이트
+
+                time.sleep(0.03)  # ~20 Hz
+                timestep += 1
+
+                freq = 1.0 / (time.perf_counter() - loop_start)
+                print(f"Hz={freq:.2f}")
+
+        except KeyboardInterrupt:
+            print("KeyboardInterrupt, stopping...")
+        finally:
+            # 안전 정지
+            try:
+                self.allegro.go_safe()
+            except Exception:
+                pass
+            stop_allegro_io(self.allegro)
+            print("🧠 Deployment stopped cleanly.")
+
+    # ---------- checkpoint restore ----------
+    def restore(self, fn):
+        # 체크포인트 로딩 시에도 device 매핑 통일
+        checkpoint = torch.load(fn, map_location=self.device)
+        self.running_mean_std.load_state_dict(checkpoint["running_mean_std"])
+        self.model.load_state_dict(checkpoint["model"])
+        self.sa_mean_std.load_state_dict(checkpoint["sa_mean_std"])
+
+```
+
+:::
+
+:::::: {.callout-note}
+
+# After Code
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import os
+import time
+import signal
+from typing import List, Optional
+
+import numpy as np
+import torch
+
+import rclpy
+from rclpy.executors import SingleThreadedExecutor
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64MultiArray
+
+from hora.algo.models.models import ActorCritic
+from hora.algo.models.running_mean_std import RunningMeanStd
+from hora.utils.misc import tprint
+
+
+# =========================================================
+# Allegro ROS2 I/O (백그라운드 스피너 + position_gap 퍼블리셔)
+# =========================================================
+
+DEFAULT_ORDER = {
+    "right": [
+        "ah_joint00", "ah_joint01", "ah_joint02", "ah_joint03",
+        "ah_joint10", "ah_joint11", "ah_joint12", "ah_joint13",
+        "ah_joint20", "ah_joint21", "ah_joint22", "ah_joint23",
+        "ah_joint30", "ah_joint31", "ah_joint32", "ah_joint33",
+    ],
+}
+
+
+class AllegroHandIO(Node):
+    """ROS2 Allegro I/O 노드: 명령 퍼블리시 + joint_states 구독 + /position_gap 퍼블리시"""
+    def __init__(
+        self,
+        side: str = "right",
+        controller_name: Optional[str] = None,
+        joint_states_topic: str = "/joint_states",
+        command_topic: Optional[str] = None,
+    ):
+        super().__init__("allegro_hand_io")
+
+        side = (side or "right").lower()
+        if side not in ("right", "left"):
+            self.get_logger().warn(f"Unknown side '{side}', defaulting to 'right'.")
+            side = "right"
+        self.side = side
+
+        controller_name = controller_name or "allegro_hand_position_controller"
+        if command_topic is None:
+            command_topic = f"/{controller_name}/commands"
+
+        # pubs/subs
+        self._cmd_pub = self.create_publisher(Float64MultiArray, command_topic, 10)
+        self._gap_pub = self.create_publisher(JointState, "/position_gap", 10)
+        self.create_subscription(JointState, joint_states_topic, self._on_js, 50)
+
+        # state
+        self._last_js: Optional[JointState] = None
+        self._index_map: Optional[List[int]] = None
+        self._last_cmd: Optional[np.ndarray] = None
+
+        self._desired_names = DEFAULT_ORDER["right"]
+
+        # 안전 포즈
+        self.safe_pose = np.array([
+            0.5, 0.2, 0.0, 0.0,   # Thumb
+            0.0, 0.0, 0.0, 0.0,   # Index
+            0.0, 0.0, 0.0, 0.0,   # Middle
+            0.0, 0.0, 0.0, 0.0,   # Ring
+        ], dtype=float)
+
+        self.get_logger().info(f"[AllegroHandIO] side={self.side}")
+        self.get_logger().info(f"[AllegroHandIO] cmd topic={command_topic}")
+        self.get_logger().info(f"[AllegroHandIO] joint_states topic={joint_states_topic}")
+        self.get_logger().info(f"[AllegroHandIO] gap topic=/position_gap")
+
+    # ---------- public ----------
+    def command_joint_position(self, positions: List[float]) -> bool:
+        """16D 목표 자세 퍼블리시 + 직후 1회 gap 퍼블리시"""
+        try:
+            data = [float(x) for x in positions]
+        except Exception:
+            self.get_logger().warn("command_joint_position: positions must be a sequence of numbers.")
+            return False
+        if len(data) != 16:
+            self.get_logger().warn(f"command_joint_position: expected 16 elements, got {len(data)}.")
+            return False
+
+        msg = Float64MultiArray()
+        msg.data = data
+        self._cmd_pub.publish(msg)
+        self._last_cmd = np.asarray(data, dtype=float)
+
+        # 현재 최신 상태로 gap 한번 퍼블리시(논블로킹)
+        self._publish_position_gap()
+        return True
+
+    def poll_joint_position(self, wait: bool = False, timeout: float = 0.0) -> Optional[np.ndarray]:
+        """현재 조인트를 Allegro 순서(16D)로 반환"""
+        if self._last_js is None and wait:
+            # timer 콜백에서 블로킹은 권장하지 않으나, 초기화 시에는 사용 가능
+            end_t = time.perf_counter() + max(0.0, float(timeout))
+            while self._last_js is None and time.perf_counter() < end_t:
+                rclpy.spin_once(self, timeout_sec=0.02)
+
+        js = self._last_js
+        if js is None or not js.position:
+            return None
+
+        if self._index_map is None and js.name:
+            self._index_map = self._build_index_map(js.name)
+
+        if self._index_map:
+            try:
+                vec = np.array([js.position[i] for i in self._index_map], dtype=float)
+                if vec.size == 16:
+                    return vec
+            except Exception:
+                self.get_logger().warn("poll_joint_position: index mapping failed, fallback to raw order.")
+
+        if len(js.position) >= 16:
+            return np.array(js.position[:16], dtype=float)
+        return None
+
+    def go_safe(self):
+        self.command_joint_position(self.safe_pose)
+
+    # ---------- internals ----------
+    def _on_js(self, msg: JointState):
+        self._last_js = msg
+
+    def _build_index_map(self, joint_names: List[str]) -> Optional[List[int]]:
+        mp = {n.lower(): i for i, n in enumerate(joint_names)}
+        out = []
+        for desired in self._desired_names:
+            idx = mp.get(desired.lower())
+            if idx is None:
+                self.get_logger().warn(f"Missing joint name in /joint_states: '{desired}'")
+                return None
+            out.append(idx)
+        return out if len(out) == 16 else None
+
+    def _publish_position_gap(self):
+        if self._last_cmd is None or self._last_js is None:
+            return
+        cur = self.poll_joint_position(wait=False)
+        if cur is None or cur.size != 16:
+            return
+        gap = (self._last_cmd - cur).astype(float)
+        js = JointState()
+        js.header.stamp = self.get_clock().now().to_msg()
+        js.header.frame_id = ""
+        js.name = list(self._desired_names)
+        js.position = gap.tolist()
+        self._gap_pub.publish(js)
+
+
+# ========== FIX: Runner를 표준 threading 기반으로 ==========
+
+import threading
+from rclpy.executors import SingleThreadedExecutor
+
+class _Runner:
+    def __init__(self, node: 'AllegroHandIO'):
+        self.node = node
+        self.exec = SingleThreadedExecutor()
+        self.exec.add_node(node)
+        self.thread = threading.Thread(target=self.exec.spin, daemon=True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        try:
+            self.exec.shutdown()          # executor 중지
+        finally:
+            try:
+                self.node.destroy_node()  # 노드 파괴
+            finally:
+                # 백그라운드 스레드 종료 대기 (너무 오래 기다리지 않도록 타임아웃)
+                self.thread.join(timeout=2.0)
+
+
+
+def start_allegro_io(side: str = "right") -> 'AllegroHandIO':
+    if not rclpy.ok():
+        rclpy.init()
+    io = AllegroHandIO(side=side)
+    io._runner = _Runner(io)
+    io._runner.start()
+    return io
+
+def stop_allegro_io(io: 'AllegroHandIO'):
+    if hasattr(io, "_runner") and io._runner:
+        io._runner.stop()
+    if rclpy.ok():
+        try:
+            rclpy.shutdown()
+        except Exception:
+            pass
+
+
+# =========================================================
+# 변환/재배열 유틸
+# =========================================================
+
+def _action_hora2allegro(actions):
+    if isinstance(actions, torch.Tensor):
+        if actions.dim() > 1:
+            actions = actions.view(-1)
+        cmd_act = actions.clone()
+        temp = actions[[4, 5, 6, 7]].clone()
+        cmd_act[[4, 5, 6, 7]] = actions[[8, 9, 10, 11]]
+        cmd_act[[12, 13, 14, 15]] = temp
+        cmd_act[[8, 9, 10, 11]] = actions[[12, 13, 14, 15]]
+        return cmd_act
+    else:
+        a = np.asarray(actions).flatten()
+        cmd = a.copy()
+        temp = a[[4, 5, 6, 7]].copy()
+        cmd[[4, 5, 6, 7]] = a[[8, 9, 10, 11]]
+        cmd[[12, 13, 14, 15]] = temp
+        cmd[[8, 9, 10, 11]] = a[[12, 13, 14, 15]]
+        return cmd
+
+
+def _obs_allegro2hora(o):
+    # allegro: index - middle - ring - thumb
+    # hora   : index, thumb, middle, ring
+    return np.concatenate([o[0:4], o[12:16], o[4:8], o[8:12]]).astype(np.float64)
+
+
+def _reorder_imrt2timr(imrt):
+    # [ROS1] index-middle-ring-thumb → [ROS2] thumb-index-middle-ring
+    return np.concatenate([imrt[12:16], imrt[0:12]]).astype(np.float64)
+
+
+def _reorder_timr2imrt(timr):
+    # [ROS2] thumb-index-middle-ring → [ROS1] index-middle-ring-thumb
+    return np.concatenate([timr[4:16], timr[0:4]]).astype(np.float64)
+
+
+# =========================================================
+# 제어 에이전트 (Timer 기반)
+# =========================================================
+
+class HardwarePlayer:
+    def __init__(self, hz: float = 20.0, device: str = "cuda"):
+        torch.set_grad_enabled(False)
+        self.hz = float(hz)
+        self.device = device
+
+        # model / rms
+        obs_shape = (96,)
+        net_config = {
+            "actions_num": 16,
+            "input_shape": obs_shape,
+            "actor_units": [512, 256, 128],
+            "priv_mlp_units": [256, 128, 8],
+            "priv_info": True,
+            "proprio_adapt": True,
+            "priv_info_dim": 9,
+        }
+        self.model = ActorCritic(net_config).to(self.device).eval()
+        self.running_mean_std = RunningMeanStd(obs_shape).to(self.device).eval()
+        self.sa_mean_std = RunningMeanStd((30, 32)).to(self.device).eval()
+
+        # buffers
+        self.obs_buf = torch.zeros((1, 96), dtype=torch.float32, device=self.device)
+        self.proprio_hist_buf = torch.zeros((1, 30, 32), dtype=torch.float32, device=self.device)
+
+        # limits
+        self.allegro_dof_lower = torch.tensor([
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Index
+             0.2630, -0.1050, -0.1890, -0.1620,   # Thumb
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Middle
+            -0.4700, -0.1960, -0.1740, -0.2270,   # Ring
+        ], dtype=torch.float32, device=self.device)
+        self.allegro_dof_upper = torch.tensor([
+             0.4700, 1.6100, 1.7090, 1.6180,      # Index
+             1.3960, 1.1630, 1.6440, 1.7190,      # Thumb
+             0.4700, 1.6100, 1.7090, 1.6180,      # Middle
+             0.4700, 1.6100, 1.7090, 1.6180,      # Ring
+        ], dtype=torch.float32, device=self.device)
+
+        # poses
+        self.init_pose = [
+            0.0627, 1.2923, 0.3383, 0.1088,
+            0.0724, 1.1983, 0.1551, 0.1499,
+            0.1343, 1.1736, 0.5355, 0.2164,
+            1.1202, 1.1374, 0.8535, -0.0852,
+        ]
+
+        # state
+        self.action_scale = 1.0 / 24.0
+        self.prev_target = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+        self.cur_target  = torch.zeros((1, 16), dtype=torch.float32, device=self.device)
+        self._last_obs_q = None
+        self._skipped = 0
+        self._last_step_t = None
+
+        # ros
+        self.timer = None
+        self.allegro = None
+
+    # ---------- utils ----------
+    @staticmethod
+    def _unscale(x, lower, upper):
+        return (2.0 * x - upper - lower) / (upper - lower)
+
+    def _pre_physics_step(self, action):
+        target = self.prev_target + self.action_scale * action
+        self.cur_target = torch.clamp(target, min=self.allegro_dof_lower, max=self.allegro_dof_upper)
+        self.prev_target = self.cur_target
+
+    def _post_physics_step(self, obses):
+        # 1) 현재 관측 정규화 (obses: (16,) 또는 (1,16) 텐서 on self.device)
+        #    결과를 (1,16)로 보장
+        cur_obs = self._unscale(
+            obses.view(-1), self.allegro_dof_lower, self.allegro_dof_upper
+        ).view(1, 16)
+
+        # 2) obs_buf 롤링 (96 = 32*3)
+        #    [0:64] <- [32:96],  [64:80] <- cur_obs,  [80:96] <- cur_target
+        #    ⚠️ 겹침 방지: 소스 부분을 먼저 clone() 해서 임시 보관
+        src64 = self.obs_buf[:, 32:96].clone()     # (1,64)
+        self.obs_buf[:, 0:64] = src64              # 앞 64칸으로 당김
+        self.obs_buf[:, 64:80] = cur_obs           # 현재 관측(정규화)
+        self.obs_buf[:, 80:96] = self.cur_target   # 최신 타깃(rad)
+
+        # 3) proprio_hist_buf 롤링 (T=30)
+        #    [:, 0:-1, :] <- [:, 1:, :];  마지막 step에 [cur_obs | cur_target]
+        #    ⚠️ 동일 텐서 내 겹침 방지: 소스 clone()
+        src_hist = self.proprio_hist_buf[:, 1:, :].clone()  # (1,29,32)
+        self.proprio_hist_buf[:, 0:-1, :] = src_hist
+        self.proprio_hist_buf[:, -1, :16] = cur_obs
+        self.proprio_hist_buf[:, -1, 16:32] = self.cur_target
+
+    # ---------- timer callback ----------
+    @torch.inference_mode()
+    def _control_step(self):
+        t0 = time.perf_counter()
+
+        # 1) norm
+        obs_norm = self.running_mean_std(self.obs_buf)
+
+        # 2) inference
+        input_dict = {
+            "obs": obs_norm,
+            "proprio_hist": self.sa_mean_std(self.proprio_hist_buf),
+        }
+        action = torch.clamp(self.model.act_inference(input_dict), -1.0, 1.0)
+
+        # 3) update target
+        self._pre_physics_step(action)
+
+        # 4) publish command (CPU로만 내릴 때 변환)
+        cmd = self.cur_target.detach().to("cpu").numpy()[0]
+        ros1 = _action_hora2allegro(cmd)
+        ros2 = _reorder_imrt2timr(ros1)
+        self.allegro.command_joint_position(ros2)
+
+        # 5) non-blocking obs update (드랍 시 마지막 유효 관측 사용)
+        q_pos = self.allegro.poll_joint_position(wait=False, timeout=0.0)
+        if q_pos is not None:
+            ros1_q = _reorder_timr2imrt(q_pos)
+            hora_q = _obs_allegro2hora(ros1_q)
+            obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+            self._last_obs_q = obs_q
+        else:
+            obs_q = self._last_obs_q
+            self._skipped += 1
+
+        if obs_q is not None:
+            self._post_physics_step(obs_q)
+
+        # 6) light jitter log
+        if self._last_step_t is None:
+            self._last_step_t = t0
+        else:
+            dt = t0 - self._last_step_t
+            self._last_step_t = t0
+            # 5초마다 한 번만 출력
+            if int(time.time()) % 5 == 0:
+                hz_est = 1.0 / max(dt, 1e-6)
+                print(f"[timer] {hz_est:.2f} Hz, skipped={self._skipped}")
+
+    # ---------- deploy ----------
+    def deploy(self):
+        # ROS2 I/O 시작(백그라운드 실행기)
+        self.allegro = start_allegro_io(side='right')
+
+        # 워밍업(블로킹) — 하드웨어 settle
+        warmup = int(self.hz * 4)
+        for t in range(warmup):
+            tprint(f"setup {t} / {warmup}")
+            pose = _reorder_imrt2timr(np.array(self.init_pose, dtype=np.float64))
+            self.allegro.command_joint_position(pose)
+            time.sleep(1.0 / self.hz)
+
+        # 첫 관측(블로킹 1회 — 초기화 안정)
+        q_pos = self.allegro.poll_joint_position(wait=True, timeout=5.0)
+        if q_pos is None:
+            print("❌ failed to read joint state.")
+            stop_allegro_io(self.allegro)
+            return
+
+        ros1_q = _reorder_timr2imrt(q_pos)
+        hora_q = _obs_allegro2hora(ros1_q)
+        obs_q = torch.from_numpy(hora_q.astype(np.float32)).to(self.device)
+        self._last_obs_q = obs_q
+
+        # buffers 초기화
+        cur_obs_buf = self._unscale(obs_q, self.allegro_dof_lower, self.allegro_dof_upper)[None]
+        self.prev_target = obs_q[None]
+        for i in range(3):
+            self.obs_buf[:, i*32:i*32+16] = cur_obs_buf
+            self.obs_buf[:, i*32+16:i*32+32] = self.prev_target
+        self.proprio_hist_buf[:, :, :16] = cur_obs_buf
+        self.proprio_hist_buf[:, :, 16:32] = self.prev_target
+
+        # Timer 등록 (정확 주기)
+        period = 1.0 / self.hz
+        self.timer = self.allegro.create_timer(period, self._control_step)
+        print(f"Deployment started (timer-based {self.hz:.1f} Hz). Ctrl+C to stop.")
+
+        # 메인 스레드: 시그널 처리 + 유지
+        interrupted = False
+
+        def _sigint(_sig, _frm):
+            nonlocal interrupted
+            interrupted = True
+        signal.signal(signal.SIGINT, _sigint)
+
+        try:
+            while not interrupted:
+                time.sleep(0.2)
+        finally:
+            try:
+                if self.timer is not None:
+                    self.timer.cancel()
+            except Exception:
+                pass
+            try:
+                self.allegro.go_safe()
+            except Exception:
+                pass
+            stop_allegro_io(self.allegro)
+            print("🧠 Deployment stopped cleanly.")
+
+    # ---------- checkpoint ----------
+    def restore(self, fn):
+        ckpt = torch.load(fn, map_location=self.device)
+        self.running_mean_std.load_state_dict(ckpt["running_mean_std"])
+        self.model.load_state_dict(ckpt["model"])
+        self.sa_mean_std.load_state_dict(ckpt["sa_mean_std"])
+
+
+# =========================================================
+# 실행 예시
+# =========================================================
+if __name__ == "__main__":
+    # 예: CUDA가 없으면 device="cpu"로 변경
+    agent = HardwarePlayer(hz=20.0, device="cuda" if torch.cuda.is_available() else "cpu")
+    # 필요한 경우 체크포인트 로드
+    # agent.restore("/path/to/checkpoint.pth")
+    agent.deploy()
+
+```
+
+:::
+
+
+
+> ROS1/ROS2 공통 로직은 그대로 유지하면서, ROS2 특성에 맞춰 실시간성/안정성을 끌어올리는 데 초점
+
+# 1) while+sleep 루프 → ROS2 Timer 기반 제어 루프
+
+* **문제**: `while True` + `time.sleep()`는 OS 스케줄링·파이썬 GIL·깊은 콜 스택 등에 의해 지터가 커지고, 콜백/구독자와 경합할 때 주기가 더 틀어질 수 있어.
+* **개선**: `self.allegro.create_timer(period, self._control_step)`로 **주기 콜백**을 등록.
+* **효과**
+
+  * 제어 주기가 ROS 실행기에 의해 유지돼 지터가 감소.
+  * 메인 스레드는 타이머만 돌고, I/O와 콜백은 실행기가 적절히 스케줄링.
+
+---
+
+# 2) rclpy 실행기(Executor) 백그라운드 스레드화 (공식 API만 사용)
+
+* **문제**: rclpy의 내부(private) API(`rclpy.executors._util`, `_thread`)를 쓰면 버전 차이로 **AttributeError**가 발생.
+* **개선**: **표준 `threading.Thread` + `SingleThreadedExecutor`** 로 안정적인 백그라운드 스피너 구현.
+* **효과**: ROS2 노드는 백그라운드에서 안전하게 돌고, 타이머/구독 콜백이 막힘 없이 처리됨.
+
+---
+
+# 3) 장치(device) 일관성 유지 (cuda/cpu mismatch 방지)
+
+* **문제**: 텐서/모델/RMS가 서로 다른 디바이스(cu﻿da·cpu)에 있으면 `Expected all tensors to be on the same device` 런타임 오류 발생.
+* **개선**
+
+  * `self.device`를 단일 소스로 두고, `model`, `running_mean_std`, `sa_mean_std`, **버퍼(`obs_buf`, `proprio_hist_buf`)**까지 전부 같은 디바이스로 생성/이동.
+  * 하드웨어 I/O 직전 **필요할 때만** CPU로 내림: `self.cur_target.detach().to('cpu').numpy()`
+* **효과**: 디바이스 이동 최소화로 속도↑, 디바이스 불일치 에러↓.
+
+---
+
+# 4) `@torch.inference_mode()` + 불필요한 clone 최소화
+
+* **문제**: 추론 중 그래디언트 트래킹은 낭비이며, 잦은 `.clone()`은 메모리/시간 비용.
+* **개선**
+
+  * 타이머 콜백(`_control_step`)에 `@torch.inference_mode()` 적용.
+  * 꼭 필요한 위치에서만 `clone()` 사용.
+* **효과**: 추론 시 오버헤드 감소, 속도 안정화.
+
+---
+
+# 5) 관측 드랍(미수신) 대비: **last-good sample 재사용**
+
+* **문제**: 타이머 주기와 `/joint_states` 주기가 딱 맞지 않으면 어떤 틱에서 관측이 **없을 수** 있음. 그때 블로킹(`wait=True`)을 걸면 제어 주기가 깨짐.
+* **개선**: 논블로킹 `wait=False`로 읽고, 샘플이 없으면 **직전 유효 관측(`_last_obs_q`) 재사용**. 드랍 횟수 `_skipped` 로깅.
+* **효과**: 제어 주기 유지(실시간성↑), 관측 지연에 대한 **로버스트**한 동작.
+
+---
+
+# 6) 버퍼 롤링(overlap) 오류 수정
+
+* **문제**: `self.obs_buf[:, :64] = self.obs_buf[:, 32:]` 처럼 같은 텐서 내 **겹치는 메모리**에 대입하면 PyTorch가 예외를 던짐.
+* **개선 (두 가지 버전 제공)**
+
+  1. **clone 사용**: `src = self.obs_buf[:, 32:96].clone(); self.obs_buf[:, :64] = src`
+  2. **`torch.roll` 사용**: `rolled = torch.roll(self.obs_buf, shifts=-32, dims=1); self.obs_buf.copy_(rolled)`
+* **효과**: 안전하고 명확한 시프트, 예외 제거.
+
+---
+
+# 7) position gap 퍼블리셔 추가 + Header/Name 세팅
+
+* **문제**: 명령과 실제 위치 사이 오차를 외부에서 보기 어려움.
+* **개선**
+
+  * `/position_gap` 토픽에 **`sensor_msgs/JointState`**로 퍼블리시.
+  * `header.stamp = node.get_clock().now().to_msg()` (ROS 시간), `name`에 16개 조인트 이름, `position`에 gap(명령-실측) 기록.
+* **효과**: rqt_plot, bag 기록 등에서 **정확한 타임스탬프**로 시각화/분석 가능.
+
+---
+
+# 8) 명령 직후 gap 측정 (짧은 지연 대신 “다음 콜백에서 최신 상태”)
+
+* 초기에 “명령 → 아주 짧게 sleep → gap 발행”도 보여줬지만, 최종 구조에선 **타이머 콜백 안**에서 매 틱마다 최신 상태로 갱신되므로 별도 sleep이 필요 없음.
+* gap은 I/O 노드가 **항상 최신 `/joint_states` 기준**으로 계산(논블로킹) → 주기 유지.
+
+---
+
+# 9) 초기화 루틴(워밍업 + 첫 관측 블로킹 1회)
+
+* **워밍업**: `hz*4`만큼 초기 자세 명령을 보내 **드라이브 settle**.
+* **첫 관측**: `wait=True, timeout=5.0`으로 블로킹 1회만 수행 → 이후는 논블로킹.
+* **효과**: 초기 버퍼 상태가 정상적이고, 그 다음엔 주기를 깨지 않음.
+
+---
+
+# 10) 가벼운 주기/지터 로깅
+
+* 매 틱마다 출력하면 성능 저하 → **간헐(예: 5초에 한 번)** 로깅.
+* `skipped` 카운터로 관측 드랍 정도를 확인 가능.
+
+---
+
+# 11) ROS2 API 안전한 사용
+
+* 내부 API 제거(앞선 AttributeError 해결).
+* `SingleThreadedExecutor`로도 충분하나, 콜백 경합이 커지면 `MultiThreadedExecutor` 고려 가능.
+* `stop_allegro_io()`에서 `executor.shutdown()` → `node.destroy_node()` → `rclpy.shutdown()` 순서로 안전 종료.
+
+---
+
+# 12) 수치 안정성 및 성능 팁(선택적)
+
+* **FP16/TF32**: `model.half()` 및 입력도 half로 맞추면 추론 지연이 감소(CUDA 필요).
+* **CUDA Graph**: 입력 shape 고정 시 그래프 캡처 후 재사용으로 지터 감소.
+* **MLP 축소**: `actor_units`/`priv_mlp_units` 차원 줄여 실시간성↑.
+* **타이머 주기**: 하드웨어·드라이버 지연을 고려해 20 Hz부터 시작, 여유되면 상향.
+
+---
+
+# 13) ROS1/ROS2 로직 일관성 유지
+
+* **관측 → 정규화(unscale) → obs_buf/proprio_hist 업데이트 → 모델 추론 → 액션 스케일·클리핑 → 타깃 갱신 → 명령 전송 → 다음 관측**의 파이프라인은 동일.
+* 차이는 **조인트 순서 변환(ROS1↔ROS2)** 과 **토픽 인터페이스**뿐.
+
+---
+
+## 요약
+
+* **정확한 제어 주기**: ROS2 Timer로 전환, 블로킹 제거, 논블로킹 관측 + last-good 재사용.
+* **안정성**: 디바이스 일관성, 겹침 대입 수정, 안전 종료 순서 적용.
+* **분석 가능성**: `/position_gap`에 타임스탬프/이름 포함 퍼블리시.
+* **성능**: inference_mode, 최소화된 `.clone()`, 필요 시 FP16·CUDA Graph로 확장 가능.
+-->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

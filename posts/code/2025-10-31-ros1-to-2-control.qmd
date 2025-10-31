@@ -2,7 +2,7 @@
 title: "👩‍💻ROS2 code 개선"
 toc: true
 number-sections: true
-date: "2025-11=0-31"
+date: "2025-10-31"
 description: 기존의 ROS1 제어 코드에서 ROS2 제어 코드로 리펙토링
 categories: [ros2, python, code]
 execute:
