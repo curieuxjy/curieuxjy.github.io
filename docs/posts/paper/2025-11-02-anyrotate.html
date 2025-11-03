@@ -1152,21 +1152,21 @@ Policy Network [512 → 256 → 128] (Teacher와 동일)
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph TD
-    Start([20 Hz 메인 루프 시작]) --&gt; Step1[1. 촉각 이미지 수집&lt;br/&gt;비동기, 최대 30 FPS]
-    Step1 --&gt; Step2[2. 그레이스케일 변환 + 전처리]
-    Step2 --&gt; Step3[3. CNN으로 특징 추출&lt;br/&gt;4개 센서 병렬]
-    Step3 --&gt; Step3a[접촉 자세: θ, φ&lt;br/&gt;접촉 힘: |F|]
-    Step3a --&gt; Step4[4. 관절 위치 읽기]
-    Step4 --&gt; Step5[5. Forward Kinematics]
-    Step5 --&gt; Step5a[손가락 끝 위치&lt;br/&gt;손가락 끝 방향]
-    Step5a --&gt; Step6[6. 관찰 벡터 구성]
-    Step6 --&gt; Step7[7. 정책 추론]
-    Step7 --&gt; Step7a[TCN → 잠재 벡터&lt;br/&gt;Policy → 행동 출력]
-    Step7a --&gt; Step8[8. 지수 이동 평균&lt;br/&gt;q_target = 0.9×q_old + 0.1×q_new]
-    Step8 --&gt; Step9[9. 목표 관절 위치 전송]
-    Step9 --&gt; PD[PD 제어기&lt;br/&gt;300 Hz]
-    PD --&gt; Motor[모터 구동]
+<pre class="mermaid mermaid-js">flowchart TD
+    Start(["20 Hz 메인 루프 시작"]) --&gt; Step1["1. 촉각 이미지 수집&lt;br/&gt;비동기, 최대 30 FPS"]
+    Step1 --&gt; Step2["2. 그레이스케일 변환 + 전처리"]
+    Step2 --&gt; Step3["3. CNN으로 특징 추출&lt;br/&gt;4개 센서 병렬"]
+    Step3 --&gt; Step3a["접촉 자세: θ, φ&lt;br/&gt;접촉 힘: |F|"]
+    Step3a --&gt; Step4["4. 관절 위치 읽기"]
+    Step4 --&gt; Step5["5. Forward Kinematics"]
+    Step5 --&gt; Step5a["손가락 끝 위치&lt;br/&gt;손가락 끝 방향"]
+    Step5a --&gt; Step6["6. 관찰 벡터 구성"]
+    Step6 --&gt; Step7["7. 정책 추론"]
+    Step7 --&gt; Step7a["TCN → 잠재 벡터&lt;br/&gt;Policy → 행동 출력"]
+    Step7a --&gt; Step8["8. 지수 이동 평균&lt;br/&gt;q_target = 0.9 × q_old + 0.1 × q_new"]
+    Step8 --&gt; Step9["9. 목표 관절 위치 전송"]
+    Step9 --&gt; PD["PD 제어기&lt;br/&gt;300 Hz"]
+    PD --&gt; Motor["모터 구동"]
     Motor --&gt; Start
 
     style Start fill:#e1f5ff
@@ -1174,6 +1174,7 @@ Policy Network [512 → 256 → 128] (Teacher와 동일)
     style Step7 fill:#ffe1f5
     style PD fill:#e1ffe1
     style Motor fill:#ffe1e1
+
 </pre>
 </div>
 <p></p></figure><p></p>
