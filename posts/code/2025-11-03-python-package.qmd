@@ -1,7 +1,7 @@
 ---
 title: "👩‍💻Python Package"
 description: "PyPI 업로드부터 버전 관리까지, 실전 예제로 정리"
-date: "2025-11-02"
+date: "2025-11-03"
 categories: [python, code]
 execute:
   freeze: auto
