@@ -1,7 +1,7 @@
 ---
 title: "📃VQ-ACE 리뷰"
 date: 2025-11-03
-categories: [mpc, cl, action-chunking]
+categories: [mpc, rl, action-chunking]
 toc: true
 number-sections: False
 description: Efficient Policy Search for Dexterous Robotic Manipulation via Action Chunking Embedding
@@ -21,6 +21,10 @@ description: Efficient Policy Search for Dexterous Robotic Manipulation via Acti
 
 <center>
 <img src="../../images/2025-11-03-vq-ace/0.png" width="80%" />
+</center>
+
+<center>
+<img src="../../images/2025-11-03-vq-ace/0.gif" width="85%" />
 </center>
 
 ---
