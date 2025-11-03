@@ -664,21 +664,21 @@ force_noise = gaussian(0, 0.1)  # N
 ```{mermaid}
 %%| echo: false
 
-graph TD
-    Start([20 Hz 메인 루프 시작]) --> Step1[1. 촉각 이미지 수집<br/>비동기, 최대 30 FPS]
-    Step1 --> Step2[2. 그레이스케일 변환 + 전처리]
-    Step2 --> Step3[3. CNN으로 특징 추출<br/>4개 센서 병렬]
-    Step3 --> Step3a[접촉 자세: θ, φ<br/>접촉 힘: |F|]
-    Step3a --> Step4[4. 관절 위치 읽기]
-    Step4 --> Step5[5. Forward Kinematics]
-    Step5 --> Step5a[손가락 끝 위치<br/>손가락 끝 방향]
-    Step5a --> Step6[6. 관찰 벡터 구성]
-    Step6 --> Step7[7. 정책 추론]
-    Step7 --> Step7a[TCN → 잠재 벡터<br/>Policy → 행동 출력]
-    Step7a --> Step8[8. 지수 이동 평균<br/>q_target = 0.9×q_old + 0.1×q_new]
-    Step8 --> Step9[9. 목표 관절 위치 전송]
-    Step9 --> PD[PD 제어기<br/>300 Hz]
-    PD --> Motor[모터 구동]
+flowchart TD
+    Start(["20 Hz 메인 루프 시작"]) --> Step1["1. 촉각 이미지 수집<br/>비동기, 최대 30 FPS"]
+    Step1 --> Step2["2. 그레이스케일 변환 + 전처리"]
+    Step2 --> Step3["3. CNN으로 특징 추출<br/>4개 센서 병렬"]
+    Step3 --> Step3a["접촉 자세: θ, φ<br/>접촉 힘: |F|"]
+    Step3a --> Step4["4. 관절 위치 읽기"]
+    Step4 --> Step5["5. Forward Kinematics"]
+    Step5 --> Step5a["손가락 끝 위치<br/>손가락 끝 방향"]
+    Step5a --> Step6["6. 관찰 벡터 구성"]
+    Step6 --> Step7["7. 정책 추론"]
+    Step7 --> Step7a["TCN → 잠재 벡터<br/>Policy → 행동 출력"]
+    Step7a --> Step8["8. 지수 이동 평균<br/>q_target = 0.9 × q_old + 0.1 × q_new"]
+    Step8 --> Step9["9. 목표 관절 위치 전송"]
+    Step9 --> PD["PD 제어기<br/>300 Hz"]
+    PD --> Motor["모터 구동"]
     Motor --> Start
 
     style Start fill:#e1f5ff
@@ -686,6 +686,7 @@ graph TD
     style Step7 fill:#ffe1f5
     style PD fill:#e1ffe1
     style Motor fill:#ffe1e1
+
 ```
 
 **병목 지점:**
