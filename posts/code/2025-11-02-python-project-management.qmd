@@ -1,0 +1,354 @@
+---
+title: "👩‍💻Python Project Structure"
+description: "Python 프로젝트 관리 실전"
+date: "2025-11-02"
+categories: [python, code]
+execute:
+  freeze: auto
+---
+
+## 👋 들어가며
+
+파이썬으로 프로젝트를 만들다 보면 이런 고민을 하게 됩니다.
+
+> “폴더를 어떻게 나눠야 하지?”
+> “import가 자꾸 꼬이는데 왜일까?”
+> “연구용 코드랑 배포용 코드는 어떻게 달라야 하지?”
+
+처음에는 `main.py`, `utils.py`, `train.py` 파일 몇 개로 시작하지만,
+시간이 지나면 코드가 점점 커지고 **정리되지 않은 프로젝트는 유지보수 지옥**이 됩니다 😱
+
+그래서 이 글에서는 **누구나 따라할 수 있는 파이썬 프로젝트 정리법**을
+기초부터 차근차근 알려드립니다.
+
+---
+
+## 🎯 목표
+
+이 글을 마치면 아래를 스스로 구성할 수 있어요.
+
+- ✅ import 충돌 없이 모듈을 불러오기
+- ✅ 테스트 코드와 실험 스크립트 분리
+- ✅ 한눈에 이해되는 폴더 구조 만들기
+- ✅ 패키지 설치 가능한 구조 구성
+
+---
+
+## 🏗️ 기본 구조 설계
+
+먼저 폴더를 아래처럼 구성해 봅시다 👇
+
+```bash
+my_project/
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+├── src/
+│   └── my_project/
+│       ├── __init__.py
+│       ├── core/
+│       │   ├── data.py
+│       │   ├── model.py
+│       │   └── utils.py
+│       ├── api/
+│       │   ├── routes.py
+│       │   └── schemas.py
+│       ├── cli.py
+│       └── config.py
+├── tests/
+│   ├── __init__.py
+│   └── test_model.py
+├── scripts/
+│   ├── train.py
+│   ├── visualize.py
+│   └── export_model.py
+└── notebooks/
+    └── analysis.ipynb
+```
+
+### 📌 폴더별 설명
+
+| 폴더 | 역할 |
+|------|------|
+| `src/` | 실제 파이썬 코드가 들어가는 핵심 부분 |
+| `my_project/` | 패키지의 루트(프로젝트명과 동일) |
+| `tests/` | 테스트 코드 전용(권장: `pytest`) |
+| `scripts/` | 실험/실행 스크립트 |
+| `notebooks/` | Jupyter 분석 노트북 |
+
+> **핵심 포인트**: 모든 실제 코드는 `src/`에 넣습니다.
+> 이렇게 하면 **import 경로가 깔끔**해지고 충돌이 줄어듭니다.
+
+---
+
+## 🧠 왜 `src/` 구조를 쓸까?
+
+초기엔 다음처럼 시작하기 쉽습니다:
+
+```
+my_project/
+├── data.py
+├── model.py
+├── train.py
+```
+
+하지만 곧 다음 문제가 생깁니다.
+
+- `import`가 꼬임 (`ModuleNotFoundError`)
+- `pytest` 실행 시 경로 에러
+- 로컬에선 되는데 설치 후에는 실패
+
+이를 방지하려고 **`src/` 디렉토리 구조**를 씁니다.
+이 방식은 파이썬 커뮤니티에서 사실상 표준입니다.
+
+```bash
+src/my_project/
+```
+
+이렇게 하면 **명확한 패키지 루트**가 생기고,
+`import my_project.core.model` 형태로 일관된 구조를 유지할 수 있습니다.
+
+---
+
+## ⚙️ `pyproject.toml` — 프로젝트의 중심
+
+`pyproject.toml`은 현대적인 파이썬 프로젝트의 설정 파일입니다.
+이 한 파일이 **패키지 이름, 버전, 의존성** 등을 모두 정의합니다.
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my_project"
+version = "0.1.0"
+description = "My awesome project"
+authors = [{ name = "Jung Yeon Lee", email = "curieuxjy@example.com" }]
+dependencies = ["numpy", "torch", "matplotlib"]
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+```
+
+설치(개발 모드):
+
+```bash
+pip install -e .
+```
+
+> `-e` (*editable*) 옵션은 코드를 수정하면 설치를 다시 하지 않아도 **즉시 반영**되는 개발 시 필수 옵션입니다.
+
+---
+
+## 🧪 테스트 추가하기 (pytest)
+
+설치:
+
+```bash
+pip install pytest
+```
+
+테스트 파일 예시 (`tests/test_model.py`):
+
+```python
+from my_project.core.model import MyModel
+
+def test_forward():
+    model = MyModel()
+    assert model.forward([1, 2, 3]) is not None
+```
+
+실행:
+
+```bash
+pytest
+```
+
+> 팁: 루트 디렉토리에서 `pytest`를 실행하세요. (상대 경로 이슈 방지)
+
+---
+
+## 🧰 스크립트와 패키지 코드 분리하기
+
+실험/실행 스크립트는 `scripts/`로 분리합니다.
+
+```python
+# scripts/train.py
+from my_project.core.model import MyModel
+
+def main():
+    model = MyModel()
+    model.train()
+
+if __name__ == "__main__":
+    main()
+```
+
+`sys.path`를 직접 조작하는 방식(예: `sys.path.append('../')`)은
+**충돌·중복·릴리즈 실패**의 원인이 되니 피하세요.
+
+---
+
+## 🧾 의존성 관리 전략
+
+간단히 시작하려면 `requirements.txt`:
+
+```txt
+numpy
+torch
+matplotlib
+pytest
+```
+
+설치:
+
+```bash
+pip install -r requirements.txt
+```
+
+규모가 커지면 `poetry`/`uv` 같은 툴로 **의존성 고정 및 재현성**을 강화하세요.
+
+---
+
+## 🧱 보조 폴더 구성 (재현성 업그레이드)
+
+| 폴더 | 내용 |
+|------|------|
+| `configs/` | YAML/JSON 설정 파일 |
+| `data/` | 원본 데이터 (보통 `.gitignore`) |
+| `logs/` | 로그 파일 |
+| `results/` | 실험 결과/체크포인트 |
+
+예시:
+
+```bash
+my_project/
+├── configs/
+│   └── train.yaml
+├── data/
+├── logs/
+└── results/
+```
+
+---
+
+## 🚀 실행과 테스트를 편하게: `Makefile`
+
+자주 쓰는 명령은 Make로 단축하세요.
+
+```makefile
+# Makefile
+train:
+\tpython scripts/train.py
+
+test:
+\tpytest -v
+
+lint:
+\tflake8 src/
+```
+
+실행:
+
+```bash
+make train
+make test
+```
+
+> Windows라면 `make` 대신 [invoke](https://www.pyinvoke.org/)의 `tasks.py`를 추천합니다.
+
+---
+
+## 🧩 최소 동작 예제(Boilerplate)
+
+아래 파일만 만들어도 전체 흐름을 바로 시험할 수 있어요.
+
+```bash
+my_project/
+├── pyproject.toml
+├── src/my_project/__init__.py
+├── src/my_project/core/model.py
+├── scripts/train.py
+└── tests/test_model.py
+```
+
+```python
+# src/my_project/core/model.py
+class MyModel:
+    def forward(self, x):
+        return x
+
+    def train(self):
+        print("Training...")
+```
+
+```python
+# scripts/train.py
+from my_project.core.model import MyModel
+if __name__ == "__main__":
+    MyModel().train()
+```
+
+```python
+# tests/test_model.py
+from my_project.core.model import MyModel
+def test_forward():
+    assert MyModel().forward([1, 2, 3]) == [1, 2, 3]
+```
+
+설치 & 실행:
+
+```bash
+pip install -e .
+python scripts/train.py
+pytest -q
+```
+
+---
+
+## 🧠 트러블슈팅 체크리스트
+
+- `ModuleNotFoundError`가 나요 → 루트에서 `pip install -e .` 했는지, `src/` 구조인지 확인
+- 테스트에서 import 실패 → 루트에서 `pytest` 실행 (`cd` 위치 확인)
+- 스크립트에서 `sys.path` 추가했나요? → 제거하고 정식 import로 변경
+- 설치했는데 변경이 반영 안됨 → `-e` 모드인지 확인
+- 의존성 충돌 → 가상환경(venv/conda) 재설치 후 `requirements.txt` 또는 `poetry.lock` 사용
+
+---
+
+## 🎓 마무리 — 한눈에 요약
+
+| 항목 | 핵심 요약 |
+|------|------------|
+| 코드 구조 | `src/my_project`로 루트 고정 |
+| import | 절대 경로 (`import my_project.XXX`) 사용 |
+| 테스트 | `pytest`로 루트 기준 실행 |
+| 의존성 | `pyproject.toml` + `requirements.txt` |
+| 실행 | `pip install -e .` 로 개발 환경 세팅 |
+| 보조 폴더 | `scripts/`, `configs/`, `data/`, `logs/`, `results/` |
+
+---
+
+
+### 부록 A. 샘플 `pyproject.toml` (복붙용)
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my_project"
+version = "0.1.0"
+description = "My awesome project"
+authors = [{ name = "Jung Yeon Lee", email = "curieuxjy@example.com" }]
+dependencies = ["numpy", "torch", "matplotlib", "pytest"]
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+```

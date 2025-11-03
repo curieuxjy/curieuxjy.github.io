@@ -1,0 +1,307 @@
+---
+title: "👩‍💻Python Package"
+description: "PyPI 업로드부터 버전 관리까지, 실전 예제로 정리"
+date: "2025-11-02"
+categories: [python, code]
+execute:
+  freeze: auto
+---
+
+## 👋 들어가며
+
+이전 글에서는 파이썬 프로젝트 구조를 깔끔하게 정리하는 방법을 배웠습니다.
+이번에는 **그 프로젝트를 실제로 배포 가능한 패키지로 만드는 방법**을 배워볼게요.
+
+> “내 코드를 pip install로 설치할 수 있게 만들고 싶다!”
+> “PyPI에 올려서 다른 사람도 바로 쓸 수 있게 하고 싶다!”
+
+이 글은 바로 그런 분들을 위한 **실전형 배포 튜토리얼**입니다.
+복잡한 설정 없이, **한 번에 따라 하면 바로 배포**할 수 있게 구성했습니다.
+
+---
+
+## 🎯 목표
+
+이 포스팅을 따라 하면 다음을 할 수 있습니다:
+
+- ✅ PyPI 계정 생성 및 토큰 등록
+- ✅ `pyproject.toml` 기반 패키지 메타데이터 구성
+- ✅ `.tar.gz`, `.whl` 빌드 파일 생성
+- ✅ PyPI 테스트 서버/공식 서버 업로드
+- ✅ 버전 관리 및 업데이트 전략 이해
+
+---
+
+## 🧩 1. 사전 준비
+
+### ① 프로젝트 구조
+
+지난 포스트에서 만든 구조를 그대로 활용합니다 👇
+
+```bash
+my_project/
+├── pyproject.toml
+├── README.md
+├── src/
+│   └── my_project/
+│       ├── __init__.py
+│       └── core/
+│           └── model.py
+```
+
+### ② 패키지 초기화
+
+`src/my_project/__init__.py` 파일을 비워두거나 아래처럼 간단히 작성합니다.
+
+```python
+__version__ = "0.1.0"
+```
+
+이 값은 나중에 PyPI 버전과 자동으로 동기화됩니다.
+
+---
+
+## ⚙️ 2. pyproject.toml 설정하기
+
+이제 `pyproject.toml`을 수정해 패키지 정보를 명시합니다.
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my_project"
+version = "0.1.0"
+description = "An example Python package for beginners"
+authors = [{ name = "Jung Yeon Lee", email = "curieuxjy@example.com" }]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy"]
+
+[project.urls]
+Homepage = "https://github.com/curieuxjy/my_project"
+BugTracker = "https://github.com/curieuxjy/my_project/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+```
+
+💡 **포인트 정리**
+- `name`: PyPI에서 사용할 고유 이름 (전세계 중복 불가)
+- `version`: semver(예: `0.1.0`) 형식
+- `requires-python`: 지원 파이썬 버전
+- `dependencies`: pip 설치 시 자동으로 함께 설치되는 라이브러리 목록
+
+---
+
+## 📦 3. 빌드(Build) 준비
+
+패키지를 업로드하려면 **소스 배포(`.tar.gz`)**와 **바이너리 휠(`.whl`)** 파일이 필요합니다.
+
+### 설치
+
+```bash
+pip install build twine
+```
+
+### 빌드 명령
+
+```bash
+python -m build
+```
+
+이후 `dist/` 폴더가 자동으로 생기고, 아래 파일들이 생성됩니다.
+
+```bash
+dist/
+├── my_project-0.1.0-py3-none-any.whl
+└── my_project-0.1.0.tar.gz
+```
+
+---
+
+## 🧪 4. 테스트 서버 업로드 (TestPyPI)
+
+실제 PyPI에 올리기 전에 **테스트 서버**로 먼저 연습해 봅시다.
+
+### ① TestPyPI 계정 생성
+
+👉 [https://test.pypi.org/account/register/](https://test.pypi.org/account/register/)
+
+회원가입 후 **API Token**을 생성하세요.
+토큰 값은 `"pypi-..."` 형태로 시작합니다.
+
+### ② 토큰 등록
+
+로컬에 안전하게 저장하기 위해 `~/.pypirc` 파일을 만듭니다.
+
+```ini
+[testpypi]
+  username = __token__
+  password = pypi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+### ③ 업로드 명령
+
+```bash
+python -m twine upload --repository testpypi dist/*
+```
+
+성공 시 결과 예시 👇
+
+```
+Uploading distributions to https://test.pypi.org/legacy/
+Uploading my_project-0.1.0-py3-none-any.whl
+Uploading my_project-0.1.0.tar.gz
+View at:
+https://test.pypi.org/project/my_project/
+```
+
+### ④ 설치 테스트
+
+```bash
+pip install -i https://test.pypi.org/simple/ my_project
+```
+
+> ✅ TestPyPI는 테스트용이므로, 실제 공개용은 아래 단계에서 진행합니다.
+
+---
+
+## 🚀 5. PyPI 공식 업로드
+
+### ① PyPI 계정 생성
+
+👉 [https://pypi.org/account/register/](https://pypi.org/account/register/)
+
+API Token을 생성하고, `~/.pypirc` 파일에 추가합니다.
+
+```ini
+[pypi]
+  username = __token__
+  password = pypi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+### ② 업로드
+
+```bash
+python -m twine upload dist/*
+```
+
+완료 후 URL 출력:
+
+```
+View at:
+https://pypi.org/project/my_project/
+```
+
+### ③ pip으로 설치 확인
+
+```bash
+pip install my_project
+```
+
+---
+
+## 🧭 6. 버전 관리와 재배포
+
+새로운 기능이나 버그 수정 후에는 **버전 업데이트**를 해야 합니다.
+
+### ① 버전 규칙 (Semantic Versioning)
+
+| 형식 | 의미 |
+|------|------|
+| `MAJOR.MINOR.PATCH` | 예: `1.4.2` |
+| `MAJOR` | 호환성 깨짐 (Breaking change) |
+| `MINOR` | 새로운 기능 추가 (Backward compatible) |
+| `PATCH` | 버그 수정 또는 개선 |
+
+예시:
+
+```python
+__version__ = "0.2.0"  # 기존 0.1.0에서 기능 추가
+```
+
+### ② 재배포
+
+버전 번호를 바꾼 뒤 다시 빌드하고 업로드:
+
+```bash
+python -m build
+python -m twine upload dist/*
+```
+
+> ⚠️ PyPI는 같은 버전을 두 번 업로드할 수 없습니다.
+> 새로 올릴 때마다 반드시 버전을 변경하세요.
+
+---
+
+## 🧰 7. 추가 옵션과 프로 팁
+
+| 상황 | 해결 방법 |
+|------|-------------|
+| PyPI 업로드 시 인증 오류 | `~/.pypirc` 파일 권한(600) 확인 |
+| 빌드 캐시 초기화 | `rm -rf build dist *.egg-info` |
+| 비공개 배포 | 사내 PyPI 미러 또는 GitHub Packages 활용 |
+| 자동 버전 관리 | `bumpver` 또는 `versioneer` 사용 |
+| 자동 배포 | GitHub Actions 워크플로우로 `twine upload` 자동화 |
+
+---
+
+## 🧩 8. 배포 자동화 예시 (GitHub Actions)
+
+`.github/workflows/publish.yml` 파일을 추가하면
+커밋 시 자동으로 PyPI에 업로드할 수 있습니다.
+
+```yaml
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install build twine
+      - run: python -m build
+      - name: Upload to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: python -m twine upload dist/*
+```
+
+이제 GitHub에서 태그(`v0.2.0`)를 푸시하면
+자동으로 PyPI에 새 버전이 배포됩니다 🎉
+
+---
+
+## 🧠 트러블슈팅
+
+| 문제 | 원인 | 해결 |
+|------|------|------|
+| “invalid token” | `.pypirc` 오타 | 경로와 들여쓰기 확인 |
+| “File already exists” | 중복 버전 업로드 | 버전 번호 변경 후 재빌드 |
+| “No such file dist/” | 빌드 안 함 | `python -m build` 실행 |
+| “Permission denied” | 파일 권한 | `chmod 600 ~/.pypirc` |
+| 설치 후 import 오류 | `src/` 구조 누락 | `where = ["src"]` 확인 |
+
+---
+
+## 🎓 마무리 요약
+
+| 단계 | 명령 |
+|------|------|
+| 빌드 | `python -m build` |
+| TestPyPI 업로드 | `python -m twine upload --repository testpypi dist/*` |
+| 공식 PyPI 업로드 | `python -m twine upload dist/*` |
+| 설치 확인 | `pip install my_project` |
