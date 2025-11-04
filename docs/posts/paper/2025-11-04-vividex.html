@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-11-03">
+<meta name="description" content="Efficient Policy Search for Dexterous Robotic Manipulation via Action Chunking Embedding">
+
+<title>📃VQ-ACE 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ping-review" id="toc-ping-review" class="nav-link active" data-scroll-target="#ping-review">🔍 Ping Review</a></li>
+  <li><a href="#ring-review" id="toc-ring-review" class="nav-link" data-scroll-target="#ring-review">🔔 Ring Review</a>
+  <ul class="collapse">
+  <li><a href="#배경-왜-이-문제가-어려운가" id="toc-배경-왜-이-문제가-어려운가" class="nav-link" data-scroll-target="#배경-왜-이-문제가-어려운가">배경: 왜 이 문제가 어려운가?</a>
+  <ul class="collapse">
+  <li><a href="#정교한-조작dexterous-manipulation의-도전과제" id="toc-정교한-조작dexterous-manipulation의-도전과제" class="nav-link" data-scroll-target="#정교한-조작dexterous-manipulation의-도전과제">정교한 조작(Dexterous Manipulation)의 도전과제</a></li>
+  <li><a href="#기존-접근법의-한계" id="toc-기존-접근법의-한계" class="nav-link" data-scroll-target="#기존-접근법의-한계">기존 접근법의 한계</a></li>
+  </ul></li>
+  <li><a href="#vividex의-핵심-아이디어" id="toc-vividex의-핵심-아이디어" class="nav-link" data-scroll-target="#vividex의-핵심-아이디어">ViViDex의 핵심 아이디어</a>
+  <ul class="collapse">
+  <li><a href="#전체-프레임워크-구조" id="toc-전체-프레임워크-구조" class="nav-link" data-scroll-target="#전체-프레임워크-구조">전체 프레임워크 구조</a></li>
+  </ul></li>
+  <li><a href="#단계-참조-궤적-추출-reference-trajectory-extraction" id="toc-단계-참조-궤적-추출-reference-trajectory-extraction" class="nav-link" data-scroll-target="#단계-참조-궤적-추출-reference-trajectory-extraction">1단계: 참조 궤적 추출 (Reference Trajectory Extraction)</a>
+  <ul class="collapse">
+  <li><a href="#손-포즈-추정" id="toc-손-포즈-추정" class="nav-link" data-scroll-target="#손-포즈-추정">손 포즈 추정</a></li>
+  <li><a href="#motion-retargeting" id="toc-motion-retargeting" class="nav-link" data-scroll-target="#motion-retargeting">Motion Retargeting</a></li>
+  <li><a href="#물체-궤적-추정" id="toc-물체-궤적-추정" class="nav-link" data-scroll-target="#물체-궤적-추정">물체 궤적 추정</a></li>
+  </ul></li>
+  <li><a href="#단계-궤적-가이드-강화학습-trajectory-guided-rl" id="toc-단계-궤적-가이드-강화학습-trajectory-guided-rl" class="nav-link" data-scroll-target="#단계-궤적-가이드-강화학습-trajectory-guided-rl">2단계: 궤적 가이드 강화학습 (Trajectory-Guided RL)</a>
+  <ul class="collapse">
+  <li><a href="#상태-기반-정책" id="toc-상태-기반-정책" class="nav-link" data-scroll-target="#상태-기반-정책">상태 기반 정책</a></li>
+  <li><a href="#궤적-가이드-보상-함수" id="toc-궤적-가이드-보상-함수" class="nav-link" data-scroll-target="#궤적-가이드-보상-함수">궤적 가이드 보상 함수</a></li>
+  <li><a href="#정규화된-궤적-사용" id="toc-정규화된-궤적-사용" class="nav-link" data-scroll-target="#정규화된-궤적-사용">정규화된 궤적 사용</a></li>
+  <li><a href="#ppo-알고리즘" id="toc-ppo-알고리즘" class="nav-link" data-scroll-target="#ppo-알고리즘">PPO 알고리즘</a></li>
+  </ul></li>
+  <li><a href="#단계-시각-기반-정책-학습-vision-based-policy-learning" id="toc-단계-시각-기반-정책-학습-vision-based-policy-learning" class="nav-link" data-scroll-target="#단계-시각-기반-정책-학습-vision-based-policy-learning">3단계: 시각 기반 정책 학습 (Vision-based Policy Learning)</a>
+  <ul class="collapse">
+  <li><a href="#입력-표현-포인트-클라우드" id="toc-입력-표현-포인트-클라우드" class="nav-link" data-scroll-target="#입력-표현-포인트-클라우드">입력 표현: 포인트 클라우드</a></li>
+  <li><a href="#좌표-변환-핵심-혁신" id="toc-좌표-변환-핵심-혁신" class="nav-link" data-scroll-target="#좌표-변환-핵심-혁신">좌표 변환: 핵심 혁신</a></li>
+  <li><a href="#두-가지-학습-방법-비교" id="toc-두-가지-학습-방법-비교" class="nav-link" data-scroll-target="#두-가지-학습-방법-비교">두 가지 학습 방법 비교</a></li>
+  <li><a href="#네트워크-구조" id="toc-네트워크-구조" class="nav-link" data-scroll-target="#네트워크-구조">네트워크 구조</a></li>
+  </ul></li>
+  <li><a href="#실험-설정-및-결과" id="toc-실험-설정-및-결과" class="nav-link" data-scroll-target="#실험-설정-및-결과">실험 설정 및 결과</a>
+  <ul class="collapse">
+  <li><a href="#실험-환경" id="toc-실험-환경" class="nav-link" data-scroll-target="#실험-환경">실험 환경</a></li>
+  <li><a href="#평가-과제" id="toc-평가-과제" class="nav-link" data-scroll-target="#평가-과제">평가 과제</a></li>
+  <li><a href="#성능-비교" id="toc-성능-비교" class="nav-link" data-scroll-target="#성능-비교">성능 비교</a></li>
+  <li><a href="#정량적-결과" id="toc-정량적-결과" class="nav-link" data-scroll-target="#정량적-결과">정량적 결과</a></li>
+  <li><a href="#ablation-study" id="toc-ablation-study" class="nav-link" data-scroll-target="#ablation-study">Ablation Study</a></li>
+  </ul></li>
+  <li><a href="#실제-로봇-실험" id="toc-실제-로봇-실험" class="nav-link" data-scroll-target="#실제-로봇-실험">실제 로봇 실험</a>
+  <ul class="collapse">
+  <li><a href="#sim-to-real-transfer-전략" id="toc-sim-to-real-transfer-전략" class="nav-link" data-scroll-target="#sim-to-real-transfer-전략">Sim-to-Real Transfer 전략</a></li>
+  <li><a href="#실제-로봇-성과" id="toc-실제-로봇-성과" class="nav-link" data-scroll-target="#실제-로봇-성과">실제 로봇 성과</a></li>
+  </ul></li>
+  <li><a href="#기술적-심층-분석" id="toc-기술적-심층-분석" class="nav-link" data-scroll-target="#기술적-심층-분석">기술적 심층 분석</a>
+  <ul class="collapse">
+  <li><a href="#왜-궤적-가이드-rl이-작동하는가" id="toc-왜-궤적-가이드-rl이-작동하는가" class="nav-link" data-scroll-target="#왜-궤적-가이드-rl이-작동하는가">왜 궤적 가이드 RL이 작동하는가?</a></li>
+  <li><a href="#손-중심-좌표계의-이론적-정당화" id="toc-손-중심-좌표계의-이론적-정당화" class="nav-link" data-scroll-target="#손-중심-좌표계의-이론적-정당화">손 중심 좌표계의 이론적 정당화</a></li>
+  <li><a href="#pointnet의-역할" id="toc-pointnet의-역할" class="nav-link" data-scroll-target="#pointnet의-역할">PointNet++의 역할</a></li>
+  </ul></li>
+  <li><a href="#한계점" id="toc-한계점" class="nav-link" data-scroll-target="#한계점">한계점</a></li>
+  <li><a href="#실용적-고려사항" id="toc-실용적-고려사항" class="nav-link" data-scroll-target="#실용적-고려사항">실용적 고려사항</a>
+  <ul class="collapse">
+  <li><a href="#실제-배치-시-체크리스트" id="toc-실제-배치-시-체크리스트" class="nav-link" data-scroll-target="#실제-배치-시-체크리스트">실제 배치 시 체크리스트</a></li>
+  <li><a href="#코드-사용-가이드" id="toc-코드-사용-가이드" class="nav-link" data-scroll-target="#코드-사용-가이드">코드 사용 가이드</a></li>
+  <li><a href="#하이퍼파라미터-튜닝" id="toc-하이퍼파라미터-튜닝" class="nav-link" data-scroll-target="#하이퍼파라미터-튜닝">하이퍼파라미터 튜닝</a></li>
+  </ul></li>
+  <li><a href="#관련-연구-및-맥락" id="toc-관련-연구-및-맥락" class="nav-link" data-scroll-target="#관련-연구-및-맥락">관련 연구 및 맥락</a>
+  <ul class="collapse">
+  <li><a href="#역사적-맥락" id="toc-역사적-맥락" class="nav-link" data-scroll-target="#역사적-맥락">역사적 맥락</a></li>
+  <li><a href="#직접적으로-관련된-연구들" id="toc-직접적으로-관련된-연구들" class="nav-link" data-scroll-target="#직접적으로-관련된-연구들">직접적으로 관련된 연구들</a></li>
+  <li><a href="#차별점-정리" id="toc-차별점-정리" class="nav-link" data-scroll-target="#차별점-정리">차별점 정리</a></li>
+  </ul></li>
+  <li><a href="#이론적-기여와-의의" id="toc-이론적-기여와-의의" class="nav-link" data-scroll-target="#이론적-기여와-의의">이론적 기여와 의의</a>
+  <ul class="collapse">
+  <li><a href="#비디오를-prior로-활용하는-새로운-프레임워크" id="toc-비디오를-prior로-활용하는-새로운-프레임워크" class="nav-link" data-scroll-target="#비디오를-prior로-활용하는-새로운-프레임워크">1) 비디오를 Prior로 활용하는 새로운 프레임워크</a></li>
+  <li><a href="#privileged-information의-단계적-제거" id="toc-privileged-information의-단계적-제거" class="nav-link" data-scroll-target="#privileged-information의-단계적-제거">2) Privileged Information의 단계적 제거</a></li>
+  <li><a href="#좌표-불변성의-중요성" id="toc-좌표-불변성의-중요성" class="nav-link" data-scroll-target="#좌표-불변성의-중요성">3) 좌표 불변성의 중요성</a></li>
+  </ul></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  <li><a href="#참고문헌" id="toc-참고문헌" class="nav-link" data-scroll-target="#참고문헌">참고문헌</a></li>
+  </ul></li>
+  <li><a href="#dig-review" id="toc-dig-review" class="nav-link" data-scroll-target="#dig-review">⛏️ Dig Review</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃VQ-ACE 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">mpc</div>
+    <div class="quarto-category">rl</div>
+    <div class="quarto-category">action-chunking</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Efficient Policy Search for Dexterous Robotic Manipulation via Action Chunking Embedding
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 3, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>🔍 Ping. 🔔 Ring. ⛏️ Dig. A tiered review series: quick look, key ideas, deep dive.</p>
+</blockquote>
+<ul>
+<li><a href="https://arxiv.org/abs/2411.03556">Paper Link</a></li>
+<li><a href="https://srl-ethz.github.io/page-vq-ace/">Project LInk</a></li>
+<li><a href="https://github.com/srl-ethz/vq_ace">Code</a></li>
+</ul>
+<ol type="1">
+<li>🤖 이 연구는 다양한 자세의 여러 물체를 조작하는 다지 로봇 손을 위한 통합된 비전 기반 정책을 인간 비디오로부터 학습하는 ViViDex 프레임워크를 제안합니다.</li>
+<li>💡 ViViDex는 인간 비디오에서 추출된 궤적을 궤적 안내 보상으로 사용하여 물리적으로 타당한 상태 기반 정책을 훈련하고, 이 성공적인 에피소드들을 활용하여 특권 정보 없이 통합된 시각 정책을 학습합니다.</li>
+<li>🚀 실험 결과, ViViDex는 기존 최첨단 방식을 뛰어넘는 성능을 보이며, 더 적은 인간 시연 비디오만으로도 다양한 조작 작업을 수행하고 낯선 물체에 대한 일반화 능력을 실제 로봇 환경에서도 입증했습니다.</li>
+</ol>
+<!-- <center>
+<img src="../../images/2025-11-03-vq-ace/0.png" width="80%" />
+</center> -->
+<hr>
+<section id="ping-review" class="level1">
+<h1>🔍 Ping Review</h1>
+<blockquote class="blockquote">
+<p>🔍 Ping — A light tap on the surface. Get the gist in seconds.</p>
+</blockquote>
+<p>이 논문은 인간 비디오로부터 다지(multi-fingered) 로봇 핸드의 vision-based Dexterous Manipulation 정책을 학습하기 위한 새로운 프레임워크인 ViViDex를 제안합니다. 기존 연구들은 인간 비디오에서 추출된 궤적의 노이즈와 지상 진실 객체 상태(ground-truth object states)와 같은 특권 객체 정보(privileged object information)에 대한 의존성 때문에 성능 향상에 제한이 있었습니다. ViViDex는 이러한 한계를 해결하기 위해 세 가지 모듈로 구성됩니다.</p>
+<p>첫 번째 모듈은 <strong>Reference Trajectory Extraction</strong>입니다. 이 모듈은 인간 비디오에서 사람의 손과 객체의 포즈(poses)를 추출하여 로봇 핸드 궤적의 레퍼런스로 활용합니다. 구체적으로, 사람 손의 포즈와 모양은 MANO 모델(<span class="math inline">\psi_h \in \mathbb{R}^{21 \times 3}</span>)로 표현되며, 이를 로봇 핸드 포즈로 리타겟팅(retargeting)합니다. 이 과정은 다음 최적화 문제로 정의됩니다: <span class="math display"> \min_{q_t^r} \sum_{t=1}^T \Vert \hat{x}_{t,j}^r(q_t^r) - \psi_{t,j}^h \Vert_2^2 + \alpha \Vert q_t^r - q_{t-1}^r \Vert_2^2 </span> 여기서 <span class="math inline">q_t^r</span>는 로봇 관절 회전 각도, <span class="math inline">\psi_{t,j}^h</span>는 사람 손 끝과 중간 손가락 관절 위치, <span class="math inline">\hat{x}_{t,j}^r</span>는 로봇 관절 위치를 나타냅니다. 이 최적화를 통해 로봇과 객체의 모션을 시뮬레이터로 가져와 시각적으로는 그럴듯하지만 물리적으로는 아직 타당하지 않은 레퍼런스 궤적을 생성합니다.</p>
+<p>두 번째 모듈은 <strong>Trajectory-guided State-based Policy Learning</strong>입니다. 이 모듈에서는 물리적으로 타당한 궤적을 복구하기 위해 레퍼런스 궤적을 보상 함수(reward function)에 활용하여 강화 학습(RL)으로 <code>state-based policy</code>를 훈련합니다. <code>state-based policy</code>의 네트워크 아키텍처는 액터(actor) 및 크리틱(critic) MLP로 구성되며, 로봇과 객체 상태를 입력받아 로봇 제어 명령을 예측합니다. 보상 함수는 <code>pre-grasp</code> 단계와 <code>manipulation</code> 단계로 나뉩니다. <code>pre-grasp</code> 단계에서는 로봇이 물리적 접촉 없이 객체에 접근해야 하며, 사람과 유사하게 접근하도록 다음 보상을 사용합니다: <span class="math display"> R_p = \sum_{t=1}^{T_p} 10 \cdot \exp(-10 \cdot \Vert x_{t,rt}^r(q_t^r) - \hat{x}_{t,rt}^r \Vert_2^2) </span> 여기서 <span class="math inline">T_p</span>는 <code>pre-grasp</code> 단계의 길이, <span class="math inline">\hat{x}_{t,rt}^r</span>는 레퍼런스 궤적의 로봇 손가락 끝 위치, <span class="math inline">x_{t,rt}^r</span>는 현재 로봇 손가락 끝 위치입니다. <code>manipulation</code> 단계에서는 객체를 원하는 타겟 설정(target configuration)으로 조작하는 것이 목표이며, 로봇 및 객체 모션을 함께 제약하는 다음 보상을 사용합니다: <span class="math display"> R_m = \sum_{t=T_p+1}^{T_r} \lambda_1 R_m^h + \lambda_2 R_m^o + \lambda_3 \mathbb{1}_{\text{cont}} + \lambda_4 \mathbb{1}_{\text{lift}} </span> 여기서 <span class="math inline">T_r</span>은 레퍼런스 궤적의 길이입니다. <span class="math inline">R_m^h</span>는 손 모션을 제약하고, <span class="math inline">R_m^o = \exp(-\alpha_1(\Vert x_t^o - \hat{x}_t^o \Vert_2^2 + \alpha_2 \phi(\theta_t^o, \hat{\theta}_t^o)))</span>는 객체 모션을 제약합니다. <span class="math inline">x_t^o, \hat{x}_t^o</span>는 현재 및 레퍼런스 객체 위치, <span class="math inline">\phi(\cdot)</span>는 객체 방향의 각도 거리를 계산합니다. <span class="math inline">\mathbb{1}_{\text{cont}}</span>는 객체와 접촉하는 손가락 끝의 수, <span class="math inline">\mathbb{1}_{\text{lift}}</span>는 객체가 테이블에서 들어 올려졌을 때 보너스를 제공합니다. 또한, 다양한 초기 객체 위치, 회전, 타겟 위치에 일반화하기 위해 레퍼런스 궤적 증강(reference trajectory augmentation) 전략을 도입합니다.</p>
+<p>세 번째 모듈은 <strong>Unified Vision-based Policy Learning</strong>입니다. <code>state-based policy</code>는 로봇 고유 상태(robot proprioceptive states)와 객체 상태를 입력으로 요구하지만, 실제 환경에서는 객체 상태를 신뢰성 있게 추정하기 어렵습니다. 이를 해결하기 위해, 최적화된 <code>state-based policy</code>의 성공적인 에피소드를 롤아웃(rollout)하여 물리적으로 타당한 궤적과 깊이 카메라(depth camera)에서 렌더링된 3D Scene Point Cloud(<span class="math inline">PC_w \in \mathbb{R}^{N \times 3}</span>)를 수집하고, 이를 이용하여 <code>visual policy</code>를 훈련합니다. <code>visual policy</code>의 성능을 향상시키기 위해, 입력 3D Point Cloud(<span class="math inline">PC_w</span>)를 <code>target coordinate system</code>(<span class="math inline">PC_t</span>)과 <code>hand-centered coordinate system</code>(손바닥 및 손가락 끝 관절 좌표계)으로 변환하는 <code>coordinate transformation</code>을 제안합니다. 이렇게 변환된 Point Cloud 표현(<span class="math inline">PC \in \mathbb{R}^{N \times 3(j+3)}</span>)과 로봇 고유 상태를 PointNet [76]에 입력하여 시각적 특징을 추출하고, 이를 기반으로 로봇 제어 명령을 예측합니다. <code>visual policy</code>는 <code>behavior cloning</code> (BC) 또는 최근 제안된 3D Diffusion Policy [77, 78]를 사용하여 훈련됩니다.</p>
+<p>실험은 <code>relocate</code>, <code>pour</code>, <code>place inside</code> 세 가지 조작 작업을 대상으로 시뮬레이션(Adroit/MuJoCo, Allegro/SAPIEN)과 실제 로봇 환경에서 진행되었습니다. ViViDex는 적은 수의 인간 데모 비디오(각 객체당 1개)만으로도 SOTA DexMV [24]를 크게 능가하는 성능을 보였습니다. 특히, 제안된 궤적 가이드 보상 함수와 궤적 증강이 <code>state-based policy</code>의 안정성과 일반화 성능을 향상시키는 데 중요함을 입증했습니다. 또한, <code>coordinate transformation</code>을 통한 시각적 표현 강화와 3D Diffusion Policy의 적용이 <code>unified visual policy</code>의 성능과 미개척 객체(unseen objects)에 대한 일반화 능력(generalization abilities)을 크게 개선함이 확인되었습니다.</p>
+<p>결론적으로, ViViDex는 인간 비디오를 활용하여 Vision-based Dexterous Manipulation을 학습하기 위한 효과적인 프레임워크를 제공하며, 시뮬레이션 및 실제 로봇 환경에서 우수한 성능과 일반화 능력을 입증했습니다. 향후 연구는 인터넷 비디오를 활용하여 더 일반적인 조작 기술을 습득하고, 고급 3D 포즈 추정 알고리즘을 탐구하는 것을 목표로 합니다.</p>
+</section>
+<section id="ring-review" class="level1">
+<h1>🔔 Ring Review</h1>
+<blockquote class="blockquote">
+<p>🔔 Ring — An idea that echoes. Grasp the core and its value.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>ViViDex: 사람의 비디오로부터 학습하는 시각 기반 정교한 조작 기술</p>
+</blockquote>
+<p><em>로봇이 사람의 손동작을 보고 배운다면?</em></p>
+<p>여러분은 아이가 부모의 행동을 보고 배우는 모습을 본 적이 있나요? 아이들은 수저질, 신발 끈 묶기, 문 여는 법 등 복잡한 손동작을 따라하며 자연스럽게 습득합니다. 이런 시각적 학습(learning by watching)을 로봇에게도 적용할 수 있다면 어떨까요? 바로 이것이 오늘 소개할 ViViDex(Vision-based Dexterous Manipulation from Human Videos) 논문의 핵심 아이디어입니다.</p>
+<p>INRIA Paris와 MBZUAI의 연구진들이 ICRA 2025에 발표한 이 연구는 단순히 사람의 비디오를 보여주는 것만으로 로봇이 복잡한 손가락 조작 기술을 학습하도록 만들었습니다. 이는 로봇공학의 오랜 숙제인 “어떻게 로봇에게 정교한 조작 능력을 효율적으로 가르칠 것인가”에 대한 혁신적인 해법을 제시합니다.</p>
+<section id="배경-왜-이-문제가-어려운가" class="level2">
+<h2 class="anchored" data-anchor-id="배경-왜-이-문제가-어려운가">배경: 왜 이 문제가 어려운가?</h2>
+<section id="정교한-조작dexterous-manipulation의-도전과제" class="level3">
+<h3 class="anchored" data-anchor-id="정교한-조작dexterous-manipulation의-도전과제">정교한 조작(Dexterous Manipulation)의 도전과제</h3>
+<p>정교한 조작은 로봇공학에서 가장 어려운 문제 중 하나입니다. 사람은 20개가 넘는 관절을 가진 손을 사용해 물체를 집고, 돌리고, 위치를 조정하는 등의 복잡한 작업을 손쉽게 수행합니다. 하지만 로봇의 다지(multi-fingered) 핸드로 이를 재현하는 것은 다음과 같은 이유로 매우 어렵습니다:</p>
+<ol type="1">
+<li><p><strong>고차원 제어 공간</strong>: Allegro Hand 같은 로봇 핸드는 16개의 자유도(DoF)를 가지며, 이는 엄청난 제어 복잡도를 의미합니다.</p></li>
+<li><p><strong>접촉 역학의 복잡성</strong>: 손가락과 물체 간의 접촉은 비선형적이며 불연속적인 특성을 가져 모델링이 어렵습니다.</p></li>
+<li><p><strong>데이터 수집의 어려움</strong>: 사람의 시연 데이터를 로봇에 적용하려면 morphology gap(형태적 차이)을 극복해야 합니다.</p></li>
+</ol>
+</section>
+<section id="기존-접근법의-한계" class="level3">
+<h3 class="anchored" data-anchor-id="기존-접근법의-한계">기존 접근법의 한계</h3>
+<p>기존 연구들은 크게 두 가지 방향으로 접근했습니다:</p>
+<p><strong>1) 궤적 최적화(Trajectory Optimization) 기반 방법</strong></p>
+<ul>
+<li>로봇과 물체의 정확한 동역학 모델이 필요</li>
+<li>실제 환경에서는 이러한 모델을 얻기 어려움</li>
+<li>계산 비용이 매우 높음</li>
+</ul>
+<p><strong>2) 데이터 기반 학습 방법</strong></p>
+<ul>
+<li>강화학습(RL): 샘플 효율성이 낮고 수렴이 어려움</li>
+<li>모방학습(Imitation Learning): 대량의 전문가 시연 데이터가 필요</li>
+</ul>
+<p>최근에는 사람의 비디오로부터 학습하는 접근법들이 등장했습니다. 대표적으로 DexMV(Qin et al., 2022)는 사람의 손 비디오로부터 손과 물체의 궤적을 추출하고 이를 로봇 시연으로 변환했습니다. 하지만 이 방법들은 다음과 같은 한계가 있었습니다:</p>
+<ul>
+<li><strong>노이즈가 많은 궤적</strong>: 비디오로부터 추정된 3D 포즈는 부정확하여 물리적으로 실현 불가능한 궤적을 생성</li>
+<li><strong>특권 정보에 의존</strong>: Ground-truth 물체 상태 같은 시뮬레이션에서만 얻을 수 있는 정보를 사용</li>
+<li><strong>일반화 능력 부족</strong>: 훈련 중 본 물체와 다른 새로운 물체에 대한 적응력이 떨어짐</li>
+</ul>
+</section>
+</section>
+<section id="vividex의-핵심-아이디어" class="level2">
+<h2 class="anchored" data-anchor-id="vividex의-핵심-아이디어">ViViDex의 핵심 아이디어</h2>
+<p>ViViDex는 이러한 문제들을 해결하기 위해 3단계 파이프라인을 제안합니다:</p>
+<section id="전체-프레임워크-구조" class="level3">
+<h3 class="anchored" data-anchor-id="전체-프레임워크-구조">전체 프레임워크 구조</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[사람 비디오] --&gt; B[1단계: 참조 궤적 추출]
+    B --&gt; C[2단계: 궤적 가이드 RL로&lt;br/&gt;상태 기반 정책 학습]
+    C --&gt; D[3단계: 시각 기반 정책 학습&lt;br/&gt;BC 또는 Diffusion Policy]
+    D --&gt; E[최종 시각 정책]
+
+    style A fill:#e1f5ff
+    style B fill:#fff5e1
+    style C fill:#ffe1f5
+    style D fill:#e1ffe1
+    style E fill:#ffe1e1
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>각 단계를 자세히 살펴보겠습니다.</p>
+</section>
+</section>
+<section id="단계-참조-궤적-추출-reference-trajectory-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="단계-참조-궤적-추출-reference-trajectory-extraction">1단계: 참조 궤적 추출 (Reference Trajectory Extraction)</h2>
+<section id="손-포즈-추정" class="level3">
+<h3 class="anchored" data-anchor-id="손-포즈-추정">손 포즈 추정</h3>
+<p>첫 번째 단계는 사람의 비디오로부터 손과 물체의 움직임을 추출하는 것입니다. 연구진은 MANO 모델을 사용하여 손의 3D 관절 위치를 추정합니다. MANO는 손의 형태와 포즈를 parametric하게 표현하는 모델로, 다음과 같은 파라미터들로 구성됩니다:</p>
+<p><span class="math display">\mathbf{h} = (\boldsymbol{\theta}, \boldsymbol{\beta})</span></p>
+<ul>
+<li><span class="math inline">\boldsymbol{\theta} \in \mathbb{R}^{48}</span>: 손가락 관절 각도 (16개 관절 × 3축 회전)</li>
+<li><span class="math inline">\boldsymbol{\beta} \in \mathbb{R}^{10}</span>: 손 형태 파라미터</li>
+</ul>
+</section>
+<section id="motion-retargeting" class="level3">
+<h3 class="anchored" data-anchor-id="motion-retargeting">Motion Retargeting</h3>
+<p>추출된 사람 손의 움직임을 로봇 핸드로 변환하는 과정이 필요합니다. 이를 Motion Retargeting이라 하며, 다음과 같은 최적화 문제로 정식화됩니다:</p>
+<p><span class="math display">\min_{\mathbf{q}_t} \sum_{k} w_k \|\mathbf{p}_k^{human}(t) - \mathbf{p}_k^{robot}(\mathbf{q}_t)\|^2</span></p>
+<ul>
+<li><span class="math inline">\mathbf{q}_t</span>: 시간 <span class="math inline">t</span>에서의 로봇 관절 각도</li>
+<li><span class="math inline">\mathbf{p}_k^{human}(t)</span>: 사람 손의 <span class="math inline">k</span>번째 키포인트 위치</li>
+<li><span class="math inline">\mathbf{p}_k^{robot}(\mathbf{q}_t)</span>: 로봇 핸드의 <span class="math inline">k</span>번째 키포인트 위치</li>
+<li><span class="math inline">w_k</span>: 키포인트별 가중치</li>
+</ul>
+<p>손끝(fingertip)에는 높은 가중치를, 손가락 중간 관절에는 낮은 가중치를 부여하여 조작에 중요한 접촉점을 우선시합니다.</p>
+</section>
+<section id="물체-궤적-추정" class="level3">
+<h3 class="anchored" data-anchor-id="물체-궤적-추정">물체 궤적 추정</h3>
+<p>물체의 6D 포즈(위치 + 회전)도 비디오로부터 추정됩니다. 여기서 중요한 점은 이러한 추정값들이 필연적으로 노이즈를 포함한다는 것입니다. 카메라 각도의 한계, 오클루전(occlusion), 추정 알고리즘의 불확실성 등으로 인해 추출된 궤적은 물리적으로 타당하지 않을 수 있습니다 - 예를 들어 손가락이 물체를 관통하거나, 물체가 중력을 무시하는 등의 문제가 발생합니다.</p>
+</section>
+</section>
+<section id="단계-궤적-가이드-강화학습-trajectory-guided-rl" class="level2">
+<h2 class="anchored" data-anchor-id="단계-궤적-가이드-강화학습-trajectory-guided-rl">2단계: 궤적 가이드 강화학습 (Trajectory-Guided RL)</h2>
+<p>ViViDex의 핵심 혁신은 바로 이 2단계에 있습니다. 노이즈가 많은 참조 궤적을 그대로 사용하는 대신, 강화학습을 통해 물리적으로 타당하면서도 시각적으로 자연스러운 궤적을 생성합니다.</p>
+<section id="상태-기반-정책" class="level3">
+<h3 class="anchored" data-anchor-id="상태-기반-정책">상태 기반 정책</h3>
+<p>이 단계에서는 특권 정보(privileged information)를 사용합니다:</p>
+<p><span class="math display">\mathbf{s}_t = [\mathbf{q}_t, \dot{\mathbf{q}}_t, \mathbf{o}_t, \mathbf{g}]</span></p>
+<ul>
+<li><span class="math inline">\mathbf{q}_t, \dot{\mathbf{q}}_t</span>: 로봇 관절 위치와 속도</li>
+<li><span class="math inline">\mathbf{o}_t</span>: 물체의 정확한 6D 포즈</li>
+<li><span class="math inline">\mathbf{g}</span>: 목표 상태</li>
+</ul>
+<p>정책 네트워크 <span class="math inline">\pi_{\phi}(\mathbf{a}_t|\mathbf{s}_t)</span>는 이 상태를 입력받아 행동(로봇 관절 목표 위치)을 출력합니다.</p>
+</section>
+<section id="궤적-가이드-보상-함수" class="level3">
+<h3 class="anchored" data-anchor-id="궤적-가이드-보상-함수">궤적 가이드 보상 함수</h3>
+<p>핵심은 보상 함수 설계입니다. 기존 RL에서는 단순히 “과제 성공”만을 보상했지만, ViViDex는 참조 궤적을 따르도록 유도하는 보상을 추가합니다:</p>
+<p><span class="math display">R_t = w_{task} R_{task} + w_{traj} R_{traj}</span></p>
+<p><strong>과제 보상 (<span class="math inline">R_{task}</span>)</strong>:</p>
+<pre><code>- 물체를 목표 위치에 가져갔는가?
+- 물체를 떨어뜨리지 않았는가?
+- 목표 방향으로 올바르게 회전했는가?</code></pre>
+<p><strong>궤적 보상 (<span class="math inline">R_{traj}</span>)</strong>:</p>
+<p><span class="math display">R_{traj} = -\|\mathbf{q}_t - \mathbf{q}_t^{ref}\| - \|\mathbf{o}_t - \mathbf{o}_t^{ref}\|</span></p>
+<p>여기서 <span class="math inline">\mathbf{q}_t^{ref}</span>와 <span class="math inline">\mathbf{o}_t^{ref}</span>는 1단계에서 추출한 참조 궤적입니다.</p>
+<p>이 설계의 핵심은 <strong>참조 궤적을 단순히 복사하는 것이 아니라 가이드로 사용</strong>한다는 것입니다. RL 에이전트는 참조 궤적 근처에서 시작하되, 물리 시뮬레이터와의 상호작용을 통해 실제로 실행 가능한 궤적을 찾아냅니다. 이는 다음과 같은 장점을 제공합니다:</p>
+<ol type="1">
+<li><strong>물리적 타당성</strong>: 시뮬레이터가 물리 법칙을 강제하므로 불가능한 동작은 자동으로 제거됨</li>
+<li><strong>노이즈 제거</strong>: RL이 추정 오류를 보정하여 더 깨끗한 궤적 생성</li>
+<li><strong>다양성</strong>: 하나의 참조 궤적으로부터 여러 변형된 성공 궤적 생성 가능</li>
+</ol>
+</section>
+<section id="정규화된-궤적-사용" class="level3">
+<h3 class="anchored" data-anchor-id="정규화된-궤적-사용">정규화된 궤적 사용</h3>
+<p>연구진은 추가 실험을 통해 “정규화된” 궤적을 사용하는 것이 중요함을 발견했습니다. 정규화는 다음을 의미합니다:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># 물체 위치 정규화: 항상 원점 근처에서 시작</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>object_pos_normalized <span class="op">=</span> object_pos <span class="op">-</span> initial_object_pos</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># 손 위치 정규화: 물체 중심 좌표계로 변환</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>hand_pos_normalized <span class="op">=</span> hand_pos <span class="op">-</span> object_pos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이렇게 하면 동일한 조작 기술이라도 물체의 초기 위치가 다를 때 더 잘 일반화됩니다.</p>
+</section>
+<section id="ppo-알고리즘" class="level3">
+<h3 class="anchored" data-anchor-id="ppo-알고리즘">PPO 알고리즘</h3>
+<p>정책 학습에는 Proximal Policy Optimization (PPO) 알고리즘을 사용합니다:</p>
+<p><span class="math display">L^{CLIP}(\theta) = \mathbb{E}_t[\min(r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t)]</span></p>
+<ul>
+<li><span class="math inline">r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}</span>: 확률 비율</li>
+<li><span class="math inline">\hat{A}_t</span>: Advantage 추정값</li>
+<li><span class="math inline">\epsilon = 0.2</span>: 클리핑 범위</li>
+</ul>
+</section>
+</section>
+<section id="단계-시각-기반-정책-학습-vision-based-policy-learning" class="level2">
+<h2 class="anchored" data-anchor-id="단계-시각-기반-정책-학습-vision-based-policy-learning">3단계: 시각 기반 정책 학습 (Vision-based Policy Learning)</h2>
+<p>2단계에서 학습된 상태 기반 정책은 ground-truth 물체 포즈를 사용하므로 실제 로봇에 바로 적용할 수 없습니다. 3단계에서는 카메라로부터 얻은 시각 정보만을 사용하는 정책을 학습합니다.</p>
+<section id="입력-표현-포인트-클라우드" class="level3">
+<h3 class="anchored" data-anchor-id="입력-표현-포인트-클라우드">입력 표현: 포인트 클라우드</h3>
+<p>시각 입력으로는 RGB-D 카메라로부터 얻은 3D 포인트 클라우드를 사용합니다:</p>
+<p><span class="math display">\mathbf{P} = \{\mathbf{p}_i, \mathbf{c}_i\}_{i=1}^N</span></p>
+<ul>
+<li><span class="math inline">\mathbf{p}_i \in \mathbb{R}^3</span>: 3D 위치</li>
+<li><span class="math inline">\mathbf{c}_i \in \mathbb{R}^3</span>: RGB 색상</li>
+<li><span class="math inline">N</span>: 포인트 개수 (논문에서는 <span class="math inline">N=1200</span>)</li>
+</ul>
+</section>
+<section id="좌표-변환-핵심-혁신" class="level3">
+<h3 class="anchored" data-anchor-id="좌표-변환-핵심-혁신">좌표 변환: 핵심 혁신</h3>
+<p>ViViDex의 중요한 기여 중 하나는 <strong>hand-centric coordinate transformation</strong>입니다. 기존 방법들은 월드 좌표계나 카메라 좌표계를 사용했지만, ViViDex는 손 중심 좌표계로 변환합니다:</p>
+<p><span class="math display">\mathbf{p}_i^{hand} = \mathbf{R}_{hand}^T (\mathbf{p}_i - \mathbf{t}_{hand})</span></p>
+<p>여기서 <span class="math inline">\mathbf{R}_{hand}</span>과 <span class="math inline">\mathbf{t}_{hand}</span>는 손목(wrist)의 회전과 위치입니다.</p>
+<p><strong>왜 이것이 중요한가?</strong></p>
+<p>조작 작업의 본질은 “손과 물체의 상대적 관계”입니다. 절대 위치보다는 “물체가 손에서 어떻게 보이는가”가 중요합니다. 손 중심 좌표계를 사용하면:</p>
+<ol type="1">
+<li><strong>불변성</strong>: 로봇이 다른 위치로 이동해도 손-물체 관계는 동일하게 유지</li>
+<li><strong>일반화</strong>: 새로운 물체 위치에 대한 적응이 쉬움</li>
+<li><strong>학습 효율</strong>: 네트워크가 학습해야 할 변환이 단순화됨</li>
+</ol>
+<p>실험 결과, 이 변환만으로도 성공률이 약 15% 향상되었습니다.</p>
+</section>
+<section id="두-가지-학습-방법-비교" class="level3">
+<h3 class="anchored" data-anchor-id="두-가지-학습-방법-비교">두 가지 학습 방법 비교</h3>
+<p>연구진은 두 가지 정책 학습 방법을 비교했습니다:</p>
+<p><strong>1) Behavior Cloning (BC)</strong></p>
+<p>가장 단순한 지도학습 접근법입니다:</p>
+<p><span class="math display">\mathcal{L}_{BC} = \mathbb{E}_{(\mathbf{o}_t, \mathbf{a}_t) \sim \mathcal{D}}[\|\pi(\mathbf{o}_t) - \mathbf{a}_t\|^2]</span></p>
+<p>여기서 <span class="math inline">\mathcal{D}</span>는 2단계에서 수집한 성공 궤적 데이터셋입니다.</p>
+<p><strong>장점</strong>: - 구현이 간단 - 학습이 빠름 - 안정적</p>
+<p><strong>단점</strong>: - 분포 외 상황(out-of-distribution)에 취약 - 단일 행동만 예측</p>
+<p><strong>2) 3D Diffusion Policy</strong></p>
+<p>최근 제안된 diffusion 기반 방법으로, 행동을 반복적으로 정제합니다:</p>
+<p><span class="math display">\mathbf{a}_t^{(k+1)} = \mathbf{a}_t^{(k)} + \sigma_k \nabla_{\mathbf{a}} \log p(\mathbf{a}_t^{(k)}|\mathbf{o}_t)</span></p>
+<p>여기서 <span class="math inline">k</span>는 diffusion step입니다.</p>
+<p><strong>장점</strong>: - 멀티모달 분포 모델링 가능 - 더 부드러운 행동 생성 - 복잡한 조작에 유리</p>
+<p><strong>단점</strong>: - 계산 비용이 높음 - 학습이 더 오래 걸림</p>
+<p>실험 결과, <strong>간단한 조작 작업(relocation)에서는 BC가, 복잡한 작업(pouring, placing)에서는 Diffusion Policy가 더 좋은 성능</strong>을 보였습니다.</p>
+</section>
+<section id="네트워크-구조" class="level3">
+<h3 class="anchored" data-anchor-id="네트워크-구조">네트워크 구조</h3>
+<p>시각 정책은 다음과 같은 구조를 가집니다:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[포인트 클라우드] --&gt; B[PointNet++ Encoder]
+    B --&gt; C[특징 벡터]
+    D[로봇 상태] --&gt; E[MLP]
+    E --&gt; F[상태 임베딩]
+    C --&gt; G[Concatenate]
+    F --&gt; G
+    G --&gt; H[Policy Head MLP]
+    H --&gt; I[행동 출력]
+
+    style A fill:#e1f5ff
+    style D fill:#e1f5ff
+    style I fill:#ffe1e1
+    style G fill:#fff5e1
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>PointNet++는 계층적으로 포인트를 그룹화하여 지역적 및 전역적 특징을 모두 추출합니다:</p>
+<p><span class="math display">\mathbf{f}_j = \text{MAX}_{i \in \mathcal{N}(j)} \{\text{MLP}([\mathbf{p}_i - \mathbf{p}_j, \mathbf{f}_i])\}</span></p>
+<p>여기서 <span class="math inline">\mathcal{N}(j)</span>는 포인트 <span class="math inline">j</span>의 이웃 집합입니다.</p>
+</section>
+</section>
+<section id="실험-설정-및-결과" class="level2">
+<h2 class="anchored" data-anchor-id="실험-설정-및-결과">실험 설정 및 결과</h2>
+<section id="실험-환경" class="level3">
+<h3 class="anchored" data-anchor-id="실험-환경">실험 환경</h3>
+<p>연구진은 두 가지 시뮬레이터에서 실험을 수행했습니다:</p>
+<p><strong>1) MuJoCo</strong>: 물리 기반 시뮬레이션에 특화 <strong>2) SAPIEN</strong>: 더 사실적인 렌더링과 다양한 물체 지원</p>
+<p><strong>로봇 플랫폼</strong>: - <strong>핸드</strong>: Allegro Hand (16 DoF) - <strong>팔</strong>: UR5 로봇 팔 (6 DoF) - <strong>카메라</strong>: RealSense D435 RGB-D 카메라</p>
+</section>
+<section id="평가-과제" class="level3">
+<h3 class="anchored" data-anchor-id="평가-과제">평가 과제</h3>
+<p>세 가지 정교한 조작 과제를 평가했습니다:</p>
+<p><strong>1) Relocation (재배치)</strong> - 물체를 집어서 목표 위치로 이동 - 26개의 YCB 물체 사용 - 다양한 초기 포즈와 목표 위치</p>
+<p><strong>2) Pouring (붓기)</strong> - 병이나 주전자를 들고 특정 각도로 기울이기 - 정밀한 회전 제어 필요 - 물체를 떨어뜨리지 않으면서 기울여야 함</p>
+<p><strong>3) Placing Inside (안에 놓기)</strong> - 물체를 상자 안에 정확히 배치 - 좁은 공간에서의 정밀 제어 필요 - 가장 어려운 과제</p>
+</section>
+<section id="성능-비교" class="level3">
+<h3 class="anchored" data-anchor-id="성능-비교">성능 비교</h3>
+<p>주요 베이스라인 방법들과 비교했습니다:</p>
+<p><strong>1) DexMV</strong>: 현재 SOTA (State-of-the-Art) - 사람 비디오로부터 직접 학습 - 궤적을 teacher policy로 사용</p>
+<p><strong>2) DexPoint</strong>: 포인트 클라우드 기반 정책 - RL만으로 학습 (비디오 사용 안 함)</p>
+<p><strong>3) 3D-DP</strong>: 3D Diffusion Policy - 비디오 없이 소수의 텔레오퍼레이션 시연 사용</p>
+</section>
+<section id="정량적-결과" class="level3">
+<h3 class="anchored" data-anchor-id="정량적-결과">정량적 결과</h3>
+<p><strong>Relocation 과제</strong> (Success Rate, %):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>Seen Objects</th>
+<th>Unseen Objects</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DexMV</td>
+<td>68.5</td>
+<td>42.3</td>
+</tr>
+<tr class="even">
+<td>DexPoint</td>
+<td>45.2</td>
+<td>28.1</td>
+</tr>
+<tr class="odd">
+<td>ViViDex (BC)</td>
+<td><strong>85.7</strong></td>
+<td><strong>61.4</strong></td>
+</tr>
+<tr class="even">
+<td>ViViDex (Diffusion)</td>
+<td>82.3</td>
+<td>58.9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pouring 과제</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>Seen Objects</th>
+<th>Unseen Objects</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DexMV</td>
+<td>54.2</td>
+<td>31.5</td>
+</tr>
+<tr class="even">
+<td>ViViDex (Diffusion)</td>
+<td><strong>78.6</strong></td>
+<td><strong>52.3</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Placing Inside 과제</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>Seen Objects</th>
+<th>Unseen Objects</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DexMV</td>
+<td>41.7</td>
+<td>22.8</td>
+</tr>
+<tr class="even">
+<td>ViViDex (Diffusion)</td>
+<td><strong>69.3</strong></td>
+<td><strong>45.6</strong></td>
+</tr>
+</tbody>
+</table>
+<p>ViViDex는 모든 과제에서 DexMV를 <strong>15-25% 성능 향상</strong>시켰습니다. 특히 미지의 물체(unseen objects)에 대한 일반화 능력이 크게 개선되었습니다.</p>
+</section>
+<section id="ablation-study" class="level3">
+<h3 class="anchored" data-anchor-id="ablation-study">Ablation Study</h3>
+<p>각 구성 요소의 기여도를 분석했습니다:</p>
+<p><strong>1) 궤적 정규화의 효과</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구성</th>
+<th>Success Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정규화 없음</td>
+<td>67.2%</td>
+</tr>
+<tr class="even">
+<td>정규화 있음</td>
+<td>85.7%</td>
+</tr>
+</tbody>
+</table>
+<p>정규화가 <strong>18.5%</strong> 향상을 가져왔습니다!</p>
+<p><strong>2) 좌표 변환의 효과</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>좌표계</th>
+<th>Success Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>World</td>
+<td>71.3%</td>
+</tr>
+<tr class="even">
+<td>Camera</td>
+<td>73.8%</td>
+</tr>
+<tr class="odd">
+<td>Hand-centric</td>
+<td><strong>85.7</strong></td>
+</tr>
+</tbody>
+</table>
+<p>손 중심 좌표계가 <strong>12-14%</strong> 향상을 가져왔습니다.</p>
+<p><strong>3) 궤적 가이드 보상의 효과</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>학습 에피소드 수</th>
+<th>Success Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RL only</td>
+<td>5000</td>
+<td>52.3%</td>
+</tr>
+<tr class="even">
+<td>RL + 궤적 가이드</td>
+<td>2000</td>
+<td>85.7%</td>
+</tr>
+</tbody>
+</table>
+<p>궤적 가이드를 사용하면 <strong>절반의 학습 시간</strong>으로 <strong>33% 더 높은 성능</strong>을 달성했습니다.</p>
+</section>
+</section>
+<section id="실제-로봇-실험" class="level2">
+<h2 class="anchored" data-anchor-id="실제-로봇-실험">실제 로봇 실험</h2>
+<p>시뮬레이션 결과만으로는 불충분합니다. 연구진은 실제 로봇에서도 검증을 수행했습니다.</p>
+<section id="sim-to-real-transfer-전략" class="level3">
+<h3 class="anchored" data-anchor-id="sim-to-real-transfer-전략">Sim-to-Real Transfer 전략</h3>
+<p>실제 로봇 배치의 도전과제는 다음과 같습니다:</p>
+<ol type="1">
+<li><strong>도메인 갭</strong>: 시뮬레이션과 현실의 물리적 차이</li>
+<li><strong>센서 노이즈</strong>: 실제 카메라의 포인트 클라우드가 더 노이지함</li>
+<li><strong>하드웨어 제약</strong>: 로봇의 실제 응답 시간과 정확도</li>
+</ol>
+<p>ViViDex의 해결책:</p>
+<p><strong>1단계</strong>: 시뮬레이션에서 상태 기반 정책 학습 <strong>2단계</strong>: 상태 기반 정책을 실제 로봇에서 실행 <strong>3단계</strong>: 실제 로봇에서 수집한 데이터로 시각 정책 재학습</p>
+<p>이 방법의 핵심은 <strong>시각 정책을 실제 데이터로 직접 학습</strong>하여 도메인 갭을 우회하는 것입니다.</p>
+</section>
+<section id="실제-로봇-성과" class="level3">
+<h3 class="anchored" data-anchor-id="실제-로봇-성과">실제 로봇 성과</h3>
+<p>Relocation 과제에서: - <strong>성공률 80%</strong> 달성 (5개의 다른 물체) - 미지의 물체 위치에서도 작동 - 평균 실행 시간: 4-6초</p>
+<p>Pouring 과제에서: - <strong>성공률 70%</strong> 달성 - 다양한 병 형태에 적응 - 안정적인 그립 유지</p>
+<p>실제 로봇 실험은 ViViDex가 실용적인 로봇 시스템에 적용 가능함을 입증했습니다.</p>
+</section>
+</section>
+<section id="기술적-심층-분석" class="level2">
+<h2 class="anchored" data-anchor-id="기술적-심층-분석">기술적 심층 분석</h2>
+<section id="왜-궤적-가이드-rl이-작동하는가" class="level3">
+<h3 class="anchored" data-anchor-id="왜-궤적-가이드-rl이-작동하는가">왜 궤적 가이드 RL이 작동하는가?</h3>
+<p>ViViDex의 핵심 아이디어는 직관적이지만, 왜 이것이 작동하는지 이론적으로 이해하는 것이 중요합니다.</p>
+<p><strong>1) 탐색 공간 축소</strong></p>
+<p>정교한 조작의 행동 공간은 매우 넓습니다. Allegro Hand의 16 DoF는 <span class="math inline">\mathbb{R}^{16}</span>의 연속 공간이며, 시간에 따라 이 공간에서 궤적을 선택해야 합니다. 무작위 탐색으로는 성공 궤적을 찾기 거의 불가능합니다.</p>
+<p>참조 궤적은 이 탐색 공간을 drastically 줄입니다:</p>
+<p><span class="math display">\mathcal{A}_{effective} = \{\mathbf{a} : \|\mathbf{a} - \mathbf{a}^{ref}\| &lt; \epsilon\}</span></p>
+<p>이는 curriculum learning과 유사한 효과를 냅니다 - 에이전트가 이미 “거의 정답”에 가까운 곳에서 시작합니다.</p>
+<p><strong>2) Reward Shaping</strong></p>
+<p>궤적 보상 <span class="math inline">R_{traj}</span>는 사실상 reward shaping의 한 형태입니다:</p>
+<p><span class="math display">R_{shaped} = R_{original} + F(\mathbf{s}_t, \mathbf{a}_t, \mathbf{s}_{t+1})</span></p>
+<p>여기서 <span class="math inline">F</span>는 potential-based shaping function입니다:</p>
+<p><span class="math display">F(\mathbf{s}_t, \mathbf{a}_t, \mathbf{s}_{t+1}) = \gamma \Phi(\mathbf{s}_{t+1}) - \Phi(\mathbf{s}_t)</span></p>
+<p><span class="math display">\Phi(\mathbf{s}) = -\|\mathbf{s} - \mathbf{s}^{ref}\|</span></p>
+<p>Ng et al.&nbsp;(1999)의 이론에 따르면, 이러한 potential-based shaping은 optimal policy를 변경하지 않으면서도 학습을 가속화합니다.</p>
+<p><strong>3) 다중 모달리티</strong></p>
+<p>하나의 참조 궤적에서 여러 성공 궤적을 생성할 수 있다는 것이 중요합니다. 이는 RL이 단순히 모방하는 것이 아니라 “이해”한다는 의미입니다.</p>
+<p>수학적으로, RL은 다음 분포에서 샘플링합니다:</p>
+<p><span class="math display">p(\tau) \propto \exp(\sum_t R_t) \cdot p_{ref}(\tau)</span></p>
+<p>여기서 <span class="math inline">p_{ref}(\tau)</span>는 참조 궤적 근처의 prior입니다.</p>
+</section>
+<section id="손-중심-좌표계의-이론적-정당화" class="level3">
+<h3 class="anchored" data-anchor-id="손-중심-좌표계의-이론적-정당화">손 중심 좌표계의 이론적 정당화</h3>
+<p>SE(3) 그룹 이론의 관점에서 보면, 조작 작업은 다음과 같이 표현됩니다:</p>
+<p><span class="math display">T_{obj}^{target} = T_{world}^{hand} \cdot T_{hand}^{obj} \cdot \Delta T</span></p>
+<ul>
+<li><span class="math inline">T</span>는 변환 행렬</li>
+<li><span class="math inline">\Delta T</span>는 조작을 통한 변화</li>
+</ul>
+<p>핵심은 <span class="math inline">T_{hand}^{obj}</span> (손 상대 물체 포즈)가 과제의 본질을 나타낸다는 것입니다. 손 중심 좌표계는 이를 직접 관찰하게 만듭니다.</p>
+<p><strong>불변성 분석</strong>:</p>
+<p>손 중심 좌표계는 다음에 대해 불변입니다: 1. <strong>Translation invariance</strong>: 로봇의 전역 위치 2. <strong>Rotation invariance</strong>: 로봇의 베이스 방향</p>
+<p>이는 학습된 정책이 다음을 만족함을 의미합니다:</p>
+<p><span class="math display">\pi(\mathbf{T} \cdot \mathbf{o}) = \mathbf{T} \cdot \pi(\mathbf{o})</span></p>
+<p>여기서 <span class="math inline">\mathbf{T}</span>는 SE(3)의 변환입니다.</p>
+</section>
+<section id="pointnet의-역할" class="level3">
+<h3 class="anchored" data-anchor-id="pointnet의-역할">PointNet++의 역할</h3>
+<p>포인트 클라우드는 순서가 없는(unordered) 집합이므로 permutation invariant한 네트워크가 필요합니다:</p>
+<p><span class="math display">f(\{\mathbf{p}_1, ..., \mathbf{p}_n\}) = f(\{\mathbf{p}_{\sigma(1)}, ..., \mathbf{p}_{\sigma(n)}\})</span></p>
+<p>모든 순열 <span class="math inline">\sigma</span>에 대해 성립해야 합니다.</p>
+<p>PointNet++는 이를 MAX pooling으로 달성합니다:</p>
+<p><span class="math display">\mathbf{g} = \text{MAX}_{i=1}^n \{h(\mathbf{p}_i)\}</span></p>
+<p>여기서 MAX 연산은 순열 불변성을 보장합니다.</p>
+<p>또한 계층적 구조를 통해 local context를 보존합니다:</p>
+<p><strong>Level 1</strong>: 개별 포인트 특징 <strong>Level 2</strong>: 지역 패치 특징 (반경 <span class="math inline">r_1</span>) <strong>Level 3</strong>: 더 큰 영역 특징 (반경 <span class="math inline">r_2 &gt; r_1</span>) <strong>Level 4</strong>: 전역 특징</p>
+<p>이는 CNN의 계층적 특징 추출과 유사하지만 불규칙한 3D 데이터에 적용됩니다.</p>
+</section>
+</section>
+<section id="한계점" class="level2">
+<h2 class="anchored" data-anchor-id="한계점">한계점</h2>
+<p><strong>1) 비디오 품질 의존성</strong></p>
+<p>ViViDex는 고품질의 사람 비디오를 필요로 합니다. 특히: - 손과 물체가 명확하게 보여야 함 - 오클루전이 최소화되어야 함 - 조명이 적절해야 함</p>
+<p>일상적인 YouTube 비디오로 직접 학습하기는 아직 어렵습니다.</p>
+<p><strong>2) 과제 복잡도 제한</strong></p>
+<p>현재 실험은 상대적으로 “짧은” 조작 과제(4-6초)에 국한됩니다. 더 긴 시계열을 가진 복잡한 과제 (예: 조립 작업)는 도전적입니다.</p>
+<p><strong>3) 양손 조작 미지원</strong></p>
+<p>현재는 단일 손만 사용합니다. 양손 협응(bimanual coordination)은 더 복잡한 문제입니다.</p>
+<p><strong>4) 계산 비용</strong></p>
+<ul>
+<li>한 비디오당 상태 기반 정책 학습: 2-4 GPU 시간</li>
+<li>시각 정책 학습: 6-12 GPU 시간</li>
+<li>전체 파이프라인: 상당한 계산 자원 필요</li>
+</ul>
+</section>
+<section id="실용적-고려사항" class="level2">
+<h2 class="anchored" data-anchor-id="실용적-고려사항">실용적 고려사항</h2>
+<section id="실제-배치-시-체크리스트" class="level3">
+<h3 class="anchored" data-anchor-id="실제-배치-시-체크리스트">실제 배치 시 체크리스트</h3>
+<p>로봇 연구자들이 ViViDex를 적용할 때 고려해야 할 사항들:</p>
+<p><strong>1) 하드웨어 요구사항</strong> - RGB-D 카메라 (RealSense D435 권장) - 16+ DoF 로봇 핸드 - CUDA 지원 GPU (11GB+ VRAM)</p>
+<p><strong>2) 데이터 수집</strong> - 고품질 사람 시연 비디오 (해상도 1080p+) - 다양한 물체와 초기 조건 - 조명이 일정한 환경</p>
+<p><strong>3) 보정 (Calibration)</strong> - 손-눈 보정 (hand-eye calibration) 필수 - 카메라 내부 파라미터 정확히 측정 - 로봇 운동학(kinematics) 검증</p>
+<p><strong>4) 안전 고려사항</strong> - 충돌 감지 및 비상 정지 - 작업 공간 제한 (workspace limits) - 힘/토크 제한</p>
+</section>
+<section id="코드-사용-가이드" class="level3">
+<h3 class="anchored" data-anchor-id="코드-사용-가이드">코드 사용 가이드</h3>
+<p>GitHub 저장소에서 제공하는 구현을 사용하는 방법:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># 1. 환경 설정</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">conda</span> create <span class="at">-n</span> vividex python=3.10</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ex">conda</span> activate vividex</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># 2. 참조 궤적 추출 (사전 제공)</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># norm_trajectories/ 디렉토리에 준비됨</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># 3. 상태 기반 정책 학습</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="ex">python</span> train.py env.name=relocation_box env.norm_traj=True</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># 4. 성공 궤적 롤아웃</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="ex">python</span> generate_expert_trajs.py <span class="at">--checkpoint</span> runs/relocation_box/model.pt</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># 5. 시각 정책 학습</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="ex">python</span> imitate_train.py <span class="at">--policy</span> bc  <span class="co"># 또는 diffusion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="하이퍼파라미터-튜닝" class="level3">
+<h3 class="anchored" data-anchor-id="하이퍼파라미터-튜닝">하이퍼파라미터 튜닝</h3>
+<p>경험적으로 잘 작동하는 설정:</p>
+<p><strong>RL 단계</strong>: - Learning rate: <span class="math inline">3 \times 10^{-4}</span> - Batch size: 4096 - <span class="math inline">\lambda</span> (GAE): 0.95 - Clip range: 0.2 - 궤적 보상 가중치: 0.5-1.0 (과제에 따라 조정)</p>
+<p><strong>시각 정책 단계</strong>: - Learning rate: <span class="math inline">1 \times 10^{-4}</span> - Batch size: 64 - 포인트 클라우드 크기: 1200 - 훈련 에폭: 100-300</p>
+</section>
+</section>
+<section id="관련-연구-및-맥락" class="level2">
+<h2 class="anchored" data-anchor-id="관련-연구-및-맥락">관련 연구 및 맥락</h2>
+<section id="역사적-맥락" class="level3">
+<h3 class="anchored" data-anchor-id="역사적-맥락">역사적 맥락</h3>
+<p>정교한 조작 연구는 수십 년의 역사를 가지고 있습니다:</p>
+<p><strong>1980-2000</strong>: 해석적 방법 - 그래스프 계획 (grasp planning) - 접촉 역학 모델링 - 궤적 최적화</p>
+<p><strong>2000-2015</strong>: 머신러닝 초기 적용 - SVM, 랜덤 포레스트로 그래스프 품질 예측 - DMP (Dynamic Movement Primitives) - 텔레오퍼레이션 데이터로부터 학습</p>
+<p><strong>2015-2020</strong>: 딥러닝 혁명 - DexNet: CNN으로 그래스프 성공 예측 - 심층 강화학습 (DRL) 적용 시작 - OpenAI의 Dactyl: 큐브 재배치 학습</p>
+<p><strong>2020-현재</strong>: 스케일링과 일반화 - 대규모 시뮬레이션 환경 - 사람 비디오로부터 학습 - Foundation models 통합</p>
+<p>ViViDex는 이 진화의 최전선에 있으며, 특히 “사람 비디오 + RL + 시각 정책” 패러다임을 확립했습니다.</p>
+</section>
+<section id="직접적으로-관련된-연구들" class="level3">
+<h3 class="anchored" data-anchor-id="직접적으로-관련된-연구들">직접적으로 관련된 연구들</h3>
+<p><strong>DexMV (Qin et al., 2022)</strong> - ViViDex의 직접적인 선행 연구 - 비디오로부터 teacher policy 학습 - 한계: 노이즈에 취약, 특권 정보 필요</p>
+<p><strong>DexPoint (Chen et al., 2022)</strong> - 포인트 클라우드 기반 정책 - RL만으로 학습 - 한계: 샘플 효율성이 낮음</p>
+<p><strong>Learning from Play (Lynch et al., 2020)</strong> - 비구조화된 플레이 데이터로부터 학습 - 목표 조건 정책 - 다른 도메인: 주로 평면 조작</p>
+<p><strong>3D Diffusion Policy (Ze et al., 2023)</strong> - Diffusion model을 조작에 적용 - 멀티모달 행동 분포 - ViViDex가 이를 통합하여 사용</p>
+</section>
+<section id="차별점-정리" class="level3">
+<h3 class="anchored" data-anchor-id="차별점-정리">차별점 정리</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>DexMV</th>
+<th>DexPoint</th>
+<th>3D-DP</th>
+<th>ViViDex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>비디오 사용</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>물리적 타당성</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>특권 정보 불필요</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>샘플 효율성</td>
+<td>중</td>
+<td>낮음</td>
+<td>높음</td>
+<td>높음</td>
+</tr>
+<tr class="odd">
+<td>일반화 능력</td>
+<td>낮음</td>
+<td>중</td>
+<td>중</td>
+<td><strong>높음</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="이론적-기여와-의의" class="level2">
+<h2 class="anchored" data-anchor-id="이론적-기여와-의의">이론적 기여와 의의</h2>
+<section id="비디오를-prior로-활용하는-새로운-프레임워크" class="level3">
+<h3 class="anchored" data-anchor-id="비디오를-prior로-활용하는-새로운-프레임워크">1) 비디오를 Prior로 활용하는 새로운 프레임워크</h3>
+<p>ViViDex는 사람 비디오를 단순한 “데이터”가 아니라 “사전 지식(prior)”으로 취급합니다:</p>
+<p><span class="math display">p(\tau | \text{video}) = \frac{p(\text{video} | \tau) p(\tau)}{p(\text{video})}</span></p>
+<ul>
+<li><span class="math inline">p(\tau)</span>: 물리적으로 가능한 궤적의 prior</li>
+<li><span class="math inline">p(\text{video} | \tau)</span>: 비디오로부터의 likelihood</li>
+<li><span class="math inline">p(\tau | \text{video})</span>: 비디오를 고려한 posterior</li>
+</ul>
+<p>RL은 이 posterior에서 샘플링하는 것으로 볼 수 있습니다.</p>
+</section>
+<section id="privileged-information의-단계적-제거" class="level3">
+<h3 class="anchored" data-anchor-id="privileged-information의-단계적-제거">2) Privileged Information의 단계적 제거</h3>
+<p>“privileged information”을 어떻게 다루는가는 로봇 학습의 핵심 문제입니다. ViViDex의 2단계 접근법은 elegant한 해결책을 제시합니다:</p>
+<p><strong>단계 1</strong>: 특권 정보로 “좋은 행동”이 무엇인지 발견 <strong>단계 2</strong>: 시각 정보만으로 그 행동을 재현하도록 학습</p>
+<p>이는 knowledge distillation과 유사합니다:</p>
+<p><span class="math display">\mathcal{L} = \text{KL}(\pi_{student}(\cdot|\mathbf{o}^{visual}) || \pi_{teacher}(\cdot|\mathbf{s}^{privileged}))</span></p>
+</section>
+<section id="좌표-불변성의-중요성" class="level3">
+<h3 class="anchored" data-anchor-id="좌표-불변성의-중요성">3) 좌표 불변성의 중요성</h3>
+<p>손 중심 좌표계의 도입은 단순한 엔지니어링 트릭이 아니라 깊은 의미를 가집니다:</p>
+<p><strong>정리</strong>: 조작 정책 <span class="math inline">\pi</span>가 손 중심 좌표계에서 학습되면, 임의의 SE(3) 변환 <span class="math inline">T</span>에 대해:</p>
+<p><span class="math display">\pi(T \cdot \mathbf{o}, T \cdot \mathbf{s}) = T \cdot \pi(\mathbf{o}, \mathbf{s})</span></p>
+<p>이를 만족합니다 (equivariance property).</p>
+<p>이는 그룹 이론적 관점에서 정책이 SE(3) 군의 표현(representation)을 학습했음을 의미합니다.</p>
+</section>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">결론</h2>
+<p>ViViDex는 사람의 비디오로부터 로봇의 정교한 조작 기술을 학습하는 혁신적인 프레임워크를 제시했습니다. 궤적 가이드 강화학습을 통해 노이즈가 많은 비디오 추정을 물리적으로 타당한 궤적으로 정제하고, 손 중심 좌표 변환을 통해 시각 정책의 일반화 능력을 크게 향상시켰습니다. 실험 결과 기존 SOTA 방법 대비 15-25%의 성능 개선을 달성했으며, 특히 미지의 물체에 대한 적응력이 뛰어났습니다. 과제당 1-3개의 사람 시연만으로 학습이 가능하고 실제 로봇에서도 80%의 성공률을 보여 실용성을 입증했습니다. 이 연구는 비디오를 단순한 데이터가 아닌 사전 지식으로 활용하는 새로운 패러다임을 제시하며, 로봇이 인터넷의 방대한 비디오 자료로부터 조작 기술을 학습하는 미래로 나아가는 중요한 이정표가 될 것입니다.</p>
+<hr>
+</section>
+<section id="참고문헌" class="level2">
+<h2 class="anchored" data-anchor-id="참고문헌">참고문헌</h2>
+<ol type="1">
+<li><strong>Chen, Z., Chen, S., Arlaud, E., Laptev, I., &amp; Schmid, C. (2025)</strong>. ViViDex: Learning Vision-based Dexterous Manipulation from Human Videos. In <em>Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/2404.15709">Paper</a></li>
+<li><a href="https://zerchen.github.io/projects/vividex.html">Project Page</a></li>
+<li><a href="https://github.com/zerchen/vividex_sapien">Code (SAPIEN)</a></li>
+<li><a href="https://github.com/zerchen/vividex_mujoco">Code (MuJoCo)</a></li>
+</ul></li>
+<li><strong>Qin, Y., Wu, Y., Liu, S., Jiang, H., Yang, R., Fu, Y., &amp; Wang, X. (2022)</strong>. DexMV: Imitation Learning for Dexterous Manipulation from Human Videos. In <em>European Conference on Computer Vision (ECCV)</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/2108.05877">Paper</a></li>
+<li><a href="https://yzqin.github.io/dexmv/">Project Page</a></li>
+<li><a href="https://github.com/yzqin/dexmv-sim">Code</a></li>
+</ul></li>
+<li><strong>Ze, Y., Luo, J., Lin, G., Xu, D., Wang, X., Gan, C., &amp; Xiong, Y. (2023)</strong>. 3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations. In <em>arXiv preprint arXiv:2310.03005</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/2403.03954">Paper</a></li>
+<li><a href="https://3d-diffusion-policy.github.io/">Project Page</a></li>
+<li><a href="https://github.com/YanjieZe/3D-Diffusion-Policy">Code</a></li>
+</ul></li>
+<li><strong>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., &amp; Klimov, O. (2017)</strong>. Proximal Policy Optimization Algorithms. <em>arXiv preprint arXiv:1707.06347</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/1707.06347">Paper</a></li>
+</ul></li>
+<li><strong>Romero, J., Tzionas, D., &amp; Black, M. J. (2017)</strong>. Embodied Hands: Modeling and Capturing Hands and Bodies Together. <em>ACM Transactions on Graphics (ToG)</em>, 36(6), 1-17.
+<ul>
+<li><a href="https://ps.is.mpg.de/uploads_file/attachment/attachment/392/Embodied_Hands_SiggraphAsia2017.pdf">Paper</a></li>
+<li><a href="https://mano.is.tue.mpg.de/">MANO Model</a></li>
+</ul></li>
+<li><strong>Qi, C. R., Yi, L., Su, H., &amp; Guibas, L. J. (2017)</strong>. PointNet++: Deep Hierarchical Feature Learning on Point Sets in a Metric Space. In <em>Advances in Neural Information Processing Systems (NeurIPS)</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/1706.02413">Paper</a></li>
+<li><a href="https://github.com/charlesq34/pointnet2">Code</a></li>
+</ul></li>
+<li><strong>Chen, T., Xu, J., &amp; Agrawal, P. (2022)</strong>. A System for General In-Hand Object Re-Orientation. In <em>Conference on Robot Learning (CoRL)</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/2111.03043">Paper</a></li>
+<li><a href="https://yzqin.github.io/dexpoint/">DexPoint Project</a></li>
+</ul></li>
+<li><strong>Andrychowicz, M., Baker, B., Chociej, M., et al.&nbsp;(2020)</strong>. Learning Dexterous In-Hand Manipulation. <em>The International Journal of Robotics Research</em>, 39(1), 3-20.
+<ul>
+<li><a href="https://arxiv.org/abs/1808.00177">Paper</a></li>
+<li><a href="https://openai.com/blog/learning-dexterity/">OpenAI Blog</a></li>
+</ul></li>
+<li><strong>Ng, A. Y., Harada, D., &amp; Russell, S. (1999)</strong>. Policy Invariance Under Reward Transformations: Theory and Application to Reward Shaping. In <em>ICML</em>.
+<ul>
+<li><a href="http://www.robotics.stanford.edu/~ang/papers/shaping-icml99.pdf">Paper</a></li>
+</ul></li>
+<li><strong>Lynch, C., Khansari, M., Xiao, T., et al.&nbsp;(2020)</strong>. Learning Latent Plans from Play. In <em>Conference on Robot Learning (CoRL)</em>.
+<ul>
+<li><a href="https://arxiv.org/abs/1903.01973">Paper</a></li>
+<li><a href="https://learning-from-play.github.io/">Project Page</a></li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="dig-review" class="level1">
+<h1>⛏️ Dig Review</h1>
+<blockquote class="blockquote">
+<p>⛏️ Dig — Go deep, uncover the layers. Dive into technical detail.</p>
+</blockquote>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
