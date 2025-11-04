@@ -369,19 +369,14 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 </header>
 
 
-<section id="들어가며" class="level2">
-<h2 class="anchored" data-anchor-id="들어가며">👋 들어가며</h2>
 <p>파이썬으로 프로젝트를 만들다 보면 이런 고민을 하게 됩니다.</p>
 <blockquote class="blockquote">
 <p>“폴더를 어떻게 나눠야 하지?” “import가 자꾸 꼬이는데 왜일까?” “연구용 코드랑 배포용 코드는 어떻게 달라야 하지?”</p>
 </blockquote>
-<p>처음에는 <code>main.py</code>, <code>utils.py</code>, <code>train.py</code> 파일 몇 개로 시작하지만, 시간이 지나면 코드가 점점 커지고 <strong>정리되지 않은 프로젝트는 유지보수 지옥</strong>이 됩니다 😱</p>
-<p>그래서 이 글에서는 <strong>누구나 따라할 수 있는 파이썬 프로젝트 정리법</strong>을 기초부터 차근차근 알려드립니다.</p>
-<hr>
-</section>
-<section id="목표" class="level2">
-<h2 class="anchored" data-anchor-id="목표">🎯 목표</h2>
-<p>이 글을 마치면 아래를 스스로 구성할 수 있어요.</p>
+<p>처음에는 <code>main.py</code>, <code>utils.py</code>, <code>train.py</code> 파일 몇 개로 시작하지만, 시간이 지나면 코드가 점점 커지고 <strong>정리되지 않은 프로젝트는 유지보수 지옥</strong>이 됩니다. 그래서 이 글에서는 <strong>파이썬 프로젝트 정리법</strong>에 대해 알아봅니다.</p>
+<center>
+<img src="../../images/2025-11-02-python-project-management/0.png" width="60%">
+</center>
 <ul>
 <li>✅ import 충돌 없이 모듈을 불러오기</li>
 <li>✅ 테스트 코드와 실험 스크립트 분리</li>
@@ -389,7 +384,6 @@ gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
 <li>✅ 패키지 설치 가능한 구조 구성</li>
 </ul>
 <hr>
-</section>
 <section id="기본-구조-설계" class="level2">
 <h2 class="anchored" data-anchor-id="기본-구조-설계">🏗️ 기본 구조 설계</h2>
 <p>먼저 폴더를 아래처럼 구성해 봅시다 👇</p>
