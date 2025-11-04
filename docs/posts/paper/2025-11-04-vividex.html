@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-03">
-<meta name="description" content="Efficient Policy Search for Dexterous Robotic Manipulation via Action Chunking Embedding">
+<meta name="dcterms.date" content="2025-11-04">
+<meta name="description" content="Learning Vision-based Dexterous Manipulation from Human Videos">
 
-<title>📃VQ-ACE 리뷰 – Curieux.JY</title>
+<title>📃ViViDex 리뷰 – Curieux.JY</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -454,7 +454,16 @@ window.Quarto = {
   <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
   <li><a href="#참고문헌" id="toc-참고문헌" class="nav-link" data-scroll-target="#참고문헌">참고문헌</a></li>
   </ul></li>
-  <li><a href="#dig-review" id="toc-dig-review" class="nav-link" data-scroll-target="#dig-review">⛏️ Dig Review</a></li>
+  <li><a href="#dig-review" id="toc-dig-review" class="nav-link" data-scroll-target="#dig-review">⛏️ Dig Review</a>
+  <ul class="collapse">
+  <li><a href="#핵심-기여-요약" id="toc-핵심-기여-요약" class="nav-link" data-scroll-target="#핵심-기여-요약">1. 핵심 기여 요약</a></li>
+  <li><a href="#기술-구성-요소-상세-분석" id="toc-기술-구성-요소-상세-분석" class="nav-link" data-scroll-target="#기술-구성-요소-상세-분석">2. 기술 구성 요소 상세 분석</a></li>
+  <li><a href="#관련-연구와의-비교-분석" id="toc-관련-연구와의-비교-분석" class="nav-link" data-scroll-target="#관련-연구와의-비교-분석">3. 관련 연구와의 비교 분석</a></li>
+  <li><a href="#실험-설정-및-결과-1" id="toc-실험-설정-및-결과-1" class="nav-link" data-scroll-target="#실험-설정-및-결과-1">4. 실험 설정 및 결과</a>
+  <ul class="collapse">
+  <li><a href="#주요-결과" id="toc-주요-결과" class="nav-link" data-scroll-target="#주요-결과">주요 결과</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -464,7 +473,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">📃VQ-ACE 리뷰</h1>
+<h1 class="title">📃ViViDex 리뷰</h1>
   <div class="quarto-categories">
     <div class="quarto-category">mpc</div>
     <div class="quarto-category">rl</div>
@@ -474,7 +483,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Efficient Policy Search for Dexterous Robotic Manipulation via Action Chunking Embedding
+    Learning Vision-based Dexterous Manipulation from Human Videos
   </div>
 </div>
 
@@ -485,7 +494,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 3, 2025</p>
+      <p class="date">November 4, 2025</p>
     </div>
   </div>
   
@@ -501,18 +510,18 @@ window.Quarto = {
 <p>🔍 Ping. 🔔 Ring. ⛏️ Dig. A tiered review series: quick look, key ideas, deep dive.</p>
 </blockquote>
 <ul>
-<li><a href="https://arxiv.org/abs/2411.03556">Paper Link</a></li>
-<li><a href="https://srl-ethz.github.io/page-vq-ace/">Project LInk</a></li>
-<li><a href="https://github.com/srl-ethz/vq_ace">Code</a></li>
+<li><a href="https://arxiv.org/abs/2404.15709">Paper Link</a></li>
+<li><a href="https://zerchen.github.io/projects/vividex.html">Project LInk</a></li>
+<li>Code:<a href="https://github.com/zerchen/vividex_sapien">Sapein</a>, <a href="https://github.com/zerchen/vividex_mujoco">Mujoco</a></li>
 </ul>
 <ol type="1">
-<li>🤖 이 연구는 다양한 자세의 여러 물체를 조작하는 다지 로봇 손을 위한 통합된 비전 기반 정책을 인간 비디오로부터 학습하는 ViViDex 프레임워크를 제안합니다.</li>
-<li>💡 ViViDex는 인간 비디오에서 추출된 궤적을 궤적 안내 보상으로 사용하여 물리적으로 타당한 상태 기반 정책을 훈련하고, 이 성공적인 에피소드들을 활용하여 특권 정보 없이 통합된 시각 정책을 학습합니다.</li>
-<li>🚀 실험 결과, ViViDex는 기존 최첨단 방식을 뛰어넘는 성능을 보이며, 더 적은 인간 시연 비디오만으로도 다양한 조작 작업을 수행하고 낯선 물체에 대한 일반화 능력을 실제 로봇 환경에서도 입증했습니다.</li>
+<li>다양한 자세의 여러 물체를 조작하는 다지 로봇 손을 위한 통합된 비전 기반 정책을 인간 비디오로부터 학습하는 ViViDex 프레임워크를 제안합니다.</li>
+<li>ViViDex는 인간 비디오에서 추출된 궤적을 궤적 안내 보상으로 사용하여 물리적으로 타당한 상태 기반 정책을 훈련하고, 이 성공적인 에피소드들을 활용하여 특권 정보 없이 통합된 시각 정책을 학습합니다.</li>
+<li>실험 결과, ViViDex는 기존 최첨단 방식을 뛰어넘는 성능을 보이며, 더 적은 인간 시연 비디오만으로도 다양한 조작 작업을 수행하고 낯선 물체에 대한 일반화 능력을 실제 로봇 환경에서도 입증했습니다.</li>
 </ol>
-<!-- <center>
-<img src="../../images/2025-11-03-vq-ace/0.png" width="80%" />
-</center> -->
+<center>
+<img src="../../images/2025-11-04-vividex/00.png" width="100%">
+</center>
 <hr>
 <section id="ping-review" class="level1">
 <h1>🔍 Ping Review</h1>
@@ -622,6 +631,9 @@ window.Quarto = {
 <li><span class="math inline">w_k</span>: 키포인트별 가중치</li>
 </ul>
 <p>손끝(fingertip)에는 높은 가중치를, 손가락 중간 관절에는 낮은 가중치를 부여하여 조작에 중요한 접촉점을 우선시합니다.</p>
+<center>
+<img src="../../images/2025-11-04-vividex/01.png" width="70%">
+</center>
 </section>
 <section id="물체-궤적-추정" class="level3">
 <h3 class="anchored" data-anchor-id="물체-궤적-추정">물체 궤적 추정</h3>
@@ -882,7 +894,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>정규화가 <strong>18.5%</strong> 향상을 가져왔습니다!</p>
+<p>정규화가 <strong>18.5%</strong> 향상을 가져왔습니다.</p>
 <p><strong>2) 좌표 변환의 효과</strong>:</p>
 <table class="caption-top table">
 <thead>
@@ -1225,8 +1237,74 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>⛏️ Dig — Go deep, uncover the layers. Dive into technical detail.</p>
 </blockquote>
+<section id="핵심-기여-요약" class="level2">
+<h2 class="anchored" data-anchor-id="핵심-기여-요약">1. 핵심 기여 요약</h2>
+<p>ViViDex 논문은 인간 동영상(human videos)을 활용하여 다자유도(multi-fingered) 로봇 핸드의 시각 기반 정밀 조작(dexterous manipulation) 정책을 학습하는 새로운 프레임워크를 제안한다. 주요 기여는 다음과 같다:</p>
+<p>ViViDex 프레임워크 제안: 인간의 조작 동영상으로부터 시각 기반 정밀 조작 정책을 학습하는 통합 프레임워크를 도입했다. 기존 방법들이 수백 개의 동영상과 복잡한 보상 함수에 의존하던 한계를 극복하기 위해, 트래젝토리 가이드 강화학습(trajectory-guided RL)과 통합 비전 기반 정책(distilled visual policy) 학습 과정을 결합하였다.</p>
+<p>상태 기반 정책 학습 개선: 인간 동영상에서 추출한 손과 물체 궤적(reference trajectory)을 그대로 사용하지 않고, 물리적으로 타당한 물체-손 동작으로 변환한다. 이를 위해 궤적 유사성을 유지하는 새로운 보상 함수(reward)를 설계하여 강화학습(RL) 과정에 반영했다. 또한, 비전 기반 정책을 위한 새로운 네트워크 구조(좌표 변환을 포함한 PointNet 기반 모델)를 제안하였다.</p>
+<p>실험적 검증: 세 가지 정밀 조작 과제(relocate, pour, place-inside)에 대해 광범위한 시뮬레이션 및 실제 로봇 실험을 수행했다. 그 결과, 제안한 ViViDex가 동일 조건에서 기존 최첨단(예: DexMV ) 방법들을 뛰어넘는 성능을 보였고, 특히 훨씬 적은 동영상을 사용하면서도 높은 성공률을 달성함을 입증했다.</p>
+<p>이상의 결과들은 ViViDex가 인간의 자연스러운 조작 동작을 효과적으로 활용하여 물리적 타당성을 보장한 시각 기반 로봇 조작 정책을 학습할 수 있음을 시사한다.</p>
+</section>
+<section id="기술-구성-요소-상세-분석" class="level2">
+<h2 class="anchored" data-anchor-id="기술-구성-요소-상세-분석">2. 기술 구성 요소 상세 분석</h2>
+<center>
+<img src="../../images/2025-11-04-vividex/00.png" width="100%">
+</center>
+<blockquote class="blockquote">
+<p>그림 1. ViViDex 프레임워크 개요: (a) 인간 동영상으로부터 참조 궤적을 추출하고, (b) 해당 궤적을 RL 기반으로 정제하여 상태(state)-기반 정책을 학습하며, (c) 이를 통해 얻은 타당한 궤적을 사용해 RGB-D 센서 입력만으로 동작하는 통합 시각 정책을 학습한다.</p>
+</blockquote>
+<p>ViViDex는 세 개의 모듈로 구성된 파이프라인으로, 그림 1에 개요가 나와 있다. 먼저 (1) 인간 동영상으로부터 참조 궤적(reference trajectory) 추출을 통해 실제 인간 손과 물체의 움직임 정보를 얻고, 다음으로 (2) 궤적 유도 상태 기반 정책 학습 단계를 통해 물리적으로 타당한 로봇 동작을 생성한다. 마지막으로 (3) 통합된 시각 기반 정책 학습 단계에서 실제 센서 입력(3D 포인트클라우드)만으로 동작을 수행하는 네트워크를 훈련한다. 이 세 모듈은 그림 1에 요약된 바와 같이 연결된다.</p>
+<p>참조 궤적 추출 및 모션 리타게팅(Motion Retargeting): ViViDex는 Narang et al.의 DexYCB 데이터셋을 사용한다. 이 데이터셋은 20개의 YCB 물체에 대해 인간의 손-물체 상호작용 영상을 제공한다. 본 연구에서는 기존 작업(DexMV )과의 비교를 위해 머스타드병, 토마토캔, 설탕상자, 대형클램프, 머그잔 등 5개 물체를 선택했다. 각 물체마다 비디오 1~3개를 선택하여 실험에 사용하며, 해당 비디오로부터 3D 손 관절과 물체 포즈를 추정한다. 추정된 인간 손 궤적은 로봇 관절 공간으로 직접 옮기기에는 노이즈와 불일치가 있으므로, 그림 2에 보이는 바와 같이 최적화 기반 리타게팅을 적용하여 알레그로(Allegro) 로봇 손 관절(<span class="math inline">q_t^r</span>)을 구한다. 목표는 인간 손가락 끝 위치 <span class="math inline">\psi_t^{h_j}</span>와 로봇 손가락 끝 위치 <span class="math inline">\hat{x}_{t}^{r_j}(q_t^r)</span>의 차이를 최소화하는 것이다. 식 (1)과 같은 목적으로 <span class="math inline">\ell_2</span> 거리와 관절 변화에 대한 규제항을 결합한 최적화 문제를 풀어 로봇 관절 궤적을 획득한다. 그 결과 시각적으로 자연스럽지만 물리적으로 불안정한 궤적이 생성된다(그림 2).</p>
+<p>상태 기반 정책(State-based policy) 학습: 획득한 참조 궤적을 기반으로 강화학습(RL)을 통해 물리적으로 타당한 로봇 동작을 학습한다. 상태 기반 정책은 actor-critic MLP 네트워크로 구현되며, 로봇 관절 및 물체의 상태 정보를 입력받아 로봇 관절 제어 명령을 출력한다. 여기서 핵심은 트래젝토리-유도 보상 함수(trajectory-guided reward)의 설계이다. 참조 궤적을 ‘프리그랩(pre-grasp) 단계’(물체 접근)와 ‘매니퓰레이션 단계’(물체 조작)로 나누고, 각 단계마다 다음과 같은 보상을 부과한다(그림 2):</p>
+<p>프리그랩 단계 보상 (<span class="math inline">R_p</span>): 로봇 손가락 끝의 현재 위치 <span class="math inline">x_t^r</span>가 참조 궤적의 로봇 손가락 끝 위치 <span class="math inline">\hat{x}_t^r</span>와 가까울수록 보상이 증가한다. 구체적으로, <span class="math inline">T_p</span> 시간 동안 다음과 같은 보상을 사용한다:</p>
+<p><span class="math display">R_p = \sum_{t}^{T_p} 10\,\exp\Bigl(-10\,|x_t^r - \hat{x}_t^r|^2\Bigr).</span></p>
+<p>매니퓰레이션 단계 보상 (<span class="math inline">R_m</span>): 물체를 목표 위치로 이동·조작하는 단계로, 로봇 손과 물체 동작을 함께 제약하는 종합 보상을 적용한다. 참조 궤적의 잔여 단계 <span class="math inline">t=T_p+1</span>부터 <span class="math inline">T_r</span>까지에 대해 다음을 정의한다:</p>
+<p><span class="math display">R_m = \sum_{t=T_p+1}^{T_r}\bigl[\lambda_1 R^m_h + \lambda_2 R^m_o + \lambda_3\,1_{\text{contact}} + \lambda_4\,1_{\text{lift}}\bigr].</span></p>
+<p>여기서 <span class="math inline">R^m_h</span>는 프리그랩 단계와 유사하게 손 움직임을 참조 궤적과 가깝게 유지하는 손 동작 보상, <span class="math inline">R^m_o = \exp\bigl(-\alpha_1(|x_t^o - \hat{x}_t^o|^2 + \alpha_2\phi(\theta_t^o,\hat{\theta}_t^o))\bigr)</span>는 물체 위치 및 자세가 참조와 유사할수록 증가하는 물체 보상이다. 또한 <span class="math inline">1_{\text{contact}}</span>는 손가락 끝이 물체와 접촉한 개수, <span class="math inline">1_{\text{lift}}</span>는 물체를 성공적으로 들어올렸을 때 추가로 주어지는 보너스 항이다. 실험에서는 하이퍼파라미터를 <span class="math inline">\lambda_1=4,\lambda_2=10,\lambda_3=0.5,\alpha_1=50,\alpha_2=0.1</span> 등으로 설정했다. 이와 같은 보상 설정으로 학습된 정책은 참조 궤적을 따라 물체를 조작하면서 물리적 제약을 만족하도록 학습된다.</p>
+<p>학습 도중 데이터 다양성을 확보하기 위해 궤적 증강(trajectory augmentation)을 수행한다. 구체적으로, 초기 물체 위치나 회전을 무작위로 변경하고 참조 궤적 전체를 변환하거나, 목표 물체 위치를 변화시키며 손 동작 궤적을 선형 보간한다. 이를 통해 정책은 참조 궤적과 다른 초기/목표 조건에서도 일반화될 수 있도록 학습된다.</p>
+<center>
+<img src="../../images/2025-11-04-vividex/02.png" width="70%">
+</center>
+<blockquote class="blockquote">
+<p>왼쪽은 프리그랩 단계, 오른쪽은 매니퓰레이션 단계이다. R1, R2, R3는 서로 다른 보상 함수 설정(손 보상 유/무)을 나타낸다. R3(제안 방식, 손 보상을 양 단계에 모두 포함)은 가장 높은 성공률을 보인다.</p>
+</blockquote>
+<p>보상 함수의 효과: Table I와 그림 3의 비교에서 알 수 있듯, 프리그랩 단계와 매니퓰레이션 단계 모두에서 손 궤적 유사성을 유도하는 보상(R3 방식)을 사용할 때, 가장 현실적이고 성공적인 조작이 가능했다. 손 보상을 누락한 R1, R2 방식은 각각 접근 또는 집기 단계에서 비현실적인 동작을 유발하였고, 성공률도 낮았다. 특히 R3 정책은 모든 객체에 대해 <span class="math inline">\text{SR}_3=1.00</span>을 달성할 만큼 안정적인 성능을 보였다.</p>
+<p>시각 기반 정책(Vision-based policy) 학습: 상태 기반 정책은 로봇 고유 상태와 물체 상태를 모두 필요로 한다. 그러나 실제 환경에서는 물체의 정확한 위치/자세를 측정하기 어려우므로, ViViDex는 RGB-D 카메라로 얻은 3D 포인트클라우드만을 입력으로 하는 시각 기반 정책을 추가로 학습한다. 구체적으로, 상태 기반 정책에서 얻은 여러 성공 시뮬레이션 궤적을 롤아웃하면서 각 시간마다 3D 포인트클라우드 <span class="math inline">PC^w\in\mathbb{R}^{N\times3}</span>와 로봇 관절 상태를 기록한다.</p>
+<p>이렇게 수집된 비주얼 데이터를 학습에 활용하기 위해, 좌표 변환(coordinate transformation) 기법을 적용한다. 먼저, 세계 좌표계(<span class="math inline">PC^w</span>)를 목표 물체 중심 좌표계(<span class="math inline">PC^t</span>)로 이동시켜 네트워크가 목표 위치를 더 잘 인식하도록 한다. 아울러, 더 자세한 상호작용 정보를 얻기 위해 전체 포인트클라우드를 로봇의 손목 및 각 손가락 끝좌표계(총 6개)의 좌표계로 추가 변환한다. 이렇게 변환된 포인트클라우드들을 합쳐(PointNet 기반) 시각 특징을 추출하고, 이 특징과 로봇 관절 상태를 입력으로 최종 MLP가 제어 명령을 예측한다(그림 3 참조).</p>
+<p>그림 3. ViViDex의 시각 기반 정책 네트워크 구조. 세계 좌표(<span class="math inline">PC^w</span>)에서 목표 물체 좌표계(<span class="math inline">PC^t</span>)와 다수의 손 관절 좌표계로 포인트클라우드를 변환하여 PointNet에 입력한다. 추출된 시각 특징과 로봇 관절 상태를 함께 사용하여 행동을 예측한다.</p>
+<p>학습 방식으로는 행동 복제(Behavior Cloning)와 확산 정책(Diffusion policy) 두 가지를 비교했다. 실험 결과, 충분한 점밀도(point density)와 확산 모델을 사용할수록 성능이 향상되었다. 예를 들어, 포인트클라우드를 512개가 아닌 2048개로 늘리고 확산 정책을 사용할 때 성공률이 증가함이 확인되었다. Diffusion 정책은 노이즈에 더 강건하여 동작 예측 안정성이 높았고, 전반적으로 BC보다 성능이 우수했다. 학습 데이터는 상태 기반 정책으로부터 얻은 약 100회 이상 성공 궤적이며, 단일 에피소드 학습에 BC 약 10시간, 확산 정책 약 20시간이 소요되었다.</p>
+</section>
+<section id="관련-연구와의-비교-분석" class="level2">
+<h2 class="anchored" data-anchor-id="관련-연구와의-비교-분석">3. 관련 연구와의 비교 분석</h2>
+<p>ViViDex는 인간 동영상을 이용한 학습과 시각 기반 조작 학습 분야의 여러 선행 연구들과 연관된다. 주요 비교 대상은 다음과 같다.</p>
+<p>DexMV (Qin et al., ECCV 2022): 인간 조작 동영상에서 3D 손과 물체 자세를 자동 추출한 뒤, 이를 로봇 시뮬레이션 데모로 변환하여 RL 정책 학습에 활용한다. 동영상으로부터 추출된 궤적을 최적화 기반으로 로봇 관절 궤적으로 리타게팅하고, DAPG 등 알고리즘으로 학습한다. 그러나 이 방법은 포즈 추정 잡음이 커서 객체당 수십~수백 개의 영상이 필요하며, 보상 함수 조정과 물체 CAD 모델 등 특권 정보(privileged information)에 의존한다는 단점이 있다.</p>
+<p>DexVIP (Mandikal &amp; Grauman, CoRL 2022): 유튜브 동영상 등 실제 환경의 in-the-wild 영상에서 인간 손-물체 상호작용을 추출하여 로봇 그리핑(grasping) 정책을 학습한다. 특히 인간 손의 포즈에 대한 사전(prior)을 강화학습에 도입하여 학습 속도와 일반화성을 향상시킨다. 이 방법은 다양한 객체로의 확장성이 뛰어나며, 전문적 장비가 필요 없는 비용 효율적인 접근법을 제시했다. 그러나, DexVIP는 주로 그립 동작에 한정되어 있으며, 완전한 손 동작 제어까지 포함하지 않는다.</p>
+<p>VideoDex (Shaw et al., CoRL 2022): 인간의 조작 동영상에서 시각/행동/물리적 선험 지식을 추출하여 로봇 정책 학습에 활용한다. 영상으로부터 학습한 visual prior와 physical prior를 네트워크에 적용해 다양한 조작 과제에서 강건한 성능을 보여주었다. 실제 환경에서 다수의 객체를 다룰 수 있는 범용적인 정책 학습이 목표이다.</p>
+<p>기타 연구들: DexRepNet, VideoDex 등 여러 연구가 기하학적 표현, 텔레오퍼레이션, 강화학습 보조 정보 등을 통해 정밀 조작을 다루었다. 그러나 대부분은 모노-이나 듀얼 카메라 입력이나 특수 장비(예: VR 글러브)에 의존하거나, 광범위한 전문가 데이터 수집을 요구한다.</p>
+<p>이들에 비해 ViViDex의 차별점은 다음과 같다. 첫째, 단일 비디오(객체당 1~3편)만으로도 높은 성능을 달성할 만큼 데이터 효율성이 뛰어나다. 실제로 표 II에서 제안 방법(S6, S7)은 객체마다 1편의 훈련 동영상만 사용하여 모든 객체의 Relocate 과제에서 <span class="math inline">\text{SR}_3=1.00</span>을 달성했는데, DexMV는 수십~수백 편의 동영상으로도 일부 객체에서 낮은 성능에 머물렀다. 둘째, ViViDex는 로봇의 물체 CAD 모델이나 ground-truth 물체 포즈 같은 특권 정보를 전혀 사용하지 않는다. 대신, 3D 포인트클라우드를 통해 관측된 정보만으로 정책을 학습한다. 이는 실제 로봇 적용 시 센서만으로도 정책 실행이 가능함을 의미한다. 셋째, RL 보상을 참조 궤적과 일치시키는 방식으로 설계하여 별도의 복잡한 보상 엔지니어링을 최소화했고, 좌표 변환을 포함한 네트워크 구조 개선으로 시각 정보를 효율적으로 활용했다. 결과적으로 ViViDex는 기존의 인간 동영상 기반 방법들이 갖는 잡음 문제와 확장성 한계를 효과적으로 극복했다.</p>
+</section>
+<section id="실험-설정-및-결과-1" class="level2">
+<h2 class="anchored" data-anchor-id="실험-설정-및-결과-1">4. 실험 설정 및 결과</h2>
+<p>논문은 세 가지 정밀 조작 과제(relocate, pour, place inside)에 대해 심층 실험을 수행했다. 다음은 주요 실험 세부 사항과 결과이다.</p>
+<p>데이터셋 및 환경: 실험에는 DexYCB 데이터셋의 5개 객체를 사용했다. 각 객체에 대해 프로토콜 #1(객체별 개별 정책, 초기 위치는 그림2의 첫 번째 행 참조)과 프로토콜 #2(다중 객체 통합 정책, 각 객체별 3가지 초기 위치 사용) 두 가지 평가 설정을 적용했다. 또한 Adroit 다중 자유도 핸드 및 MuJoCo 시뮬레이터를 기본 환경으로 사용하되, 실제성과 속도 향상을 위해 Allegro 핸드를 UR5 암에 연결하여 SAPIEN 시뮬레이터에서도 훈련을 진행했다.</p>
+<p>평가 지표: 주요 평가지표는 성공률(success rate, SR)이다. Relocate 과제의 경우 DexMV 연구들과 일관되게 물체-목표간 거리 10cm 이내의 <span class="math inline">\text{SR}_{10}</span>을 사용했으며, 더 엄격한 3cm 이내 <span class="math inline">\text{SR}_3</span>도 함께 측정했다. 또한 상태 기반 정책의 참조 궤적 일치도를 평가하기 위해 <span class="math inline">E_o</span> (물체 위치 오차 평균), <span class="math inline">E_h</span> (손끝 위치 오차 평균), <span class="math inline">\text{SR}_o</span>(<span class="math inline">E_o&lt;1</span>cm 비율), <span class="math inline">\text{SR}_h</span>(<span class="math inline">E_h&lt;5</span>cm 비율) 지표를 이용했다. 비전 기반 정책은 주로 <span class="math inline">\text{SR}_3</span>를 보고 성공 여부를 판단했다.</p>
+<p>베이스라인 및 비교: DexMV에서 제시된 다양한 학습 방법(TRPO, SOIL, GAIL+, DAPG)을 재현하여 비교했다. 특히 DAPG는 DexMV 논문에서 가장 성능이 우수한 방법이었다. ViViDex에서는 PPO를 사용하여 상태 기반 정책을 학습했고, 비전 정책은 행동 복제와 확산 정책을 비교 실험했다.</p>
+<section id="주요-결과" class="level3">
+<h3 class="anchored" data-anchor-id="주요-결과">주요 결과</h3>
+<p>Relocate 과제 (상태 기반 정책): 표 II에 Relocate 과제의 성능 비교가 요약되어 있다. 제안 방법(S6: Adroit/PPO, S7: Allegro/PPO)은 객체당 단 1편의 동영상으로 훈련했음에도 모든 객체에서 <span class="math inline">\text{SR}_{10} = \text{SR}_3 = 1.00</span>을 달성했다. 반면, DexMV의 DAPG 기반 정책(S4)은 일부 객체(예: 설탕상자)에서 <span class="math inline">\text{SR}_3=0</span>으로 떨어지고, 대형클램프·머그에서 낮은 성능을 보였다. S6/S7의 정책은 DexMV가 수십 개의 동영상을 사용해도 달성하지 못했던 5개 객체 모두에 대한 완전한 성공률을 얻었다. 주목할 점은 S6(Adroit)와 S7(Allegro)의 성능이 거의 동일하다는 것으로, 이는 제안 기법이 로봇 핸드의 구체적 모델 차이에도 강건함을 시사한다. 강화학습 단계에서 좌표 회전 증강을 제거한 S8은 약간의 성능 저하만 보여, 학습된 정책의 일반화 능력을 확인했다.</p>
+<p>상태 기반 정책의 보상 함수 평가: Table I(그림 참조)에 나타난 세 가지 보상 설정(R1, R2, R3) 실험 결과, 앞서 언급한 바와 같이 R3 방식(프리그랩/매니퓰레이션 단계 모두에서 손 위치 보상 사용)이 평균 손끝 오차(<span class="math inline">E_h</span>)를 최소화하고 <span class="math inline">\text{SR}_3</span>를 1.00으로 달성하여 최고 성능을 보였다. 이는 손 궤적 보상을 사용하는 것이 안정적인 예비 접근 및 집기 동작에 필수적임을 확인한다.</p>
+<p>시각 기반 정책 학습 결과: 비전 정책 학습에는 상태 정책 롤아웃으로 얻은 데이터를 사용했다(약 100개의 성공 궤적). 표 III는 Relocate 과제에서 <span class="math inline">\text{SR}_3</span>를 보여준다. 포인트클라우드 수를 512개(V1)에서 2048개(V2)로 늘리자 전체 성공률이 <span class="math inline">0.86\to0.96</span>로 증가했으며, 확산 정책(V3)을 적용하자 평균 0.99로 더욱 향상되었다. 즉, 고밀도 포인트 사용과 확산 모델이 시각 정책의 성능을 끌어올렸다. 비전 정책은 상태 정책에 비해 약간의 성능 손실을 보였지만, 실제 물체 관측 정보만으로도 매우 높은 성공률을 구현했다.</p>
+<p>통합 정책(다중 객체) 학습: Protocol #2 설정에서 다중 객체를 통합하여 학습한 결과도 양호했다. 표 IV(논문)에는 5개 객체를 모두 고려한 단일 정책의 성능이 제시되었다. 좌표 변환 모듈 추가 및 손 관절 좌표계의 세부 변환 적용은 <span class="math inline">\text{SR}_3</span>를 크게 향상시켰다(Behavior Cloning 기준 평균 81%→95%, Diffusion 기준 93%→99%). 즉, 제안된 시각적 피쳐 변환 기법이 다중 객체 일반화 성능에 긍정적 영향을 주었다.</p>
+<p>Pour 및 Place-Insde 과제: ViViDex의 상태 기반 정책은 나머지 두 과제에서도 우수한 성능을 보였다. 표 V를 보면, Adroit 핸드를 이용한 제안 방법(L5)은 Pour 과제에서 97%, Place-Insde 과제에서 68% 성공률을 달성했다. 이는 DexMV의 최적 기법(DAPG, L4)이 각각 27%와 31%에 그친 것보다 현저히 높다. 즉, 단 한 편의 동영상만으로도 기존 방법보다 월등한 성능을 얻었다. 통제 실험으로 BC와 Diffusion을 비교한 결과, 두 방식 모두 97%/68%로 유사했으며, Diffusion이 소폭 향상된 결과를 보였다.</p>
+<p>실제 로봇 실험: UR5 암과 Allegro 핸드, 단일 RGB-D 카메라를 이용하여 실제 세계에서 실험을 수행했다. 시뮬레이터에서 학습된 상태 기반 정책을 실제에 적용하여 데이터(포인트클라우드, 관절 상태)를 수집한 뒤 비전 정책을 학습했다. 그림 4와 표 VI에 요약된 바와 같이, 제안된 통합 비전 정책(R3, Diffusion)은 5개의 실험 물체에 대해 평균 80%의 성공률을 기록했다(개별 정책 R1: 88%, 통합 BC R2: 72%). 또한 5개의 미지의 물체(크래커박스, 스프레이병 등)에도 68%의 성공률을 보여, 제안된 모델이 미지 객체로의 확장에서도 효과적임을 확인했다.</p>
+<center>
+<img src="../../images/2025-11-04-vividex/03.png" width="70%">
+</center>
+<p>요약하면, ViViDex는 제한된 수의 인간 동영상으로부터 고품질의 궤적을 생성하고 이를 정책 학습에 효과적으로 활용하여, 세 가지 과제에서 기존 방법을 능가하는 성능을 입증했다. 특히, 복수 객체 및 실제 환경으로도 잘 일반화되는 점이 주목할 만하다.</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
