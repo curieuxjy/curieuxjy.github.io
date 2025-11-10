@@ -1,7 +1,7 @@
 ---
 #title: "Je suis curieux de tout."
 listing:
-  contents: 
+  contents:
     - "posts/code/*.qmd"
     - "posts/code/*.ipynb"
     - "posts/paper/*.qmd"
@@ -16,7 +16,7 @@ listing:
   sort-ui: true
   filter-ui: true
   image-placeholder: def.png
-  
+
 page-layout: full
 title-block-banner: true
 comments: false
@@ -26,7 +26,7 @@ comments: false
 <table style="width: 100%; table-layout: fixed;">
   <tr>
     <td style="width: 30%; text-align: left; vertical-align: center;">
-      <img src="./blog_index2.gif" style="width: 100%;">
+      <img src="./asset/welcome.gif" style="width: 100%;">
     </td>
     <td style="width: 70%; text-align: right; vertical-align: center;">
       <center>
