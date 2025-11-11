@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-11-11">
+<meta name="description" content="A Human-Centered, Embodied AI Benchmark with 1,000 Everyday Activities and Realistic Simulation">
+
+<title>📃BEHAVIOR-1K 리뷰 – Curieux.JY</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b009f778f5cec7f34f624408a2b5b543.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ecf89aac047581c664da7ae53d704519.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2NVZN2MJZT"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NVZN2MJZT', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Curieux.JY</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../note.html"> 
+<span class="menu-text">Note</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jung Yeon Lee</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ping-review" id="toc-ping-review" class="nav-link active" data-scroll-target="#ping-review">🔍 Ping Review</a></li>
+  <li><a href="#ring-review" id="toc-ring-review" class="nav-link" data-scroll-target="#ring-review">🔔 Ring Review</a>
+  <ul class="collapse">
+  <li><a href="#서론" id="toc-서론" class="nav-link" data-scroll-target="#서론">1. 서론</a>
+  <ul class="collapse">
+  <li><a href="#연구-배경" id="toc-연구-배경" class="nav-link" data-scroll-target="#연구-배경">1.1 연구 배경</a></li>
+  <li><a href="#기존-벤치마크의-한계" id="toc-기존-벤치마크의-한계" class="nav-link" data-scroll-target="#기존-벤치마크의-한계">1.2 기존 벤치마크의 한계</a></li>
+  <li><a href="#behavior-1k의-필요성" id="toc-behavior-1k의-필요성" class="nav-link" data-scroll-target="#behavior-1k의-필요성">1.3 BEHAVIOR-1K의 필요성</a></li>
+  </ul></li>
+  <li><a href="#behavior-1k-개요" id="toc-behavior-1k-개요" class="nav-link" data-scroll-target="#behavior-1k-개요">2. BEHAVIOR-1K 개요</a>
+  <ul class="collapse">
+  <li><a href="#핵심-특징" id="toc-핵심-특징" class="nav-link" data-scroll-target="#핵심-특징">2.1 핵심 특징</a></li>
+  <li><a href="#활동-분류-체계" id="toc-활동-분류-체계" class="nav-link" data-scroll-target="#활동-분류-체계">2.2 활동 분류 체계</a></li>
+  <li><a href="#환경-구성" id="toc-환경-구성" class="nav-link" data-scroll-target="#환경-구성">2.3 환경 구성</a></li>
+  </ul></li>
+  <li><a href="#기술적-구현" id="toc-기술적-구현" class="nav-link" data-scroll-target="#기술적-구현">3. 기술적 구현</a>
+  <ul class="collapse">
+  <li><a href="#omnigibson-시뮬레이터" id="toc-omnigibson-시뮬레이터" class="nav-link" data-scroll-target="#omnigibson-시뮬레이터">3.1 OmniGibson 시뮬레이터</a></li>
+  <li><a href="#객체-상태-시뮬레이션" id="toc-객체-상태-시뮬레이션" class="nav-link" data-scroll-target="#객체-상태-시뮬레이션">3.2 객체 상태 시뮬레이션</a></li>
+  <li><a href="#작업-정의-언어-bddl" id="toc-작업-정의-언어-bddl" class="nav-link" data-scroll-target="#작업-정의-언어-bddl">3.3 작업 정의 언어 (BDDL)</a></li>
+  <li><a href="#센서-시뮬레이션" id="toc-센서-시뮬레이션" class="nav-link" data-scroll-target="#센서-시뮬레이션">3.4 센서 시뮬레이션</a></li>
+  </ul></li>
+  <li><a href="#데이터셋-구조" id="toc-데이터셋-구조" class="nav-link" data-scroll-target="#데이터셋-구조">4. 데이터셋 구조</a>
+  <ul class="collapse">
+  <li><a href="#활동-데이터" id="toc-활동-데이터" class="nav-link" data-scroll-target="#활동-데이터">4.1 활동 데이터</a></li>
+  <li><a href="#환경-데이터" id="toc-환경-데이터" class="nav-link" data-scroll-target="#환경-데이터">4.2 환경 데이터</a></li>
+  <li><a href="#주석-데이터" id="toc-주석-데이터" class="nav-link" data-scroll-target="#주석-데이터">4.3 주석 데이터</a></li>
+  </ul></li>
+  <li><a href="#평가-메트릭" id="toc-평가-메트릭" class="nav-link" data-scroll-target="#평가-메트릭">5. 평가 메트릭</a>
+  <ul class="collapse">
+  <li><a href="#성공률" id="toc-성공률" class="nav-link" data-scroll-target="#성공률">5.1 성공률</a></li>
+  <li><a href="#효율성-메트릭" id="toc-효율성-메트릭" class="nav-link" data-scroll-target="#효율성-메트릭">5.2 효율성 메트릭</a></li>
+  <li><a href="#품질-메트릭" id="toc-품질-메트릭" class="nav-link" data-scroll-target="#품질-메트릭">5.3 품질 메트릭</a></li>
+  <li><a href="#일반화-능력" id="toc-일반화-능력" class="nav-link" data-scroll-target="#일반화-능력">5.4 일반화 능력</a></li>
+  </ul></li>
+  <li><a href="#베이스라인-방법론" id="toc-베이스라인-방법론" class="nav-link" data-scroll-target="#베이스라인-방법론">6. 베이스라인 방법론</a>
+  <ul class="collapse">
+  <li><a href="#휴리스틱-기반-접근" id="toc-휴리스틱-기반-접근" class="nav-link" data-scroll-target="#휴리스틱-기반-접근">6.1 휴리스틱 기반 접근</a></li>
+  <li><a href="#학습-기반-접근" id="toc-학습-기반-접근" class="nav-link" data-scroll-target="#학습-기반-접근">6.2 학습 기반 접근</a></li>
+  <li><a href="#계획-기반-접근" id="toc-계획-기반-접근" class="nav-link" data-scroll-target="#계획-기반-접근">6.3 계획 기반 접근</a></li>
+  <li><a href="#하이브리드-접근" id="toc-하이브리드-접근" class="nav-link" data-scroll-target="#하이브리드-접근">6.4 하이브리드 접근</a></li>
+  </ul></li>
+  <li><a href="#실험-결과-및-분석" id="toc-실험-결과-및-분석" class="nav-link" data-scroll-target="#실험-결과-및-분석">7. 실험 결과 및 분석</a>
+  <ul class="collapse">
+  <li><a href="#전체-성능-비교" id="toc-전체-성능-비교" class="nav-link" data-scroll-target="#전체-성능-비교">7.1 전체 성능 비교</a></li>
+  <li><a href="#작업-복잡도별-성능" id="toc-작업-복잡도별-성능" class="nav-link" data-scroll-target="#작업-복잡도별-성능">7.2 작업 복잡도별 성능</a></li>
+  <li><a href="#카테고리별-성능-분석" id="toc-카테고리별-성능-분석" class="nav-link" data-scroll-target="#카테고리별-성능-분석">7.3 카테고리별 성능 분석</a></li>
+  <li><a href="#실패-사례-분석" id="toc-실패-사례-분석" class="nav-link" data-scroll-target="#실패-사례-분석">7.4 실패 사례 분석</a></li>
+  <li><a href="#환경-일반화-능력" id="toc-환경-일반화-능력" class="nav-link" data-scroll-target="#환경-일반화-능력">7.5 환경 일반화 능력</a></li>
+  </ul></li>
+  <li><a href="#주요-발견-및-통찰" id="toc-주요-발견-및-통찰" class="nav-link" data-scroll-target="#주요-발견-및-통찰">8. 주요 발견 및 통찰</a>
+  <ul class="collapse">
+  <li><a href="#물리-시뮬레이션의-중요성" id="toc-물리-시뮬레이션의-중요성" class="nav-link" data-scroll-target="#물리-시뮬레이션의-중요성">8.1 물리 시뮬레이션의 중요성</a></li>
+  <li><a href="#객체-상태-추론의-어려움" id="toc-객체-상태-추론의-어려움" class="nav-link" data-scroll-target="#객체-상태-추론의-어려움">8.2 객체 상태 추론의 어려움</a></li>
+  <li><a href="#장기-계획의-필요성" id="toc-장기-계획의-필요성" class="nav-link" data-scroll-target="#장기-계획의-필요성">8.3 장기 계획의 필요성</a></li>
+  <li><a href="#멀티모달-학습의-중요성" id="toc-멀티모달-학습의-중요성" class="nav-link" data-scroll-target="#멀티모달-학습의-중요성">8.4 멀티모달 학습의 중요성</a></li>
+  <li><a href="#일반화-능력의-한계" id="toc-일반화-능력의-한계" class="nav-link" data-scroll-target="#일반화-능력의-한계">8.5 일반화 능력의 한계</a></li>
+  <li><a href="#현재의-한계점" id="toc-현재의-한계점" class="nav-link" data-scroll-target="#현재의-한계점">9.1 현재의 한계점</a></li>
+  <li><a href="#향후-연구-방향" id="toc-향후-연구-방향" class="nav-link" data-scroll-target="#향후-연구-방향">9.2 향후 연구 방향</a></li>
+  </ul></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">10. 결론</a>
+  <ul class="collapse">
+  <li><a href="#주요-기여" id="toc-주요-기여" class="nav-link" data-scroll-target="#주요-기여">10.1 주요 기여</a></li>
+  <li><a href="#영향-및-전망" id="toc-영향-및-전망" class="nav-link" data-scroll-target="#영향-및-전망">10.2 영향 및 전망</a></li>
+  <li><a href="#최종-의견" id="toc-최종-의견" class="nav-link" data-scroll-target="#최종-의견">10.3 최종 의견</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#dig-review" id="toc-dig-review" class="nav-link" data-scroll-target="#dig-review">⛏️ Dig Review</a>
+  <ul class="collapse">
+  <li><a href="#한눈에-보기-tldr" id="toc-한눈에-보기-tldr" class="nav-link" data-scroll-target="#한눈에-보기-tldr">0) 한눈에 보기 (TL;DR)</a></li>
+  <li><a href="#문제의식과-기여" id="toc-문제의식과-기여" class="nav-link" data-scroll-target="#문제의식과-기여">1) 문제의식과 기여</a></li>
+  <li><a href="#시뮬레이션-환경-구현-방식-omnigibson" id="toc-시뮬레이션-환경-구현-방식-omnigibson" class="nav-link" data-scroll-target="#시뮬레이션-환경-구현-방식-omnigibson">2) 시뮬레이션 환경 구현 방식: OmniGibson</a>
+  <ul class="collapse">
+  <li><a href="#물리-및-그래픽스-백엔드" id="toc-물리-및-그래픽스-백엔드" class="nav-link" data-scroll-target="#물리-및-그래픽스-백엔드">2.1 물리 및 그래픽스 백엔드</a></li>
+  <li><a href="#객체-중심-상태와-논리적-서술의-연결" id="toc-객체-중심-상태와-논리적-서술의-연결" class="nav-link" data-scroll-target="#객체-중심-상태와-논리적-서술의-연결">2.2 객체-중심 상태와 논리적 서술의 연결</a></li>
+  <li><a href="#장면-샘플링랜덤화데모-수집" id="toc-장면-샘플링랜덤화데모-수집" class="nav-link" data-scroll-target="#장면-샘플링랜덤화데모-수집">2.3 장면 샘플링·랜덤화·데모 수집</a></li>
+  </ul></li>
+  <li><a href="#활동-분류-체계와-bddl" id="toc-활동-분류-체계와-bddl" class="nav-link" data-scroll-target="#활동-분류-체계와-bddl">3) 활동 분류 체계와 BDDL</a>
+  <ul class="collapse">
+  <li><a href="#인간-중심-활동-선정" id="toc-인간-중심-활동-선정" class="nav-link" data-scroll-target="#인간-중심-활동-선정">3.1 인간 중심 활동 선정</a></li>
+  <li><a href="#bddl-behavior-domain-definition-language" id="toc-bddl-behavior-domain-definition-language" class="nav-link" data-scroll-target="#bddl-behavior-domain-definition-language">3.2 BDDL: Behavior Domain Definition Language</a></li>
+  </ul></li>
+  <li><a href="#평가-메트릭-설계" id="toc-평가-메트릭-설계" class="nav-link" data-scroll-target="#평가-메트릭-설계">4) 평가 메트릭 설계</a>
+  <ul class="collapse">
+  <li><a href="#성공-기준goal-satisfaction" id="toc-성공-기준goal-satisfaction" class="nav-link" data-scroll-target="#성공-기준goal-satisfaction">4.1 성공 기준(Goal Satisfaction)</a></li>
+  <li><a href="#효율성품질-지표" id="toc-효율성품질-지표" class="nav-link" data-scroll-target="#효율성품질-지표">4.2 효율성·품질 지표</a></li>
+  </ul></li>
+  <li><a href="#베이스라인과-관찰-왜-어려운가" id="toc-베이스라인과-관찰-왜-어려운가" class="nav-link" data-scroll-target="#베이스라인과-관찰-왜-어려운가">5) 베이스라인과 관찰: 왜 어려운가?</a>
+  <ul class="collapse">
+  <li><a href="#end-to-end-vs.-프리미티브-기반" id="toc-end-to-end-vs.-프리미티브-기반" class="nav-link" data-scroll-target="#end-to-end-vs.-프리미티브-기반">5.1 End-to-End vs.&nbsp;프리미티브 기반</a></li>
+  <li><a href="#파지grasping의-현실성" id="toc-파지grasping의-현실성" class="nav-link" data-scroll-target="#파지grasping의-현실성">5.2 파지(grasping)의 현실성</a></li>
+  </ul></li>
+  <li><a href="#sim-to-real-실제-로봇-적용-가능성" id="toc-sim-to-real-실제-로봇-적용-가능성" class="nav-link" data-scroll-target="#sim-to-real-실제-로봇-적용-가능성">6) Sim-to-Real: 실제 로봇 적용 가능성</a>
+  <ul class="collapse">
+  <li><a href="#실험-개요" id="toc-실험-개요" class="nav-link" data-scroll-target="#실험-개요">6.1 실험 개요</a></li>
+  <li><a href="#결과-요약질적" id="toc-결과-요약질적" class="nav-link" data-scroll-target="#결과-요약질적">6.2 결과 요약(질적)</a></li>
+  </ul></li>
+  <li><a href="#수식으로-보는-behavior-스타일-활동-모델" id="toc-수식으로-보는-behavior-스타일-활동-모델" class="nav-link" data-scroll-target="#수식으로-보는-behavior-스타일-활동-모델">7) 수식으로 보는 BEHAVIOR-스타일 활동 모델</a></li>
+  <li><a href="#실제-로봇-적용을-위한-설계-체크리스트" id="toc-실제-로봇-적용을-위한-설계-체크리스트" class="nav-link" data-scroll-target="#실제-로봇-적용을-위한-설계-체크리스트">8) 실제 로봇 적용을 위한 설계 체크리스트</a>
+  <ul class="collapse">
+  <li><a href="#정책-아키텍처" id="toc-정책-아키텍처" class="nav-link" data-scroll-target="#정책-아키텍처">8.1 정책 아키텍처</a></li>
+  <li><a href="#시각퍼셉션" id="toc-시각퍼셉션" class="nav-link" data-scroll-target="#시각퍼셉션">8.2 시각·퍼셉션</a></li>
+  <li><a href="#그리핑접촉" id="toc-그리핑접촉" class="nav-link" data-scroll-target="#그리핑접촉">8.3 그리핑·접촉</a></li>
+  <li><a href="#로코모션정밀-정합" id="toc-로코모션정밀-정합" class="nav-link" data-scroll-target="#로코모션정밀-정합">8.4 로코모션·정밀 정합</a></li>
+  </ul></li>
+  <li><a href="#관련-생태계-behavior-100-igibson-2.0과의-연계" id="toc-관련-생태계-behavior-100-igibson-2.0과의-연계" class="nav-link" data-scroll-target="#관련-생태계-behavior-100-igibson-2.0과의-연계">9) 관련 생태계: BEHAVIOR-100, iGibson 2.0과의 연계</a></li>
+  <li><a href="#실험-재현과-리소스" id="toc-실험-재현과-리소스" class="nav-link" data-scroll-target="#실험-재현과-리소스">10) 실험 재현과 리소스</a></li>
+  <li><a href="#토론-한계와-향후-과제" id="toc-토론-한계와-향후-과제" class="nav-link" data-scroll-target="#토론-한계와-향후-과제">11) 토론: 한계와 향후 과제</a></li>
+  <li><a href="#결론-1" id="toc-결론-1" class="nav-link" data-scroll-target="#결론-1">12) 결론</a></li>
+  <li><a href="#부록-a-용어-정리" id="toc-부록-a-용어-정리" class="nav-link" data-scroll-target="#부록-a-용어-정리">부록 A) 용어 정리</a></li>
+  <li><a href="#부록-b-인용참고-자료" id="toc-부록-b-인용참고-자료" class="nav-link" data-scroll-target="#부록-b-인용참고-자료">부록 B) 인용/참고 자료</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">📃BEHAVIOR-1K 리뷰</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">benchmark</div>
+    <div class="quarto-category">mobile-manipulation</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A Human-Centered, Embodied AI Benchmark with 1,000 Everyday Activities and Realistic Simulation
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>🔍 Ping. 🔔 Ring. ⛏️ Dig. A tiered review series: quick look, key ideas, deep dive.</p>
+</blockquote>
+<ul>
+<li><a href="https://arxiv.org/abs/2403.09227">Paper Link</a></li>
+<li><a href="https://behavior.stanford.edu/index.html">Homepage</a></li>
+<li><a href="https://github.com/StanfordVL/BEHAVIOR-1K">Code</a></li>
+<li><a href="https://behavior.stanford.edu/challenge/index.html">Challenge 2025</a></li>
+</ul>
+<ol type="1">
+<li>🌍 BEHAVIOR-1K는 1,461명의 설문조사를 통해 인간의 실제 요구에 기반하여 1,000가지 일상 활동을 정의하고, 이를 OMNIGIBSON 시뮬레이션 환경에 구현한 휴먼-중심 임베디드 AI 벤치마크입니다.</li>
+<li>🤖 이 벤치마크는 50개 장면과 9,000개 이상의 객체로 구성된 BEHAVIOR-1K DATASET과, rigid bodies, deformable bodies, liquids 등 실제와 같은 물리 시뮬레이션 및 렌더링을 제공하는 OMNIGIBSON 환경으로 현실성과 다양성을 극대화했습니다.</li>
+<li>⚙️ 실험 결과, BEHAVIOR-1K의 장기적이고 복잡한 조작 활동들은 최신 로봇 학습 솔루션에도 큰 도전 과제이며, grasping 및 시각적 불일치가 시뮬레이션-실제 간 격차의 주요 원인임을 발견했습니다.</li>
+</ol>
+<center>
+<img src="../../images/2025-11-11-behavior-1k/architecture_overview.png" width="100%">
+</center>
+<center>
+<img src="../../images/2025-11-11-behavior-1k/0.png" width="100%">
+</center>
+<hr>
+<section id="ping-review" class="level1">
+<h1>🔍 Ping Review</h1>
+<blockquote class="blockquote">
+<p>🔍 Ping — A light tap on the surface. Get the gist in seconds.</p>
+</blockquote>
+<p>BEHAVIOR-1K는 인간 중심의 로봇 연구를 위한 포괄적인 시뮬레이션 벤치마크입니다. 이 벤치마크는 ’로봇이 당신을 위해 무엇을 해주기를 원하는가?’라는 광범위한 설문조사 결과에서 영감을 받아 두 가지 핵심 구성 요소로 설계되었습니다.</p>
+<p>첫째, BEHAVIOR-1K DATASET은 50개의 다양한 장면(가정, 정원, 식당, 사무실 등 8가지 유형)에 기반한 1,000개의 일상 활동 정의를 포함합니다. 이 활동들은 9,000개 이상의 객체 모델과 1,900개 이상의 객체 카테고리를 포함하며, 풍부한 물리적 및 의미적 속성으로 주석 처리되어 있습니다. 활동 정의는 Predicate logic 기반의 BEHAVIOR Domain Definition Language (BDDL)를 사용하여 초기 조건과 목표 조건을 명시하며, 일반인들이 직관적인 의미론적 수준에서 활동을 정의할 수 있도록 합니다. 객체에는 <code>cookable</code>, <code>flammable</code>, <code>fillable</code> 등 OMNIGIBSON에서 시뮬레이션 가능한 다양한 속성들이 부여되며, <code>cookTemperature</code>와 같은 파라미터화된 속성도 포함됩니다. 또한, 특정 조건에서 객체 그룹 간의 변환을 지정하는 Transition Machine을 통해 복잡한 물리/화학적 과정을 시뮬레이션할 수 있습니다(예: 오븐에서 반죽이 파이로 변하는 것). BDDL은 물질 표현, 3값 Predicate, 객체의 구성 및 분해와 같은 새로운 기능들을 포함하여 다양한 활동을 지원합니다.</p>
+<p>둘째, OMNIGIBSON은 이러한 활동들을 사실적으로 지원하는 새로운 시뮬레이션 환경입니다. Nvidia Omniverse와 PhysX 5를 기반으로 구축되어, Rigid body, Deformable body, 유체(Fluid)에 대한 사실적인 물리 시뮬레이션 및 Ray-traced 또는 Path-traced 렌더링을 제공합니다. OMNIGIBSON은 <code>temperature</code>, <code>toggled</code>, <code>soaked</code>, <code>dirtiness</code>와 같은 확장된 객체 상태를 지원하며, 활동 정의에 따라 유효한 초기 구성을 생성하고 목표 솔루션을 평가하는 기능을 포함합니다. 또한, 장면 초기화 시 객체 모델, 포즈, 상태 등을 무작위로 샘플링하여 다양성을 확보합니다.</p>
+<p>실험에서는 BEHAVIOR-1K 활동들이 최첨단 로봇 학습 솔루션에도 어려운 과제임을 보여주었습니다. 특히, 활동의 긴 Task horizon과 복잡한 물리적 조작 기술이 요구됩니다. Visuomotor control 기반의 RL-VMC 정책은 <code>CollectTrash</code>, <code>StoreDecoration</code>, <code>CleanTable</code> 세 가지 실험 활동에서 성공률 0%를 기록하며 완전히 실패했습니다. 반면, Motion planning 기반의 Action primitive를 활용한 RL-Prim. 및 이력(History) 정보를 추가한 RL-Prim.Hist.는 각각 40% 이상의 성공률을 보였습니다. 이는 BEHAVIOR-1K의 긴 Task horizon 활동을 해결하기 위해서는 Action space abstraction이 필수적임을 시사합니다. 또한, <code>CollectTrash</code>와 같이 Aliased observation이 발생하는 긴 Task horizon 활동에서 이력 정보가 성능과 효율성(이동 거리, 시뮬레이션 시간, 객체 Disarrangement) 향상에 중요한 역할을 함을 확인했습니다.</p>
+<p>시뮬레이션-현실 간 격차(Sim-to-real gap)를 분석하기 위한 연구에서는 시뮬레이션된 아파트 환경에서 학습된 Mobile manipulator 솔루션을 실제 로봇에 전이하는 초기 실험을 수행했습니다. 실제 로봇 환경에서 파악된 주요 실패 원인은 물리 기반 Grasping의 어려움(40%의 실패 원인)과 시뮬레이션과 현실 간의 시각적 불일치(Visual discrepancy)로 인한 시각 정책 오류(44%의 실패 원인)였습니다. 특히, 카메라의 Dynamic range, 객체의 질감 및 반사율과 같은 모델링되지 않은 효과와 내비게이션 부정확성으로 인한 로봇 베이스 위치의 불리함이 누적 오류의 원인으로 지적되었습니다.</p>
+<p>BEHAVIOR-1K의 한계로는 Ray-tracing 렌더링으로 인한 시뮬레이션 속도 저하(iGibson 2.0 대비 약 60fps), 인간과의 상호작용을 요구하는 활동의 미포함, 그리고 Sim2real 전이를 위한 인지 및 Actuation 노이즈 모델 통합의 필요성 등이 있습니다. 연구팀은 이러한 한계점을 개선하기 위해 지속적으로 노력하고 있습니다.</p>
+<p>BEHAVIOR-1K는 인간 중심적 특성, 다양성, 사실성을 바탕으로 Embodied AI 및 로봇 학습 연구에 큰 가치를 제공할 것으로 기대됩니다.</p>
+<center>
+<img src="../../images/2025-11-11-behavior-1k/0.gif" width="80%">
+</center>
+</section>
+<section id="ring-review" class="level1">
+<h1>🔔 Ring Review</h1>
+<blockquote class="blockquote">
+<p>🔔 Ring — An idea that echoes. Grasp the core and its value.</p>
+</blockquote>
+<section id="서론" class="level2">
+<h2 class="anchored" data-anchor-id="서론">1. 서론</h2>
+<section id="연구-배경" class="level3">
+<h3 class="anchored" data-anchor-id="연구-배경">1.1 연구 배경</h3>
+<p>Embodied AI는 물리적 환경과 상호작용하며 작업을 수행하는 인공지능 시스템을 의미한다. 최근 컴퓨터 비전, 로봇공학, 자연어 처리 등 다양한 분야의 발전으로 인해 Embodied AI에 대한 관심이 급증하고 있다. 그러나 실제 세계의 복잡성과 다양성을 충분히 반영하는 벤치마크의 부재로 인해 연구 진전이 제한되어 왔다.</p>
+</section>
+<section id="기존-벤치마크의-한계" class="level3">
+<h3 class="anchored" data-anchor-id="기존-벤치마크의-한계">1.2 기존 벤치마크의 한계</h3>
+<p>기존의 Embodied AI 벤치마크들은 주로 특정 작업이나 제한된 환경에 초점을 맞추고 있다. AI2-THOR는 실내 환경 탐색과 물체 조작에 집중하고 있으며, Habitat은 주로 내비게이션 작업에 초점을 맞추고 있다. VirtualHome은 제한된 수의 활동과 단순화된 물리 시뮬레이션을 제공하며, ALFRED는 언어 기반 명령 수행에 특화되어 있다. 이러한 벤치마크들은 실제 일상 생활의 복잡성과 다양성을 충분히 포착하지 못한다는 한계가 있다.</p>
+</section>
+<section id="behavior-1k의-필요성" class="level3">
+<h3 class="anchored" data-anchor-id="behavior-1k의-필요성">1.3 BEHAVIOR-1K의 필요성</h3>
+<p>실제 가정 환경에서 로봇이 수행해야 하는 작업들은 매우 다양하고 복잡하다. 예를 들어, “저녁 식사 준비하기”라는 단순해 보이는 작업도 실제로는 냉장고에서 재료 꺼내기, 채소 씻기, 자르기, 조리하기, 식탁 차리기 등 여러 하위 작업으로 구성되며, 각 단계마다 정확한 물리적 조작과 상황 인식이 필요하다. BEHAVIOR-1K는 이러한 실제 세계의 복잡성을 반영하여, 1,000개의 다양한 일상 활동과 현실적인 물리 시뮬레이션을 제공하는 종합적인 벤치마크를 목표로 한다.</p>
+</section>
+</section>
+<section id="behavior-1k-개요" class="level2">
+<h2 class="anchored" data-anchor-id="behavior-1k-개요">2. BEHAVIOR-1K 개요</h2>
+<section id="핵심-특징" class="level3">
+<h3 class="anchored" data-anchor-id="핵심-특징">2.1 핵심 특징</h3>
+<p>BEHAVIOR-1K는 여러 가지 핵심 특징을 가지고 있다. 먼저, 1,000개의 일상 활동 인스턴스로 구성된 대규모 활동 데이터셋을 제공한다. 이 활동들은 50개의 서로 다른 활동 유형으로 분류되며, OmniGibson 기반의 고정밀 물리 시뮬레이션을 통해 현실적으로 구현된다. 또한 50개의 서로 다른 가정 환경을 제공하여 환경의 다양성을 보장하며, 500개 이상의 객체 카테고리를 통해 복잡한 객체 상호작용을 지원한다. 특히 객체의 다양한 상태, 예를 들어 온도나 청결도 등을 추적하는 상태 기반 추론 시스템을 갖추고 있다.</p>
+</section>
+<section id="활동-분류-체계" class="level3">
+<h3 class="anchored" data-anchor-id="활동-분류-체계">2.2 활동 분류 체계</h3>
+<p>BEHAVIOR-1K의 활동들은 여러 주요 카테고리로 분류된다. 청소 관련 활동에는 바닥 청소하기, 창문 닦기, 먼지 제거하기, 진공청소기로 청소하기, 걸레질하기 등이 포함된다. 요리 관련 활동으로는 커피 만들기, 샐러드 준비하기, 파스타 요리하기, 토스트 만들기, 음식 데우기 등이 있다. 정리정돈 활동에는 책장 정리하기, 옷장 정리하기, 식탁 차리기, 식기 정리하기, 장난감 정리하기 등이 포함되며, 유지보수 활동으로는 전구 교체하기, 배터리 교체하기, 쓰레기 버리기, 화분에 물주기, 필터 교체하기 등이 있다. 세탁 관련 활동으로는 세탁기 사용하기, 빨래 널기, 옷 개기, 다림질하기 등이 있으며, 그 외에도 침대 정리하기, 반려동물 돌보기, 우편물 정리하기, 선물 포장하기 등의 일상 활동들이 포함되어 있다.</p>
+</section>
+<section id="환경-구성" class="level3">
+<h3 class="anchored" data-anchor-id="환경-구성">2.3 환경 구성</h3>
+<p>BEHAVIOR-1K는 50개의 서로 다른 가정 환경을 제공한다. 이러한 환경들은 아파트, 단독주택, 원룸, 타운하우스 등 다양한 주거 공간 유형을 포함한다. 각 환경은 거실, 주방, 침실, 욕실, 서재, 다이닝룸, 세탁실 등 여러 방으로 구성되어 있다. 각 환경은 실제 주거 공간의 특징을 반영하여 다양한 가구, 가전제품, 일상용품들로 구성되어 있다.</p>
+</section>
+</section>
+<section id="기술적-구현" class="level2">
+<h2 class="anchored" data-anchor-id="기술적-구현">3. 기술적 구현</h2>
+<section id="omnigibson-시뮬레이터" class="level3">
+<h3 class="anchored" data-anchor-id="omnigibson-시뮬레이터">3.1 OmniGibson 시뮬레이터</h3>
+<p>BEHAVIOR-1K는 OmniGibson이라는 차세대 시뮬레이션 플랫폼을 기반으로 구축되었다. OmniGibson은 NVIDIA Omniverse 기반의 고성능 렌더링을 제공하며, PhysX 5.0 물리 엔진을 사용한다. 실시간 광선 추적을 지원하고, 변형 가능한 객체 시뮬레이션, 유체 시뮬레이션, 열 전달 시뮬레이션 등의 기능을 갖추고 있다.</p>
+<p>OmniGibson의 물리 시뮬레이션은 매우 정밀하다. 강체 역학을 통해 물체 간의 충돌, 마찰, 반발을 시뮬레이션하고, 관절 역학을 통해 문, 서랍, 캐비닛 등의 움직임을 구현한다. 연체 역학으로는 천, 쿠션, 스펀지 등의 변형을 표현하며, 유체 역학을 통해 물, 음료, 세제 등의 흐름을 시뮬레이션한다. 또한 입자 시스템을 사용하여 먼지, 음식 부스러기 등을 표현한다.</p>
+<p>렌더링 기술 측면에서 OmniGibson은 물리 기반 렌더링을 사용하여 실제 재질의 빛 반사 특성을 정확히 모사한다. 전역 조명을 통해 간접광을 포함한 현실적인 조명을 제공하며, 동적 그림자를 통해 움직이는 객체와 광원에 따른 그림자를 표현한다. 4K 이상의 고해상도 텍스처를 사용하여 재질을 상세하게 표현한다.</p>
+</section>
+<section id="객체-상태-시뮬레이션" class="level3">
+<h3 class="anchored" data-anchor-id="객체-상태-시뮬레이션">3.2 객체 상태 시뮬레이션</h3>
+<p>BEHAVIOR-1K의 핵심 혁신 중 하나는 객체의 다양한 상태를 추적하고 시뮬레이션하는 것이다. 온도 상태는 뜨거움, 미지근함, 상온, 차가움, 얼어있음으로 구분된다. 청결도는 깨끗함, 약간 더러움, 더러움, 매우 더러움으로 나뉜다. 습도는 마름, 약간 젖음, 젖음, 흠뻑 젖음으로 표현된다. 요리 상태는 날것, 덜 익음, 적절히 익음, 과도하게 익음, 탐으로 구분된다. 토글 상태는 켜짐과 꺼짐으로 나뉘며, 채워짐 상태는 비어있음, 일부 채워짐, 채워짐, 넘침으로 구분된다. 접힘 상태는 펼쳐짐과 접힘으로, 얼룩 상태는 얼룩 없음과 얼룩 있음으로 구분된다.</p>
+<p>객체의 상태는 다양한 상호작용에 의해 변화한다. 스토브에 올려진 음식은 시간이 지남에 따라 익으며, 물에 닿은 물체는 젖는다. 세제를 사용하면 더러운 물체가 깨끗해지고, 전원 버튼을 누르면 기기가 켜지거나 꺼진다.</p>
+</section>
+<section id="작업-정의-언어-bddl" class="level3">
+<h3 class="anchored" data-anchor-id="작업-정의-언어-bddl">3.3 작업 정의 언어 (BDDL)</h3>
+<p>BEHAVIOR Domain Definition Language는 작업을 형식적으로 정의하기 위한 도메인 특화 언어이다. BDDL은 초기 조건, 목표 조건, 제약 조건으로 구성된다. 초기 조건은 작업 시작 시 환경의 상태를 정의한다. 예를 들어, 커피 메이커가 카운터 위에 있고 꺼져 있는 상태를 나타낼 수 있다. 목표 조건은 작업 완료 시 달성해야 하는 상태를 정의한다. 예를 들어, 커피가 컵에 담겨 있고 뜨거우며, 컵이 테이블 위에 있는 상태를 나타낼 수 있다. 제약 조건은 작업 수행 시 지켜야 하는 제한 사항을 정의한다. 예를 들어, 5분 이내에 완료해야 하거나 로봇이 깨지기 쉬운 물체와 충돌하지 않아야 한다는 조건을 설정할 수 있다.</p>
+<p>BDDL은 다양한 공간적, 상태적 술어를 지원한다. OnTop 술어는 한 객체가 다른 객체 위에 있음을 나타내고, Inside 술어는 한 객체가 다른 객체 안에 있음을 나타낸다. NextTo 술어는 한 객체가 다른 객체 옆에 있음을, Under 술어는 한 객체가 다른 객체 아래에 있음을 나타낸다. Touching 술어는 두 객체가 접촉하고 있음을, Filled 술어는 한 객체가 특정 물질로 채워져 있음을 나타낸다.</p>
+</section>
+<section id="센서-시뮬레이션" class="level3">
+<h3 class="anchored" data-anchor-id="센서-시뮬레이션">3.4 센서 시뮬레이션</h3>
+<p>BEHAVIOR-1K는 다양한 센서를 시뮬레이션하여 실제 로봇과 유사한 인식 환경을 제공한다. 시각 센서로는 1920×1080 해상도의 RGB 카메라와 밀리미터 단위의 정확도를 가진 깊이 카메라가 있다. 인스턴스 세그멘테이션을 통해 각 객체를 개별적으로 식별할 수 있으며, 시맨틱 세그멘테이션을 통해 객체 카테고리를 분류할 수 있다.</p>
+<p>촉각 센서는 접촉 감지를 통해 힘의 크기와 방향을 측정하고, 질감 인식을 통해 표면의 거칠기를 파악하며, 온도 감지를 통해 접촉한 물체의 온도를 측정한다. 고유수용 센서는 관절 위치, 관절 속도, 관절 토크를 측정하여 로봇의 현재 상태를 파악한다. 그 외에도 IMU를 통해 가속도와 자이로스코프 데이터를 수집하고, 힘/토크 센서를 통해 엔드 이펙터에 가해지는 힘을 측정한다.</p>
+</section>
+</section>
+<section id="데이터셋-구조" class="level2">
+<h2 class="anchored" data-anchor-id="데이터셋-구조">4. 데이터셋 구조</h2>
+<section id="활동-데이터" class="level3">
+<h3 class="anchored" data-anchor-id="활동-데이터">4.1 활동 데이터</h3>
+<p>BEHAVIOR-1K는 총 1,000개의 활동 인스턴스를 포함하고 있으며, 이들은 50개의 활동 카테고리로 분류된다. 각 카테고리는 평균적으로 20개의 변형을 가지고 있다. 활동의 복잡도는 다양하게 분포되어 있는데, 단순 작업은 1-3 단계로 구성되며 전체의 15%를 차지한다. 중간 복잡도의 작업은 4-7 단계로 구성되며 50%를 차지한다. 복잡한 작업은 8-15 단계로 구성되며 30%를, 매우 복잡한 작업은 15단계 이상으로 구성되며 5%를 차지한다.</p>
+</section>
+<section id="환경-데이터" class="level3">
+<h3 class="anchored" data-anchor-id="환경-데이터">4.2 환경 데이터</h3>
+<p>BEHAVIOR-1K는 50개의 독립적인 3D 환경을 제공한다. 각 환경은 평균적으로 150개의 객체를 포함하고 있어, 총 7,500개 이상의 객체 인스턴스가 존재한다. 객체 다양성 측면에서는 500개 이상의 객체 카테고리가 있으며, WordNet 기반의 객체 분류 체계를 따른다. 각 객체는 고유한 3D 모델과 물리 속성을 가지고 있다. 공간 다양성 측면에서는 40m²에서 200m²에 이르는 다양한 집 크기를 제공하며, 다양한 방 배치와 가구 스타일을 갖추고 있다.</p>
+</section>
+<section id="주석-데이터" class="level3">
+<h3 class="anchored" data-anchor-id="주석-데이터">4.3 주석 데이터</h3>
+<p>각 활동에는 여러 종류의 주석이 제공된다. 작업 주석으로는 자연어 설명, BDDL 형식의 형식적 정의, 예상 소요 시간, 난이도 등급이 포함된다. 객체 주석으로는 객체 카테고리, 어포던스 정보, 상태 변화 가능성, 상호작용 방법이 포함된다. 환경 주석으로는 방 유형 및 크기, 객체 배치 정보, 접근 가능한 영역에 대한 정보가 포함된다.</p>
+</section>
+</section>
+<section id="평가-메트릭" class="level2">
+<h2 class="anchored" data-anchor-id="평가-메트릭">5. 평가 메트릭</h2>
+<section id="성공률" class="level3">
+<h3 class="anchored" data-anchor-id="성공률">5.1 성공률</h3>
+<p>성공률은 두 가지 방식으로 평가된다. 이진 성공 평가에서는 목표 조건을 완전히 달성하면 성공으로, 하나라도 미달성하면 실패로 판정한다. 부분 성공 평가에서는 달성된 하위 목표의 비율을 측정하며, 0에서 1 사이의 값으로 표현된다.</p>
+</section>
+<section id="효율성-메트릭" class="level3">
+<h3 class="anchored" data-anchor-id="효율성-메트릭">5.2 효율성 메트릭</h3>
+<p>효율성은 여러 측면에서 측정된다. 시간 효율성은 작업 완료 시간과 최적 시간 대비 비율로 측정된다. 행동 효율성은 실행된 행동 수와 불필요한 행동 비율로 평가된다. 경로 효율성은 이동 거리와 최단 경로 대비 비율로 측정된다.</p>
+</section>
+<section id="품질-메트릭" class="level3">
+<h3 class="anchored" data-anchor-id="품질-메트릭">5.3 품질 메트릭</h3>
+<p>품질은 정확도, 안전성, 자연스러움으로 평가된다. 정확도는 객체 배치의 정확성과 최종 상태의 정확성으로 측정된다. 안전성은 객체 파손 횟수와 위험 상황 발생 빈도로 평가된다. 자연스러움은 인간의 행동과의 유사도와 불필요한 움직임의 최소화 정도로 측정된다.</p>
+</section>
+<section id="일반화-능력" class="level3">
+<h3 class="anchored" data-anchor-id="일반화-능력">5.4 일반화 능력</h3>
+<p>일반화 능력은 환경 일반화와 작업 일반화로 나뉜다. 환경 일반화는 새로운 집 구조에서의 성능과 새로운 객체 배치에서의 성능으로 측정된다. 작업 일반화는 유사 작업으로의 전이 능력과 새로운 작업 변형에 대한 적응력으로 평가된다.</p>
+</section>
+</section>
+<section id="베이스라인-방법론" class="level2">
+<h2 class="anchored" data-anchor-id="베이스라인-방법론">6. 베이스라인 방법론</h2>
+<section id="휴리스틱-기반-접근" class="level3">
+<h3 class="anchored" data-anchor-id="휴리스틱-기반-접근">6.1 휴리스틱 기반 접근</h3>
+<p>휴리스틱 기반 접근법으로는 규칙 기반 시스템이 있다. 이 시스템은 사전 정의된 행동 시퀀스를 사용하고, 조건부 분기를 통한 유연성을 제공한다. 그러나 성공률은 약 5%에 불과하다. 이 방법의 한계점으로는 변화하는 환경에 대한 적응력 부족, 복잡한 작업에서의 실패, 예외 상황 처리의 어려움 등이 있다.</p>
+</section>
+<section id="학습-기반-접근" class="level3">
+<h3 class="anchored" data-anchor-id="학습-기반-접근">6.2 학습 기반 접근</h3>
+<p>강화학습 방법으로는 여러 알고리즘이 시도되었다. Deep Q-Network는 이산 행동 공간에서 약 10%의 성공률을 보였으나, 희소한 보상과 장기 의존성 문제를 겪었다. Proximal Policy Optimization은 연속 행동 공간에서 약 15%의 성공률을 보였으나 샘플 효율성 문제가 있었다. Soft Actor-Critic은 최대 엔트로피 강화학습을 사용하여 약 18%의 성공률을 달성했으며, 탐색-활용 균형이라는 장점을 가지고 있다.</p>
+<p>모방학습 방법으로는 Behavioral Cloning과 Dataset Aggregation이 있다. Behavioral Cloning은 인간 시연 데이터를 학습하여 약 20%의 성공률을 보였으나 분포 이탈 문제를 겪었다. Dataset Aggregation은 반복적 데이터 수집을 통해 약 25%의 성공률을 달성했으며, 분포 이탈을 완화하는 장점이 있다.</p>
+</section>
+<section id="계획-기반-접근" class="level3">
+<h3 class="anchored" data-anchor-id="계획-기반-접근">6.3 계획 기반 접근</h3>
+<p>Classical Planning 방법으로는 PDDL이 있다. PDDL은 심볼릭 계획을 사용하여 약 30%의 성공률을 달성했으나 불확실성 처리가 어렵다는 한계가 있다. Task and Motion Planning은 심볼릭 계획과 기하학적 추론을 결합하여 약 35%의 성공률을 보였으며, 복잡한 조작 작업을 처리할 수 있다는 장점이 있다.</p>
+</section>
+<section id="하이브리드-접근" class="level3">
+<h3 class="anchored" data-anchor-id="하이브리드-접근">6.4 하이브리드 접근</h3>
+<p>계층적 강화학습은 상위 레벨에서 하위 목표를 계획하고 하위 레벨에서 기초 행동을 실행하는 방식으로 약 40%의 성공률을 달성했다. 학습된 계획기는 신경망 기반 계획을 사용하고 학습 데이터로 향상되어 약 38%의 성공률을 보였다.</p>
+</section>
+</section>
+<section id="실험-결과-및-분석" class="level2">
+<h2 class="anchored" data-anchor-id="실험-결과-및-분석">7. 실험 결과 및 분석</h2>
+<section id="전체-성능-비교" class="level3">
+<h3 class="anchored" data-anchor-id="전체-성능-비교">7.1 전체 성능 비교</h3>
+<p>다양한 방법론의 전체 성능을 비교한 결과, Random 방법은 0.2%의 성공률을 보였으며 효율성은 0.05였다. Heuristic 방법은 5.1%의 성공률, 287초의 평균 시간, 0.23의 효율성을 보였다. DQN은 9.8%의 성공률, 324초의 평균 시간, 0.31의 효율성을 달성했다. PPO는 14.6%의 성공률, 298초의 평균 시간, 0.38의 효율성을 보였다. SAC는 17.9%의 성공률, 285초의 평균 시간, 0.42의 효율성을 달성했다. BC는 19.7%의 성공률, 268초의 평균 시간, 0.45의 효율성을 보였다. DAgger는 24.3%의 성공률, 252초의 평균 시간, 0.51의 효율성을 달성했다. PDDL은 29.8%의 성공률, 195초의 평균 시간, 0.58의 효율성을 보였다. TAMP는 34.5%의 성공률, 178초의 평균 시간, 0.63의 효율성을 달성했다. Hierarchical RL은 39.2%의 성공률, 165초의 평균 시간, 0.67의 효율성으로 가장 좋은 성능을 보였다.</p>
+</section>
+<section id="작업-복잡도별-성능" class="level3">
+<h3 class="anchored" data-anchor-id="작업-복잡도별-성능">7.2 작업 복잡도별 성능</h3>
+<p>단순 작업의 경우 TAMP가 65%의 최고 성공률을 기록했으며 평균 성공률은 48%였다. 주요 실패 원인은 물체 인식 오류였다. 중간 복잡도 작업에서는 Hierarchical RL이 42%의 최고 성공률을 보였고 평균 성공률은 28%였다. 주요 실패 원인은 하위 목표 계획 오류였다. 복잡한 작업에서는 Hierarchical RL이 18%의 최고 성공률을 기록했으며 평균 성공률은 12%였다. 주요 실패 원인은 장기 의존성과 누적 오류였다. 매우 복잡한 작업의 경우 TAMP가 5%의 최고 성공률을 보였고 평균 성공률은 2%였다. 주요 실패 원인은 계획 수립 실패였다.</p>
+</section>
+<section id="카테고리별-성능-분석" class="level3">
+<h3 class="anchored" data-anchor-id="카테고리별-성능-분석">7.3 카테고리별 성능 분석</h3>
+<p>청소 활동은 평균 32%의 성공률을 보였으며, 주요 도전 과제는 먼지나 얼룩 등 보이지 않는 상태를 감지하는 것이었다. 요리 활동은 평균 18%의 성공률을 보였으며, 온도 제어, 시간 관리, 복잡한 순서가 주요 도전 과제였다. 정리정돈 활동은 평균 28%의 성공률을 보였으며, 적절한 위치 결정과 공간 추론이 주요 도전 과제였다. 유지보수 활동은 평균 25%의 성공률을 보였으며, 정밀한 조작과 도구 사용이 주요 도전 과제였다.</p>
+</section>
+<section id="실패-사례-분석" class="level3">
+<h3 class="anchored" data-anchor-id="실패-사례-분석">7.4 실패 사례 분석</h3>
+<p>전체 실패 사례 중 35%는 인식 실패로 인한 것이었다. 여기에는 객체 감지 실패, 객체 상태 추론 오류, 장면 이해 부족이 포함된다. 28%는 계획 실패로 인한 것이었으며, 불가능한 계획 수립, 하위 목표 순서 오류, 제약 조건 위반이 원인이었다. 22%는 실행 실패로 인한 것이었으며, 물체 파지 실패, 부정확한 배치, 충돌 발생이 원인이었다. 15%는 상태 관리 실패로 인한 것이었으며, 객체 상태 변화 감지 실패, 잘못된 상태 전이 가정, 전제 조건 확인 누락이 원인이었다.</p>
+</section>
+<section id="환경-일반화-능력" class="level3">
+<h3 class="anchored" data-anchor-id="환경-일반화-능력">7.5 환경 일반화 능력</h3>
+<p>동일한 환경에서 객체 배치만 변경한 경우 평균 15%의 성능 하락이 있었으며, 학습 기반 방법이 더 큰 영향을 받았다. 완전히 새로운 환경에서는 평균 35%의 성능 하락이 있었으며, 계획 기반 방법이 상대적으로 강건했다. 새로운 객체 인스턴스를 사용한 경우 평균 20%의 성능 하락이 있었으며, 시각적 변화에 민감한 모습을 보였다.</p>
+</section>
+</section>
+<section id="주요-발견-및-통찰" class="level2">
+<h2 class="anchored" data-anchor-id="주요-발견-및-통찰">8. 주요 발견 및 통찰</h2>
+<section id="물리-시뮬레이션의-중요성" class="level3">
+<h3 class="anchored" data-anchor-id="물리-시뮬레이션의-중요성">8.1 물리 시뮬레이션의 중요성</h3>
+<p>정확한 물리 시뮬레이션이 필수적이라는 것이 밝혀졌다. 비현실적인 물리는 학습된 정책이 실제 환경으로 전이되지 못하게 만든다. 특히 접촉 역학의 정확도가 매우 중요하며, 마찰, 중력, 관성이 행동 선택에 큰 영향을 미친다. 그러나 시뮬레이션과 현실 사이의 격차는 여전히 존재한다. 도메인 랜덤화를 통해 이를 일부 완화할 수 있지만, 더 정밀한 물리 모델이 필요하다.</p>
+</section>
+<section id="객체-상태-추론의-어려움" class="level3">
+<h3 class="anchored" data-anchor-id="객체-상태-추론의-어려움">8.2 객체 상태 추론의 어려움</h3>
+<p>온도나 청결도와 같이 시각적으로 명확하지 않은 상태를 추론하는 것이 매우 어렵다는 것이 확인되었다. 이러한 보이지 않는 상태를 파악하기 위해서는 다중 모달 센싱이 필요하며, 추론 능력이 요구된다. 또한 시간에 따른 상태 변화를 추적하고, 인과 관계를 이해하며, 상태를 예측하는 능력이 필요하다.</p>
+</section>
+<section id="장기-계획의-필요성" class="level3">
+<h3 class="anchored" data-anchor-id="장기-계획의-필요성">8.3 장기 계획의 필요성</h3>
+<p>복잡한 작업을 수행하기 위해서는 계획이 필수적이다. 단순 반응형 정책만으로는 불충분하며, 여러 단계의 하위 목표를 설정할 수 있어야 한다. 계층적 추상화가 중요하다. 또한 실행 중에 재계획이 필요하고, 예상치 못한 상황에 대응할 수 있어야 하며, 유연한 계획 조정이 가능해야 한다.</p>
+</section>
+<section id="멀티모달-학습의-중요성" class="level3">
+<h3 class="anchored" data-anchor-id="멀티모달-학습의-중요성">8.4 멀티모달 학습의 중요성</h3>
+<p>자연어 명령을 이해하고 시각 정보와 언어 정보를 결합하며 상식 지식을 활용하는 시각-언어 통합이 중요하다. 또한 물체 조작 시 촉각 피드백이 중요하며, 힘 제어가 필요하고, 안전한 상호작용을 보장해야 하는 시각-촉각 통합도 필요하다.</p>
+</section>
+<section id="일반화-능력의-한계" class="level3">
+<h3 class="anchored" data-anchor-id="일반화-능력의-한계">8.5 일반화 능력의 한계</h3>
+<p>훈련 환경에 특화되어 새로운 상황에 취약한 과적합 문제가 발견되었다. 더 다양한 훈련 데이터가 필요하다. 또한 작업 간 전이와 환경 간 전이가 제한적이며, 메타 학습 접근이 필요하다는 것이 밝혀졌다.</p>
+</section>
+<section id="현재의-한계점" class="level3">
+<h3 class="anchored" data-anchor-id="현재의-한계점">9.1 현재의 한계점</h3>
+<p>시뮬레이션 측면에서는 일부 물리 현상이 근사화되어 있고, 변형 가능한 객체에 대한 지원이 제한적이며, 유체 시뮬레이션이 복잡하다는 한계가 있다. 작업 범위 측면에서는 실내 활동에만 집중되어 있고, 복잡한 사회적 상호작용이 부재하며, 창의적 작업이 부족하다. 평가 메트릭 측면에서는 정성적 품질 평가가 어렵고, 부분 성공의 점수화가 문제이며, 안전성 정량화에 한계가 있다. 계산 비용 측면에서는 고정밀 시뮬레이션의 비용이 높고, 대규모 학습에 많은 자원이 필요하며, 실시간 실행이 어렵다.</p>
+</section>
+<section id="향후-연구-방향" class="level3">
+<h3 class="anchored" data-anchor-id="향후-연구-방향">9.2 향후 연구 방향</h3>
+<p>더 다양한 활동을 위해서는 실외 활동을 추가하고, 사회적 상호작용을 포함하며, 창의적 작업을 확장하고, 수 시간에서 수 일에 걸친 장기 작업을 다루어야 한다. 개선된 시뮬레이션을 위해서는 더 정확한 물리 엔진이 필요하고, 변형 가능한 객체 지원을 강화해야 하며, 복잡한 유체 시뮬레이션을 구현하고, 재료 속성을 다양화해야 한다.</p>
+<p>멀티모달 학습을 위해서는 시각-언어-행동을 통합하고, 상식 추론을 통합하며, 대규모 사전 학습 모델을 활용하고, 인간 시연 데이터를 활용해야 한다. Sim-to-Real 전이를 위해서는 도메인 랜덤화 기법을 개선하고, 도메인 적응 알고리즘을 개발하며, 실제 로봇 플랫폼에서 검증하고, 시뮬레이션-현실 격차를 축소해야 한다.</p>
+<p>효율적 학습을 위해서는 샘플 효율성을 개선하고, 전이 학습 및 메타 학습을 활용하며, 오프라인 강화학습을 적용하고, 자기 지도 학습을 사용해야 한다. 인간-로봇 협업을 위해서는 공동 작업을 수행하고, 자연어로 상호작용하며, 의도를 이해하고 예측하며, 적응적으로 행동을 조정해야 한다.</p>
+<p>설명 가능성을 위해서는 의사결정 과정을 투명하게 하고, 실패 원인을 분석하며, 사용자 신뢰를 구축해야 한다. 안전성 및 신뢰성을 위해서는 안전 제약 조건을 학습하고, 예측 가능한 행동을 보장하며, 오류 복구 메커니즘을 갖추고, 견고성을 검증해야 한다.</p>
+<p>장기적으로는 완전 자율 가정 로봇을 개발하여 인간 수준의 일상 작업을 수행하고, 새로운 작업에 빠르게 적응하며, 자연스러운 인간과의 상호작용을 구현해야 한다. 개인화된 AI 어시스턴트는 사용자 선호도를 학습하고, 맥락을 인식하여 지원하며, 예측적으로 도움을 제공해야 한다. 범용 Embodied AI는 다양한 환경에서 작동하고, 광범위한 작업을 수행하며, 지속적으로 학습하고 개선되어야 한다.</p>
+</section>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">10. 결론</h2>
+<section id="주요-기여" class="level3">
+<h3 class="anchored" data-anchor-id="주요-기여">10.1 주요 기여</h3>
+<p>BEHAVIOR-1K는 Embodied AI 연구에 중요한 기여를 한다. 종합적인 벤치마크로서 1,000개의 다양한 일상 활동, 50개의 현실적인 가정 환경, 체계적인 평가 프레임워크, 표준화된 메트릭을 제공한다. 현실적인 시뮬레이션을 통해 고정밀 물리 시뮬레이션, 사실적인 렌더링, 복잡한 객체 상태 추적, 다양한 센서 모델링을 구현했다. 연구 기반을 제공함으로써 오픈소스 도구 및 데이터, 커뮤니티 벤치마크, 재현 가능한 실험, 협업 플랫폼을 제공한다. 실용적 가치 측면에서는 실제 응용을 반영한 작업, 현실적인 도전 과제, 산업계 적용 가능성을 제시한다.</p>
+</section>
+<section id="영향-및-전망" class="level3">
+<h3 class="anchored" data-anchor-id="영향-및-전망">10.2 영향 및 전망</h3>
+<p>BEHAVIOR-1K는 연구를 가속화하여 표준화된 평가로 연구 비교를 용이하게 하고, 새로운 방법론 개발을 촉진하며, 협업 연구를 활성화한다. 실용성을 강조하여 실제 응용 가능한 작업에 초점을 맞추고, 산업계의 관심을 증대시키며, 상용화 가능성을 탐색한다. 커뮤니티를 구축하여 공통 플랫폼을 통한 협업을 촉진하고, 지식을 공유 및 축적하며, 차세대 연구자를 교육한다.</p>
+<p>BEHAVIOR-1K는 가정용 로봇과 Embodied AI의 발전에 중요한 이정표가 될 것이다. 이 벤치마크를 통해 연구자들은 실용적이고 강건한 AI 에이전트를 개발할 수 있으며, 산업계는 상용 제품 개발의 기술적 기반을 마련할 수 있고, 사회는 일상 생활을 돕는 로봇의 혜택을 누릴 수 있다.</p>
+</section>
+<section id="최종-의견" class="level3">
+<h3 class="anchored" data-anchor-id="최종-의견">10.3 최종 의견</h3>
+<p>BEHAVIOR-1K는 단순한 벤치마크를 넘어, Embodied AI 연구의 패러다임을 제시한다. 실제 세계의 복잡성을 포용하고, 실용적인 응용을 지향하며, 커뮤니티의 협력을 촉진하는 이 벤치마크는 인간을 돕는 지능형 로봇 실현에 한 걸음 더 가까이 다가가게 한다.</p>
+<p>향후 더 많은 연구자들이 이 플랫폼을 활용하여 혁신적인 알고리즘을 개발하고, 더 나은 시뮬레이션 기술을 구축하며, 궁극적으로는 우리의 일상 생활을 실질적으로 개선할 수 있는 로봇 시스템을 만들어낼 것으로 기대한다.</p>
+<!--
+## 참고문헌
+
+Li와 그의 동료들은 2023년 IEEE/CVF Conference on Computer Vision and Pattern Recognition에서 BEHAVIOR-1K를 발표했다. 이 벤치마크는 1,000개의 일상 활동과 현실적인 시뮬레이션을 갖춘 Embodied AI를 위한 종합적인 평가 시스템을 제공한다.
+
+Shen과 그의 연구팀은 2021년 Conference on Robot Learning에서 iGibson 2.0을 소개했다. 이 시스템은 일상적인 가정 작업을 위한 로봇 학습을 위해 객체 중심 시뮬레이션을 제공한다.
+
+Savva와 그의 동료들은 2019년 IEEE/CVF International Conference on Computer Vision에서 Habitat 플랫폼을 발표했다. 이는 Embodied AI 연구를 위한 기반 시설을 제공하는 플랫폼이다.
+
+Kolve와 그의 연구팀은 2017년 arXiv에 AI2-THOR를 발표했다. 이는 시각적 AI를 위한 상호작용 3D 환경을 제공한다.
+
+Puig와 그의 동료들은 2018년 IEEE Conference on Computer Vision and Pattern Recognition에서 VirtualHome을 소개했다. 이 시스템은 프로그램을 통해 가정 활동을 시뮬레이션한다.
+
+Shridhar와 그의 연구팀은 2020년 IEEE/CVF Conference on Computer Vision and Pattern Recognition에서 ALFRED를 발표했다. 이는 일상 작업을 위한 기반 지침 해석을 위한 벤치마크이다.
+
+Xia와 그의 동료들은 2018년 IEEE Conference on Computer Vision and Pattern Recognition에서 Gibson Env를 소개했다. 이는 Embodied 에이전트를 위한 실제 세계 인식을 제공한다.
+
+Deitke와 그의 연구팀은 2022년 Advances in Neural Information Processing Systems에서 ProcTHOR를 발표했다. 이는 절차적 생성을 사용한 대규모 Embodied AI를 제공한다.
+
+Szot과 그의 동료들은 2021년 Advances in Neural Information Processing Systems에서 Habitat 2.0을 소개했다. 이 시스템은 가정 보조 로봇이 서식지를 재배치하도록 훈련시킨다.
+
+Gan과 그의 연구팀은 2021년 Advances in Neural Information Processing Systems의 데이터셋 및 벤치마크 트랙에서 ThreeDWorld를 발표했다. 이는 상호작용 멀티모달 물리 시뮬레이션을 위한 플랫폼이다.
+
+-->
+<blockquote class="blockquote">
+<p>프로젝트 웹사이트는 https://behavior.stanford.edu에서 접근할 수 있으며, 코드 저장소는 https://github.com/StanfordVL/behavior에 있다. 데이터셋은 https://behavior.stanford.edu/omnigibson에서 다운로드할 수 있고, 문서는 https://behavior.stanford.edu/docs에서 확인할 수 있다. 논문은 https://arxiv.org/abs/2403.09227에서 열람할 수 있다.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="dig-review" class="level1">
+<h1>⛏️ Dig Review</h1>
+<blockquote class="blockquote">
+<p>⛏️ Dig — Go deep, uncover the layers. Dive into technical detail.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>BEHAVIOR-1K: 1,000개 일상 활동과 현실적 시뮬레이션을 갖춘 인간 중심 Embodied AI 벤치마크 — 심층 리뷰</p>
+</blockquote>
+<section id="한눈에-보기-tldr" class="level2">
+<h2 class="anchored" data-anchor-id="한눈에-보기-tldr">0) 한눈에 보기 (TL;DR)</h2>
+<ul>
+<li><strong>무엇?</strong> BEHAVIOR-1K는 “사람들이 로봇에게 정말로 맡기고 싶은 일”을 출발점으로 설계된 <strong>1,000개 일상 활동</strong> 벤치마크와 <strong>OmniGibson</strong> 시뮬레이터로 구성된 대규모 플랫폼입니다. 50개 장면, 9천+ 객체, 풍부한 물리·의미 속성, 변형체/유체까지 모델링합니다.</li>
+<li><strong>왜 중요한가?</strong> 기존 벤치마크가 다루기 어려웠던 <strong>장기(Time-extended) 모바일 매니퓰레이션</strong>을 현실감 높게 모사하여, 실제 로봇 서비스로 이어지는 연구를 촉진합니다.</li>
+<li><strong>핵심 난점?</strong> End-to-end 비전 정책은 거의 실패하고, <strong>고수준 프리미티브 + 메모리</strong>가 일부 과제를 해결하지만, sim-to-real 전이는 여전히 큰 격차가 남아 있습니다.</li>
+</ul>
+<hr>
+</section>
+<section id="문제의식과-기여" class="level2">
+<h2 class="anchored" data-anchor-id="문제의식과-기여">1) 문제의식과 기여</h2>
+<p>로봇학습의 많은 과제는 연구자가 정의한 좁은 범주의 태스크에 편향되어 왔습니다. BEHAVIOR-1K는 <strong>대중 설문</strong>을 통해 “로봇에게 부탁하고 싶은 활동”을 수집하고, 그 결과를 바탕으로 <strong>현실적·다양한 과제군(1,000개)</strong>을 구축했습니다. 이를 실행하는 새로운 시뮬레이터 <strong>OmniGibson</strong>은 <strong>PhysX/Omniverse</strong> 기반의 고충실 물리·렌더링으로 경질체, <strong>연성체(천/종이/옷감)</strong>, <strong>유체</strong> 상호작용까지 지원합니다. 결과적으로, <strong>사람 중심의 다양성 + 현실적 물리</strong>라는 두 축을 모두 확장한 점이 가장 큰 기여입니다.</p>
+<hr>
+</section>
+<section id="시뮬레이션-환경-구현-방식-omnigibson" class="level2">
+<h2 class="anchored" data-anchor-id="시뮬레이션-환경-구현-방식-omnigibson">2) 시뮬레이션 환경 구현 방식: OmniGibson</h2>
+<section id="물리-및-그래픽스-백엔드" class="level3">
+<h3 class="anchored" data-anchor-id="물리-및-그래픽스-백엔드">2.1 물리 및 그래픽스 백엔드</h3>
+<ul>
+<li><strong>엔진/플랫폼</strong>: NVIDIA <strong>Omniverse</strong> + <strong>PhysX</strong>(5.x 계열) 기반. 경질체의 충돌/마찰/관절, 연성체(Cloth), 유체 흐름, 투명·반사 재질 등 고급 효과를 지원합니다. 이는 가사·정리·요리 등 <strong>생활 밀착형 과제</strong>를 시뮬레이션하기 위한 전제조건입니다.</li>
+<li><strong>시각 충실도</strong>: 레이 트레이싱 기반의 사실적 조명/재질 표현으로, 센싱-중심 정책학습(예: RGB-D)에서 <strong>도메인 차이</strong>를 줄이는 효과가 기대됩니다.</li>
+</ul>
+</section>
+<section id="객체-중심-상태와-논리적-서술의-연결" class="level3">
+<h3 class="anchored" data-anchor-id="객체-중심-상태와-논리적-서술의-연결">2.2 객체-중심 상태와 논리적 서술의 연결</h3>
+<p>OmniGibson은 <strong>객체 상태(object states)</strong>를 일급 개념으로 다룹니다. 예: <strong>온도(temperature)</strong>, <strong>젖음(wetness)</strong>, <strong>청결(cleanliness)</strong>, <strong>토글 on/off</strong>, <strong>슬라이스(sliced)</strong> 등. 이러한 연속/이산 속성은 <strong>논리 술어(predicate)</strong>로 매핑되어 “익었다(cooked)”, “안에 있다(inside)” 등 과제의 <strong>목표 조건</strong>을 기계적으로 판정합니다. 이 사상은 iGibson 2.0에서 도입되었고 OmniGibson에서 한층 확장되었습니다.</p>
+<ul>
+<li><strong>논리-물리 매핑 예시</strong> <span class="math display">\texttt{Cooked}(x) ;\Longleftrightarrow; T_x \ge T_\mathrm{cook}</span> 여기서 <span class="math inline">T_x</span>는 객체 <span class="math inline">x</span>의 온도, <span class="math inline">T_\mathrm{cook}</span>은 조리 판정 임계값입니다(시뮬레이터가 연속상태를 추적).</li>
+</ul>
+</section>
+<section id="장면-샘플링랜덤화데모-수집" class="level3">
+<h3 class="anchored" data-anchor-id="장면-샘플링랜덤화데모-수집">2.3 장면 샘플링·랜덤화·데모 수집</h3>
+<ul>
+<li><strong>샘플링</strong>: “초기/목표 논리 조건을 만족하는” 물리 배치를 자동 샘플링해 <strong>무한대에 가까운 에피소드</strong>를 생성합니다(예: 냉동식품이 냉장고 <strong>안</strong>에 있고, 오븐은 <strong>꺼져 있음</strong>).</li>
+<li><strong>도메인 랜덤화</strong>: 배치/재질/조명 등 변화를 통해 강인한 정책을 학습합니다. 시뮬레이션-현실 시각 격차를 줄이는 전형적 접근입니다.</li>
+<li><strong>VR/텔레오퍼레이션</strong>: iGibson 2.0에서의 VR 인터페이스 전통을 잇는 <strong>데모 수집</strong> 파이프라인이 제공됩니다(인간-시범 → IL/IRM 등).</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>요약:</strong> OmniGibson은 “물리(연성/유체/관절) + 논리 상태 + 자동 인스턴스화 + 데모수집”을 통합한 <strong>현실감·생산성·확장성</strong> 삼박자를 구현합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="활동-분류-체계와-bddl" class="level2">
+<h2 class="anchored" data-anchor-id="활동-분류-체계와-bddl">3) 활동 분류 체계와 BDDL</h2>
+<section id="인간-중심-활동-선정" class="level3">
+<h3 class="anchored" data-anchor-id="인간-중심-활동-선정">3.1 인간 중심 활동 선정</h3>
+<p>1,461명 규모의 설문으로 “로봇에게 바라는 일”을 수집, 상위 1,000개를 <strong>활동(activity)</strong>으로 채택했습니다. <strong>집·정원·식당·사무실</strong> 등 <strong>50개 장면</strong>, <strong>9천+ 객체</strong>와 결합하여 풍부한 과제 인스턴스를 생성합니다.</p>
+</section>
+<section id="bddl-behavior-domain-definition-language" class="level3">
+<h3 class="anchored" data-anchor-id="bddl-behavior-domain-definition-language">3.2 BDDL: Behavior Domain Definition Language</h3>
+<p>BDDL은 <strong>초기 상태</strong> <span class="math inline">S_{\tau,0}</span>와 <strong>목표 상태</strong> <span class="math inline">S_{\tau,g}</span>를 <strong>논리 술어들의 집합</strong>으로 기술하는 <strong>도메인 전용 서술 언어</strong>입니다. 활동 <span class="math inline">\tau</span>는 아래처럼 정의됩니다. <span class="math display">
+\tau \equiv {S_{\tau,0},, S_{\tau,g}}, \quad
+S_{\tau,\cdot} = { \text{predicates over objects / states}}
+</span> 예: <code>Forall(o \in decorations) Inside(o, cabinet)</code> → “모든 장식물이 캐비닛 <strong>안</strong>에 있다.” 이렇게 정의하면 <strong>환경/배치가 달라도</strong> 논리 조건만 만족하면 <strong>성공</strong>으로 판정할 수 있습니다.</p>
+<blockquote class="blockquote">
+<p><strong>의의:</strong> 연구자 수작업 스크립팅 없이 <strong>활동 정의 → 무한 인스턴스 생성 → 자동 평가</strong>가 가능해집니다. 이는 ’활동 일반화’를 가속합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="평가-메트릭-설계" class="level2">
+<h2 class="anchored" data-anchor-id="평가-메트릭-설계">4) 평가 메트릭 설계</h2>
+<section id="성공-기준goal-satisfaction" class="level3">
+<h3 class="anchored" data-anchor-id="성공-기준goal-satisfaction">4.1 성공 기준(Goal Satisfaction)</h3>
+<p>성공은 <strong>BDDL 목표 조건 충족</strong> 여부로 이진 판정합니다. 학습에서는 의도적으로 보상을 단순화(스파스 리워드)하여 <strong>목표 중심 학습</strong>을 유도합니다.</p>
+</section>
+<section id="효율성품질-지표" class="level3">
+<h3 class="anchored" data-anchor-id="효율성품질-지표">4.2 효율성·품질 지표</h3>
+<p>실사용 로봇 관점에서 <strong>성공률만으로는 부족</strong>합니다. BEHAVIOR 계열은 다음의 <strong>효율성/품질</strong> 지표를 함께 측정합니다.</p>
+<ul>
+<li><strong>이동 거리</strong> <span class="math inline">D_\text{nav}</span>: 총 주행 거리(짧을수록 효율).</li>
+<li><strong>소요 시간/스텝</strong> <span class="math inline">T</span>: 완료까지 시간 또는 단계 수(빠를수록 효율).</li>
+<li><strong>환경 교란</strong> <span class="math inline">D_\text{kin}</span>: 임무와 무관하게 <strong>움직인 타 객체들의 총 이동량</strong>(작을수록 <strong>정돈된</strong> 수행). 이들은 <strong>경로 최적성/속도/정리 품질</strong>을 수치화해 실제 서비스 적합성을 평가하게 해줍니다.</li>
+</ul>
+<blockquote class="blockquote">
+<p>종합 점수 <span class="math inline">Q</span>(참고치)를 병행 보고하기도 하나, 연구 보고에서는 개별 지표의 해석력이 더 크다고 논의합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="베이스라인과-관찰-왜-어려운가" class="level2">
+<h2 class="anchored" data-anchor-id="베이스라인과-관찰-왜-어려운가">5) 베이스라인과 관찰: 왜 어려운가?</h2>
+<section id="end-to-end-vs.-프리미티브-기반" class="level3">
+<h3 class="anchored" data-anchor-id="end-to-end-vs.-프리미티브-기반">5.1 End-to-End vs.&nbsp;프리미티브 기반</h3>
+<ul>
+<li><strong>End-to-End 비전→액션</strong> 정책은 다수 과제에서 실패.</li>
+<li><strong>행동 프리미티브(예: pick/place/열기/닫기)</strong>를 사용한 <strong>계층형 정책</strong>은 일부 과제에서 <strong>유의미한 성공률</strong>을 달성.</li>
+<li><strong>메모리(히스토리) 추가</strong> 시 이동 경로 단축·불필요 행동 감소 등 <strong>효율성 지표 개선</strong>. 핵심은 <strong>장기 계획 + 다단계 조작</strong>이라는 구조적 난점을 <strong>추상 액션과 기억</strong>으로 완화해야 한다는 점입니다.</li>
+</ul>
+</section>
+<section id="파지grasping의-현실성" class="level3">
+<h3 class="anchored" data-anchor-id="파지grasping의-현실성">5.2 파지(grasping)의 현실성</h3>
+<p>훈련 중 <strong>보조 그리퍼(Sticky-Mitten)</strong>를 쓰면 시뮬레이션 성능이 높지만, 이를 제거하고 <strong>완전 물리 그리핑</strong>으로 평가하면 급락합니다. 파지는 여전히 <strong>병목 난제</strong>이며, 데이터·센서퓨전·접촉계획의 개선이 필요합니다.</p>
+<hr>
+</section>
+</section>
+<section id="sim-to-real-실제-로봇-적용-가능성" class="level2">
+<h2 class="anchored" data-anchor-id="sim-to-real-실제-로봇-적용-가능성">6) Sim-to-Real: 실제 로봇 적용 가능성</h2>
+<section id="실험-개요" class="level3">
+<h3 class="anchored" data-anchor-id="실험-개요">6.1 실험 개요</h3>
+<ul>
+<li>실제 <strong>모바일 매니퓰레이터(Tiago)</strong> + 아파트 <strong>디지털 트윈</strong> 구축 → OmniGibson 학습 정책을 <strong>현실 이식</strong>.</li>
+<li><strong>시각 도메인 랜덤화</strong>로 카메라 차이를 일부 완화. <strong>YOLO</strong> 기반 2D 검출→3D 투영, <strong>지도 기반 위치추정</strong> 적용.</li>
+</ul>
+</section>
+<section id="결과-요약질적" class="level3">
+<h3 class="anchored" data-anchor-id="결과-요약질적">6.2 결과 요약(질적)</h3>
+<ul>
+<li>시뮬레이터 성공률(예: 특정 과제 <strong>≈40%</strong>) → <strong>현실 이식 0%</strong> 사례 보고.</li>
+<li><strong>인간 오라클(최적 프리미티브)</strong>가 지시한 경우도 <strong>현실 성공률이 낮음</strong>(약 수십 %대).</li>
+<li>실패 원인: <strong>정책 선택 오류</strong>, <strong>시각 격차(HDR/질감/노이즈)</strong>, <strong>그리핑 실패</strong>, <strong>누적 오차(compounding errors)</strong> 등 <strong>다원적</strong>. → <strong>시각 랜덤화</strong>, <strong>액션/센서 노이즈 모델링</strong>, <strong>접촉물리 정밀화</strong>, <strong>프리미티브-계층화</strong>가 필수.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>정리:</strong> “현실성 높은 시뮬레이터 + 인간 중심 과제”만으로 격차가 자동 해소되진 않습니다. <strong>센서/액터 노이즈 주입</strong>, <strong>도메인 랜덤화의 체계화</strong>, <strong>로봇 하드웨어(엔드이펙터) 개선</strong>, <strong>오류복구 정책</strong>이 동반되어야 합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="수식으로-보는-behavior-스타일-활동-모델" class="level2">
+<h2 class="anchored" data-anchor-id="수식으로-보는-behavior-스타일-활동-모델">7) 수식으로 보는 BEHAVIOR-스타일 활동 모델</h2>
+<p>활동 <span class="math inline">\tau</span>의 학습 문제를 간단히 쓰면:</p>
+<ul>
+<li><strong>MDP</strong>: <span class="math inline">(\mathcal S,\mathcal A, p, r_\tau,\gamma)</span>, 관측 <span class="math inline">o_t \sim \mathcal O(s_t)</span></li>
+<li><strong>스파스 리워드</strong>: <span class="math display">
+r_\tau(s_t,a_t,s_{t+1})=
+\begin{cases}
++1,&amp; s_{t+1}\in S_{\tau,g}\
+0,&amp; \text{otherwise}
+\end{cases}
+</span></li>
+<li><strong>성공 확률</strong>: <span class="math inline">;P_\pi^\tau=\Pr\big(s_T\in S_{\tau,g}\mid \pi\big)</span></li>
+<li><strong>효율성 측정</strong>(예): <span class="math display">
+D_\text{nav}=\sum_{t=1}^{T}\lVert x_t-x_{t-1}\rVert,\quad
+D_\text{kin}=\sum_{t=1}^{T}\sum_{o\in \mathcal O_\text{env}}\lVert p^o_t-p^o_{t-1}\rVert
+</span> <span class="math inline">T</span>는 완료 시점(또는 제한 스텝). 여기서 <span class="math inline">D_\text{kin}</span>은 <strong>주변 교란</strong>을 정량화합니다. (논문에서 제안된 품질 지표 맥락화.)</li>
+</ul>
+<hr>
+</section>
+<section id="실제-로봇-적용을-위한-설계-체크리스트" class="level2">
+<h2 class="anchored" data-anchor-id="실제-로봇-적용을-위한-설계-체크리스트">8) 실제 로봇 적용을 위한 설계 체크리스트</h2>
+<section id="정책-아키텍처" class="level3">
+<h3 class="anchored" data-anchor-id="정책-아키텍처">8.1 정책 아키텍처</h3>
+<ul>
+<li><strong>계층형</strong>: 고수준 <strong>프리미티브(옵션)</strong> + 저수준 제어(컨트롤러) 분할.</li>
+<li><strong>메모리</strong>: <span class="math inline">o_{1:t}</span> 요약(Transformer/GRU)로 장기 의존성 처리.</li>
+<li><strong>스킬 라이브러리</strong>: pick/place/open/close/pour/fold 등 <strong>스킬-사전</strong>을 구축하고, <strong>조건부</strong> 파라미터(목표 포즈/힘/시간)로 인스턴스화.</li>
+</ul>
+</section>
+<section id="시각퍼셉션" class="level3">
+<h3 class="anchored" data-anchor-id="시각퍼셉션">8.2 시각·퍼셉션</h3>
+<ul>
+<li><strong>다중센서</strong>: RGB-D + 관절/힘/촉각(가능 시) 융합.</li>
+<li><strong>도메인 랜덤화</strong>: 조명/재질/노이즈/해상도/왜곡/모션블러.</li>
+<li><strong>세그멘테이션 + 6D 포즈</strong>: 조작 대상의 추적 안정화.</li>
+</ul>
+</section>
+<section id="그리핑접촉" class="level3">
+<h3 class="anchored" data-anchor-id="그리핑접촉">8.3 그리핑·접촉</h3>
+<ul>
+<li><strong>엔드이펙터</strong>: 마찰·순응·피드백(힘/촉각) 고려한 <strong>하드웨어</strong>.</li>
+<li><strong>접촉계획</strong>: grasp-synthesis(샘플링/학습 혼합) + 슬립/팁오버 감지.</li>
+</ul>
+</section>
+<section id="로코모션정밀-정합" class="level3">
+<h3 class="anchored" data-anchor-id="로코모션정밀-정합">8.4 로코모션·정밀 정합</h3>
+<ul>
+<li><strong>전역→국소 정합</strong>: 전역 경로계획 후 <strong>마지막 1m</strong>에서 정밀 정합(ICP/비전-아르코).</li>
+<li><strong>오류복구</strong>: 실패 감지 후 <strong>백오프→재시도</strong> 정책.</li>
+</ul>
+<blockquote class="blockquote">
+<p>위 체크리스트는 논문에서 드러난 실패 모드(시각/그리핑/누적오차)를 줄이기 위한 <strong>실용적 가이드</strong>입니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="관련-생태계-behavior-100-igibson-2.0과의-연계" class="level2">
+<h2 class="anchored" data-anchor-id="관련-생태계-behavior-100-igibson-2.0과의-연계">9) 관련 생태계: BEHAVIOR-100, iGibson 2.0과의 연계</h2>
+<ul>
+<li><strong>BEHAVIOR-100</strong>: 100개 가사활동, <strong>BDDL</strong> 최초 도입, 객체 상태·논리 술어·자동 인스턴스화의 삼단 구성 확립. BEHAVIOR-1K는 이를 <strong>스케일·현실성</strong> 측면에서 대폭 확장했습니다. (<a href="https://stanfordvl.github.io/behavior/intro.html?utm_source=chatgpt.com" title="The BEHAVIOR Benchmark — BEHAVIOR 1.0.0 documentation">stanfordvl.github.io</a>)</li>
+<li><strong>iGibson 2.0</strong>: 객체 상태/논리 매핑/VR 데모 수집·샘플링을 제안. OmniGibson은 물리/그래픽 충실도를 끌어올려 <strong>연성체/유체</strong>까지 아우릅니다.</li>
+</ul>
+<hr>
+</section>
+<section id="실험-재현과-리소스" class="level2">
+<h2 class="anchored" data-anchor-id="실험-재현과-리소스">10) 실험 재현과 리소스</h2>
+<ul>
+<li><p><strong>논문/코드/웹사이트</strong>: arXiv(논문), PMLR(CoRL 2023), 프로젝트 페이지, GitHub 저장소가 공개되어 있습니다.</p>
+<ul>
+<li>논문: BEHAVIOR-1K(2024, arXiv) / CoRL 2023 PMLR 버전 참고.</li>
+<li>사이트/문서: 주요 개요·시뮬레이터 문서·데모 등.</li>
+<li>코드/BDDL: BEHAVIOR-1K 저장소 및 BDDL 레퍼런스.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="토론-한계와-향후-과제" class="level2">
+<h2 class="anchored" data-anchor-id="토론-한계와-향후-과제">11) 토론: 한계와 향후 과제</h2>
+<ol type="1">
+<li><strong>Sim-to-Real 격차</strong>: 고충실 시뮬레이터에도 불구하고 여전히 큼. 해결책은 <strong>센서/액터 노이즈 주입</strong>, <strong>강화된 도메인 랜덤화</strong>, <strong>실측 기반 재질/마찰 캘리브레이션</strong>, <strong>엔드이펙터/그리핑</strong> 개선입니다.</li>
+<li><strong>장기 계획</strong>: 수백-수천 스텝 구조는 <strong>계층형 RL/IL</strong>, <strong>언어형 태스크 계획</strong>(LLM-guided), <strong>하이브리드 계획-학습</strong>의 도입 근거를 강화합니다.</li>
+<li><strong>사람-로봇 상호작용(HRI)</strong>: 현재 버전은 인간 에이전트의 풍부한 상호작용을 제한적으로 다룹니다. <strong>가상 인간의 사실적 시뮬레이션</strong>이 향후 확장 포인트입니다.</li>
+</ol>
+<hr>
+</section>
+<section id="결론-1" class="level2">
+<h2 class="anchored" data-anchor-id="결론-1">12) 결론</h2>
+<p>BEHAVIOR-1K는 <strong>인간 중심 과제 정의(1,000개)</strong>와 <strong>현실감 높은 시뮬레이션(OmniGibson)</strong>을 결합해, <strong>장기 모바일 매니퓰레이션</strong>의 표준 벤치마크로 자리매김하고 있습니다. 베이스라인 분석은 <strong>프리미티브·메모리·그리핑</strong>의 중요성을 재확인했고, <strong>Sim-to-Real</strong> 지형도를 구체적으로 드러냈습니다. 본 벤치마크는 <strong>실제 서비스 로봇</strong>으로 이어지기 위한 연구 집약점으로서, <strong>계층형 정책·퍼셉션 강건화·접촉물리·오류복구</strong>를 포함한 총체적 접근을 요구합니다.</p>
+<hr>
+</section>
+<section id="부록-a-용어-정리" class="level2">
+<h2 class="anchored" data-anchor-id="부록-a-용어-정리">부록 A) 용어 정리</h2>
+<ul>
+<li><strong>BDDL</strong>: 초기/목표 상태를 논리 술어로 기술하는 도메인 언어. <span class="math inline">\tau={S_{\tau,0},S_{\tau,g}}</span>.</li>
+<li><strong>환경 교란(<span class="math inline">D_\text{kin}</span>)</strong>: 임무 수행 중 주변 객체의 총 이동량—정돈 품질 지표.</li>
+<li><strong>프리미티브(Primitive)</strong>: pick/place/open/close/pour/fold 등 고수준 스킬.</li>
+<li><strong>도메인 랜덤화</strong>: 시각/물리/잡음 무작위화로 일반화 유도.</li>
+</ul>
+<hr>
+</section>
+<section id="부록-b-인용참고-자료" class="level2">
+<h2 class="anchored" data-anchor-id="부록-b-인용참고-자료">부록 B) 인용/참고 자료</h2>
+<ul>
+<li>Li et al., <strong>BEHAVIOR-1K</strong> (arXiv 2403.09227; CoRL 2023 PMLR). (<a href="https://arxiv.org/abs/2403.09227?utm_source=chatgpt.com" title="BEHAVIOR-1K: A Human-Centered, Embodied AI Benchmark with 1,000 Everyday Activities and Realistic Simulation">arXiv</a>)</li>
+<li><strong>OmniGibson</strong> 문서(시뮬레이터 인터페이스/PhysX 백엔드). (<a href="https://behavior.stanford.edu/omnigibson/simulator.html?utm_source=chatgpt.com" title="Simulator">behavior.stanford.edu</a>)</li>
+<li><strong>BEHAVIOR-100</strong> 소개/문서(BDDL 원형, 100개 활동). (<a href="https://stanfordvl.github.io/behavior/intro.html?utm_source=chatgpt.com" title="The BEHAVIOR Benchmark — BEHAVIOR 1.0.0 documentation">stanfordvl.github.io</a>)</li>
+<li><strong>iGibson 2.0</strong> (객체 상태·논리 매핑·VR/샘플링). (<a href="https://arxiv.org/abs/2108.03272?utm_source=chatgpt.com" title="iGibson 2.0: Object-Centric Simulation for Robot Learning of Everyday Household Tasks">arXiv</a>)</li>
+<li>프로젝트/코드 레포: <strong>BEHAVIOR-1K</strong>, <strong>BDDL</strong>. (<a href="https://github.com/StanfordVL/BEHAVIOR-1K?utm_source=chatgpt.com" title="GitHub - StanfordVL/BEHAVIOR-1K: ...">GitHub</a>)</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="curieuxjy/blog_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Jung Yeon Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/curieuxjy">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
